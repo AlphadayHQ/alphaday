@@ -1,0 +1,7 @@
+dist/
+
+# testing
+/coverage
+
+# production
+/build
