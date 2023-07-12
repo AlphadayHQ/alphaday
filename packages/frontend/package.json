@@ -1,7 +1,7 @@
 {
   "name": "@alphadayhq/frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -19,8 +19,8 @@
     "react-dom": "18.2.0",
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
-    "@alphaday/shared": "*",
-    "@alphaday/components": "*"
+    "@alphaday/shared": "1.0.0",
+    "@alphaday/components": "1.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.5",
