@@ -20,12 +20,22 @@ export interface IRoute {
  * added to the app.
  */
 export enum ERouteNames {
-  HOME = "/",
+  Base = "/",
+  Boards = "/b/:slug",
+  FallBack = "*",
 }
 
 export const routes: IRoute[] = [
   {
-    path: ERouteNames.HOME,
+    path: ERouteNames.Base,
+    component: lazy(() => import("./pages/index")),
+  },
+  {
+    path: ERouteNames.Boards,
+    component: lazy(() => import("./pages/index")),
+  },
+  {
+    path: ERouteNames.FallBack,
     component: lazy(() => import("./pages/index")),
   },
 ];
