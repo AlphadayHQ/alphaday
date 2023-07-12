@@ -1,9 +1,9 @@
 {
-  "name": "shared",
+  "name": "@alphaday/shared",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "./src/main.tsx",
+  "main": "./src/main.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -13,7 +13,6 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
-
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
