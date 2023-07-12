@@ -10,6 +10,7 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "jsx": "react-jsx",
 
@@ -20,7 +21,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "./vite.config.ts"],
+  "include": ["src", "./vite.config.ts", "main.ts"],
   "references": [
     {
       "path": "../../tsconfig.root.json"

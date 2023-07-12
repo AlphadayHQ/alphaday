@@ -13,7 +13,7 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-import { Shared } from "@alphaday/shared";
+import { Col } from "@alphaday/shared";
 import { Components } from "@alphaday/components";
 
 /* Theme variables */
@@ -23,8 +23,8 @@ const App: React.FunctionComponent = () => {
   return (
     <div className="App">
       <header>
-        <Shared />
         <Components />
+        <Col />
       </header>
     </div>
   );

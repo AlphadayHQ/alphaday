@@ -1,1 +1,0 @@
-export { Shared } from "./App";
