@@ -9,6 +9,7 @@
   "scripts": {
     "build": "yarn --cwd packages/frontend build",
     "dev": "yarn --cwd packages/frontend dev",
+    "dev:themes": "yarn --cwd packages/themes dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
