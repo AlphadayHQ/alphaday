@@ -6,9 +6,9 @@ import { lazy, LazyExoticComponent } from "react";
  * It defines the path and the component to be rendered.
  */
 export interface IRoute {
-  path: ERouteNames;
-  component: LazyExoticComponent<() => JSX.Element>;
-  exact?: boolean;
+    path: ERouteNames;
+    component: LazyExoticComponent<() => JSX.Element>;
+    exact?: boolean;
 }
 
 /**
@@ -20,22 +20,22 @@ export interface IRoute {
  * added to the app.
  */
 export enum ERouteNames {
-  Base = "/",
-  Boards = "/b/:slug",
-  FallBack = "*",
+    Base = "/",
+    Boards = "/b/:slug",
+    FallBack = "*",
 }
 
 export const routes: IRoute[] = [
-  {
-    path: ERouteNames.Base,
-    component: lazy(() => import("./pages/index")),
-  },
-  {
-    path: ERouteNames.Boards,
-    component: lazy(() => import("./pages/index")),
-  },
-  {
-    path: ERouteNames.FallBack,
-    component: lazy(() => import("./pages/index")),
-  },
+    {
+        path: ERouteNames.Base,
+        component: lazy(() => import("./pages/index")),
+    },
+    {
+        path: ERouteNames.Boards,
+        component: lazy(() => import("./pages/index")),
+    },
+    {
+        path: ERouteNames.FallBack,
+        component: lazy(() => import("./pages/index")),
+    },
 ];
