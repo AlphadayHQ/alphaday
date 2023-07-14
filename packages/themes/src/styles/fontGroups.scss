@@ -1,0 +1,68 @@
+// @layer components {
+// .font-group-major {
+//   @apply text-2xl font-semibold leading-none tracking-[0px];
+// }
+// .font-group-highlight {
+//   @apply text-xs font-bold leading-normal tracking-[0.5px];
+// }
+// .font-group-highlightSemi {
+//   @apply text-xs font-semibold leading-normal tracking-[0.5px];
+// }
+// .font-group-normal {
+//   @apply text-xs font-normal leading-normal tracking-[0.2px];
+// }
+// .font-group-support {
+//   @apply text-[10px] font-normal leading-normal tracking-[0.2px] uppercase;
+// }
+// .font-group-supportBold {
+//   @apply text-[10px] font-semibold leading-normal tracking-[0.2px];
+// }
+// .font-group-mini {
+//   @apply text-[10px] font-normal leading-normal tracking-[0.2px] normal-case;
+// }
+// }
+
+.fontGroup-major {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0px;
+}
+.fontGroup-highlight {
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+.fontGroup-highlightSemi {
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.5px;
+}
+.fontGroup-normal {
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+.fontGroup-support {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+.fontGroup-supportBold {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+}
+.fontGroup-mini {
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  text-transform: none;
+}
