@@ -2,17 +2,20 @@ import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
 import styles from "./AlphaButton.module.scss";
+import { fontVariants } from "../../globalStyles/fontGroups";
 
 const buttonVariants = tv({
-  base: styles.alphaButton,
+  base: `${styles.alphaButton}`,
   variants: {
     variant: {
       primaryXL: styles.primaryXL,
       secondaryXL: styles.secondaryXL,
       primary: styles.primary,
       secondary: styles.secondary,
-      small: styles.small,
-      extraSmall: styles.extraSmall,
+      small: `${styles.small} ${fontVariants({ variant: "normal" })}`,
+      extraSmall: `${styles.extraSmall}  ${fontVariants({
+        variant: "normal",
+      })}`,
     },
     error: { true: "bg-dangerFiltered" },
     uppercase: {
