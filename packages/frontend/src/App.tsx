@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import { IonApp } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 import { routes } from "./routes";
 
@@ -23,27 +23,27 @@ import "@ionic/react/css/typography.css";
  *
  * It is yet to be implemented.
  */
-const App: React.FunctionComponent = () => {
-  return (
-    <IonApp>
-      <div className="App">
-        <IonReactRouter>
-          <Suspense>
-            <Switch>
-              {routes.map((route) => (
-                <Route
-                  key={route.path}
-                  path={route.path}
-                  exact={route.exact}
-                  component={route.component}
-                />
-              ))}
-            </Switch>
-          </Suspense>
-        </IonReactRouter>
-      </div>
-    </IonApp>
-  );
+const App: React.FC = () => {
+    return (
+        <IonApp>
+            <div className="App">
+                <IonReactRouter>
+                    <Suspense>
+                        <Switch>
+                            {routes.map((route) => (
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    exact={route.exact}
+                                    component={route.component}
+                                />
+                            ))}
+                        </Switch>
+                    </Suspense>
+                </IonReactRouter>
+            </div>
+        </IonApp>
+    );
 };
 
 export default App;
