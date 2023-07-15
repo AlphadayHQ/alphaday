@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1024" height="1024" viewBox="0 0 1024 1024" xml:space="preserve">
+<desc>Created with Fabric.js 2.3.6</desc>
+<defs>
+</defs>
+<g id="icon-1" transform="translate(512 512) scale(16.48 16.48)" style="">
+	<path d="M 17.9256 26.4894 H 3.03198 V 41.383 H 17.9256 V 26.4894 Z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,88,56); fill-rule: nonzero; opacity: 1;" transform="translate(-14.52121 8.9362) translate(-10.47879, -33.9362) " stroke-linecap="round" />
+	<path d="M 49.9468 8.51062 H 35.0532 V 23.4042 H 49.9468 V 8.51062 Z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,88,56); fill-rule: nonzero; opacity: 1;" transform="translate(17.5 -9.04259) translate(-42.5, -15.95741) " stroke-linecap="round" />
+	<path d="M 7.50003 8.4043 H 0.0532227 V 23.2979 H 7.50003 V 8.4043 Z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,88,56); fill-rule: nonzero; opacity: 1;" transform="translate(-21.223374 -9.1489) translate(-3.77662635, -15.851099999999999) " stroke-linecap="round" />
+	<path d="M 31.9681 0 H 10.6915 V 23.4043 H 31.9681 V 0 Z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,88,56); fill-rule: nonzero; opacity: 1;" transform="translate(-3.6702 -13.29785) translate(-21.3298, -11.70215) " stroke-linecap="round" />
+	<path d="M 38.1383 26.5957 H 21.1171 V 50 H 38.1383 V 26.5957 Z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,88,56); fill-rule: nonzero; opacity: 1;" transform="translate(4.6277 13.29785) translate(-29.6277, -38.29785) " stroke-linecap="round" />
+</g>
+</svg>

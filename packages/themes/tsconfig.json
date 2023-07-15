@@ -20,7 +20,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vite-plugin-svgr/client"] // for SVG imports
   },
   "include": ["src"],
   "references": [{ "path": "../../tsconfig.root.json" }]

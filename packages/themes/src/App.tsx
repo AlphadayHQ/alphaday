@@ -1,5 +1,6 @@
 import { IonDatetime, setupIonicReact } from "@ionic/react";
 import { AlphaButton } from "./components/buttons/AlphaButton";
+import { AlphaIconButton } from "./components/buttons/AlphaIconButton";
 
 setupIonicReact();
 
@@ -10,10 +11,10 @@ function App() {
         Vite + React + Ionic + Tailwind
       </h1>
       <IonDatetime className="mt-10"></IonDatetime>
-      <div className="m-10 p-10 bg-primary">
-        <AlphaButton variant="small">
-          Primary
-        </AlphaButton>
+      <div className="m-10 p-10 bg-primary flex flex-col gap-3">
+        <AlphaButton variant="small">Primary</AlphaButton>
+
+        <AlphaIconButton variant="star" />
       </div>
     </div>
   );
