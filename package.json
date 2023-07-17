@@ -7,17 +7,28 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "yarn --cwd packages/frontend build",
-    "dev": "yarn --cwd packages/frontend dev",
-    "dev:themes": "yarn --cwd packages/themes dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:frontend": "yarn --cwd packages/frontend build",
+    "dev:frontend": "yarn --cwd packages/frontend dev",
+    "lint:frontend": "yarn --cwd packages/frontend lint",
+    "test:frontend": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
+    "@typescript-eslint/eslint-plugin": "5.54.0",
+    "@typescript-eslint/parser": "5.54.0",
     "cypress": "12.7.0",
     "eslint": "8.35.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "5.0.0",
     "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "husky": "8.0.3",
+    "prettier": "3.0.0",
     "typescript": "5.1.6"
   },
   "repository": {

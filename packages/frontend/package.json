@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint --max-warnings=0 --ignore-path .gitignore . --ext ts --ext tsx"
   },
   "dependencies": {
     "@ionic/react": "7.1.2",
