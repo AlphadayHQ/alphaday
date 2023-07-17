@@ -1,4 +1,4 @@
-import { AlphaIconButton, AlphaIconStarButton } from "./AlphaIconButton";
+import { AlphaIconButton } from "./AlphaIconButton";
 
 export default {
     title: "Widgets/AlphaIconButton",
@@ -6,4 +6,4 @@ export default {
     argTypes: {},
 };
 
-export { AlphaIconButton, AlphaIconStarButton };
+export { AlphaIconButton };
