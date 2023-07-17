@@ -51,8 +51,6 @@ export interface ButtonProps extends TButtonVariants {
   onMouseOver?: () => void | (() => Promise<void>);
   onMouseLeave?: () => void | (() => Promise<void>);
 }
-interface StarProps extends Omit<ButtonProps, "variant"> {
-}
 
 /**
  *
