@@ -7,25 +7,25 @@ export interface AlphaLightboxProps {
     children: ReactNode;
 }
 
+const triggerId = "open-carousel-modal" // TODO: id's should be unique. Maybe use a regeistry if they become  much
 
 export const AlphaLightbox: FC<AlphaLightboxProps> = ({ speed, children }) => {
-    const [show, setShow] = useState(false);
     const [index, setIndex] = useState(0);
+
     return (
         <>
-            {!show && (
-                <AlphaCarousel
-                    showPointers
-                    speed={speed}
-                    onItemClick={(currentIndex) => {
-                        setShow(true);
-                        setIndex(currentIndex);
-                    }}
-                >
-                    {children}
-                </AlphaCarousel>
-            )}
-            <Modal show={show} onClose={() => setShow(false)}>
+            <AlphaCarousel
+                triggerId={triggerId}
+                showPointers
+                speed={speed}
+                onItemClick={(currentIndex) => {
+                    setIndex(currentIndex);
+                }}
+            >
+                {children}
+            </AlphaCarousel>
+
+            <Modal triggerId={triggerId}>
                 <AlphaCarousel
                     speed={0}
                     showPointers={false}

@@ -8,7 +8,7 @@ import {
 } from "react";
 import { ReactComponent as PointerSVG } from "src/assets/svg/pointer.svg";
 import { twMerge } from "tailwind-merge";
-import { Z_INDEX_REGISTRY } from "../../utils/zIndexRegistry";
+import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 
 enum ECarouselPagination {
     Next = 1,
@@ -22,15 +22,19 @@ export interface AlphaCarouselProps {
     showPointers?: boolean;
     children: ReactNode;
     onItemClick?: (index: number) => void;
+    triggerId?: string;
 }
 
-export const AlphaCarouselItem: FC<{ children: ReactNode }> = ({ children }) => (
+export const AlphaCarouselItem: FC<{ children: ReactNode }> = ({
+    children,
+}) => (
     <div className="inline-flex h-min flex-col items-center justify-center">
         {children}
     </div>
 );
- 
+
 export const AlphaCarousel: FC<AlphaCarouselProps> = ({
+    triggerId,
     children,
     speed = 3000,
     showDots,
@@ -65,6 +69,7 @@ export const AlphaCarousel: FC<AlphaCarouselProps> = ({
 
     return (
         <div
+            id={triggerId}
             className="overflow-hidden"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
@@ -115,7 +120,9 @@ export const AlphaCarousel: FC<AlphaCarouselProps> = ({
                             <div
                                 key={String(i)}
                                 className={twMerge(
-                                    index === i ? "bg-primary" : "bg-primaryVariant700",
+                                    index === i
+                                        ? "bg-primary"
+                                        : "bg-primaryVariant700",
                                     "bg-border hover:bg-primary mx-1 h-2 w-2 cursor-pointer rounded-full transition-colors duration-300"
                                 )}
                                 onClick={() => {
