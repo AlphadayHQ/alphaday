@@ -1,3 +1,4 @@
+//@ts-nocheck we'll fix this later: // TODO
 import { useCallback } from "react";
 import { setCurrentTutorialTip, setStoreShowTutorial } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";

@@ -1,5 +1,5 @@
 import { useCallback, useState, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useViewRoute } from "src/api/hooks";
 import {
     useSaveViewMutation,
@@ -144,7 +144,7 @@ interface IView {
 }
 
 export const useView: () => IView = () => {
-    const navigate = useNavigate();
+    const navigate = useHistory();
     const dispatch = useAppDispatch();
 
     const { routeInfo, pathContainsHashOrSlug } = useViewRoute();
@@ -364,7 +364,7 @@ export const useView: () => IView = () => {
                         });
                         // update browser history
                         const pathToView = buildViewPath(response);
-                        navigate(pathToView);
+                        navigate.push(pathToView);
                     })
                     .catch((rejected: RequestRejectedError) => {
                         Logger.error(
@@ -495,7 +495,7 @@ export const useView: () => IView = () => {
                     pathContainsHashOrSlug &&
                     [hash, slug].indexOf(routeInfo.value) !== -1
                 ) {
-                    navigate("/");
+                    navigate.push("/");
                 }
                 removeViewFromCache(viewId);
                 return;
@@ -517,7 +517,7 @@ export const useView: () => IView = () => {
                         Logger.debug(
                             "useView::removeView: Navigating to root path"
                         );
-                        navigate("/");
+                        navigate.push("/");
                     }
                     setDialogState(EViewDialogState.Closed);
                     toast("Board successfully removed", {
@@ -579,7 +579,9 @@ export const useView: () => IView = () => {
                     (s) =>
                         s.setting.slug === EWidgetSettingsRegistry.IncludedTags
                 );
-                if (!widgetTagSettings) return false;
+                if (!widgetTagSettings) {
+                    return false;
+                }
 
                 return widgetTagSettings.tags.find((tag) => tag.id === tagId);
             });
@@ -605,8 +607,9 @@ export const useView: () => IView = () => {
                     (kw) => kw.tag.id !== tagId
                 );
 
-                if (updatedKeywords)
+                if (updatedKeywords) {
                     dispatch(viewsStore.setViewKeywords(updatedKeywords));
+                }
             }
             dispatch(viewsStore.removeTagFromViewWidget({ widgetHash, tagId }));
         },
@@ -627,7 +630,7 @@ export const useView: () => IView = () => {
 
     const navigateToView = useCallback(
         (view: TRemoteUserViewPreview) => {
-            navigate(buildViewPath(view));
+            navigate.push(buildViewPath(view));
         },
         [navigate]
     );

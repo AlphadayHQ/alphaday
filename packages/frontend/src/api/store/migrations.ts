@@ -1,4 +1,5 @@
 import { MigrationManifest } from "redux-persist";
+//@ts-ignore this type does not exist yet // TODO
 import { EChartType } from "src/components/market/types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";

@@ -1,7 +1,7 @@
 import "src/mocks/libraryMocks";
 import { useEffect } from "react";
 import { renderHook } from "@testing-library/react-hooks";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { DefaultWrapper, withLocation } from "src/mocks/utils";
 import { useViewRoute } from "./useViewRoute";
 
@@ -17,9 +17,9 @@ describe("useViewRoute", () => {
         // check that is updates correctly after navigating
         const { result: result2 } = renderHook(
             () => {
-                const navigate = useNavigate();
+                const navigate = useHistory();
                 useEffect(() => {
-                    navigate("/b/bitcoin");
+                    navigate.push("/b/bitcoin");
                     // eslint-disable-next-line
                 }, []);
                 return useViewRoute();

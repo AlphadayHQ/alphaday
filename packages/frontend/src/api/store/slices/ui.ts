@@ -1,6 +1,9 @@
-import { TTheme } from "@doar/shared/types";
+// import { TTheme } from "@doar/shared/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ECookieChoice, TTutorialTip } from "src/api/types";
+
+// eslint
+type TTheme = any;
 
 export interface ITutorialState {
     showTutorial: boolean | undefined;

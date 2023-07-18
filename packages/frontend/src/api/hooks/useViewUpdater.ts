@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
     useView,
     useViewRoute,
@@ -25,7 +25,7 @@ import { useWalletView } from "./useWalletView";
 
 export const useViewUpdater: () => void = () => {
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
+    const navigate = useHistory();
 
     const {
         saveSelectedView,
@@ -165,7 +165,7 @@ export const useViewUpdater: () => void = () => {
              * we navigate to the root
              */
             if (!selectedView?.data.is_system_view) {
-                navigate("/");
+                navigate.push("/");
             }
         }
         setPrevIsAuthenticated(isAuthenticated);
@@ -314,7 +314,7 @@ export const useViewUpdater: () => void = () => {
                     "useViewUpdater: selecting default view",
                     defaultView.name
                 );
-                navigate(
+                navigate.push(
                     buildViewPathFromHashOrSlug(
                         defaultView.slug ?? defaultView.hash
                     )

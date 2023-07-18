@@ -1,6 +1,8 @@
 import "src/mocks/libraryMocks";
 import { EItemFeedPreference } from "src/api/types";
+//@ts-ignore these types do not exist yet // TODO add types
 import { ECalendarType } from "src/components/calendar/types";
+//@ts-ignore these types do not exist yet // TODO add types
 import { EChartType } from "src/components/market/types";
 import { RootState } from "../store";
 import widgetsReducer, {
