@@ -16,12 +16,17 @@
     "jsx": "react-jsx",
 
     /* Linting */
+    "rootDir": "./src/",  
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["vite-plugin-svgr/client"] // for SVG imports
+    "types": ["vite-plugin-svgr/client"], // for SVG imports
+
+    "paths": {
+      "src/*": ["./src/*"],
+    }
   },
   "include": ["src"],
   "references": [{ "path": "../../tsconfig.root.json" }]
