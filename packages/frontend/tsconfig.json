@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.root.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -30,7 +30,7 @@
   ],
   "references": [
     {
-      "path": "../../tsconfig.root.json"
+      "path": "../../tsconfig.json"
     }
   ]
 }
