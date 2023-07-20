@@ -1,0 +1,1 @@
+const UI_CONFIG = {};
