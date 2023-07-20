@@ -7,6 +7,6 @@
   },
   "include": [
     "packages/frontend/vite.config.ts",
-    "packages/theme/vite.config.ts"
+    "packages/themes/vite.config.ts"
   ]
 }
