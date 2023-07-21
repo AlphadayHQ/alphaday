@@ -1,14 +1,11 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
-import styles from "./Button.module.scss";
+import styles from "./AlphaButton.module.scss";
 import { fontVariants } from "../../globalStyles/fontGroups";
 
 const buttonVariants = tv({
-    base: twMerge(
-        styles.Button,
-        "inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-[15px] pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]"
-    ),
+    base: `${styles.alphaButton} inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-[15px] pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]`,
     variants: {
         variant: {
             primaryXL: `box-border h-[54px] border-2 border-solid border-btnRingVariant200 px-[25px] py-4 hover:border-btnRingVariant100 active:bg-btnBackgroundVariant700`,
@@ -48,7 +45,7 @@ export interface ButtonProps extends TButtonVariants {
     testId?: string;
 }
 
-export const Button: FC<ButtonProps> = ({
+export const AlphaButton: FC<ButtonProps> = ({
     children,
     variant,
     disabled,
