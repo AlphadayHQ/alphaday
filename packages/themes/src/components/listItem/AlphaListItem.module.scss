@@ -1,0 +1,100 @@
+.audioIndicator {
+    .length {
+        align-self: baseline;
+    }
+}
+
+.listItem {
+    .content {
+        [role="button"] {
+            cursor: pointer;
+            color: var(--primaryVariant100);
+            @apply fontGroup-highlight !important;
+        }
+    }
+
+    img.embed,
+    .content img {
+        border-radius: 6px;
+        margin: 10px 0;
+    }
+
+    .lastLine.center {
+        align-items: center;
+    }
+
+    .podcast {
+        .top {
+            display: flex;
+            flex-direction: row;
+
+            .source {
+                color: var(--primary);
+                margin: 0;
+                @apply fontGroup-supportBold !important;
+            }
+            .time {
+                color: var(--primaryVariant100);
+                margin: 0;
+                @apply fontGroup-mini !important;
+            }
+        }
+
+        .text {
+            margin-top: 7px;
+
+            .title {
+                color: var(--primary);
+                margin: 0;
+            }
+            .desc {
+                color: var(--primary);
+                margin: 3px 0 0;
+                @apply fontGroup-normal !important;
+            }
+        }
+    }
+    .video {
+        .text {
+            margin-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: initial;
+
+            .title {
+                color: var(--primary);
+                margin: 0;
+                @apply fontGroup-highlightSemi !important;
+            }
+
+            .lastLine {
+                position: absolute;
+                bottom: 16px; // line-height of text
+            }
+        }
+
+        .image {
+            min-width: 142.22px;
+            height: 80px;
+            object-fit: cover;
+        }
+    }
+}
+
+// AlphaCollapseItem
+.collapseItem {
+    .fullHeight {
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+
+        .wrap {
+            @apply pt-[5px] !important;
+        }
+    }
+
+    &.faq .full-height .wrap {
+        display: flex !important;
+    }
+}

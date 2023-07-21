@@ -1,13 +1,15 @@
 import { FC } from "react";
+import {twMerge} from "tailwind-merge"
 import styles from "./AlphaButton.module.scss";
 
 interface IProps {
-    isCollapsed: boolean;
+  isCollapsed: boolean;
+  className?: string;
 }
 
-const AlphaCollapseButton: FC<IProps> = ({ isCollapsed }) => (
+const AlphaCollapseButton: FC<IProps> = ({ isCollapsed, className }) => (
   <div
-    className={styles.alphaCollapseButton}
+    className={twMerge(className, styles.alphaCollapseButton)}
     role="button"
     title="Open/close details"
   >

@@ -14,6 +14,9 @@ function App() {
           <IonDatetime className="mt-10"></IonDatetime>
           <div className="bg-primary m-10 flex flex-col gap-3 p-10">
               <AlphaButton variant="small">Primary</AlphaButton>
+              <div className="">
+                  <p className="contentXXXX m-4">Tyring out Prose</p>
+              </div>
               <AlphaArrow direction="up" />
               <AlphaArrow direction="down" />
 
