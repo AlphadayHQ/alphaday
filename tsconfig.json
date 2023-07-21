@@ -6,7 +6,7 @@
     "allowSyntheticDefaultImports": true
   },
   "include": [
-    "packages/frontend/vite.config.ts",
-    "packages/themes/vite.config.ts"
+    "packages/frontend/**/*.ts",
+    "packages/themes/**/*.ts"
   ]
 }

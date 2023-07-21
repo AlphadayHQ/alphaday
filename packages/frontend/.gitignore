@@ -5,3 +5,6 @@ dist/
 
 # production
 /build
+
+# tsconfig
+*.tsbuildinfo
