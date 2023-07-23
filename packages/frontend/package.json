@@ -12,6 +12,7 @@
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore . --ext ts --ext tsx"
   },
   "dependencies": {
+    "@alphaday/configs": "1.0.0",
     "@alphaday/themes": "1.0.0",
     "@ionic/react": "7.1.2",
     "@ionic/react-router": "7.1.2",
@@ -57,12 +58,9 @@
     "@types/react-test-renderer": "18.0.0",
     "@types/uuid": "9.0.2",
     "@vitejs/plugin-legacy": "4.1.0",
-    "@vitejs/plugin-react": "4.0.2",
     "cypress": "12.7.0",
     "jsdom": "22.1.0",
     "react-test-renderer": "18.2.0",
-    "terser": "5.18.2",
-    "vite": "4.4.2",
-    "vitest": "0.33.0"
+    "terser": "5.18.2"
   }
 }

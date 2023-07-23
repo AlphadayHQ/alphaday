@@ -11,7 +11,6 @@ import { Logger } from "./api/utils/logging";
 import CONFIG from "./config";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
 import PersistProvider from "./api/store/providers/persist-provider";
-import ThemeProvider from "./api/store/providers/theme-provider";
 import { store } from "./api/store/store";
 import App from "./App";
 
@@ -64,11 +63,9 @@ root.render(
         <Provider store={store}>
             <PersistProvider>
                 <AppContextProvider>
-                    <ThemeProvider>
                         <WagmiConfig config={wagmiConfig}>
                             <App />
                         </WagmiConfig>
-                    </ThemeProvider>
                 </AppContextProvider>
             </PersistProvider>
         </Provider>

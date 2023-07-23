@@ -5,21 +5,21 @@ import { TutorialProvider } from "./tutorial-context";
 import { WalletViewProvider } from "./wallet-view-context";
 
 interface Props {
-    components: Array<
+    providers: Array<
         React.JSXElementConstructor<React.PropsWithChildren<unknown>>
     >;
     children: React.ReactNode;
 }
 
 function Compose(props: Props) {
-    const { components = [], children } = props;
+    const { providers = [], children } = props;
 
     return (
-        <>
-            {components.reduceRight((acc, Comp) => {
-                return <Comp>{acc}</Comp>;
-            }, children)}
-        </>
+
+            providers.reduceRight((childComponent, Provider) => {
+                return <Provider>{childComponent}</Provider>;
+            }, children)
+
     );
 }
 
@@ -27,7 +27,7 @@ export const AppContextProvider: FC<{ children?: React.ReactNode }> = ({
     children,
 }) => (
     <Compose
-        components={[
+        providers={[
             TutorialProvider,
             DimensionsProvider,
             ChatProvider,
