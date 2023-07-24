@@ -57,8 +57,8 @@ export const ModalHeader: FC<IProps> = ({
     return (
         <div
             className={twMerge(
-                className,
-                "flex items-start justify-between rounded-t-[calc(0.3rem-1px)] p-4"
+                "flex items-start justify-between rounded-t-[calc(0.3rem-1px)] p-4",
+                className
             )}
             {...restProps}
         >
@@ -96,8 +96,8 @@ export const ModalClose: FC<IClose> = ({
         <button
             type="button"
             className={twMerge(
-                className,
-                "text-primary m-auto mb-[-4rem] cursor-pointer appearance-none border-0 bg-transparent px-4 py-4 text-7xl font-light leading-[0.87] opacity-50"
+                "text-primary m-auto mb-[-4rem] cursor-pointer appearance-none border-0 bg-transparent px-4 py-4 text-7xl font-light leading-[0.87] opacity-50",
+                className
             )}
             onClick={onClose}
             {...restProps}
@@ -134,8 +134,8 @@ export const ModalFooter: FC<IProps & { bg?: string }> = ({
     return (
         <div
             className={twMerge(
-                className,
-                "flex flex-wrap items-center justify-end space-x-1 rounded-bl-lg rounded-br-lg border-t border-black px-3 py-3"
+                "flex flex-wrap items-center justify-end space-x-1 rounded-bl-lg rounded-br-lg border-t border-black px-3 py-3",
+                className
             )}
             {...restProps}
         >
