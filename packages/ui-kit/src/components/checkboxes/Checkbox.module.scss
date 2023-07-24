@@ -1,0 +1,31 @@
+.vector {
+    stroke: var(--primary);
+
+    path:nth-child(2) {
+        stroke: var(--btnRingVariant100);
+    }
+
+    &:hover {
+        stroke: var(--primaryVariant400);
+
+        path:nth-child(2) {
+            stroke: var(--btnRingVariant400);
+        }
+    }
+
+    &:active {
+        stroke: var(--primaryVariant500);
+
+        path:nth-child(2) {
+            stroke: var(--btnRingVariant100);
+        }
+    }
+
+    &.disabled {
+        stroke: var(--primaryVariant600);
+
+        path:nth-child(2) {
+            stroke: var(--primaryVariant600);
+        }
+    }
+}

@@ -1,0 +1,7 @@
+// file for all css styles not found in tailwind's library
+
+@layer utilities {
+    .break-word {
+        word-break: break-word;
+    }
+}

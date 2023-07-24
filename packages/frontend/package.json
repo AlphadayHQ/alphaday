@@ -12,7 +12,7 @@
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore . --ext ts --ext tsx"
   },
   "dependencies": {
-    "@alphaday/themes": "1.0.0",
+    "@alphaday/ui-kit": "1.0.0",
     "@ionic/react": "7.1.2",
     "@ionic/react-router": "7.1.2",
     "@reduxjs/toolkit": "1.8.0",

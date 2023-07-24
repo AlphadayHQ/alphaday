@@ -7,6 +7,6 @@
   },
   "include": [
     "packages/frontend/**/*.ts",
-    "packages/themes/**/*.ts"
+    "packages/ui-kit/**/*.ts"
   ]
 }
