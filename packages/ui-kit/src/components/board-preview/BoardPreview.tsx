@@ -23,7 +23,7 @@ interface IPreview {
     onEdit?: () => void;
 }
 
-export const AlphaBoardPreview: FC<IPreview> = ({
+export const BoardPreview: FC<IPreview> = ({
     previewImg,
     title,
     description,
@@ -82,10 +82,10 @@ export const AlphaBoardPreview: FC<IPreview> = ({
             [onEdit]
         );
 
-    const boardTitle = title
-        // validateEthAddr(title)
-        // ? truncateWithEllipsis(title, 10)
-        // : title;
+    const boardTitle = title;
+    // validateEthAddr(title)
+    // ? truncateWithEllipsis(title, 10)
+    // : title;
 
     return (
         <div

@@ -3,7 +3,6 @@ import { ChangeEvent, FC, FocusEvent, MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import Feedback from "../feedback/feedback";
 
-
 interface IInputProps {
     className?: string;
     type?: string;
@@ -24,7 +23,7 @@ interface IInputProps {
     height?: string;
 }
 
-export const AlphaInput: FC<IInputProps> = ({
+export const Input: FC<IInputProps> = ({
     disabled,
     state,
     feedbackText,

@@ -1,6 +1,6 @@
 @value fontGroup-highlight from "src/globalStyles/fontGroups.scss";
 
-.alphaButton {
+.Button {
     outline: 0;
     transition:
         color 0.15s ease-in-out,
@@ -32,7 +32,7 @@
     }
 }
 
-.alphaCollapseButton {
+.collapseButton {
     justify-self: center;
     display: flex;
     justify-content: center;
@@ -69,7 +69,7 @@
     }
 }
 
-.alphaIconButton {
+.IconButton {
     outline: 0;
     background: transparent;
     transition:

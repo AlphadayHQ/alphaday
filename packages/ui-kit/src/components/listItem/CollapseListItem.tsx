@@ -1,12 +1,11 @@
 import { FC, RefObject } from "react";
 import ReactMarkdown from "react-markdown";
 // import { remarkRegex, REMARK_URL_REGEX } from "src/api/utils/textUtils";
-import AlphaCollapseButton from "../buttons/AlphaCollapseButton";
+import CollapseButton from "../buttons/CollapseButton";
 import { twMerge } from "tailwind-merge";
-import styles from "./AlphaListItem.module.scss";
+import styles from "./ListItem.module.scss";
 
 //  TODO:  const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
-
 
 interface ICollapseListItem {
     openAccordion: boolean;
@@ -55,7 +54,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
     return variants[variant];
 };
 
-const AlphaCollapseListItem: FC<ICollapseListItem> = ({
+const CollapseListItem: FC<ICollapseListItem> = ({
     openAccordion,
     author,
     title,
@@ -87,7 +86,7 @@ const AlphaCollapseListItem: FC<ICollapseListItem> = ({
                 ) : (
                     <>
                         {title}
-                        <AlphaCollapseButton isCollapsed={!openAccordion} />
+                        <CollapseButton isCollapsed={!openAccordion} />
                     </>
                 )}
             </div>
@@ -131,4 +130,4 @@ const AlphaCollapseListItem: FC<ICollapseListItem> = ({
     );
 };
 
-export default AlphaCollapseListItem;
+export default CollapseListItem;

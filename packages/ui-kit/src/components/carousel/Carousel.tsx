@@ -15,7 +15,7 @@ enum ECarouselPagination {
     Previous = -1,
 }
 
-export interface AlphaCarouselProps {
+export interface CarouselProps {
     speed?: number;
     startIndex?: number;
     showDots?: boolean;
@@ -25,15 +25,13 @@ export interface AlphaCarouselProps {
     triggerId?: string;
 }
 
-export const AlphaCarouselItem: FC<{ children: ReactNode }> = ({
-    children,
-}) => (
+export const CarouselItem: FC<{ children: ReactNode }> = ({ children }) => (
     <div className="inline-flex h-min flex-col items-center justify-center">
         {children}
     </div>
 );
 
-export const AlphaCarousel: FC<AlphaCarouselProps> = ({
+export const Carousel: FC<CarouselProps> = ({
     triggerId,
     children,
     speed = 3000,

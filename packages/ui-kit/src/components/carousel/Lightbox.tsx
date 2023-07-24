@@ -1,20 +1,20 @@
 import { useState, FC, ReactNode } from "react";
-import { AlphaCarousel } from "./AlphaCarousel";
+import { Carousel } from "./Carousel";
 import { Modal } from "../modal/modal";
 
-export interface AlphaLightboxProps {
+export interface LightboxProps {
     speed?: number;
     children: ReactNode;
 }
 
-const triggerId = "open-carousel-modal" // TODO: id's should be unique. Maybe use a regeistry if they become  much
+const triggerId = "open-carousel-modal"; // TODO: id's should be unique. Maybe use a regeistry if they become  much
 
-export const AlphaLightbox: FC<AlphaLightboxProps> = ({ speed, children }) => {
+export const Lightbox: FC<LightboxProps> = ({ speed, children }) => {
     const [index, setIndex] = useState(0);
 
     return (
         <>
-            <AlphaCarousel
+            <Carousel
                 triggerId={triggerId}
                 showPointers
                 speed={speed}
@@ -23,16 +23,12 @@ export const AlphaLightbox: FC<AlphaLightboxProps> = ({ speed, children }) => {
                 }}
             >
                 {children}
-            </AlphaCarousel>
+            </Carousel>
 
             <Modal triggerId={triggerId}>
-                <AlphaCarousel
-                    speed={0}
-                    showPointers={false}
-                    startIndex={index}
-                >
+                <Carousel speed={0} showPointers={false} startIndex={index}>
                     {children}
-                </AlphaCarousel>
+                </Carousel>
             </Modal>
         </>
     );

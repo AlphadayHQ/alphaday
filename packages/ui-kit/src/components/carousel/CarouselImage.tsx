@@ -3,16 +3,13 @@ import QuickPinchZoom, {
     make3dTransformValue,
     UpdateAction,
 } from "react-quick-pinch-zoom";
-import { AlphaCarouselItem } from "./AlphaCarousel";
+import { CarouselItem } from "./Carousel";
 
-interface AlphaCarouselImageProps {
+interface CarouselImageProps {
     src: string;
     title: string;
 }
-export const AlphaCarouselImage: FC<AlphaCarouselImageProps> = ({
-    src,
-    title,
-}) => {
+export const CarouselImage: FC<CarouselImageProps> = ({ src, title }) => {
     const imgRef = useRef<HTMLImageElement | null>(null);
     const onUpdate = useCallback(({ x, y, scale }: UpdateAction) => {
         const { current: img } = imgRef;
@@ -25,13 +22,13 @@ export const AlphaCarouselImage: FC<AlphaCarouselImageProps> = ({
     }, []);
 
     return (
-        <AlphaCarouselItem>
+        <CarouselItem>
             <QuickPinchZoom onUpdate={onUpdate}>
                 <img alt="image" className="w-full" ref={imgRef} src={src} />
             </QuickPinchZoom>
             <div className="w-full pt-2 text-center font-extrabold">
                 {title}
             </div>
-        </AlphaCarouselItem>
+        </CarouselItem>
     );
 };

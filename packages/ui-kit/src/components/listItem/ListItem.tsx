@@ -4,7 +4,7 @@ import { imgOnError } from "src/utils/errorHandling";
 import { ReactComponent as PauseSVG } from "src/assets/alphadayAssets/icons/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/alphadayAssets/icons/play2.svg";
 import { twMerge } from "tailwind-merge";
-import styles from "./AlphaListItem.module.scss";
+import styles from "./ListItem.module.scss";
 
 import ItemBookmark from "./ItemBookmark";
 
@@ -94,7 +94,7 @@ const listItemVaraints = (variant: IList["variant"]) => {
 };
 
 // note external liks have to begin with http:// or https://
-export const AlphaListItem: FC<IList> = ({
+export const ListItem: FC<IList> = ({
     variant,
     path,
     date,
@@ -219,7 +219,8 @@ export const AlphaListItem: FC<IList> = ({
                                 className={twMerge(
                                     "fontGroup-normal border-primaryVariant200 bg-btnBackgroundVariant300 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
                                     styles.audioIndicator,
-                                    isPlaying && "bg-secondaryOrange text-btnRingVariant200"
+                                    isPlaying &&
+                                        "bg-secondaryOrange text-btnRingVariant200"
                                 )}
                             >
                                 {isPlaying ? (

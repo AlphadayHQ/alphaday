@@ -12,7 +12,7 @@ export interface CheckBoxProps {
     onChange?: () => void | (() => Promise<void>);
 }
 
-export const AlphaCheckbox: FC<CheckBoxProps> = ({
+export const Checkbox: FC<CheckBoxProps> = ({
     checked,
     disabled,
     uppercase,
@@ -46,7 +46,7 @@ export const AlphaCheckbox: FC<CheckBoxProps> = ({
     );
 };
 
-AlphaCheckbox.defaultProps = {
+Checkbox.defaultProps = {
     checked: true,
     disabled: false,
     uppercase: true,

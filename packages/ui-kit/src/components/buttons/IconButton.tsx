@@ -12,10 +12,10 @@ import { ReactComponent as StarFilledSVG } from "src/assets/svg/starFilled.svg";
 import { ReactComponent as TrashSVG } from "src/assets/svg/trash.svg";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 import { tv, VariantProps } from "tailwind-variants";
-import styles from "./AlphaButton.module.scss";
+import styles from "./Button.module.scss";
 
 const buttonVariants = tv({
-    base: `${styles.alphaIconButton} inline-flex items-center justify-center tracking-[0.2px] text-center align-middle cursor-pointer leading-normal select-none p-0 border-0`,
+    base: `${styles.IconButton} inline-flex items-center justify-center tracking-[0.2px] text-center align-middle cursor-pointer leading-normal select-none p-0 border-0`,
     variants: {
         variant: {
             info: styles.info,
@@ -89,7 +89,7 @@ const iconSelector = (
     return <></>;
 };
 
-export const AlphaIconButton: FC<ButtonProps> = ({
+export const IconButton: FC<ButtonProps> = ({
     variant,
     disabled,
     label,
