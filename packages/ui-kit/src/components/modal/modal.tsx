@@ -1,5 +1,5 @@
-import { FC, useRef } from "react";
-import { IonModal, IonButton, IonContent } from "@ionic/react";
+import { FC } from "react";
+import { IonModal, IonContent } from "@ionic/react";
 import { twMerge } from "tailwind-merge";
 
 export interface IProps {
@@ -12,9 +12,14 @@ export interface IProps {
 
 export interface IModal extends IProps {
     /**
+     * Is the modal open
+     * @default false
+     */
+    showModal?: boolean;
+    /**
      * Id of element to trigger the modal to open.
      */
-    triggerId: string;
+    triggerId?: string;
     /**
      * Modal Sizes
      */
@@ -23,30 +28,35 @@ export interface IModal extends IProps {
      * Callback function for close modal
      */
     onClose?: () => void;
+    /**
+     * Ref for modal
+     * @default null
+     */
+    innerRef: React.MutableRefObject<HTMLIonModalElement | null>;
 }
 
-export const Modal: FC<IModal> = ({
-    className,
-    children,
-    onClose,
-    triggerId,
-}) => {
-    const modal = useRef<HTMLIonModalElement>(null);
-
+/**
+ * This is a modal component uses the triggerId to open the modal.
+ * when an element with the triggerId is clicked, the modal will open.
+ *
+ * Ionic's isOpen: boolean can also be used to open the modal. However it uses a
+ * one-way data binding, so it will not update it's value when the modal closes.
+ * https://ionicframework.com/docs/api/modal#using-isopen
+ */
+export const Modal: FC<
+    RequireAtLeastOne<IModal, "triggerId" | "showModal">
+> = ({ className, children, onClose, triggerId, showModal, innerRef }) => {
     return (
         <IonModal
-            ref={modal}
+            ref={innerRef}
             trigger={triggerId}
             onWillDismiss={() => onClose?.()}
             className={className}
+            isOpen={showModal}
         >
-            <IonButton onClick={() => modal.current?.dismiss()}>
-                Cancel
-            </IonButton>
             <IonContent className="ion-padding">{children}</IonContent>
         </IonModal>
     );
-    
 };
 
 export const ModalHeader: FC<IProps> = ({
@@ -73,10 +83,7 @@ export const ModalTitle: FC<IProps> = ({
     ...restProps
 }) => {
     return (
-        <h6
-            className={twMerge(className, "mb-0 leading-6")}
-            {...restProps}
-        >
+        <h6 className={twMerge(className, "mb-0 leading-6")} {...restProps}>
             {children}
         </h6>
     );
@@ -108,7 +115,6 @@ export const ModalClose: FC<IClose> = ({
         </button>
     );
 };
-
 
 export const ModalBody: FC<IProps> = ({
     className,

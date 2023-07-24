@@ -43,6 +43,7 @@ export interface ButtonProps extends TButtonVariants {
     onClick?: () => MaybeAsync<void>;
     children?: React.ReactNode;
     testId?: string;
+    id?: string;
 }
 
 export const AlphaButton: FC<ButtonProps> = ({
@@ -66,6 +67,7 @@ export const AlphaButton: FC<ButtonProps> = ({
             )}
             data-testid={testId}
             {...restProps}
+            type="button"
         >
             {children}
         </button>
