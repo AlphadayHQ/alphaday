@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
-import styles from "./Button.module.scss";
 import { fontVariants } from "../../globalStyles/fontGroups";
+import styles from "./Button.module.scss";
 
 const buttonVariants = tv({
     base: twMerge(
@@ -68,6 +68,7 @@ export const Button: FC<ButtonProps> = ({
                 extraClassStyles
             )}
             data-testid={testId}
+            type="button"
             {...restProps}
         >
             {children}

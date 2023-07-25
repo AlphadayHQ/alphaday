@@ -1,8 +1,8 @@
 import { FC, RefObject } from "react";
 import ReactMarkdown from "react-markdown";
 // import { remarkRegex, REMARK_URL_REGEX } from "src/api/utils/textUtils";
-import CollapseButton from "../buttons/CollapseButton";
 import { twMerge } from "tailwind-merge";
+import CollapseButton from "../buttons/CollapseButton";
 import styles from "./ListItem.module.scss";
 
 //  TODO:  const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
@@ -64,8 +64,8 @@ const CollapseListItem: FC<ICollapseListItem> = ({
     fullHeight,
 }) => {
     return (
-        <div className={collapseItemVaraints(variant)["base"]}>
-            <div className={collapseItemVaraints(variant)["title"]}>
+        <div className={collapseItemVaraints(variant).base}>
+            <div className={collapseItemVaraints(variant).title}>
                 {variant === "faq" ? (
                     <>
                         <div
@@ -96,14 +96,13 @@ const CollapseListItem: FC<ICollapseListItem> = ({
             <div
                 ref={descHeightRef}
                 className={twMerge(
-                    collapseItemVaraints(variant)["desc"],
-                    openAccordion &&
-                        collapseItemVaraints(variant)["fullHeight"],
+                    collapseItemVaraints(variant).desc,
+                    openAccordion && collapseItemVaraints(variant).fullHeight,
                     openAccordion && `h-[${fullHeight || "109.2px"}]`
                 )}
             >
                 {openAccordion && (
-                    <div className={collapseItemVaraints(variant)["wrap"]}>
+                    <div className={collapseItemVaraints(variant).wrap}>
                         {description.length > 0 ? (
                             <ReactMarkdown
                                 // remarkPlugins={PLUGINS}
@@ -115,7 +114,7 @@ const CollapseListItem: FC<ICollapseListItem> = ({
                             <>
                                 <div
                                     className={
-                                        collapseItemVaraints(variant)["wrap"]
+                                        collapseItemVaraints(variant).wrap
                                     }
                                 >
                                     No description.

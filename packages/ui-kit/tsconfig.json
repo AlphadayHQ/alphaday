@@ -1,44 +1,14 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "module": "ESNext",
-    "skipLibCheck": true,
-    /* Bundler mode */
-    "moduleResolution": "Node",
-    "allowImportingTsExtensions": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    /* Linting */
     "rootDir": "./src/",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": [
-      "vite-plugin-svgr/client"
-    ], // for SVG imports
     "paths": {
       "src/*": [
         "./src/*"
-      ],
+      ]
     }
   },
   "include": [
-    "src"
-  ],
-  "references": [
-    {
-      "path": "../../tsconfig.json"
-    }
+    "src/**/*"
   ]
 }

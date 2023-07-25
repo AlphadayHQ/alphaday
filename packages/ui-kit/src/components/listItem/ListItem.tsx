@@ -1,12 +1,11 @@
 import { FC } from "react";
-import { computeDuration } from "src/utils/dateUtils";
-import { imgOnError } from "src/utils/errorHandling";
 import { ReactComponent as PauseSVG } from "src/assets/alphadayAssets/icons/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/alphadayAssets/icons/play2.svg";
+import { computeDuration } from "src/utils/dateUtils";
+import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
-import styles from "./ListItem.module.scss";
-
 import ItemBookmark from "./ItemBookmark";
+import styles from "./ListItem.module.scss";
 
 const HRElement = () => <hr className="border-btnRingVariant500 m-0" />;
 
@@ -122,22 +121,21 @@ export const ListItem: FC<IList> = ({
                     href={path}
                     target="_blank"
                     onClick={onClick}
-                    className={variantStyle["base"]}
+                    className={variantStyle.base}
+                    rel="noreferrer"
                 >
-                    <div className={variantStyle["date"]}>{duration}</div>
-                    <div className={variantStyle["info"]}>
-                        <div className={variantStyle["title"]}>{title}</div>
-                        <p className={variantStyle["lastLine"]}>
+                    <div className={variantStyle.date}>{duration}</div>
+                    <div className={variantStyle.info}>
+                        <div className={variantStyle.title}>{title}</div>
+                        <p className={variantStyle.lastLine}>
                             {source}
                             {source && (
-                                <span className={variantStyle["spacer"]}>
-                                    •
-                                </span>
+                                <span className={variantStyle.spacer}>•</span>
                             )}
                             <img
                                 src={tagImg}
                                 alt=""
-                                className={variantStyle["img"]}
+                                className={variantStyle.img}
                                 onError={imgOnError}
                             />
                             <span>{tag}</span>{" "}
@@ -159,10 +157,10 @@ export const ListItem: FC<IList> = ({
         const variantStyle = listItemVaraints("reports");
         return (
             <>
-                <li className={variantStyle["base"]}>
-                    <div className={variantStyle["date"]}>{duration}</div>
-                    <div className={variantStyle["info"]}>
-                        <div className={variantStyle["title"]}>
+                <li className={variantStyle.base}>
+                    <div className={variantStyle.date}>{duration}</div>
+                    <div className={variantStyle.info}>
+                        <div className={variantStyle.title}>
                             <a
                                 type={variant}
                                 href={path}
@@ -172,15 +170,15 @@ export const ListItem: FC<IList> = ({
                                 {title}
                             </a>
                         </div>
-                        <p className={variantStyle["lastLine"]}>
+                        <p className={variantStyle.lastLine}>
                             <a href={tagImg} target="_blank" rel="noreferrer">
                                 <span>{tag}</span>{" "}
                             </a>
-                            <span className={variantStyle["spacer"]}>•</span>
+                            <span className={variantStyle.spacer}>•</span>
                             <img
                                 src={source} // TODO: source is image url for tag pill
                                 alt=""
-                                className={variantStyle["img"]}
+                                className={variantStyle.img}
                                 onError={imgOnError}
                             />
                         </p>
@@ -196,47 +194,45 @@ export const ListItem: FC<IList> = ({
 
         return (
             <>
-                <li onClick={onClick} className={variantStyle["base"]}>
-                    <>
-                        <div className="top">
-                            <img
-                                src={tagImg}
-                                alt=""
-                                className={variantStyle["img"]}
-                                onError={imgOnError}
-                            />
-                            <div className={variantStyle["info"]}>
-                                <p className="source">{tag}</p>
-                                <p className="time">{duration}</p>
-                            </div>
+                <li onClick={onClick} className={variantStyle.base}>
+                    <div className="top">
+                        <img
+                            src={tagImg}
+                            alt=""
+                            className={variantStyle.img}
+                            onError={imgOnError}
+                        />
+                        <div className={variantStyle.info}>
+                            <p className="source">{tag}</p>
+                            <p className="time">{duration}</p>
                         </div>
-                        <div className="text">
-                            <p className={variantStyle["title"]}>{title}</p>
-                            <p className="desc">{description}</p>
-                        </div>
-                        <p className="lastLine center">
-                            <span
-                                className={twMerge(
-                                    "fontGroup-normal border-primaryVariant200 bg-btnBackgroundVariant300 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
-                                    styles.audioIndicator,
-                                    isPlaying &&
-                                        "bg-secondaryOrange text-btnRingVariant200"
-                                )}
-                            >
-                                {isPlaying ? (
-                                    <PauseSVG className="w-[16.4px]" />
-                                ) : (
-                                    <PlaySVG className=" fill-primaryVariant100 mr-[5.4px] w-[9px]" />
-                                )}
-                                <span className="length">{mediaLength}</span>
-                            </span>
-                            <ItemBookmark
-                                isAuthenticated={isAuthenticated}
-                                onBookmark={onBookmark}
-                                bookmarked={bookmarked}
-                            />
-                        </p>
-                    </>
+                    </div>
+                    <div className="text">
+                        <p className={variantStyle.title}>{title}</p>
+                        <p className="desc">{description}</p>
+                    </div>
+                    <p className="lastLine center">
+                        <span
+                            className={twMerge(
+                                "fontGroup-normal border-primaryVariant200 bg-btnBackgroundVariant300 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
+                                styles.audioIndicator,
+                                isPlaying &&
+                                    "bg-secondaryOrange text-btnRingVariant200"
+                            )}
+                        >
+                            {isPlaying ? (
+                                <PauseSVG className="w-[16.4px]" />
+                            ) : (
+                                <PlaySVG className=" fill-primaryVariant100 mr-[5.4px] w-[9px]" />
+                            )}
+                            <span className="length">{mediaLength}</span>
+                        </span>
+                        <ItemBookmark
+                            isAuthenticated={isAuthenticated}
+                            onBookmark={onBookmark}
+                            bookmarked={bookmarked}
+                        />
+                    </p>
                 </li>
                 <HRElement />
             </>
@@ -246,7 +242,7 @@ export const ListItem: FC<IList> = ({
         const variantStyle = listItemVaraints("video");
         return (
             <>
-                <li onClick={onClick} className={variantStyle["base"]}>
+                <li onClick={onClick} className={variantStyle.base}>
                     <img
                         src={image}
                         alt=""
@@ -254,17 +250,12 @@ export const ListItem: FC<IList> = ({
                         onError={imgOnError}
                     />
                     <div className="text">
-                        <p className={variantStyle["title"]}>{title}</p>
+                        <p className={variantStyle.title}>{title}</p>
 
-                        <p
-                            className={twMerge(
-                                variantStyle["lastLine"],
-                                "center"
-                            )}
-                        >
+                        <p className={twMerge(variantStyle.lastLine, "center")}>
                             <span>{tag}</span>{" "}
-                            <span className={variantStyle["spacer"]}>•</span>
-                            <span className={variantStyle["date"]}>
+                            <span className={variantStyle.spacer}>•</span>
+                            <span className={variantStyle.date}>
                                 {duration}
                             </span>
                             <ItemBookmark
@@ -282,21 +273,22 @@ export const ListItem: FC<IList> = ({
     return (
         <>
             <a
-                className={listItemVaraints(variant)["base"]}
+                className={listItemVaraints(variant).base}
                 target="_blank"
                 href={path}
+                rel="noreferrer"
             >
                 <img
                     src={tagImg}
                     alt=""
-                    className={listItemVaraints(variant)["img"]}
+                    className={listItemVaraints(variant).img}
                     onError={imgOnError}
                 />
-                <div className={listItemVaraints(variant)["info"]}>
-                    <div className={listItemVaraints(variant)["title"]}>
+                <div className={listItemVaraints(variant).info}>
+                    <div className={listItemVaraints(variant).title}>
                         {title}
                     </div>
-                    <p className={listItemVaraints(variant)["lastLine"]}>
+                    <p className={listItemVaraints(variant).lastLine}>
                         <span>{tag}</span> <span className="spacer">•</span>
                         <span className="date">{duration}</span>
                     </p>

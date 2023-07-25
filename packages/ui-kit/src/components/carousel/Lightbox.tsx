@@ -1,6 +1,6 @@
 import { useState, FC, ReactNode } from "react";
-import { Carousel } from "./Carousel";
 import { Modal } from "../modal/modal";
+import { Carousel } from "./Carousel";
 
 export interface LightboxProps {
     speed?: number;

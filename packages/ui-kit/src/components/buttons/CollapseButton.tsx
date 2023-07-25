@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { twMerge } from "tailwind-merge";
 import styles from "Button.module.scss";
+import { twMerge } from "tailwind-merge";
 
 interface IProps {
     isCollapsed: boolean;
