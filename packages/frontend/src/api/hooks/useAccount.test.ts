@@ -1,5 +1,6 @@
 import "src/mocks/libraryMocks";
 import { useEffect } from "react";
+import Vitest from "vitest";
 import { renderHook } from "@testing-library/react-hooks";
 import { useGetUserProfileQuery, useGetFeaturesQuery } from "src/api/services";
 import * as userStore from "src/api/store/slices/user";
@@ -7,16 +8,16 @@ import { DefaultWrapper } from "src/mocks/utils";
 import { useAppDispatch } from "../store/hooks";
 import { useAccount } from "./useAccount";
 
-jest.mock("src/api/services");
+vi.mock("src/api/services");
 
 describe("useAccount", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     it("should return the correct account information for disconnected", () => {
         (
-            useGetUserProfileQuery as jest.MockedFunction<
+            useGetUserProfileQuery as Vitest.MockedFunction<
                 typeof useGetUserProfileQuery
             >
         ).mockReturnValue({
@@ -25,10 +26,10 @@ describe("useAccount", () => {
             error: null,
             isFetching: false,
             isLoading: false,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         (
-            useGetFeaturesQuery as jest.MockedFunction<
+            useGetFeaturesQuery as Vitest.MockedFunction<
                 typeof useGetFeaturesQuery
             >
         ).mockReturnValue({
@@ -37,7 +38,7 @@ describe("useAccount", () => {
             error: null,
             isFetching: false,
             isLoading: false,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         const { result } = renderHook(() => useAccount(), {
             wrapper: DefaultWrapper,
@@ -54,7 +55,7 @@ describe("useAccount", () => {
     it("should return the correct account information for connected", () => {
         const walletAccount = "0x00589290920";
         (
-            useGetUserProfileQuery as jest.MockedFunction<
+            useGetUserProfileQuery as Vitest.MockedFunction<
                 typeof useGetUserProfileQuery
             >
         ).mockReturnValue({
@@ -67,10 +68,10 @@ describe("useAccount", () => {
             error: null,
             isFetching: false,
             isLoading: false,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         (
-            useGetFeaturesQuery as jest.MockedFunction<
+            useGetFeaturesQuery as Vitest.MockedFunction<
                 typeof useGetFeaturesQuery
             >
         ).mockReturnValue({
@@ -87,7 +88,7 @@ describe("useAccount", () => {
             error: null,
             isFetching: false,
             isLoading: false,
-            refetch: jest.fn(),
+            refetch: vi.fn(),
         });
         const { result, waitForNextUpdate } = renderHook(
             () => {

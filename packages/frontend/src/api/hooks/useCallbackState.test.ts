@@ -15,7 +15,7 @@ describe("useCallbackState", () => {
             name: "John",
             age: 30,
         };
-        const callbackFn = jest.fn();
+        const callbackFn = vi.fn();
         const { result } = renderHook(() => useCallbackState(initialState));
 
         act(() => {

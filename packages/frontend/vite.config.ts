@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { fileURLToPath, URL } from "url";
 import legacy from "@vitejs/plugin-legacy";
 import react from "@vitejs/plugin-react";
@@ -13,5 +14,9 @@ export default defineConfig({
                 replacement: fileURLToPath(new URL("./src", import.meta.url)),
             },
         ],
+    },
+    test: {
+        globals: true,
+        environment: "happy-dom",
     },
 });

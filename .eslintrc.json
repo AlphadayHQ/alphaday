@@ -135,7 +135,9 @@
         {
             "files": [
                 "setupTests.ts",
-                "vite.config.ts"
+                "vite.config.ts",
+                "*.test.ts",
+                "*.test.tsx"
             ],
             "rules": {
                 "import/no-extraneous-dependencies": "off"

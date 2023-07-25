@@ -10,7 +10,7 @@
     "build:frontend": "yarn --cwd packages/frontend build",
     "dev:frontend": "yarn --cwd packages/frontend dev",
     "lint:frontend": "yarn --cwd packages/frontend lint",
-    "test:frontend": "echo \"Error: no test specified\" && exit 1"
+    "test:frontend": "yarn --cwd packages/frontend test.unit"
   },
   "devDependencies": {
     "@types/react": "18.2.14",
