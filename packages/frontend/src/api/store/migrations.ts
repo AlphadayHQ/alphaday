@@ -1,5 +1,5 @@
 import { MigrationManifest } from "redux-persist";
-//@ts-ignore this type does not exist yet // TODO
+// @ts-ignore this type does not exist yet // TODO
 import { EChartType } from "src/components/market/types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
@@ -66,7 +66,7 @@ export type TMigrations = MigrationManifest & {
  */
 const addFieldToWidgetState = <
     S extends Record<string, unknown>,
-    K extends keyof S[string]
+    K extends keyof S[string],
 >(
     state: S,
     newKey: K,

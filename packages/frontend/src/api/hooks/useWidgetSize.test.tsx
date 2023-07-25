@@ -27,9 +27,9 @@ describe("useWidgetSize", () => {
     it("should return the correct size when the element is defined", () => {
         const clientWidth = 800;
         const getElementByIdSpy = jest.spyOn(document, "getElementById");
-        getElementByIdSpy.mockReturnValueOnce(({
+        getElementByIdSpy.mockReturnValueOnce({
             clientWidth,
-        } as unknown) as HTMLElement);
+        } as unknown as HTMLElement);
 
         const { result } = renderHook(() => useWidgetSize([768, 320]), {
             wrapper: DimensionsProvider,

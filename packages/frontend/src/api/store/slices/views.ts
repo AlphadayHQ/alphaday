@@ -190,7 +190,7 @@ const viewsSlice = createSlice({
                 remoteView.id === selectedView.data.id,
                 "slices::views::syncView: ids should match"
             );
-            const id = selectedView.data.id;
+            const { id } = selectedView.data;
             const updatedAt = remoteView.updated_at;
             selectedView.data = {
                 ...selectedView.data,
@@ -646,42 +646,40 @@ export const selectedViewSelector: (
     }
 );
 
-export const keywordSearchListSelector: (
-    state: RootState
-) => TKeyword[] = createSelector(
-    (state: RootState) => state.views.selectedViewId,
-    userAndSharedViewsCacheSelector,
-    (selectedViewId, userAndSharedViewsCache) => {
-        if (selectedViewId === undefined) {
+export const keywordSearchListSelector: (state: RootState) => TKeyword[] =
+    createSelector(
+        (state: RootState) => state.views.selectedViewId,
+        userAndSharedViewsCacheSelector,
+        (selectedViewId, userAndSharedViewsCache) => {
+            if (selectedViewId === undefined) {
+                return [];
+            }
+            if (userAndSharedViewsCache?.[selectedViewId]) {
+                return userAndSharedViewsCache?.[selectedViewId].data.keywords;
+            }
             return [];
         }
-        if (userAndSharedViewsCache?.[selectedViewId]) {
-            return userAndSharedViewsCache?.[selectedViewId].data.keywords;
-        }
-        return [];
-    }
-);
+    );
 
-export const isViewModifiedSelector: (
-    state: RootState
-) => boolean = createSelector(
-    (state: RootState) => state.views.selectedViewId,
-    (state: RootState) => state.views.subscribedViewsCache,
-    (state: RootState) => state.views.sharedViewsCache,
-    (selectedViewId, subscribedViewsCache, sharedViewsCache) => {
-        if (selectedViewId === undefined) {
-            return false;
-        }
+export const isViewModifiedSelector: (state: RootState) => boolean =
+    createSelector(
+        (state: RootState) => state.views.selectedViewId,
+        (state: RootState) => state.views.subscribedViewsCache,
+        (state: RootState) => state.views.sharedViewsCache,
+        (selectedViewId, subscribedViewsCache, sharedViewsCache) => {
+            if (selectedViewId === undefined) {
+                return false;
+            }
 
-        const selectedView =
-            subscribedViewsCache?.[selectedViewId] ??
-            sharedViewsCache?.[selectedViewId];
-        if (selectedView === undefined) {
-            return false;
+            const selectedView =
+                subscribedViewsCache?.[selectedViewId] ??
+                sharedViewsCache?.[selectedViewId];
+            if (selectedView === undefined) {
+                return false;
+            }
+            return isViewModified(selectedView);
         }
-        return isViewModified(selectedView);
-    }
-);
+    );
 
 export const {
     setSelectedViewId,

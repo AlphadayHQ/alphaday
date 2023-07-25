@@ -14,13 +14,9 @@ interface Props {
 function Compose(props: Props) {
     const { providers = [], children } = props;
 
-    return (
-
-            providers.reduceRight((childComponent, Provider) => {
-                return <Provider>{childComponent}</Provider>;
-            }, children)
-
-    );
+    return providers.reduceRight((childComponent, Provider) => {
+        return <Provider>{childComponent}</Provider>;
+    }, children);
 }
 
 export const AppContextProvider: FC<{ children?: React.ReactNode }> = ({

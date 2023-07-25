@@ -49,11 +49,14 @@ export const isHash: (s: string | undefined | null) => boolean = (s) => {
 export const arrayAsDictById = <T extends { id: number }>(
     arr: T[]
 ): Record<number, T> => {
-    return arr.reduce((acc, newVal) => {
-        // eslint-disable-next-line no-param-reassign
-        acc[newVal.id] = newVal;
-        return acc;
-    }, {} as Record<number, T>);
+    return arr.reduce(
+        (acc, newVal) => {
+            // eslint-disable-next-line no-param-reassign
+            acc[newVal.id] = newVal;
+            return acc;
+        },
+        {} as Record<number, T>
+    );
 };
 
 export const delay = (duration: number): Promise<void> => {

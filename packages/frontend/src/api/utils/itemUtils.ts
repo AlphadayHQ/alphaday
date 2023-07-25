@@ -145,7 +145,7 @@ export const makeRepeated = <T extends string | number>(
  */
 export const buildMultiValue = <
     T extends Record<string, unknown>,
-    D extends Record<string, unknown> = Record<string, unknown>
+    D extends Record<string, unknown> = Record<string, unknown>,
 >(
     results: D[],
     structure: Record<string, string>

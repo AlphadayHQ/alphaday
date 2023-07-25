@@ -1,4 +1,4 @@
-//@ts-nocheck we'll fix this later: // TODO
+// @ts-nocheck we'll fix this later: // TODO
 import { useCallback } from "react";
 import { setCurrentTutorialTip, setStoreShowTutorial } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
@@ -32,10 +32,8 @@ export const useTutorial: () => ITutorial = () => {
               (tutorial) => tutorial.id !== ETutorialTipId.WalletView
           );
 
-    const {
-        showTutorial,
-        currentTutorialTip: storedTutorialTip,
-    } = useAppSelector((state) => state.ui.tutorial);
+    const { showTutorial, currentTutorialTip: storedTutorialTip } =
+        useAppSelector((state) => state.ui.tutorial);
     const currentTutorialTip = allowedTutorials.find(
         (tutorial) => tutorial.id === storedTutorialTip?.id
     );

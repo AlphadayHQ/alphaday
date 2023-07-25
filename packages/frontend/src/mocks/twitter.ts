@@ -13,18 +13,15 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
             source: {
                 name: "Alphaday Twitter",
                 slug: "alphaday_twitter_social",
-                icon:
-                    "https://s3.eu-west-1.amazonaws.com/dev-zettaday.com/media/default_icon.png",
+                icon: "https://s3.eu-west-1.amazonaws.com/dev-zettaday.com/media/default_icon.png",
             },
-            title:
-                "RT @TO: Blockbuster and Netflix…The better business model always winsBitcoin-only startups will always be destroyed in the marketplace…",
+            title: "RT @TO: Blockbuster and Netflix…The better business model always winsBitcoin-only startups will always be destroyed in the marketplace…",
             url: "https://twitter.com/twitter/status/1598589725400616960",
             image: null,
             tweet: {
                 id: "1598589725400616960",
                 lang: "en",
-                text:
-                    "RT @TO: Blockbuster and Netflix…\n\nThe better business model always wins\n\nBitcoin-only startups will always be destroyed in the marketplace…",
+                text: "RT @TO: Blockbuster and Netflix…\n\nThe better business model always wins\n\nBitcoin-only startups will always be destroyed in the marketplace…",
                 author: {
                     id: "863083003081359362",
                     url: "https://t.co/5ZffIXBPL0",
@@ -133,8 +130,7 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
                         tweet: {
                             id: "1598067328897363968",
                             lang: "en",
-                            text:
-                                "Blockbuster and Netflix…\n\nThe better business model always wins\n\nBitcoin-only startups will always be destroyed in the marketplace by competitors who listen to their customers\n\nNo way around it\n\n87% of Bitcoiners hold other crypto\n\nSmart move @lopp",
+                            text: "Blockbuster and Netflix…\n\nThe better business model always wins\n\nBitcoin-only startups will always be destroyed in the marketplace by competitors who listen to their customers\n\nNo way around it\n\n87% of Bitcoiners hold other crypto\n\nSmart move @lopp",
                             author: {
                                 id: "6635012",
                                 url: "https://t.co/Xxs98XOBm5",
@@ -261,8 +257,7 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
                 social_network: "twitter",
                 username: "antiprosynth",
                 name: "antiprosynthesis.eth ⟠",
-                image:
-                    "https://pbs.twimg.com/profile_images/1363775802454736899/RUjufbtQ_normal.jpg",
+                image: "https://pbs.twimg.com/profile_images/1363775802454736899/RUjufbtQ_normal.jpg",
                 description:
                     "#Ethereum ⟠ $ETH softcore developer, news aggregator and information asymmetry fighter.\n\n🐬🔊",
                 followers: 58010,
@@ -280,18 +275,15 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
             source: {
                 name: "Alphaday Twitter",
                 slug: "alphaday_twitter_social",
-                icon:
-                    "https://s3.eu-west-1.amazonaws.com/dev-zettaday.com/media/default_icon.png",
+                icon: "https://s3.eu-west-1.amazonaws.com/dev-zettaday.com/media/default_icon.png",
             },
-            title:
-                'RT @evan_van_ness: since the Merge 77 days ago$BTC "inflation": $1,347,157,987$ETH "inflation": $387,891',
+            title: 'RT @evan_van_ness: since the Merge 77 days ago$BTC "inflation": $1,347,157,987$ETH "inflation": $387,891',
             url: "https://twitter.com/twitter/status/1598569531772911617",
             image: null,
             tweet: {
                 id: "1598569531772911617",
                 lang: "en",
-                text:
-                    'RT @evan_van_ness: since the Merge 77 days ago\n\n$BTC "inflation": $1,347,157,987\n\n$ETH "inflation": $387,891',
+                text: 'RT @evan_van_ness: since the Merge 77 days ago\n\n$BTC "inflation": $1,347,157,987\n\n$ETH "inflation": $387,891',
                 author: {
                     id: "863083003081359362",
                     url: "https://t.co/5ZffIXBPL0",
@@ -387,8 +379,7 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
                             media_key: "3_1597598811978964997",
                             width: 3840,
                             type: "photo",
-                            url:
-                                "https://pbs.twimg.com/media/FivPp7GXoAUHuEy.jpg",
+                            url: "https://pbs.twimg.com/media/FivPp7GXoAUHuEy.jpg",
                         },
                     ],
                 },
@@ -409,8 +400,7 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
                         tweet: {
                             id: "1598406164475248678",
                             lang: "en",
-                            text:
-                                'since the Merge 77 days ago\n\n$BTC "inflation": $1,347,157,987\n\n$ETH "inflation": $387,891',
+                            text: 'since the Merge 77 days ago\n\n$BTC "inflation": $1,347,157,987\n\n$ETH "inflation": $387,891',
                             author: {
                                 id: "189518354",
                                 url: "https://t.co/IhPxABjY8H",
@@ -509,8 +499,7 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
                 social_network: "twitter",
                 username: "antiprosynth",
                 name: "antiprosynthesis.eth ⟠",
-                image:
-                    "https://pbs.twimg.com/profile_images/1363775802454736899/RUjufbtQ_normal.jpg",
+                image: "https://pbs.twimg.com/profile_images/1363775802454736899/RUjufbtQ_normal.jpg",
                 description:
                     "#Ethereum ⟠ $ETH softcore developer, news aggregator and information asymmetry fighter.\n\n🐬🔊",
                 followers: 58010,
@@ -528,18 +517,15 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
             source: {
                 name: "Alphaday Twitter",
                 slug: "alphaday_twitter_social",
-                icon:
-                    "https://s3.eu-west-1.amazonaws.com/dev-zettaday.com/media/default_icon.png",
+                icon: "https://s3.eu-west-1.amazonaws.com/dev-zettaday.com/media/default_icon.png",
             },
-            title:
-                "RT @evan_van_ness: @ultrasoundmoney @coinmetrics $BTC has 3473 more inflation than $ETH at the moment$BTC money printer go brrrrrrrrrrrrr…",
+            title: "RT @evan_van_ness: @ultrasoundmoney @coinmetrics $BTC has 3473 more inflation than $ETH at the moment$BTC money printer go brrrrrrrrrrrrr…",
             url: "https://twitter.com/twitter/status/1598569581118951424",
             image: null,
             tweet: {
                 id: "1598569581118951424",
                 lang: "en",
-                text:
-                    "RT @evan_van_ness: @ultrasoundmoney @coinmetrics $BTC has 3473 more inflation than $ETH at the moment\n\n$BTC money printer go brrrrrrrrrrrrr…",
+                text: "RT @evan_van_ness: @ultrasoundmoney @coinmetrics $BTC has 3473 more inflation than $ETH at the moment\n\n$BTC money printer go brrrrrrrrrrrrr…",
                 author: {
                     id: "863083003081359362",
                     url: "https://t.co/5ZffIXBPL0",
@@ -668,8 +654,7 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
                         tweet: {
                             id: "1598426964150263809",
                             lang: "en",
-                            text:
-                                "@ultrasoundmoney @coinmetrics $BTC has 3473 more inflation than $ETH at the moment\n\n$BTC money printer go brrrrrrrrrrrrrrrrrrrrr 🖨️",
+                            text: "@ultrasoundmoney @coinmetrics $BTC has 3473 more inflation than $ETH at the moment\n\n$BTC money printer go brrrrrrrrrrrrrrrrrrrrr 🖨️",
                             author: {
                                 id: "189518354",
                                 url: "https://t.co/IhPxABjY8H",
@@ -801,8 +786,7 @@ export const twitterFeedMock: TGetTweetsRawResponse = {
                 social_network: "twitter",
                 username: "antiprosynth",
                 name: "antiprosynthesis.eth ⟠",
-                image:
-                    "https://pbs.twimg.com/profile_images/1363775802454736899/RUjufbtQ_normal.jpg",
+                image: "https://pbs.twimg.com/profile_images/1363775802454736899/RUjufbtQ_normal.jpg",
                 description:
                     "#Ethereum ⟠ $ETH softcore developer, news aggregator and information asymmetry fighter.\n\n🐬🔊",
                 followers: 58010,

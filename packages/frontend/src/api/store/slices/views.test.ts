@@ -388,9 +388,9 @@ describe("selectedViewSelector", () => {
             viewsCache,
             selectedViewId: viewId,
         };
-        const selectedView = selectedViewSelector(({
+        const selectedView = selectedViewSelector({
             views: initialState,
-        } as unknown) as RootState);
+        } as unknown as RootState);
         expect(selectedView).toStrictEqual(viewsCache[viewId]);
     });
 });

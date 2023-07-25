@@ -1,8 +1,8 @@
 import "src/mocks/libraryMocks";
 import { EItemFeedPreference } from "src/api/types";
-//@ts-ignore these types do not exist yet // TODO add types
+// @ts-ignore these types do not exist yet // TODO add types
 import { ECalendarType } from "src/components/calendar/types";
-//@ts-ignore these types do not exist yet // TODO add types
+// @ts-ignore these types do not exist yet // TODO add types
 import { EChartType } from "src/components/market/types";
 import { RootState } from "../store";
 import widgetsReducer, {
@@ -108,9 +108,8 @@ describe("newsFeedPreference", () => {
     const newsFeedPreferenceSelector = selectNewsFeedPreference(widgetHash);
 
     it("should select the news feed preference", () => {
-        const selectedNewsFeedPreference = newsFeedPreferenceSelector(
-            rootState
-        );
+        const selectedNewsFeedPreference =
+            newsFeedPreferenceSelector(rootState);
         expect(selectedNewsFeedPreference).toBeUndefined();
     });
 
@@ -151,14 +150,12 @@ describe("blogFeedPreference", () => {
 
 describe("selectPodcastFeedPreference", () => {
     const podcastFeedPreference = EItemFeedPreference.Last;
-    const podcastFeedPreferenceSelector = selectPodcastFeedPreference(
-        widgetHash
-    );
+    const podcastFeedPreferenceSelector =
+        selectPodcastFeedPreference(widgetHash);
 
     it("should select the podcast feed preference", () => {
-        const selectedPodcastFeedPreference = podcastFeedPreferenceSelector(
-            rootState
-        );
+        const selectedPodcastFeedPreference =
+            podcastFeedPreferenceSelector(rootState);
         expect(selectedPodcastFeedPreference).toBeUndefined();
     });
 
@@ -183,9 +180,8 @@ describe("videoFeedPreference", () => {
     const videoFeedPreferenceSelector = selectVideoFeedPreference(widgetHash);
 
     it("should select the video feed preference", () => {
-        const selectedVideoFeedPreference = videoFeedPreferenceSelector(
-            rootState
-        );
+        const selectedVideoFeedPreference =
+            videoFeedPreferenceSelector(rootState);
         expect(selectedVideoFeedPreference).toBeUndefined();
     });
 
@@ -370,14 +366,12 @@ describe("setEventFilters", () => {
 describe("setPodcastPreferredChannelIds", () => {
     const podcastPreferredChannelIds = [1, 2, 3];
 
-    const preferredChannelIdsSelector = selectPodcastPreferredChannelIds(
-        widgetHash
-    );
+    const preferredChannelIdsSelector =
+        selectPodcastPreferredChannelIds(widgetHash);
 
     it("should select the podcast channels", () => {
-        const selectedPodcastPreferredChannelIds = preferredChannelIdsSelector(
-            rootState
-        );
+        const selectedPodcastPreferredChannelIds =
+            preferredChannelIdsSelector(rootState);
         expect(selectedPodcastPreferredChannelIds).toBeUndefined();
     });
 
@@ -400,14 +394,12 @@ describe("setPodcastPreferredChannelIds", () => {
 
 describe("setVideoPreferredChannelIds", () => {
     const videoPreferredChannelIds = [1, 2, 3];
-    const videoPreferredChannelIdsSelector = selectVideoPreferredChannelIds(
-        widgetHash
-    );
+    const videoPreferredChannelIdsSelector =
+        selectVideoPreferredChannelIds(widgetHash);
 
     it("should select the video preferred channel ids", () => {
-        const selectedVideoPreferredChannelIds = videoPreferredChannelIdsSelector(
-            rootState
-        );
+        const selectedVideoPreferredChannelIds =
+            videoPreferredChannelIdsSelector(rootState);
         expect(selectedVideoPreferredChannelIds).toBeUndefined();
     });
 
@@ -418,12 +410,11 @@ describe("setVideoPreferredChannelIds", () => {
         });
         const state = widgetsReducer(initialState, action);
 
-        const selectedVideoPreferredChannelIds = videoPreferredChannelIdsSelector(
-            {
+        const selectedVideoPreferredChannelIds =
+            videoPreferredChannelIdsSelector({
                 ...rootState,
                 widgets: state,
-            }
-        );
+            });
 
         expect(selectedVideoPreferredChannelIds).toEqual(
             videoPreferredChannelIds

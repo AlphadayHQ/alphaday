@@ -6,19 +6,13 @@ import { useFeatureFlags } from "./useFeatureFlags";
 import { useView } from "./useView";
 
 export const useWalletViewStateUpdater: () => EWalletViewState = () => {
-    const {
-        isAuthenticated,
-        accountHasSmartTags,
-        accountSmartTagsUpdated,
-    } = useAccount();
+    const { isAuthenticated, accountHasSmartTags, accountSmartTagsUpdated } =
+        useAccount();
     const { subscribedViews } = useView();
     const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
 
-    const {
-        allowFetchWalletView,
-        walletViewState,
-        setWalletViewState,
-    } = useWalletViewContext();
+    const { allowFetchWalletView, walletViewState, setWalletViewState } =
+        useWalletViewContext();
 
     if (isAuthenticated && isWalletBoardAllowed) {
         if (subscribedViews?.some((view) => view.data.is_smart)) {

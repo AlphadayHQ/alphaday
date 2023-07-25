@@ -7,10 +7,8 @@ import { SUPPORTED_EVM_NETWORKS } from "src/config/thirdparty";
 import CONFIG from "../../config/config";
 
 const { API_BASE_URL, ROUTES, API_KEY } = CONFIG.API_PROVIDERS.ZAPPER;
-const {
-    API_BASE_URL: API_BASE_URL_V2,
-    ROUTES: ROUTES_V2,
-} = CONFIG.API_PROVIDERS.ZAPPER_V2;
+const { API_BASE_URL: API_BASE_URL_V2, ROUTES: ROUTES_V2 } =
+    CONFIG.API_PROVIDERS.ZAPPER_V2;
 
 /**
  * primitive types
