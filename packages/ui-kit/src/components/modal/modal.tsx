@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, forwardRef } from "react";
 import { IonModal, IonContent } from "@ionic/react";
 import { twMerge } from "tailwind-merge";
 
@@ -28,13 +28,7 @@ export interface IModal extends IProps {
      * Callback function for close modal
      */
     onClose?: () => void;
-    /**
-     * Ref for modal
-     * @default null
-     */
-    innerRef: React.MutableRefObject<HTMLIonModalElement | null>;
 }
-
 /**
  * This is a modal component uses the triggerId to open the modal.
  * when an element with the triggerId is clicked, the modal will open.
@@ -43,12 +37,14 @@ export interface IModal extends IProps {
  * one-way data binding, so it will not update it's value when the modal closes.
  * https://ionicframework.com/docs/api/modal#using-isopen
  */
-export const Modal: FC<
+
+export const Modal = forwardRef<
+    HTMLIonModalElement | null,
     RequireAtLeastOne<IModal, "triggerId" | "showModal">
-> = ({ className, children, onClose, triggerId, showModal, innerRef }) => {
+>(({ className, children, onClose, triggerId, showModal }, ref) => {
     return (
         <IonModal
-            ref={innerRef}
+            ref={ref}
             trigger={triggerId}
             onWillDismiss={() => onClose?.()}
             className={className}
@@ -57,7 +53,7 @@ export const Modal: FC<
             <IonContent className="ion-padding">{children}</IonContent>
         </IonModal>
     );
-};
+});
 
 export const ModalHeader: FC<IProps> = ({
     className,

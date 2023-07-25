@@ -68,7 +68,7 @@ export const Dialog: FC<
         <Modal
             triggerId={triggerId || "default-dialog-trigger"}
             showModal={showDialog}
-            innerRef={modalRef}
+            ref={modalRef}
             data-testid="alpha-dialog"
             {...restProps}
         >
