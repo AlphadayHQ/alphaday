@@ -1,4 +1,5 @@
 import { FC, useRef } from "react";
+// TODO: Add useKeyPress hook and Logger
 // import { useKeyPress } from "src/api/hooks";
 // import { Logger } from "src/api/utils/logging";
 import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
