@@ -2,7 +2,7 @@ import { FC, useRef } from "react";
 // import { useKeyPress } from "src/api/hooks";
 // import { Logger } from "src/api/utils/logging";
 import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
-import { AlphaButton, ButtonProps } from "../buttons/AlphaButton";
+import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
 export interface IDialog {
@@ -92,7 +92,7 @@ export const Dialog: FC<
             {(showSaveButton || showCloseButton) && (
                 <div className="flex justify-center border-0 pb-[15px]">
                     {showSaveButton && (
-                        <AlphaButton
+                        <Button
                             data-testid="alpha-dialog-action-button"
                             extraClassStyles="alphaDialog"
                             onClick={handleSaveDialog}
@@ -100,17 +100,17 @@ export const Dialog: FC<
                             {...buttonProps}
                         >
                             {saveButtonText}
-                        </AlphaButton>
+                        </Button>
                     )}
                     {showCloseButton && (
-                        <AlphaButton
+                        <Button
                             data-testid="alpha-dialog-close-button"
                             extraClassStyles="alphaDialog"
                             onClick={handleCloseDialog}
                             {...buttonProps}
                         >
                             {closeButtonText}
-                        </AlphaButton>
+                        </Button>
                     )}
                 </div>
             )}
