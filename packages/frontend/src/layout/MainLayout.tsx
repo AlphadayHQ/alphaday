@@ -1,14 +1,14 @@
 import React from "react";
-import { TUserViewWidget } from "src/api/types";
+// import { TUserViewWidget } from "src/api/types";
 // import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
-import Footer from "./Footer";
+import { Footer } from "@alphaday/ui-kit";
 import Header from "./header/header";
 
 interface IProps {
     hideFooter?: boolean;
     hideFeatures?: boolean;
     toggleWidgetLib?: () => void;
-    layoutState?: TUserViewWidget[][];
+    // layoutState?: TUserViewWidget[][];
     children?: React.ReactNode;
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>
