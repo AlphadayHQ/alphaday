@@ -68,7 +68,6 @@ export const Button: FC<ButtonProps> = ({
             data-testid={testId}
             type="button"
             {...restProps}
-            type="button"
         >
             {children}
         </button>

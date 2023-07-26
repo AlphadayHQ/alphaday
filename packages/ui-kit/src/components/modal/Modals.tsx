@@ -53,7 +53,7 @@ export const Modal = forwardRef<
             <IonContent className="ion-padding">{children}</IonContent>
         </IonModal>
     );
-};
+});
 
 export const ModalHeader: FC<IProps> = ({
     className,
