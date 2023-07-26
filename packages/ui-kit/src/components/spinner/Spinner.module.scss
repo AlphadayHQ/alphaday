@@ -1,0 +1,20 @@
+@keyframes spinner-border {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes spinner-grow {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.animateBorder {
+    animation: spinner-border 0.75s linear infinite;
+}
+.animateGrow {
+    animation: spinner-grow 0.75s linear infinite;
+}

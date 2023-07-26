@@ -1,5 +1,5 @@
-import { FC, useRef } from "react";
-import { IonModal, IonButton, IonContent } from "@ionic/react";
+import { FC, forwardRef } from "react";
+import { IonModal, IonContent } from "@ionic/react";
 import { twMerge } from "tailwind-merge";
 
 export interface IProps {
@@ -12,9 +12,14 @@ export interface IProps {
 
 export interface IModal extends IProps {
     /**
+     * Is the modal open
+     * @default false
+     */
+    showModal?: boolean;
+    /**
      * Id of element to trigger the modal to open.
      */
-    triggerId: string;
+    triggerId?: string;
     /**
      * Modal Sizes
      */
@@ -24,29 +29,31 @@ export interface IModal extends IProps {
      */
     onClose?: () => void;
 }
+/**
+ * This is a modal component uses the triggerId to open the modal.
+ * when an element with the triggerId is clicked, the modal will open.
+ *
+ * Ionic's isOpen: boolean can also be used to open the modal. However it uses a
+ * one-way data binding, so it will not update it's value when the modal closes.
+ * https://ionicframework.com/docs/api/modal#using-isopen
+ */
 
-export const Modal: FC<IModal> = ({
-    className,
-    children,
-    onClose,
-    triggerId,
-}) => {
-    const modal = useRef<HTMLIonModalElement>(null);
-
+export const Modal = forwardRef<
+    HTMLIonModalElement | null,
+    RequireAtLeastOne<IModal, "triggerId" | "showModal">
+>(({ className, children, onClose, triggerId, showModal }, ref) => {
     return (
         <IonModal
-            ref={modal}
+            ref={ref}
             trigger={triggerId}
             onWillDismiss={() => onClose?.()}
             className={className}
+            isOpen={showModal}
         >
-            <IonButton onClick={() => modal.current?.dismiss()}>
-                Cancel
-            </IonButton>
             <IonContent className="ion-padding">{children}</IonContent>
         </IonModal>
     );
-};
+});
 
 export const ModalHeader: FC<IProps> = ({
     className,
@@ -56,8 +63,8 @@ export const ModalHeader: FC<IProps> = ({
     return (
         <div
             className={twMerge(
-                className,
-                "flex items-start justify-between rounded-t-[calc(0.3rem-1px)] p-4"
+                "flex items-start justify-between rounded-t-[calc(0.3rem-1px)] p-4",
+                className
             )}
             {...restProps}
         >
@@ -92,8 +99,8 @@ export const ModalClose: FC<IClose> = ({
         <button
             type="button"
             className={twMerge(
-                className,
-                "text-primary m-auto mb-[-4rem] cursor-pointer appearance-none border-0 bg-transparent px-4 py-4 text-7xl font-light leading-[0.87] opacity-50"
+                "text-primary m-auto mb-[-4rem] cursor-pointer appearance-none border-0 bg-transparent px-4 py-4 text-7xl font-light leading-[0.87] opacity-50",
+                className
             )}
             onClick={onClose}
             {...restProps}
@@ -129,8 +136,8 @@ export const ModalFooter: FC<IProps & { bg?: string }> = ({
     return (
         <div
             className={twMerge(
-                className,
-                "flex flex-wrap items-center justify-end space-x-1 rounded-bl-lg rounded-br-lg border-t border-black px-3 py-3"
+                "flex flex-wrap items-center justify-end space-x-1 rounded-bl-lg rounded-br-lg border-t border-black px-3 py-3",
+                className
             )}
             {...restProps}
         >

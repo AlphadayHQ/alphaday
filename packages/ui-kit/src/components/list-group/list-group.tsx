@@ -38,9 +38,9 @@ export const ListGroup: FC<IListGroup> = ({
     return (
         <ul
             className={twMerge(
-                className,
                 horizontal ? "flex-row" : "flex-col",
-                "flex"
+                "flex",
+                className
             )}
             {...restProps}
         >
@@ -108,7 +108,6 @@ export const ListGroupItem: FC<IListGroupItem> = ({
     return (
         <a
             className={twMerge(
-                className,
                 getListGroupItemClasses({
                     active,
                     disabled,
@@ -116,7 +115,8 @@ export const ListGroupItem: FC<IListGroupItem> = ({
                     flush,
                     horizontal,
                 }),
-                "border-light relative block border bg-transparent p-3 first:border-t-0 last:border-b-0"
+                "border-light relative block border bg-transparent p-3 first:border-t-0 last:border-b-0",
+                className
             )}
             href={href}
             {...restProps}
