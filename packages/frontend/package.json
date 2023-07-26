@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@alphaday/ui-kit": "1.0.0",
+    "@alphaday/shared": "1.0.0",
+    "@alphaday/components": "1.0.0",
     "@ionic/react": "7.1.2",
     "@ionic/react-router": "7.1.2",
     "@reduxjs/toolkit": "1.8.0",
