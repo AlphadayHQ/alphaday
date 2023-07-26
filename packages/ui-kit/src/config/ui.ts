@@ -1,1 +1,1 @@
-const UI_CONFIG = {};
+export const UI_CONFIG = {};

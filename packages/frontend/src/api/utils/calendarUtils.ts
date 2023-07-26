@@ -56,9 +56,10 @@ export const getEventCategoryByColor = (
     return defaultEventCategory;
 };
 
-const assignEventColors: (
-    itemType: string | undefined
-) => { backgroundColor: string; borderColor: string } = (itemType) => {
+const assignEventColors: (itemType: string | undefined) => {
+    backgroundColor: string;
+    borderColor: string;
+} = (itemType) => {
     let colors;
     if (itemType !== undefined) {
         colors = eventColorDict[itemType.toLowerCase()];

@@ -1,9 +1,9 @@
 /* eslint-disable react/button-has-type */
 import { FC } from "react";
+import { ReactComponent as BellSVG } from "src/assets/svg/bell.svg";
 import { ReactComponent as ArrowDown } from "src/assets/svg/chevron-down.svg";
 import { ReactComponent as ArrowLeft } from "src/assets/svg/chevron-left.svg";
 import { ReactComponent as ArrowRight } from "src/assets/svg/chevron-right.svg";
-import { ReactComponent as BellSVG } from "src/assets/svg/bell.svg";
 import { ReactComponent as CloseIconSVG } from "src/assets/svg/closeIcon.svg";
 import { ReactComponent as CloseIcon2SVG } from "src/assets/svg/closeIcon2.svg";
 import { ReactComponent as InfoSVG } from "src/assets/svg/info.svg";
@@ -86,7 +86,7 @@ const iconSelector = (
         default:
             break;
     }
-    return <></>;
+    return null;
 };
 
 export const IconButton: FC<ButtonProps> = ({

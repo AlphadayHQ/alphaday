@@ -19,8 +19,7 @@ import { EToastRole, toast } from "../utils/toastUtils";
 
 const portfolioFeedbackMessages = {
     success: "Your portfolio has been updated successfully",
-    error:
-        "An error occurred and we could not save your portfolio. Please try again later",
+    error: "An error occurred and we could not save your portfolio. Please try again later",
 };
 
 interface IPortfolioAccount {

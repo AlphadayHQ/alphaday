@@ -105,9 +105,8 @@ export const parseAsTweet = (remoteTweet: TRemoteTweet): TTweets => {
         entities: remoteTweet.entities
             ? parseRemoteEntities(remoteTweet.entities)
             : undefined,
-        attachments: remoteTweet?.attachments?.attachments.map(
-            parseRemoteMedia
-        ),
+        attachments:
+            remoteTweet?.attachments?.attachments.map(parseRemoteMedia),
         referencedTweets: remoteTweet.referenced_tweets,
         retweet: referencedTweets?.[0].tweet,
         metrics: parseRemoteMetrics(remoteTweet.public_metrics),
@@ -125,8 +124,8 @@ export const parseRemoteTweetV1 = (
         attachments: {
             media_keys: t.attachments?.media_keys ?? [],
             attachments:
-                r.includes.media?.filter((m) =>
-                    t.attachments?.media_keys?.includes(m.media_key)
+                r.includes.media?.filter(
+                    (m) => t.attachments?.media_keys?.includes(m.media_key)
                 ) ?? [],
         },
         author: r.includes.users.find(

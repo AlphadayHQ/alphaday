@@ -48,4 +48,4 @@ export const CHART_RANGE_OPTIONS = {
     all: "ALL",
 } as const;
 type TRangeKeys = keyof typeof CHART_RANGE_OPTIONS;
-export type TChartRange = typeof CHART_RANGE_OPTIONS[TRangeKeys];
+export type TChartRange = (typeof CHART_RANGE_OPTIONS)[TRangeKeys];

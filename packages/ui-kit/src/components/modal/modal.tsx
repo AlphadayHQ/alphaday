@@ -53,7 +53,7 @@ export const Modal = forwardRef<
             <IonContent className="ion-padding">{children}</IonContent>
         </IonModal>
     );
-});
+};
 
 export const ModalHeader: FC<IProps> = ({
     className,
@@ -130,7 +130,7 @@ export const ModalBody: FC<IProps> = ({
 export const ModalFooter: FC<IProps & { bg?: string }> = ({
     className,
     children,
-    bg,
+    bg: _bg, // TODO: support bg colors
     ...restProps
 }) => {
     return (

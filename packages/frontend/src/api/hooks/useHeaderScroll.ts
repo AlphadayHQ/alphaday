@@ -29,11 +29,12 @@ const useHeaderScroll: () => IHeaderScroll = () => {
     const handleClickScroll = useCallback(
         (scrollRight = false) => {
             const scrollValue = width > 400 ? 300 : 220;
-            if (headerRef)
+            if (headerRef) {
                 headerRef.scrollBy({
                     left: scrollRight ? scrollValue : -scrollValue,
                     behavior: "smooth",
                 });
+            }
         },
         [headerRef, width]
     );
@@ -66,6 +67,7 @@ const useHeaderScroll: () => IHeaderScroll = () => {
         setHeaderRef,
         handleClickScroll,
         hideLeftPan: headerRef?.scrollLeft === 0,
+        /* eslint-disable no-unsafe-optional-chaining */
         hideRightPan: headerRef
             ? headerRef?.scrollLeft + headerRef?.clientWidth >
               headerRef?.scrollWidth - 5

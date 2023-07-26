@@ -77,8 +77,7 @@ const stateV5 = {
                     name: "Cardano",
                     slug: "cardano",
                     ticker: "ADA",
-                    icon:
-                        "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png",
+                    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png",
                     tags: [177],
                 },
             },
@@ -87,8 +86,7 @@ const stateV5 = {
                     name: "Polkadot",
                     slug: "polkadot-new",
                     ticker: "DOT",
-                    icon:
-                        "https://s2.coinmarketcap.com/static/img/coins/64x64/6636.png",
+                    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/6636.png",
                     tags: [142],
                 },
             },
@@ -269,8 +267,7 @@ const stateV12 = {
                     name: "BNB",
                     slug: "bnb",
                     ticker: "BNB",
-                    icon:
-                        "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
+                    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png",
                     tags: [92, 1684, 1627],
                 },
             },

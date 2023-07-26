@@ -344,57 +344,62 @@ export default widgetsSlice.reducer;
  * selectors
  */
 
-export const selectNewsFeedPreference = (widgetHash: string) => (
-    state: RootState
-): EItemFeedPreference | undefined =>
-    state.widgets.news[widgetHash]?.feedPreference;
+export const selectNewsFeedPreference =
+    (widgetHash: string) =>
+    (state: RootState): EItemFeedPreference | undefined =>
+        state.widgets.news[widgetHash]?.feedPreference;
 
-export const selectPodcastFeedPreference = (widgetHash: string) => (
-    state: RootState
-): EItemFeedPreference | undefined =>
-    state.widgets.podcast[widgetHash]?.feedPreference;
+export const selectPodcastFeedPreference =
+    (widgetHash: string) =>
+    (state: RootState): EItemFeedPreference | undefined =>
+        state.widgets.podcast[widgetHash]?.feedPreference;
 
-export const selectPodcastPreferredChannelIds = (widgetHash: string) => (
-    state: RootState
-): number[] | undefined =>
-    state.widgets.podcast[widgetHash]?.preferredChannelIds;
+export const selectPodcastPreferredChannelIds =
+    (widgetHash: string) =>
+    (state: RootState): number[] | undefined =>
+        state.widgets.podcast[widgetHash]?.preferredChannelIds;
 
-export const selectBlogFeedPreference = (widgetHash: string) => (
-    state: RootState
-): EItemFeedPreference | undefined =>
-    state.widgets.blog[widgetHash]?.feedPreference;
+export const selectBlogFeedPreference =
+    (widgetHash: string) =>
+    (state: RootState): EItemFeedPreference | undefined =>
+        state.widgets.blog[widgetHash]?.feedPreference;
 
-export const selectVideoFeedPreference = (widgetHash: string) => (
-    state: RootState
-): EItemFeedPreference | undefined =>
-    state.widgets.video[widgetHash]?.feedPreference;
+export const selectVideoFeedPreference =
+    (widgetHash: string) =>
+    (state: RootState): EItemFeedPreference | undefined =>
+        state.widgets.video[widgetHash]?.feedPreference;
 
-export const selectVideoPreferredChannelIds = (widgetHash: string) => (
-    state: RootState
-): number[] | undefined => state.widgets.video[widgetHash]?.preferredChannelIds;
+export const selectVideoPreferredChannelIds =
+    (widgetHash: string) =>
+    (state: RootState): number[] | undefined =>
+        state.widgets.video[widgetHash]?.preferredChannelIds;
 
-export const selectSelectedDate = (widgetHash: string) => (
-    state: RootState
-): string | undefined => state.widgets.calendar[widgetHash]?.selectedDate;
+export const selectSelectedDate =
+    (widgetHash: string) =>
+    (state: RootState): string | undefined =>
+        state.widgets.calendar[widgetHash]?.selectedDate;
 
-export const selectSelectedCalendarType = (widgetHash: string) => (
-    state: RootState
-): ECalendarType | undefined =>
-    state.widgets.calendar[widgetHash]?.selectedCalendarType;
+export const selectSelectedCalendarType =
+    (widgetHash: string) =>
+    (state: RootState): ECalendarType | undefined =>
+        state.widgets.calendar[widgetHash]?.selectedCalendarType;
 
-export const selectSelectedChartType = (widgetHash: string) => (
-    state: RootState
-): EChartType | undefined =>
-    state.widgets.market[widgetHash]?.selectedChartType;
+export const selectSelectedChartType =
+    (widgetHash: string) =>
+    (state: RootState): EChartType | undefined =>
+        state.widgets.market[widgetHash]?.selectedChartType;
 
-export const selectShowAllAssets = (widgetHash: string) => (
-    state: RootState
-): boolean => !!state.widgets.portfolio[widgetHash]?.showAllAssets;
+export const selectShowAllAssets =
+    (widgetHash: string) =>
+    (state: RootState): boolean =>
+        !!state.widgets.portfolio[widgetHash]?.showAllAssets;
 
-export const selectIsMinimised = (widgetHash: string) => (
-    state: RootState
-): boolean => !!state.widgets.common[widgetHash]?.isMinimised;
+export const selectIsMinimised =
+    (widgetHash: string) =>
+    (state: RootState): boolean =>
+        !!state.widgets.common[widgetHash]?.isMinimised;
 
-export const selectWidgetHeight = (widgetHash: string) => (
-    state: RootState
-): number | undefined => state.widgets.common[widgetHash]?.widgetHeight;
+export const selectWidgetHeight =
+    (widgetHash: string) =>
+    (state: RootState): number | undefined =>
+        state.widgets.common[widgetHash]?.widgetHeight;

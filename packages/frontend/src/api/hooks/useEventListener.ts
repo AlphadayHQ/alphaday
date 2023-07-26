@@ -9,7 +9,7 @@ function useEventListener<K extends keyof WindowEventMap>(
 ): void;
 function useEventListener<
     K extends keyof HTMLElementEventMap,
-    T extends HTMLElement = HTMLDivElement
+    T extends HTMLElement = HTMLDivElement,
 >(
     eventName: K,
     handler: (event: HTMLElementEventMap[K]) => void,
@@ -20,7 +20,7 @@ function useEventListener<
 function useEventListener<
     KW extends keyof WindowEventMap,
     KH extends keyof HTMLElementEventMap,
-    T extends HTMLElement | void = void
+    T extends HTMLElement | void = void,
 >(
     eventName: KW | KH,
     handler: (
@@ -41,8 +41,7 @@ function useEventListener<
         if (
             !(
                 targetElement &&
-                ((targetElement as unknown) as HTMLInputElement)
-                    .addEventListener
+                (targetElement as unknown as HTMLInputElement).addEventListener
             )
         ) {
             return;
@@ -52,7 +51,7 @@ function useEventListener<
         const eventListener: typeof handler = (event) =>
             savedHandler.current(event);
 
-        ((targetElement as unknown) as HTMLInputElement).addEventListener(
+        (targetElement as unknown as HTMLInputElement).addEventListener(
             eventName,
             eventListener
         );
@@ -60,7 +59,7 @@ function useEventListener<
         // Remove event listener on cleanup
         // eslint-disable-next-line consistent-return
         return () => {
-            ((targetElement as unknown) as HTMLInputElement).removeEventListener(
+            (targetElement as unknown as HTMLInputElement).removeEventListener(
                 eventName,
                 eventListener
             );

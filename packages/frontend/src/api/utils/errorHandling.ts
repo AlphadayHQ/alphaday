@@ -11,7 +11,7 @@ export const imgOnError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
 /* eslint-enable no-param-reassign */
 
 export type TErrorId = keyof Omit<
-    typeof globalMessages["error"],
+    (typeof globalMessages)["error"],
     "requestFailed" | "boardHasNoRequiredWidget"
 >;
 export const errorPatterns: Partial<Record<TErrorId, string>> = {
@@ -123,6 +123,7 @@ export const getErrorMessage = (err: unknown): string | undefined => {
 
 export const getRtkErrorCode = (
     error: FetchBaseQueryError | SerializedError
+    // eslint-disable-next-line consistent-return
 ): number | undefined => {
     // @ts-expect-error
     if (error.status !== undefined) {

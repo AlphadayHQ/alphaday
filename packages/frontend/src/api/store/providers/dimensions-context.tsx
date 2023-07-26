@@ -48,7 +48,7 @@ export const DimensionsProvider: FC<{ children?: React.ReactNode }> = ({
 
         const resizeObserver = new ResizeObserver(handleResize);
 
-        const mutationObserver = new MutationObserver(function () {
+        const mutationObserver = new MutationObserver(function Observe() {
             const elem = document.getElementById(WIDGET_SIZE_TRACKING_ID);
             if (elem) {
                 resizeObserver.observe(elem);
@@ -66,12 +66,8 @@ export const DimensionsProvider: FC<{ children?: React.ReactNode }> = ({
         };
     }, []);
     return (
-        <DimensionsContext.Provider
-            value={{
-                widgetsSize,
-                windowSize,
-            }}
-        >
+        // eslint-disable-next-line react/jsx-no-constructed-context-values
+        <DimensionsContext.Provider value={{ widgetsSize, windowSize }}>
             {children}
         </DimensionsContext.Provider>
     );
