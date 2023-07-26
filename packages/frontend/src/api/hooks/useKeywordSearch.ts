@@ -29,17 +29,15 @@ export const useKeywordSearch: () => IKeywordSearch = () => {
     );
     const [searchState, setSearchState] = useState("");
 
-    const {
-        data: keywordsData,
-        isFetching: isFetchingKeywordResults,
-    } = useGetKeywordsListQuery(
-        {
-            search: searchState,
-        },
-        {
-            skip: searchState === "",
-        }
-    );
+    const { data: keywordsData, isFetching: isFetchingKeywordResults } =
+        useGetKeywordsListQuery(
+            {
+                search: searchState,
+            },
+            {
+                skip: searchState === "",
+            }
+        );
     const {
         data: trendingKeywordsData,
         isFetching: isFetchingTrendingKeywordResults,

@@ -10,12 +10,8 @@ import { EWalletEvent, useWalletEvent } from "./useWalletEvent";
 
 export const useGlobalHooks: () => void = () => {
     const { signout, resetWalletConnection, connectWallet } = useWallet();
-    const {
-        authWallet,
-        isAuthenticated,
-        resetAuthState,
-        cleanAuthState,
-    } = useAccount();
+    const { authWallet, isAuthenticated, resetAuthState, cleanAuthState } =
+        useAccount();
 
     const { setWalletEventListener } = useWalletEvent(
         EWalletEvent.AccountChanged,

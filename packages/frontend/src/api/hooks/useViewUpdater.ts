@@ -54,9 +54,8 @@ export const useViewUpdater: () => void = () => {
     });
 
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const [prevIsAuthenticated, setPrevIsAuthenticated] = useState(
-        isAuthenticated
-    );
+    const [prevIsAuthenticated, setPrevIsAuthenticated] =
+        useState(isAuthenticated);
 
     useWalletView();
 
@@ -159,15 +158,14 @@ export const useViewUpdater: () => void = () => {
             dispatch(
                 alphadayApi.util.invalidateTags(["Views", "SubscribedViews"])
             );
-        } else {
+        } else if (!selectedView?.data.is_system_view) {
             /**
              * If user has logged out and the current view is a custom view,
              * we navigate to the root
              */
-            if (!selectedView?.data.is_system_view) {
-                navigate.push("/");
-            }
+            navigate.push("/");
         }
+
         setPrevIsAuthenticated(isAuthenticated);
     }
 

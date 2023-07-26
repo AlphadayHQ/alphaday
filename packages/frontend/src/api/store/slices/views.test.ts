@@ -242,6 +242,7 @@ describe("updateSubscribedViewsCache", () => {
         const viewIds = newSubscribedViews.map((view) => view.id);
 
         // delay the last modified date by 1 second
+        // eslint-disable-next-line no-promise-executor-return
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         const newSubscribedViewsState = viewsReducer(
@@ -388,9 +389,9 @@ describe("selectedViewSelector", () => {
             viewsCache,
             selectedViewId: viewId,
         };
-        const selectedView = selectedViewSelector(({
+        const selectedView = selectedViewSelector({
             views: initialState,
-        } as unknown) as RootState);
+        } as unknown as RootState);
         expect(selectedView).toStrictEqual(viewsCache[viewId]);
     });
 });

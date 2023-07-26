@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import { TTag } from "../types";
 
 // URL might be wrapped in parentheses and end in a dot and or \n.
-export const URL_GLOBAL_REGEX = /\(?(?<url>https?:\/\/[^\s]+[^).\n])\)?\.?\n?/gi;
+export const URL_GLOBAL_REGEX =
+    /\(?(?<url>https?:\/\/[^\s]+[^).\n])\)?\.?\n?/gi;
 
 // exact match (with no sufixes/postfixes)
 export const URL_REGEX = /^https?:\/\/[^\s]*[^.]$/i;
@@ -94,7 +95,8 @@ export const textHasTags = (text: string, tags: TTag[]): boolean =>
 /**
  * Typically used in the function below, when parsing markdown urls
  */
-export const REMARK_URL_REGEX = /https?:\/\/([a-z\d-]+\.)+[a-z\d]{2,}[\w/?&=#%]*/g;
+export const REMARK_URL_REGEX =
+    /https?:\/\/([a-z\d-]+\.)+[a-z\d]{2,}[\w/?&=#%]*/g;
 
 /**
  * Typically used optionally in the function below, when parsing markdown content

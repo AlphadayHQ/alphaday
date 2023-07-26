@@ -71,6 +71,7 @@ export const Carousel: FC<CarouselProps> = ({
             className="overflow-hidden"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
+            role="alertdialog"
         >
             {showPointers && count > 1 && (
                 <div

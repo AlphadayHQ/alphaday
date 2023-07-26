@@ -15,9 +15,11 @@ describe("useAccount", () => {
     });
 
     it("should return the correct account information for disconnected", () => {
-        (useGetUserProfileQuery as jest.MockedFunction<
-            typeof useGetUserProfileQuery
-        >).mockReturnValue({
+        (
+            useGetUserProfileQuery as jest.MockedFunction<
+                typeof useGetUserProfileQuery
+            >
+        ).mockReturnValue({
             data: undefined,
             currentData: undefined,
             error: null,
@@ -25,9 +27,11 @@ describe("useAccount", () => {
             isLoading: false,
             refetch: jest.fn(),
         });
-        (useGetFeaturesQuery as jest.MockedFunction<
-            typeof useGetFeaturesQuery
-        >).mockReturnValue({
+        (
+            useGetFeaturesQuery as jest.MockedFunction<
+                typeof useGetFeaturesQuery
+            >
+        ).mockReturnValue({
             data: undefined,
             currentData: undefined,
             error: null,
@@ -49,9 +53,11 @@ describe("useAccount", () => {
 
     it("should return the correct account information for connected", () => {
         const walletAccount = "0x00589290920";
-        (useGetUserProfileQuery as jest.MockedFunction<
-            typeof useGetUserProfileQuery
-        >).mockReturnValue({
+        (
+            useGetUserProfileQuery as jest.MockedFunction<
+                typeof useGetUserProfileQuery
+            >
+        ).mockReturnValue({
             currentData: {
                 user: {
                     id: 1,
@@ -63,9 +69,11 @@ describe("useAccount", () => {
             isLoading: false,
             refetch: jest.fn(),
         });
-        (useGetFeaturesQuery as jest.MockedFunction<
-            typeof useGetFeaturesQuery
-        >).mockReturnValue({
+        (
+            useGetFeaturesQuery as jest.MockedFunction<
+                typeof useGetFeaturesQuery
+            >
+        ).mockReturnValue({
             data: [
                 {
                     id: 2,

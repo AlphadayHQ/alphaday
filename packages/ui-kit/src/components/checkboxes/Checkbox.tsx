@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import { FC } from "react";
 import { ReactComponent as CheckedSVG } from "src/assets/svg/checked.svg";
 import { ReactComponent as UncheckedSVG } from "src/assets/svg/unchecked.svg";

@@ -46,7 +46,6 @@ export const Modal: FC<IModal> = ({
             <IonContent className="ion-padding">{children}</IonContent>
         </IonModal>
     );
-    
 };
 
 export const ModalHeader: FC<IProps> = ({
@@ -73,10 +72,7 @@ export const ModalTitle: FC<IProps> = ({
     ...restProps
 }) => {
     return (
-        <h6
-            className={twMerge(className, "mb-0 leading-6")}
-            {...restProps}
-        >
+        <h6 className={twMerge(className, "mb-0 leading-6")} {...restProps}>
             {children}
         </h6>
     );
@@ -109,7 +105,6 @@ export const ModalClose: FC<IClose> = ({
     );
 };
 
-
 export const ModalBody: FC<IProps> = ({
     className,
     children,
@@ -128,7 +123,7 @@ export const ModalBody: FC<IProps> = ({
 export const ModalFooter: FC<IProps & { bg?: string }> = ({
     className,
     children,
-    bg,
+    bg: _bg, // TODO: support bg colors
     ...restProps
 }) => {
     return (

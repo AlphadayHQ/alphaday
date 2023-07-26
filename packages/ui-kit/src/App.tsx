@@ -1,7 +1,7 @@
 import { IonDatetime, setupIonicReact } from "@ionic/react";
+import { Arrow } from "./components/arrow/Arrow";
 import { Button } from "./components/buttons/Button";
 import { IconButton } from "./components/buttons/IconButton";
-import { Arrow } from "./components/arrow/Arrow";
 
 setupIonicReact();
 
@@ -11,7 +11,7 @@ function App() {
             <h1 className="text-primary text-lg font-semibold">
                 Vite + React + Ionic + Tailwind
             </h1>
-            <IonDatetime className="mt-10"></IonDatetime>
+            <IonDatetime className="mt-10" />
             <div className="bg-primary m-10 flex flex-col gap-3 p-10">
                 <Button variant="small">Primary</Button>
                 <div className="">

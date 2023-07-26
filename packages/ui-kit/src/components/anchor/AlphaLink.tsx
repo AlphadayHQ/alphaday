@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import { fontVariants } from "../../globalStyles/fontGroups";
-import { twMerge } from "tailwind-merge";
 import { Link } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
+import { fontVariants } from "../../globalStyles/fontGroups";
 
 interface IAnchor {
     path: string;
@@ -41,9 +41,7 @@ const AnchorElement: FC<IAnchor> = ({
         {children}
     </a>
 );
-export const AlphaLink: FC<IAnchor> = ({
-    target, path, ...otherProps
-}) => {
+export const AlphaLink: FC<IAnchor> = ({ target, path, ...otherProps }) => {
     const internal = /^\/(?!\/)/.test(path);
     if (!internal) {
         const isHash = path.startsWith("#");
