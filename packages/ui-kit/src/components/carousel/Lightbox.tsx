@@ -1,5 +1,5 @@
 import { useState, FC, ReactNode } from "react";
-import { Modal } from "../modal/Modals";
+import { Modal } from "../modal/Modal";
 import { Carousel } from "./Carousel";
 
 export interface LightboxProps {

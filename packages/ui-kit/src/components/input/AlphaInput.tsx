@@ -3,7 +3,6 @@ import { ChangeEvent, FC, FocusEvent, MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import Feedback from "../feedback/feedback";
 
-
 interface IInputProps {
     className?: string;
     type?: string;

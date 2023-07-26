@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
-import styles from "./spinner.module.scss"
+import styles from "./spinner.module.scss";
 
 export interface IProps {
     /**
@@ -42,7 +42,6 @@ const variantClasses = {
     grow: `inline-block h-8 w-8 bg-current align-text-bottom opacity-0 ${styles.animateGrow}`,
     border: `inline-block align-text-bottom ${styles.animateBorder} rounded-[50%] border-solid border-current border-r-transparent`,
 };
-
 
 export const Spinner: FC<IProps> = ({
     className,
