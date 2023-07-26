@@ -1,35 +1,42 @@
-/* Core CSS required for Ionic components to work properly */
-import "@ionic/react/css/core.css";
+import { Suspense } from "react";
+import { IonApp } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { Route, Switch } from "react-router-dom";
+import { routes } from "./routes";
+import "@alphaday/ui-kit/global.scss";
 
-/* Basic CSS for apps built with Ionic */
-import "@ionic/react/css/normalize.css";
-import "@ionic/react/css/structure.css";
-import "@ionic/react/css/typography.css";
-
-/* Optional CSS utils that can be commented out */
-import "@ionic/react/css/padding.css";
-import "@ionic/react/css/float-elements.css";
-import "@ionic/react/css/text-alignment.css";
-import "@ionic/react/css/text-transformation.css";
-import "@ionic/react/css/flex-utils.css";
-import "@ionic/react/css/display.css";
-import { Container, Col } from "@alphaday/shared";
-import { Button } from "@alphaday/components";
-
-/* Theme variables */
-import "./theme/variables.css";
-
-const App: React.FunctionComponent = () => {
-  return (
-    <div className="App">
-      <Container>
-        <Col>
-          <Button>Hello Vite!</Button>
-          <div className="ion-padding">test</div>
-        </Col>
-      </Container>
-    </div>
-  );
+/**
+ * The comments below are for notes and should be removed as this app grows.
+ *
+ * Ideally, this app should have truly dynamic routes which react-router-v6 gives us.
+ * However, Ionic's IonRouterOutlet does not support react-router-v6 yet.
+ * As a result, I'm proposing a hybrid approach where we use react-router-v5 to handle routing
+ * But leverage react's in-built features to handle the dynamicity. This would be done by using a unique key
+ * to depose the route and switch to a new one. This is not ideal but it's a workaround for now.
+ *
+ * It is yet to be implemented.
+ */
+const App: React.FC = () => {
+    return (
+        <IonApp>
+            <div className="App">
+                <IonReactRouter>
+                    <Suspense>
+                        <Switch>
+                            {routes.map((route) => (
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    exact={route.exact}
+                                    component={route.component}
+                                />
+                            ))}
+                        </Switch>
+                    </Suspense>
+                </IonReactRouter>
+            </div>
+        </IonApp>
+    );
 };
 
 export default App;

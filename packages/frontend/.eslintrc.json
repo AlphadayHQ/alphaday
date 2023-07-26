@@ -1,0 +1,18 @@
+{
+    "extends": [
+        "../../.eslintrc.json"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "project": "tsconfig.json"
+    },
+    "plugins": [
+        "import"
+    ],
+    "ignorePatterns": [
+        "cypress.config.ts",
+        "cypress"
+    ]
+}

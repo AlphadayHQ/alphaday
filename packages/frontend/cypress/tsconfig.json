@@ -1,0 +1,17 @@
+{
+    "extends": "../../../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "baseUrl": "../",
+        "isolatedModules": false,
+        "module": "ES2015",
+        "target": "ES2015",
+        "types": [
+            "cypress",
+            "@types/node"
+        ]
+    },
+    "include": [
+        "./**/*.ts"
+    ]
+}

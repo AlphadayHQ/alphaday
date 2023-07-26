@@ -1,0 +1,362 @@
+import { EWidgetData } from "src/api/services";
+import { TUserViewWidget } from "src/api/types";
+import { v4 as uuid4 } from "uuid";
+import { EWidgetSettingsRegistry } from "src/constants";
+import { TItem } from "src/types";
+
+export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
+    {
+        id: 1,
+        hash: uuid4(),
+        name: "Widget 1",
+        widget: {
+            id: 1,
+            slug: "test1_table_widget",
+            name: "Widget 1",
+            description: "Widget 1 description",
+            short_description: "Widget 1 short description",
+            icon: "widget-1.png",
+            endpoint_header: {},
+            endpoint_url: null,
+            data_type: EWidgetData.Static,
+            settings: [
+                {
+                    setting: {
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    sort_order: 1,
+                },
+            ],
+            status: 1,
+            template: {
+                id: 1,
+                slug: "table_template",
+                name: "Table Template",
+                icon: "table-template.png",
+                status: 1,
+            },
+            custom_data: {},
+            custom_meta: {},
+            format_structure: {
+                data: [
+                    { name: "John Doe", age: "30" },
+                    { name: "Jane Doe", age: "40" },
+                    { name: "Jack Doe", age: "50" },
+                ],
+                columns: [
+                    {
+                        name: "Name",
+                        field: {
+                            name: "name",
+                            type: "string",
+                        },
+                        column_type: "string",
+                        width: 5,
+                    },
+                    {
+                        name: "Age",
+                        field: {
+                            name: "age",
+                            type: "number",
+                        },
+                        column_type: "number",
+                        width: 5,
+                    },
+                ],
+            },
+            max_per_view: 1,
+            refresh_interval: 1,
+            sort_order: 1,
+            featured: true,
+            hide_in_library: false,
+            categories: [],
+        },
+        settings: [
+            {
+                setting: {
+                    name: "Included Tags",
+                    setting_type: "tags",
+                    slug: EWidgetSettingsRegistry.IncludedTags,
+                },
+                tags: [],
+                toggle_value: false,
+            },
+        ],
+        sort_order: 0,
+    },
+    {
+        id: 2,
+        hash: uuid4(),
+        name: "Widget 2",
+        widget: {
+            id: 1,
+            slug: "test2_table_widget",
+            name: "Widget 2",
+            description: "Widget 2 description",
+            short_description: "Widget 2 short description",
+            icon: "widget-1.png",
+            endpoint_header: {},
+            endpoint_url: null,
+            data_type: EWidgetData.Static,
+            settings: [
+                {
+                    setting: {
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    sort_order: 1,
+                },
+            ],
+            status: 1,
+            template: {
+                id: 1,
+                slug: "table_template",
+                name: "Table Template",
+                icon: "table-template.png",
+                status: 1,
+            },
+            custom_data: {},
+            custom_meta: {},
+            format_structure: {
+                data: [
+                    { job: "Developer", pay: "50.670090" },
+                    { job: "Designer", pay: "60.4500978" },
+                ],
+                columns: [
+                    {
+                        name: "Jobs",
+                        field: {
+                            name: "job",
+                            type: "string",
+                        },
+                        column_type: "string",
+                        width: 5,
+                    },
+                    {
+                        name: "Pay",
+                        field: {
+                            name: "pay",
+                            type: "number",
+                        },
+                        column_type: "decimal",
+                        width: 5,
+                    },
+                ],
+            },
+            max_per_view: 1,
+            refresh_interval: 1,
+            sort_order: 1,
+            featured: true,
+            hide_in_library: false,
+            categories: [],
+        },
+        settings: [
+            {
+                setting: {
+                    name: "Included Tags",
+                    setting_type: "tags",
+                    slug: EWidgetSettingsRegistry.IncludedTags,
+                },
+                tags: [],
+                toggle_value: false,
+            },
+        ],
+        sort_order: 0,
+    },
+];
+
+// v2 of our table widget structure
+export const customTableModuleDataMock: TUserViewWidget[] = [
+    {
+        id: 1,
+        hash: uuid4(),
+        name: "Widget 1",
+        widget: {
+            id: 1,
+            slug: "test1_table_widget",
+            name: "Widget 1",
+            description: "Widget 1 description",
+            short_description: "Widget 1 short description",
+            icon: "widget-1.png",
+            endpoint_header: {},
+            endpoint_url: null,
+            data_type: EWidgetData.Static,
+            settings: [
+                {
+                    setting: {
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    sort_order: 1,
+                },
+            ],
+            status: 1,
+            template: {
+                id: 1,
+                slug: "custom_table_template",
+                name: "Table Template",
+                icon: "table-template.png",
+                status: 1,
+            },
+            custom_data: {
+                items: [
+                    {
+                        category: {
+                            name: "category",
+                            value: "Beginners",
+                            type: "string",
+                        },
+                        link_name: {
+                            name: "link_name",
+                            value: "coinbase.com",
+                            type: "string",
+                        },
+                        exchange_url: {
+                            name: "exchange_url",
+                            value: "http://coinbase.com/",
+                            type: "string",
+                        },
+                        exchange_name: {
+                            name: "exchange_name",
+                            value: "Coinbase",
+                            type: "string",
+                        },
+                    },
+                ],
+            },
+            custom_meta: {
+                layout: {
+                    layout_type: "table",
+                    columns: [
+                        {
+                            title: "Best for",
+                            name: "category",
+                            template: "{{category}}",
+                            format: "plain-text",
+                            width: 1,
+                        },
+                        {
+                            title: "Exchange Name",
+                            name: "exchange_name",
+                            template: "{{exchange_name}}",
+                            format: "plain-text",
+                            width: 1,
+                        },
+                        {
+                            title: "URL",
+                            name: "exchange_url",
+                            template: "{{exchange_url}}",
+                            format: "link",
+                            width: 1,
+                        },
+                    ],
+                },
+            },
+            format_structure: {},
+            max_per_view: 1,
+            refresh_interval: 1,
+            sort_order: 1,
+            featured: true,
+            hide_in_library: false,
+            categories: [],
+        },
+        settings: [
+            {
+                setting: {
+                    name: "Included Tags",
+                    setting_type: "tags",
+                    slug: EWidgetSettingsRegistry.IncludedTags,
+                },
+                tags: [],
+                toggle_value: false,
+            },
+        ],
+        sort_order: 0,
+    },
+    {
+        id: 2,
+        hash: uuid4(),
+        name: "Widget 2",
+        widget: {
+            id: 1,
+            slug: "test2_table_widget",
+            name: "Widget 2",
+            description: "Widget 2 description",
+            short_description: "Widget 2 short description",
+            icon: "widget-1.png",
+            endpoint_header: {},
+            endpoint_url: null,
+            data_type: EWidgetData.Static,
+            settings: [
+                {
+                    setting: {
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    sort_order: 1,
+                },
+            ],
+            status: 1,
+            template: {
+                id: 1,
+                slug: "custom_table_template",
+                name: "Table Template",
+                icon: "table-template.png",
+                status: 1,
+            },
+            custom_data: {
+                items: [
+                    {
+                        job: {
+                            name: "job",
+                            value: "Developer",
+                            type: "string",
+                        },
+                        pay: {
+                            name: "pay",
+                            value: 50.67009,
+                            type: "number",
+                        },
+                    },
+                ],
+            },
+            custom_meta: {
+                layout: {
+                    layout_type: "table",
+                    columns: [
+                        {
+                            title: "Jobs",
+                            name: "jobs",
+                            template: "{{job}}",
+                            format: "plain-text",
+                            width: 1,
+                        },
+                        {
+                            title: "Pay",
+                            name: "pay",
+                            template: "{{pay}}",
+                            format: "decimal",
+                            width: 1,
+                        },
+                    ],
+                },
+            },
+            format_structure: {},
+            max_per_view: 1,
+            refresh_interval: 1,
+            sort_order: 1,
+            featured: true,
+            hide_in_library: false,
+            categories: [],
+        },
+        settings: [
+            {
+                setting: {
+                    name: "Included Tags",
+                    setting_type: "tags",
+                    slug: EWidgetSettingsRegistry.IncludedTags,
+                },
+                tags: [],
+                toggle_value: false,
+            },
+        ],
+        sort_order: 0,
+    },
+];
