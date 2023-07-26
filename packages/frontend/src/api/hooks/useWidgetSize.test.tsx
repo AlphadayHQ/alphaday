@@ -18,6 +18,7 @@ const windowSize = {
 const DimensionsProvider: FC<{ children: React.ReactNode }> = ({
     children,
 }) => (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <DimensionsContext.Provider value={{ widgetsSize, windowSize }}>
         {children}
     </DimensionsContext.Provider>

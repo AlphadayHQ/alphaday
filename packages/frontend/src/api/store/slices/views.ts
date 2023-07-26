@@ -340,6 +340,7 @@ const viewsSlice = createSlice({
                         s.setting.slug === EWidgetSettingsRegistry.IncludedTags
                 );
                 if (tagsSettings === undefined) {
+                    // eslint-disable-next-line no-continue
                     continue;
                 }
                 const widgetTags = tagsSettings.tags;

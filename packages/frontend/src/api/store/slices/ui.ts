@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ECookieChoice, TTutorialTip } from "src/api/types";
 
 // eslint
-type TTheme = any;
+type TTheme = unknown;
 
 export interface ITutorialState {
     showTutorial: boolean | undefined;

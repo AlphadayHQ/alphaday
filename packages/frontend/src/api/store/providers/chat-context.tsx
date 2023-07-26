@@ -102,6 +102,7 @@ export const ChatProvider: FC<{ children?: React.ReactNode }> = ({
     children,
 }) => {
     return (
+        // eslint-disable-next-line react/jsx-no-constructed-context-values
         <ChatContext.Provider value={{ sendMessage, getMessages }}>
             {children}
         </ChatContext.Provider>
