@@ -1,24 +1,23 @@
 import { FC, useState, useRef } from "react";
-// import { alphaBreakpoints } from "@doar/shared/styled";
-import Close2 from "src/assets/svg/close2.svg";
-import MenuMobile from "src/assets/svg/menuMobile.svg";
+import { useWindowSize } from "src/api/hooks";
+import { ReactComponent as Close2 } from "src/assets/alphadayAssets/icons/close2.svg";
+import { ReactComponent as MenuMobile } from "src/assets/alphadayAssets/icons/menuMobile.svg";
+// import { NavTabButton } from "src/components/widgets/tabButtons/NavTabButton";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 // import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
 // import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 // import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 // import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
-import { useWindowSize } from "../../api/hooks";
-import Logo from "../../components/logo";
 
 import {
-    StyledHeader,
-    StyledSearch,
-    StyledLogo,
-    StyleNavbarRight,
-    StyledNavbarElement,
-    StyledWrapper,
-} from "./header.style";
-import { breakpoints } from "../../../globalStyles/breakpoints";
+    HeaderWrapper,
+    Logo,
+    NavTabButton,
+    breakpoints,
+    HeaderNavRight,
+    HeaderNavElement,
+    HeaderNavbar,
+} from "@alphaday/ui-kit";
 
 interface IProps {
     hideFeatures: boolean;
@@ -28,7 +27,7 @@ interface IProps {
         | undefined;
 }
 
-const Header: FC<IProps> = ({
+const LayoutHeader: FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
     setTutFocusElemRef,
@@ -57,24 +56,22 @@ const Header: FC<IProps> = ({
     return (
         <div ref={headerRef}>
             {width >= breakpoints.TwoColMinWidth ? (
-                <StyledWrapper
+                <HeaderWrapper
                     data-testid="header-nav"
-                    $boardsLibOpen={boardsLibOpen}
+                    className={boardsLibOpen ? "static mb-[-110px]" : ""}
                 >
-                    <StyledHeader>
-                        <StyledLogo>
-                            <Logo />
-                        </StyledLogo>
+                    <HeaderNavbar>
+                        <Logo />
                         {!hideFeatures && (
                             <>
-                                <StyledSearch>
-                                    {/* <HeaderSearchContainer /> */}
-                                </StyledSearch>
-                                <StyleNavbarRight style={{ padding: 0 }}>
-                                    <StyledNavbarElement mr={["15px"]}>
+                                {/* <StyledSearch>
+                                    <HeaderSearchContainer />
+                                </StyledSearch> */}
+                                <HeaderNavRight className="p-0">
+                                    <HeaderNavElement className="mr-[15px]">
                                         {/* <SyncIndicatorContainer /> */}
-                                    </StyledNavbarElement>
-                                    <StyledNavbarElement mr={["15px"]}>
+                                    </HeaderNavElement>
+                                    <HeaderNavElement className="mr-[15px]">
                                         <NavTabButton
                                             variant="views"
                                             open={false}
@@ -84,7 +81,7 @@ const Header: FC<IProps> = ({
                                         >
                                             Boards
                                         </NavTabButton>
-                                    </StyledNavbarElement>
+                                    </HeaderNavElement>
                                     <span
                                         ref={(ref) =>
                                             setTutFocusElemRef &&
@@ -92,8 +89,8 @@ const Header: FC<IProps> = ({
                                             setTutFocusElemRef(ref)
                                         }
                                     >
-                                        <StyledNavbarElement>
-                                            <AlphaNavTabButton
+                                        <HeaderNavElement>
+                                            <NavTabButton
                                                 variant="modules"
                                                 open={false}
                                                 uppercase={false}
@@ -101,11 +98,11 @@ const Header: FC<IProps> = ({
                                                 title="Open Widget Library"
                                             >
                                                 Widgets
-                                            </AlphaNavTabButton>
-                                        </StyledNavbarElement>
+                                            </NavTabButton>
+                                        </HeaderNavElement>
                                     </span>
 
-                                    <NotificationDropdownContainer
+                                    {/* <NotificationDropdownContainer
                                         ml={[
                                             "8px",
                                             "15px",
@@ -113,57 +110,58 @@ const Header: FC<IProps> = ({
                                             "15px",
                                             "30px",
                                         ]}
-                                    />
-                                    <StyledNavbarElement
-                                        ml={["8px", "15px", "15px", "15px"]}
-                                        mr={["15px"]}
-                                    >
-                                        <ProfileDropdownContainer />
-                                    </StyledNavbarElement>
-                                </StyleNavbarRight>
+                                    /> */}
+                                    <HeaderNavElement className="oneCol:ml-[15px] ml-[8px] mr-[15px]">
+                                        {/* <ProfileDropdownContainer /> */}
+                                    </HeaderNavElement>
+                                </HeaderNavRight>
                             </>
                         )}
-                    </StyledHeader>
-                    {!hideFeatures && (
+                    </HeaderNavbar>
+                    {/* {!hideFeatures && (
                         <ViewsTabContainer
                             headerRef={headerRef}
                             boardsLibOpen={boardsLibOpen}
                             toggleBoardsLib={toggleBoardsLib}
                             handleMobileOpen={handleMobileOpen}
                         />
-                    )}
-                </StyledWrapper>
+                    )} */}
+                </HeaderWrapper>
             ) : (
-                <StyledWrapper $boardsLibOpen={boardsLibOpen}>
-                    <StyledHeader mobileOpen={mobileOpen}>
-                        <div className="wrap">
-                            <StyledLogo>
-                                <Logo />
-                            </StyledLogo>
+                <HeaderWrapper
+                    className={boardsLibOpen ? "static mb-[-110px]" : ""}
+                >
+                    <HeaderNavbar mobileOpen={mobileOpen}>
+                        <div className="flex w-full flex-row items-center justify-between">
+                            <Logo />
                             {!hideFeatures && (
-                                <StyleNavbarRight>
+                                <HeaderNavRight>
                                     {mobileOpen ? (
                                         <Close2
-                                            style={{ marginTop: "-2px" }}
                                             onClick={handleMobileOpen}
+                                            className="-mt-0.5"
                                         />
                                     ) : (
                                         <MenuMobile
-                                            style={{ marginTop: "-2px" }}
+                                            className="-mt-0.5"
                                             onClick={handleMobileOpen}
                                         />
                                     )}
-                                </StyleNavbarRight>
+                                </HeaderNavRight>
                             )}
                         </div>
                         {mobileOpen && (
-                            <div className="wrap center">
-                                <HeaderSearchContainer />
+                            <div className="mx-2.5 my-auto flex w-full flex-row items-center justify-center">
+                                {/* <HeaderSearchContainer /> */}
                             </div>
                         )}
-                        {mobileOpen && <h3 className="boards">Boards</h3>}
-
                         {mobileOpen && (
+                            <h3 className="twoCol:pl-[15px] twoCol:pb-0 pb-0 pl-3 pr-0 pt-2.5 text-sm">
+                                Boards
+                            </h3>
+                        )}
+
+                        {/* {mobileOpen && (
                             <ViewsTabContainer
                                 mobileOpen
                                 boardsLibOpen={boardsLibOpen}
@@ -171,29 +169,27 @@ const Header: FC<IProps> = ({
                                 headerRef={headerRef}
                                 handleMobileOpen={handleMobileOpen}
                             />
-                        )}
+                        )} */}
 
                         {!hideFeatures && (
-                            <StyleNavbarRight>
-                                {width > alphaBreakpoints.TwoColMinWidth && (
+                            <HeaderNavRight>
+                                {width > breakpoints.TwoColMinWidth && (
                                     <>
-                                        <NotificationDropdownContainer
+                                        {/* <NotificationDropdownContainer
                                             ml={["8px", "1px", "1px", "15px"]}
-                                        />
-                                        <StyledNavbarElement
-                                            ml={["8px", "1px", "1px", "15px"]}
-                                        >
-                                            <ProfileDropdownContainer />
-                                        </StyledNavbarElement>
+                                        /> */}
+                                        <HeaderNavElement className="oneCol:ml-[15px] ml-[8px]">
+                                            {/* <ProfileDropdownContainer /> */}
+                                        </HeaderNavElement>
                                     </>
                                 )}
-                            </StyleNavbarRight>
+                            </HeaderNavRight>
                         )}
-                    </StyledHeader>
-                </StyledWrapper>
+                    </HeaderNavbar>
+                </HeaderWrapper>
             )}
         </div>
     );
 };
 
-export default Header;
+export default LayoutHeader;

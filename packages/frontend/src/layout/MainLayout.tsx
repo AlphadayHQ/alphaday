@@ -2,7 +2,7 @@ import React from "react";
 // import { TUserViewWidget } from "src/api/types";
 // import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
 import { Footer } from "@alphaday/ui-kit";
-import Header from "./header/header";
+import Header from "./LayoutHeader";
 
 interface IProps {
     hideFooter?: boolean;
