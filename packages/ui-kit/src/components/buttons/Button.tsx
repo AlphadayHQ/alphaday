@@ -5,7 +5,10 @@ import { fontVariants } from "../../globalStyles/fontGroups";
 import styles from "./Button.module.scss";
 
 const buttonVariants = tv({
-    base: `${styles.Button} inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-[15px] pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]`,
+    base: twMerge(
+        styles.button,
+        "inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-[15px] pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]"
+    ),
     variants: {
         variant: {
             primaryXL: `box-border h-[54px] border-2 border-solid border-btnRingVariant200 px-[25px] py-4 hover:border-btnRingVariant100 active:bg-btnBackgroundVariant700`,
@@ -39,7 +42,6 @@ type TButtonVariants = VariantProps<typeof buttonVariants>;
 export interface ButtonProps extends TButtonVariants {
     label?: string;
     title?: string;
-    extraClassStyles?: string;
     onClick?: () => MaybeAsync<void>;
     children?: React.ReactNode;
     testId?: string;
@@ -53,7 +55,6 @@ export const Button: FC<ButtonProps> = ({
     uppercase,
     error,
     label,
-    extraClassStyles,
     testId,
     ...restProps
 }) => {
@@ -61,10 +62,7 @@ export const Button: FC<ButtonProps> = ({
         <button
             disabled={disabled}
             aria-label={label}
-            className={twMerge(
-                buttonVariants({ variant, disabled, uppercase, error }),
-                extraClassStyles
-            )}
+            className={buttonVariants({ variant, disabled, uppercase, error })}
             data-testid={testId}
             type="button"
             {...restProps}
