@@ -1,9 +1,7 @@
 import { FC, useState, useRef } from "react";
-import { alphaBreakpoints } from "@doar/shared/styled";
-import { useWindowSize } from "src/api/hooks";
-import { ReactComponent as Close2 } from "src/assets/alphadayAssets/icons/close2.svg";
-import { ReactComponent as MenuMobile } from "src/assets/alphadayAssets/icons/menuMobile.svg";
-import { AlphaNavTabButton } from "src/components/widgets/tabButtons/AlphaNavTabButton";
+// import { alphaBreakpoints } from "@doar/shared/styled";
+import Close2 from "src/assets/svg/close2.svg";
+import MenuMobile from "src/assets/svg/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 // import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
 // import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
@@ -20,6 +18,7 @@ import {
     StyledNavbarElement,
     StyledWrapper,
 } from "./header.style";
+import { breakpoints } from "../../../globalStyles/breakpoints";
 
 interface IProps {
     hideFeatures: boolean;
@@ -57,7 +56,7 @@ const Header: FC<IProps> = ({
 
     return (
         <div ref={headerRef}>
-            {width >= alphaBreakpoints.TwoColMinWidth ? (
+            {width >= breakpoints.TwoColMinWidth ? (
                 <StyledWrapper
                     data-testid="header-nav"
                     $boardsLibOpen={boardsLibOpen}
@@ -69,14 +68,14 @@ const Header: FC<IProps> = ({
                         {!hideFeatures && (
                             <>
                                 <StyledSearch>
-                                    <HeaderSearchContainer />
+                                    {/* <HeaderSearchContainer /> */}
                                 </StyledSearch>
                                 <StyleNavbarRight style={{ padding: 0 }}>
                                     <StyledNavbarElement mr={["15px"]}>
-                                        <SyncIndicatorContainer />
+                                        {/* <SyncIndicatorContainer /> */}
                                     </StyledNavbarElement>
                                     <StyledNavbarElement mr={["15px"]}>
-                                        <AlphaNavTabButton
+                                        <NavTabButton
                                             variant="views"
                                             open={false}
                                             uppercase={false}
@@ -84,7 +83,7 @@ const Header: FC<IProps> = ({
                                             title="Open Boards Library"
                                         >
                                             Boards
-                                        </AlphaNavTabButton>
+                                        </NavTabButton>
                                     </StyledNavbarElement>
                                     <span
                                         ref={(ref) =>
