@@ -1,7 +1,7 @@
 {
   "name": "@alphaday/components",
   "private": true,
-  "version": "1.0.0",
+  "version": "0.0.0",
   "type": "module",
   "main": "main.ts",
   "scripts": {
@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@alphaday/shared": "1.0.0",
+    "@alphaday/shared": "0.0.0",
     "@react-google-maps/api": "2.18.1",
     "@south-paw/react-vector-maps": "3.1.0",
     "apexcharts": "3.26.0",
