@@ -1,8 +1,6 @@
+import { TTheme } from "@alphaday/shared/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ECookieChoice, TTutorialTip } from "src/api/types";
-
-// eslint
-type TTheme = unknown;
 
 export interface ITutorialState {
     showTutorial: boolean | undefined;

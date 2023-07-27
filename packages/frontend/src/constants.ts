@@ -76,4 +76,5 @@ export enum ETemplateNameRegistry {
     Uniswap = "UNISWAP",
     VenueMap = "VENUE",
     Video = "VIDEO",
+    Sample = "SAMPLE",
 }
