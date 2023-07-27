@@ -12,6 +12,10 @@ export default {
             ...deviceBreakpoints,
             tiny: { max: deviceBreakpoints.tiny }, // tailwind defaults to min-width. This means @media (max-width: tiny) { ... }
         },
+        fontFamily: {
+            sans: '"Open sans", sans-serif',
+            montserrat: '"Montserrat", "Helvetica Neue", Helvetica, Verdana',
+        },
     },
     plugins: [typography],
 };
