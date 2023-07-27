@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import { alphadayColors } from "./src/globalStyles/colors";
-import { deviceBreakpoints } from "./src/globalStyles/breakpoints";
+import { breakpoints, tailwindBreakpoints } from "./src/globalStyles/breakpoints";
 import typography from "@tailwindcss/typography";
 
 export default {
@@ -8,9 +8,10 @@ export default {
     theme: {
         extend: {},
         colors: alphadayColors,
+
         screens: {
-            ...deviceBreakpoints,
-            tiny: { max: deviceBreakpoints.tiny }, // tailwind defaults to min-width. This means @media (max-width: tiny) { ... }
+            ...tailwindBreakpoints,
+            tiny: { max: tailwindBreakpoints.tiny }, // tailwind defaults to min-width. This means @media (max-width: tiny) { ... }
         },
         fontFamily: {
             sans: '"Open sans", sans-serif',
