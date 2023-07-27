@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import Vitest from "vitest"
+import Vitest from "vitest";
 import useEventListener from "./useEventListener";
 
 describe("useEventListener", () => {

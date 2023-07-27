@@ -1,9 +1,8 @@
-
 declare global {
     export type MaybeAsync<T> = T | Promise<T>;
     /**
      * RequireAtLeastOne, is used to enforce a condition on a type T such that at least one of the properties in T is required.
-     * 
+     *
      * RequireAtLeastOne<T, Keys extends keyof T = keyof T> takes two type parameters, T and Keys. T is any type, while Keys is a set of keys from T.
      * By default, Keys extends from keyof T, which means it includes all keys of T.
      *

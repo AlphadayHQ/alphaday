@@ -29,7 +29,8 @@
     "plugins": [
         "@typescript-eslint",
         "prettier",
-        "jsx-a11y"
+        "jsx-a11y",
+        "react-refresh"
     ],
     "rules": {
         "prefer-const": "error",
