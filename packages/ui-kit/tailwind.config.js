@@ -17,6 +17,10 @@ export default {
             sans: '"Open sans", sans-serif',
             montserrat: '"Montserrat", "Helvetica Neue", Helvetica, Verdana',
         },
+        fontFamily: {
+            sans: '"Open sans", sans-serif',
+            montserrat: '"Montserrat", "Helvetica Neue", Helvetica, Verdana',
+        },
     },
     plugins: [typography],
 };
