@@ -1,5 +1,5 @@
 import { FC } from "react";
-import  CloseSVG from "src/assets/alphadayAssets/icons/close.svg";
+import CloseSVG from "src/assets/alphadayAssets/icons/close.svg";
 import ViewsSVG from "src/assets/alphadayAssets/icons/views.svg";
 import WidgetsSVG from "src/assets/alphadayAssets/icons/widgets.svg";
 import { TabButton } from "./TabButton";
@@ -15,7 +15,7 @@ interface ButtonProps {
     children?: React.ReactNode;
 }
 
-export const AlphaNavTabButton: FC<ButtonProps> = ({
+export const NavTabButton: FC<ButtonProps> = ({
     children,
     variant,
     open,
@@ -49,7 +49,7 @@ export const AlphaNavTabButton: FC<ButtonProps> = ({
     );
 };
 
-AlphaNavTabButton.defaultProps = {
+NavTabButton.defaultProps = {
     open: false,
     disabled: false,
     uppercase: true,
