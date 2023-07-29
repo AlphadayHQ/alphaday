@@ -47,6 +47,7 @@ export const fontUtilities = {
     },
 };
 
+// TODO replace all instances of fontVariants with fontUtilities
 export const fontVariants = tv({
     variants: {
         variant: {
