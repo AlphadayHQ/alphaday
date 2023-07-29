@@ -1,5 +1,5 @@
 import { FC } from "react";
-import CloseSVG from "src/assets/alphadayAssets/icons/close3.svg";
+import {ReactComponent as CloseSVG} from "src/assets/alphadayAssets/icons/close3.svg";
 import styles from "./Button.module.scss";
 import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
@@ -54,6 +54,7 @@ export interface ButtonProps extends TButtonVariants {
     onClick?: () => MaybeAsync<void>;
     onClose?: () => MaybeAsync<void>;
     children?: React.ReactNode;
+    className?: string;
 }
 
 export const TabButton: FC<ButtonProps> = ({
@@ -65,18 +66,19 @@ export const TabButton: FC<ButtonProps> = ({
     label,
     onClose,
     title,
+    className,
     ...restProps
 }) => {
     const isDisabled = open ? false : disabled;
     return (
         <button
             disabled={isDisabled}
-            className={buttonVariants({
+            className={twMerge(buttonVariants({
                 variant,
                 disabled: isDisabled,
                 uppercase,
                 open,
-            })}
+            }), className)}
             aria-label={label}
             name={title}
             {...restProps}
