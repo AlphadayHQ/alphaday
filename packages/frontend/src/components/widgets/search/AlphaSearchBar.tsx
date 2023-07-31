@@ -171,7 +171,9 @@ export const AlphaSearchBar = <T,>({
         actionType: ActionMeta<T>
     ) => {
         onChange(e, actionType);
-        if (updateSearch) setSearchValues([...e]);
+        if (updateSearch) {
+            setSearchValues([...e]);
+        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -184,7 +186,9 @@ export const AlphaSearchBar = <T,>({
         (value: string, meta: InputActionMeta) => {
             if (["input-blur", "menu-close"].indexOf(meta.action) === -1) {
                 setInputValue(value);
-                if (onInputChange) onInputChange(value);
+                if (onInputChange) {
+                    onInputChange(value);
+                }
                 return value;
             }
             return inputValue;

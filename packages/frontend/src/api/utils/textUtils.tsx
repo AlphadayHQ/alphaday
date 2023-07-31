@@ -33,8 +33,9 @@ export const truncateWithEllipsis = (
     const maxLen = count !== undefined ? count : 12;
 
     if (text.length > maxLen) {
-        if (ellipsisPos === "end")
+        if (ellipsisPos === "end") {
             return `${text.substr(0, Math.floor(maxLen))}...`;
+        }
         return `${text.substr(0, Math.floor(maxLen / 2))}...${text.substr(
             text.length - Math.floor(maxLen / 2)
         )}`;

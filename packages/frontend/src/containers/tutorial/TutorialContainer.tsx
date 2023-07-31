@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 // import { breakpoints } from "@alphaday/shared/styled";
-import { useAvailableViews, /* useWindowSize */ } from "src/api/hooks";
+import { useAvailableViews /* useWindowSize */ } from "src/api/hooks";
 import { useTutorial } from "src/api/hooks/useTutorial";
 // import Tutorial from "src/components/tutorial/Tutorial";
 import CONFIG from "src/config/config";
