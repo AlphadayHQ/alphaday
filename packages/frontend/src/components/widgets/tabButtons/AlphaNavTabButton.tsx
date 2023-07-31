@@ -7,7 +7,7 @@ import { AlphaTabButton } from "./AlphaTabButton";
 
 interface ButtonProps {
     variant: "views" | "modules";
-    open: boolean;
+    open?: boolean;
     disabled?: boolean;
     uppercase?: boolean;
     label?: string;
@@ -27,7 +27,7 @@ export const AlphaNavTabButton: FC<ButtonProps> = ({
 }) => {
     return (
         <AlphaTabButton
-            open={open}
+            open={!!open}
             disabled={disabled}
             uppercase={uppercase}
             aria-label={label}

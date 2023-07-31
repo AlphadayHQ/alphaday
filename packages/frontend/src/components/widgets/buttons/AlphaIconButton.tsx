@@ -1,8 +1,8 @@
 /* eslint-disable react/button-has-type */
 import { FC } from "react";
-import { ReactComponent as ArrowDown } from "../../../assets/alphadayAssets/icons/chevron-down.svg";
-import { ReactComponent as ArrowLeft } from "../../../assets/alphadayAssets/icons/chevron-left.svg";
-import { ReactComponent as ArrowRight } from "../../../assets/alphadayAssets/icons/chevron-right.svg";
+import { ReactComponent as ArrowDown } from "../../../assets/icons/chevron-down.svg";
+import { ReactComponent as ArrowLeft } from "../../../assets/icons/chevron-left.svg";
+import { ReactComponent as ArrowRight } from "../../../assets/icons/chevron-right.svg";
 import { ReactComponent as BellSVG } from "../../../assets/svg/bell.svg";
 import { ReactComponent as CloseIconSVG } from "../../../assets/svg/closeIcon.svg";
 import { ReactComponent as CloseIcon2SVG } from "../../../assets/svg/closeIcon2.svg";
@@ -14,7 +14,7 @@ import { ReactComponent as UserSVG } from "../../../assets/svg/user.svg";
 import { StyledButton, TVariant } from "./AlphaIconButton.style";
 
 export interface ButtonProps {
-    variant: TVariant;
+    variant?: TVariant;
     disabled?: boolean;
     label?: string;
     title?: string;
@@ -56,11 +56,11 @@ const iconSelector = (variant: TVariant) => {
         default:
             break;
     }
-    return <></>;
+    return null;
 };
 
 export const AlphaIconButton: FC<ButtonProps> = ({
-    variant,
+    variant = "info",
     disabled,
     label,
     children,
@@ -97,7 +97,6 @@ export const AlphaIconStarButton: FC<StarProps> = ({
 };
 
 AlphaIconButton.defaultProps = {
-    variant: "info",
     disabled: false,
     label: "button",
 };

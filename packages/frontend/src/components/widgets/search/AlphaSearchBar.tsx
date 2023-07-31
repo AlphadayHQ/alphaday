@@ -70,8 +70,9 @@ const CustomMenuList = (showTrending: boolean) => {
 const CustomOption = <Option,>(
     props: OptionProps<Option, true, GroupBase<Option>>
 ) => {
+    const { label } = props;
     return (
-        <div data-testid={`searchbar-option-${slugify(props.label)}`}>
+        <div data-testid={`searchbar-option-${slugify(label)}`}>
             <Option {...props} />
         </div>
     );
@@ -101,8 +102,6 @@ export interface ISearchProps<Option = unknown> {
     options?: Option[];
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
-    uppercase?: boolean;
-    label?: string;
     placeholder: string;
     initialInputValue?: string;
     initialSearchValues: Option[];

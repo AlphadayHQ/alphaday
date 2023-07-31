@@ -317,6 +317,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                     tag_type: ETag.Local, // default all pinned coins to local
                                 })
                             );
+                            /* eslint-disable react/no-unstable-nested-components */
                             return (
                                 <TagsOptions
                                     key={setting.slug}

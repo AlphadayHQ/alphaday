@@ -5,7 +5,7 @@ import { StyledButton } from "./AlphaTabButton.style";
 
 export interface ButtonProps {
     variant?: "primary" | "small" | "extraSmall" | "transparent" | "removable";
-    open: boolean;
+    open?: boolean;
     disabled?: boolean;
     uppercase?: boolean;
     label?: string;
