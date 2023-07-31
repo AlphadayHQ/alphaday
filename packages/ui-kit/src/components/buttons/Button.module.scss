@@ -1,6 +1,4 @@
-@value fontGroup-highlight from "src/globalStyles/fontGroups.scss";
-
-.Button {
+.button {
     outline: 0;
     transition:
         color 0.15s ease-in-out,
@@ -12,7 +10,6 @@
     &:focus {
         outline: none;
     }
-    composes: fontGroup-highlight;
     border-color: var(--btnRingVariant100);
     color: var(--primary);
     background-color: var(--btnBackgroundVariant100);
@@ -30,6 +27,7 @@
         border-color: var(--btnRingVariant200);
         pointer-events: none;
     }
+    @apply fontGroup-highlight;
 }
 
 .collapseButton {
@@ -236,5 +234,83 @@
     }
     &.disabled {
         opacity: 0.2;
+    }
+}
+
+.tabsButtonBase {
+    outline: 0;
+    transition:
+        color 0.15s ease-in-out,
+        background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out,
+        box-shadow 0.15s ease-in-out;
+
+    .tabButton {
+        fill: var(--primary);
+        margin-right: 6px;
+        width: 10px;
+        height: 10px;
+        align-self: center;
+    }
+
+    .close {
+        align-self: center;
+        margin-left: 3.5px;
+        width: 7px;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+    &:hover {
+        background-color: var(--btnBackgroundVariant1000);
+    }
+    &:active {
+        background-color: var(--btnBackgroundVariant300);
+    }
+}
+
+.tabsButtonTransparent {
+    .close {
+        padding-right: 7px;
+        width: 13.5px;
+        cursor: pointer;
+    }
+}
+
+.tabsButtonRemovable {
+    .close {
+        padding-left: 3px;
+        padding-right: 9px;
+        width: 18.5px;
+        cursor: pointer;
+    }
+}
+
+.tabsButtonDisabled {
+    color: var(--primaryVariant300);
+    pointer-events: none;
+    .tabButton {
+        fill: var(--primaryVariant300);
+        stroke: var(--primaryVariant300);
+    }
+}
+
+.tabsButtonOpen {
+    &.small {
+        color: var(--primary);
+        border-color: var(--btnBackgroundVariant1400);
+        background-color: var(--btnBackgroundVariant1500);
+    }
+    &.extraSmall {
+        border-color: var(--btnBackgroundVariant1400);
+        background-color: var(--btnBackgroundVariant1500);
+    }
+    .tabButton {
+        fill: var(--primary);
+        stroke: var(--primary);
+        pointer-events: auto;
     }
 }
