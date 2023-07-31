@@ -12,7 +12,7 @@ const API_V0 = {
     DEFAULT_PARAMS: {
         RESPONSE_LIMIT: 20,
     },
-    API_BASE_URL: process.env.REACT_APP_API_BASE_URL,
+    API_BASE_URL: import.meta.env.REACT_APP_API_BASE_URL,
     ROUTES: {
         NEWS: {
             BASE: "items/news",

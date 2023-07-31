@@ -5,7 +5,6 @@ import {
   useJsApiLoader,
   Marker as MarkerComponent,
 } from "@react-google-maps/api";
-import { MapKey } from "@alphaday/shared/data";
 import { Spinner } from "../../ui/spinner/spinner";
 import { StyledMap } from "./style";
 
@@ -40,7 +39,7 @@ export const GoogleMap: FC<IProps> = ({
 }) => {
   const { isLoaded, loadError } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: MapKey,
+    googleMapsApiKey: "AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY",
   });
   if (loadError) {
     return <div>Map cannot be loaded right now, sorry.</div>;

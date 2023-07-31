@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close3.svg";
+import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { StyledButton } from "./AlphaTabButton.style";
 
 export interface ButtonProps {

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { TBaseTag } from "src/api/services";
 import { TUserViewWidget } from "src/api/types";
-import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close3.svg";
+import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { AlphaTabButton } from "src/components/widgets/tabButtons/AlphaTabButton";
 import { StyledModuleHeader, StyledModuleTitle } from "./BaseContainer.style";
 import BaseContainerMenu from "./BaseContainerMenu";

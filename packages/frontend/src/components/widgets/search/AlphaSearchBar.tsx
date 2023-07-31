@@ -16,7 +16,7 @@ import Select, {
     OptionProps,
 } from "react-select";
 import { slugify } from "src/api/utils/textUtils";
-import { ReactComponent as HotSVG } from "src/assets/alphadayAssets/icons/hot.svg";
+import { ReactComponent as HotSVG } from "src/assets/icons/hot.svg";
 import { useAppSelector } from "../../../api/store/hooks";
 import {
     StyledCustomPlaceholder,

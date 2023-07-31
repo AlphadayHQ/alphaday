@@ -2,12 +2,12 @@ import { FC, useMemo, useState } from "react";
 import { themes } from "@alphaday/shared/styled";
 import { useLayer } from "react-laag";
 import { useAppSelector } from "src/api/store/hooks";
-import { ReactComponent as CameraSVG } from "src/assets/alphadayAssets/icons/camera.svg";
-import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close.svg";
-import { ReactComponent as InfoSVG } from "src/assets/alphadayAssets/icons/info.svg";
-import { ReactComponent as MaximizeSVG } from "src/assets/alphadayAssets/icons/maximize.svg";
-import { ReactComponent as MinimizeSVG } from "src/assets/alphadayAssets/icons/minimize.svg";
-import { ReactComponent as SettingsSVG } from "src/assets/alphadayAssets/icons/settings.svg";
+import { ReactComponent as CameraSVG } from "src/assets/icons/camera.svg";
+import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
+import { ReactComponent as InfoSVG } from "src/assets/icons/info.svg";
+import { ReactComponent as MaximizeSVG } from "src/assets/icons/maximize.svg";
+import { ReactComponent as MinimizeSVG } from "src/assets/icons/minimize.svg";
+import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 
 import UI_CONFIG from "src/config/ui";
 import {

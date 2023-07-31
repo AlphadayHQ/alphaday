@@ -13,7 +13,7 @@ export const useGaTracker = (): void => {
     const { allowTracking } = useCookieChoice();
 
     if (CONFIG.IS_PROD && allowTracking && !isInitialized) {
-        const MEASUREMENT_ID = process.env.REACT_APP_GA_MEASUREMENT_ID;
+        const MEASUREMENT_ID = import.meta.env.REACT_APP_GA_MEASUREMENT_ID;
         if (MEASUREMENT_ID) {
             ReactGA.initialize(MEASUREMENT_ID);
             isInitialized = true;

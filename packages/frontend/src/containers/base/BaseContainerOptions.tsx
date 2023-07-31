@@ -25,9 +25,9 @@ import {
     TBaseEntity,
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
-import { ReactComponent as PinSVG } from "src/assets/alphadayAssets/icons/pin.svg";
-import { ReactComponent as PinnedSVG } from "src/assets/alphadayAssets/icons/pinned.svg";
-import { ReactComponent as TrashSVG } from "src/assets/alphadayAssets/icons/trash.svg";
+import { ReactComponent as PinSVG } from "src/assets/icons/pin.svg";
+import { ReactComponent as PinnedSVG } from "src/assets/icons/pinned.svg";
+import { ReactComponent as TrashSVG } from "src/assets/icons/trash.svg";
 import ScrollBar from "src/components/scrollbar";
 import { AlphaButton } from "src/components/widgets/buttons/AlphaButton";
 import { AlphaSearchBar } from "src/components/widgets/search/AlphaSearchBar";

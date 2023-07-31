@@ -20,13 +20,11 @@ interface IModuleWrapper {
     rowIndex: number;
     colIndex: number;
     moduleData: TUserViewWidget;
-    preferredDragTutorialWidget: number[] | undefined;
-    fullSizeWidgetConfig:
-        | {
-              slug: TTemplateSlug;
-              hash: string | undefined;
-          }
-        | undefined;
+    preferredDragTutorialWidget?: number[];
+    fullSizeWidgetConfig?: {
+        slug: TTemplateSlug;
+        hash: string | undefined;
+    };
 }
 
 const ModuleWrapper: FC<IModuleWrapper> = ({
@@ -43,7 +41,9 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     const templateSlug = moduleData.widget.template.slug;
     const widgetName = getWidgetName(templateSlug);
 
-    const { ADJUSTABLE = true } = widgetName ? CONFIG.WIDGETS[widgetName] : {};
+    const { ADJUSTABLE = true } = widgetName
+        ? CONFIG.WIDGETS[widgetName] ?? {}
+        : {};
     const [isAdjustable, setIsAdjustable] = useState(ADJUSTABLE);
 
     const handleAdjustable = useCallback(

@@ -1,8 +1,8 @@
 /* eslint-disable react/button-has-type */
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close.svg";
-import { ReactComponent as ViewsSVG } from "src/assets/alphadayAssets/icons/views.svg";
-import { ReactComponent as WidgetsSVG } from "src/assets/alphadayAssets/icons/widgets.svg";
+import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
+import { ReactComponent as ViewsSVG } from "src/assets/icons/views.svg";
+import { ReactComponent as WidgetsSVG } from "src/assets/icons/widgets.svg";
 import { AlphaTabButton } from "./AlphaTabButton";
 
 interface ButtonProps {

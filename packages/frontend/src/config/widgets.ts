@@ -191,6 +191,9 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 600,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Sample]: {
+        ADJUSTABLE: false,
+    },
 } as const;
 
 export default WIDGETS_CONFIG;

@@ -1,5 +1,5 @@
 const SampleContainer = () => {
-    return <>Hello Alphaday</>;
+    return <>Hello Alphaday from Sample Widget</>;
 };
 
 export default SampleContainer;

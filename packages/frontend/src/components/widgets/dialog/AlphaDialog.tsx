@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useKeyPress } from "src/api/hooks";
 import { Logger } from "src/api/utils/logging";
-import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close3.svg";
+import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { AlphaButton, ButtonProps } from "../buttons/AlphaButton";
 
 import {
