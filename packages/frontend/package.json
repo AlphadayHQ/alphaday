@@ -41,7 +41,7 @@
     "react-redux": "8.0.2",
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
-    "react-select": "5.7.4",
+    "react-select": "5.4.0",
     "redux-persist": "6.0.0",
     "remark-breaks": "3.0.3",
     "unist-util-visit": "5.0.0",

@@ -1,4 +1,16 @@
 import { FC, useRef, useState } from "react";
+import {
+    BaseModuleBody,
+    BaseModuleHeader,
+    BaseModuleOptionsFooter,
+    BaseModuleWrapper,
+    ScrollBar,
+    SearchBar,
+    TabButton,
+    themes,
+} from "@alphaday/ui-kit";
+import { ReactComponent as PinSVG } from "@alphaday/ui-kit/src/assets/svg/pin.svg";
+import { ReactComponent as PinnedSVG } from "@alphaday/ui-kit/src/assets/svg/pinned.svg";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import {
     components,
@@ -25,22 +37,7 @@ import {
     TBaseEntity,
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
-import { ReactComponent as PinSVG } from "src/assets/icons/pin.svg";
-import { ReactComponent as PinnedSVG } from "src/assets/icons/pinned.svg";
-import { ReactComponent as TrashSVG } from "src/assets/icons/trash.svg";
-import ScrollBar from "src/components/scrollbar";
-import { AlphaButton } from "src/components/widgets/buttons/AlphaButton";
-import { AlphaSearchBar } from "src/components/widgets/search/AlphaSearchBar";
-import { AlphaTabButton } from "src/components/widgets/tabButtons/AlphaTabButton";
 import { EWidgetSettingsRegistry } from "src/constants";
-import {
-    StyledModuleWrapper,
-    StyledModuleHeader,
-    StyledModuleBody,
-    StyledModuleTitle,
-    StyledModuleFooter,
-    StyledSvgWrapper,
-} from "./BaseContainer.style";
 import BaseContainerMenu from "./BaseContainerMenu";
 
 interface IBaseContainerOptions {
@@ -83,9 +80,9 @@ const CoinOption: FC<OptionProps<TOptions, true> & { coins?: TCoin[] }> = ({
     const isPinned = !!coins?.find((coin) => coin.id === props.data.value);
     return (
         <components.Option {...props}>
-            <StyledSvgWrapper>
+            <div className="mr-2 [&>svg]:h-2.5">
                 {isPinned ? <PinnedSVG /> : <PinSVG />}
-            </StyledSvgWrapper>
+            </div>
             {children}
         </components.Option>
     );
@@ -119,10 +116,13 @@ const TagsOptions: FC<ITagsOptions> = ({
                 )
         );
 
+    // TODO remove hardcoded theme
+    const { colors } = themes.dark;
+
     return (
         <div key={setting.slug} className="setting" title={title}>
-            <div className="setting-title">{setting.name}:</div>
-            <AlphaSearchBar
+            <div className="mb-2.5">{setting.name}:</div>
+            <SearchBar
                 initialInputValue={searchState}
                 options={searchState ? options : undefined}
                 updateSearch={false}
@@ -131,13 +131,9 @@ const TagsOptions: FC<ITagsOptions> = ({
                 onInputChange={setSearchState}
                 placeholder={placeholder}
                 onChange={(keywords) => {
-                    if (!keywords || keywords.length === 0) {
-                        return;
-                    }
+                    if (!keywords || keywords.length === 0) return;
                     const [{ tag }] = keywords;
-                    if (!tag) {
-                        return;
-                    }
+                    if (!tag) return;
                     if ("tag" in tag) {
                         onIncludeTag(tag.tag);
                     } else {
@@ -145,15 +141,15 @@ const TagsOptions: FC<ITagsOptions> = ({
                     }
                     setSearchState("");
                 }}
-                customStyles={(theme) => ({
+                customStyles={() => ({
                     container: {
                         maxWidth: "300px",
                     },
                     control: {
                         padding: "0 10px",
                         backgroundColor: disabled
-                            ? theme?.colors?.backgroundVariant800
-                            : theme?.colors?.backgroundVariant400,
+                            ? colors.backgroundVariant800
+                            : colors.backgroundVariant400,
                     },
                     menuList: {
                         maxHeight: "100px",
@@ -168,7 +164,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                 customComponents={customComponents}
                 disabled={disabled}
             />
-            <div className="searchTags">
+            <div className="m-2.5">
                 {tags.map((tag) => (
                     <span
                         role="button"
@@ -178,18 +174,21 @@ const TagsOptions: FC<ITagsOptions> = ({
                             e.stopPropagation(); // Doing this on StyledButton doesn't work.
                         }}
                         className={
-                            tag.tag_type === ETag.Local ? "persisted" : ""
+                            tag.tag_type === ETag.Local
+                                ? "[&>*]:text-secondaryOrange50 opacity-90"
+                                : ""
                         }
                     >
-                        <AlphaTabButton
+                        <TabButton
                             variant="transparent"
+                            className="[&>.close]:stroke-secondaryOrange100"
                             open={false}
                             onClose={() => {
                                 onRemoveTag(tag.id);
                             }}
                         >
                             {tag.name}
-                        </AlphaTabButton>
+                        </TabButton>
                     </span>
                 ))}
             </div>
@@ -226,17 +225,17 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
     const footerHeight = footerWrapRef.current?.clientHeight ?? 0;
 
     return (
-        <StyledModuleWrapper
-            className={`flip ${!showSettings ? "flipped" : ""}`}
-            $height={
+        <BaseModuleWrapper
+            height={
                 widgetHeight < headerHeight + footerHeight
                     ? headerHeight + footerHeight
                     : widgetHeight
             }
+            showSettings={showSettings}
         >
             <div ref={headerRef} {...dragProps}>
-                <StyledModuleHeader>
-                    <div className="header">
+                <BaseModuleHeader>
+                    <div className="flex w-full items-center justify-between">
                         <div
                             role="button"
                             tabIndex={0}
@@ -244,11 +243,11 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                 toggleSettings();
                                 toggleCollapse();
                             }}
-                            className="wrap"
+                            className="flex h-[inherit] w-full pb-0.5"
                         >
-                            <StyledModuleTitle>
+                            <h6 className="text-primaryVariant100 fontGroup-highlight m-0 inline-flex uppercase">
                                 {widgetTitle} OPTIONS
-                            </StyledModuleTitle>
+                            </h6>
                         </div>
                         <BaseContainerMenu
                             widgetDescription={widget.description}
@@ -271,10 +270,10 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                             removeWidget={removeWidget}
                         />
                     </div>
-                </StyledModuleHeader>
+                </BaseModuleHeader>
             </div>
-            <StyledModuleBody>
-                <ScrollBar className="settings">
+            <BaseModuleBody>
+                <ScrollBar className="shrink p-[15px]">
                     {settings?.map((group) => {
                         const { setting, tags } = group;
                         if (
@@ -317,7 +316,6 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                     tag_type: ETag.Local, // default all pinned coins to local
                                 })
                             );
-                            /* eslint-disable react/no-unstable-nested-components */
                             return (
                                 <TagsOptions
                                     key={setting.slug}
@@ -387,20 +385,12 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                         return null; // we don't support other settings types yet
                     })}
                 </ScrollBar>
-            </StyledModuleBody>
-            <div ref={footerWrapRef}>
-                <StyledModuleFooter>
-                    <AlphaButton
-                        variant="small"
-                        onClick={removeWidget}
-                        title="Removes this widget from the current board"
-                    >
-                        <TrashSVG width="15px" fill="inherit" /> &nbsp; Remove
-                        Widget
-                    </AlphaButton>
-                </StyledModuleFooter>
-            </div>
-        </StyledModuleWrapper>
+            </BaseModuleBody>
+            <BaseModuleOptionsFooter
+                removeWidget={removeWidget}
+                ref={footerWrapRef}
+            />
+        </BaseModuleWrapper>
     );
 };
 

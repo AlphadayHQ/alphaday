@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-import { alphadayColors } from "./src/globalStyles/colors";
+import { colors } from "./src/globalStyles/colors";
 import { tailwindBreakpoints } from "./src/globalStyles/breakpoints";
 import typography from "@tailwindcss/typography";
 import plugin from "tailwindcss/plugin";
@@ -9,7 +9,7 @@ export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {},
-        colors: alphadayColors,
+        colors: colors,
 
         screens: {
             ...tailwindBreakpoints,
