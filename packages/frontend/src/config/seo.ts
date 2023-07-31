@@ -11,8 +11,8 @@ const SEO_CONFIG = {
         linkedIn: "https://www.linkedin.com/company/alphaday",
     },
     HOTJAR: {
-        SITE_ID: import.meta.env.REACT_APP_HOTJAR_SITE_ID,
-        SNIPPET_VERSION: import.meta.env.REACT_APP_HOTJAR_SNIPPET_VERSION,
+        SITE_ID: import.meta.env.VITE_HOTJAR_SITE_ID,
+        SNIPPET_VERSION: import.meta.env.VITE_HOTJAR_SNIPPET_VERSION,
     },
     BOARDS_WITH_DEFAULT_CONFIG: ["default", "beginner", "nft", "trading"],
 };
