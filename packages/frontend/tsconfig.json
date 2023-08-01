@@ -27,6 +27,7 @@
     "src",
     "src/*",
     "src/**/*",
-    "vite.config.ts"
+    "vite.config.ts",
+    "../ui-kit/src/@types/global.d.ts"
   ]
 }

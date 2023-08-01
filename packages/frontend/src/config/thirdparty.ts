@@ -95,16 +95,16 @@ export const SUPPORTED_EVM_NETWORKS = {
 };
 
 const ZAPPER = {
-    API_KEY: String(process.env.REACT_APP_ZAPPER_API_KEY),
-    API_BASE_URL: String(process.env.REACT_APP_ZAPPER_BASE_URL),
+    API_KEY: String(import.meta.env.VITE_ZAPPER_API_KEY),
+    API_BASE_URL: String(import.meta.env.VITE_ZAPPER_BASE_URL),
     ROUTES: {
         TOKEN_BALANCES: "apps/tokens/balances",
         GAS_PRICES: "gas-prices",
     },
 };
 const ZAPPER_V2 = {
-    API_KEY: String(process.env.REACT_APP_ZAPPER_API_KEY),
-    API_BASE_URL: String(process.env.REACT_APP_ZAPPER_BASE_URL_V2),
+    API_KEY: String(import.meta.env.VITE_ZAPPER_API_KEY),
+    API_BASE_URL: String(import.meta.env.VITE_ZAPPER_BASE_URL_V2),
     ROUTES: {
         TOKEN_BALANCES: "balances",
         NFT_BALANCES: "nft/balances/tokens",
@@ -112,23 +112,23 @@ const ZAPPER_V2 = {
 };
 
 const DEFI_PULSE = {
-    API_KEY: String(process.env.REACT_APP_DEFIPULSE_API_KEY),
-    API_BASE_URL: String(process.env.REACT_APP_DEFIPULSE_BASE_URL),
+    API_KEY: String(import.meta.env.VITE_DEFIPULSE_API_KEY),
+    API_BASE_URL: String(import.meta.env.VITE_DEFIPULSE_BASE_URL),
 };
 
 const ETHERSCAN = {
-    API_KEY: String(process.env.REACT_APP_ETHERSCAN_API_KEY),
-    API_BASE_URL: String(process.env.REACT_APP_ETHERSCAN_BASE_URL),
+    API_KEY: String(import.meta.env.VITE_ETHERSCAN_API_KEY),
+    API_BASE_URL: String(import.meta.env.VITE_ETHERSCAN_BASE_URL),
 };
 
 const ETHPLORER = {
-    API_KEY: String(process.env.REACT_APP_ETHPLORER_API_KEY),
+    API_KEY: String(import.meta.env.VITE_ETHPLORER_API_KEY),
     API_BASE_URL: "",
 };
 
 const COINGECKO = {
     API_KEY: undefined,
-    API_BASE_URL: String(process.env.REACT_APP_COINGECKO_BASE_URL),
+    API_BASE_URL: String(import.meta.env.VITE_COINGECKO_BASE_URL),
     ROUTES: {
         PRICE: "simple/price",
     },
@@ -136,7 +136,7 @@ const COINGECKO = {
 
 const ULTRA_SOUND_MONEY = {
     API_KEY: undefined,
-    API_BASE_URL: String(process.env.REACT_APP_ULTRA_SOUND_MONEY_BASE_URL),
+    API_BASE_URL: String(import.meta.env.VITE_ULTRA_SOUND_MONEY_BASE_URL),
 };
 
 const IPAPI = {
@@ -149,7 +149,7 @@ const IPAPI = {
 
 const IPFS_GATEWAY = {
     API_KEY: undefined,
-    API_BASE_URL: String(process.env.REACT_APP_ALPHADAY_IPFS_GATEWAY),
+    API_BASE_URL: String(import.meta.env.VITE_ALPHADAY_IPFS_GATEWAY),
 };
 
 export const API_PROVIDERS: TApiProviders = {
@@ -188,7 +188,9 @@ export const EXPLORERS = {
             zapperCoinGeckoMap[
                 asset.token.symbol as keyof typeof zapperCoinGeckoMap
             ];
-        if (geckoCoin) return `https://www.coingecko.com/en/coins/${geckoCoin}`;
+        if (geckoCoin) {
+            return `https://www.coingecko.com/en/coins/${geckoCoin}`;
+        }
         const explorer: string =
             SUPPORTED_EVM_NETWORKS[
                 asset.network as keyof typeof SUPPORTED_EVM_NETWORKS
@@ -212,13 +214,13 @@ export const EXPLORERS = {
 } as const;
 
 export const WALLET_CONNECT = {
-    PROJECT_ID: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID ?? "",
+    PROJECT_ID: import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID ?? "",
 } as const;
 
 export const UNISWAP = {
-    convenienceFee: process.env.REACT_APP_SWAP_FEE
-        ? parseInt(process.env.REACT_APP_SWAP_FEE, 10)
+    convenienceFee: import.meta.env.VITE_SWAP_FEE
+        ? parseInt(import.meta.env.VITE_SWAP_FEE, 10)
         : undefined,
     convenienceFeeRecipient:
-        process.env.REACT_APP_SWAP_FEE_ADDRESS || undefined,
+        import.meta.env.VITE_SWAP_FEE_ADDRESS || undefined,
 } as const;

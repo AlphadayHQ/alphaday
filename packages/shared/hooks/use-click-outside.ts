@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, RefObject } from "react";
 
 export default <T extends HTMLElement>(
     onClose: () => void,
-    modalRef?: RefObject<T> // doar modals don't bubble click events to the document
+    modalRef?: RefObject<T> // modals don't bubble click events to the document
 ): RefObject<T> => {
     const ref = useRef<T>(null);
     const escapeListener = useCallback(

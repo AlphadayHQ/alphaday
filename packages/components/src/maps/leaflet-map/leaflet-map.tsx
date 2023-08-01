@@ -10,7 +10,6 @@ import {
 } from "react-leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
-import { MapBoxAccessKey } from "@alphaday/shared/data";
 import { StyledMap } from "./style";
 
 const DefaultIcon = L.icon({
@@ -75,7 +74,6 @@ export const LeafletMap: FC<IProps> = ({
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          accessToken={MapBoxAccessKey}
         />
         {RenderChild}
       </MapContainer>

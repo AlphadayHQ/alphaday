@@ -84,7 +84,7 @@ export const StyledDropMenu = styled.div<IProps>`
     props.theme.name === "dark" &&
     css`
       border-width: 0;
-      background-color: ${({ theme }) => theme.colors.backgroundVariant100};
+      background-color: #191C1F;
     `}
 `;
 

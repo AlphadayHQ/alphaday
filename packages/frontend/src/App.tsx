@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { IonApp } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Switch } from "react-router-dom";
 import { routes } from "./routes";
@@ -18,24 +17,22 @@ import "@alphaday/ui-kit/global.scss";
  */
 const App: React.FC = () => {
     return (
-        <IonApp>
-            <div className="App">
-                <IonReactRouter>
-                    <Suspense>
-                        <Switch>
-                            {routes.map((route) => (
-                                <Route
-                                    key={route.path}
-                                    path={route.path}
-                                    exact={route.exact}
-                                    component={route.component}
-                                />
-                            ))}
-                        </Switch>
-                    </Suspense>
-                </IonReactRouter>
-            </div>
-        </IonApp>
+        <div className="App">
+            <IonReactRouter>
+                <Suspense>
+                    <Switch>
+                        {routes.map((route) => (
+                            <Route
+                                key={route.path}
+                                path={route.path}
+                                exact={route.exact}
+                                component={route.component}
+                            />
+                        ))}
+                    </Switch>
+                </Suspense>
+            </IonReactRouter>
+        </div>
     );
 };
 

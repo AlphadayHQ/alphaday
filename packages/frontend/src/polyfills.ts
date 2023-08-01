@@ -4,9 +4,7 @@ import { Buffer } from "buffer";
 (window as any).global = window;
 global.Buffer = Buffer;
 global.process = {
-    env: { DEBUG: undefined },
+    env: import.meta.env,
     version: "",
-    // eslint-disable-next-line
-    nextTick: require("next-tick"),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as any;
