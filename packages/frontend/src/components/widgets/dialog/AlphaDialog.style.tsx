@@ -8,14 +8,13 @@ import {
 import styled from "@alphaday/shared";
 
 export const StyledModal = styled(({ ...props }) => <Modal {...props} />)`
-    background-color: ${({ theme }) => theme.colors.backgroundVariant1600};
+    background-color: rgba(0, 0, 0, 0.6);
     overflow: hidden;
     .modal-content {
         max-width: 429px;
-        background-color: ${({ theme }) => theme.colors.backgroundVariant200};
-        border: 1px solid ${(props) => props.theme.colors.backgroundVariant300};
-        box-shadow: 0px 0px 0px 1px
-            ${({ theme }) => theme.colors.backgroundVariant200};
+        background-color: #212328;
+        border: 1px solid $#27292e;
+        box-shadow: 0px 0px 0px 1px #212328;
         border-radius: 5px;
         padding-bottom: 20px;
     }
@@ -40,8 +39,8 @@ export const StyledModalHeader = styled(({ ...props }) => (
         width: 34px;
         height: 34px;
         border-radius: 50%;
-        background-color: ${({ theme }) => theme.colors.backgroundVariant200};
-        border: 1.5px solid ${({ theme }) => theme.colors.primaryVariant200};
+        background-color: #212328;
+        border: 1.5px solid ${({ theme }) => theme?.colors?.primaryVariant200};
         outline: none;
         --webkit-tap-highlight-color: transparent;
 
@@ -73,5 +72,5 @@ export const StyledModalTitle = styled(({ ...props }) => (
 
     /* Primary/Light */
 
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme?.colors?.primary};
 `;

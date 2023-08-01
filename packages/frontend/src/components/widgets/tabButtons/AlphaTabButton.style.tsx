@@ -29,20 +29,20 @@ const buttonStyles = css<IProps>`
     &:focus {
         outline: none;
     }
-    ${({ theme }) => theme.fontGroup.supportBold}
+    ${({ theme }) => theme?.fontGroup?.supportBold}
     width: max-content;
     height: 34px;
     padding: 6px 15px 7px 15px;
     border-radius: 8px;
     border: 1px solid;
-    border-color: ${({ theme }) => theme.colors.btnRingVariant300};
-    color: ${({ theme }) => theme.colors.primary};
-    background-color: ${({ theme }) => theme.colors.btnBackgroundVariant100};
+    border-color: ${({ theme }) => theme?.colors?.btnRingVariant300};
+    color: ${({ theme }) => theme?.colors?.primary};
+    background-color: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
 
     text-transform: ${({ $uppercase }) => ($uppercase ? "uppercase" : "none")};
 
     .tabButton {
-        fill: ${({ theme }) => theme.colors.primary};
+        fill: ${({ theme }) => theme?.colors?.primary};
         margin-right: 6px;
         width: 10px;
         height: 10px;
@@ -57,11 +57,11 @@ const buttonStyles = css<IProps>`
 
     &:hover {
         background-color: ${({ theme }) =>
-            theme.colors.btnBackgroundVariant1000};
+            theme?.colors?.btnBackgroundVariant1000};
     }
     &:active {
         background-color: ${({ theme }) =>
-            theme.colors.btnBackgroundVariant300};
+            theme?.colors?.btnBackgroundVariant300};
     }
 
     ${({ $variant }) =>
@@ -89,17 +89,17 @@ const buttonStyles = css<IProps>`
         css`
             height: 26px;
             padding: 4px 8px 5px 8px;
-            ${({ theme }) => theme.fontGroup.normal}
+            ${({ theme }) => theme?.fontGroup?.normal}
             border: 0;
             background-color: ${({ theme }) =>
-                theme.colors.btnBackgroundVariant1100};
+                theme?.colors?.btnBackgroundVariant1100};
             &:hover {
                 background-color: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1200};
+                    theme?.colors?.btnBackgroundVariant1200};
             }
             &:active {
                 background-color: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1300};
+                    theme?.colors?.btnBackgroundVariant1300};
             }
         `};
     ${({ $variant }) =>
@@ -117,31 +117,31 @@ const buttonStyles = css<IProps>`
         $variant === "extraSmall" &&
         css`
             height: 26px;
-            ${({ theme }) => theme.fontGroup.normal}
+            ${({ theme }) => theme?.fontGroup?.normal}
             padding: 1px 8px 1px 8px;
             border-radius: 8px;
             border: 0;
-            color: ${({ theme }) => theme.colors.primaryVariant100};
+            color: ${({ theme }) => theme?.colors?.primaryVariant100};
             background-color: ${({ theme }) =>
-                theme.colors.btnBackgroundVariant1100};
-            border-color: ${({ theme }) => theme.colors.primaryVariant200};
+                theme?.colors?.btnBackgroundVariant1100};
+            border-color: ${({ theme }) => theme?.colors?.primaryVariant200};
             &:hover {
                 background-color: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1200};
+                    theme?.colors?.btnBackgroundVariant1200};
             }
             &:active {
                 background-color: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1300};
+                    theme?.colors?.btnBackgroundVariant1300};
             }
         `};
     ${({ disabled }) =>
         disabled &&
         css`
-            color: ${({ theme }) => theme.colors.primaryVariant300};
+            color: ${({ theme }) => theme?.colors?.primaryVariant300};
             pointer-events: none;
             .tabButton {
-                fill: ${({ theme }) => theme.colors.primaryVariant300};
-                stroke: ${({ theme }) => theme.colors.primaryVariant300};
+                fill: ${({ theme }) => theme?.colors?.primaryVariant300};
+                stroke: ${({ theme }) => theme?.colors?.primaryVariant300};
             }
         `}
     ${({ $open, $variant }) =>
@@ -149,36 +149,36 @@ const buttonStyles = css<IProps>`
         css`
             color: ${({ theme }) =>
                 $variant === "extraSmall"
-                    ? theme.colors.primaryVariant100
-                    : theme.colors.primary};
+                    ? theme?.colors?.primaryVariant100
+                    : theme?.colors?.primary};
             background-color: ${({ theme }) =>
-                theme.colors.btnBackgroundVariant1400};
+                theme?.colors?.btnBackgroundVariant1400};
             border-color: ${({ theme }) =>
                 !($variant === "small" || $variant === "extraSmall") &&
-                theme.colors.btnBackgroundVariant1400};
+                theme?.colors?.btnBackgroundVariant1400};
             &:hover {
                 background-color: ${({ theme }) =>
                     !($variant === "small" || $variant === "extraSmall")
-                        ? theme.colors.btnBackgroundVariant1500
-                        : theme.colors.btnBackgroundVariant1400};
+                        ? theme?.colors?.btnBackgroundVariant1500
+                        : theme?.colors?.btnBackgroundVariant1400};
             }
             &:active {
                 background-color: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1400};
+                    theme?.colors?.btnBackgroundVariant1400};
             }
             .tabButton {
-                fill: ${({ theme }) => theme.colors.primary};
-                stroke: ${({ theme }) => theme.colors.primary};
+                fill: ${({ theme }) => theme?.colors?.primary};
+                stroke: ${({ theme }) => theme?.colors?.primary};
                 pointer-events: auto;
             }
         `};
     &.portfolio-addWallet {
-        border: 1px solid ${({ theme }) => theme.colors.primaryVariant100};
+        border: 1px solid ${({ theme }) => theme?.colors?.primaryVariant100};
         background-color: ${({ theme }) =>
-            theme.colors.btnBackgroundVariant1200};
+            theme?.colors?.btnBackgroundVariant1200};
         &:hover {
             background-color: ${({ theme }) =>
-                theme.colors.btnBackgroundVariant1100};
+                theme?.colors?.btnBackgroundVariant1100};
         }
     }
 `;

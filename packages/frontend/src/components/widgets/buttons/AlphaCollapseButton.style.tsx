@@ -25,7 +25,7 @@ export const StyledCollapseButton = styled(({ ...props }) => (
         width: 1em;
         height: 0.16em;
         top: calc((1em / 2) - 0.08em);
-        background-color: ${(props) => props.theme.colors.primary};
+        background-color: ${(props) => props.theme?.colors?.primary};
         transition: 0.3s ease-in-out all;
         border-radius: 0.03em;
     }

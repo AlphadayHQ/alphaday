@@ -3,7 +3,7 @@ import styled, { css } from "@alphaday/shared/styled";
 
 export const StyledModuleMenu = styled.div<{ isMenuOpen: boolean }>`
     .button {
-        fill: ${({ theme }) => theme.colors.primaryVariant100};
+        fill: #767c8f;
         cursor: pointer;
         height: 30px;
         align-self: center;
@@ -19,7 +19,7 @@ export const StyledModuleMenu = styled.div<{ isMenuOpen: boolean }>`
                 width: 3px;
                 height: 3px;
                 border-radius: 50%;
-                background: ${({ theme }) => theme.colors.primaryVariant100};
+                background: #767c8f;
                 position: absolute;
                 transition: 0.25s;
                 opacity: 1;
@@ -61,7 +61,8 @@ export const StyledModuleMenu = styled.div<{ isMenuOpen: boolean }>`
             }
             .button .kebabMenu span.line {
                 opacity: 1;
-                background: ${({ theme }) => theme.colors.backgroundVariant400};
+                background: ${({ theme }) =>
+                    theme?.colors?.backgroundVariant400};
                 &:nth-child(5) {
                     transform: rotate(45deg);
                 }
@@ -79,7 +80,7 @@ export const StyledModuleMenu = styled.div<{ isMenuOpen: boolean }>`
 export const StyledMenuDivider = styled.div`
     height: 0;
     overflow: hidden;
-    border-top: 1px solid ${({ theme }) => theme.colors.btnRingVariant500};
+    border-top: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant500};
     margin: 0;
     width: 200px;
 `;
@@ -98,7 +99,7 @@ export const StyledMenuItem = styled.span<{ disabled?: boolean }>`
     ${({ disabled }) => disabled && `opacity: 0.5;`}
 
     &:hover {
-        background-color: ${({ theme }) => theme.colors.backgroundVariant800};
+        background-color: #1E2024};
     }
 
     &:nth-child(1) {
@@ -166,9 +167,9 @@ export const StyledModuleWrapper = styled.div<{
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: ${(props) => props.theme.colors.backgroundVariant200};
-    color: ${(props) => props.theme.colors.primary};
-    border: 2px solid ${(props) => props.theme.colors.background};
+    background-color: #212328;
+    color: #767c8f;
+    border: 2px solid #111213;
     box-shadow: 0px 0px 0px 1px rgba(121, 131, 162, 0.2);
     border-radius: 5px;
     overflow: hidden;
@@ -177,11 +178,11 @@ export const StyledModuleWrapper = styled.div<{
 `;
 
 export const StyledModuleHeader = styled.div`
-    background-color: ${(props) => props.theme.colors.backgroundVariant300};
-    color: ${(props) => props.theme.colors.primaryVariant100};
+    background-color: #27292e;
+    color: #767c8f;
     background-blend-mode: soft-light;
     padding: 4.5px 9px 4.5px 15px;
-    border-bottom: 1.2px solid ${(props) => props.theme.colors.background};
+    border-bottom: 1.2px solid #111213;
     border-radius: 3px;
 
     .wrap {
@@ -219,7 +220,7 @@ export const StyledModuleHeader = styled.div`
     }
 
     .button {
-        fill: ${({ theme }) => theme.colors.primaryVariant100};
+        fill: #767c8f;
         cursor: pointer;
         height: 30px;
         align-self: center;
@@ -231,8 +232,8 @@ export const StyledModuleHeader = styled.div`
 export const StyledModuleFooter = styled(({ ...rest }) => (
     <CardFooter {...rest} />
 ))`
-    color: ${({ theme }) => theme.colors.primaryVariant100};
-    border-top: 0.8px solid ${({ theme }) => theme.colors.btnRingVariant500};
+    color: #767c8f;
+    border-top: 0.8px solid ${({ theme }) => theme?.colors?.btnRingVariant500};
 
     width: 100%;
     display: flex;
@@ -252,10 +253,10 @@ export const StyledModuleBody = styled(({ ...rest }) => <CardBody {...rest} />)`
         margin: 10px;
 
         .close:hover * {
-            stroke: ${({ theme }) => theme.colors.secondaryOrange100};
+            stroke: #ba7a02;
         }
         .persisted * {
-            color: ${({ theme }) => theme.colors.secondaryOrange50};
+            color: #e1b74f;
             opacity: 0.9;
         }
     }
@@ -270,9 +271,9 @@ export const StyledModuleBody = styled(({ ...rest }) => <CardBody {...rest} />)`
 export const StyledModuleTitle = styled.h6`
     display: inline-flex;
     align-self: end;
-    ${({ theme }) => theme.fontGroup.highlight}
+    ${({ theme }) => theme?.fontGroup?.highlight}
     text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.primaryVariant100};
+    color: #767c8f;
     margin: 0;
 `;
 

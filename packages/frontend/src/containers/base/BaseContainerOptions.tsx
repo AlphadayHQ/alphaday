@@ -152,8 +152,8 @@ const TagsOptions: FC<ITagsOptions> = ({
                     control: {
                         padding: "0 10px",
                         backgroundColor: disabled
-                            ? theme.colors.backgroundVariant800
-                            : theme.colors.backgroundVariant400,
+                            ? theme?.colors?.backgroundVariant800
+                            : theme?.colors?.backgroundVariant400,
                     },
                     menuList: {
                         maxHeight: "100px",

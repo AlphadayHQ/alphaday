@@ -6,7 +6,7 @@ export const StyledModal = styled(({ ...props }) => <Modal {...props} />)<{
     $contain?: boolean;
 }>`
     overflow: auto;
-    background-color: ${({ theme }) => theme.colors.backgroundVariant1200};
+    background-color: rgb(0, 0, 0, 0.8);
 
     .modal-dialog {
         width: 100%;
@@ -24,15 +24,15 @@ export const StyledModal = styled(({ ...props }) => <Modal {...props} />)<{
             `
         min-width: 1150px;
         `}
-        background-color: ${({ theme }) => theme.colors.backgroundVariant800};
-        border: 2px solid ${(props) => props.theme.colors.background};
+        background-color: #1E2024};
+        border: 2px solid #111213;
         box-shadow: 0px 0px 0px 1px rgba(121, 131, 162, 0.2);
         border-radius: 5px;
         margin: 15px;
     }
     .foot-block {
         position: absolute;
-        background-color: ${({ theme }) => theme.colors.backgroundVariant800};
+        background-color: #1E2024};
         width: 100%;
         height: 5px;
         bottom: 0.6px;
@@ -50,7 +50,7 @@ export const StyledModalContent = styled.div`
     color: #767c8f;
 
     .setting-title {
-        ${({ theme }) => theme.fontGroup.normal}
+        ${({ theme }) => theme?.fontGroup?.normal}
         margin-bottom: 10px;
     }
 `;

@@ -6,9 +6,9 @@ const { Z_INDEX_REGISTRY } = UI_CONFIG;
 
 export const StyledModal = styled(({ ...props }) => <Modal {...props} />)`
     z-index: ${Z_INDEX_REGISTRY.ERROR_MODAL};
-    background-color: ${({ theme }) => theme.colors.btnBackgroundVariant1900};
+    background-color: ${({ theme }) => theme?.colors?.btnBackgroundVariant1900};
     .modal-content {
-        background-color: ${({ theme }) => theme.colors.backgroundVariant100};
+        background-color: #191C1F;
     }
 `;
 
@@ -17,13 +17,13 @@ export const StyledModalHeader = styled(({ ...props }) => (
 ))`
     background-color: ${({ theme, variant }) =>
         variant === "warning"
-            ? theme.colors.secondaryOrange
-            : theme.colors.danger};
+            ? theme?.colors?.secondaryOrange
+            : theme?.colors?.danger};
     .modal-header {
         background-color: ${({ theme, variant }) =>
             variant === "warning"
-                ? theme.colors.secondaryOrange
-                : theme.colors.danger};
+                ? theme?.colors?.secondaryOrange
+                : theme?.colors?.danger};
     }
 `;
 

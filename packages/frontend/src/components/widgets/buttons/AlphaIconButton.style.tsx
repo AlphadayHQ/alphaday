@@ -49,16 +49,16 @@ const buttonStyles = css<IProps>`
             svg {
                 width: 13.93px;
                 height: 13.93px;
-                stroke: ${({ theme }) => theme.colors.primaryVariant100};
+                stroke: ${({ theme }) => theme?.colors?.primaryVariant100};
             }
             &:hover {
                 svg {
-                    stroke: ${({ theme }) => theme.colors.primaryVariant800};
+                    stroke: ${({ theme }) => theme?.colors?.primaryVariant800};
                 }
             }
             &:active {
                 svg {
-                    stroke: ${({ theme }) => theme.colors.primaryVariant900};
+                    stroke: ${({ theme }) => theme?.colors?.primaryVariant900};
                 }
             }
         `};
@@ -68,40 +68,40 @@ const buttonStyles = css<IProps>`
             svg {
                 width: 24px;
                 height: 24px;
-                stroke: ${({ theme }) => theme.colors.primaryVariant100};
+                stroke: ${({ theme }) => theme?.colors?.primaryVariant100};
             }
             &:hover {
                 svg {
-                    stroke: ${({ theme }) => theme.colors.primaryVariant800};
+                    stroke: ${({ theme }) => theme?.colors?.primaryVariant800};
                 }
             }
             &:active {
                 svg {
-                    stroke: ${({ theme }) => theme.colors.primaryVariant1000};
+                    stroke: ${({ theme }) => theme?.colors?.primaryVariant1000};
                 }
             }
         `};
     ${({ $variant, disabled }) =>
         $variant === "closeWithBg" &&
         css`
-            background: ${({ theme }) => theme.colors.btnBackgroundVariant100};
-            border: 1px solid ${({ theme }) => theme.colors.btnRingVariant300};
+            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 8px;
             svg {
                 width: 8.4px;
                 height: 8.4px;
-                stroke: ${({ theme }) => theme.colors.primaryVariant100};
+                stroke: ${({ theme }) => theme?.colors?.primaryVariant100};
             }
             &:hover {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1000};
+                    theme?.colors?.btnBackgroundVariant1000};
             }
             &:active {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant700};
+                    theme?.colors?.btnBackgroundVariant700};
                 border: 1px solid
-                    ${({ theme }) => theme.colors.btnRingVariant500};
+                    ${({ theme }) => theme?.colors?.btnRingVariant500};
             }
             ${disabled
                 ? css`
@@ -112,24 +112,24 @@ const buttonStyles = css<IProps>`
     ${({ $variant, disabled }) =>
         $variant === "notification" &&
         css`
-            background: ${({ theme }) => theme.colors.btnBackgroundVariant100};
-            border: 1px solid ${({ theme }) => theme.colors.btnRingVariant300};
+            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 8px;
             svg {
                 width: 16px;
                 height: 18px;
-                fill: ${({ theme }) => theme.colors.white};
+                fill: ${({ theme }) => theme?.colors?.white};
             }
             &:hover {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1000};
+                    theme?.colors?.btnBackgroundVariant1000};
             }
             &:active {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant700};
+                    theme?.colors?.btnBackgroundVariant700};
                 border: 1px solid
-                    ${({ theme }) => theme.colors.btnRingVariant500};
+                    ${({ theme }) => theme?.colors?.btnRingVariant500};
             }
             ${disabled
                 ? css`
@@ -140,24 +140,24 @@ const buttonStyles = css<IProps>`
     ${({ $variant, disabled }) =>
         $variant === "profile" &&
         css`
-            background: ${({ theme }) => theme.colors.btnBackgroundVariant100};
-            border: 1px solid ${({ theme }) => theme.colors.btnRingVariant300};
+            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 7.5px;
             svg {
                 width: 16px;
                 height: 18px;
-                fill: ${({ theme }) => theme.colors.white};
+                fill: ${({ theme }) => theme?.colors?.white};
             }
             &:hover {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1000};
+                    theme?.colors?.btnBackgroundVariant1000};
             }
             &:active {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant700};
+                    theme?.colors?.btnBackgroundVariant700};
                 border: 1px solid
-                    ${({ theme }) => theme.colors.btnRingVariant500};
+                    ${({ theme }) => theme?.colors?.btnRingVariant500};
             }
             ${disabled
                 ? css`
@@ -169,8 +169,8 @@ const buttonStyles = css<IProps>`
         $variant === "trash" &&
         css`
             position: relative;
-            background: ${({ theme }) => theme.colors.btnBackgroundVariant100};
-            border: 1px solid ${({ theme }) => theme.colors.btnRingVariant300};
+            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 20.59px;
             transition: all 0.2s ease-in-out;
@@ -183,11 +183,11 @@ const buttonStyles = css<IProps>`
                 position: absolute;
                 width: 28.82px;
                 height: 28.82px;
-                stroke: ${({ theme }) => theme.colors.primaryVariant100};
+                stroke: ${({ theme }) => theme?.colors?.primaryVariant100};
             }
             &:hover {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1000};
+                    theme?.colors?.btnBackgroundVariant1000};
                 .text {
                     opacity: 1;
                 }
@@ -207,41 +207,41 @@ const buttonStyles = css<IProps>`
             svg {
                 width: 18.84px;
                 height: 18px;
-                fill: ${({ theme }) => theme.colors.primaryVariant100};
+                fill: ${({ theme }) => theme?.colors?.primaryVariant100};
             }
             &:hover {
                 svg {
-                    fill: ${({ theme }) => theme.colors.btnRingVariant100};
+                    fill: ${({ theme }) => theme?.colors?.btnRingVariant100};
                 }
             }
             &:active {
                 svg {
                     fill: ${({ theme }) =>
-                        theme.colors.btnBackgroundVariant1400};
+                        theme?.colors?.btnBackgroundVariant1400};
                 }
             }
         `};
     ${({ $variant, disabled }) =>
         ($variant === "leftArrow" || $variant === "rightArrow") &&
         css`
-            background: ${({ theme }) => theme.colors.backgroundVariant1200};
-            border: 1px solid ${({ theme }) => theme.colors.btnRingVariant300};
+            background: rgb(0, 0, 0, 0.8);
+            border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 6.5px;
             svg {
                 width: 18px;
                 height: 18px;
-                stroke: ${({ theme }) => theme.colors.primary};
+                stroke: ${({ theme }) => theme?.colors?.primary};
             }
             &:hover {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant1000};
+                    theme?.colors?.btnBackgroundVariant1000};
             }
             &:active {
                 background: ${({ theme }) =>
-                    theme.colors.btnBackgroundVariant700};
+                    theme?.colors?.btnBackgroundVariant700};
                 border: 1px solid
-                    ${({ theme }) => theme.colors.btnRingVariant500};
+                    ${({ theme }) => theme?.colors?.btnRingVariant500};
             }
             ${disabled
                 ? css`

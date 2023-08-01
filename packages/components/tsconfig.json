@@ -2,10 +2,13 @@
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
-
     /* Bundler mode */
     "moduleResolution": "Node",
     "resolveJsonModule": true,
@@ -13,7 +16,6 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
     /* Linting */
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,10 +23,14 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "./vite.config.ts", "main.ts"],
+  "include": [
+    "src",
+    "./vite.config.ts",
+    "main.ts"
+  ],
   "references": [
     {
-      "path": "../../tsconfig.root.json"
+      "path": "../../tsconfig.json"
     }
   ]
 }

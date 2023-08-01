@@ -6,8 +6,8 @@ function BasePage() {
     return (
         <DragDropContext onDragEnd={() => {}}>
             <Droppable droppableId="alphaday">
-                {(_provided) => (
-                    <>
+                {(provided) => (
+                    <div ref={provided.innerRef}>
                         {dummyModuleData.map((moduleData, index) => (
                             <ModuleWrapper
                                 key={moduleData.id}
@@ -16,7 +16,7 @@ function BasePage() {
                                 colIndex={index}
                             />
                         ))}
-                    </>
+                    </div>
                 )}
             </Droppable>
         </DragDropContext>
