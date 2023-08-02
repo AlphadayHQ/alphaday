@@ -8,7 +8,7 @@ export const StyledModal = styled(({ ...props }) => <Modal {...props} />)`
     z-index: ${Z_INDEX_REGISTRY.ERROR_MODAL};
     background-color: ${({ theme }) => theme?.colors?.btnBackgroundVariant1900};
     .modal-content {
-        background-color: #191C1F;
+        background-color: #191c1f;
     }
 `;
 

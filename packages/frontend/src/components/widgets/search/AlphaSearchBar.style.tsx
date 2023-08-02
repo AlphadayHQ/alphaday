@@ -11,7 +11,8 @@ export const StyledMenuHeader = styled.div`
     color: ${({ theme }) => theme?.colors?.primaryVariant100};
     ${({ theme }) => theme?.fontGroup?.mini}
     width: 100%;
-    border-bottom: 1px solid ${(props) => props.theme?.colors?.btnRingVariant300};
+    border-bottom: 1px solid
+        ${(props) => props.theme?.colors?.btnRingVariant300};
     display: flex;
     align-items: center;
 

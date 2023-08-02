@@ -26,10 +26,8 @@ const IS_TEST = import.meta.env.VITE_ENVIRONMENT === EEnvironments.Test;
 const IS_DEV =
     import.meta.env.VITE_ENVIRONMENT === EEnvironments.Development ||
     !import.meta.env.VITE_ENVIRONMENT;
-const IS_STAGING =
-    import.meta.env.VITE_ENVIRONMENT === EEnvironments.Staging;
-const IS_PROD =
-    import.meta.env.VITE_ENVIRONMENT === EEnvironments.Production;
+const IS_STAGING = import.meta.env.VITE_ENVIRONMENT === EEnvironments.Staging;
+const IS_PROD = import.meta.env.VITE_ENVIRONMENT === EEnvironments.Production;
 
 const ENVIRONMENT = (() => {
     const env = import.meta.env.VITE_ENVIRONMENT ?? "";
