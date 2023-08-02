@@ -11,12 +11,13 @@ import Select, {
     SelectComponentsConfig,
     MenuListProps,
     OptionProps,
+    ClassNamesConfig,
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
 import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
+import { darkColors } from "src/globalStyles/colors";
 import { Spinner } from "../spinner/Spinner";
-
 /**
  * for simplicity, all components types here are defined with IsMulti = true
  * Supporting an arbitrary value for IsMulti would require some additional refactoring
@@ -97,8 +98,8 @@ export interface ISearchProps<Option = unknown> {
     options?: Option[];
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
-    uppercase?: boolean;
-    label?: string;
+    // uppercase?: boolean;
+    // label?: string;
     placeholder: string;
     initialInputValue?: string;
     initialSearchValues: Option[];
@@ -114,9 +115,7 @@ export interface ISearchProps<Option = unknown> {
         actionType: ActionMeta<Option>
     ) => void | ((o: Option[]) => Promise<void>);
     onInputChange?: (e: string) => void;
-    customStyles?: (
-        theme: (typeof themes)["dark"]
-    ) => Partial<
+    customStyles?: () => Partial<
         Record<
             keyof StylesConfig<Option, true, GroupBase<Option>>,
             CSSObjectWithLabel
@@ -141,9 +140,9 @@ export const SearchBar = <T,>({
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
-    // TODO (xavier-charles): remove hard-coded theme
-    const themedStyles = customStyles && customStyles(themes.dark);
+    const themedStyles = customStyles?.();
 
+    // TODO use react-select classnames prop instead of this/
     const {
         backgroundVariant200,
         backgroundVariant400,
@@ -151,7 +150,7 @@ export const SearchBar = <T,>({
         backgroundVariant600,
         btnBackgroundVariant1400,
         primary,
-    } = themes.dark.colors;
+    } = darkColors;
 
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
