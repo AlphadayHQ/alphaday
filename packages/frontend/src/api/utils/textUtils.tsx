@@ -1,4 +1,4 @@
-import type { Node, Parent } from "unist";
+import type { Node, Parent, Literal } from "unist";
 import { visit } from "unist-util-visit";
 import { v4 as uuidv4 } from "uuid";
 import { TTag } from "../types";
@@ -106,6 +106,11 @@ export const REMARK_URL_REGEX =
 export const REMARK_MENTION_REGEX = /(@[a-zA-Z\d-_]{1,31})/g;
 export const REMARK_HASHTAG_REGEX = /(#\w*[A-Za-z]\w*)/g;
 
+interface IParentWithLiteral extends Literal {
+    url?: string;
+    children: Literal[];
+}
+
 /**
  * A remark plugin that matches text nodes against a regex pattern and replaces them with a link node.
  *
@@ -117,12 +122,12 @@ export const remarkRegex = (
     callback: (matchedText: string) => string = (matchedText) => matchedText
 ): (() => (tree: Node) => void) => {
     return () => (tree: Node) => {
-        visit(tree, "text", (node, index, parent: Parent) => {
+        visit(tree, "text", (node: Literal, index, parent: Parent) => {
             const nodeValue = node.value as string;
             const matches = Array.from(nodeValue.matchAll(pattern));
 
             if (matches.length > 0 && parent && parent.type !== "link") {
-                const newChildren: Node[] = [];
+                const newChildren: IParentWithLiteral[] = [];
 
                 let lastIndex = 0;
 
@@ -134,13 +139,14 @@ export const remarkRegex = (
                         newChildren.push({
                             type: "text",
                             value: nodeValue.slice(lastIndex, start),
+                            children: [],
                         });
                     }
 
                     newChildren.push({
                         type: "link",
                         url: callback(match[0].trim()),
-                        data: {
+                        value: {
                             hProperties: {
                                 target: "_blank",
                                 rel: "noopener noreferrer",
@@ -156,6 +162,7 @@ export const remarkRegex = (
                     newChildren.push({
                         type: "text",
                         value: nodeValue.slice(lastIndex),
+                        children: [],
                     });
                 }
 

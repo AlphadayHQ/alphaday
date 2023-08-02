@@ -9,8 +9,8 @@ import {
     HeaderNavbar,
 } from "@alphaday/ui-kit";
 import { useWindowSize } from "src/api/hooks";
-import { ReactComponent as Close2 } from "src/assets/alphadayAssets/icons/close2.svg";
-import { ReactComponent as MenuMobile } from "src/assets/alphadayAssets/icons/menuMobile.svg";
+import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
+import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import { NavTabButton } from "src/components/widgets/tabButtons/NavTabButton";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 // import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";

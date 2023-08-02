@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Route, Switch } from "react-router-dom";
 import { routes } from "./routes";
-import "@alphaday/ui-kit/global.scss";
 
 /**
  * The comments below are for notes and should be removed as this app grows.
