@@ -37,9 +37,9 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
                     "[&>:nth-child(3)]:scale-[6] [&>:nth-child(3)]:opacity-60"
             )}
         >
-            {KebabIconVectorPos.map(([top, left]) => (
+            {KebabIconVectorPos.map(([top, left], i) => (
                 <span
-                    key={`${top}-${left}`}
+                    key={`${top}-${left}-${i}`}
                     className={`left-[${left}px] top-[${top}px] ${otherClasses}`}
                 />
             ))}
