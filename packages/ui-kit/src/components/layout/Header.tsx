@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Z_INDEX_REGISTRY } from "src/config/zIndexRegistry";
+import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 import { twMerge } from "tailwind-merge";
 
 export const HeaderWrapper: FC<{

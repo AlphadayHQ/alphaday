@@ -3,7 +3,7 @@ import PerfectScrollbar, { ScrollBarProps } from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import styles from "./scrollbar.module.scss"
 import { twMerge } from "tailwind-merge";
-import { Z_INDEX_REGISTRY } from "src/config/zIndexRegistry";
+import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 
 export const ScrollBar: FC<ScrollBarProps> = ({
     children,

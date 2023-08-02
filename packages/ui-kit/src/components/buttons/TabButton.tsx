@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close3.svg";
-import styles from "./Button.module.scss";
+import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
 import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
+import styles from "./Button.module.scss";
 
 // TODO (xavier-charles):: Replace [portfolio-addWallet] in AddressTabSelect with => border border-primaryVariant100)] bg-btnBackgroundVariant1200)] border-solid hover:bg-btnBackgroundVariant1100
 
@@ -71,7 +71,8 @@ export const TabButton: FC<ButtonProps> = ({
 }) => {
     const isDisabled = open ? false : disabled;
     return (
-        <button
+        <div
+            type="button"
             disabled={isDisabled}
             className={twMerge(
                 buttonVariants({
@@ -99,7 +100,7 @@ export const TabButton: FC<ButtonProps> = ({
                     }}
                 />
             )}
-        </button>
+        </div>
     );
 };
 

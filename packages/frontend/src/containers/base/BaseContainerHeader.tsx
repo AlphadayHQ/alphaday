@@ -2,7 +2,7 @@ import { FC } from "react";
 import { BaseModuleHeader, TabButton } from "@alphaday/ui-kit";
 import { TBaseTag } from "src/api/services";
 import { TUserViewWidget } from "src/api/types";
-import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close3.svg";
+import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import BaseContainerMenu from "./BaseContainerMenu";
 
 interface IBaseContainerHeader {

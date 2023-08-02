@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { Spinner } from "@alphaday/components";
 import { themes } from "@alphaday/shared/styled";
+import { ReactComponent as HotSVG } from "@alphaday/ui-kit/src/assets/svg/hot.svg";
 import Select, {
     components,
     GroupBase,
@@ -16,7 +17,6 @@ import Select, {
     OptionProps,
 } from "react-select";
 import { slugify } from "src/api/utils/textUtils";
-import { ReactComponent as HotSVG } from "src/assets/icons/hot.svg";
 import { useAppSelector } from "../../../api/store/hooks";
 import {
     StyledCustomPlaceholder,

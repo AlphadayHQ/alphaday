@@ -2,7 +2,7 @@ import { FC, useRef } from "react";
 // TODO (xavier-charles):: Add useKeyPress hook and Logger
 // import { useKeyPress } from "src/api/hooks";
 // import { Logger } from "src/api/utils/logging";
-import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
+import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
 import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
