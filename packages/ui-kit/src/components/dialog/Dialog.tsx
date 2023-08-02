@@ -52,13 +52,13 @@ export const Dialog: FC<
     //     skip: disableSave,
     // });
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = async () => {
         onClose();
-        modalRef.current?.dismiss();
+        await modalRef.current?.dismiss();
     };
-    const handleSaveDialog = () => {
-        onSave?.();
-        modalRef.current?.dismiss();
+    const handleSaveDialog = async () => {
+        await onSave?.();
+        await modalRef.current?.dismiss();
     };
 
     const showSaveButton = onSave && saveButtonText;
@@ -78,6 +78,7 @@ export const Dialog: FC<
                 </h6>
                 {showXButton && (
                     <button
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         onClick={handleCloseDialog}
                         className="border-primaryVariant200 bg-backgroundVariant200 flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
                         title="close"
@@ -95,7 +96,6 @@ export const Dialog: FC<
                     {showSaveButton && (
                         <Button
                             data-testid="alpha-dialog-action-button"
-                            extraClassStyles="alphaDialog"
                             onClick={handleSaveDialog}
                             disabled={disableSave === true}
                             {...buttonProps}
@@ -106,7 +106,6 @@ export const Dialog: FC<
                     {showCloseButton && (
                         <Button
                             data-testid="alpha-dialog-close-button"
-                            extraClassStyles="alphaDialog"
                             onClick={handleCloseDialog}
                             {...buttonProps}
                         >

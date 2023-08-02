@@ -65,7 +65,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         | undefined;
 
     // if we do not yet support this template, then we should gracefully exit
-    if (ModuleContainer === undefined) return <></>;
+    if (ModuleContainer === undefined) return null;
 
     const viewPath = buildViewPath(selectedView?.data);
 
@@ -120,7 +120,6 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                                             "ModuleWrapper: could not build full-size widget url, it should never happen. Widget slug:",
                                             templateSlug
                                         );
-                                        return;
                                     }
                                     // navigate(
                                     //     `${viewPath}${fullSizePath.substring(

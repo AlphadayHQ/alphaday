@@ -240,7 +240,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 </div>
             </div>
             {onToggleShowFullSize && allowFullSize && (
-                <Modal show={!!showFullSize} onClose={handleShowFullSize}>
+                <Modal showModal={!!showFullSize} onClose={handleShowFullSize}>
                     <BaseContainerHeader
                         headerRef={headerRef}
                         toggleCollapse={toggleCollapse}
@@ -264,7 +264,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 title="Alphaday"
                 showXButton
                 saveButtonText="Close"
-                show={showMobileDialog}
+                showDialog={showMobileDialog}
                 onSave={handleShowDialog}
                 onClose={handleShowDialog}
             >
