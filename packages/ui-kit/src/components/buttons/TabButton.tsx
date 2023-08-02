@@ -71,7 +71,7 @@ export const TabButton: FC<ButtonProps> = ({
 }) => {
     const isDisabled = open ? false : disabled;
     return (
-        <div
+        <button
             type="button"
             disabled={isDisabled}
             className={twMerge(
@@ -100,7 +100,7 @@ export const TabButton: FC<ButtonProps> = ({
                     }}
                 />
             )}
-        </div>
+        </button>
     );
 };
 
