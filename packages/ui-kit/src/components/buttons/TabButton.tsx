@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
+import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
 import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
 import styles from "./Button.module.scss";

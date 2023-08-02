@@ -17,3 +17,7 @@
 
 /* custom css */
 @import "./custom.scss";
+
+html:not(.hydrated) body {
+  display: initial !important;
+}
