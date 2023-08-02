@@ -1,7 +1,7 @@
 import { FC } from "react";
-import CloseSVG from "src/assets/alphadayAssets/icons/close.svg";
-import ViewsSVG from "src/assets/alphadayAssets/icons/views.svg";
-import WidgetsSVG from "src/assets/alphadayAssets/icons/widgets.svg";
+import { ReactComponent as CloseSVG } from "src/assets/alphadayAssets/icons/close.svg";
+import { ReactComponent as ViewsSVG } from "src/assets/alphadayAssets/icons/views.svg";
+import { ReactComponent as WidgetsSVG } from "src/assets/alphadayAssets/icons/widgets.svg";
 import { TabButton } from "./TabButton";
 
 interface ButtonProps {
@@ -50,7 +50,6 @@ export const NavTabButton: FC<ButtonProps> = ({
 };
 
 NavTabButton.defaultProps = {
-    open: false,
     disabled: false,
     uppercase: true,
     label: "button",

@@ -221,6 +221,5 @@ export const UNISWAP = {
     convenienceFee: import.meta.env.VITE_SWAP_FEE
         ? parseInt(import.meta.env.VITE_SWAP_FEE, 10)
         : undefined,
-    convenienceFeeRecipient:
-        import.meta.env.VITE_SWAP_FEE_ADDRESS || undefined,
+    convenienceFeeRecipient: import.meta.env.VITE_SWAP_FEE_ADDRESS || undefined,
 } as const;

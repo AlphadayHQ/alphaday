@@ -22,7 +22,7 @@ const AnchorElement: FC<IAnchor> = ({
     label,
     target,
     onClick,
-    variant,
+    variant: _variant,
     ...rest
 }) => (
     <a

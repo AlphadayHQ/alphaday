@@ -56,9 +56,9 @@ export const Dialog: FC<
         onClose();
         modalRef.current?.dismiss();
     };
-    const handleSaveDialog = () => {
-        onSave?.();
-        modalRef.current?.dismiss();
+    const handleSaveDialog = async () => {
+        await onSave?.();
+        await modalRef.current?.dismiss();
     };
 
     const showSaveButton = onSave && saveButtonText;
@@ -95,7 +95,6 @@ export const Dialog: FC<
                     {showSaveButton && (
                         <Button
                             data-testid="alpha-dialog-action-button"
-                            extraClassStyles="alphaDialog"
                             onClick={handleSaveDialog}
                             disabled={disableSave === true}
                             {...buttonProps}
@@ -106,7 +105,6 @@ export const Dialog: FC<
                     {showCloseButton && (
                         <Button
                             data-testid="alpha-dialog-close-button"
-                            extraClassStyles="alphaDialog"
                             onClick={handleCloseDialog}
                             {...buttonProps}
                         >

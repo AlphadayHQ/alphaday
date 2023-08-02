@@ -1,8 +1,8 @@
 import { FC } from "react";
 import CloseSVG from "src/assets/alphadayAssets/icons/close3.svg";
-import styles from "./Button.module.scss";
 import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
+import styles from "./Button.module.scss";
 
 // TODO: Replace [portfolio-addWallet] in AddressTabSelect with => border border-primaryVariant100)] bg-btnBackgroundVariant1200)] border-solid hover:bg-btnBackgroundVariant1100
 
@@ -79,6 +79,7 @@ export const TabButton: FC<ButtonProps> = ({
             })}
             aria-label={label}
             name={title}
+            type="button"
             {...restProps}
         >
             {children}
@@ -99,9 +100,5 @@ export const TabButton: FC<ButtonProps> = ({
 };
 
 TabButton.defaultProps = {
-    variant: "primary",
-    open: false,
-    disabled: false,
-    uppercase: true,
     label: "button",
 };

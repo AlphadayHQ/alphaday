@@ -18,6 +18,7 @@ import "@alphaday/ui-kit/global.scss";
 const App: React.FC = () => {
     return (
         <div className="App">
+            {/** @ts-expect-error react16/react18 conflict */}
             <IonReactRouter>
                 <Suspense>
                     <Switch>

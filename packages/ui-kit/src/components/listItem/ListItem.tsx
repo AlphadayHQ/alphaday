@@ -17,7 +17,7 @@ interface IList {
     description?: string;
     source?: string;
     tag: string;
-    tagShortName?: string;
+    // tagShortName?: string;
     tagImg?: string;
     mediaLength?: string;
     bookmarked?: boolean;
@@ -194,7 +194,11 @@ export const ListItem: FC<IList> = ({
 
         return (
             <>
-                <li onClick={onClick} className={variantStyle.base}>
+                <li
+                    role="banner"
+                    onClick={onClick}
+                    className={variantStyle.base}
+                >
                     <div className="top">
                         <img
                             src={tagImg}
