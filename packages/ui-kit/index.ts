@@ -22,11 +22,11 @@ import Logo from "./src/components/layout/Logo";
 import { Modal } from "./src/components/modal/Modal";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
-import { themes } from "./src/globalStyles";
 import { breakpoints } from "./src/globalStyles/breakpoints";
+import { darkColors as defaultColors } from "./src/globalStyles/colors";
 
 export {
-    themes,
+    defaultColors,
     breakpoints,
     NavTabButton,
     Button,
