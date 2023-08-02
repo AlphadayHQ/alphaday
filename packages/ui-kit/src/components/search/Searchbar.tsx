@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { themes } from "@alphaday/ui-kit";
 import Select, {
     components,
     GroupBase,
@@ -12,11 +13,10 @@ import Select, {
     MenuListProps,
     OptionProps,
 } from "react-select";
-// TODO add slugify util
+// TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
 import { ReactComponent as HotSVG } from "src/assets/svg/hot.svg";
 import { Spinner } from "../spinner/Spinner";
-import { themes } from "@alphaday/ui-kit";
 
 /**
  * for simplicity, all components types here are defined with IsMulti = true
@@ -36,7 +36,7 @@ const CustomInput = <Option,>(props: InputProps<Option>) => {
         <>
             <Input data-testid="searchbar-input" {...props} />
             {!value && (
-                <div className="w-full pt-[0.5px] text-primaryVariant100 fontGroup-normal">
+                <div className="text-primaryVariant100 fontGroup-normal w-full pt-[0.5px]">
                     Search...
                 </div>
             )}
@@ -51,7 +51,7 @@ const CustomMenuList = (showTrending: boolean) => {
                 {showTrending && (
                     <div className="border-b-btnRingVariant300 text-primaryVariant100 fontGroup-mini flex w-full items-center border-b border-solid px-3 pb-2.5 pt-3">
                         Trending Keywords
-                        <HotSVG className="mb-0 ml-0.5 mr-0 mt-px h-3 w-2.5 pb-0.5 text-primaryVariant100" />
+                        <HotSVG className="text-primaryVariant100 mb-0 ml-0.5 mr-0 mt-px h-3 w-2.5 pb-0.5" />
                     </div>
                 )}
                 <div data-testid="searchbar-menu">
@@ -107,16 +107,16 @@ export interface ISearchProps<Option = unknown> {
     updateSearch?: boolean;
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
-    customComponents?: Partial<
-        SelectComponentsConfig<Option, true, GroupBase<Option>>
-    > | undefined;
+    customComponents?:
+        | Partial<SelectComponentsConfig<Option, true, GroupBase<Option>>>
+        | undefined;
     onChange: (
         o: Readonly<Option[]>,
         actionType: ActionMeta<Option>
     ) => void | ((o: Option[]) => Promise<void>);
     onInputChange?: (e: string) => void;
     customStyles?: (
-        theme: typeof themes["dark"]
+        theme: (typeof themes)["dark"]
     ) => Partial<
         Record<
             keyof StylesConfig<Option, true, GroupBase<Option>>,
@@ -142,7 +142,7 @@ export const SearchBar = <T,>({
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
-    // TODO remove hard-coded theme
+    // TODO (xavier-charles): remove hard-coded theme
     const themedStyles = customStyles && customStyles(themes.dark);
 
     const {
@@ -152,7 +152,7 @@ export const SearchBar = <T,>({
         backgroundVariant600,
         btnBackgroundVariant1400,
         primary,
-    } = themes["dark"].colors;
+    } = themes.dark.colors;
 
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
@@ -359,7 +359,7 @@ export const SearchBar = <T,>({
             : isFetchingKeywordResults;
 
     return (
-        <div className="h-[41px] w-full max-w-[524px] text-primary">
+        <div className="text-primary h-[41px] w-full max-w-[524px]">
             <Select
                 onChange={(e, changeType) => handleSearchValues(e, changeType)}
                 onInputChange={handleInputChange}

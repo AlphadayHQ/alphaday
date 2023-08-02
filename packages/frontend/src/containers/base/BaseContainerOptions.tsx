@@ -116,7 +116,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                 )
         );
 
-    // TODO remove hardcoded theme
+    // TODO (xavier-charles): remove hardcoded theme
     const { colors } = themes.dark;
 
     return (

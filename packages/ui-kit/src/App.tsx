@@ -7,7 +7,7 @@ import { Z_INDEX_REGISTRY } from "./config/zIndexRegistry";
 setupIonicReact();
 
 function App() {
-    // TODO Doesn't work like this so add zIndex to utilities just like fonts.
+    // TODO (xavier-charles): Doesn't work like this so add zIndex to utilities just like fonts.
     const p = `z-[${Z_INDEX_REGISTRY.SCROLLBAR}]`;
 
     return (

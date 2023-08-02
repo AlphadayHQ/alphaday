@@ -71,7 +71,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
     isWidgetOptions,
 }) => {
     const [showMenu, setShowMenu] = useState(false);
-    // TODO remove hard coded themes
+    // TODO (xavier-charles): remove hard coded themes
     const { colors } = themes.dark;
 
     const { renderLayer, triggerProps, layerProps } = useLayer({

@@ -152,7 +152,7 @@ export const ListItem: FC<IList> = ({
         );
     }
 
-    // TODO: remove this if we no longer need it
+    // TODO (xavier-charles):: remove this if we no longer need it
     if (variant === "reports") {
         const variantStyle = listItemVaraints("reports");
         return (
@@ -176,7 +176,7 @@ export const ListItem: FC<IList> = ({
                             </a>
                             <span className={variantStyle.spacer}>•</span>
                             <img
-                                src={source} // TODO: source is image url for tag pill
+                                src={source} // TODO (xavier-charles):: source is image url for tag pill
                                 alt=""
                                 className={variantStyle.img}
                                 onError={imgOnError}

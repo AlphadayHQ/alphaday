@@ -7,7 +7,7 @@ export interface LightboxProps {
     children: ReactNode;
 }
 
-const triggerId = "open-carousel-modal"; // TODO: id's should be unique. Maybe use a regeistry if they become  much
+const triggerId = "open-carousel-modal"; // TODO (xavier-charles):: id's should be unique. Maybe use a regeistry if they become  much
 
 export const Lightbox: FC<LightboxProps> = ({ speed, children }) => {
     const [index, setIndex] = useState(0);

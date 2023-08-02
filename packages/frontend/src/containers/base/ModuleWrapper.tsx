@@ -1,4 +1,4 @@
-// TODO: uncomment the commented code
+// TODO (xavier-charles): uncomment the commented code
 import { FC, useState, useCallback, memo } from "react";
 import { Draggable } from "react-beautiful-dnd";
 // import { useNavigate } from "react-router-dom";
