@@ -8,7 +8,7 @@ setupIonicReact();
 
 function App() {
     // TODO (xavier-charles): Doesn't work like this so add zIndex to utilities just like fonts.
-    const p = `z-[${Z_INDEX_REGISTRY.SCROLLBAR}]`;
+    // const p = `z-[${Z_INDEX_REGISTRY.SCROLLBAR}]`;
 
     return (
         <div className="flex h-screen w-screen flex-col items-center justify-center">
