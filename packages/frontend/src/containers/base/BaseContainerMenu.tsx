@@ -39,6 +39,7 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
         >
             {KebabIconVectorPos.map(([top, left]) => (
                 <span
+                    key={`${top}-${left}`}
                     className={`left-[${left}px] top-[${top}px] ${otherClasses}`}
                 />
             ))}
