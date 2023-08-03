@@ -11,12 +11,11 @@ import Select, {
     SelectComponentsConfig,
     MenuListProps,
     OptionProps,
-    ClassNamesConfig,
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
-import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
 import { darkColors } from "src/globalStyles/colors";
+import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
 import { Spinner } from "../spinner/Spinner";
 /**
  * for simplicity, all components types here are defined with IsMulti = true
@@ -142,7 +141,7 @@ export const SearchBar = <T,>({
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
     const themedStyles = customStyles?.();
 
-    // TODO use react-select classnames prop instead of this/
+    // TODO (xavier-charles): use react-select classnames prop instead of this
     const {
         backgroundVariant200,
         backgroundVariant400,

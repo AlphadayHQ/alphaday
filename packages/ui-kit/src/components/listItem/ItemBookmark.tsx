@@ -17,7 +17,7 @@ const ItemBookmark: FC<IBookmark> = ({
     bookmarked,
     showSpacer = true,
 }) => {
-    if (authenticatedOnly && !isAuthenticated) return <></>;
+    if (authenticatedOnly && !isAuthenticated) return null;
     return (
         <>
             {showSpacer && <span className="spacer">•</span>}
