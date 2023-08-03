@@ -8,7 +8,7 @@ import { WagmiConfig } from "wagmi";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
 import PersistProvider from "./api/store/providers/persist-provider";
 import { wagmiConfig } from "./api/store/providers/wallet-connect-provider";
-// TODO: add themes support import ThemeProvider from "./api/store/providers/theme-provider";
+// TODO (xavier-charles): add themes support import ThemeProvider from "./api/store/providers/theme-provider";
 import { store } from "./api/store/store";
 import { ECookieChoice } from "./api/types";
 import { Logger } from "./api/utils/logging";

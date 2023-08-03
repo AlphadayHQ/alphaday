@@ -1,8 +1,4 @@
-/* eslint-disable react/button-has-type */
 import { useState, useEffect, useCallback } from "react";
-import { Spinner } from "@alphaday/components";
-import { themes } from "@alphaday/shared/styled";
-import { ReactComponent as HotSVG } from "@alphaday/ui-kit/src/assets/svg/hot.svg";
 import Select, {
     components,
     GroupBase,
@@ -16,15 +12,10 @@ import Select, {
     MenuListProps,
     OptionProps,
 } from "react-select";
-import { slugify } from "src/api/utils/textUtils";
-import { useAppSelector } from "../../../api/store/hooks";
-import {
-    StyledCustomPlaceholder,
-    StyledSearchContainer,
-    StyledEmptyResultsContainer,
-    StyledMenuHeader,
-    StyledSpinner,
-} from "./AlphaSearchBar.style";
+// TODO (xavier-charles): add slugify util
+// import { slugify } from "src/api/utils/textUtils";
+import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
+import { Spinner } from "../spinner/Spinner";
 
 /**
  * for simplicity, all components types here are defined with IsMulti = true
@@ -44,7 +35,9 @@ const CustomInput = <Option,>(props: InputProps<Option>) => {
         <>
             <Input data-testid="searchbar-input" {...props} />
             {!value && (
-                <StyledCustomPlaceholder>Search...</StyledCustomPlaceholder>
+                <div className="text-primaryVariant100 fontGroup-normal w-full pt-[0.5px]">
+                    Search...
+                </div>
             )}
         </>
     ) : null;
@@ -55,9 +48,10 @@ const CustomMenuList = (showTrending: boolean) => {
         return (
             <>
                 {showTrending && (
-                    <StyledMenuHeader>
-                        Trending Keywords <HotSVG className="hot" />
-                    </StyledMenuHeader>
+                    <div className="border-b-btnRingVariant300 text-primaryVariant100 fontGroup-mini flex w-full items-center border-b border-solid px-3 pb-2.5 pt-3">
+                        Trending Keywords
+                        <HotSVG className="text-primaryVariant100 mb-0 ml-0.5 mr-0 mt-px h-3 w-2.5 pb-0.5" />
+                    </div>
                 )}
                 <div data-testid="searchbar-menu">
                     <MenuList {...props} />
@@ -70,9 +64,10 @@ const CustomMenuList = (showTrending: boolean) => {
 const CustomOption = <Option,>(
     props: OptionProps<Option, true, GroupBase<Option>>
 ) => {
-    const { label } = props;
     return (
-        <div data-testid={`searchbar-option-${slugify(label)}`}>
+        <div
+        // data-testid={`searchbar-option-${slugify(props.label)}`}
+        >
             <Option {...props} />
         </div>
     );
@@ -84,15 +79,15 @@ const CustomNoOptionsMessage = (isFetching: boolean | undefined) => {
     ) {
         return (
             <NoOptionsMessage {...props}>
-                <StyledEmptyResultsContainer>
+                <div className="text-primary flex w-full max-w-[524px] items-center justify-center overscroll-contain font-[bold]">
                     {isFetching === true ? (
-                        <StyledSpinner>
+                        <div className="flex h-[70px] w-full items-center justify-center">
                             <Spinner />
-                        </StyledSpinner>
+                        </div>
                     ) : (
                         "No results"
                     )}
-                </StyledEmptyResultsContainer>
+                </div>
             </NoOptionsMessage>
         );
     };
@@ -102,6 +97,8 @@ export interface ISearchProps<Option = unknown> {
     options?: Option[];
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
+    uppercase?: boolean;
+    label?: string;
     placeholder: string;
     initialInputValue?: string;
     initialSearchValues: Option[];
@@ -109,16 +106,16 @@ export interface ISearchProps<Option = unknown> {
     updateSearch?: boolean;
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
-    customComponents?: Partial<
-        SelectComponentsConfig<Option, true, GroupBase<Option>>
-    >;
+    customComponents?:
+        | Partial<SelectComponentsConfig<Option, true, GroupBase<Option>>>
+        | undefined;
     onChange: (
         o: Readonly<Option[]>,
         actionType: ActionMeta<Option>
     ) => void | ((o: Option[]) => Promise<void>);
     onInputChange?: (e: string) => void;
     customStyles?: (
-        theme: typeof themes.light
+        theme: (typeof themes)["dark"]
     ) => Partial<
         Record<
             keyof StylesConfig<Option, true, GroupBase<Option>>,
@@ -128,7 +125,7 @@ export interface ISearchProps<Option = unknown> {
         IProps;
 }
 
-export const AlphaSearchBar = <T,>({
+export const SearchBar = <T,>({
     disabled,
     onChange,
     onInputChange,
@@ -144,7 +141,9 @@ export const AlphaSearchBar = <T,>({
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
-    const { theme } = useAppSelector((state) => state.ui);
+    // TODO (xavier-charles): remove hard-coded theme
+    const themedStyles = customStyles && customStyles(themes.dark);
+
     const {
         backgroundVariant200,
         backgroundVariant400,
@@ -152,8 +151,7 @@ export const AlphaSearchBar = <T,>({
         backgroundVariant600,
         btnBackgroundVariant1400,
         primary,
-    } = themes[theme].colors;
-    const themedStyles = customStyles && customStyles(themes[theme]);
+    } = themes.dark.colors;
 
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
@@ -171,9 +169,7 @@ export const AlphaSearchBar = <T,>({
         actionType: ActionMeta<T>
     ) => {
         onChange(e, actionType);
-        if (updateSearch) {
-            setSearchValues([...e]);
-        }
+        if (updateSearch) setSearchValues([...e]);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -186,9 +182,7 @@ export const AlphaSearchBar = <T,>({
         (value: string, meta: InputActionMeta) => {
             if (["input-blur", "menu-close"].indexOf(meta.action) === -1) {
                 setInputValue(value);
-                if (onInputChange) {
-                    onInputChange(value);
-                }
+                if (onInputChange) onInputChange(value);
                 return value;
             }
             return inputValue;
@@ -364,7 +358,7 @@ export const AlphaSearchBar = <T,>({
             : isFetchingKeywordResults;
 
     return (
-        <StyledSearchContainer>
+        <div className="text-primary h-[41px] w-full max-w-[524px]">
             <Select
                 onChange={(e, changeType) => handleSearchValues(e, changeType)}
                 onInputChange={handleInputChange}
@@ -390,6 +384,6 @@ export const AlphaSearchBar = <T,>({
                 }}
                 inputValue={initialInputValue}
             />
-        </StyledSearchContainer>
+        </div>
     );
 };

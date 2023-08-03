@@ -6,7 +6,7 @@ import PreviewImage from "src/assets/img/defaultView2x.png";
 import { ReactComponent as PinSVG } from "src/assets/svg/pin.svg";
 import { ReactComponent as PinnedSVG } from "src/assets/svg/pinned.svg";
 import { ReactComponent as EditSVG } from "src/assets/svg/rename.svg";
-import { ReactComponent as TrashSVG } from "src/assets/svg/trash.svg";
+import { ReactComponent as TrashSVG } from "../../assets/svg/trash.svg";
 import { twMerge } from "tailwind-merge";
 
 interface IPreview {

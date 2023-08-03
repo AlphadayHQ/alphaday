@@ -35,7 +35,7 @@ const ItemBookmark: FC<IBookmark> = ({
                 }}
                 title={
                     isAuthenticated ? "Bookmark this item" : ""
-                    // TODO : globalMessages.callToAction.signUpToBookmark("items")
+                    // TODO (xavier-charles): : globalMessages.callToAction.signUpToBookmark("items")
                 }
             >
                 {bookmarked ? <BookmarkedSVG /> : <BookmarkSVG />}

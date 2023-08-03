@@ -84,7 +84,8 @@ const buttonStyles = css<IProps>`
     ${({ $variant, disabled }) =>
         $variant === "closeWithBg" &&
         css`
-            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            background: ${({ theme }) =>
+                theme?.colors?.btnBackgroundVariant100};
             border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 8px;
@@ -112,7 +113,8 @@ const buttonStyles = css<IProps>`
     ${({ $variant, disabled }) =>
         $variant === "notification" &&
         css`
-            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            background: ${({ theme }) =>
+                theme?.colors?.btnBackgroundVariant100};
             border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 8px;
@@ -140,7 +142,8 @@ const buttonStyles = css<IProps>`
     ${({ $variant, disabled }) =>
         $variant === "profile" &&
         css`
-            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            background: ${({ theme }) =>
+                theme?.colors?.btnBackgroundVariant100};
             border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 7.5px;
@@ -169,7 +172,8 @@ const buttonStyles = css<IProps>`
         $variant === "trash" &&
         css`
             position: relative;
-            background: ${({ theme }) => theme?.colors?.btnBackgroundVariant100};
+            background: ${({ theme }) =>
+                theme?.colors?.btnBackgroundVariant100};
             border: 1px solid ${({ theme }) => theme?.colors?.btnRingVariant300};
             border-radius: 100px;
             padding: 20.59px;

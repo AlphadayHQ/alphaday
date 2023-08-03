@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import CollapseButton from "../buttons/CollapseButton";
 import styles from "./ListItem.module.scss";
 
-//  TODO:  const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
+//  TODO (xavier-charles)::  const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
 
 interface ICollapseListItem {
     openAccordion: boolean;

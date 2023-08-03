@@ -66,7 +66,8 @@ const buttonStyles = css<IProps>`
             border-color: ${({ theme }) => theme?.colors?.btnRingVariant200};
             box-sizing: border-box;
             &:hover {
-                border-color: ${({ theme }) => theme?.colors?.btnRingVariant100};
+                border-color: ${({ theme }) =>
+                    theme?.colors?.btnRingVariant100};
             }
             &:active {
                 background-color: ${({ theme }) =>
