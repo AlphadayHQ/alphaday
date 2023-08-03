@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 import { twMerge } from "tailwind-merge";
+import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 
 export const HeaderWrapper: FC<{
     children: React.ReactNode;
@@ -9,9 +9,12 @@ export const HeaderWrapper: FC<{
     return (
         <div
             className={twMerge(
-                `z-[${Z_INDEX_REGISTRY.HEADER}] fixed inset-x-0 top-0 flex flex-col`,
+                "fixed inset-x-0 top-0 flex flex-col",
                 className
             )}
+            style={{
+                zIndex: Z_INDEX_REGISTRY.HEADER,
+            }}
         >
             {children}
         </div>

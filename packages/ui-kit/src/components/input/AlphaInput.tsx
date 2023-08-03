@@ -52,11 +52,13 @@ export const AlphaInput: FC<IInputProps> = ({
                 value={value}
                 readOnly={readonly}
                 className={twMerge(
-                    `w-[${width || "359px"}]`,
-                    `h-[${height || "40px"}]`,
                     `${state === "error" && "border-danger"}`,
                     "bg-backgroundVariant400 text-primary flex flex-row  items-start rounded-lg p-3"
                 )}
+                style={{
+                    width: width || "359px",
+                    height: height || "40px",
+                }}
                 {...restProps}
             />
             {feedbackText && showState && (

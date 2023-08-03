@@ -75,10 +75,8 @@ export const Carousel: FC<CarouselProps> = ({
         >
             {showPointers && count > 1 && (
                 <div
-                    className={twMerge(
-                        `z-[${Z_INDEX_REGISTRY.CAROUSEL}]`,
-                        "top-2/5 absolute left-0 scale-x-[-1] cursor-pointer opacity-60 hover:opacity-100"
-                    )}
+                    className="top-2/5 absolute left-0 scale-x-[-1] cursor-pointer opacity-60 hover:opacity-100"
+                    style={{ zIndex: Z_INDEX_REGISTRY.CAROUSEL }}
                 >
                     <PointerSVG
                         width="50px"
@@ -99,10 +97,8 @@ export const Carousel: FC<CarouselProps> = ({
             </div>
             {showPointers && count > 1 && (
                 <div
-                    className={twMerge(
-                        `z-[${Z_INDEX_REGISTRY.CAROUSEL}]`,
-                        "top-2/5 absolute left-[calc(100%-50px)] right-0 cursor-pointer opacity-60 hover:opacity-100"
-                    )}
+                    className="top-2/5 absolute left-[calc(100%-50px)] right-0 cursor-pointer opacity-60 hover:opacity-100"
+                    style={{ zIndex: Z_INDEX_REGISTRY.CAROUSEL }}
                 >
                     <PointerSVG
                         width="50px"
@@ -117,6 +113,10 @@ export const Carousel: FC<CarouselProps> = ({
                         .fill(null)
                         .map((_, i) => (
                             <div
+                                role="button"
+                                title="button"
+                                tabIndex={0}
+                                // eslint-disable-next-line react/no-array-index-key
                                 key={String(i)}
                                 className={twMerge(
                                     index === i

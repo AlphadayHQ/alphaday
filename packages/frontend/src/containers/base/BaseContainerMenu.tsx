@@ -22,10 +22,10 @@ interface IBaseContainerMenu {
 
 const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
     const KebabIconVectorPos = [
-        [1.5, 8.5],
-        [1.5, 8.5],
-        [1.5, 8.5],
-        [15.5, 8.5],
+        "top-[1.5px]",
+        "top-[8.5px]",
+        "top-[8.5px]",
+        "top-[15.5px]",
     ];
     const otherClasses =
         "w-[3px] h-[3px] bg-primaryVariant100 absolute transition-[0.25s] opacity-100 rounded-[50%]";
@@ -37,10 +37,10 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
                     "[&>:nth-child(3)]:scale-[6] [&>:nth-child(3)]:opacity-60"
             )}
         >
-            {KebabIconVectorPos.map(([top, left], i) => (
+            {KebabIconVectorPos.map((top, i) => (
                 <span
-                    key={`${top + left + i}`}
-                    className={`left-[${left}px] top-[${top}px] ${otherClasses}`}
+                    key={`${top + i.toString()}`}
+                    className={`left-[8.5px] ${top} ${otherClasses}`}
                 />
             ))}
             <span
