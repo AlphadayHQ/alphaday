@@ -130,7 +130,7 @@ export const ModalBody: FC<IProps> = ({
 export const ModalFooter: FC<IProps & { bg?: string }> = ({
     className,
     children,
-    bg: _bg, // TODO: support bg colors
+    bg: _bg, // TODO (xavier-charles):: support bg colors
     ...restProps
 }) => {
     return (

@@ -1,9 +1,8 @@
 import { FC } from "react";
+import { BaseModuleHeader, TabButton } from "@alphaday/ui-kit";
 import { TBaseTag } from "src/api/services";
 import { TUserViewWidget } from "src/api/types";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
-import { AlphaTabButton } from "src/components/widgets/tabButtons/AlphaTabButton";
-import { StyledModuleHeader, StyledModuleTitle } from "./BaseContainer.style";
 import BaseContainerMenu from "./BaseContainerMenu";
 
 interface IBaseContainerHeader {
@@ -37,30 +36,33 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
     allowFullSize,
 }) => {
     return (
-        <StyledModuleHeader ref={headerRef}>
-            <div className="header">
+        <BaseModuleHeader ref={headerRef}>
+            <div className="flex w-full items-center justify-between">
                 <div
                     role="button"
                     tabIndex={0}
                     onClick={toggleCollapse}
-                    className="wrap"
+                    className="flex h-[inherit] w-full pb-0.5"
                 >
-                    <StyledModuleTitle>{title}</StyledModuleTitle>
+                    <h6 className="text-primaryVariant100 m-0 inline-flex uppercase">
+                        {title}
+                    </h6>
                     {tags && (
                         <span
                             data-testid="module-search-tags"
-                            className="searchTags"
+                            className="pl-1.5 leading-[18px]"
                         >
                             {tags.map((tag) => (
                                 <span
                                     role="button"
+                                    className="items-end [&>svg]:self-end [&>svg]:pb-[3px]"
                                     key={tag.id}
                                     tabIndex={0}
                                     onClick={(e) => {
                                         e.stopPropagation(); // Doing this on StyledButton doesn't work.
                                     }}
                                 >
-                                    <AlphaTabButton
+                                    <TabButton
                                         variant="transparent"
                                         open={false}
                                         onClose={() => {
@@ -72,7 +74,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                                         title={tag.name}
                                     >
                                         {tag.name}
-                                    </AlphaTabButton>
+                                    </TabButton>
                                 </span>
                             ))}
                         </span>
@@ -80,7 +82,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                 </div>
                 {showFullSize ? (
                     <div
-                        className="button"
+                        className="fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center"
                         onClick={handleShowFullSize}
                         role="button"
                         title="Close full-size view"
@@ -114,7 +116,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                     />
                 )}
             </div>
-        </StyledModuleHeader>
+        </BaseModuleHeader>
     );
 };
 

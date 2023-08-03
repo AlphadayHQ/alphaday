@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
 import styles from "./Button.module.scss";
 
-// TODO: Replace [portfolio-addWallet] in AddressTabSelect with => border border-primaryVariant100)] bg-btnBackgroundVariant1200)] border-solid hover:bg-btnBackgroundVariant1100
+// TODO (xavier-charles):: Replace [portfolio-addWallet] in AddressTabSelect with => border border-primaryVariant100)] bg-btnBackgroundVariant1200)] border-solid hover:bg-btnBackgroundVariant1100
 
 const buttonVariants = tv({
     base: twMerge(
@@ -54,6 +54,7 @@ export interface ButtonProps extends TButtonVariants {
     onClick?: () => MaybeAsync<void>;
     onClose?: () => MaybeAsync<void>;
     children?: React.ReactNode;
+    className?: string;
 }
 
 export const TabButton: FC<ButtonProps> = ({
@@ -65,18 +66,23 @@ export const TabButton: FC<ButtonProps> = ({
     label,
     onClose,
     title,
+    className,
     ...restProps
 }) => {
     const isDisabled = open ? false : disabled;
     return (
         <button
+            type="button"
             disabled={isDisabled}
-            className={buttonVariants({
-                variant,
-                disabled: isDisabled,
-                uppercase,
-                open,
-            })}
+            className={twMerge(
+                buttonVariants({
+                    variant,
+                    disabled: isDisabled,
+                    uppercase,
+                    open,
+                }),
+                className
+            )}
             aria-label={label}
             name={title}
             type="button"

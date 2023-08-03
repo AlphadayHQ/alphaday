@@ -1,8 +1,8 @@
-import logoDay from "src/assets/icons/logo-white.svg";
+import Logoday from "../../assets/svg/logo-white.svg";
 
 /* eslint-disable no-param-reassign */
 export const imgOnError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
     e.currentTarget.onerror = null;
-    e.currentTarget.src = logoDay;
+    e.currentTarget.src = Logoday;
 };
 /* eslint-enable no-param-reassign */

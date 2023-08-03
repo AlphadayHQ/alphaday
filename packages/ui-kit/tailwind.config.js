@@ -1,13 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-import { alphadayColors } from "./src/globalStyles/colors";
-import { breakpoints, tailwindBreakpoints } from "./src/globalStyles/breakpoints";
+import { colors } from "./src/globalStyles/colors";
+import { tailwindBreakpoints } from "./src/globalStyles/breakpoints";
 import typography from "@tailwindcss/typography";
+import plugin from "tailwindcss/plugin";
+import { fontUtilities } from "./src/globalStyles/fontGroups";
 
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {},
-        colors: alphadayColors,
+        colors: colors,
 
         screens: {
             ...tailwindBreakpoints,
@@ -17,6 +19,17 @@ export default {
             sans: '"Open sans", sans-serif',
             montserrat: '"Montserrat", "Helvetica Neue", Helvetica, Verdana',
         },
+        fontFamily: {
+            sans: '"Open sans", sans-serif',
+            montserrat: '"Montserrat", "Helvetica Neue", Helvetica, Verdana',
+        },
     },
-    plugins: [typography],
+    plugins: [
+        typography,
+        plugin(function ({ addUtilities }) {
+            addUtilities({
+                ...fontUtilities,
+            });
+        }),
+    ],
 };

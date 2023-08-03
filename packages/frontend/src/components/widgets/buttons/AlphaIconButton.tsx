@@ -1,16 +1,16 @@
 /* eslint-disable react/button-has-type */
 import { FC } from "react";
+import { ReactComponent as BellSVG } from "../../../assets/icons/bell.svg";
 import { ReactComponent as ArrowDown } from "../../../assets/icons/chevron-down.svg";
 import { ReactComponent as ArrowLeft } from "../../../assets/icons/chevron-left.svg";
 import { ReactComponent as ArrowRight } from "../../../assets/icons/chevron-right.svg";
-import { ReactComponent as BellSVG } from "../../../assets/svg/bell.svg";
-import { ReactComponent as CloseIconSVG } from "../../../assets/svg/closeIcon.svg";
-import { ReactComponent as CloseIcon2SVG } from "../../../assets/svg/closeIcon2.svg";
-import { ReactComponent as InfoSVG } from "../../../assets/svg/info.svg";
-import { ReactComponent as StarSVG } from "../../../assets/svg/star.svg";
-import { ReactComponent as StarFilledSVG } from "../../../assets/svg/starFilled.svg";
-import { ReactComponent as TrashSVG } from "../../../assets/svg/trash.svg";
-import { ReactComponent as UserSVG } from "../../../assets/svg/user.svg";
+import { ReactComponent as CloseIconSVG } from "../../../assets/icons/closeIcon.svg";
+import { ReactComponent as CloseIcon2SVG } from "../../../assets/icons/closeIcon2.svg";
+import { ReactComponent as InfoSVG } from "../../../assets/icons/info.svg";
+import { ReactComponent as StarSVG } from "../../../assets/icons/star.svg";
+import { ReactComponent as StarFilledSVG } from "../../../assets/icons/starFilled.svg";
+import { ReactComponent as TrashSVG } from "../../../assets/icons/trash.svg";
+import { ReactComponent as UserSVG } from "../../../assets/icons/user.svg";
 import { StyledButton, TVariant } from "./AlphaIconButton.style";
 
 export interface ButtonProps {

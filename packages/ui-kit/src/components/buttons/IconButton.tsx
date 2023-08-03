@@ -4,12 +4,12 @@ import { ReactComponent as BellSVG } from "src/assets/svg/bell.svg";
 import { ReactComponent as ArrowDown } from "src/assets/svg/chevron-down.svg";
 import { ReactComponent as ArrowLeft } from "src/assets/svg/chevron-left.svg";
 import { ReactComponent as ArrowRight } from "src/assets/svg/chevron-right.svg";
-import { ReactComponent as CloseIconSVG } from "src/assets/svg/close.svg";
-import { ReactComponent as CloseIcon2SVG } from "src/assets/svg/close2.svg";
+import { ReactComponent as CloseSVG } from "src/assets/svg/close.svg";
+import { ReactComponent as Close2SVG } from "src/assets/svg/close2.svg";
 import { ReactComponent as InfoSVG } from "src/assets/svg/info.svg";
 import { ReactComponent as StarSVG } from "src/assets/svg/star.svg";
 import { ReactComponent as StarFilledSVG } from "src/assets/svg/starFilled.svg";
-import { ReactComponent as TrashSVG } from "src/assets/svg/trash.svg";
+import { ReactComponent as TrashSVG } from "../../assets/svg/trash.svg";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 import { tv, VariantProps } from "tailwind-variants";
 import styles from "./Button.module.scss";
@@ -66,9 +66,9 @@ const iconSelector = (
         case "info":
             return <InfoSVG />;
         case "close":
-            return <CloseIconSVG />;
+            return <CloseSVG />;
         case "closeWithBg":
-            return <CloseIcon2SVG />;
+            return <Close2SVG />;
         case "notification":
             return <BellSVG />;
         case "profile":

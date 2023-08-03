@@ -1,8 +1,18 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-import { useWindowSize } from "@alphaday/shared/hooks";
-import { alphaBreakpoints } from "@alphaday/shared/styled";
+import {
+    Dialog,
+    Modal,
+    BaseModuleWrapper,
+    breakpoints,
+    BaseModuleBody,
+} from "@alphaday/ui-kit";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
-import { useCallbackState, useKeyPress, useView } from "src/api/hooks";
+import {
+    useCallbackState,
+    useKeyPress,
+    useView,
+    useWindowSize,
+} from "src/api/hooks";
 import {
     toggleCollapse as toggleCollapseInStore,
     selectIsMinimised,
@@ -12,15 +22,8 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TUserViewWidget } from "src/api/types";
-import { AlphaDialog } from "src/components/widgets/dialog/AlphaDialog";
-import { AlphaModal } from "src/components/widgets/modal/AlphaModal";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
-import {
-    StyledModuleWrapper,
-    StyledModuleBody,
-    StyledModuleFlip,
-} from "./BaseContainer.style";
 import BaseContainerHeader from "./BaseContainerHeader";
 import BaseContainerOptions from "./BaseContainerOptions";
 
@@ -97,21 +100,18 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     };
     const toggleCollapse = useCallback(() => {
         dispatch(toggleCollapseInStore({ widgetHash: moduleData.hash }));
-        if (onToggleCollapse != null) {
-            onToggleCollapse();
-        }
+        if (onToggleCollapse != null) onToggleCollapse();
     }, [dispatch, moduleData.hash, onToggleCollapse]);
 
     const toggleSettings = useCallback(() => {
         // widget options uses the height of the widget. The widget must be expanded before the options can be shown
         if (isCollapsed) {
+            // Change the state of the widget to expanded before showing the options
             setAlreadyCollapsed(false, () => {
                 toggleCollapse();
                 setShowSettings((showSetting) => !showSetting);
             });
-        } else {
-            setShowSettings((showSetting) => !showSetting);
-        }
+        } else setShowSettings((showSetting) => !showSetting);
     }, [isCollapsed, setAlreadyCollapsed, toggleCollapse]);
 
     useEffect(() => {
@@ -121,35 +121,27 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     const handleShowFullSize = useCallback(() => {
         if (
             width !== undefined &&
-            width < alphaBreakpoints.TwoColMinWidth &&
+            width < breakpoints.TwoColMinWidth &&
             showFullSize === false
-        ) {
+        )
             setShowMobileDialog(true);
-        }
         // expand regular size module since full-size modal is already open
         if (onToggleShowFullSize != null) {
-            if (showFullSize) {
-                onToggleShowFullSize("close");
-            } else {
-                onToggleShowFullSize("open");
-            }
+            if (showFullSize) onToggleShowFullSize("close");
+            else onToggleShowFullSize("open");
         }
     }, [onToggleShowFullSize, showFullSize, width]);
 
     const removeWidget = useCallback(() => {
         dispatch(removeWidgetFromView({ widgetHash: moduleData.hash }));
         dispatch(removeWidgetStateFromCache({ widgetHash: moduleData.hash }));
-        if (onRemoveWidget) {
-            onRemoveWidget(moduleData.hash);
-        }
+        if (onRemoveWidget) onRemoveWidget(moduleData.hash);
     }, [dispatch, onRemoveWidget, moduleData.hash]);
 
     const adjustHeight = (event: React.MouseEvent<HTMLSpanElement>) => {
         event.stopPropagation();
         event.preventDefault();
-        if (!moduleWrapRef.current) {
-            return;
-        }
+        if (!moduleWrapRef.current) return;
         const startHeight = moduleWrapRef.current.clientHeight; // Current widget Height
         const { pageY: startPosY } = event;
 
@@ -185,10 +177,13 @@ const BaseContainer: FC<IBaseContainerProps> = ({
 
     return (
         <>
-            <StyledModuleFlip id={moduleData.hash}>
-                <div className="flip-inner">
-                    <StyledModuleWrapper
-                        className={`flip ${showSettings ? "flipped" : ""}`}
+            <div
+                className="[&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
+                id={moduleData.hash}
+            >
+                <div className="relative h-full w-full [transform-style:preserve-3d]">
+                    <BaseModuleWrapper
+                        showSettings={showSettings}
                         ref={moduleWrapRef}
                     >
                         <div
@@ -219,9 +214,9 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                             />
                         </div>
                         {!alreadyCollapsed && !showFullSize && (
-                            <StyledModuleBody>{children}</StyledModuleBody>
+                            <BaseModuleBody>{children}</BaseModuleBody>
                         )}
-                    </StyledModuleWrapper>
+                    </BaseModuleWrapper>
                     <BaseContainerOptions
                         onIncludeTag={includeTagInViewWidget}
                         onRemoveTag={removeTagFromViewWidget}
@@ -236,16 +231,16 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     {adjustable && !isCollapsed && (
                         <div
                             onMouseDown={adjustHeight}
-                            className="adjust-height-handle"
+                            className="absolute bottom-[-18px] left-[-3px] h-[15px] w-[calc(100%_+_6px)] cursor-row-resize border-[none]"
                             role="button"
                             title="Adjust widget height"
                             tabIndex={-1}
                         />
                     )}
                 </div>
-            </StyledModuleFlip>
+            </div>
             {onToggleShowFullSize && allowFullSize && (
-                <AlphaModal show={!!showFullSize} onClose={handleShowFullSize}>
+                <Modal showModal={!!showFullSize} onClose={handleShowFullSize}>
                     <BaseContainerHeader
                         headerRef={headerRef}
                         toggleCollapse={toggleCollapse}
@@ -263,18 +258,18 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     />
                     {children}
                     <div className="foot-block" />
-                </AlphaModal>
+                </Modal>
             )}
-            <AlphaDialog
+            <Dialog
                 title="Alphaday"
                 showXButton
                 saveButtonText="Close"
-                show={showMobileDialog}
+                showDialog={showMobileDialog}
                 onSave={handleShowDialog}
                 onClose={handleShowDialog}
             >
                 <p>Switch to Desktop to get the best experience of {title}</p>
-            </AlphaDialog>
+            </Dialog>
         </>
     );
 };

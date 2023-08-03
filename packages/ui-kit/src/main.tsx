@@ -5,7 +5,7 @@ import "./globalStyles/index.scss";
 
 const container = document.getElementById("root");
 if (!container) {
-    // TODO: Replace with a proper logger
+    // TODO (xavier-charles):: Replace with a proper logger
     throw new Error("Root element not found");
 }
 

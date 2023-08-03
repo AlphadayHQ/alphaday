@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "src/assets/svg/close.svg";
-import { ReactComponent as ViewsSVG } from "src/assets/svg/views.svg";
-import { ReactComponent as WidgetsSVG } from "src/assets/svg/widgets.svg";
+import { ReactComponent as CloseSVG } from "../../assets/svg/close.svg";
+import { ReactComponent as ViewsSVG } from "../../assets/svg/views.svg";
+import { ReactComponent as WidgetsSVG } from "../../assets/svg/widgets.svg";
 import { TabButton } from "./TabButton";
 
 interface ButtonProps {

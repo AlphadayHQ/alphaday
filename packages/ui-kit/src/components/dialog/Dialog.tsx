@@ -1,8 +1,8 @@
 import { FC, useRef } from "react";
-// TODO: Add useKeyPress hook and Logger
+// TODO (xavier-charles):: Add useKeyPress hook and Logger
 // import { useKeyPress } from "src/api/hooks";
 // import { Logger } from "src/api/utils/logging";
-import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
+import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
 import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
@@ -52,9 +52,9 @@ export const Dialog: FC<
     //     skip: disableSave,
     // });
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = async () => {
         onClose();
-        modalRef.current?.dismiss();
+        await modalRef.current?.dismiss();
     };
     const handleSaveDialog = async () => {
         await onSave?.();
@@ -78,6 +78,7 @@ export const Dialog: FC<
                 </h6>
                 {showXButton && (
                     <button
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         onClick={handleCloseDialog}
                         className="border-primaryVariant200 bg-backgroundVariant200 flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
                         title="close"
