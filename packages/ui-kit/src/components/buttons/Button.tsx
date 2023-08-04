@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
-import { fontVariants } from "../../globalStyles/fontGroups";
 import styles from "./Button.module.scss";
 
 const buttonVariants = tv({
@@ -15,12 +14,9 @@ const buttonVariants = tv({
             secondaryXL: `box-border h-[54px] border-btnRingVariant300 px-[25px] py-4 active:bg-btnBackgroundVariant700`,
             primary: "",
             secondary: "border-btnRingVariant300",
-            small: `${fontVariants({
-                variant: "normal",
-            })} h-[29px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-5 pb-[3px] pt-0.5 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800`,
-            extraSmall: `${fontVariants({
-                variant: "normal",
-            })} h-[26px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800`,
+            small: "fontGroup-normal h-[29px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-5 pb-[3px] pt-0.5 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
+            extraSmall:
+                "fontGroup-normal h-[26px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
         },
         error: { true: "bg-dangerFiltered" },
         uppercase: {
