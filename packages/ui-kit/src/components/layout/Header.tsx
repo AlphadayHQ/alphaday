@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 import { twMerge } from "tailwind-merge";
+import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 
 export const HeaderWrapper: FC<{
     children: React.ReactNode;

@@ -46,7 +46,7 @@ const variantClasses = {
 export const Spinner: FC<IProps> = ({
     className,
     variant = "border",
-    color,
+    color: _color, // TODO: Implement color
     size = "md",
     ...restProps
 }) => {

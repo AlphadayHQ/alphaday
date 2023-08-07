@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
+import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
 import { twMerge } from "tailwind-merge";
 import { VariantProps, tv } from "tailwind-variants";
 import styles from "./Button.module.scss";
@@ -105,9 +105,5 @@ export const TabButton: FC<ButtonProps> = ({
 };
 
 TabButton.defaultProps = {
-    variant: "primary",
-    open: false,
-    disabled: false,
-    uppercase: true,
     label: "button",
 };

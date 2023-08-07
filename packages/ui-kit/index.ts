@@ -28,8 +28,8 @@ import { breakpoints } from "./src/globalStyles/breakpoints";
 export {
     themes,
     breakpoints,
-    NavTabButton,
     Button,
+    NavTabButton,
     TabButton,
     Footer,
     Logo,
@@ -48,3 +48,4 @@ export {
     twMerge,
     useLayer,
 };
+

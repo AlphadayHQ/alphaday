@@ -20,7 +20,7 @@ export const deviceBreakpoints = {
 export const tailwindBreakpoints = (() => {
     const newBreakpoints: Record<string, string> = {};
     Object.entries(deviceBreakpoints).forEach(([key, value]) => {
-        newBreakpoints[key] = value + "px";
+        newBreakpoints[key] = `${value}px`;
     });
     return newBreakpoints;
 })();
