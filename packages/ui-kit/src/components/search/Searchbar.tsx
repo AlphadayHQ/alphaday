@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { themes } from "@alphaday/ui-kit";
 import Select, {
     components,
     GroupBase,
@@ -16,6 +15,7 @@ import Select, {
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
 import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
+import { themes } from "../../globalStyles";
 import { Spinner } from "../spinner/Spinner";
 
 /**
@@ -98,8 +98,6 @@ export interface ISearchProps<Option = unknown> {
     options?: Option[];
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
-    uppercase?: boolean;
-    label?: string;
     placeholder: string;
     initialInputValue?: string;
     initialSearchValues: Option[];
