@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import { FC, useRef, useState } from "react";
 import {
     BaseModuleBody,
@@ -161,6 +162,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                         marginLeft: "0px",
                     },
                 })}
+                // @ts-expect-error TODO(elcharitas): fix this type issue
                 customComponents={customComponents}
                 disabled={disabled}
             />
