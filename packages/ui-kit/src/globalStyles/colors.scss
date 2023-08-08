@@ -104,6 +104,7 @@ http://ionicframework.com/docs/theming/ */
   --alpha-dark-filtered-300: rgba(0, 0, 0, 0.6);
 
   /* secondary shades */
+  --alpha-white: #ffffff;
   --alpha-light-blue: #477ff7;
   --alpha-light-blue-100: #5e8ff8;
   --alpha-dark-blue: #263964;
@@ -185,6 +186,7 @@ http://ionicframework.com/docs/theming/ */
   --secondaryYellowGreen: var(--alpha-yellow-green);
   --success: var(--alpha-green);
   --successFiltered: var(--alpha-green-filtered);
+  --white: var(--alpha-white);
 }
 
 /*
