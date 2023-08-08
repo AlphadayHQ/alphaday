@@ -1,21 +1,21 @@
 {
   "short_name": "Alphaday",
-  "name": "My Alphaday",
+  "name": "Alphaday",
   "icons": [
     {
-      "src": "assets/icon/favicon.png",
+      "src": "/logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "assets/icon/icon.png",
+      "src": "/logo.png",
       "type": "image/png",
-      "sizes": "512x512",
+      "sizes": "192x192",
       "purpose": "maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff"
+  "theme_color": "#FAA202",
+  "background_color": "#111213"
 }
