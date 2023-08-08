@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { themes } from "@alphaday/ui-kit";
 import Select, {
     components,
     GroupBase,
@@ -15,6 +14,7 @@ import Select, {
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
+import { themes } from "src/globalStyles";
 import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
 import { Spinner } from "../spinner/Spinner";
 
