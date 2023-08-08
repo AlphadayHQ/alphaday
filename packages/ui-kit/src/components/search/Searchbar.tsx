@@ -98,8 +98,8 @@ export interface ISearchProps<Option = unknown> {
     options?: Option[];
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
-    uppercase?: boolean;
-    label?: string;
+    // uppercase?: boolean;
+    // label?: string;
     placeholder: string;
     initialInputValue?: string;
     initialSearchValues: Option[];

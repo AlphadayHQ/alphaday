@@ -14,7 +14,7 @@ import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 // import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
 // import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
-// import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
+import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 // import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
 
 interface IProps {
@@ -62,9 +62,9 @@ const LayoutHeader: FC<IProps> = ({
                         <Logo />
                         {!hideFeatures && (
                             <>
-                                {/* <StyledSearch>
+                                <div className="twoCol:w-[404px] threeCol:w-[524px] order-2 flex w-[300px] flex-1 items-center justify-center">
                                     <HeaderSearchContainer />
-                                </StyledSearch> */}
+                                </div>
                                 <HeaderNavRight className="p-0">
                                     <HeaderNavElement className="mr-[15px]">
                                         {/* <SyncIndicatorContainer /> */}
@@ -150,7 +150,7 @@ const LayoutHeader: FC<IProps> = ({
                         </div>
                         {mobileOpen && (
                             <div className="mx-2.5 my-auto flex w-full flex-row items-center justify-center">
-                                {/* <HeaderSearchContainer /> */}
+                                <HeaderSearchContainer />
                             </div>
                         )}
                         {mobileOpen && (
