@@ -97,9 +97,13 @@ const CollapseListItem: FC<ICollapseListItem> = ({
                 ref={descHeightRef}
                 className={twMerge(
                     collapseItemVaraints(variant).desc,
-                    openAccordion && collapseItemVaraints(variant).fullHeight,
-                    openAccordion && `h-[${fullHeight || "109.2px"}]`
+                    openAccordion && collapseItemVaraints(variant).fullHeight
                 )}
+                style={{
+                    height: openAccordion
+                        ? `${fullHeight || 109.2}px`
+                        : undefined,
+                }}
             >
                 {openAccordion && (
                     <div className={collapseItemVaraints(variant).wrap}>

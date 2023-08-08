@@ -1,9 +1,8 @@
 import { FC } from "react";
 import PerfectScrollbar, { ScrollBarProps } from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
-import styles from "./scrollbar.module.scss"
 import { twMerge } from "tailwind-merge";
-import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
+import styles from "./scrollbar.module.scss";
 
 export const ScrollBar: FC<ScrollBarProps> = ({
     children,
@@ -14,7 +13,15 @@ export const ScrollBar: FC<ScrollBarProps> = ({
     ...rest
 }) => {
     return (
-        <div className={twMerge(`[&>.ps>.ps__rail-y]:z-[${Z_INDEX_REGISTRY.SCROLLBAR}]`, styles.scrollbar, className)}  {...rest}>
+        <div
+            className={twMerge(
+                // The alternative to hardcoding the z-[8] is to create a module.scss file
+                `[&>.ps>.ps__rail-y]:z-[8]`,
+                styles.scrollbar,
+                className
+            )}
+            {...rest}
+        >
             <PerfectScrollbar
                 containerRef={containerRef}
                 onYReachEnd={onYReachEnd}
