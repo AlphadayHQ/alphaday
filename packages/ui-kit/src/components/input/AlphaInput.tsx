@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import { ChangeEvent, FC, FocusEvent, MouseEvent } from "react";
 import { twMerge } from "tailwind-merge";
 import Feedback from "../feedback/feedback";
