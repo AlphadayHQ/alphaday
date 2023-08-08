@@ -3,7 +3,6 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { MemoryRouter, MemoryRouterProps } from "react-router-dom";
 import { zapperApi } from "src/api/services";
-import ThemeProvider from "src/api/store/providers/theme-provider";
 import searchReducer from "src/api/store/slices/search";
 import uiReducer from "src/api/store/slices/ui";
 import userReducer from "src/api/store/slices/user";
@@ -33,9 +32,7 @@ export const BaseWrapper: FC<IProps> = ({ children, withZapperApi }) => {
                 }),
             })}
         >
-            <ThemeProvider>
-                <div className="item">{children}</div>
-            </ThemeProvider>
+            <div className="item">{children}</div>
         </Provider>
     );
 };

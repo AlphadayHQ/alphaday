@@ -1,6 +1,7 @@
 import { Suspense } from "react";
+import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { routes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
@@ -17,11 +18,11 @@ import "@alphaday/ui-kit/global.scss";
  */
 const App: React.FC = () => {
     return (
-        // TODO: Add a theme switching logic here
-        <div className="App theme-dark">
+        <IonApp>
+            {/** @ts-expect-error react16/18 type conflict */}
             <IonReactRouter>
                 <Suspense>
-                    <Switch>
+                    <IonRouterOutlet>
                         {routes.map((route) => (
                             <Route
                                 key={route.path}
@@ -30,10 +31,10 @@ const App: React.FC = () => {
                                 component={route.component}
                             />
                         ))}
-                    </Switch>
+                    </IonRouterOutlet>
                 </Suspense>
             </IonReactRouter>
-        </div>
+        </IonApp>
     );
 };
 

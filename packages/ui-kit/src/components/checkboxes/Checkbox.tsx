@@ -14,7 +14,7 @@ export interface CheckBoxProps {
 export const Checkbox: FC<CheckBoxProps> = ({
     checked,
     disabled,
-    uppercase,
+    uppercase: _uppercase, // TODO: implement uppercase
     label,
     ...restProps
 }) => {

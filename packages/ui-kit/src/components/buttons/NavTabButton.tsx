@@ -50,7 +50,6 @@ export const NavTabButton: FC<ButtonProps> = ({
 };
 
 NavTabButton.defaultProps = {
-    open: false,
     disabled: false,
     uppercase: true,
     label: "button",
