@@ -28,8 +28,8 @@ import { darkColors as defaultColors } from "./src/globalStyles/colors";
 export {
     defaultColors,
     breakpoints,
-    NavTabButton,
     Button,
+    NavTabButton,
     TabButton,
     Footer,
     Logo,
@@ -48,3 +48,4 @@ export {
     twMerge,
     useLayer,
 };
+

@@ -9,9 +9,12 @@ export const HeaderWrapper: FC<{
     return (
         <div
             className={twMerge(
-                `z-[${Z_INDEX_REGISTRY.HEADER}] fixed inset-x-0 top-0 flex flex-col`,
+                "fixed inset-x-0 top-0 flex flex-col",
                 className
             )}
+            style={{
+                zIndex: Z_INDEX_REGISTRY.HEADER,
+            }}
         >
             {children}
         </div>
