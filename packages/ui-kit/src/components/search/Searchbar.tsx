@@ -97,6 +97,7 @@ export interface ISearchProps<Option = unknown> {
     options?: Option[];
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
+    // TODO (xavier-charles): handle/remove prop if not needed
     // uppercase?: boolean;
     // label?: string;
     placeholder: string;
