@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
+
+
 import { FC } from "react";
 import { ReactComponent as PauseSVG } from "src/assets/icons/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/icons/play2.svg";
@@ -28,7 +31,7 @@ interface IList {
     image?: string;
 }
 
-const listItemVaraints = (variant: IList["variant"]) => {
+const listItemVariants = (variant: IList["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.listItem,
@@ -113,7 +116,7 @@ export const ListItem: FC<IList> = ({
     const duration = computeDuration(date);
 
     if (variant === "news") {
-        const variantStyle = listItemVaraints("news");
+        const variantStyle = listItemVariants("news");
 
         return (
             <>
@@ -154,7 +157,7 @@ export const ListItem: FC<IList> = ({
 
     // TODO (xavier-charles):: remove this if we no longer need it
     if (variant === "reports") {
-        const variantStyle = listItemVaraints("reports");
+        const variantStyle = listItemVariants("reports");
         return (
             <>
                 <li className={variantStyle.base}>
@@ -190,12 +193,13 @@ export const ListItem: FC<IList> = ({
     }
 
     if (variant === "podcast") {
-        const variantStyle = listItemVaraints("podcast");
+        const variantStyle = listItemVariants("podcast");
 
         return (
             <>
                 <li
-                    role="banner"
+                    role="button"
+                    tabIndex={0}
                     onClick={onClick}
                     className={variantStyle.base}
                 >
@@ -243,10 +247,15 @@ export const ListItem: FC<IList> = ({
         );
     }
     if (variant === "video") {
-        const variantStyle = listItemVaraints("video");
+        const variantStyle = listItemVariants("video");
         return (
             <>
-                <li onClick={onClick} className={variantStyle.base}>
+                <li
+                    role="button"
+                    tabIndex={0}
+                    onClick={onClick}
+                    className={variantStyle.base}
+                >
                     <img
                         src={image}
                         alt=""
@@ -277,7 +286,7 @@ export const ListItem: FC<IList> = ({
     return (
         <>
             <a
-                className={listItemVaraints(variant).base}
+                className={listItemVariants(variant).base}
                 target="_blank"
                 href={path}
                 rel="noreferrer"
@@ -285,14 +294,14 @@ export const ListItem: FC<IList> = ({
                 <img
                     src={tagImg}
                     alt=""
-                    className={listItemVaraints(variant).img}
+                    className={listItemVariants(variant).img}
                     onError={imgOnError}
                 />
-                <div className={listItemVaraints(variant).info}>
-                    <div className={listItemVaraints(variant).title}>
+                <div className={listItemVariants(variant).info}>
+                    <div className={listItemVariants(variant).title}>
                         {title}
                     </div>
-                    <p className={listItemVaraints(variant).lastLine}>
+                    <p className={listItemVariants(variant).lastLine}>
                         <span>{tag}</span> <span className="spacer">•</span>
                         <span className="date">{duration}</span>
                     </p>
