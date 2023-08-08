@@ -13,7 +13,7 @@ import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 // import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
-// import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
+import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 // import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
 
@@ -67,7 +67,7 @@ const LayoutHeader: FC<IProps> = ({
                                 </div>
                                 <HeaderNavRight className="p-0">
                                     <HeaderNavElement className="mr-[15px]">
-                                        {/* <SyncIndicatorContainer /> */}
+                                        <SyncIndicatorContainer />
                                     </HeaderNavElement>
                                     <HeaderNavElement className="mr-[15px]">
                                         <NavTabButton
