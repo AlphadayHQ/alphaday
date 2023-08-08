@@ -17,7 +17,8 @@ import "@alphaday/ui-kit/global.scss";
  */
 const App: React.FC = () => {
     return (
-        <div className="App">
+        // TODO: Add a theme switching logic here
+        <div className="App theme-dark">
             <IonReactRouter>
                 <Suspense>
                     <Switch>
