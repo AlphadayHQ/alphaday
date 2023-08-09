@@ -159,7 +159,6 @@ const TagsOptions: FC<ITagsOptions> = ({
                         marginLeft: "0px",
                     },
                 })}
-                // @ts-expect-error TODO(elcharitas): fix this type issue
                 customComponents={customComponents}
                 disabled={disabled}
             />

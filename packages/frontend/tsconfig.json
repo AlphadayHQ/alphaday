@@ -13,5 +13,6 @@
   "include": [
     "src/**/*",
     "vite.config.ts",
+    "../ui-kit/src/@types/global.d.ts"
   ],
 }
