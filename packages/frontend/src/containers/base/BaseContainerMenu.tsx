@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from "react";
-import { themes, twMerge, useLayer } from "@alphaday/ui-kit";
+import { defaultColors, twMerge, useLayer } from "@alphaday/ui-kit";
 import { ReactComponent as CameraSVG } from "src/assets/icons/camera.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
 import { ReactComponent as InfoSVG } from "src/assets/icons/info.svg";
@@ -72,9 +72,6 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
     isWidgetOptions,
 }) => {
     const [showMenu, setShowMenu] = useState(false);
-    // TODO (xavier-charles): remove hard coded themes
-    const { colors } = themes.dark;
-
     const { renderLayer, triggerProps, layerProps } = useLayer({
         isOpen: showMenu,
         placement: "bottom-end",
@@ -89,9 +86,9 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
             style: {
                 ...layerProps.style,
                 width: "200px",
-                background: colors.backgroundVariant1100,
-                color: colors.primary,
-                border: `1px solid ${colors.btnRingVariant500}`,
+                background: defaultColors.backgroundVariant1100,
+                color: defaultColors.primary,
+                border: `1px solid ${defaultColors.btnRingVariant500}`,
                 boxShadow: `0px 0px 35px 9px rgba(19, 21, 27, 0.7)`,
                 borderRadius: `5px`,
                 zIndex: Z_INDEX_REGISTRY.HEADER_MENU,
@@ -104,7 +101,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                 flexDirection: "column" as "column",
             },
         }),
-        [colors, layerProps, showMenu]
+        [layerProps, showMenu]
     );
 
     const IconStyle = {
@@ -135,7 +132,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                 <KebabMenu showMenu={showMenu} />
             </div>
             {renderLayer(
-                <div {...styledLayerProps} className="menuList">
+                <div {...styledLayerProps}>
                     <div
                         onClick={() => closeMenuAndCall(toggleSettings)}
                         tabIndex={0}
