@@ -1,6 +1,4 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
-
-
 import { FC } from "react";
 import { ReactComponent as PauseSVG } from "src/assets/icons/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/icons/play2.svg";
