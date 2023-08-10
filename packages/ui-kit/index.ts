@@ -10,6 +10,9 @@ import { Button } from "./src/components/buttons/Button";
 import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
 import { Dialog } from "./src/components/dialog/Dialog";
+import SyncIndicator, {
+    EIndicatorState,
+} from "./src/components/header/syncIndicator/SyncIndicator";
 import Footer from "./src/components/layout/Footer";
 import {
     HeaderWrapper,
@@ -56,4 +59,6 @@ export {
     HRElement,
     twMerge,
     useLayer,
+    SyncIndicator,
+    EIndicatorState,
 };
