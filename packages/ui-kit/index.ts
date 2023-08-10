@@ -25,6 +25,7 @@ import { Modal } from "./src/components/modal/Modal";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
+import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { darkColors as defaultColors } from "./src/globalStyles/colors";
 
@@ -46,6 +47,7 @@ export {
     BaseModuleOptionsFooter,
     ScrollBar,
     SearchBar,
+    SwitchWrap,
     Dialog,
     Modal,
     ModuleLoader,
