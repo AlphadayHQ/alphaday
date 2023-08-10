@@ -22,6 +22,7 @@ import { ListItem, HRElement } from "./src/components/listItem/ListItem";
 
 import { NoItems } from "./src/components/listItem/NoItems";
 import { Modal } from "./src/components/modal/Modal";
+import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { breakpoints } from "./src/globalStyles/breakpoints";
@@ -47,6 +48,7 @@ export {
     SearchBar,
     Dialog,
     Modal,
+    ModuleLoader,
     ListItem,
     NoItems,
     HRElement,
