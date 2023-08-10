@@ -16,7 +16,6 @@ import Select, {
 // import { slugify } from "src/api/utils/textUtils";
 import { darkColors } from "src/globalStyles/colors";
 import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
-import { themes } from "../../globalStyles";
 import { Spinner } from "../spinner/Spinner";
 /**
  * for simplicity, all components types here are defined with IsMulti = true
