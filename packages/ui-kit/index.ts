@@ -16,9 +16,7 @@ import {
     DropdownToggle,
     DropdownItem,
 } from "./src/components/dropdown/dropdown";
-
 import Footer from "./src/components/layout/Footer";
-
 import {
     HeaderWrapper,
     HeaderNavbar,

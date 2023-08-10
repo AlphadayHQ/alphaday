@@ -135,7 +135,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
 
     return (
         <Dropdown direction="down" data-testid="profile-dropdown">
-            <DropdownToggle variant="texted">
+            <DropdownToggle>
                 <span
                     ref={(ref) =>
                         setTutFocusElemRef && ref && setTutFocusElemRef(ref)
