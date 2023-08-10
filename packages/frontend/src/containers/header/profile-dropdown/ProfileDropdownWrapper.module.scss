@@ -1,0 +1,60 @@
+.drop-menu {
+    &:before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 25px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        left: auto;
+        right: 20px;
+        @apply oneCol:right-5;
+    }
+    &:after {
+        content: "";
+        position: absolute;
+        top: -8.5px;
+        left: 26px;
+        border-left: 9px solid transparent;
+        border-right: 9px solid transparent;
+        left: auto;
+        right: 21px;
+        @apply oneCol:right-[21px];
+    }
+}
+
+.toggle {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    outline: 0;
+    pointer-events: none;
+
+    height: 18px;
+    width: 33px;
+    border-radius: 12px;
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    border: 0;
+    background: var(--white);
+    transition: all 0.2s ease;
+    &:after {
+        content: "";
+        position: absolute;
+        top: 2.5px;
+        left: 2.4px;
+        width: 13.5px;
+        height: 13.5px;
+        border-radius: 50%;
+        background-color: var(--backgroundVariant100);
+        box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2);
+        transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+    }
+
+    &:checked:after {
+        transform: translatex(15px);
+    }
+}
