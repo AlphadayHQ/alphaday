@@ -7,7 +7,7 @@ export const HeaderWrapper: FC<{
     className?: string;
 }> = ({ children, className }) => {
     return (
-        <div
+        <header
             className={twMerge(
                 "fixed inset-x-0 top-0 flex flex-col",
                 className
@@ -17,7 +17,7 @@ export const HeaderWrapper: FC<{
             }}
         >
             {children}
-        </div>
+        </header>
     );
 };
 
@@ -29,7 +29,7 @@ export const HeaderNavbar: FC<{
     return (
         <div
             className={twMerge(
-                "bg-backgroundVariant100 twoCol:h-[60px] twoCol:top-0 twoCol:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0 px-4 py-2",
+                "bg-backgroundVariant100 twoCol:h-[60px] twoCol:top-0 twoCol:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0 py-2",
                 mobileOpen ? "h-auto" : "h-16",
                 className
             )}

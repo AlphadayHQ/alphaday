@@ -11,10 +11,9 @@ import {
 import { useWindowSize } from "src/api/hooks";
 import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
-// import { NavTabButton } from "src/components/widgets/tabButtons/NavTabButton";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 // import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
-// import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
+import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 // import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 // import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
 
@@ -63,12 +62,12 @@ const LayoutHeader: FC<IProps> = ({
                         <Logo />
                         {!hideFeatures && (
                             <>
-                                {/* <StyledSearch>
-                                    <HeaderSearchContainer />
-                                </StyledSearch> */}
+                                <div className="twoCol:w-[404px] threeCol:w-[524px] order-2 flex w-[300px] flex-1 items-center justify-center">
+                                    {/* <HeaderSearchContainer /> */}
+                                </div>
                                 <HeaderNavRight className="p-0">
                                     <HeaderNavElement className="mr-[15px]">
-                                        {/* <SyncIndicatorContainer /> */}
+                                        <SyncIndicatorContainer />
                                     </HeaderNavElement>
                                     <HeaderNavElement className="mr-[15px]">
                                         <NavTabButton

@@ -34,15 +34,15 @@ export const NavTabButton: FC<ButtonProps> = ({
         >
             {variant === "modules" &&
                 (open ? (
-                    <CloseSVG className="tabButton" />
+                    <CloseSVG className="fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
                 ) : (
-                    <WidgetsSVG className="tabButton widgets" />
+                    <WidgetsSVG className="widgets fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
                 ))}
             {variant === "views" &&
                 (open ? (
-                    <CloseSVG className="tabButton" />
+                    <CloseSVG className="fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
                 ) : (
-                    <ViewsSVG className="tabButton" />
+                    <ViewsSVG className="fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
                 ))}
             {children}
         </TabButton>

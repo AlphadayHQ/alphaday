@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, RefObject } from "react";
 
-export default <T extends HTMLElement>(
+export default function useClickOutside <T extends HTMLElement>(
     onClose: () => void,
     modalRef?: RefObject<T> // modals don't bubble click events to the document
-): RefObject<T> => {
+): RefObject<T> {
     const ref = useRef<T>(null);
     const escapeListener = useCallback(
         (e: KeyboardEvent) => {

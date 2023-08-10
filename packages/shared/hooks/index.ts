@@ -1,4 +1,4 @@
-import useClickOutside from "./use-click-outside";
-import useWindowSize from "./use-window-size";
+import useClickOutside from "./useClickOutside";
+import useWindowSize from "./useWindowsize";
 
 export { useClickOutside, useWindowSize };
