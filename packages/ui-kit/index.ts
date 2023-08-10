@@ -18,7 +18,7 @@ import {
     HeaderNavElement,
 } from "./src/components/layout/Header";
 import Logo from "./src/components/layout/Logo";
-import { ListItem } from "./src/components/listItem/ListItem";
+import { ListItem, HRElement } from "./src/components/listItem/ListItem";
 
 import { NoItems } from "./src/components/listItem/NoItems";
 import { Modal } from "./src/components/modal/Modal";
@@ -49,6 +49,7 @@ export {
     Modal,
     ListItem,
     NoItems,
+    HRElement,
     twMerge,
     useLayer,
 };
