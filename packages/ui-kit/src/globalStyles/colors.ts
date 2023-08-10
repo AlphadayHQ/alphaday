@@ -1,4 +1,5 @@
-export const colors = {
+
+export const darkColors = {
     white: "var(--alpha-white)", // color: #FFFFFF -- white
     primary: "var(--alpha-light)", // color: #C2C5D6 -- primary light
     primaryVariant100: "var(--alpha-dark-grey)", // color: #767C8F -- primary dark grey

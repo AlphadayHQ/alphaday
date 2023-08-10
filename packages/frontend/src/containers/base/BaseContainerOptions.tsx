@@ -8,7 +8,7 @@ import {
     ScrollBar,
     SearchBar,
     TabButton,
-    themes,
+    defaultColors,
 } from "@alphaday/ui-kit";
 import { ReactComponent as PinSVG } from "@alphaday/ui-kit/src/assets/svg/pin.svg";
 import { ReactComponent as PinnedSVG } from "@alphaday/ui-kit/src/assets/svg/pinned.svg";
@@ -117,9 +117,6 @@ const TagsOptions: FC<ITagsOptions> = ({
                 )
         );
 
-    // TODO (xavier-charles): remove hardcoded theme
-    const { colors } = themes.dark;
-
     return (
         <div key={setting.slug} className="setting" title={title}>
             <div className="mb-2.5">{setting.name}:</div>
@@ -149,8 +146,8 @@ const TagsOptions: FC<ITagsOptions> = ({
                     control: {
                         padding: "0 10px",
                         backgroundColor: disabled
-                            ? colors.backgroundVariant800
-                            : colors.backgroundVariant400,
+                            ? defaultColors.backgroundVariant800
+                            : defaultColors.backgroundVariant400,
                     },
                     menuList: {
                         maxHeight: "100px",
@@ -162,7 +159,6 @@ const TagsOptions: FC<ITagsOptions> = ({
                         marginLeft: "0px",
                     },
                 })}
-                // @ts-expect-error TODO(elcharitas): fix this type issue
                 customComponents={customComponents}
                 disabled={disabled}
             />

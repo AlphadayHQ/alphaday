@@ -15,7 +15,9 @@
     "lint:ui": "yarn --cwd packages/ui-kit lint",
     "lint:fix": "yarn --cwd packages/frontend lint --fix && yarn --cwd packages/ui-kit lint --fix",
     "lint": "yarn lint:frontend && yarn lint:ui",
-    "test:frontend": "echo \"Error: no test specified\" && exit 1"
+    "test:frontend": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "typecheck": "yarn --cwd packages/frontend typecheck && yarn --cwd packages/ui-kit typecheck"
   },
   "devDependencies": {
     "@types/react": "18.2.14",

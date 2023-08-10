@@ -22,13 +22,11 @@ interface IModuleWrapper {
     rowIndex: number;
     colIndex: number;
     moduleData: TUserViewWidget;
-    preferredDragTutorialWidget: number[] | undefined;
-    fullSizeWidgetConfig:
-        | {
-              slug: TTemplateSlug;
-              hash: string | undefined;
-          }
-        | undefined;
+    preferredDragTutorialWidget?: number[];
+    fullSizeWidgetConfig?: {
+        slug: TTemplateSlug;
+        hash: string | undefined;
+    };
 }
 
 const ModuleWrapper: FC<IModuleWrapper> = ({

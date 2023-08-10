@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint --max-warnings=0 --ignore-path .gitignore . --ext ts --ext tsx"
+    "lint": "eslint --max-warnings=0 --ignore-path .gitignore . --ext ts --ext tsx",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@alphaday/components": "0.0.0",
@@ -41,7 +42,7 @@
     "react-redux": "8.0.2",
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
-    "react-select": "5.4.0",
+    "react-select": "5.7.0",
     "redux-persist": "6.0.0",
     "remark-breaks": "3.0.3",
     "unist-util-visit": "5.0.0",
@@ -66,7 +67,7 @@
     "cypress": "12.7.0",
     "jsdom": "22.1.0",
     "react-test-renderer": "18.2.0",
-    "terser": "5.18.2",    
+    "terser": "5.18.2",
     "vite-plugin-svgr": "3.2.0"
   }
 }
