@@ -10,6 +10,7 @@ import {
     FunctionComponent,
     useMemo,
 } from "react";
+import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
 import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "src/hooks";
 import { AnchorElement } from "../anchor/AlphaLink";
@@ -74,6 +75,18 @@ export const Dropdown: FC<DropdownProps> = ({
     );
 };
 
+export const DropdownAvatar: FC = () => {
+    return (
+        <div className="relative h-16 w-16 rounded-full">
+            <div className="absolute inset-0 flex h-full w-full items-center justify-center rounded-full text-[15px] font-bold uppercase leading-[100%] text-white">
+                <div>
+                    <UserSVG className="w-6" />
+                </div>
+            </div>
+        </div>
+    );
+};
+
 export const DropdownToggle: FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
@@ -81,7 +94,7 @@ export const DropdownToggle: FC<{ children: React.ReactNode }> = ({
         <button
             aria-label="DropdownToggle"
             type="button"
-            className="inline-flex cursor-pointer select-none items-center justify-center border border-solid border-transparent text-center align-middle font-normal leading-normal transition-all hover:outline-none focus:outline-none active:outline-none"
+            className="inline-flex cursor-pointer select-none items-center justify-center border border-solid border-[none] border-transparent bg-transparent p-0 text-center align-middle font-normal leading-normal transition-all hover:outline-none focus:outline-none active:outline-none"
         >
             {children}
         </button>
@@ -204,17 +217,4 @@ export const DropdownItem: FC<IDropItem> = ({
     >
         {children}
     </AnchorElement>
-);
-
-interface IDropDivider {
-    className?: string;
-}
-
-export const DropdownDivider: FC<IDropDivider> = ({ className }) => (
-    <div
-        className={twMerge(
-            className,
-            "border-t-primaryVariant700 border-primaryVariant700 mx-0 my-2 h-0 overflow-hidden border-t border-solid"
-        )}
-    />
 );
