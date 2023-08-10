@@ -11,6 +11,7 @@ import {
     TAuthWallet,
     WalletConnectionState,
 } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { AlphaIconButton } from "src/components/widgets/buttons/AlphaIconButton";
@@ -18,7 +19,7 @@ import CONFIG from "src/config";
 import globalMessages from "src/globalMessages";
 import styles from "./ProfileDropdownWrapper.module.scss";
 // TODO (xavier-charles): wallet view button
-// import WalletViewButton from "./WalletViewButton";
+import WalletViewButton from "./WalletViewButton";
 
 interface IProps {
     onConnectWallet: () => MaybeAsync<void>;
@@ -174,12 +175,12 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                                         authWallet.account.address
                                     )}
                                 </div>
-                                {/* {isWalletBoardAllowed && (
+                                {isWalletBoardAllowed && (
                                     <WalletViewButton
                                         walletViewState={walletViewState}
                                         onClick={onClickWalletViewButton}
                                     />
-                                )} */}
+                                )}
                             </div>
                         )}
                     </div>
@@ -190,7 +191,14 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                                 className="hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 fontGroup-normal clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-[18px] py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] focus:outline-none [&>svg]:mr-[15px] [&>svg]:h-4 [&>svg]:w-4"
                                 key={option.dataTestId}
                                 data-testid={option.dataTestId}
-                                onClick={option.handler}
+                                onClick={() => {
+                                    option.handler()?.catch((err) => {
+                                        Logger.error(
+                                            "profile-dropdown:ProfileDropdownWrapper",
+                                            err
+                                        );
+                                    });
+                                }}
                                 role="button"
                                 tabIndex={0}
                                 // path="/"

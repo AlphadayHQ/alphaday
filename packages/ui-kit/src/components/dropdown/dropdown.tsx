@@ -10,7 +10,7 @@ import {
     FunctionComponent,
     useMemo,
 } from "react";
-import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
+import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "src/hooks";
 import { AnchorElement } from "../anchor/AlphaLink";
@@ -199,6 +199,7 @@ interface IDropItem {
     className?: string;
     active?: boolean;
     children?: React.ReactNode;
+    onClick?: () => void;
 }
 
 export const DropdownItem: FC<IDropItem> = ({
@@ -206,9 +207,11 @@ export const DropdownItem: FC<IDropItem> = ({
     path,
     className,
     active,
+    onClick,
 }) => (
     <AnchorElement
         path={path}
+        onClick={onClick}
         className={twMerge(
             "text-primary hover:bg-primary hover:text-backgroundVariant400 clear-both block w-full whitespace-nowrap border-0 bg-transparent px-[15px] py-1.5 font-normal transition-all duration-[0.2s] ease-[ease-in-out]",
             active && "bg-primary hover:bg-primary text-white hover:text-white",
