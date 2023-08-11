@@ -47,6 +47,7 @@ export const Dropdown: FC<DropdownProps> = ({
         const child = el as IChild;
         if (child !== null) {
             const childType = child?.type as FunctionComponent;
+
             const name = childType.displayName || childType.name;
             if (name === "DropdownToggle") {
                 return <child.type {...child.props} onClick={handleClick} />;
@@ -77,29 +78,30 @@ export const Dropdown: FC<DropdownProps> = ({
 
 export const DropdownAvatar: FC = () => {
     return (
-        <div className="relative h-16 w-16 rounded-full">
+        <div className="bg-btnBackgroundVariant1800 relative h-16 w-16 rounded-full">
             <div className="absolute inset-0 flex h-full w-full items-center justify-center rounded-full text-[15px] font-bold uppercase leading-[100%] text-white">
                 <div>
-                    <UserSVG className="w-6" />
+                    <UserSVG className="fill-primary w-5" />
                 </div>
             </div>
         </div>
     );
 };
 
-export const DropdownToggle: FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
+export const DropdownToggle: FC<{ children: React.ReactNode }> = (props) => {
+    const { children, ...restProps } = props;
     return (
         <button
             aria-label="DropdownToggle"
             type="button"
-            className="inline-flex cursor-pointer select-none items-center justify-center border border-solid border-[none] border-transparent bg-transparent p-0 text-center align-middle font-normal leading-normal transition-all hover:outline-none focus:outline-none active:outline-none"
+            className="inline-flex cursor-pointer select-none items-center justify-center border-[none] p-0 text-center align-middle font-normal leading-normal transition-all"
+            {...restProps}
         >
             {children}
         </button>
     );
 };
+DropdownToggle.displayName = "DropdownToggle";
 
 interface IDropMenu {
     show?: boolean;
@@ -121,9 +123,9 @@ interface IMenuMeasure {
 
 const dropdownDirection = {
     up: "mb-0.5 left-0 bottom-full",
-    down: "mt-0.5 left-0 top-full",
+    down: "mt-0.5 right-0 top-full",
     left: "mr-0.5 left-0 top-0",
-    right: "mr-0.5 left-0 top-0",
+    right: "mr-0.5 right-0 top-0",
 };
 
 export const DropdownMenu: FC<IDropMenu> = ({
@@ -180,7 +182,7 @@ export const DropdownMenu: FC<IDropMenu> = ({
             ref={menuRef}
             style={directionSyles}
             className={twMerge(
-                "text-primary bg-backgroundVariant100 absolute z-[1000] float-left hidden min-w-[10rem] rounded bg-clip-padding p-[5px] text-left text-sm shadow-[0_0_8px_2px_rgb(28_39_60_/_4%)] will-change-transform",
+                "text-primary bg-backgroundVariant100 absolute z-[1000] float-left hidden min-w-[10rem] rounded bg-clip-padding text-left text-sm shadow-[0_0_8px_2px_rgb(28_39_60_/_4%)] will-change-transform",
                 show && "block",
                 className,
                 dropdownDirection[direction || "down"]
@@ -195,29 +197,17 @@ export const DropdownMenu: FC<IDropMenu> = ({
 DropdownMenu.displayName = "DropdownMenu";
 
 interface IDropItem {
-    path: string;
-    className?: string;
-    active?: boolean;
     children?: React.ReactNode;
     onClick?: () => void;
 }
 
-export const DropdownItem: FC<IDropItem> = ({
-    children,
-    path,
-    className,
-    active,
-    onClick,
-}) => (
-    <AnchorElement
-        path={path}
+export const DropdownItem: FC<IDropItem> = ({ children, onClick }) => (
+    <div
         onClick={onClick}
-        className={twMerge(
-            "text-primary hover:bg-primary hover:text-backgroundVariant400 clear-both block w-full whitespace-nowrap border-0 bg-transparent px-[15px] py-1.5 font-normal transition-all duration-[0.2s] ease-[ease-in-out]",
-            active && "bg-primary hover:bg-primary text-white hover:text-white",
-            className
-        )}
+        role="button"
+        tabIndex={0}
+        className="hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 fontGroup-normal clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-[18px] py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] [&>svg]:mr-[15px] [&>svg]:h-4 [&>svg]:w-4"
     >
         {children}
-    </AnchorElement>
+    </div>
 );

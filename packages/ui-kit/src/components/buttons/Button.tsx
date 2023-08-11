@@ -42,11 +42,13 @@ export interface ButtonProps extends TButtonVariants {
     children?: React.ReactNode;
     testId?: string;
     id?: string;
+    className?: string;
 }
 
 export const Button: FC<ButtonProps> = ({
     children,
     variant,
+    className,
     disabled,
     uppercase,
     error,
@@ -58,7 +60,10 @@ export const Button: FC<ButtonProps> = ({
         <button
             disabled={disabled}
             aria-label={label}
-            className={buttonVariants({ variant, disabled, uppercase, error })}
+            className={twMerge(
+                buttonVariants({ variant, disabled, uppercase, error }),
+                className
+            )}
             data-testid={testId}
             type="button"
             {...restProps}

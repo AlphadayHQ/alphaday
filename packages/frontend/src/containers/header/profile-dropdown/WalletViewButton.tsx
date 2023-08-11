@@ -1,13 +1,11 @@
 import { FC } from "react";
-import { Spinner } from "@alphaday/components";
-import { twMerge } from "@alphaday/ui-kit";
+import { Button, Spinner, twMerge } from "@alphaday/ui-kit";
 import { EWalletViewState } from "src/api/types";
 import {
     getWalletViewStateMessages,
     onClickNoTags,
 } from "src/api/utils/walletViewUtils";
-import { ReactComponent as WandSVG } from "src/assets/alphadayAssets/icons/wand.svg";
-import { AlphaButton } from "src/components/widgets/buttons/AlphaButton";
+import { ReactComponent as WandSVG } from "src/assets/icons/wand.svg";
 import { withFeature } from "src/containers/features/withFeature";
 import { EFeaturesRegistry } from "src/constants";
 
@@ -60,7 +58,7 @@ const WalletViewButton: FC<IWalletViewButton> = ({
 
     return (
         <div>
-            <AlphaButton
+            <Button
                 variant="extraSmall"
                 className={twMerge(
                     isFetchingWalletView &&
@@ -72,7 +70,7 @@ const WalletViewButton: FC<IWalletViewButton> = ({
                 title={getWalletViewStateMessages(walletViewState)}
             >
                 {viewButtonChild[walletViewState]}
-            </AlphaButton>
+            </Button>
         </div>
     );
 };

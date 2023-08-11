@@ -3,7 +3,9 @@ import {
     Dropdown,
     DropdownAvatar,
     DropdownItem,
+    DropdownMenu,
     DropdownToggle,
+    IconButton,
     twMerge,
 } from "@alphaday/ui-kit";
 import {
@@ -14,7 +16,6 @@ import {
 import { Logger } from "src/api/utils/logging";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
-import { AlphaIconButton } from "src/components/widgets/buttons/AlphaIconButton";
 import CONFIG from "src/config";
 import globalMessages from "src/globalMessages";
 import styles from "./ProfileDropdownWrapper.module.scss";
@@ -39,7 +40,7 @@ interface IProps {
 }
 
 const Divider = () => (
-    <div className="border-btnRingVariant500 m-0 h-0 border border-solid" />
+    <div className="border-btnRingVariant500 m-0 h-0 border-t border-solid" />
 );
 
 const ProfileDropdownWrapper: React.FC<IProps> = ({
@@ -143,17 +144,14 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                     }
                 >
                     <span className="items-[initial] flex h-[34px] w-[34px]">
-                        <AlphaIconButton
-                            title="Open User Menu"
-                            variant="profile"
-                        />
+                        <IconButton title="Open User Menu" variant="profile" />
                     </span>
                 </span>
             </DropdownToggle>
             {isVerifyPrompted && !showTutorial && (
-                <div
+                <DropdownMenu
                     className={twMerge(
-                        "twoCol:mt-[14.5px] twoCol:p-[18px 0px] left-auto right-0 -mr-2.5 mt-[11.5px] w-[275px] rounded-t-none rounded-bl rounded-br border-t-0 px-[5px] py-[25px] shadow-none",
+                        "twoCol:mt-[14.5px] twoCol:p-[18px_0px] left-auto right-0 -mr-2.5 mt-[11.5px] w-[275px] rounded-t-none rounded-bl rounded-br border-t-0 shadow-none",
                         styles["dropdown-menu"]
                     )}
                 >
@@ -187,8 +185,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                     <Divider />
                     {walletMenuOptions.map((option) => {
                         return (
-                            <div
-                                className="hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 fontGroup-normal clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-[18px] py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] focus:outline-none [&>svg]:mr-[15px] [&>svg]:h-4 [&>svg]:w-4"
+                            <DropdownItem
                                 key={option.dataTestId}
                                 data-testid={option.dataTestId}
                                 onClick={() => {
@@ -199,18 +196,15 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                                         );
                                     });
                                 }}
-                                role="button"
-                                tabIndex={0}
-                                // path="/"
                             >
                                 <span title={option.title}>
                                     {option.menuTitle}
                                 </span>
-                            </div>
+                            </DropdownItem>
                         );
                     })}
                     <Divider />
-                    <DropdownItem onClick={handleToggle} path="/">
+                    <DropdownItem onClick={handleToggle}>
                         Tutorial{" "}
                         <input
                             title="Toggle Tutorial"
@@ -222,17 +216,14 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                     </DropdownItem>
                     <Divider />
                     {CONFIG.APP.VERSION && CONFIG.APP.COMMIT && (
-                        <DropdownItem
-                            className="fontGroup-normal hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-[18px] py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] focus:outline-none"
-                            path="/"
-                        >
+                        <DropdownItem>
                             <div className="fontGroup-mini text-primaryVariant100">
                                 Version: {CONFIG.APP.VERSION} <br />
                                 Commit: {CONFIG.APP.COMMIT}
                             </div>
                         </DropdownItem>
                     )}
-                </div>
+                </DropdownMenu>
             )}
         </Dropdown>
     );
