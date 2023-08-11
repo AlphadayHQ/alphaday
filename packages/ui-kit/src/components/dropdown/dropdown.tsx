@@ -12,8 +12,7 @@ import {
 } from "react";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 import { twMerge } from "tailwind-merge";
-import { useClickOutside } from "src/hooks";
-import { AnchorElement } from "../anchor/AlphaLink";
+import { useClickOutside } from "../../hooks";
 
 type IChild = Exclude<ReactChild, ReactText>;
 
