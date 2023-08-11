@@ -9,7 +9,7 @@ export const themes = {
                 colors: darkColors,
             },
         },
-        // TODO: add another theme like so
+        // TODO (xavier-charles): add another theme like so
         // {
         //   selectors: ['.dark'],
         //   theme: {
