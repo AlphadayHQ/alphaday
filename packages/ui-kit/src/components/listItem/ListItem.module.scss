@@ -9,7 +9,7 @@
         [role="button"] {
             cursor: pointer;
             color: var(--primaryVariant100);
-            @apply fontGroup-highlight !important;
+            @apply fontGroup-highlight;
         }
     }
 
@@ -31,12 +31,12 @@
             .source {
                 color: var(--primary);
                 margin: 0;
-                @apply fontGroup-supportBold !important;
+                @apply fontGroup-supportBold;
             }
             .time {
                 color: var(--primaryVariant100);
                 margin: 0;
-                @apply fontGroup-mini !important;
+                @apply fontGroup-mini;
             }
         }
 
@@ -50,7 +50,7 @@
             .desc {
                 color: var(--primary);
                 margin: 3px 0 0;
-                @apply fontGroup-normal !important;
+                @apply fontGroup-normal;
             }
         }
     }
@@ -65,7 +65,7 @@
             .title {
                 color: var(--primary);
                 margin: 0;
-                @apply fontGroup-highlightSemi !important;
+                @apply fontGroup-highlightSemi;
             }
 
             .lastLine {
@@ -90,11 +90,11 @@
         -webkit-box-orient: vertical;
 
         .wrap {
-            @apply pt-[5px] !important;
+            @apply pt-[5px];
         }
     }
 
     &.faq .full-height .wrap {
-        display: flex !important;
+        display: flex;
     }
 }

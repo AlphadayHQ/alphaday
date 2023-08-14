@@ -3,7 +3,7 @@ import { darkColors } from "./src/globalStyles/colors";
 import { tailwindBreakpoints } from "./src/globalStyles/breakpoints";
 import typography from "@tailwindcss/typography";
 import plugin from "tailwindcss/plugin";
-import createThemes from "tw-colors";
+// import createThemes from "tw-colors";
 import { fontUtilities } from "./src/globalStyles/fontGroups";
 
 export default {
@@ -26,10 +26,10 @@ export default {
     },
     plugins: [
         typography,
-        createThemes({
-            dark: darkColors,
-            // Add themes here like light: LightColors
-        }),
+        // createThemes({
+        //     dark: darkColors,
+        //     // Add themes here like light: LightColors
+        // }),
         plugin(function ({ addUtilities }) {
             addUtilities({
                 ...fontUtilities,
