@@ -15,7 +15,7 @@ export interface ButtonProps {
     uppercase?: boolean;
     label?: string;
     title?: string;
-    extraClassStyles?: string;
+    className?: string;
     onClick?: () => MaybeAsync<void>;
     children?: React.ReactNode;
     testId?: string;
@@ -28,7 +28,7 @@ export const AlphaButton: FC<ButtonProps> = ({
     disabled,
     uppercase,
     label,
-    extraClassStyles,
+    className,
     testId,
     ...restProps
 }) => {
@@ -39,7 +39,7 @@ export const AlphaButton: FC<ButtonProps> = ({
             disabled={disabled}
             $uppercase={uppercase}
             aria-label={label}
-            className={extraClassStyles}
+            className={className}
             data-testid={testId}
             {...restProps}
         >

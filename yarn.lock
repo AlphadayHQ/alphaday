@@ -20979,6 +20979,15 @@ tailwind-variants@0.1.13:
   dependencies:
     tailwind-merge "^1.13.2"
 
+tailwindcss-theme-swapper@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/tailwindcss-theme-swapper/-/tailwindcss-theme-swapper-0.7.3.tgz#fcacf4bf41f7af08b84003afc25168cdf89bccbb"
+  integrity sha512-5SJfJCCRF1K8Hq9nJzWOu6b/bXhAwNQPcEpbV7L0YOLmD/x9PsLwDHTcDz2wFEFrS4uzecpjwoMEn+gjqi2wXg==
+  dependencies:
+    color "^4.2.3"
+    postcss "^8.4.21"
+    tailwindcss "^3.3.1"
+
 tailwindcss@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.3.2.tgz#2f9e35d715fdf0bbf674d90147a0684d7054a2d3"
@@ -21008,7 +21017,7 @@ tailwindcss@3.3.2:
     resolve "^1.22.2"
     sucrase "^3.32.0"
 
-tailwindcss@^3.0.2:
+tailwindcss@^3.0.2, tailwindcss@^3.3.1:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.3.3.tgz#90da807393a2859189e48e9e7000e6880a736daf"
   integrity sha512-A0KgSkef7eE4Mf+nKJ83i75TMyq8HqY3qmFIJSWy8bNt0v1lG7jUcpGpoTFxAwYcWOphcTBLPPJg+bDfhDf52w==

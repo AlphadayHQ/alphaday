@@ -12,7 +12,7 @@ import { useWindowSize } from "src/api/hooks";
 import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
-// import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
+import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
 import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 // import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 // import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
@@ -110,7 +110,7 @@ const LayoutHeader: FC<IProps> = ({
                                         ]}
                                     /> */}
                                     <HeaderNavElement className="oneCol:ml-[15px] ml-[8px] mr-[15px]">
-                                        {/* <ProfileDropdownContainer /> */}
+                                        <ProfileDropdownContainer />
                                     </HeaderNavElement>
                                 </HeaderNavRight>
                             </>
@@ -177,7 +177,7 @@ const LayoutHeader: FC<IProps> = ({
                                             ml={["8px", "1px", "1px", "15px"]}
                                         /> */}
                                         <HeaderNavElement className="oneCol:ml-[15px] ml-[8px]">
-                                            {/* <ProfileDropdownContainer /> */}
+                                            <ProfileDropdownContainer />
                                         </HeaderNavElement>
                                     </>
                                 )}

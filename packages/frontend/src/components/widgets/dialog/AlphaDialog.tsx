@@ -76,7 +76,7 @@ export const AlphaDialog: FC<IModal> = ({
                     {showSaveButton && (
                         <AlphaButton
                             data-testid="alpha-dialog-action-button"
-                            extraClassStyles="alphaDialog"
+                            className="alphaDialog"
                             onClick={onSave}
                             disabled={disableSave === true}
                             {...buttonProps}
@@ -87,7 +87,7 @@ export const AlphaDialog: FC<IModal> = ({
                     {showCloseButton && (
                         <AlphaButton
                             data-testid="alpha-dialog-close-button"
-                            extraClassStyles="alphaDialog"
+                            className="alphaDialog"
                             onClick={onClose}
                             {...buttonProps}
                         >

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ReactComponent as CheckedSVG } from "src/assets/svg/checkmark.svg";
 import { ReactComponent as RedCrossSVG } from "src/assets/svg/red-x.svg";
-import { Spinner } from "../../spinner/Spinner";
+import { Spinner } from "../spinner/Spinner";
 
 export enum EIndicatorState {
     error,
