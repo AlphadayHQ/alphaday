@@ -27,6 +27,7 @@ import {
 } from "./src/components/layout/Header";
 import Logo from "./src/components/layout/Logo";
 
+import {listItemVariants} from "./src/components/listItem/ListItem";
 import { Modal } from "./src/components/modal/Modal";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
@@ -40,6 +41,7 @@ import { darkColors as defaultColors } from "./src/globalStyles/colors";
 export {
     defaultColors,
     breakpoints,
+    listItemVariants,
     Button,
     IconButton,
     NavTabButton,
