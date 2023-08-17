@@ -1,16 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-import { darkColors } from "./src/globalStyles/colors";
+import { themes } from "./src/globalStyles/themes";
 import { tailwindBreakpoints } from "./src/globalStyles/breakpoints";
 import typography from "@tailwindcss/typography";
 import plugin from "tailwindcss/plugin";
-// import createThemes from "tw-colors";
+import themeSwapper from "tailwindcss-theme-swapper";
 import { fontUtilities } from "./src/globalStyles/fontGroups";
 
 export default {
     content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
     theme: {
         extend: {},
-        colors: darkColors,
         screens: {
             ...tailwindBreakpoints,
             tiny: { max: tailwindBreakpoints.tiny }, // tailwind defaults to min-width. This means @media (max-width: tiny) { ... }
@@ -26,10 +25,7 @@ export default {
     },
     plugins: [
         typography,
-        // createThemes({
-        //     dark: darkColors,
-        //     // Add themes here like light: LightColors
-        // }),
+        themeSwapper(themes),
         plugin(function ({ addUtilities }) {
             addUtilities({
                 ...fontUtilities,

@@ -7,12 +7,17 @@ import {
     BaseModuleOptionsFooter,
 } from "./src/components/base/BaseComponents";
 import { Button } from "./src/components/buttons/Button";
+import { IconButton } from "./src/components/buttons/IconButton";
 import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
 import { Dialog } from "./src/components/dialog/Dialog";
-import SyncIndicator, {
-    EIndicatorState,
-} from "./src/components/header/syncIndicator/SyncIndicator";
+import {
+    Dropdown,
+    DropdownAvatar,
+    DropdownToggle,
+    DropdownItem,
+    DropdownMenu,
+} from "./src/components/dropdown/dropdown";
 import Footer from "./src/components/layout/Footer";
 import {
     HeaderWrapper,
@@ -29,6 +34,10 @@ import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
+import { Spinner } from "./src/components/spinner/Spinner";
+import SyncIndicator, {
+    EIndicatorState,
+} from "./src/components/syncIndicator/SyncIndicator";
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { darkColors as defaultColors } from "./src/globalStyles/colors";
 
@@ -36,6 +45,7 @@ export {
     defaultColors,
     breakpoints,
     Button,
+    IconButton,
     NavTabButton,
     TabButton,
     Footer,
@@ -61,4 +71,10 @@ export {
     useLayer,
     SyncIndicator,
     EIndicatorState,
+    Dropdown,
+    DropdownAvatar,
+    DropdownToggle,
+    DropdownItem,
+    DropdownMenu,
+    Spinner,
 };

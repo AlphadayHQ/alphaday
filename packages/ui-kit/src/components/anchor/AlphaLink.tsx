@@ -12,7 +12,7 @@ interface IAnchor {
     children?: React.ReactNode;
 }
 
-const AnchorElement: FC<IAnchor> = ({
+export const AnchorElement: FC<IAnchor> = ({
     path,
     children,
     className,
