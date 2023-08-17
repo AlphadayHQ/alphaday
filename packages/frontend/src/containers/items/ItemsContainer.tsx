@@ -358,6 +358,7 @@ const ItemsContainer: FC<IModuleContainer> = ({ moduleData }) => {
         );
     }
 
+    // TODO(elcharitas): add support for this widget
     // if (widgetType === "DISCORD") {
     //     return (
     //         <DiscordModule
