@@ -6,7 +6,8 @@
     "baseUrl": "./",
     "paths": {
       "src/*": [
-        "./src/*"
+        "./src/*",
+        "../ui-kit/src/*"
       ]
     }
   },
