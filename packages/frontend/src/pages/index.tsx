@@ -1,13 +1,12 @@
-// import { DragDropContext, Droppable } from "react-beautiful-dnd";
-// import ModuleWrapper from "src/containers/base/ModuleWrapper";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import MainLayout from "src/layout/MainLayout";
-// import { dummyModuleData } from "./staticData";
+import { dummyModuleData } from "./staticData";
 
 function BasePage() {
     return (
         <MainLayout>
-            {/* // TODO (xavier-charles): Add drag and drop context */}
-            {/* <DragDropContext onDragEnd={() => {}}>
+            <DragDropContext onDragEnd={() => {}}>
                 <Droppable droppableId="alphaday">
                     {(provided) => (
                         <div ref={provided.innerRef}>
@@ -22,7 +21,7 @@ function BasePage() {
                         </div>
                     )}
                 </Droppable>
-            </DragDropContext> */}
+            </DragDropContext>
         </MainLayout>
     );
 }
