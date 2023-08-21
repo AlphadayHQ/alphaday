@@ -1,23 +1,22 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
-import { fontVariants } from "../../globalStyles/fontGroups";
 import styles from "./Button.module.scss";
 
 const buttonVariants = tv({
-    base: `${styles.Button} inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-[15px] pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]`,
+    base: twMerge(
+        styles.button,
+        "inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-[15px] pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]"
+    ),
     variants: {
         variant: {
             primaryXL: `box-border h-[54px] border-2 border-solid border-btnRingVariant200 px-[25px] py-4 hover:border-btnRingVariant100 active:bg-btnBackgroundVariant700`,
             secondaryXL: `box-border h-[54px] border-btnRingVariant300 px-[25px] py-4 active:bg-btnBackgroundVariant700`,
             primary: "",
             secondary: "border-btnRingVariant300",
-            small: `${fontVariants({
-                variant: "normal",
-            })} h-[29px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-5 pb-[3px] pt-0.5 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800`,
-            extraSmall: `${fontVariants({
-                variant: "normal",
-            })} h-[26px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800`,
+            small: "fontGroup-normal h-[29px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-5 pb-[3px] pt-0.5 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
+            extraSmall:
+                "fontGroup-normal h-[26px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
         },
         error: { true: "bg-dangerFiltered" },
         uppercase: {
@@ -39,21 +38,21 @@ type TButtonVariants = VariantProps<typeof buttonVariants>;
 export interface ButtonProps extends TButtonVariants {
     label?: string;
     title?: string;
-    extraClassStyles?: string;
     onClick?: () => MaybeAsync<void>;
     children?: React.ReactNode;
     testId?: string;
     id?: string;
+    className?: string;
 }
 
 export const Button: FC<ButtonProps> = ({
     children,
     variant,
+    className,
     disabled,
     uppercase,
     error,
     label,
-    extraClassStyles,
     testId,
     ...restProps
 }) => {
@@ -63,7 +62,7 @@ export const Button: FC<ButtonProps> = ({
             aria-label={label}
             className={twMerge(
                 buttonVariants({ variant, disabled, uppercase, error }),
-                extraClassStyles
+                className
             )}
             data-testid={testId}
             type="button"

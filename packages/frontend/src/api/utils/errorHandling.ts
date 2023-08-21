@@ -1,6 +1,7 @@
+import logoDay from "@alphaday/ui-kit/src/assets/svg/logo-white.svg";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
-import logoDay from "src/assets/svg/logo-white.svg";
+
 import globalMessages from "src/globalMessages";
 
 /* eslint-disable no-param-reassign */

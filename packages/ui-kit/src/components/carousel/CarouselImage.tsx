@@ -24,7 +24,7 @@ export const CarouselImage: FC<CarouselImageProps> = ({ src, title }) => {
     return (
         <CarouselItem>
             <QuickPinchZoom onUpdate={onUpdate}>
-                <img alt="image" className="w-full" ref={imgRef} src={src} />
+                <img alt={title} className="w-full" ref={imgRef} src={src} />
             </QuickPinchZoom>
             <div className="w-full pt-2 text-center font-extrabold">
                 {title}

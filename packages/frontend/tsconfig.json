@@ -1,15 +1,19 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "./",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "baseUrl": "./",
     "paths": {
       "src/*": [
-        "./src/*"
+        "./src/*",
+        "../ui-kit/src/*"
       ]
     }
   },
   "include": [
     "src/**/*",
-    "vite.config.ts"
-  ]
+    "vite.config.ts",
+    "../ui-kit/src/@types/global.d.ts"
+  ],
 }

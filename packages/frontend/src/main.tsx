@@ -4,15 +4,16 @@ import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import PersistProvider from "src/api/store/providers/persist-provider";
-import { wagmiConfig } from "src/api/store/providers/wallet-connect-provider";
 import { WagmiConfig } from "wagmi";
-import App from "src/App";
-import CONFIG from "src/config";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
+import PersistProvider from "./api/store/providers/persist-provider";
+import { wagmiConfig } from "./api/store/providers/wallet-connect-provider";
+// TODO (xavier-charles): add themes support import ThemeProvider from "./api/store/providers/theme-provider";
 import { store } from "./api/store/store";
 import { ECookieChoice } from "./api/types";
 import { Logger } from "./api/utils/logging";
+import App from "./App";
+import CONFIG from "./config";
 
 /**
  * at this point, the store is still not loaded and we can't read the state
@@ -63,9 +64,11 @@ root.render(
         <Provider store={store}>
             <PersistProvider>
                 <AppContextProvider>
+                    {/* <ThemeProvider> */}
                     <WagmiConfig config={wagmiConfig}>
                         <App />
                     </WagmiConfig>
+                    {/* </ThemeProvider> */}
                 </AppContextProvider>
             </PersistProvider>
         </Provider>

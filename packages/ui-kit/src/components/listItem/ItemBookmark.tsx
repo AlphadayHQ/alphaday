@@ -17,7 +17,9 @@ const ItemBookmark: FC<IBookmark> = ({
     bookmarked,
     showSpacer = true,
 }) => {
-    if (authenticatedOnly && !isAuthenticated) return <></>;
+    if (authenticatedOnly && !isAuthenticated) {
+        return null;
+    }
     return (
         <>
             {showSpacer && <span className="spacer">•</span>}
@@ -35,7 +37,7 @@ const ItemBookmark: FC<IBookmark> = ({
                 }}
                 title={
                     isAuthenticated ? "Bookmark this item" : ""
-                    // TODO : globalMessages.callToAction.signUpToBookmark("items")
+                    // TODO (xavier-charles): : globalMessages.callToAction.signUpToBookmark("items")
                 }
             >
                 {bookmarked ? <BookmarkedSVG /> : <BookmarkSVG />}

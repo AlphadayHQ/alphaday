@@ -8,11 +8,17 @@
   ],
   "scripts": {
     "build:frontend": "yarn --cwd packages/frontend build",
+    "build:ui": "yarn --cwd packages/ui-kit build",
     "dev:frontend": "yarn --cwd packages/frontend dev",
+    "start": "yarn --cwd packages/frontend dev",
     "lint:frontend": "yarn --cwd packages/frontend lint",
     "test:frontend": "yarn --cwd packages/frontend test.unit",
     "lint:ui-kit": "yarn --cwd packages/ui-kit lint",
-    "lint": "yarn lint:ui-kit && yarn lint:frontend"
+    "lint": "yarn lint:ui && yarn lint:frontend",
+    "lint:ui": "yarn --cwd packages/ui-kit lint",
+    "lint:fix": "yarn --cwd packages/frontend lint --fix && yarn --cwd packages/ui-kit lint --fix",
+    "prepare": "husky install",
+    "typecheck": "yarn --cwd packages/frontend typecheck && yarn --cwd packages/ui-kit typecheck"
   },
   "devDependencies": {
     "@testing-library/cypress": "9.0.0",
@@ -40,6 +46,7 @@
     "prettier": "3.0.0",
     "typescript": "5.1.6",
     "vite": "4.4.2",
+    "vite-tsconfig-paths": "4.2.0",
     "vitest": "0.33.0"
   },
   "repository": {

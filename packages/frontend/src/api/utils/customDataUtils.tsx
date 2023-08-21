@@ -12,7 +12,7 @@ import { TCustomItem } from "src/api/types";
 import { getErrorMessage } from "src/api/utils/errorHandling";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
-import { ReactComponent as LinkIcon } from "src/assets/alphadayAssets/icons/external-link.svg";
+import { ReactComponent as LinkIcon } from "src/assets/icons/external-link.svg";
 
 enum ESupportedTypes {
     String = "string",

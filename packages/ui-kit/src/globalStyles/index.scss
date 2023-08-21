@@ -12,8 +12,14 @@
 /* ionic colors config */
 @import "./colors.scss";
 
-/* fonts config */
-@import "./fontGroups.scss";
-
 /* custom css */
 @import "./custom.scss";
+
+/**
+ * This would fix an hydration issue with ionic
+ * N/B: It's a phantom bug since it should have been fixed in ionic v5
+ * Ref - https://github.com/ionic-team/ionic-framework/issues/18914
+ */
+html:not(.hydrated) body {
+  display: initial !important;
+}

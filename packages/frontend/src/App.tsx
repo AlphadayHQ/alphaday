@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import { IonApp } from "@ionic/react";
+import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { routes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
@@ -18,23 +18,22 @@ import "@alphaday/ui-kit/global.scss";
  */
 const App: React.FC = () => {
     return (
-        <IonApp>
-            <div className="App">
-                <IonReactRouter>
-                    <Suspense>
-                        <Switch>
-                            {routes.map((route) => (
-                                <Route
-                                    key={route.path}
-                                    path={route.path}
-                                    exact={route.exact}
-                                    component={route.component}
-                                />
-                            ))}
-                        </Switch>
-                    </Suspense>
-                </IonReactRouter>
-            </div>
+        <IonApp className="theme-dark">
+            {/** @ts-expect-error react16/18 type conflict */}
+            <IonReactRouter>
+                <Suspense>
+                    <IonRouterOutlet>
+                        {routes.map((route) => (
+                            <Route
+                                key={route.path}
+                                path={route.path}
+                                exact={route.exact}
+                                component={route.component}
+                            />
+                        ))}
+                    </IonRouterOutlet>
+                </Suspense>
+            </IonReactRouter>
         </IonApp>
     );
 };

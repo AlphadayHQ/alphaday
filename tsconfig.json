@@ -1,3 +1,16 @@
 {
-  "extends": "./tsconfig.base.json"
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react-jsx",
+  },
+  "include": [
+    "packages/frontend/**/*.ts",
+    "packages/frontend/**/*.tsx",
+    "packages/ui-kit/**/*.ts",
+    "packages/ui-kit/**/*.tsx"
+  ]
 }

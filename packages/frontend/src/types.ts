@@ -1,3 +1,4 @@
+import React, { lazy } from "react";
 import {
     TUserViewWidget,
     TDynamicItem,
@@ -54,7 +55,10 @@ export type TTemplatesDict = {
     [key in TTemplateSlug]: TTemplateComponent;
 };
 
-export const TEMPLATES_DICT: Partial<TTemplatesDict> = {};
+export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
+    news_template: lazy(() => import("./containers/items/ItemsContainer")),
+    sample_template: lazy(() => import("./containers/sample/SampleContainer")),
+};
 
 export type TFullSizeRoute = {
     [path in TTemplateSlug]?: {

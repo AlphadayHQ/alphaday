@@ -8,8 +8,7 @@ const globalMessages = {
         generic: "An error occurred while processing your request.",
         forbidden: "You do not have permission to access this page.",
         unauthorized: "You are not authorized to access this page.",
-        notAuthenticated:
-            "Please connect and verify your wallet to access this page.",
+        notAuthenticated: "Please connect and verify your wallet to continue",
         maxViews: "You have created maximum allowed boards",
         maxWidgets: "Your board has more widgets than allowed",
         maxViewWidgets:
@@ -46,6 +45,7 @@ const globalMessages = {
         noMatchFound: (item: string): string => `No matching ${item} found.`,
     },
     portfolio: {
+        connectWallet: "To signup, first connect your wallet.",
         verifyWallet:
             "Sign a fee-less message to confirm ownership and log in to Alphaday to save your configuration.",
     },

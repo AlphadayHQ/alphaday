@@ -6,7 +6,6 @@ import { twMerge } from "tailwind-merge";
 export interface CheckBoxProps {
     checked: boolean;
     disabled?: boolean;
-    uppercase?: boolean;
     label?: string;
     onChange?: () => void | (() => Promise<void>);
 }
@@ -14,12 +13,12 @@ export interface CheckBoxProps {
 export const Checkbox: FC<CheckBoxProps> = ({
     checked,
     disabled,
-    uppercase,
     label,
     ...restProps
 }) => {
     return (
         <label
+            htmlFor={label}
             aria-label={label}
             className="text-primary relative inline-block cursor-pointer select-none text-6xl"
             {...restProps}
@@ -46,8 +45,6 @@ export const Checkbox: FC<CheckBoxProps> = ({
 };
 
 Checkbox.defaultProps = {
-    checked: true,
     disabled: false,
-    uppercase: true,
     label: "checkbox",
 };

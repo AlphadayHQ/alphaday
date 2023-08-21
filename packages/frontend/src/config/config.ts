@@ -22,27 +22,28 @@ export enum EEnvironments {
     Production = "production",
 }
 
-const IS_TEST = process.env.REACT_APP_ENVIRONMENT === EEnvironments.Test;
+const IS_TEST = import.meta.env.VITE_ENVIRONMENT === EEnvironments.Test;
 const IS_DEV =
-    process.env.REACT_APP_ENVIRONMENT === EEnvironments.Development ||
-    !process.env.REACT_APP_ENVIRONMENT;
-const IS_STAGING = process.env.REACT_APP_ENVIRONMENT === EEnvironments.Staging;
-const IS_PROD = process.env.REACT_APP_ENVIRONMENT === EEnvironments.Production;
+    import.meta.env.VITE_ENVIRONMENT === EEnvironments.Development ||
+    !import.meta.env.VITE_ENVIRONMENT;
+const IS_STAGING = import.meta.env.VITE_ENVIRONMENT === EEnvironments.Staging;
+const IS_PROD = import.meta.env.VITE_ENVIRONMENT === EEnvironments.Production;
 
 const ENVIRONMENT = (() => {
-    const env = process.env.REACT_APP_ENVIRONMENT ?? "";
-    // @ts-expect-error
-    if (Object.values(EEnvironments).includes(env)) return env as EEnvironments;
+    const env = import.meta.env.VITE_ENVIRONMENT ?? "";
+    if (Object.values(EEnvironments).includes(env)) {
+        return env as EEnvironments;
+    }
     return EEnvironments.Development;
 })();
 
 const LOGLEVEL =
-    process.env.REACT_APP_LOGLEVEL != null
-        ? parseInt(process.env.REACT_APP_LOGLEVEL, 10)
+    import.meta.env.VITE_LOGLEVEL != null
+        ? parseInt(import.meta.env.VITE_LOGLEVEL, 10)
         : 0;
 
 const SENTRY = {
-    DSN: process.env.REACT_APP_SENTRY_DSN,
+    DSN: import.meta.env.VITE_SENTRY_DSN,
     ENABLE: true,
 };
 
@@ -79,12 +80,12 @@ const CONFIG = {
     VIEWS: VIEWS_CONFIG,
     USER: USER_CONFIG,
     APP: {
-        VERSION: process.env.REACT_APP_VERSION || "",
+        VERSION: import.meta.env.VITE_VERSION || "",
         STORAGE_KEY: "alphaday",
         STORAGE_VERSION: 19,
-        COMMIT: process.env.REACT_APP_COMMIT,
-        X_APP_ID: process.env.REACT_APP_X_APP_ID || "",
-        X_APP_SECRET: process.env.REACT_APP_X_APP_SECRET || "",
+        COMMIT: import.meta.env.VITE_COMMIT,
+        X_APP_ID: import.meta.env.VITE_X_APP_ID || "",
+        X_APP_SECRET: import.meta.env.VITE_X_APP_SECRET || "",
     },
 };
 

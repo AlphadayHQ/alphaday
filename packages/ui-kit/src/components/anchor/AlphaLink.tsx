@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import { fontVariants } from "../../globalStyles/fontGroups";
 
 interface IAnchor {
     path: string;
@@ -10,11 +9,10 @@ interface IAnchor {
     label?: string | undefined;
     target?: "_blank" | "_self" | "_parent" | "_top";
     onClick?: (e: React.MouseEvent) => void;
-    variant?: "link1" | "link2" | "link3";
     children?: React.ReactNode;
 }
 
-const AnchorElement: FC<IAnchor> = ({
+export const AnchorElement: FC<IAnchor> = ({
     path,
     children,
     className,
@@ -22,7 +20,6 @@ const AnchorElement: FC<IAnchor> = ({
     label,
     target,
     onClick,
-    variant,
     ...rest
 }) => (
     <a
@@ -30,8 +27,7 @@ const AnchorElement: FC<IAnchor> = ({
         rel={rel}
         className={twMerge(
             className,
-            fontVariants({ variant: "highlight" }),
-            "text-primaryVariant100 hover:text-btnRingVariant100 active:text-btnBackgroundVariant1400 cursor-pointer hover:underline active:underline"
+            "text-primaryVariant100 fontGroup-highlight hover:text-btnRingVariant100 active:text-btnBackgroundVariant1400 cursor-pointer hover:underline active:underline"
         )}
         href={path}
         target={target}
@@ -57,8 +53,7 @@ export const AlphaLink: FC<IAnchor> = ({ target, path, ...otherProps }) => {
             rel="preload"
             className={twMerge(
                 otherProps.className,
-                fontVariants({ variant: "highlight" }),
-                "text-primaryVariant100 hover:text-btnRingVariant100 active:text-btnBackgroundVariant1400 cursor-pointer hover:underline active:underline"
+                "text-primaryVariant100 fontGroup-highlight hover:text-btnRingVariant100 active:text-btnBackgroundVariant1400 cursor-pointer hover:underline active:underline"
             )}
             to={path}
             onClick={otherProps.onClick}
