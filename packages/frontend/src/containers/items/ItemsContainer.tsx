@@ -12,7 +12,7 @@ import {
     useGetDaoItemsQuery,
     useGetForumItemsQuery,
     useGetRedditItemsQuery,
-    // useGetDiscordItemsQuery,
+    useGetDiscordItemsQuery,
 } from "src/api/services";
 import {
     setNewsFeedPreference,
@@ -29,7 +29,7 @@ import {
     TDaoItem,
     TForumItem,
     TRedditItem,
-    // TDiscordItem,
+    TDiscordItem,
 } from "src/api/types";
 import * as filterUtils from "src/api/utils/filterUtils";
 import {
@@ -40,7 +40,7 @@ import { Logger } from "src/api/utils/logging";
 import { toast } from "src/api/utils/toastUtils";
 import { getWidgetName } from "src/api/utils/viewUtils";
 import DaoModule from "src/components/daos/DaoModule";
-// import DiscordModule from "src/components/discord/DiscordModule";
+import DiscordModule from "src/components/discord/DiscordModule";
 import NewsModule from "src/components/news/NewsModule";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry, ETemplateNameRegistry } from "src/constants";
@@ -52,11 +52,16 @@ type TItemGroup =
     | ETemplateNameRegistry.News
     | ETemplateNameRegistry.Forum
     | ETemplateNameRegistry.Dao
-    | ETemplateNameRegistry.Reddit;
-// | ETemplateNameRegistry.Discord;
+    | ETemplateNameRegistry.Reddit
+    | ETemplateNameRegistry.Discord;
 
-type TItem = TNewsItem | TBlogItem | TDaoItem | TForumItem | TRedditItem;
-// | TDiscordItem;
+type TItem =
+    | TNewsItem
+    | TBlogItem
+    | TDaoItem
+    | TForumItem
+    | TRedditItem
+    | TDiscordItem;
 
 const ITEMS_DICT = {
     config: {
@@ -65,7 +70,7 @@ const ITEMS_DICT = {
         DAO: CONFIG.WIDGETS.DAO,
         FORUM: CONFIG.WIDGETS.FORUM,
         REDDIT: CONFIG.WIDGETS.REDDIT,
-        // DISCORD: CONFIG.WIDGETS.DISCORD,
+        DISCORD: CONFIG.WIDGETS.DISCORD,
     },
     setFeedPreference: {
         BLOG: setBlogFeedPreference,
@@ -73,7 +78,7 @@ const ITEMS_DICT = {
         DAO: undefined,
         FORUM: undefined,
         REDDIT: undefined,
-        // DISCORD: undefined,
+        DISCORD: undefined,
     },
     selectFeedPreference: {
         BLOG: selectBlogFeedPreference,
@@ -81,7 +86,7 @@ const ITEMS_DICT = {
         DAO: undefined,
         FORUM: undefined,
         REDDIT: undefined,
-        // DISCORD: undefined,
+        DISCORD: undefined,
     },
     useOpenItemMutation: {
         BLOG: useOpenBlogItemMutation,
@@ -89,7 +94,7 @@ const ITEMS_DICT = {
         DAO: undefined,
         FORUM: undefined,
         REDDIT: undefined,
-        // DISCORD: undefined,
+        DISCORD: undefined,
     },
     useBookmarkItemMutation: {
         BLOG: useBookmarkBlogItemMutation,
@@ -97,7 +102,7 @@ const ITEMS_DICT = {
         DAO: undefined,
         FORUM: undefined,
         REDDIT: undefined,
-        // DISCORD: undefined,
+        DISCORD: undefined,
     },
     useGetItemListQuery: {
         BLOG: useGetBlogListQuery,
@@ -105,7 +110,7 @@ const ITEMS_DICT = {
         DAO: useGetDaoItemsQuery,
         REDDIT: useGetRedditItemsQuery,
         FORUM: useGetForumItemsQuery,
-        // DISCORD: useGetDiscordItemsQuery,
+        DISCORD: useGetDiscordItemsQuery,
     },
 };
 
@@ -358,17 +363,16 @@ const ItemsContainer: FC<IModuleContainer> = ({ moduleData }) => {
         );
     }
 
-    // TODO(elcharitas): add support for this widget
-    // if (widgetType === "DISCORD") {
-    //     return (
-    //         <DiscordModule
-    //             isLoadingItems={isLoading}
-    //             items={(items ?? itemsData?.results ?? []) as TDiscordItem[]}
-    //             widgetHeight={widgetHeight}
-    //             handlePaginate={handleNextPage}
-    //         />
-    //     );
-    // }
+    if (widgetType === "DISCORD") {
+        return (
+            <DiscordModule
+                isLoadingItems={isLoading}
+                items={(items ?? itemsData?.results ?? []) as TDiscordItem[]}
+                widgetHeight={widgetHeight}
+                handlePaginate={handleNextPage}
+            />
+        );
+    }
 
     return (
         <DaoModule

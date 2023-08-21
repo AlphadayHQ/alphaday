@@ -11,7 +11,7 @@ import styles from "./ListItem.module.scss";
 export const HRElement = () => <hr className="border-btnRingVariant500 m-0" />;
 
 interface IList {
-    variant: "news" | "dao" | "podcast" | "video" | "reports";
+    variant: "news" | "dao" | "podcast" | "video" | "reports" | "discord";
     path?: string;
     date: string | Date;
     title: string;
@@ -29,7 +29,7 @@ interface IList {
     image?: string;
 }
 
-const listItemVariants = (variant: IList["variant"]) => {
+export const listItemVariants = (variant: IList["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.listItem,

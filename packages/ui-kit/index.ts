@@ -28,6 +28,7 @@ import {
 import Logo from "./src/components/layout/Logo";
 import { ListItem, HRElement } from "./src/components/listItem/ListItem";
 
+import { listItemVariants } from "./src/components/listItem/ListItem";
 import { NoItems } from "./src/components/listItem/NoItems";
 import { Modal } from "./src/components/modal/Modal";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
@@ -44,6 +45,7 @@ import { darkColors as defaultColors } from "./src/globalStyles/colors";
 export {
     defaultColors,
     breakpoints,
+    listItemVariants,
     Button,
     IconButton,
     NavTabButton,
