@@ -56,6 +56,7 @@ export type TTemplatesDict = {
 };
 
 export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
+    news_template: lazy(() => import("./containers/items/ItemsContainer")),
     sample_template: lazy(() => import("./containers/sample/SampleContainer")),
 };
 

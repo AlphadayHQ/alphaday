@@ -1,15 +1,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
-
 import { FC } from "react";
-import { ReactComponent as PauseSVG } from "src/assets/icons/pause.svg";
-import { ReactComponent as PlaySVG } from "src/assets/icons/play2.svg";
+import { ReactComponent as PauseSVG } from "src/assets/svg/pause.svg";
+import { ReactComponent as PlaySVG } from "src/assets/svg/play2.svg";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
 import ItemBookmark from "./ItemBookmark";
 import styles from "./ListItem.module.scss";
 
-const HRElement = () => <hr className="border-btnRingVariant500 m-0" />;
+export const HRElement = () => <hr className="border-btnRingVariant500 m-0" />;
 
 interface IList {
     variant: "news" | "dao" | "podcast" | "video" | "reports";
