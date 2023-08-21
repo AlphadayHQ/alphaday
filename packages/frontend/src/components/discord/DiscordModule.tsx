@@ -1,12 +1,8 @@
 import { FC, FormEvent } from "react";
-import { CardBody } from "@doar/components";
+import { ModuleLoader, NoItems, ScrollBar } from "@alphaday/ui-kit";
 import { TDiscordItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
-import { StyledNoItems } from "../common/Items.style";
-import ModuleLoader from "../moduleLoader";
-import { StyledList } from "../news/NewsModule.style";
-import ScrollBar from "../scrollbar";
 import DiscordFeedItem from "./DiscordFeedItem";
 
 interface IDiscord {
@@ -31,26 +27,24 @@ const DiscordModule: FC<IDiscord> = ({
     };
 
     return isLoadingItems || !items ? (
-        <ModuleLoader height={`${String(widgetHeight)}px`} />
+        <ModuleLoader $height={`${widgetHeight}px`} />
     ) : (
-        <CardBody p={["0px", "0px"]}>
-            <StyledList $height={widgetHeight}>
-                <ScrollBar onScroll={handleDiscordListScroll}>
-                    {items.map((item) => {
-                        return <DiscordFeedItem key={item.id} item={item} />;
-                    })}
-                    {!isLoadingItems && items.length === 0 && (
-                        <StyledNoItems>
-                            <p>
-                                {globalMessages.queries.noMatchFound(
-                                    "Discord Items"
-                                )}
-                            </p>
-                        </StyledNoItems>
-                    )}
-                </ScrollBar>
-            </StyledList>
-        </CardBody>
+        <div>
+            <ScrollBar onScroll={handleDiscordListScroll}>
+                {items.map((item) => {
+                    return <DiscordFeedItem key={item.id} item={item} />;
+                })}
+                {!isLoadingItems && items.length === 0 && (
+                    <NoItems>
+                        <p>
+                            {globalMessages.queries.noMatchFound(
+                                "Discord Items"
+                            )}
+                        </p>
+                    </NoItems>
+                )}
+            </ScrollBar>
+        </div>
     );
 };
 

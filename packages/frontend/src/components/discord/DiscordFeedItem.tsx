@@ -43,6 +43,7 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
     return (
         <div
             role="button"
+            tabIndex={0}
             onClick={(event: FormEvent) => {
                 if (
                     (event.target as HTMLDivElement).tagName === "A" ||
