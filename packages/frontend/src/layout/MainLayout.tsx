@@ -30,7 +30,7 @@ const MainLayout: React.FC<IProps> = ({
             setTutFocusElemRef={setTutFocusElemRef}
         />
         {/* <WidgetsLibContainer layoutState={layoutState} /> */}
-        <div>{children}</div>
+        <div className="p-4">{children}</div>
         {!hideFooter && <Footer />}
     </>
 );

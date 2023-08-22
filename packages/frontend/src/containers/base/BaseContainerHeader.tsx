@@ -44,7 +44,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                     onClick={toggleCollapse}
                     className="flex h-[inherit] w-full pb-0.5"
                 >
-                    <h6 className="text-primaryVariant100 m-0 inline-flex uppercase">
+                    <h6 className="text-primaryVariant100 fontGroup-highlight m-0 inline-flex uppercase">
                         {title}
                     </h6>
                     {tags && (
