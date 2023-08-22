@@ -57,7 +57,7 @@ const NewsModule: FC<INews> = memo(function NewsModule({
                     (nav) =>
                         ((nav.auth === true && isAuthenticated) ||
                             !nav.auth) && (
-                            <span key={String(nav.value)} className="mr-10">
+                            <span key={String(nav.value)} className="mr-3">
                                 <TabButton
                                     variant="small"
                                     uppercase={false}

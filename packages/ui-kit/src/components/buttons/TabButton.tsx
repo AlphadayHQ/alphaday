@@ -18,7 +18,7 @@ const buttonVariants = tv({
                 "bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
                 styles.tabsButtonTransparent
             ),
-            small: "small fontGroup-normal h-[29px] bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
+            small: "small fontGroup-normal h-[29px] bg-transparent h-[21px] cursor-pointer pt-px pb-px px-3 border-0 hover:bg-transparent active:bg-transparent",
             removable: twMerge(
                 "fontGroup-normal h-[26px] bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
                 styles.tabsButtonRemovable
