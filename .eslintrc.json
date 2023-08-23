@@ -29,7 +29,8 @@
     "plugins": [
         "@typescript-eslint",
         "prettier",
-        "jsx-a11y"
+        "jsx-a11y",
+        "react-refresh"
     ],
     "rules": {
         "prefer-const": "error",
@@ -135,7 +136,9 @@
         {
             "files": [
                 "setupTests.ts",
-                "vite.config.ts"
+                "vite.config.ts",
+                "*.test.ts",
+                "*.test.tsx"
             ],
             "rules": {
                 "import/no-extraneous-dependencies": "off"

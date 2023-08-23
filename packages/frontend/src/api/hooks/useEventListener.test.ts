@@ -1,9 +1,10 @@
 import { renderHook } from "@testing-library/react-hooks";
+import Vitest from "vitest";
 import useEventListener from "./useEventListener";
 
 describe("useEventListener", () => {
-    let addEventListenerSpy: jest.SpyInstance;
-    let removeEventListenerSpy: jest.SpyInstance;
+    let addEventListenerSpy: Vitest.SpyInstance;
+    let removeEventListenerSpy: Vitest.SpyInstance;
 
     afterEach(() => {
         addEventListenerSpy.mockRestore();
@@ -12,10 +13,10 @@ describe("useEventListener", () => {
 
     it("should add event listener to window with provided event name and handler", () => {
         const eventName = "resize";
-        const handler = jest.fn();
+        const handler = vi.fn();
 
-        addEventListenerSpy = jest.spyOn(window, "addEventListener");
-        removeEventListenerSpy = jest.spyOn(window, "removeEventListener");
+        addEventListenerSpy = vi.spyOn(window, "addEventListener");
+        removeEventListenerSpy = vi.spyOn(window, "removeEventListener");
 
         const { unmount } = renderHook(() =>
             useEventListener(eventName, handler)
@@ -37,13 +38,13 @@ describe("useEventListener", () => {
 
     it("should add event listener to provided element with provided event name and handler", () => {
         const eventName = "click";
-        const handler = jest.fn();
+        const handler = vi.fn();
         const element = {
             current: document.createElement("button"),
         };
 
-        addEventListenerSpy = jest.spyOn(element.current, "addEventListener");
-        removeEventListenerSpy = jest.spyOn(
+        addEventListenerSpy = vi.spyOn(element.current, "addEventListener");
+        removeEventListenerSpy = vi.spyOn(
             element.current,
             "removeEventListener"
         );
