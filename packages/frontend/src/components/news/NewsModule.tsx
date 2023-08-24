@@ -73,17 +73,15 @@ const NewsModule: FC<INews> = memo(function NewsModule({
                 )}
             </SwitchWrap>
             {isLoadingItems || !items ? (
-                <ModuleLoader $height={`${String(widgetHeight)}px`} />
+                <ModuleLoader $height={`${widgetHeight}px`} />
             ) : (
-                <div>
-                    <NewsItemList
-                        items={items}
-                        handlePaginate={handlePaginate}
-                        onClick={onClick}
-                        onBookmark={onBookmark}
-                        isAuthenticated={isAuthenticated}
-                    />
-                </div>
+                <NewsItemList
+                    items={items}
+                    handlePaginate={handlePaginate}
+                    onClick={onClick}
+                    onBookmark={onBookmark}
+                    isAuthenticated={isAuthenticated}
+                />
             )}
         </>
     );

@@ -81,9 +81,8 @@ const BaseContainer: FC<IBaseContainerProps> = ({
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
     const isCollapsed = useAppSelector(selectIsMinimised(moduleData.hash));
-    const [alreadyCollapsed, setAlreadyCollapsed] = useCallbackState(
-        isCollapsed
-    );
+    const [alreadyCollapsed, setAlreadyCollapsed] =
+        useCallbackState(isCollapsed);
     const { removeTagFromViewWidget /* includeTagInViewWidget */ } = useView();
 
     const adjustWidgetHeight = (height: number) => {

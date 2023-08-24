@@ -9,7 +9,7 @@ import styles from "./Button.module.scss";
 const buttonVariants = tv({
     base: twMerge(
         styles.tabsButtonBase,
-        "fontGroup-supportBold inline-flex items-center justify-center text-center align-middle cursor-pointer leading-normal select-none border-0 w-max h-[34px] border border-btnRingVariant300 text-primary bg-btnBackgroundVariant100 pt-1.5 pb-[7px] px-[15px] rounded-lg border-solid"
+        "inline-flex items-center justify-center text-center align-middle cursor-pointer leading-normal select-none border-0 w-max h-[34px] border border-btnRingVariant300 text-primary bg-btnBackgroundVariant100 pt-1.5 pb-[7px] px-[15px] rounded-lg border-solid"
     ),
     variants: {
         variant: {
@@ -18,8 +18,7 @@ const buttonVariants = tv({
                 "bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
                 styles.tabsButtonTransparent
             ),
-            small:
-                "small fontGroup-normal h-[29px] bg-transparent h-[21px] cursor-pointer pt-3 pb-3 px-2 border-0 hover:bg-transparent active:bg-transparent",
+            small: "small fontGroup-normal h-[29px] bg-transparent h-[21px] cursor-pointer pt-3 pb-3 px-2 border-0 hover:bg-transparent active:bg-transparent",
             removable: twMerge(
                 "fontGroup-normal h-[26px] bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
                 styles.tabsButtonRemovable

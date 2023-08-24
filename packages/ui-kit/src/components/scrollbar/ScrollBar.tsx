@@ -16,7 +16,7 @@ export const ScrollBar: FC<ScrollBarProps> = ({
         <div
             className={twMerge(
                 // The alternative to hardcoding the z-[8] is to create a module.scss file
-                `[&>.ps>.ps__rail-y]:z-[8]`,
+                `[&>.ps>.ps__rail-y]:z-[8] overflow-auto`,
                 styles.scrollbar,
                 className
             )}
