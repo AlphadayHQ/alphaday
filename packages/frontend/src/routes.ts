@@ -29,6 +29,7 @@ export const routes: IRoute[] = [
     {
         path: ERouteNames.Base,
         component: lazy(() => import("./pages/index")),
+        exact: true,
     },
     {
         path: ERouteNames.Boards,

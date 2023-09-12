@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
-    Dialog,
-    Modal,
+    // Dialog,
+    // Modal,
     BaseModuleWrapper,
     breakpoints,
     BaseModuleBody,
@@ -25,7 +25,7 @@ import { TUserViewWidget } from "src/api/types";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import BaseContainerHeader from "./BaseContainerHeader";
-import BaseContainerOptions from "./BaseContainerOptions";
+// import BaseContainerOptions from "./BaseContainerOptions";
 
 const { HEADER_HEIGHT } = CONFIG.WIDGETS.COMMON;
 interface IBaseContainerProps {
@@ -83,7 +83,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     const isCollapsed = useAppSelector(selectIsMinimised(moduleData.hash));
     const [alreadyCollapsed, setAlreadyCollapsed] =
         useCallbackState(isCollapsed);
-    const { removeTagFromViewWidget, includeTagInViewWidget } = useView();
+    const { removeTagFromViewWidget /* includeTagInViewWidget */ } = useView();
 
     const adjustWidgetHeight = (height: number) => {
         dispatch(
@@ -93,11 +93,11 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             })
         );
     };
-    const [showMobileDialog, setShowMobileDialog] = useState(false);
+    const [, /* showMobileDialog */ setShowMobileDialog] = useState(false);
     const [showSettings, setShowSettings] = useState<boolean | undefined>();
-    const handleShowDialog = () => {
-        setShowMobileDialog(false);
-    };
+    // const handleShowDialog = () => {
+    //     setShowMobileDialog(false);
+    // };
     const toggleCollapse = useCallback(() => {
         dispatch(toggleCollapseInStore({ widgetHash: moduleData.hash }));
         if (onToggleCollapse != null) onToggleCollapse();
@@ -181,7 +181,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 className="[&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
                 id={moduleData.hash}
             >
-                <div className="relative h-full w-full [transform-style:preserve-3d]">
+                <div className="relative mb-4 h-full w-full [transform-style:preserve-3d]">
                     <BaseModuleWrapper
                         showSettings={showSettings}
                         ref={moduleWrapRef}
@@ -217,7 +217,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                             <BaseModuleBody>{children}</BaseModuleBody>
                         )}
                     </BaseModuleWrapper>
-                    <BaseContainerOptions
+                    {/* <BaseContainerOptions
                         onIncludeTag={includeTagInViewWidget}
                         onRemoveTag={removeTagFromViewWidget}
                         toggleCollapse={toggleCollapse}
@@ -227,7 +227,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                         removeWidget={removeWidget}
                         moduleData={moduleData}
                         dragProps={dragProps}
-                    />
+                    /> */}
                     {adjustable && !isCollapsed && (
                         <div
                             onMouseDown={adjustHeight}
@@ -239,7 +239,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     )}
                 </div>
             </div>
-            {onToggleShowFullSize && allowFullSize && (
+            {/* {onToggleShowFullSize && allowFullSize && (
                 <Modal showModal={!!showFullSize} onClose={handleShowFullSize}>
                     <BaseContainerHeader
                         headerRef={headerRef}
@@ -259,8 +259,8 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     {children}
                     <div className="foot-block" />
                 </Modal>
-            )}
-            <Dialog
+            )} */}
+            {/* <Dialog
                 title="Alphaday"
                 showXButton
                 saveButtonText="Close"
@@ -269,7 +269,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 onClose={handleShowDialog}
             >
                 <p>Switch to Desktop to get the best experience of {title}</p>
-            </Dialog>
+            </Dialog> */}
         </>
     );
 };
