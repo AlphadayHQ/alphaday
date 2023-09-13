@@ -34,7 +34,7 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
             className={twMerge(
                 "relative -mt-px h-5 w-5",
                 showMenu &&
-                    "[&>:nth-child(3)]:scale-[6] [&>:nth-child(3)]:opacity-60"
+                    "[&>:nth-child(3)]:scale-[6] [&>:nth-child(3)]:opacity-100"
             )}
         >
             {KebabIconVectorPos.map((top, i) => (
@@ -45,16 +45,20 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
             ))}
             <span
                 className={twMerge(
-                    "fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center",
+                    "fill-primaryVariant100 flex cursor-pointer items-center self-center",
                     otherClasses,
-                    showMenu && "bg-backgroundVariant400 -rotate-45 opacity-100"
+                    "opacity-0",
+                    showMenu &&
+                        "bg-backgroundVariant400 h-[10px] w-0.5 top-[5px] left-[9px] -rotate-45 opacity-100"
                 )}
             />
             <span
                 className={twMerge(
-                    "fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center",
+                    "fill-primaryVariant100 flex cursor-pointer items-center self-center",
                     otherClasses,
-                    showMenu && "bg-backgroundVariant400 rotate-45 opacity-100"
+                    "opacity-0",
+                    showMenu &&
+                        "bg-backgroundVariant400 h-[10px] w-0.5 top-[5px] left-[9px] rotate-45 opacity-100"
                 )}
             />
         </div>
