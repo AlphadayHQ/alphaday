@@ -68,7 +68,7 @@ export const dummyModuleData: TUserViewWidget[] = [
     {
         id: 2,
         hash: uuid4(),
-        name: "News Widget",
+        name: "News",
         widget: {
             id: 2,
             slug: "test1_news_widget",
