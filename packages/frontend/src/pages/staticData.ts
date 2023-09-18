@@ -68,12 +68,13 @@ export const dummyModuleData: TUserViewWidget[] = [
     {
         id: 2,
         hash: uuid4(),
-        name: "News Widget",
+        name: "News",
         widget: {
             id: 2,
             slug: "test1_news_widget",
             name: "Widget 2",
-            description: "Widget 1 description",
+            description:
+                "Aggregate crypto articles from reputable crypto news sources from across the internet. Current sources include: Coindesk, CoinTelegraph, Decrypt, The Defiant, and more.",
             short_description: "Widget 1 short description",
             icon: "widget-1.png",
             endpoint_header: {},

@@ -34,7 +34,7 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
             className={twMerge(
                 "relative -mt-px h-5 w-5",
                 showMenu &&
-                    "[&>:nth-child(3)]:scale-[6] [&>:nth-child(3)]:opacity-60"
+                    "[&>:nth-child(3)]:scale-[6] [&>:nth-child(3)]:opacity-100"
             )}
         >
             {KebabIconVectorPos.map((top, i) => (
@@ -45,16 +45,20 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
             ))}
             <span
                 className={twMerge(
-                    "fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center",
+                    "fill-primaryVariant100 flex cursor-pointer items-center self-center",
                     otherClasses,
-                    showMenu && "bg-backgroundVariant400 -rotate-45 opacity-100"
+                    "opacity-0",
+                    showMenu &&
+                        "bg-backgroundVariant400 h-[10px] w-0.5 top-[5px] left-[9px] -rotate-45 opacity-100"
                 )}
             />
             <span
                 className={twMerge(
-                    "fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center",
+                    "fill-primaryVariant100 flex cursor-pointer items-center self-center",
                     otherClasses,
-                    showMenu && "bg-backgroundVariant400 rotate-45 opacity-100"
+                    "opacity-0",
+                    showMenu &&
+                        "bg-backgroundVariant400 h-[10px] w-0.5 top-[5px] left-[9px] rotate-45 opacity-100"
                 )}
             />
         </div>
@@ -138,7 +142,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                         tabIndex={0}
                         role="button"
                         className={twMerge(
-                            "flex cursor-pointer items-center px-3 py-1.5",
+                            "flex cursor-pointer items-center p-3 pb-1.5",
                             toggleSettings === undefined &&
                                 "cursor-not-allowed bg-transparent opacity-50"
                         )}
@@ -147,7 +151,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                             style={{ ...IconStyle, padding: "2px" }}
                             className="icon"
                         />
-                        <div className="break-word w-full px-3 py-0">
+                        <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             {isWidgetOptions ? "Close Options" : "Options"}
                         </div>
                     </div>
@@ -166,7 +170,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                             style={{ ...IconStyle, padding: "2px" }}
                             className="icon"
                         />
-                        <div className="break-word w-full px-3 py-0">
+                        <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             Maximize
                         </div>
                     </div>
@@ -177,6 +181,11 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                         }
                         tabIndex={0}
                         role="button"
+                        className={twMerge(
+                            "flex cursor-pointer items-center px-3 py-1.5",
+                            toggleMinimize === undefined &&
+                                "cursor-not-allowed bg-transparent opacity-50"
+                        )}
                     >
                         {toggleExpand ? (
                             <MaximizeSVG
@@ -186,7 +195,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                         ) : (
                             <MinimizeSVG style={IconStyle} className="icon" />
                         )}
-                        <div className="break-word w-full px-3 py-0">
+                        <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             {toggleExpand ? "Expand" : "Minimize"}
                         </div>
                     </div>
@@ -202,7 +211,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                         )}
                     >
                         <CameraSVG style={IconStyle} className="icon" />
-                        <div className="break-word w-full px-3 py-0">
+                        <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             Screenshot
                         </div>
                     </div>
@@ -218,17 +227,17 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                     >
                         <CloseSVG style={IconStyle} className="icon" />
 
-                        <div className="break-word w-full px-3 py-0">
+                        <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             Remove Widget
                         </div>
                     </div>
-                    <div className="border--btnRingVariant500 m-0 h-0 w-[200px] overflow-hidden border-t border-solid" />
-                    <div className="description">
+                    <div className="border-btnRingVariant500 m-0 h-0 w-[200px] overflow-hidden border-t border-solid" />
+                    <div className="flex cursor-pointer items-center p-3 pt-[18px]">
                         <InfoSVG
                             style={{ minWidth: "15px", marginTop: "2.5px" }}
-                            className="icon"
+                            className="self-start"
                         />
-                        <div className="break-word w-full px-3 py-0">
+                        <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             {widgetDescription}
                         </div>
                     </div>
