@@ -22,7 +22,7 @@ const ItemBookmark: FC<IBookmark> = ({
     }
     return (
         <>
-            {showSpacer && <span className="spacer">•</span>}
+            {showSpacer && <span className="spacer px-2">•</span>}
             <span
                 className="bookmark"
                 role="button"
