@@ -1,8 +1,6 @@
-import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
-import ModuleWrapper from "src/containers/base/ModuleWrapper";
-import MainLayout from "src/layout/MainLayout";
-import { useWindowSize } from "@alphaday/shared/hooks";
 import { useCallback, useState, useMemo, useRef } from "react";
+import { useWindowSize } from "@alphaday/shared/hooks";
+import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import {
     useView,
     useAvailableViews,
@@ -17,8 +15,8 @@ import {
     removeWidgetStateFromCache,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
+import * as userStore from "src/api/store/slices/user";
 import { ETutorialTipId, TUserViewWidget } from "src/api/types";
-import { EToastRole, toast } from "src/api/utils/toastUtils";
 import {
     computeLayoutGrid,
     getDraggedWidget,
@@ -26,9 +24,11 @@ import {
     getColType,
     EColumnType,
 } from "src/api/utils/layoutUtils";
-import * as userStore from "src/api/store/slices/user";
-import CONFIG from "src/config/config";
 import { Logger } from "src/api/utils/logging";
+import { EToastRole, toast } from "src/api/utils/toastUtils";
+import CONFIG from "src/config/config";
+import ModuleWrapper from "src/containers/base/ModuleWrapper";
+import MainLayout from "src/layout/MainLayout";
 
 const { UI, VIEWS } = CONFIG;
 

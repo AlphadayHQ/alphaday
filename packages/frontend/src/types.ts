@@ -56,12 +56,12 @@ export type TTemplatesDict = {
 };
 
 export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
-    blog_template: lazy( () => import( "./containers/items/ItemsContainer" ) ),
-    dao_template: lazy( () => import( "./containers/items/ItemsContainer" ) ),
-    discord_template: lazy( () => import( "./containers/items/ItemsContainer" ) ),
-    forum_template: lazy( () => import( "./containers/items/ItemsContainer" ) ),
-    news_template: lazy( () => import( "./containers/items/ItemsContainer" ) ),
-    reddit_template: lazy( () => import( "./containers/items/ItemsContainer" ) ),
+    blog_template: lazy(() => import("./containers/items/ItemsContainer")),
+    dao_template: lazy(() => import("./containers/items/ItemsContainer")),
+    discord_template: lazy(() => import("./containers/items/ItemsContainer")),
+    forum_template: lazy(() => import("./containers/items/ItemsContainer")),
+    news_template: lazy(() => import("./containers/items/ItemsContainer")),
+    reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
     sample_template: lazy(() => import("./containers/sample/SampleContainer")),
 };
 

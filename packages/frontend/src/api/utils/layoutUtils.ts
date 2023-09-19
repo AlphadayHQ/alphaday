@@ -6,12 +6,8 @@ import CONFIG from "src/config";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
-const {
-    SingleColMinWidth,
-    TwoColMinWidth,
-    ThreeColMinWidth,
-    FourColMinWidth,
-} = alphaBreakpoints;
+const { SingleColMinWidth, TwoColMinWidth, ThreeColMinWidth, FourColMinWidth } =
+    alphaBreakpoints;
 
 /**
  * Heads up: layout is in the form (col #, row #) or (x, y), starting from the
@@ -31,7 +27,7 @@ export type TLayoutGrid = {
         TUserViewWidget[],
         TUserViewWidget[],
         TUserViewWidget[],
-        TUserViewWidget[]
+        TUserViewWidget[],
     ];
 };
 

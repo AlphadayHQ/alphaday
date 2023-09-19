@@ -54,9 +54,8 @@ export const useViewUpdater: () => void = () => {
     });
 
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const [prevIsAuthenticated, setPrevIsAuthenticated] = useState(
-        isAuthenticated
-    );
+    const [prevIsAuthenticated, setPrevIsAuthenticated] =
+        useState(isAuthenticated);
 
     useWalletView();
 
