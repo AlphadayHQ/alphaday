@@ -57,9 +57,8 @@ export const useViewUpdater: () => void = () => {
     });
 
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const [prevIsAuthenticated, setPrevIsAuthenticated] = useState(
-        isAuthenticated
-    );
+    const [prevIsAuthenticated, setPrevIsAuthenticated] =
+        useState(isAuthenticated);
 
     useWalletView();
 
@@ -167,6 +166,7 @@ export const useViewUpdater: () => void = () => {
              * If user has logged out and the current view is a custom view,
              * we navigate to the root
              */
+            // eslint-disable-next-line no-lonely-if
             if (!selectedView?.data.is_system_view) {
                 navigate.push("/");
             }
