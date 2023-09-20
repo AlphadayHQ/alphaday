@@ -77,11 +77,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         rowIndex === preferredDragTutorialWidget?.[1];
 
     return (
-        <Draggable
-            isDragDisabled={false}
-            draggableId={moduleData.hash}
-            index={rowIndex}
-        >
+        <Draggable draggableId={moduleData.hash} index={rowIndex}>
             {(provided, { isDragging }) => (
                 <div
                     id={

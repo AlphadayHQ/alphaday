@@ -7,20 +7,22 @@ function BasePage() {
     return (
         <MainLayout>
             <DragDropContext onDragEnd={() => {}}>
-                <Droppable droppableId="alphaday">
-                    {(provided) => (
-                        <div ref={provided.innerRef}>
-                            {dummyModuleData.map((moduleData, index) => (
-                                <ModuleWrapper
-                                    key={moduleData.id}
-                                    moduleData={moduleData}
-                                    rowIndex={index}
-                                    colIndex={index}
-                                />
-                            ))}
-                        </div>
-                    )}
-                </Droppable>
+                <div className="grid grid-cols-1 twoCol:grid-cols-2 threeCol:grid-cols-3 fourCol:grid-cols-4 gap-4">
+                    {dummyModuleData.map((moduleData, index) => (
+                        <Droppable droppableId="alphaday">
+                            {(provided) => (
+                                <div ref={provided.innerRef}>
+                                    <ModuleWrapper
+                                        key={moduleData.id}
+                                        moduleData={moduleData}
+                                        rowIndex={index}
+                                        colIndex={index}
+                                    />
+                                </div>
+                            )}
+                        </Droppable>
+                    ))}
+                </div>
             </DragDropContext>
         </MainLayout>
     );
