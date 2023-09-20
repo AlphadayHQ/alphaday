@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import {
     useView,
@@ -20,12 +20,15 @@ import {
     buildViewPathFromHashOrSlug,
     isViewStale,
 } from "src/api/utils/viewUtils";
+import CONFIG from "src/config/config";
 import useEventListener from "./useEventListener";
 import { useWalletView } from "./useWalletView";
 
 export const useViewUpdater: () => void = () => {
     const dispatch = useAppDispatch();
     const navigate = useHistory();
+
+    const saveDebounceTimeout = useRef<NodeJS.Timeout>();
 
     const {
         saveSelectedView,
@@ -54,8 +57,9 @@ export const useViewUpdater: () => void = () => {
     });
 
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const [prevIsAuthenticated, setPrevIsAuthenticated] =
-        useState(isAuthenticated);
+    const [prevIsAuthenticated, setPrevIsAuthenticated] = useState(
+        isAuthenticated
+    );
 
     useWalletView();
 
@@ -158,14 +162,15 @@ export const useViewUpdater: () => void = () => {
             dispatch(
                 alphadayApi.util.invalidateTags(["Views", "SubscribedViews"])
             );
-        } else if (!selectedView?.data.is_system_view) {
+        } else {
             /**
              * If user has logged out and the current view is a custom view,
              * we navigate to the root
              */
-            navigate.push("/");
+            if (!selectedView?.data.is_system_view) {
+                navigate.push("/");
+            }
         }
-
         setPrevIsAuthenticated(isAuthenticated);
     }
 
@@ -225,7 +230,12 @@ export const useViewUpdater: () => void = () => {
         !isLoadingSaveView &&
         !selectedView?.data.is_system_view // don't auto save system views
     ) {
-        saveSelectedView();
+        if (saveDebounceTimeout.current !== undefined) {
+            clearTimeout(saveDebounceTimeout.current);
+        }
+        saveDebounceTimeout.current = setTimeout(() => {
+            saveSelectedView();
+        }, CONFIG.VIEWS.AUTO_SAVE_DEBOUNCE);
     }
 
     /**
