@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
-import { ReactComponent as PlusSVG } from "../../../assets/svg/plus.svg";
+import { ReactComponent as PlusSVG } from "../../assets/svg/plus.svg";
 
 interface IPreview {
     previewImg: string;
