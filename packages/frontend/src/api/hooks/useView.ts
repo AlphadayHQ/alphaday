@@ -19,6 +19,7 @@ import {
     EViewDialogState,
     TUserViewWidget,
     TTag,
+    TViewMeta,
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import {
@@ -37,13 +38,6 @@ export const RTK_VIEW_CACHE_KEYS = {
     SAVE_VIEW_AS: "save-view-as-cache-key",
     SAVE_VIEW_META: "save-view-meta-cache-key",
     DELETE_VIEW: "delete-view-cache-key",
-};
-
-export type TRemoveViewRequest = {
-    id: number;
-    isReadOnly?: boolean | undefined;
-    hash: string;
-    slug?: string;
 };
 
 interface IView {
@@ -103,7 +97,7 @@ interface IView {
      *
      * @param viewId the id of the view to be deleted
      */
-    removeView: ({ id, isReadOnly, hash, slug }: TRemoveViewRequest) => void;
+    removeView: ({ id, isReadOnly, hash, slug }: TViewMeta) => void;
     /**
      * Essentially, we have three types of views stored in cache.
      * 1. Available/cached views - these contain full view data (ie. including widget data).
@@ -485,7 +479,7 @@ export const useView: () => IView = () => {
     const openRemoveViewDialog = () => setDialogState(EViewDialogState.Remove);
 
     const removeView = useCallback(
-        (request: TRemoveViewRequest) => {
+        (request: TViewMeta) => {
             const { id: viewId, isReadOnly, hash, slug } = request;
             if (isReadOnly) {
                 // it's important to navigate out first, and then remove from cache
