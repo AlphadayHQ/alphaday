@@ -300,7 +300,8 @@ export const ListItem: FC<IList> = ({
                         {title}
                     </div>
                     <p className={listItemVariants(variant).lastLine}>
-                        <span>{tag}</span> <span className="spacer">•</span>
+                        <span>{tag}</span>
+                        <span className="spacer px-2">•</span>
                         <span className="date">{duration}</span>
                     </p>
                 </div>
