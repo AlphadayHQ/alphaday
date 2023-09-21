@@ -148,6 +148,7 @@ export const useViewUpdater: () => void = () => {
      * Handle loging/logout transitions
      */
     if (isAuthenticated !== prevIsAuthenticated) {
+        Logger.debug("useViewUpdater: isAuthenticated changed");
         if (isAuthenticated) {
             /**
              * Invalidate view-related RTK-query tags upon login
@@ -253,7 +254,7 @@ export const useViewUpdater: () => void = () => {
         setPrevIsFullSize(isFullSize);
         const defaultView = subscribedViews[0].data;
         Logger.debug(
-            "selecting default view for FullSize mode",
+            "useViewUpdater: selecting default view for FullSize mode",
             defaultView.name
         );
         setSelectedViewId(defaultView.id);
