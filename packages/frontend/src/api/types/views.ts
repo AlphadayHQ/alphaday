@@ -34,6 +34,14 @@ export type TUserViewPreview = TRemoteUserViewPreview;
 
 export type TUserViewDraft = TRemoteUserViewDraft;
 
+export type TViewMeta = {
+    id: number;
+    isReadOnly?: boolean;
+    hash: string;
+    slug?: string;
+    isWalletView?: boolean;
+};
+
 export type TSourceData = TRemoteSourceData;
 
 export type TCounterData = {
