@@ -17,11 +17,9 @@ const DaoModule: FC<IDao> = memo(function DaoModule({
     widgetHeight,
 }) {
     return isLoadingItems || !items ? (
-        <ModuleLoader $height={`${String(widgetHeight)}px`} />
+        <ModuleLoader $height={`${widgetHeight}px`} />
     ) : (
-        <div>
-            <DaoItemList items={items} handlePaginate={handlePaginate} />
-        </div>
+        <DaoItemList items={items} handlePaginate={handlePaginate} />
     );
 });
 
