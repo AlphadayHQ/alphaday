@@ -109,7 +109,7 @@ const LayoutHeader: FC<IProps> = ({
                                             "30px",
                                         ]}
                                     /> */}
-                                    <HeaderNavElement className="oneCol:ml-[15px] ml-[8px] mr-[15px]">
+                                    <HeaderNavElement className="singleCol:ml-[15px] ml-[8px] mr-[15px]">
                                         <ProfileDropdownContainer />
                                     </HeaderNavElement>
                                 </HeaderNavRight>
@@ -176,7 +176,7 @@ const LayoutHeader: FC<IProps> = ({
                                         {/* <NotificationDropdownContainer
                                             ml={["8px", "1px", "1px", "15px"]}
                                         /> */}
-                                        <HeaderNavElement className="oneCol:ml-[15px] ml-[8px]">
+                                        <HeaderNavElement className="singleCol:ml-[15px] ml-[8px]">
                                             <ProfileDropdownContainer />
                                         </HeaderNavElement>
                                     </>

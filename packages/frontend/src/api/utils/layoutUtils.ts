@@ -6,7 +6,7 @@ import CONFIG from "src/config";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
-const { oneCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
+const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
 /**
  * Heads up: layout is in the form (col #, row #) or (x, y), starting from the
@@ -192,7 +192,7 @@ export const getColType = (windowWidth: number): EColumnType => {
     if (windowWidth < twoCol) {
         return EColumnType.SingleCol;
     }
-    if (windowWidth >= oneCol && windowWidth < threeCol) {
+    if (windowWidth >= singleCol && windowWidth < threeCol) {
         return EColumnType.TwoCol;
     }
     if (windowWidth >= twoCol && windowWidth < fourCol)

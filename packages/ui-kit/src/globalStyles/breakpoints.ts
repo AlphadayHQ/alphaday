@@ -11,7 +11,7 @@ export const breakpoints = {
 
 export const deviceBreakpoints = {
     tiny: breakpoints.tiny,
-    oneCol: breakpoints.SingleColMinWidth,
+    singleCol: breakpoints.SingleColMinWidth,
     twoCol: breakpoints.TwoColMinWidth,
     threeCol: breakpoints.ThreeColMinWidth,
     fourCol: breakpoints.FourColMinWidth,
