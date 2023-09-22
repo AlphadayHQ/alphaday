@@ -36,14 +36,14 @@ const CustomInput = <Option,>(props: InputProps<Option>) => {
     return !isDisabled ? (
         <>
             <Input data-testid="searchbar-input" {...props} />
-            {(!value && hasValue) && (
+            {!value && hasValue && (
                 <div className="text-primaryVariant100 fontGroup-normal">
                     Search...
                 </div>
-            )}       
+            )}
         </>
     ) : null;
-}
+};
 
 const CustomPlaceholder = <Option,>(props: PlaceholderProps<Option>) => {
     const { isDisabled, children } = props;
@@ -57,11 +57,15 @@ const CustomPlaceholder = <Option,>(props: PlaceholderProps<Option>) => {
 const CustomValueContainer = <Option,>(props: ValueContainerProps<Option>) => {
     const { isDisabled, children, hasValue } = props;
     return !isDisabled ? (
-        <div className={`flex ${hasValue ? "" : "flex-row-reverse "}items-center`}>
-            { children }
+        <div
+            className={`flex ${
+                hasValue ? "" : "flex-row-reverse "
+            }items-center`}
+        >
+            {children}
         </div>
     ) : null;
-}
+};
 
 const CustomMenuList = (showTrending: boolean) => {
     return function Menu<Option>(props: MenuListProps<Option>) {
