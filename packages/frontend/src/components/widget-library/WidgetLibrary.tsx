@@ -1,7 +1,6 @@
 import { FC, ChangeEvent, useRef } from "react";
 import {
     Input,
-    Modal,
     ModalLib,
     ModuleLoader,
     ModulePreview,
@@ -22,7 +21,6 @@ import { ReactComponent as UsersSVG } from "src/assets/icons/users.svg";
 import market from "src/assets/img/preview/marketModule2x.png";
 import CONFIG from "src/config/config";
 import "./WidgetLibrary.module.scss";
-import { useClickOutside } from "src/hooks";
 
 const CAT_ICONS = {
     defi: <DefiSVG />,

@@ -1,6 +1,5 @@
-import { FC, forwardRef, useRef } from "react";
+import { FC, forwardRef } from "react";
 import { IonModal, IonContent } from "@ionic/react";
-import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
 import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "src/hooks";
 
