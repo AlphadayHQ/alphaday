@@ -38,7 +38,20 @@ interface IViewRouteInfo {
 }
 
 export const useViewRoute = (): IViewRouteInfo => {
-    const location = useLocation();
+    const routeLocation = useLocation();
+    /**
+     * (@elcharitas): This is a hack to get the location object from the react-router-dom
+     *
+     * React-Router v5 has a bug(it may also not be a bug, I can't say) where
+     * the location object is not reflected as expected when the route changes
+     * It's weird but it's why we get this multiple rerendering issue.
+     * We should watch for a proper fix in the future.
+     *
+     * TODO: Remove this hack when react-router v6 support is added to ionic
+     * Ref: https://github.com/ionic-team/ionic-framework/issues/24177
+     */
+    const location =
+        "location" in routeLocation ? routeLocation.location : routeLocation;
 
     const fullSizeWidgetPath = useMemo(() => {
         const fullSizeWidgetTest = CONFIG.ROUTING.REGEXPS.FULL_SIZE_WIDGET.exec(

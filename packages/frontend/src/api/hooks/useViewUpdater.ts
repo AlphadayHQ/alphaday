@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import {
     useView,
@@ -20,12 +20,15 @@ import {
     buildViewPathFromHashOrSlug,
     isViewStale,
 } from "src/api/utils/viewUtils";
+import CONFIG from "src/config/config";
 import useEventListener from "./useEventListener";
 import { useWalletView } from "./useWalletView";
 
 export const useViewUpdater: () => void = () => {
     const dispatch = useAppDispatch();
     const navigate = useHistory();
+
+    const saveDebounceTimeout = useRef<NodeJS.Timeout>();
 
     const {
         saveSelectedView,
@@ -145,6 +148,7 @@ export const useViewUpdater: () => void = () => {
      * Handle loging/logout transitions
      */
     if (isAuthenticated !== prevIsAuthenticated) {
+        Logger.debug("useViewUpdater: isAuthenticated changed");
         if (isAuthenticated) {
             /**
              * Invalidate view-related RTK-query tags upon login
@@ -158,14 +162,16 @@ export const useViewUpdater: () => void = () => {
             dispatch(
                 alphadayApi.util.invalidateTags(["Views", "SubscribedViews"])
             );
-        } else if (!selectedView?.data.is_system_view) {
+        } else {
             /**
              * If user has logged out and the current view is a custom view,
              * we navigate to the root
              */
-            navigate.push("/");
+            // eslint-disable-next-line no-lonely-if
+            if (!selectedView?.data.is_system_view) {
+                navigate.push("/");
+            }
         }
-
         setPrevIsAuthenticated(isAuthenticated);
     }
 
@@ -225,7 +231,12 @@ export const useViewUpdater: () => void = () => {
         !isLoadingSaveView &&
         !selectedView?.data.is_system_view // don't auto save system views
     ) {
-        saveSelectedView();
+        if (saveDebounceTimeout.current !== undefined) {
+            clearTimeout(saveDebounceTimeout.current);
+        }
+        saveDebounceTimeout.current = setTimeout(() => {
+            saveSelectedView();
+        }, CONFIG.VIEWS.AUTO_SAVE_DEBOUNCE);
     }
 
     /**
@@ -243,7 +254,7 @@ export const useViewUpdater: () => void = () => {
         setPrevIsFullSize(isFullSize);
         const defaultView = subscribedViews[0].data;
         Logger.debug(
-            "selecting default view for FullSize mode",
+            "useViewUpdater: selecting default view for FullSize mode",
             defaultView.name
         );
         setSelectedViewId(defaultView.id);
