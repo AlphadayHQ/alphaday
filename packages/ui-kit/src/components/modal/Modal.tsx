@@ -1,6 +1,8 @@
-import { FC, forwardRef } from "react";
+import { FC, forwardRef, useRef } from "react";
 import { IonModal, IonContent } from "@ionic/react";
+import { OverlayEventDetail } from "@ionic/react/dist/types/components/react-component-lib/interfaces";
 import { twMerge } from "tailwind-merge";
+import { useClickOutside } from "src/hooks";
 
 export interface IProps {
     /**
@@ -51,6 +53,41 @@ export const Modal = forwardRef<
             isOpen={showModal}
         >
             <IonContent className="ion-padding">{children}</IonContent>
+        </IonModal>
+    );
+});
+
+export const ModalLib = forwardRef<
+    HTMLIonModalElement | null,
+    RequireAtLeastOne<IModal, "triggerId" | "showModal">
+>(({ className, children, onClose, triggerId, showModal }, ref) => {
+    const containerRef = useClickOutside<HTMLDivElement>(() => {
+        onClose?.();
+    });
+
+    return (
+        <IonModal
+            ref={ref}
+            trigger={triggerId}
+            isOpen={showModal}
+            showBackdrop
+            className={twMerge(
+                "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none",
+                className
+            )}
+        >
+            <div className="h-full w-full flex items-center justify-center ">
+                <div
+                    ref={containerRef}
+                    style={{
+                        boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
+                        maxWidth: "min(calc(100% - 20px), 1050px)",
+                    }}
+                    className="bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
+                >
+                    {children}
+                </div>
+            </div>
         </IonModal>
     );
 });

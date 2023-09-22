@@ -34,7 +34,7 @@ import {
 } from "./src/components/listItem/ListItem";
 
 import { NoItems } from "./src/components/listItem/NoItems";
-import { Modal } from "./src/components/modal/Modal";
+import { Modal, ModalLib } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
@@ -70,6 +70,7 @@ export {
     SwitchWrap,
     Dialog,
     Modal,
+    ModalLib,
     Input,
     ModuleLoader,
     ListItem,

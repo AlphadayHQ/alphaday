@@ -2,7 +2,7 @@ import { Modal } from "@alphaday/components";
 import styled, { breakpoints } from "@alphaday/shared/styled";
 
 export const StyledModal = styled(Modal)`
-    background-color: ${({ theme }) => theme.colors.backgroundVariant1300};
+    /* background-color: ${({ theme }) => theme.colors.backgroundVariant1300};
     overflow: hidden;
 
     .modal-dialog {
@@ -18,7 +18,7 @@ export const StyledModal = styled(Modal)`
         box-shadow: 0px 0px 0px 1px rgba(121, 131, 162, 0.2);
         border-radius: 5px;
         max-width: min(calc(100% - 20px), 1050px);
-    }
+    } */
     .button {
         margin-right: 10px;
     }
@@ -38,22 +38,6 @@ export const StyledModal = styled(Modal)`
     }
 `;
 
-export const StyledInput = styled.div`
-    width: min(80%, 370px);
-    ${({ theme }) => theme.fontGroup.normal}
-
-    input {
-        height: 28px;
-        outline: none;
-        border: none;
-        &:focus,
-        &:hover {
-            outline: none;
-            border: none;
-        }
-    }
-`;
-
 export const StyledHr = styled.hr`
     margin: 0;
     width: 100%;
@@ -61,14 +45,14 @@ export const StyledHr = styled.hr`
 `;
 
 export const StyledContainer = styled.div`
-    --height: calc(85vh - 100px);
+    /* --height: calc(85vh - 100px);
     position: relative;
     display: flex;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.backgroundVariant1500};
-    max-height: var(--height);
+    max-height: var(--height); */
 
-    .header {
+    /* .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -86,20 +70,20 @@ export const StyledContainer = styled.div`
                 margin-right: 7px;
             }
         }
-    }
+    } */
 
-    .cat-wrap {
+    /* .cat-wrap {
         width: 280px;
         background-color: ${({ theme }) => theme.colors.backgroundVariant800};
         height: var(--height);
-    }
+    } */
 
     .modules {
-        width: 100%;
+        /* width: 100%;
         height: var(--height);
-        box-shadow: -2px 0px 34px rgba(0, 0, 0, 0.2);
+        box-shadow: -2px 0px 34px rgba(0, 0, 0, 0.2); */
 
-        .modules-list {
+        /* .modules-list {
             height: calc(var(--height) - 120px);
             padding: 25px;
             .modules-wrap {
@@ -114,47 +98,18 @@ export const StyledContainer = styled.div`
                     margin: 10px;
                 }
             }
-        }
+        } */
     }
 
-    .modules-count {
+    /* .modules-count {
         margin: 25px 35px 10px;
         ${({ theme }) => theme.fontGroup.highlightSemi}
-    }
+    } */
 
-    .no-modules {
+    /* .no-modules {
         display: flex;
         align-items: center;
         justify-content: center;
         height: 100%;
-    }
-`;
-
-export const StyledCatItem = styled.div<{ active?: boolean }>`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 16px 15px 16px 25px;
-
-    color: ${({ theme }) => theme.colors.primaryVariant100};
-
-    ${({ active, theme }) =>
-        active &&
-        `
-        background: ${theme.colors.btnBackgroundVariant1400};
-        color: ${theme.colors.primary};
-    `}
-    ${({ theme }) => theme.fontGroup.highlight}
-
-    &:hover {
-        color: ${({ theme }) => theme.colors.primary};
-    }
-
-    cursor: pointer;
-
-    svg {
-        margin-right: 15px;
-        width: 18px;
-        height: 18px;
-    }
+    } */
 `;

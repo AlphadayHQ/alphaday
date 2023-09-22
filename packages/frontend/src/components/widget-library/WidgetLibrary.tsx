@@ -1,9 +1,13 @@
-import { FC, ChangeEvent } from "react";
+import { FC, ChangeEvent, useRef } from "react";
 import {
     Input,
+    Modal,
+    ModalLib,
     ModuleLoader,
     ModulePreview,
     ScrollBar,
+    TabButton,
+    twMerge,
 } from "@alphaday/ui-kit";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget } from "src/api/types";
@@ -17,13 +21,8 @@ import { ReactComponent as OtherSVG } from "src/assets/icons/other.svg";
 import { ReactComponent as UsersSVG } from "src/assets/icons/users.svg";
 import market from "src/assets/img/preview/marketModule2x.png";
 import CONFIG from "src/config/config";
-import { AlphaTabButton } from "../widgets/tabButtons/AlphaTabButton";
-import {
-    StyledCatItem,
-    StyledContainer,
-    StyledInput,
-    StyledModal,
-} from "./WidgetLibrary.style";
+import "./WidgetLibrary.module.scss";
+import { useClickOutside } from "src/hooks";
 
 const CAT_ICONS = {
     defi: <DefiSVG />,
@@ -53,6 +52,7 @@ const SORT_BUTTONS: {
 ];
 
 interface IWidgetLibProps {
+    showWidgetLib: boolean;
     sortBy: EItemsSortBy;
     /**
      * Widgets to display in the library
@@ -83,6 +83,7 @@ interface IWidgetLibProps {
     handleSelectCategory: (c: string | undefined) => void;
 }
 const WidgetLibrary: FC<IWidgetLibProps> = ({
+    showWidgetLib,
     widgets,
     selectedWidget,
     handleSelectWidget,
@@ -100,24 +101,32 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
         onFilter(e.target.value);
     };
 
-    if (widgets) {
+    const modalRef = useRef<HTMLIonModalElement>(null);
+
+    if (widgets)
         return (
-            <StyledModal show onClose={toggleWidgetLib}>
-                <div className=" bg-backgroundVariant300 text-primaryVariant100 bg-blend-soft-light p-[4.5px_9px_4.5px_15px] border-b-[1.2px_solid] border-background rounded-[3px]">
+            <ModalLib
+                ref={modalRef}
+                onClose={toggleWidgetLib}
+                showModal={showWidgetLib}
+            >
+                <div className="bg-backgroundVariant300 text-primaryVariant100 bg-blend-soft-light p-[4.5px_15px_4.5px_15px] border-b-[1.2px] border-solid border-b-background rounded-[3px]">
                     <div className="w-full flex items-center justify-between">
                         <div>
                             <h6 className="m-0 inline-flex self-end fontGroup-highlight uppercase text-primaryVariant100">
                                 Widgets Library
                             </h6>
                         </div>
-                        <StyledInput>
+                        <div className="fontGroup-normal max-w-[370px] w-[80%]">
                             <Input
                                 onChange={handleFilterChange}
                                 id="widgetlib-search"
                                 name="widgetlib-search"
                                 placeholder="Quick Search..."
+                                height="28px"
+                                className="outline-none border-none focus:outline-none focus:border-none"
                             />
-                        </StyledInput>
+                        </div>
                         <div
                             className="fill-primaryVariant100 cursor-pointer h-[30px] self-center flex items-center"
                             role="button"
@@ -130,28 +139,40 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                     </div>
                 </div>
                 {categories.length > 0 ? (
-                    <StyledContainer>
-                        <div className="cat-wrap">
+                    <div className="relative flex items-center bg-backgroundVariant1500 max-h-[var(--wlib-modal-height)]">
+                        <div className="h-[var(--wlib-modal-height)] w-[280px] bg-backgroundVariant800 fontGroup-highlight">
                             <ScrollBar>
-                                <StyledCatItem
-                                    active={!selectedCategory}
+                                <div
+                                    role="button"
+                                    tabIndex={0}
+                                    className={twMerge(
+                                        "flex flex-row items-center p-[16px_15px_16px_25px] text-primaryVariant100",
+                                        !selectedCategory &&
+                                            "bg-btnBackgroundVariant1400 text-primary",
+                                        "hover:text-primary cursor-pointer [&>svg]:mr-[15px] [&>svg]:w-[18px] [&>svg]:h-[18px]"
+                                    )}
                                     onClick={() =>
                                         handleSelectCategory(undefined)
                                     }
                                 >
                                     <WidgetsSVG />
                                     All Widgets
-                                </StyledCatItem>
+                                </div>
                                 {categories.map((cat) => {
                                     const icon = cat.slug.split(
                                         "_widget_category"
                                     )[0] as keyof typeof CAT_ICONS;
                                     return (
-                                        <StyledCatItem
+                                        <div
+                                            role="button"
+                                            tabIndex={0}
+                                            className={twMerge(
+                                                "flex flex-row items-center p-[16px_15px_16px_25px] text-primaryVariant100",
+                                                selectedCategory === cat.slug &&
+                                                    "bg-btnBackgroundVariant1400 text-primary",
+                                                "hover:text-primary cursor-pointer [&>svg]:mr-[15px] [&>svg]:w-[18px] [&>svg]:h-[18px]"
+                                            )}
                                             key={cat.slug}
-                                            active={
-                                                selectedCategory === cat.slug
-                                            }
                                             onClick={() =>
                                                 handleSelectCategory(cat.slug)
                                             }
@@ -160,15 +181,20 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                                 ? CAT_ICONS[icon]
                                                 : CAT_ICONS.default}
                                             {cat.name}
-                                        </StyledCatItem>
+                                        </div>
                                     );
                                 })}
                             </ScrollBar>
                         </div>
-                        <div className="modules">
-                            <div className="header">
-                                <div className="tabs" />
-                                <div className="tabs">
+                        <div
+                            className="h-[var(--wlib-modal-height)] w-full"
+                            style={{
+                                boxShadow: "-2px 0px 34px rgba(0, 0, 0, 0.2)",
+                            }}
+                        >
+                            <div className="flex justify-between items-center p-[17px_25px] border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
+                                <div className="flex justify-around items-center [&>span]:mr-[7px]" />
+                                <div className="flex justify-around items-center [&>span]:mr-[7px] fontGroup-normal">
                                     {SORT_BUTTONS.length > 0 && (
                                         <>
                                             <span className="title">
@@ -179,7 +205,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                                     key={String(nav.value)}
                                                     className="wrap"
                                                 >
-                                                    <AlphaTabButton
+                                                    <TabButton
                                                         variant="small"
                                                         uppercase={false}
                                                         open={
@@ -190,7 +216,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                                         }
                                                     >
                                                         {nav.label}
-                                                    </AlphaTabButton>
+                                                    </TabButton>
                                                 </span>
                                             ))}
                                         </>
@@ -199,13 +225,13 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                             </div>
                             {!isLoading ? (
                                 <>
-                                    <div className="modules-count">
+                                    <div className="m-[25px_25px_10px] fontGroup-highlightSemi">
                                         {widgets.length} Widgets
                                     </div>
-                                    <div className="modules-list">
+                                    <div className="h-[calc(var(--wlib-modal-height)_-_113px)]">
                                         {widgets.length > 0 ? (
                                             <ScrollBar>
-                                                <div className="modules-wrap">
+                                                <div className="flex box-border flex-row flex-wrap w-full pl-[15px]">
                                                     {widgets.map((w) => {
                                                         const widgetCount =
                                                             cachedWidgets?.filter(
@@ -221,7 +247,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                                                     CONFIG.UI
                                                                         .NEW_WIDGET_IDENTIFIER
                                                                 }`}
-                                                                className="thumbnail"
+                                                                className="w-min max-w-min m-[10px]"
                                                             >
                                                                 <ModulePreview
                                                                     previewImg={
@@ -259,7 +285,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                                 </div>
                                             </ScrollBar>
                                         ) : (
-                                            <div className="no-modules">
+                                            <div className="flex items-center justify-center h-full">
                                                 No widgets found in this
                                                 category &#34;
                                                 {categories?.find(
@@ -276,13 +302,12 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 <ModuleLoader $height="100%" />
                             )}
                         </div>
-                    </StyledContainer>
+                    </div>
                 ) : (
                     <ModuleLoader $height="600px" />
                 )}
-            </StyledModal>
+            </ModalLib>
         );
-    }
     return null;
 };
 
