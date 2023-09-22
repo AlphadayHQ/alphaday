@@ -11,6 +11,8 @@ import Select, {
     SelectComponentsConfig,
     MenuListProps,
     OptionProps,
+    PlaceholderProps,
+    ValueContainerProps,
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
@@ -30,18 +32,36 @@ interface IProps {
 const { Input, NoOptionsMessage, MenuList, Option } = components;
 
 const CustomInput = <Option,>(props: InputProps<Option>) => {
-    const { isDisabled, value } = props;
+    const { isDisabled, value, hasValue } = props;
     return !isDisabled ? (
         <>
             <Input data-testid="searchbar-input" {...props} />
-            {!value && (
-                <div className="text-primaryVariant100 fontGroup-normal w-full pt-[0.5px]">
+            {(!value && hasValue) && (
+                <div className="text-primaryVariant100 fontGroup-normal">
                     Search...
                 </div>
-            )}
+            )}       
         </>
     ) : null;
+}
+
+const CustomPlaceholder = <Option,>(props: PlaceholderProps<Option>) => {
+    const { isDisabled, children } = props;
+    return !isDisabled ? (
+        <div className="text-primaryVariant100 fontGroup-normal w-full">
+            {children}
+        </div>
+    ) : null;
 };
+
+const CustomValueContainer = <Option,>(props: ValueContainerProps<Option>) => {
+    const { isDisabled, children, hasValue } = props;
+    return !isDisabled ? (
+        <div className={`flex ${hasValue ? "" : "flex-row-reverse "}items-center`}>
+            { children }
+        </div>
+    ) : null;
+}
 
 const CustomMenuList = (showTrending: boolean) => {
     return function Menu<Option>(props: MenuListProps<Option>) {
@@ -368,10 +388,12 @@ export const SearchBar = <T,>({
                 closeMenuOnSelect={closeMenuOnSelect}
                 components={{
                     DropdownIndicator: null,
-                    Input: CustomInput,
                     NoOptionsMessage: CustomNoOptionsMessage(isFetching),
                     MenuList: CustomMenuList(showTrending),
                     Option: CustomOption,
+                    Input: CustomInput,
+                    Placeholder: CustomPlaceholder,
+                    ValueContainer: CustomValueContainer,
                     ...customComponents,
                 }}
                 styles={selectStyles}
