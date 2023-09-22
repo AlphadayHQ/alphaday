@@ -51,7 +51,7 @@ export const ModulePreview: FC<IPreview> = ({
                     />
                     <div className="absolute bottom-[10%] right-[5%] flex justify-center items-center">
                         {count !== undefined && count > 0 && (
-                            <div className="w-5 h-5 bg-btnRingVariant100 rounded-[10px] text-backgroundVariant900 text-center font-semibold">
+                            <div className="flex justify-center items-center w-5 h-5 bg-btnRingVariant100 rounded-[10px] text-backgroundVariant900 text-center fontGroup-highlightSemi">
                                 {count}
                             </div>
                         )}
