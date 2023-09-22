@@ -63,7 +63,9 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         | undefined;
 
     // if we do not yet support this template, then we should gracefully exit
-    if (ModuleContainer === undefined) return null;
+    if (ModuleContainer === undefined) {
+        return null;
+    }
 
     const viewPath = buildViewPath(selectedView?.data);
 
