@@ -312,16 +312,26 @@ function BasePage() {
                 }}
             >
                 <div className="grid grid-cols-1 twoCol:grid-cols-2 threeCol:grid-cols-3 fourCol:grid-cols-4 gap-4">
-                    {selectedView?.data.widgets?.map((widget, index) => (
-                        <Droppable droppableId={widget.hash}>
+                    {layoutState?.map((widgets, colIndex) => (
+                        <Droppable
+                            key={`col-${colIndex}`}
+                            droppableId={`col-${colIndex}`}
+                        >
                             {(provided) => (
-                                <div ref={provided.innerRef}>
-                                    <ModuleWrapper
-                                        key={widget.id}
-                                        moduleData={widget}
-                                        rowIndex={index}
-                                        colIndex={index}
-                                    />
+                                <div
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                >
+                                    {widgets.map((widget, rowIndex) => (
+                                        <ModuleWrapper
+                                            key={widget.id}
+                                            moduleData={widget}
+                                            rowIndex={rowIndex}
+                                            colIndex={colIndex}
+                                        />
+                                    ))}
+
+                                    {provided.placeholder}
                                 </div>
                             )}
                         </Droppable>
