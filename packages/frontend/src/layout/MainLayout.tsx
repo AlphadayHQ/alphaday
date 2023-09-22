@@ -1,14 +1,15 @@
 import React from "react";
-// import { TUserViewWidget } from "src/api/types";
-// import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
 import { Footer } from "@alphaday/ui-kit";
+import { TUserViewWidget } from "src/api/types";
+// import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
 import Header from "./LayoutHeader";
 
 interface IProps {
     hideFooter?: boolean;
     hideFeatures?: boolean;
     toggleWidgetLib?: () => void;
-    // layoutState?: TUserViewWidget[][];
+    // eslint-disable-next-line react/no-unused-prop-types
+    layoutState?: TUserViewWidget[][];
     children?: React.ReactNode;
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>
