@@ -3,6 +3,7 @@ import Select, {
     components,
     GroupBase,
     StylesConfig,
+    ClassNamesConfig,
     ActionMeta,
     InputActionMeta,
     InputProps,
@@ -213,160 +214,19 @@ export const SearchBar = <T,>({
         [inputValue, onInputChange]
     );
 
-    const selectStyles: StylesConfig<T, true, GroupBase<T>> & IProps = {
-        container: (styles) => ({
-            ...styles,
-            ...themedStyles?.container,
-        }),
-        control: (styles, { isFocused }) => ({
-            ...styles,
-            cursor: "text",
-            "&:hover": {
-                backgroundColor: backgroundVariant200,
-            },
-            backgroundColor: isFocused
-                ? backgroundVariant200
-                : backgroundVariant400,
-            border: 0,
-            boxShadow: "none",
-            borderRadius: "10px",
-            height: "41px",
-            minHeight: "41px",
-            ...themedStyles?.control,
-        }),
-        placeholder: (styles) => {
-            return {
-                ...styles,
-                marginLeft: "15px",
-                fontFamily: "Open Sans",
-                fontStyle: "normal",
-                fontWeight: 400,
-                fontSize: "12px",
-                lineHeight: "18px",
-                letterSpacing: "0.2px",
-                color: primaryVariant100,
-                ...themedStyles?.placeholder,
-            };
-        },
-        multiValue: (styles) => {
-            return {
-                ...styles,
-                backgroundColor: btnBackgroundVariant1400,
-                borderRadius: "8px",
-                margin: "0",
-                marginLeft: "6px",
-                lineHeight: "16px",
-                padding: "6px",
-                "& div": {
-                    color: primary,
-                    fontSize: "12px",
-                    padding: "0px",
-                    margin: "0px 0px 0px 5px",
-                    cursor: "pointer",
-                },
-                "& div:hover": { background: "transparent" },
-                "& div:nth-of-type(2)": {
-                    display: "contents",
-                    margin: 0,
-                    cursor: "pointer",
-                    svg: {
-                        fill: primary,
-                        margin: "1px 0px",
-                        width: "15px",
-                        height: "14px",
-                        padding: "3px 0px",
-                    },
-                },
-                ...themedStyles?.multiValue,
-            };
-        },
-        valueContainer: (styles) => {
-            return {
-                ...styles,
-                padding: "0px 4px",
-                height: "41px",
-                flexWrap: "nowrap",
-                overflowX: "scroll",
-                msOverflowStyle: "none" /* IE and Edge */,
-                scrollbarWidth: "none" /* Firefox */,
-                "&::-webkit-scrollbar": {
-                    display: "none",
-                },
-                div: {
-                    minWidth: "max-content",
-                },
-                ...themedStyles?.valueContainer,
-            };
-        },
-        input: (styles) => {
-            return {
-                ...styles,
-                margin: "0px 0px 0px 10px",
-                padding: "0px",
-                color: primary,
-                border: 0,
-                ...themedStyles?.input,
-            };
-        },
-        indicatorSeparator: (styles) => {
-            return {
-                ...styles,
-                display: "none",
-            };
-        },
-        indicatorsContainer: (styles) => {
-            return {
-                ...styles,
-                cursor: "pointer",
-                svg: {
-                    color: primaryVariant100,
-                },
-            };
-        },
-
-        menu: (styles) => {
-            return {
-                ...styles,
-                background: backgroundVariant200,
-                fontWeight: "bold",
-                fontSize: "12px",
-                lineHeight: "17px",
-                boxShadow: "0px 0px 35px 14px rgba(19, 21, 27, 0.8)",
-                ...themedStyles?.menu,
-            };
-        },
-        menuList: (styles) => {
-            return {
-                ...styles,
-                padding: "0 0 5px",
-
-                "::-webkit-scrollbar": {
-                    width: "4px",
-                    height: "0px",
-                },
-                "::-webkit-scrollbar-track": {
-                    background: "#1e2025",
-                },
-                "::-webkit-scrollbar-thumb": {
-                    background: "#c1c5d6",
-                },
-                "::-webkit-scrollbar-thumb:hover": {
-                    background: "#555555",
-                },
-                ...themedStyles?.menuList,
-            };
-        },
-        option: (provided, { isFocused }) => ({
-            ...provided,
-            color: primary,
-            backgroundColor: isFocused ? backgroundVariant600 : "transparent",
-            "&:active": {
-                backgroundColor: "transparent",
-            },
-            ...themedStyles?.option,
-            cursor: "pointer",
-            textTransform: "capitalize",
-        }),
+    const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
+        control: () =>"cursor-text hover:bg-backgroundVariant200 bg-backgroundVariant400 border-0 box-shadow-none rounded-10 h-41 min-h-41",
+        placeholder: () =>
+            "ml-15 font-open-sans font-normal text-sm line-height-18 tracking-0.2 text-primaryVariant100",
+        multiValue: () =>
+            `bg-btnBackgroundVariant1400 rounded-8 m-0 ml-6 line-height-16 p-6 div { color: ${primary}; font-size: 12px; padding: 0px; margin: 0px 0px 0px 5px; cursor: pointer; } div:hover { background: transparent; } [&>div:nth-of-type(2)] { display: contents; margin: 0; cursor: pointer; svg { fill: ${primary}; margin: 1px 0px; width: 15px; height: 14px; padding: 3px 0px; } }`,
+        valueContainer: () => "p-0 h-41 flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-full [&::-webkit-scrollbar]:hidden",
+        input: () => "m-0 ml-10 p-0 text-primary border-0",
+        indicatorSeparator: () => "hidden",
+        indicatorsContainer: () => "cursor-pointer [&>svg]:text-primaryVariant100",
+        menu: () => "bg-backgroundVariant200 font-weight-bold text-sm line-height-17 shadow-[0-0-35-14-rgba(19-21-27-0.8)]",
+        menuList: () => "p-0 pb-5 [&::-webkit-scrollbar]:w-4 [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] &::-webkit-scrollbar-thumb { background: #c1c5d6; } &::-webkit-scrollbar-thumb:hover { background: #555555; }",
+        option: () => "text-primary bg-transparent hover:backgroundVariant600 active:bg-transparent cursor-pointer text-transform-capitalize",
     };
 
     if (escKeyPressed === true) {
@@ -400,7 +260,8 @@ export const SearchBar = <T,>({
                     ValueContainer: CustomValueContainer,
                     ...customComponents,
                 }}
-                styles={selectStyles}
+                // styles={themedStyles}
+                classNames={selectClasses}
                 placeholder={placeholder}
                 isDisabled={disabled}
                 menuIsOpen={escKeyPressed === true ? false : undefined}
