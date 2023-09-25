@@ -140,6 +140,7 @@ export interface ISearchProps<Option = unknown> {
         actionType: ActionMeta<Option>
     ) => void | ((o: Option[]) => Promise<void>);
     onInputChange?: (e: string) => void;
+    // eslint-disable-next-line react/no-unused-prop-types
     customStyles?: () => Partial<
         Record<
             keyof StylesConfig<Option, true, GroupBase<Option>>,
@@ -159,23 +160,16 @@ export const SearchBar = <T,>({
     initialSearchValues,
     closeMenuOnSelect = false,
     updateSearch = true,
-    customStyles,
+    // customStyles,
     customComponents,
     initialInputValue,
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
-    const themedStyles = customStyles?.();
+    // const themedStyles = customStyles?.();
 
     // TODO (xavier-charles): use react-select classnames prop instead of this
-    const {
-        backgroundVariant200,
-        backgroundVariant400,
-        primaryVariant100,
-        backgroundVariant600,
-        btnBackgroundVariant1400,
-        primary,
-    } = darkColors;
+    const { primary } = darkColors;
 
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
@@ -215,18 +209,24 @@ export const SearchBar = <T,>({
     );
 
     const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
-        control: () =>"cursor-text hover:bg-backgroundVariant200 bg-backgroundVariant400 border-0 box-shadow-none rounded-10 h-41 min-h-41",
+        control: () =>
+            "cursor-text hover:bg-backgroundVariant200 bg-backgroundVariant400 border-0 box-shadow-none rounded-10 h-41 min-h-41",
         placeholder: () =>
             "ml-15 font-open-sans font-normal text-sm line-height-18 tracking-0.2 text-primaryVariant100",
         multiValue: () =>
             `bg-btnBackgroundVariant1400 rounded-8 m-0 ml-6 line-height-16 p-6 div { color: ${primary}; font-size: 12px; padding: 0px; margin: 0px 0px 0px 5px; cursor: pointer; } div:hover { background: transparent; } [&>div:nth-of-type(2)] { display: contents; margin: 0; cursor: pointer; svg { fill: ${primary}; margin: 1px 0px; width: 15px; height: 14px; padding: 3px 0px; } }`,
-        valueContainer: () => "p-0 h-41 flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-full [&::-webkit-scrollbar]:hidden",
+        valueContainer: () =>
+            "p-0 h-41 flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-full [&::-webkit-scrollbar]:hidden",
         input: () => "m-0 ml-10 p-0 text-primary border-0",
         indicatorSeparator: () => "hidden",
-        indicatorsContainer: () => "cursor-pointer [&>svg]:text-primaryVariant100",
-        menu: () => "bg-backgroundVariant200 font-weight-bold text-sm line-height-17 shadow-[0-0-35-14-rgba(19-21-27-0.8)]",
-        menuList: () => "p-0 pb-5 [&::-webkit-scrollbar]:w-4 [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] &::-webkit-scrollbar-thumb { background: #c1c5d6; } &::-webkit-scrollbar-thumb:hover { background: #555555; }",
-        option: () => "text-primary bg-transparent hover:backgroundVariant600 active:bg-transparent cursor-pointer text-transform-capitalize",
+        indicatorsContainer: () =>
+            "cursor-pointer [&>svg]:text-primaryVariant100",
+        menu: () =>
+            "bg-backgroundVariant200 font-weight-bold text-sm line-height-17 shadow-[0-0-35-14-rgba(19-21-27-0.8)]",
+        menuList: () =>
+            "p-0 pb-5 [&::-webkit-scrollbar]:w-4 [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] &::-webkit-scrollbar-thumb { background: #c1c5d6; } &::-webkit-scrollbar-thumb:hover { background: #555555; }",
+        option: () =>
+            "text-primary bg-transparent hover:backgroundVariant600 active:bg-transparent cursor-pointer text-transform-capitalize",
     };
 
     if (escKeyPressed === true) {
