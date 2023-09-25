@@ -314,8 +314,9 @@ function BasePage() {
                 <div className="grid grid-cols-1 twoCol:grid-cols-2 threeCol:grid-cols-3 fourCol:grid-cols-4 gap-4">
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
-                            key={`col-${colIndex}`}
-                            droppableId={`col-${colIndex}`}
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={colIndex.toString()}
+                            droppableId={colIndex.toString()}
                         >
                             {(provided) => (
                                 <div
