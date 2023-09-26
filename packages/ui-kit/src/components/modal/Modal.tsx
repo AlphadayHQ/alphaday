@@ -57,7 +57,7 @@ export const Modal = forwardRef<
                 ref={ref}
                 trigger={triggerId}
                 isOpen={showModal}
-                onWillDismiss={() => onClose?.()}
+                onWillDismiss={() => onClose?.()} // for ion-modal esc key and backdrop click
                 className={twMerge(
                     "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none relative",
                     className
