@@ -18,7 +18,6 @@ import Select, {
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
 import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
-import { darkColors } from "../../globalStyles/colors";
 import { Spinner } from "../spinner/Spinner";
 /**
  * for simplicity, all components types here are defined with IsMulti = true
@@ -104,7 +103,7 @@ const CustomNoOptionsMessage = (isFetching: boolean | undefined) => {
     ) {
         return (
             <NoOptionsMessage {...props}>
-                <div className="text-primary flex w-full max-w-[524px] items-center justify-center overscroll-contain font-[bold]">
+                <div className="fontGroup-normal text-primary flex w-full max-w-[524px] items-center justify-center overscroll-contain font-[bold]">
                     {isFetching === true ? (
                         <div className="flex h-[70px] w-full items-center justify-center">
                             <Spinner />
@@ -140,7 +139,7 @@ export interface ISearchProps<Option = unknown> {
         actionType: ActionMeta<Option>
     ) => void | ((o: Option[]) => Promise<void>);
     onInputChange?: (e: string) => void;
-    // eslint-disable-next-line react/no-unused-prop-types
+
     customStyles?: () => Partial<
         Record<
             keyof StylesConfig<Option, true, GroupBase<Option>>,
@@ -160,16 +159,13 @@ export const SearchBar = <T,>({
     initialSearchValues,
     closeMenuOnSelect = false,
     updateSearch = true,
-    // customStyles,
+    customStyles,
     customComponents,
     initialInputValue,
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
-    // const themedStyles = customStyles?.();
-
-    // TODO (xavier-charles): use react-select classnames prop instead of this
-    const { primary } = darkColors;
+    const themedStyles = customStyles?.();
 
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
@@ -208,25 +204,58 @@ export const SearchBar = <T,>({
         [inputValue, onInputChange]
     );
 
+    const selectStyles: StylesConfig<T, true, GroupBase<T>> & IProps = {
+        control: () => ({
+            ...themedStyles?.control,
+        }),
+        placeholder: () => ({
+            ...themedStyles?.placeholder,
+        }),
+        multiValue: () => ({
+            ...themedStyles?.multiValue,
+        }),
+        valueContainer: () => ({
+            ...themedStyles?.valueContainer,
+        }),
+        input: () => ({
+            ...themedStyles?.input,
+        }),
+        indicatorSeparator: () => ({
+            ...themedStyles?.indicatorSeparator,
+        }),
+        indicatorsContainer: () => ({
+            ...themedStyles?.indicatorsContainer,
+        }),
+        menu: () => ({
+            ...themedStyles?.menu,
+        }),
+        menuList: () => ({
+            ...themedStyles?.menuList,
+        }),
+        option: () => ({
+            ...themedStyles?.option,
+        }),
+    };
+
     const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
         control: () =>
-            "cursor-text hover:bg-backgroundVariant200 bg-backgroundVariant400 border-0 box-shadow-none rounded-10 h-41 min-h-41",
+            "flex justify-between cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none rounded-10 h-[41px] min-h-[41px] rounded-lg",
         placeholder: () =>
-            "ml-15 font-open-sans font-normal text-sm line-height-18 tracking-0.2 text-primaryVariant100",
+            "ml-15 font-open-sans font-normal text-sm leading-4 tracking-[0.2] text-primaryVariant100",
         multiValue: () =>
-            `bg-btnBackgroundVariant1400 rounded-8 m-0 ml-6 line-height-16 p-6 div { color: ${primary}; font-size: 12px; padding: 0px; margin: 0px 0px 0px 5px; cursor: pointer; } div:hover { background: transparent; } [&>div:nth-of-type(2)] { display: contents; margin: 0; cursor: pointer; svg { fill: ${primary}; margin: 1px 0px; width: 15px; height: 14px; padding: 3px 0px; } }`,
+            `bg-btnBackgroundVariant1400 rounded-lg m-0 ml-[6px] leading-4 p-[6px] flex items-center fontGroup-normal [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div]:m-0 [&>div:hover]:bg-transparent [&>div:hover]:text-primary`,
         valueContainer: () =>
-            "p-0 h-41 flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-full [&::-webkit-scrollbar]:hidden",
-        input: () => "m-0 ml-10 p-0 text-primary border-0",
+            "p-0 h-[41px] flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-full [&::-webkit-scrollbar]:hidden",
+        input: () => "m-0 ml-[10px] p-0 text-primary border-0 fontGroup-normal",
         indicatorSeparator: () => "hidden",
         indicatorsContainer: () =>
-            "cursor-pointer [&>svg]:text-primaryVariant100",
+            "cursor-pointer [& > svg]:text-primaryVariant100",
         menu: () =>
-            "bg-backgroundVariant200 font-weight-bold text-sm line-height-17 shadow-[0-0-35-14-rgba(19-21-27-0.8)]",
+            "bg-backgroundVariant200 mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden",
         menuList: () =>
-            "p-0 pb-5 [&::-webkit-scrollbar]:w-4 [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] &::-webkit-scrollbar-thumb { background: #c1c5d6; } &::-webkit-scrollbar-thumb:hover { background: #555555; }",
+            "p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] [&::-webkit-scrollbar-thumb]:bg-[#c1c5d6] [&::-webkit-scrollbar-thumb:hover]:bg-[#555555]",
         option: () =>
-            "text-primary bg-transparent hover:backgroundVariant600 active:bg-transparent cursor-pointer text-transform-capitalize",
+            "text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer text-transform-capitalize fontGroup-highlight",
     };
 
     if (escKeyPressed === true) {
@@ -260,7 +289,7 @@ export const SearchBar = <T,>({
                     ValueContainer: CustomValueContainer,
                     ...customComponents,
                 }}
-                // styles={themedStyles}
+                styles={selectStyles}
                 classNames={selectClasses}
                 placeholder={placeholder}
                 isDisabled={disabled}
