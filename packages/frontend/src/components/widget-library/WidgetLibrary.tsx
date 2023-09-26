@@ -1,7 +1,7 @@
 import { FC, ChangeEvent, useRef } from "react";
 import {
     Input,
-    ModalLib,
+    Modal,
     ModuleLoader,
     ModulePreview,
     ScrollBar,
@@ -103,12 +103,11 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
 
     if (widgets)
         return (
-            <ModalLib
+            <Modal
                 ref={modalRef}
                 onClose={onCloseWidgetLib}
                 showModal={showWidgetLib}
             >
-                <>{console.log("called showWidgetLib", showWidgetLib)}</>
                 <div className="bg-backgroundVariant300 text-primaryVariant100 bg-blend-soft-light p-[4.5px_15px_4.5px_15px] border-b-[1.2px] border-solid border-b-background rounded-[3px]">
                     <div className="w-full flex items-center justify-between">
                         <div>
@@ -305,7 +304,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                 ) : (
                     <ModuleLoader $height="600px" />
                 )}
-            </ModalLib>
+            </Modal>
         );
     return null;
 };

@@ -28,6 +28,10 @@ export interface IModal extends IProps {
      * Callback function for close modal
      */
     onClose?: () => void;
+    /**
+     * Hide modal backdrop when modal is open.
+     */
+    hideBackdrop?: boolean;
 }
 /**
  * This is a modal component uses the triggerId to open the modal.
@@ -41,52 +45,42 @@ export interface IModal extends IProps {
 export const Modal = forwardRef<
     HTMLIonModalElement | null,
     RequireAtLeastOne<IModal, "triggerId" | "showModal">
->(({ className, children, onClose, triggerId, showModal }, ref) => {
-    return (
-        <IonModal
-            ref={ref}
-            trigger={triggerId}
-            onWillDismiss={() => onClose?.()}
-            className={className}
-            isOpen={showModal}
-        >
-            <IonContent className="ion-padding">{children}</IonContent>
-        </IonModal>
-    );
-});
-
-export const ModalLib = forwardRef<
-    HTMLIonModalElement | null,
-    RequireAtLeastOne<IModal, "triggerId" | "showModal">
->(({ className, children, onClose, triggerId, showModal }, ref) => {
-    return (
-        <IonModal
-            ref={ref}
-            trigger={triggerId}
-            isOpen={showModal}
-            onWillDismiss={() => onClose?.()}
-            showBackdrop
-            className={twMerge(
-                "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none",
-                className,
-                "modal"
-            )}
-        >
-            <IonBackdrop className="h-full w-full absolute" />
-            <div className="h-full w-full flex items-center justify-center ">
-                <div
-                    style={{
-                        boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
-                        maxWidth: "min(calc(100% - 20px), 1050px)",
-                    }}
-                    className="bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
-                >
-                    {children}
+>(
+    (
+        { className, children, onClose, triggerId, showModal, hideBackdrop },
+        ref
+    ) => {
+        return (
+            <IonModal
+                ref={ref}
+                trigger={triggerId}
+                isOpen={showModal}
+                onWillDismiss={() => onClose?.()}
+                className={twMerge(
+                    "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none",
+                    className,
+                    "modal"
+                )}
+            >
+                {!hideBackdrop && (
+                    <IonBackdrop className="h-full w-full absolute" />
+                )}
+                <div className="h-full w-full flex items-center justify-center ">
+                    <div
+                        style={{
+                            boxShadow:
+                                "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
+                            maxWidth: "min(calc(100% - 20px), 1050px)",
+                        }}
+                        className="bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
+                    >
+                        {children}
+                    </div>
                 </div>
-            </div>
-        </IonModal>
-    );
-});
+            </IonModal>
+        );
+    }
+);
 
 export const ModalHeader: FC<IProps> = ({
     className,
