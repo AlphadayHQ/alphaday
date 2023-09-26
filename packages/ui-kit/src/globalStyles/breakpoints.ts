@@ -18,7 +18,7 @@ export const deviceBreakpoints = {
 };
 
 export const tailwindBreakpoints = {
-    tiny: breakpoints.tiny,
+    tiny: `${breakpoints.tiny}px`,
     "single-col": `${breakpoints.SingleColMinWidth}px`,
     "two-col": `${breakpoints.TwoColMinWidth}px`,
     "three-col": `${breakpoints.ThreeColMinWidth}px`,

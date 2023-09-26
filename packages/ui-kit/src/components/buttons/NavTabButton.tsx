@@ -13,7 +13,6 @@ interface ButtonProps {
     title?: string;
     onClick?: () => MaybeAsync<void>;
     children?: React.ReactNode;
-    id?: string;
 }
 
 export const NavTabButton: FC<ButtonProps> = ({
