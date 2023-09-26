@@ -40,7 +40,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
 
-    const templateSlug = moduleData.widget.template.slug;
+    const templateSlug = moduleData.widget?.template.slug;
     const widgetName = getWidgetName(templateSlug);
 
     const { ADJUSTABLE = true } = widgetName ? CONFIG.WIDGETS[widgetName] : {};
@@ -89,7 +89,6 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                             ? CONFIG.UI.WIDGET_SIZE_TRACKING_ID
                             : ""
                     }
-                    className="item"
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     // style={{

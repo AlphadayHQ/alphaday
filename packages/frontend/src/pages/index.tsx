@@ -325,13 +325,12 @@ function BasePage() {
                                 >
                                     {widgets.map((widget, rowIndex) => (
                                         <ModuleWrapper
-                                            key={widget.id}
+                                            key={widget.hash}
                                             moduleData={widget}
                                             rowIndex={rowIndex}
                                             colIndex={colIndex}
                                         />
                                     ))}
-
                                     {provided.placeholder}
                                 </div>
                             )}
