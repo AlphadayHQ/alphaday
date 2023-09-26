@@ -17,10 +17,10 @@ export const deviceBreakpoints = {
     fourCol: breakpoints.FourColMinWidth,
 };
 
-export const tailwindBreakpoints = (() => {
-    const newBreakpoints: Record<string, string> = {};
-    Object.entries(deviceBreakpoints).forEach(([key, value]) => {
-        newBreakpoints[key] = `${value}px`;
-    });
-    return newBreakpoints;
-})();
+export const tailwindBreakpoints = {
+    tiny: breakpoints.tiny,
+    "single-col": breakpoints.SingleColMinWidth,
+    "two-col": breakpoints.TwoColMinWidth,
+    "three-col": breakpoints.ThreeColMinWidth,
+    "four-col": breakpoints.FourColMinWidth,
+};

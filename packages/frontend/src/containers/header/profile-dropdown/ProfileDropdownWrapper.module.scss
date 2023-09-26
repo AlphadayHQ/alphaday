@@ -8,7 +8,7 @@
         border-right: 10px solid transparent;
         left: auto;
         right: 20px;
-        @apply singleCol:right-5;
+        @apply single-col:right-5;
     }
     &:after {
         content: "";
@@ -19,7 +19,7 @@
         border-right: 9px solid transparent;
         left: auto;
         right: 21px;
-        @apply singleCol:right-[21px];
+        @apply single-col:right-[21px];
     }
 }
 

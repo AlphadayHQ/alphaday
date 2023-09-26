@@ -29,7 +29,7 @@ export const HeaderNavbar: FC<{
     return (
         <div
             className={twMerge(
-                "bg-backgroundVariant100 twoCol:h-[60px] twoCol:top-0 twoCol:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0 py-2",
+                "bg-backgroundVariant100 two-col:h-[60px] two-col:top-0 two-col:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0 py-2",
                 mobileOpen ? "h-auto" : "h-16",
                 className
             )}
@@ -46,7 +46,7 @@ export const HeaderNavRight: FC<{
     return (
         <div
             className={twMerge(
-                "singleCol:py-0 singleCol:px-[15px] twoCol:p-0 order-2 -mt-0.5 flex items-center justify-end py-0 pl-2.5 pr-5",
+                "single-col:py-0 single-col:px-[15px] two-col:p-0 order-2 -mt-0.5 flex items-center justify-end py-0 pl-2.5 pr-5",
                 className
             )}
         >
