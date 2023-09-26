@@ -239,17 +239,18 @@ export const SearchBar = <T,>({
 
     const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
         control: () =>
-            "flex justify-between cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none rounded-10 h-[41px] min-h-[41px] rounded-lg",
+            "flex justify-between items-center cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none rounded-10 h-[41px] min-h-[41px] rounded-lg",
         placeholder: () =>
             "ml-15 font-open-sans font-normal text-sm leading-4 tracking-[0.2] text-primaryVariant100",
         multiValue: () =>
-            `bg-btnBackgroundVariant1400 rounded-lg m-0 ml-[6px] leading-4 p-[6px] flex items-center fontGroup-normal [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div]:m-0 [&>div:hover]:bg-transparent [&>div:hover]:text-primary`,
+            "bg-btnBackgroundVariant1400 rounded-md m-0 ml-[6px] leading-4 p-[4px] px-[6px] flex items-center fontGroup-normal cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div]:m-0 [&>div:hover]:bg-transparent [&>div:hover]:text-primary",
+        multiValueRemove: () => "[&>svg]:h-[10px]",
         valueContainer: () =>
             "p-0 h-[41px] flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-full [&::-webkit-scrollbar]:hidden",
         input: () => "m-0 ml-[10px] p-0 text-primary border-0 fontGroup-normal",
         indicatorSeparator: () => "hidden",
-        indicatorsContainer: () =>
-            "cursor-pointer [& > svg]:text-primaryVariant100",
+        indicatorsContainer: () => "cursor-pointer",
+        clearIndicator: () => "cursor-pointer text-primaryVariant100",
         menu: () =>
             "bg-backgroundVariant200 mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden",
         menuList: () =>
