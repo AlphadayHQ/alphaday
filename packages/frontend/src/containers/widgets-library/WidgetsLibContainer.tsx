@@ -120,45 +120,42 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         }
     }, [showWidgetLib, toggleWidgetLib]);
 
-    if (widgets !== undefined) {
-        return (
-            <WidgetLibrary
-                showWidgetLib={showWidgetLib}
-                widgets={[...(widgets ?? [])]
-                    .filter((w) => !w.hide_in_library)
-                    .filter((w) => {
-                        // filter by category. If no category is selected, show all widgets
-                        return (
-                            !selectedCategory ||
-                            w.categories.some((c) => {
-                                return c.slug === selectedCategory;
-                            })
-                        );
-                    })
-                    .filter((w) =>
-                        filter
-                            ? w.name.toLowerCase().includes(filter) ||
-                              w.description.toLowerCase().includes(filter)
-                            : true
-                    )}
-                categories={[...(widgetsCategory?.results || [])].sort(
-                    (a, d) => a.sort_order - d.sort_order
+    return (
+        <WidgetLibrary
+            showWidgetLib={showWidgetLib}
+            widgets={[...(widgets ?? [])]
+                .filter((w) => !w.hide_in_library)
+                .filter((w) => {
+                    // filter by category. If no category is selected, show all widgets
+                    return (
+                        !selectedCategory ||
+                        w.categories.some((c) => {
+                            return c.slug === selectedCategory;
+                        })
+                    );
+                })
+                .filter((w) =>
+                    filter
+                        ? w.name.toLowerCase().includes(filter) ||
+                          w.description.toLowerCase().includes(filter)
+                        : true
                 )}
-                cachedWidgets={selectedView?.data.widgets?.map(
-                    (sw) => sw.widget as TWidget
-                )}
-                sortBy={sortBy}
-                onSortBy={setSortBy}
-                onFilter={handleFilter}
-                isLoading={widgets === undefined}
-                onCloseWidgetLib={onCloseWidgetLib}
-                selectedWidget={selectedWidget}
-                selectedCategory={selectedCategory}
-                handleSelectWidget={handleSelectWidget}
-                handleSelectCategory={setSelectedCategory}
-            />
-        );
-    }
-    return null;
+            categories={[...(widgetsCategory?.results || [])].sort(
+                (a, d) => a.sort_order - d.sort_order
+            )}
+            cachedWidgets={selectedView?.data.widgets?.map(
+                (sw) => sw.widget as TWidget
+            )}
+            sortBy={sortBy}
+            onSortBy={setSortBy}
+            onFilter={handleFilter}
+            isLoading={widgets === undefined}
+            onCloseWidgetLib={onCloseWidgetLib}
+            selectedWidget={selectedWidget}
+            selectedCategory={selectedCategory}
+            handleSelectWidget={handleSelectWidget}
+            handleSelectCategory={setSelectedCategory}
+        />
+    );
 };
 export default WidgetsLibContainer;

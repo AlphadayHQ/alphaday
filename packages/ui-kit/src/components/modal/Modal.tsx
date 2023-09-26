@@ -40,6 +40,8 @@ export interface IModal extends IProps {
  * Ionic's isOpen: boolean can also be used to open the modal. However it uses a
  * one-way data binding, so it will not update it's value when the modal closes.
  * https://ionicframework.com/docs/api/modal#using-isopen
+ *
+ * IonBackdrop enables the click outside to close functionality.
  */
 
 export const Modal = forwardRef<
@@ -57,26 +59,22 @@ export const Modal = forwardRef<
                 isOpen={showModal}
                 onWillDismiss={() => onClose?.()}
                 className={twMerge(
-                    "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none",
-                    className,
-                    "modal"
+                    "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none relative",
+                    className
                 )}
             >
-                {!hideBackdrop && (
-                    <IonBackdrop className="h-full w-full absolute" />
-                )}
-                <div className="h-full w-full flex items-center justify-center ">
-                    <div
-                        style={{
-                            boxShadow:
-                                "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
-                            maxWidth: "min(calc(100% - 20px), 1050px)",
-                        }}
-                        className="bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
-                    >
-                        {children}
-                    </div>
+                <div
+                    style={{
+                        boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
+                        maxWidth: "min(calc(100% - 20px), 1050px)",
+                    }}
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
+                >
+                    {children}
                 </div>
+                {!hideBackdrop && (
+                    <IonBackdrop className="h-full w-full absolute z-[-1]" />
+                )}
             </IonModal>
         );
     }

@@ -302,7 +302,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                         </div>
                     </div>
                 ) : (
-                    <ModuleLoader $height="600px" />
+                    <ModuleLoader $height="var(--wlib-modal-height)" />
                 )}
             </Modal>
         );
