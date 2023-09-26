@@ -77,7 +77,7 @@ interface IWidgetLibProps {
      * @param sort - sort by `EItemsSortBy`
      */
     onSortBy(sort: EItemsSortBy): void;
-    toggleWidgetLib: () => void;
+    onCloseWidgetLib: () => void;
     handleSelectCategory: (c: string | undefined) => void;
 }
 const WidgetLibrary: FC<IWidgetLibProps> = ({
@@ -86,7 +86,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
     selectedWidget,
     handleSelectWidget,
     onFilter,
-    toggleWidgetLib,
+    onCloseWidgetLib,
     cachedWidgets,
     categories,
     selectedCategory,
@@ -105,9 +105,10 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
         return (
             <ModalLib
                 ref={modalRef}
-                onClose={toggleWidgetLib}
+                onClose={onCloseWidgetLib}
                 showModal={showWidgetLib}
             >
+                <>{console.log("called showWidgetLib", showWidgetLib)}</>
                 <div className="bg-backgroundVariant300 text-primaryVariant100 bg-blend-soft-light p-[4.5px_15px_4.5px_15px] border-b-[1.2px] border-solid border-b-background rounded-[3px]">
                     <div className="w-full flex items-center justify-between">
                         <div>
@@ -130,7 +131,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                             role="button"
                             title="Close Widgets Library"
                             tabIndex={0}
-                            onClick={toggleWidgetLib}
+                            onClick={onCloseWidgetLib}
                         >
                             <CloseSVG fill="currentColor" />
                         </div>

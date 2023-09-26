@@ -1,7 +1,6 @@
 import { FC, forwardRef } from "react";
 import { IonModal, IonContent } from "@ionic/react";
 import { twMerge } from "tailwind-merge";
-import { useClickOutside } from "src/hooks";
 
 export interface IProps {
     /**
@@ -60,24 +59,21 @@ export const ModalLib = forwardRef<
     HTMLIonModalElement | null,
     RequireAtLeastOne<IModal, "triggerId" | "showModal">
 >(({ className, children, onClose, triggerId, showModal }, ref) => {
-    const containerRef = useClickOutside<HTMLDivElement>(() => {
-        onClose?.();
-    });
-
     return (
         <IonModal
             ref={ref}
             trigger={triggerId}
             isOpen={showModal}
+            onWillDismiss={() => onClose?.()}
             showBackdrop
             className={twMerge(
                 "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none",
-                className
+                className,
+                "modal"
             )}
         >
             <div className="h-full w-full flex items-center justify-center ">
                 <div
-                    ref={containerRef}
                     style={{
                         boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
                         maxWidth: "min(calc(100% - 20px), 1050px)",

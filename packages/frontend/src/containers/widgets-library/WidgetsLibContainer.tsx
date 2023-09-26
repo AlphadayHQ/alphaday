@@ -1,10 +1,5 @@
 import { FC, useCallback, useState } from "react";
-import {
-    useGlobalSearch,
-    useKeyPress,
-    useView,
-    useWidgetLib,
-} from "src/api/hooks";
+import { useGlobalSearch, useView, useWidgetLib } from "src/api/hooks";
 import { ETag, EItemsSortBy } from "src/api/services";
 import {
     useGetWidgetsCategoryQuery,
@@ -117,54 +112,53 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         setFilter(value.toLowerCase());
     };
 
-    const handleToggleWidgetLib = useCallback(() => {
-        toggleWidgetLib();
-        setFilter(undefined);
-        setSelectedCategory(undefined);
-    }, [toggleWidgetLib]);
+    const onCloseWidgetLib = useCallback(() => {
+        if (showWidgetLib) {
+            toggleWidgetLib();
+            setFilter(undefined);
+            setSelectedCategory(undefined);
+        }
+    }, [showWidgetLib, toggleWidgetLib]);
 
-    useKeyPress({
-        targetKey: "Escape",
-        callback: handleToggleWidgetLib,
-        skip: !showWidgetLib,
-    });
-
-    return (
-        <WidgetLibrary
-            showWidgetLib={showWidgetLib}
-            widgets={[...(widgets ?? [])]
-                .filter((w) => !w.hide_in_library)
-                .filter((w) => {
-                    // filter by category. If no category is selected, show all widgets
-                    return (
-                        !selectedCategory ||
-                        w.categories.some((c) => {
-                            return c.slug === selectedCategory;
-                        })
-                    );
-                })
-                .filter((w) =>
-                    filter
-                        ? w.name.toLowerCase().includes(filter) ||
-                          w.description.toLowerCase().includes(filter)
-                        : true
+    if (widgets !== undefined) {
+        return (
+            <WidgetLibrary
+                showWidgetLib={showWidgetLib}
+                widgets={[...(widgets ?? [])]
+                    .filter((w) => !w.hide_in_library)
+                    .filter((w) => {
+                        // filter by category. If no category is selected, show all widgets
+                        return (
+                            !selectedCategory ||
+                            w.categories.some((c) => {
+                                return c.slug === selectedCategory;
+                            })
+                        );
+                    })
+                    .filter((w) =>
+                        filter
+                            ? w.name.toLowerCase().includes(filter) ||
+                              w.description.toLowerCase().includes(filter)
+                            : true
+                    )}
+                categories={[...(widgetsCategory?.results || [])].sort(
+                    (a, d) => a.sort_order - d.sort_order
                 )}
-            categories={[...(widgetsCategory?.results || [])].sort(
-                (a, d) => a.sort_order - d.sort_order
-            )}
-            cachedWidgets={selectedView?.data.widgets?.map(
-                (sw) => sw.widget as TWidget
-            )}
-            sortBy={sortBy}
-            onSortBy={setSortBy}
-            onFilter={handleFilter}
-            isLoading={widgets === undefined}
-            toggleWidgetLib={handleToggleWidgetLib}
-            selectedWidget={selectedWidget}
-            selectedCategory={selectedCategory}
-            handleSelectWidget={handleSelectWidget}
-            handleSelectCategory={setSelectedCategory}
-        />
-    );
+                cachedWidgets={selectedView?.data.widgets?.map(
+                    (sw) => sw.widget as TWidget
+                )}
+                sortBy={sortBy}
+                onSortBy={setSortBy}
+                onFilter={handleFilter}
+                isLoading={widgets === undefined}
+                onCloseWidgetLib={onCloseWidgetLib}
+                selectedWidget={selectedWidget}
+                selectedCategory={selectedCategory}
+                handleSelectWidget={handleSelectWidget}
+                handleSelectCategory={setSelectedCategory}
+            />
+        );
+    }
+    return null;
 };
 export default WidgetsLibContainer;
