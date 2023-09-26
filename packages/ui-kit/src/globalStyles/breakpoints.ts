@@ -19,8 +19,16 @@ export const deviceBreakpoints = {
 
 export const tailwindBreakpoints = {
     tiny: breakpoints.tiny,
-    "single-col": breakpoints.SingleColMinWidth,
-    "two-col": breakpoints.TwoColMinWidth,
-    "three-col": breakpoints.ThreeColMinWidth,
-    "four-col": breakpoints.FourColMinWidth,
+    "single-col": `${breakpoints.SingleColMinWidth}px`,
+    "two-col": `${breakpoints.TwoColMinWidth}px`,
+    "three-col": `${breakpoints.ThreeColMinWidth}px`,
+    "four-col": `${breakpoints.FourColMinWidth}px`,
 };
+
+// export const tailwindBreakpoints = (() => {
+//     const newBreakpoints: Record<string, string> = {};
+//     Object.entries(deviceBreakpoints).forEach(([key, value]) => {
+//         newBreakpoints[key] = `${value}px`;
+//     });
+//     return newBreakpoints;
+// })();
