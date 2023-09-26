@@ -1,5 +1,5 @@
 import { FC, forwardRef } from "react";
-import { IonModal, IonContent, IonBackdrop } from "@ionic/react";
+import { IonModal, IonBackdrop } from "@ionic/react";
 import { twMerge } from "tailwind-merge";
 
 export interface IProps {
