@@ -37,7 +37,7 @@ const CustomInput = <Option,>(props: InputProps<Option>) => {
         <>
             <Input data-testid="searchbar-input" {...props} />
             {!value && hasValue && (
-                <div className="text-primaryVariant100 fontGroup-normal">
+                <div className="text-primaryVariant100 fontGroup-normal w-full">
                     Search...
                 </div>
             )}
@@ -246,8 +246,9 @@ export const SearchBar = <T,>({
             "bg-btnBackgroundVariant1400 rounded-md m-0 ml-[6px] leading-4 p-[4px] px-[6px] flex items-center fontGroup-normal cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div]:m-0 [&>div:hover]:bg-transparent [&>div:hover]:text-primary",
         multiValueRemove: () => "[&>svg]:h-[10px]",
         valueContainer: () =>
-            "p-0 h-[41px] flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-full [&::-webkit-scrollbar]:hidden",
-        input: () => "m-0 ml-[10px] p-0 text-primary border-0 fontGroup-normal",
+            "p-0 h-[41px] flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-[max-content] [&::-webkit-scrollbar]:hidden",
+        input: () =>
+            "m-0 ml-[10px] p-0 text-primary border-0 fontGroup-normal w-2",
         indicatorSeparator: () => "hidden",
         indicatorsContainer: () => "cursor-pointer",
         clearIndicator: () => "cursor-pointer text-primaryVariant100",
@@ -256,7 +257,7 @@ export const SearchBar = <T,>({
         menuList: () =>
             "p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] [&::-webkit-scrollbar-thumb]:bg-[#c1c5d6] [&::-webkit-scrollbar-thumb:hover]:bg-[#555555]",
         option: () =>
-            "text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer text-transform-capitalize fontGroup-highlight",
+            "text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer text-capitalize fontGroup-highlight",
     };
 
     if (escKeyPressed === true) {
