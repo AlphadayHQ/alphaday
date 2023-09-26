@@ -1,5 +1,5 @@
 import { FC, forwardRef } from "react";
-import { IonModal, IonContent } from "@ionic/react";
+import { IonModal, IonContent, IonBackdrop } from "@ionic/react";
 import { twMerge } from "tailwind-merge";
 
 export interface IProps {
@@ -72,6 +72,7 @@ export const ModalLib = forwardRef<
                 "modal"
             )}
         >
+            <IonBackdrop className="h-full w-full absolute" />
             <div className="h-full w-full flex items-center justify-center ">
                 <div
                     style={{
