@@ -1,5 +1,4 @@
 import "./polyfills";
-import React from "react";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
@@ -60,17 +59,15 @@ if (!container) {
 }
 const root = createRoot(container);
 root.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <PersistProvider>
-                <AppContextProvider>
-                    {/* <ThemeProvider> */}
-                    <WagmiConfig config={wagmiConfig}>
-                        <App />
-                    </WagmiConfig>
-                    {/* </ThemeProvider> */}
-                </AppContextProvider>
-            </PersistProvider>
-        </Provider>
-    </React.StrictMode>
+    <Provider store={store}>
+        <PersistProvider>
+            <AppContextProvider>
+                {/* <ThemeProvider> */}
+                <WagmiConfig config={wagmiConfig}>
+                    <App />
+                </WagmiConfig>
+                {/* </ThemeProvider> */}
+            </AppContextProvider>
+        </PersistProvider>
+    </Provider>
 );
