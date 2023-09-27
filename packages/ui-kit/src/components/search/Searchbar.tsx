@@ -99,7 +99,7 @@ const CustomNoOptionsMessage = (isFetching: boolean | undefined) => {
     ) {
         return (
             <NoOptionsMessage {...props}>
-                <div className="text-primary flex w-full max-w-[524px] items-center justify-center overscroll-contain font-bold">
+                <div className="text-primary flex w-full max-w-[524px] items-center justify-center overscroll-contain font-bold text-[12px]">
                     {isFetching === true ? (
                         <div className="flex h-[70px] w-full items-center justify-center">
                             <Spinner />
