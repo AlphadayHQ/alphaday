@@ -25,7 +25,7 @@ import { TUserViewWidget } from "src/api/types";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import BaseContainerHeader from "./BaseContainerHeader";
-// import BaseContainerOptions from "./BaseContainerOptions";
+import BaseContainerOptions from "./BaseContainerOptions";
 
 const { HEADER_HEIGHT } = CONFIG.WIDGETS.COMMON;
 interface IBaseContainerProps {
@@ -83,7 +83,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     const isCollapsed = useAppSelector(selectIsMinimised(moduleData.hash));
     const [alreadyCollapsed, setAlreadyCollapsed] =
         useCallbackState(isCollapsed);
-    const { removeTagFromViewWidget /* includeTagInViewWidget */ } = useView();
+    const { removeTagFromViewWidget, includeTagInViewWidget } = useView();
 
     const adjustWidgetHeight = (height: number) => {
         dispatch(
@@ -217,7 +217,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                             <BaseModuleBody>{children}</BaseModuleBody>
                         )}
                     </BaseModuleWrapper>
-                    {/* <BaseContainerOptions
+                    <BaseContainerOptions
                         onIncludeTag={includeTagInViewWidget}
                         onRemoveTag={removeTagFromViewWidget}
                         toggleCollapse={toggleCollapse}
@@ -227,7 +227,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                         removeWidget={removeWidget}
                         moduleData={moduleData}
                         dragProps={dragProps}
-                    /> */}
+                    />
                     {adjustable && !isCollapsed && (
                         <div
                             onMouseDown={adjustHeight}

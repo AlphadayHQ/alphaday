@@ -18,13 +18,14 @@ const buttonVariants = tv({
                 "bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
                 styles.tabsButtonTransparent
             ),
-            small: "small fontGroup-normal h-[29px] bg-btnBackgroundVariant1100 h-[21px] cursor-pointer pt-3 pb-3 px-2 border-0 hover:bg-btnBackgroundVariant1200 active:bg-btnBackgroundVariant1300",
+            small:
+                "small h-[29px] bg-btnBackgroundVariant1100 h-[21px] cursor-pointer pt-3 pb-3 px-2 border-0 hover:bg-btnBackgroundVariant1200 active:bg-btnBackgroundVariant1300",
             removable: twMerge(
-                "fontGroup-normal h-[26px] bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
+                "h-[26px] bg-transparent h-[21px] cursor-pointer pt-0 pb-px px-0 border-0 hover:bg-transparent active:bg-transparent",
                 styles.tabsButtonRemovable
             ),
             extraSmall:
-                "extraSmall fontGroup-normal h-[26px] text-primaryVariant100 bg-btnBackgroundVariant1100 border-primaryVariant200 px-2 py-px rounded-lg border-0 hover:bg-btnBackgroundVariant1200 active:bg-btnBackgroundVariant1300",
+                "extraSmall h-[26px] text-primaryVariant100 bg-btnBackgroundVariant1100 border-primaryVariant200 px-2 py-px rounded-lg border-0 hover:bg-btnBackgroundVariant1200 active:bg-btnBackgroundVariant1300",
         },
         uppercase: {
             true: "uppercase",
@@ -90,7 +91,7 @@ export const TabButton: FC<ButtonProps> = ({
             {children}
             {(variant === "removable" || variant === "transparent") && (
                 <CloseSVG
-                    className="close"
+                    className="close w-2 h-2 ml-1"
                     onClick={(e) => {
                         const handler = async () => {
                             e.stopPropagation();
