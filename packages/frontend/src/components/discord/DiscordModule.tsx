@@ -29,22 +29,18 @@ const DiscordModule: FC<IDiscord> = ({
     return isLoadingItems || !items ? (
         <ModuleLoader $height={`${widgetHeight}px`} />
     ) : (
-        <div>
-            <ScrollBar onScroll={handleDiscordListScroll}>
-                {items.map((item) => {
-                    return <DiscordFeedItem key={item.id} item={item} />;
-                })}
-                {!isLoadingItems && items.length === 0 && (
-                    <NoItems>
-                        <p>
-                            {globalMessages.queries.noMatchFound(
-                                "Discord Items"
-                            )}
-                        </p>
-                    </NoItems>
-                )}
-            </ScrollBar>
-        </div>
+        <ScrollBar onScroll={handleDiscordListScroll}>
+            {items.map((item) => {
+                return <DiscordFeedItem key={item.id} item={item} />;
+            })}
+            {!isLoadingItems && items.length === 0 && (
+                <NoItems>
+                    <p>
+                        {globalMessages.queries.noMatchFound("Discord Items")}
+                    </p>
+                </NoItems>
+            )}
+        </ScrollBar>
     );
 };
 

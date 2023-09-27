@@ -13,23 +13,19 @@ export const ScrollBar: FC<ScrollBarProps> = ({
     ...rest
 }) => {
     return (
-        <div
+        <PerfectScrollbar
             className={twMerge(
                 // The alternative to hardcoding the z-[8] is to create a module.scss file
                 `[&>.ps>.ps__rail-y]:z-[8] overflow-auto`,
                 styles.scrollbar,
                 className
             )}
+            containerRef={containerRef}
+            onYReachEnd={onYReachEnd}
+            onScroll={onScroll}
             {...rest}
         >
-            <PerfectScrollbar
-                containerRef={containerRef}
-                onYReachEnd={onYReachEnd}
-                onScroll={onScroll}
-                {...rest}
-            >
-                {children}
-            </PerfectScrollbar>
-        </div>
+            {children}
+        </PerfectScrollbar>
     );
 };

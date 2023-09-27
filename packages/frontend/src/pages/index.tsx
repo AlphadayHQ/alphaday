@@ -311,22 +311,32 @@ function BasePage() {
                     }
                 }}
             >
-                <Droppable droppableId="alphaday">
-                    {(provided) => (
-                        <div ref={provided.innerRef}>
-                            {selectedView?.data.widgets?.map(
-                                (widget, index) => (
-                                    <ModuleWrapper
-                                        key={widget.id}
-                                        moduleData={widget}
-                                        rowIndex={index}
-                                        colIndex={index}
-                                    />
-                                )
+                <div className="grid grid-cols-1 twoCol:grid-cols-2 threeCol:grid-cols-3 fourCol:grid-cols-4 gap-4">
+                    {layoutState?.map((widgets, colIndex) => (
+                        <Droppable
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={colIndex.toString()}
+                            droppableId={colIndex.toString()}
+                        >
+                            {(provided) => (
+                                <div
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                >
+                                    {widgets.map((widget, rowIndex) => (
+                                        <ModuleWrapper
+                                            key={widget.hash}
+                                            moduleData={widget}
+                                            rowIndex={rowIndex}
+                                            colIndex={colIndex}
+                                        />
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
                             )}
-                        </div>
-                    )}
-                </Droppable>
+                        </Droppable>
+                    ))}
+                </div>
             </DragDropContext>
         </MainLayout>
     );
