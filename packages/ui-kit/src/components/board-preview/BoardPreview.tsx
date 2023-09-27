@@ -179,7 +179,7 @@ export const BoardPreview: FC<IPreview> = ({
             >
                 {boardTitle}
             </div>
-            <p className="text-primary mt-1.75 group-hover:text-primaryVariant800 text-[11px] font-normal leading-[14px] tracking-[0.2px]">
+            <p className="text-primary mt-1.75 group-hover:text-primaryVariant800 text-[11px] leading-[14px] tracking-[0.2px]">
                 {description}
             </p>
         </div>
