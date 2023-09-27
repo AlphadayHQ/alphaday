@@ -151,7 +151,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
             {isVerifyPrompted && !showTutorial && (
                 <DropdownMenu
                     className={twMerge(
-                        "twoCol:mt-[14.5px] twoCol:p-[18px_0px] left-auto right-0 -mr-2.5 mt-[11.5px] w-[275px] rounded-t-none rounded-bl rounded-br border-t-0 shadow-none",
+                        "two-col:mt-[14.5px] two-col:p-[18px_0px] left-auto right-0 -mr-2.5 mt-[11.5px] w-[275px] rounded-t-none rounded-bl rounded-br border-t-0 shadow-none",
                         styles["dropdown-menu"]
                     )}
                 >

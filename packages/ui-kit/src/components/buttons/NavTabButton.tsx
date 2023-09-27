@@ -30,6 +30,7 @@ export const NavTabButton: FC<ButtonProps> = ({
             disabled={disabled}
             uppercase={uppercase}
             aria-label={label}
+            className="fontGroup-supportBold"
             {...restProps}
         >
             {variant === "modules" &&

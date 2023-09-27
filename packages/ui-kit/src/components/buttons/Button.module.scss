@@ -264,12 +264,6 @@
     &:focus {
         outline: none;
     }
-    &:hover {
-        background-color: var(--btnBackgroundVariant1000);
-    }
-    &:active {
-        background-color: var(--btnBackgroundVariant300);
-    }
 }
 
 .tabsButtonTransparent {

@@ -1,13 +1,12 @@
-import { alphaBreakpoints } from "@alphaday/shared/styled";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
-const { SingleColMinWidth, TwoColMinWidth, ThreeColMinWidth, FourColMinWidth } =
-    alphaBreakpoints;
+const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
 /**
  * Heads up: layout is in the form (col #, row #) or (x, y), starting from the
@@ -190,13 +189,13 @@ export const computeLayoutGrid: (
 };
 
 export const getColType = (windowWidth: number): EColumnType => {
-    if (windowWidth < TwoColMinWidth) {
+    if (windowWidth < twoCol) {
         return EColumnType.SingleCol;
     }
-    if (windowWidth >= SingleColMinWidth && windowWidth < ThreeColMinWidth) {
+    if (windowWidth >= singleCol && windowWidth < threeCol) {
         return EColumnType.TwoCol;
     }
-    if (windowWidth >= TwoColMinWidth && windowWidth < FourColMinWidth)
+    if (windowWidth >= twoCol && windowWidth < fourCol)
         return EColumnType.ThreeCol;
 
     return EColumnType.FourCol;
