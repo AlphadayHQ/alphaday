@@ -37,9 +37,7 @@ const CustomInput = <Option,>(props: InputProps<Option>) => {
         <>
             <Input data-testid="searchbar-input" {...props} />
             {!value && hasValue && (
-                <div className="text-primaryVariant100 fontGroup-normal w-full">
-                    Search...
-                </div>
+                <div className="text-primaryVariant100 w-full">Search...</div>
             )}
         </>
     ) : null;
@@ -48,9 +46,7 @@ const CustomInput = <Option,>(props: InputProps<Option>) => {
 const CustomPlaceholder = <Option,>(props: PlaceholderProps<Option>) => {
     const { isDisabled, children } = props;
     return !isDisabled ? (
-        <div className="text-primaryVariant100 fontGroup-normal w-full">
-            {children}
-        </div>
+        <div className="text-primaryVariant100 w-full">{children}</div>
     ) : null;
 };
 
@@ -103,7 +99,7 @@ const CustomNoOptionsMessage = (isFetching: boolean | undefined) => {
     ) {
         return (
             <NoOptionsMessage {...props}>
-                <div className="fontGroup-normal text-primary flex w-full max-w-[524px] items-center justify-center overscroll-contain font-[bold]">
+                <div className="text-primary flex w-full max-w-[524px] items-center justify-center overscroll-contain font-bold">
                     {isFetching === true ? (
                         <div className="flex h-[70px] w-full items-center justify-center">
                             <Spinner />
@@ -243,12 +239,12 @@ export const SearchBar = <T,>({
         placeholder: () =>
             "ml-15 font-open-sans font-normal text-sm leading-4 tracking-[0.2] text-primaryVariant100",
         multiValue: () =>
-            "bg-btnBackgroundVariant1400 rounded-[8px] m-[0_0_0_5px] leading-4 p-[4px] px-[6px] flex items-center fontGroup-normal cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary",
+            "bg-btnBackgroundVariant1400 rounded-[8px] m-[0_0_0_5px] leading-4 p-[4px] px-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary",
         multiValueRemove: () => "[&>svg]:h-[10px]",
         valueContainer: () =>
             "p-0 h-[41px] flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-[max-content] [&::-webkit-scrollbar]:hidden",
         input: ({ value }) =>
-            `m-0 ml-[10px] p-0 text-primary border-0 fontGroup-normal ${
+            `m-0 ml-[10px] p-0 text-primary border-0 ${
                 value ? "w-full" : "w-2"
             }`,
         indicatorSeparator: () => "hidden",
@@ -257,7 +253,7 @@ export const SearchBar = <T,>({
         menu: () =>
             "bg-backgroundVariant200 mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden",
         menuList: () =>
-            "p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] [&::-webkit-scrollbar-thumb]:bg-[#c1c5d6] [&::-webkit-scrollbar-thumb:hover]:bg-[#555555]",
+            "p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-backgroundVariant800 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryVariant900",
         option: () =>
             "text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer capitalize fontGroup-highlight",
     };
