@@ -13,8 +13,6 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@alphaday/components": "0.0.0",
-    "@alphaday/shared": "0.0.0",
     "@alphaday/ui-kit": "0.0.0",
     "@ionic/react": "7.1.2",
     "@ionic/react-router": "7.1.2",

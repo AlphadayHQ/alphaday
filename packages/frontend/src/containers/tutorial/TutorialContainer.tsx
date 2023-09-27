@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-// import { breakpoints } from "@alphaday/shared/styled";
+// import { breakpoints } from "@alphaday/shared/styled"; // TODO: use import from ui-kit
 import { useAvailableViews /* useWindowSize */ } from "src/api/hooks";
 import { useTutorial } from "src/api/hooks/useTutorial";
 // import Tutorial from "src/components/tutorial/Tutorial";
