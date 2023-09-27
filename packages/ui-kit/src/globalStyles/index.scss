@@ -16,6 +16,266 @@
 @import "./custom.scss";
 
 * {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+}
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    height: 100%;
+}
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+nav,
+section,
+summary {
+    display: block;
+}
+audio,
+canvas,
+video {
+    display: inline-block;
+}
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+[hidden] {
+    display: none;
+}
+html,
+button,
+input,
+select,
+textarea {
+    @apply font-sans;
+}
+a:focus {
+    outline: thin dotted;
+}
+a:active,
+a:hover {
+    outline: 0;
+}
+b,
+strong {
+    font-weight: bold;
+}
+blockquote,
+q {
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    quotes: none;
+}
+small {
+    font-size: smaller;
+}
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+sup {
+    top: -0.5em;
+}
+sub {
+    bottom: -0.25em;
+}
+li > ul,
+li > ol {
+    margin: 0;
+}
+img {
+    -ms-interpolation-mode: bicubic;
+    border: 0;
+    vertical-align: middle;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+figure {
+    margin: 0;
+}
+form {
+    margin: 0;
+}
+button,
+input,
+select,
+textarea {
+    font-size: 100%;
+    margin: 0;
+    max-width: 100%;
+    vertical-align: baseline;
+}
+
+button,
+input {
+    line-height: normal;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    cursor: pointer;
+}
+
+button[disabled],
+input[disabled] {
+    cursor: default;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    padding: 0;
+}
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+    appearance: textfield;
+    padding-right: 2px;
+    width: 100%;
+}
+
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+textarea {
+    overflow: auto;
+    vertical-align: top;
+}
+* {
+    box-sizing: border-box;
+}
+img {
+    max-width: 100%;
+}
+
+/*
+*  hide scrollbars by default
+*/
+*::-webkit-scrollbar {
+    display: none;
+    width: 0px;
+    background: transparent;
+}
+* {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;
+}
+
+html {
+    overflow: hidden;
+    overflow-y: auto;
+}
+body {
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply text-primary bg-background fontGroup-normal;
+}
+a {
+    transition: all 0.4s ease 0s;
+    text-decoration: none;
+    @apply text-primary hover:no-underline;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    margin-bottom: 8px;
+    @apply text-primary fontGroup-highlight;
+}
+p {
+    margin: 0 0 15px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+    &:only-child {
+        margin-bottom: 0;
+    }
+    @apply text-primary fontGroup-normal;
+}
+input,
+select,
+textarea {
+    transition: all 0.4s ease 0s;
+    width: 100%;
+    @apply text-primary fontGroup-normal bg-transparent border-btnRingVariant100 border border-solid active:border-primary active:outline-none focus:border-primary focus:outline-none;
+}
+input,
+select {
+    height: 40px;
+    padding: 0 15px;
+}
+.wrapper {
+    position: relative;
+}
+.sr-only {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+.link-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-indent: -99999px;
+}
+table {
+    border-collapse: collapse;
+}
+th {
+    text-align: inherit;
+}
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+}
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    @apply border-t border-solid border-btnRingVariant100;
 }

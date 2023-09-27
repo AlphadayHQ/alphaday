@@ -93,7 +93,7 @@ export const DropdownToggle: FC<{ children: React.ReactNode }> = (props) => {
         <button
             aria-label="DropdownToggle"
             type="button"
-            className="inline-flex cursor-pointer select-none items-center justify-center border-[none] p-0 text-center align-middle font-normal leading-normal transition-all"
+            className="inline-flex cursor-pointer select-none items-center justify-center border-[none] p-0 text-center align-middle leading-normal transition-all"
             {...restProps}
         >
             {children}
