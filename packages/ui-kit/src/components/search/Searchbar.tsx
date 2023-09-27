@@ -259,7 +259,7 @@ export const SearchBar = <T,>({
         menuList: () =>
             "p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-[#1e2025] [&::-webkit-scrollbar-thumb]:bg-[#c1c5d6] [&::-webkit-scrollbar-thumb:hover]:bg-[#555555]",
         option: () =>
-            "text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer text-capitalize fontGroup-highlight",
+            "text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer capitalize fontGroup-highlight",
     };
 
     if (escKeyPressed === true) {
