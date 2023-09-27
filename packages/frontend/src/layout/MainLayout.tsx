@@ -1,14 +1,13 @@
 import React from "react";
 import { Footer } from "@alphaday/ui-kit";
 import { TUserViewWidget } from "src/api/types";
-// import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
+import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
 import Header from "./LayoutHeader";
 
 interface IProps {
     hideFooter?: boolean;
     hideFeatures?: boolean;
     toggleWidgetLib?: () => void;
-    // eslint-disable-next-line react/no-unused-prop-types
     layoutState?: TUserViewWidget[][];
     children?: React.ReactNode;
     setTutFocusElemRef?:
@@ -21,7 +20,7 @@ const MainLayout: React.FC<IProps> = ({
     hideFooter,
     hideFeatures,
     toggleWidgetLib,
-    // layoutState,
+    layoutState,
     setTutFocusElemRef,
 }) => (
     <>
@@ -30,7 +29,7 @@ const MainLayout: React.FC<IProps> = ({
             toggleWidgetLib={toggleWidgetLib}
             setTutFocusElemRef={setTutFocusElemRef}
         />
-        {/* <WidgetsLibContainer layoutState={layoutState} /> */}
+        <WidgetsLibContainer layoutState={layoutState} />
         <div className="p-4 overflow-auto max-h-full">{children}</div>
 
         {!hideFooter && <Footer />}

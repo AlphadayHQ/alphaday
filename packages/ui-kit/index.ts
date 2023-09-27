@@ -18,6 +18,7 @@ import {
     DropdownItem,
     DropdownMenu,
 } from "./src/components/dropdown/dropdown";
+import { Input } from "./src/components/input/Input";
 import Footer from "./src/components/layout/Footer";
 import {
     HeaderWrapper,
@@ -26,16 +27,20 @@ import {
     HeaderNavElement,
 } from "./src/components/layout/Header";
 import Logo from "./src/components/layout/Logo";
-import { ListItem, HRElement } from "./src/components/listItem/ListItem";
+import {
+    ListItem,
+    HRElement,
+    listItemVariants,
+} from "./src/components/listItem/ListItem";
 
-import { listItemVariants } from "./src/components/listItem/ListItem";
 import { NoItems } from "./src/components/listItem/NoItems";
 import { Modal } from "./src/components/modal/Modal";
+import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
-import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import { Spinner } from "./src/components/spinner/Spinner";
+import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
@@ -65,6 +70,7 @@ export {
     SwitchWrap,
     Dialog,
     Modal,
+    Input,
     ModuleLoader,
     ListItem,
     NoItems,
@@ -79,4 +85,5 @@ export {
     DropdownItem,
     DropdownMenu,
     Spinner,
+    ModulePreview,
 };

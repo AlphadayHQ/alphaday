@@ -165,7 +165,7 @@ const HeaderSearchContainer: FC = () => {
 
     return (
         <div
-            className="twoCol:mx-2.5 twoCol:my-auto threeCol:m-auto flex w-full justify-center"
+            className="two-col:mx-2.5 two-col:my-auto three-col:m-auto flex w-full justify-center"
             data-testid="header-search-container"
         >
             <span

@@ -1,5 +1,5 @@
 import { FC, forwardRef } from "react";
-import { IonModal, IonContent } from "@ionic/react";
+import { IonModal, IonBackdrop } from "@ionic/react";
 import { twMerge } from "tailwind-merge";
 
 export interface IProps {
@@ -28,6 +28,10 @@ export interface IModal extends IProps {
      * Callback function for close modal
      */
     onClose?: () => void;
+    /**
+     * Hide modal backdrop when modal is open.
+     */
+    hideBackdrop?: boolean;
 }
 /**
  * This is a modal component uses the triggerId to open the modal.
@@ -36,24 +40,45 @@ export interface IModal extends IProps {
  * Ionic's isOpen: boolean can also be used to open the modal. However it uses a
  * one-way data binding, so it will not update it's value when the modal closes.
  * https://ionicframework.com/docs/api/modal#using-isopen
+ *
+ * IonBackdrop enables the click outside to close functionality.
  */
 
 export const Modal = forwardRef<
     HTMLIonModalElement | null,
     RequireAtLeastOne<IModal, "triggerId" | "showModal">
->(({ className, children, onClose, triggerId, showModal }, ref) => {
-    return (
-        <IonModal
-            ref={ref}
-            trigger={triggerId}
-            onWillDismiss={() => onClose?.()}
-            className={className}
-            isOpen={showModal}
-        >
-            <IonContent className="ion-padding">{children}</IonContent>
-        </IonModal>
-    );
-});
+>(
+    (
+        { className, children, onClose, triggerId, showModal, hideBackdrop },
+        ref
+    ) => {
+        return (
+            <IonModal
+                ref={ref}
+                trigger={triggerId}
+                isOpen={showModal}
+                onWillDismiss={() => onClose?.()} // for ion-modal esc key and backdrop click
+                className={twMerge(
+                    "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none relative",
+                    className
+                )}
+            >
+                <div
+                    style={{
+                        boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
+                        maxWidth: "min(calc(100% - 20px), 1050px)",
+                    }}
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
+                >
+                    {children}
+                </div>
+                {!hideBackdrop && (
+                    <IonBackdrop className="h-full w-full absolute z-[-1]" />
+                )}
+            </IonModal>
+        );
+    }
+);
 
 export const ModalHeader: FC<IProps> = ({
     className,
