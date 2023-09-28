@@ -1,9 +1,10 @@
-import React, { FC, memo } from "react";
+import React, { FC, memo, useState } from "react";
 import {
     TViewTabMenuOption,
     breakpoints,
     twMerge,
     ViewTabButton,
+    ShareViewDialog,
 } from "@alphaday/ui-kit";
 import { useWindowSize } from "src/api/hooks";
 import {
@@ -13,12 +14,9 @@ import {
     EWalletViewState,
     TViewMeta,
 } from "src/api/types";
-// import { EToastRole, toast } from "src/api/utils/toastUtils";
-import {
-    // buildViewUrl,
-    isViewModified,
-} from "src/api/utils/viewUtils";
-// import ShareViewDialog from "src/components/share-view-dialog/ShareViewDialog";
+import { truncateWithEllipsis } from "src/api/utils/textUtils";
+import { EToastRole, toast } from "src/api/utils/toastUtils";
+import { buildViewUrl, isViewModified } from "src/api/utils/viewUtils";
 // import WalletViewTabButton from "./WalletViewTabButton";
 
 interface IViewsTabProps {
@@ -60,11 +58,11 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
     // walletViewState,
     // isWalletBoardAllowed,
 }) {
-    // const [sharedView, setSharedView] = useState<TSubscribedView | undefined>(
-    //     undefined
-    // );
-    // const [showShareViewDialog, setShowShareViewDialog] =
-    //     useState<boolean>(false);
+    const [sharedView, setSharedView] = useState<TSubscribedView | undefined>(
+        undefined
+    );
+    const [showShareViewDialog, setShowShareViewDialog] =
+        useState<boolean>(false);
 
     const isSelectedViewModified = selectedView && isViewModified(selectedView);
     const tabsCount = subscribedViews.length + (extraOptions?.length || 0);
@@ -90,26 +88,26 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
     //     }
     // }, [walletView, walletViewState, handleSelectTab, onAllowFetchWalletView]);
 
-    // const handleShareView = (view: TSubscribedView) => {
-    //     setShowShareViewDialog(true);
-    //     setSharedView(view);
-    // };
+    const handleShareView = (view: TSubscribedView) => {
+        setShowShareViewDialog(true);
+        setSharedView(view);
+    };
 
-    // const sharedViewUrl = sharedView
-    //     ? buildViewUrl(sharedView?.data.hash || "")
-    //     : undefined;
+    const sharedViewUrl = sharedView
+        ? buildViewUrl(sharedView?.data.hash || "")
+        : undefined;
 
-    // const handleCopyViewUrl = () => {
-    //     if (sharedViewUrl)
-    //         navigator.clipboard
-    //             .writeText(sharedViewUrl)
-    //             .then(() => toast("Board URL copied!"))
-    //             .catch(() =>
-    //                 toast("Failed to copy board URL!", {
-    //                     type: EToastRole.Error,
-    //                 })
-    //             );
-    // };
+    const handleCopyViewUrl = () => {
+        if (sharedViewUrl)
+            navigator.clipboard
+                .writeText(sharedViewUrl)
+                .then(() => toast("Board URL copied!"))
+                .catch(() =>
+                    toast("Failed to copy board URL!", {
+                        type: EToastRole.Error,
+                    })
+                );
+    };
 
     const columnPercent = 100 / tabsCount;
     const tabButtonWrapperStyle =
@@ -198,14 +196,14 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                         view.data.is_system_view
                             ? undefined
                             : [
-                                  //   {
-                                  //       handler: !view.data.is_system_view
-                                  //           ? () => handleShareView(view)
-                                  //           : undefined,
-                                  //       icon: "share",
-                                  //       title: "Share board",
-                                  //       key: "share-board",
-                                  //   },
+                                  {
+                                      handler: !view.data.is_system_view
+                                          ? () => handleShareView(view)
+                                          : undefined,
+                                      icon: "share",
+                                      title: "Share board",
+                                      key: "share-board",
+                                  },
                                   {
                                       handler: view.data.is_system_view
                                           ? undefined
@@ -273,8 +271,11 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                         </span>
                     ))}
             </div>
-            {/* <ShareViewDialog
-                viewName={sharedView?.data?.name ?? ""}
+            <ShareViewDialog
+                title={`Share your "${truncateWithEllipsis(
+                    sharedView?.data?.name ?? "",
+                    12
+                )}" Board`}
                 viewUrl={sharedViewUrl ?? ""}
                 onCopyUrl={handleCopyViewUrl}
                 show={showShareViewDialog && sharedViewUrl !== undefined}
@@ -282,7 +283,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                     setShowShareViewDialog(false);
                     setSharedView(undefined);
                 }}
-            /> */}
+            />
         </div>
     );
 });

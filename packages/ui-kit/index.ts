@@ -12,6 +12,7 @@ import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
 import { ViewTabButton } from "./src/components/buttons/ViewTabButton";
 import { Dialog } from "./src/components/dialog/Dialog";
+import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
 import {
     ViewDialog,
     EViewDialogState,
@@ -81,6 +82,7 @@ export {
     SwitchWrap,
     ViewTabMenu,
     EViewDialogState,
+    ShareViewDialog,
     ViewDialog,
     Dialog,
     Modal,
