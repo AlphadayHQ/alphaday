@@ -1,12 +1,15 @@
 import { FC, useState } from "react";
+import { ViewDialog } from "@alphaday/ui-kit";
 import { useView, useAccount, useFeatureFlags } from "src/api/hooks";
 import { useTutorial } from "src/api/hooks/useTutorial";
 import { useWalletViewContext } from "src/api/store/providers/wallet-view-context";
 import { TSubscribedView, TViewMeta } from "src/api/types";
-import ViewDialog from "src/components/views-tab/ViewDialog";
 import ViewsTab from "src/components/views-tab/ViewsTab";
 import { EFeaturesRegistry } from "src/constants";
+import CONFIG from "../../config";
 // import BoardsLibraryContainer from "../board-library/BoardsLibraryContainer";
+
+const { VIEW_NAME_LIMT } = CONFIG.VIEWS;
 
 interface IViewsTab {
     mobileOpen?: boolean;
@@ -166,6 +169,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
                     }
                 }}
                 errorMessage={dialogErrorMessage}
+                viewNameLimit={VIEW_NAME_LIMT}
             />
         </>
     );

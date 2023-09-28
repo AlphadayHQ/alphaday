@@ -14,6 +14,10 @@ import { TabButton } from "./src/components/buttons/TabButton";
 import { ViewTabButton } from "./src/components/buttons/ViewTabButton";
 import { Dialog } from "./src/components/dialog/Dialog";
 import {
+    ViewDialog,
+    EViewDialogState,
+} from "./src/components/dialog/ViewDialog";
+import {
     Dropdown,
     DropdownAvatar,
     DropdownToggle,
@@ -76,6 +80,8 @@ export {
     SearchBar,
     SwitchWrap,
     ViewTabMenu,
+    EViewDialogState,
+    ViewDialog,
     Dialog,
     Modal,
     Input,

@@ -72,15 +72,6 @@ export type TSubscribedView = TCachedViewMeta & {
     data: TUserViewPreview;
 };
 
-export enum EViewDialogState {
-    Closed,
-    Save,
-    Remove,
-    Busy,
-    Error,
-    LimitReached,
-}
-
 export enum EWalletViewState {
     Ready = "ready",
     Fetching = "fetching",
