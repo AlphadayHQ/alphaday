@@ -1,5 +1,4 @@
 import { useCallback, useState, useMemo, useRef } from "react";
-import { useWindowSize } from "@alphaday/shared/hooks";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import {
     useView,
@@ -8,6 +7,7 @@ import {
     useViewUpdater,
     useWalletViewStateUpdater,
     useTutorial,
+    useWindowSize,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -114,7 +114,7 @@ function BasePage() {
      * which causes layoutGrid to remain undefined.
      */
     const layoutState = useMemo<TUserViewWidget[][] | undefined>(() => {
-        const colType = getColType(windowSize.width ?? 0);
+        const colType = getColType(windowSize.width);
         if (colType === EColumnType.SingleCol && layoutGrid?.singleCol) {
             return layoutGrid.singleCol;
         }
@@ -198,7 +198,7 @@ function BasePage() {
                 row: destination.index,
             };
 
-            const colType = getColType(windowSize.width ?? 0);
+            const colType = getColType(windowSize.width);
 
             const draggedWidget = getDraggedWidget(
                 currLayoutState,
