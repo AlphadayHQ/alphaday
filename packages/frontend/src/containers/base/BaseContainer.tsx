@@ -83,9 +83,8 @@ const BaseContainer: FC<IBaseContainerProps> = ({
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
     const isCollapsed = useAppSelector(selectIsMinimised(moduleData.hash));
-    const [alreadyCollapsed, setAlreadyCollapsed] = useCallbackState(
-        isCollapsed
-    );
+    const [alreadyCollapsed, setAlreadyCollapsed] =
+        useCallbackState(isCollapsed);
     const { removeTagFromViewWidget, includeTagInViewWidget } = useView();
 
     const adjustWidgetHeight = (height: number) => {
@@ -190,7 +189,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 >
                     <div
                         className={`relative w-full h-full transition-all duration-[0.5s] [transform-style:preserve-3d] ${
-                            showSettings ? "[transform:rotateX(360deg)]" : ""
+                            showSettings ? "[transform:rotateX(180deg)]" : ""
                         }`}
                     >
                         <BaseModuleWrapper

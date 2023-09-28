@@ -8,7 +8,6 @@ import Select, {
     InputActionMeta,
     InputProps,
     NoticeProps,
-    CSSObjectWithLabel,
     SelectComponentsConfig,
     MenuListProps,
     OptionProps,
@@ -136,13 +135,9 @@ export interface ISearchProps<Option = unknown> {
     ) => void | ((o: Option[]) => Promise<void>);
     onInputChange?: (e: string) => void;
 
-    customStyles?: () => Partial<
-        Record<
-            keyof StylesConfig<Option, true, GroupBase<Option>>,
-            CSSObjectWithLabel
-        >
-    > &
-        IProps;
+    componentClassNames?: Partial<
+        ClassNamesConfig<Option, true, GroupBase<Option>>
+    >;
 }
 
 export const SearchBar = <T,>({
@@ -155,14 +150,12 @@ export const SearchBar = <T,>({
     initialSearchValues,
     closeMenuOnSelect = false,
     updateSearch = true,
-    customStyles,
+    componentClassNames,
     customComponents,
     initialInputValue,
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
-    const themedStyles = customStyles?.();
-
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
 
@@ -201,61 +194,66 @@ export const SearchBar = <T,>({
     );
 
     const selectStyles: StylesConfig<T, true, GroupBase<T>> & IProps = {
-        control: () => ({
-            ...themedStyles?.control,
-        }),
-        placeholder: () => ({
-            ...themedStyles?.placeholder,
-        }),
-        multiValue: () => ({
-            ...themedStyles?.multiValue,
-        }),
-        valueContainer: () => ({
-            ...themedStyles?.valueContainer,
-        }),
-        input: () => ({
-            ...themedStyles?.input,
-        }),
-        indicatorSeparator: () => ({
-            ...themedStyles?.indicatorSeparator,
-        }),
-        indicatorsContainer: () => ({
-            ...themedStyles?.indicatorsContainer,
-        }),
-        menu: () => ({
-            ...themedStyles?.menu,
-        }),
-        menuList: () => ({
-            ...themedStyles?.menuList,
-        }),
-        option: () => ({
-            ...themedStyles?.option,
-        }),
+        control: () => ({}),
+        placeholder: () => ({}),
+        multiValue: () => ({}),
+        valueContainer: () => ({}),
+        input: () => ({}),
+        indicatorSeparator: () => ({}),
+        indicatorsContainer: () => ({}),
+        menu: () => ({}),
+        menuList: () => ({}),
+        option: () => ({}),
     };
 
     const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
-        control: () =>
-            "flex justify-between items-center cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none rounded-[10px] h-[41px] min-h-[41px]",
-        placeholder: () =>
-            "ml-15 font-open-sans font-normal text-sm leading-4 tracking-[0.2] text-primaryVariant100",
-        multiValue: () =>
-            "bg-btnBackgroundVariant1400 rounded-[8px] m-[0_0_0_5px] leading-4 p-[4px] px-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary",
-        multiValueRemove: () => "[&>svg]:h-[10px]",
-        valueContainer: () =>
-            "p-0 h-[41px] flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-[max-content] [&::-webkit-scrollbar]:hidden",
-        input: ({ value }) =>
+        ...componentClassNames,
+        control: (props) =>
+            `flex justify-between items-center cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none rounded-[10px] h-[41px] min-h-[41px] pl-1 ${componentClassNames?.control?.(
+                props
+            )}`,
+        placeholder: (props) =>
+            `ml-15 font-open-sans font-normal text-sm leading-4 tracking-[0.2] text-primaryVariant100 ${componentClassNames?.placeholder?.(
+                props
+            )}`,
+        multiValue: (props) =>
+            `bg-btnBackgroundVariant1400 rounded-[8px] m-[0_0_0_5px] leading-4 p-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary ${componentClassNames?.multiValue?.(
+                props
+            )}`,
+        multiValueRemove: (props) =>
+            `[&>svg]:h-[10px] ${componentClassNames?.multiValueRemove?.(
+                props
+            )}`,
+        valueContainer: (props) =>
+            `p-0 h-[41px] flex-nowrap overflow-x-scroll ms-overflow-style-none scrollbar-width-none [&>div]:min-w-[max-content] [&::-webkit-scrollbar]:hidden ${componentClassNames?.valueContainer?.(
+                props
+            )}`,
+        input: (props) =>
             `m-0 ml-[10px] p-0 text-primary border-0 ${
-                value ? "w-full" : "w-2"
-            }`,
-        indicatorSeparator: () => "hidden",
-        indicatorsContainer: () => "cursor-pointer",
-        clearIndicator: () => "cursor-pointer [&>svg]:text-primaryVariant100",
-        menu: () =>
-            "bg-backgroundVariant200 mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden",
-        menuList: () =>
-            "p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-backgroundVariant800 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryVariant900",
-        option: () =>
-            "text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer capitalize fontGroup-highlight",
+                props.value ? "w-full" : "w-2"
+            } ${componentClassNames?.input?.(props)}`,
+        indicatorSeparator: (props) =>
+            `hidden ${componentClassNames?.indicatorSeparator?.(props)}`,
+        indicatorsContainer: (props) =>
+            `cursor-pointer ${componentClassNames?.indicatorsContainer?.(
+                props
+            )}`,
+        clearIndicator: (props) =>
+            `cursor-pointer [&>svg]:text-primaryVariant100 ${componentClassNames?.clearIndicator?.(
+                props
+            )}`,
+        menu: (props) =>
+            `bg-backgroundVariant200 mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden ${componentClassNames?.menu?.(
+                props
+            )}`,
+        menuList: (props) =>
+            `p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-backgroundVariant800 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryVariant900 ${componentClassNames?.menuList?.(
+                props
+            )}`,
+        option: (props) =>
+            `text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer capitalize fontGroup-highlight ${componentClassNames?.option?.(
+                props
+            )}`,
     };
 
     if (escKeyPressed === true) {

@@ -139,26 +139,18 @@ const TagsOptions: FC<ITagsOptions> = ({
                     }
                     setSearchState("");
                 }}
-                customStyles={() => ({
-                    container: {
-                        maxWidth: "300px",
-                    },
-                    control: {
-                        padding: "0 10px",
-                        backgroundColor: disabled
-                            ? defaultColors.backgroundVariant800
-                            : defaultColors.backgroundVariant400,
-                    },
-                    menuList: {
-                        maxHeight: "100px",
-                    },
-                    input: {
-                        margin: "0px",
-                    },
-                    placeholder: {
-                        marginLeft: "0px",
-                    },
-                })}
+                componentClassNames={{
+                    container: () => "max-w-[300px]",
+                    control: () =>
+                        `p-0 h-[41px] cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none min-h-[41px] ${
+                            disabled
+                                ? "bg-backgroundVariant800"
+                                : "bg-backgroundVariant400"
+                        }`,
+                    menuList: () => "max-h-[100px]",
+                    input: () => "m-0 ml-[10px] p-0 text-primary border-0",
+                    placeholder: () => "ml-0",
+                }}
                 customComponents={customComponents}
                 disabled={disabled}
             />
@@ -179,7 +171,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                     >
                         <TabButton
                             variant="transparent"
-                            className="[&>.close]:stroke-secondaryOrange100 mr-1.5"
+                            className="[&>.close]:stroke-secondaryOrange100 mr-1.5 uppercase text-[10px]"
                             open={false}
                             onClose={() => {
                                 onRemoveTag(tag.id);
@@ -229,7 +221,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                     ? headerHeight + footerHeight
                     : widgetHeight
             }
-            className={`[transform:rotateX(360deg)] [backface-visibility:hidden] w-full ${
+            className={`[transform:rotateX(180deg)] [backface-visibility:hidden] w-full ${
                 showSettings ? "" : "hidden"
             }`}
         >

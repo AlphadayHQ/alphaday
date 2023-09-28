@@ -65,6 +65,7 @@ export const BaseModuleOptionsFooter = forwardRef<
                     variant="small"
                     onClick={removeWidget}
                     title="Removes this widget from the current board"
+                    className="hover:border-btnRingVariant500 focus:border-btnRingVariant500 border-btnRingVariant500"
                 >
                     <TrashSVG className="w-[15px] fill-[inherit]" /> &nbsp;
                     Remove Widget
