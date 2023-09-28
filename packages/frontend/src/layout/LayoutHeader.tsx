@@ -15,7 +15,7 @@ import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
 import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
-// import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
+import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
 
 interface IProps {
     hideFeatures: boolean;
@@ -31,12 +31,12 @@ const LayoutHeader: FC<IProps> = ({
     setTutFocusElemRef,
 }) => {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [boardsLibOpen, setBoardsLibOpen] = useState(false);
+    const [isBoardsLibOpen, setIsBoardsLibOpen] = useState(false);
     const headerRef = useRef<HTMLDivElement>(null);
 
     const handleMobileOpen = () => setMobileOpen((prev) => !prev);
     const toggleBoardsLib = () => {
-        setBoardsLibOpen((isOpen) => {
+        setIsBoardsLibOpen((isOpen) => {
             /**
              * We need to scroll to the top of the header
              * only when the boards library is not opened.
@@ -56,7 +56,7 @@ const LayoutHeader: FC<IProps> = ({
             {width >= breakpoints.TwoColMinWidth ? (
                 <HeaderWrapper
                     data-testid="header-nav"
-                    className={boardsLibOpen ? "static mb-[-110px]" : ""}
+                    className={isBoardsLibOpen ? "static mb-[-110px]" : ""}
                 >
                     <HeaderNavbar>
                         <Logo />
@@ -116,18 +116,18 @@ const LayoutHeader: FC<IProps> = ({
                             </>
                         )}
                     </HeaderNavbar>
-                    {/* {!hideFeatures && (
+                    {!hideFeatures && (
                         <ViewsTabContainer
                             headerRef={headerRef}
-                            boardsLibOpen={boardsLibOpen}
-                            toggleBoardsLib={toggleBoardsLib}
+                            isBoardsLibOpen={isBoardsLibOpen}
+                            onToggleBoardsLib={toggleBoardsLib}
                             handleMobileOpen={handleMobileOpen}
                         />
-                    )} */}
+                    )}
                 </HeaderWrapper>
             ) : (
                 <HeaderWrapper
-                    className={boardsLibOpen ? "static mb-[-110px]" : ""}
+                    className={isBoardsLibOpen ? "static mb-[-110px]" : ""}
                 >
                     <HeaderNavbar mobileOpen={mobileOpen}>
                         <div className="flex w-full flex-row items-center justify-between">
@@ -159,15 +159,15 @@ const LayoutHeader: FC<IProps> = ({
                             </h3>
                         )}
 
-                        {/* {mobileOpen && (
+                        {mobileOpen && (
                             <ViewsTabContainer
                                 mobileOpen
-                                boardsLibOpen={boardsLibOpen}
-                                toggleBoardsLib={toggleBoardsLib}
+                                isBoardsLibOpen={isBoardsLibOpen}
+                                onToggleBoardsLib={toggleBoardsLib}
                                 headerRef={headerRef}
                                 handleMobileOpen={handleMobileOpen}
                             />
-                        )} */}
+                        )}
 
                         {!hideFeatures && (
                             <HeaderNavRight>

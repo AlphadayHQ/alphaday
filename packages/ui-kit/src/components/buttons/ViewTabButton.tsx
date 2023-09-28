@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { KebabMenu, TKebabMenuOption } from "../kebab-menu/KebabMenu";
+import { ViewTabMenu, TViewTabMenuOption } from "../view-tab-menu/ViewTabMenu";
 
 export interface ButtonProps {
     selected: boolean;
@@ -11,7 +11,7 @@ export interface ButtonProps {
     onClick?: () => MaybeAsync<void>;
     modified?: boolean;
     children?: React.ReactNode;
-    options?: TKebabMenuOption[];
+    options?: TViewTabMenuOption[];
 }
 
 export const ViewTabButton: FC<ButtonProps> = ({
@@ -25,14 +25,15 @@ export const ViewTabButton: FC<ButtonProps> = ({
     ...restProps
 }) => {
     const [isHovered, setIsHovered] = useState(false);
-    const [isKebabMenuOpened, setIsKebabMenuOpened] = useState<boolean>(false);
+    const [isViewTabMenuOpened, setIsViewTabMenuOpened] =
+        useState<boolean>(false);
 
-    const toggleKebabMenu = (val?: boolean) => {
+    const toggleViewTabMenu = (val?: boolean) => {
         if (val !== undefined) {
-            setIsKebabMenuOpened(val);
+            setIsViewTabMenuOpened(val);
             return;
         }
-        setIsKebabMenuOpened((prev) => !prev);
+        setIsViewTabMenuOpened((prev) => !prev);
     };
 
     const handleMouseEnter = () => {
@@ -62,11 +63,11 @@ export const ViewTabButton: FC<ButtonProps> = ({
             {modified && (
                 <div className="bg-btnRingVariant100 h-1 w-1 rounded items-center justify-center ml-[5px]" />
             )}
-            {(isHovered || isKebabMenuOpened) && options && (
-                <KebabMenu
+            {(isHovered || isViewTabMenuOpened) && options && (
+                <ViewTabMenu
                     options={options}
-                    showMenu={isKebabMenuOpened}
-                    onToggleMenu={toggleKebabMenu}
+                    showMenu={isViewTabMenuOpened}
+                    onToggleMenu={toggleViewTabMenu}
                 />
             )}
         </button>

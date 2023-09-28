@@ -1,6 +1,6 @@
 import React, { FC, memo } from "react";
 import {
-    TKebabMenuOption,
+    TViewTabMenuOption,
     breakpoints,
     twMerge,
     ViewTabButton,
@@ -194,33 +194,33 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                     /**
                      *  note: only including actions allowed for custom views for now
                      */
-                    const viewMenuOptions: TKebabMenuOption[] | undefined = view
-                        .data.is_system_view
-                        ? undefined
-                        : [
-                              //   {
-                              //       handler: !view.data.is_system_view
-                              //           ? () => handleShareView(view)
-                              //           : undefined,
-                              //       icon: "share",
-                              //       title: "Share board",
-                              //       key: "share-board",
-                              //   },
-                              {
-                                  handler: view.data.is_system_view
-                                      ? undefined
-                                      : () =>
-                                            onRemoveView({
-                                                id: view.data.id,
-                                                isReadOnly: view.isReadOnly,
-                                                hash: view.data.hash,
-                                                slug: view.data.slug,
-                                            }),
-                                  icon: "trash",
-                                  title: "Remove board",
-                                  key: "remove-board",
-                              },
-                          ];
+                    const viewMenuOptions: TViewTabMenuOption[] | undefined =
+                        view.data.is_system_view
+                            ? undefined
+                            : [
+                                  //   {
+                                  //       handler: !view.data.is_system_view
+                                  //           ? () => handleShareView(view)
+                                  //           : undefined,
+                                  //       icon: "share",
+                                  //       title: "Share board",
+                                  //       key: "share-board",
+                                  //   },
+                                  {
+                                      handler: view.data.is_system_view
+                                          ? undefined
+                                          : () =>
+                                                onRemoveView({
+                                                    id: view.data.id,
+                                                    isReadOnly: view.isReadOnly,
+                                                    hash: view.data.hash,
+                                                    slug: view.data.slug,
+                                                }),
+                                      icon: "trash",
+                                      title: "Remove board",
+                                      key: "remove-board",
+                                  },
+                              ];
                     return (
                         <span
                             key={view.data.hash}
