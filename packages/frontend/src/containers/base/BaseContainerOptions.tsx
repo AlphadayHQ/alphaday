@@ -8,7 +8,6 @@ import {
     ScrollBar,
     SearchBar,
     TabButton,
-    defaultColors,
 } from "@alphaday/ui-kit";
 import { ReactComponent as PinSVG } from "@alphaday/ui-kit/src/assets/svg/pin.svg";
 import { ReactComponent as PinnedSVG } from "@alphaday/ui-kit/src/assets/svg/pinned.svg";
@@ -171,7 +170,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                     >
                         <TabButton
                             variant="transparent"
-                            className="[&>.close]:stroke-secondaryOrange100 mr-1.5 uppercase text-[10px]"
+                            className="[&>.close]:stroke-secondaryOrange100 mr-1.5 uppercase fontGroup-supportBold"
                             open={false}
                             onClose={() => {
                                 onRemoveTag(tag.id);

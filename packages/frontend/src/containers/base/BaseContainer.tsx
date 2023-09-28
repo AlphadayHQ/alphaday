@@ -185,7 +185,9 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             >
                 <div
                     className="group mb-4 w-full [perspective:1000px]"
-                    style={{ height: widgetHeight }}
+                    style={{
+                        height: isCollapsed ? HEADER_HEIGHT : widgetHeight,
+                    }}
                 >
                     <div
                         className={`relative w-full h-full transition-all duration-[0.5s] [transform-style:preserve-3d] ${
