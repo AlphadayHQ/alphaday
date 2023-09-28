@@ -162,7 +162,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                 customComponents={customComponents}
                 disabled={disabled}
             />
-            <div className="m-2.5">
+            <div className="m-2.5 flex items-center">
                 {tags.map((tag) => (
                     <span
                         role="button"
@@ -179,7 +179,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                     >
                         <TabButton
                             variant="transparent"
-                            className="[&>.close]:stroke-secondaryOrange100"
+                            className="[&>.close]:stroke-secondaryOrange100 mr-1.5"
                             open={false}
                             onClose={() => {
                                 onRemoveTag(tag.id);
@@ -229,7 +229,9 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                     ? headerHeight + footerHeight
                     : widgetHeight
             }
-            showSettings={showSettings}
+            className={`[transform:rotateX(360deg)] [backface-visibility:hidden] w-full ${
+                showSettings ? "" : "hidden"
+            }`}
         >
             <div ref={headerRef} {...dragProps}>
                 <BaseModuleHeader>
