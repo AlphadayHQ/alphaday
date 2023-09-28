@@ -15,19 +15,30 @@ interface IDiscordItem {
     item: TDiscordItem;
 }
 
+// regex to match time in discord message in format <t:unix_timestamp:R>
+const TIME_REGEX = /<t:(\d+):R>/g;
+
 const REMARK_PLUGINS = [
     remarkRegex(URL_GLOBAL_REGEX), // match all valid urls
+    remarkRegex(TIME_REGEX, (time: string) => {
+        const [, timestamp] = TIME_REGEX.exec(time) ?? [];
+        if (!timestamp) {
+            return time;
+        }
+        const date = new Date(parseInt(timestamp, 10) * 1000);
+        return moment(date).format("h:mm A");
+    }), // match all valid time strings
 ];
 
 const TWITTER_REMARK_PLUGINS = [
-    remarkRegex(
-        REMARK_MENTION_REGEX,
-        (handle: string) => `https://twitter.com/${handle.slice(1)}`
-    ),
-    remarkRegex(
-        REMARK_HASHTAG_REGEX,
-        (handle: string) => `https://twitter.com/hashtag/${handle.slice(1)}`
-    ),
+    remarkRegex(REMARK_MENTION_REGEX, (handle: string) => [
+        `https://twitter.com/${handle.slice(1)}`,
+        handle,
+    ]),
+    remarkRegex(REMARK_HASHTAG_REGEX, (handle: string) => [
+        `https://twitter.com/hashtag/${handle.slice(1)}`,
+        handle,
+    ]),
     ...REMARK_PLUGINS,
 ];
 
@@ -106,18 +117,20 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
                                                 <img
                                                     src={embed.image.url}
                                                     alt={embed.title}
-                                                    className={discordStyle.img}
+                                                    className="w-full h-1/2 my-2 rounded"
                                                     onError={imgOnError}
                                                 />
                                             )}
                                         </>
                                     ) : (
-                                        <img
-                                            src={embed.thumbnail.url}
-                                            alt={embed.title}
-                                            className={discordStyle.img}
-                                            onError={imgOnError}
-                                        />
+                                        embed.thumbnail?.url && (
+                                            <img
+                                                src={embed.thumbnail.url}
+                                                alt={embed.title}
+                                                className="w-full h-1/2 my-2 rounded"
+                                                onError={imgOnError}
+                                            />
+                                        )
                                     )}
                                 </a>
                             ))}

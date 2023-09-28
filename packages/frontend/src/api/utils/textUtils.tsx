@@ -119,7 +119,10 @@ interface IParentWithLiteral extends Literal {
  */
 export const remarkRegex = (
     pattern: RegExp,
-    callback: (matchedText: string) => string = (matchedText) => matchedText
+    callback: (matchedText: string) => string | string[] = (matchedText) => [
+        matchedText,
+        matchedText,
+    ]
 ): (() => (tree: Node) => void) => {
     return () => (tree: Node) => {
         visit(tree, "text", (node: Literal, index, parent: Parent) => {
@@ -143,17 +146,28 @@ export const remarkRegex = (
                         });
                     }
 
-                    newChildren.push({
-                        type: "link",
-                        url: callback(match[0].trim()),
-                        value: {
-                            hProperties: {
-                                target: "_blank",
-                                rel: "noopener noreferrer",
+                    const value = callback(match[0].trim());
+
+                    if (typeof value === "string") {
+                        newChildren.push({
+                            type: "text",
+                            value,
+                            children: [],
+                        });
+                    } else {
+                        const [url, text] = value;
+                        newChildren.push({
+                            type: "link",
+                            url,
+                            value: {
+                                hProperties: {
+                                    target: "_blank",
+                                    rel: "noopener noreferrer",
+                                },
                             },
-                        },
-                        children: [{ type: "text", value: match[0] }],
-                    });
+                            children: [{ type: "text", value: text }],
+                        });
+                    }
 
                     lastIndex = end;
                 });
