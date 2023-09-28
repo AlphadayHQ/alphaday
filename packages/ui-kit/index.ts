@@ -1,5 +1,4 @@
 import { useLayer } from "react-laag";
-import { themeColors } from "src/globalStyles/themes";
 import { twMerge } from "tailwind-merge";
 import {
     BaseModuleWrapper,
@@ -55,6 +54,7 @@ import {
     TViewTabMenuOption,
 } from "./src/components/view-tab-menu/ViewTabMenu";
 import { breakpoints } from "./src/globalStyles/breakpoints";
+import { themeColors } from "./src/globalStyles/themes";
 
 export type { TViewTabMenuOption };
 export {
