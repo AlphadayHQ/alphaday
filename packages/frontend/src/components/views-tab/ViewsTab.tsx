@@ -1,5 +1,10 @@
 import React, { FC, memo } from "react";
-import { TKebabMenuOption, breakpoints, twMerge } from "@alphaday/ui-kit";
+import {
+    TKebabMenuOption,
+    breakpoints,
+    twMerge,
+    ViewTabButton,
+} from "@alphaday/ui-kit";
 import { useWindowSize } from "src/api/hooks";
 import {
     ETutorialTipId,
@@ -14,7 +19,6 @@ import {
     isViewModified,
 } from "src/api/utils/viewUtils";
 // import ShareViewDialog from "src/components/share-view-dialog/ShareViewDialog";
-import { AlphaViewTabButton } from "./AlphaViewTabButton";
 // import WalletViewTabButton from "./WalletViewTabButton";
 
 interface IViewsTabProps {
@@ -230,7 +234,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                             }
                             style={tabButtonWrapperStyle}
                         >
-                            <AlphaViewTabButton
+                            <ViewTabButton
                                 className={
                                     selectedView?.data.hash !== view.data.hash
                                         ? "tabButton"
@@ -245,7 +249,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                                 options={viewMenuOptions}
                             >
                                 <span className="name">{view.data.name}</span>
-                            </AlphaViewTabButton>
+                            </ViewTabButton>
                         </span>
                     );
                 })}
@@ -253,7 +257,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                     !mobileOpen &&
                     extraOptions.map((option) => (
                         <span key={option.title} style={tabButtonWrapperStyle}>
-                            <AlphaViewTabButton
+                            <ViewTabButton
                                 className={
                                     isSelectedViewModified
                                         ? "opacity-80 hover:[&:not(.selected)]:bg-btnBackgroundVariant100"
@@ -265,7 +269,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                                 disabled={option.disabled}
                             >
                                 <span className="name">{option.title}</span>
-                            </AlphaViewTabButton>
+                            </ViewTabButton>
                         </span>
                     ))}
             </div>
