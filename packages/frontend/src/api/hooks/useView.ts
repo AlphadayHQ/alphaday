@@ -1,4 +1,5 @@
 import { useCallback, useState, useMemo } from "react";
+import { EViewDialogState } from "@alphaday/ui-kit";
 import { useHistory } from "react-router-dom";
 import { useViewRoute } from "src/api/hooks";
 import {
@@ -16,7 +17,6 @@ import {
     TCachedView,
     TSubscribedView,
     TBaseUserView,
-    EViewDialogState,
     TUserViewWidget,
     TTag,
     TViewMeta,

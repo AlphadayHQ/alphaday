@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from "react";
-import { defaultColors, twMerge, useLayer } from "@alphaday/ui-kit";
+import { themeColors, twMerge, useLayer } from "@alphaday/ui-kit";
 import { ReactComponent as CameraSVG } from "src/assets/icons/camera.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
 import { ReactComponent as InfoSVG } from "src/assets/icons/info.svg";
@@ -90,9 +90,9 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
             style: {
                 ...layerProps.style,
                 width: "200px",
-                background: defaultColors.backgroundVariant1100,
-                color: defaultColors.primary,
-                border: `1px solid ${defaultColors.btnRingVariant500}`,
+                background: themeColors.backgroundVariant1100,
+                color: themeColors.primary,
+                border: `1px solid ${themeColors.btnRingVariant500}`,
                 boxShadow: `0px 0px 35px 9px rgba(19, 21, 27, 0.7)`,
                 borderRadius: `5px`,
                 zIndex: Z_INDEX_REGISTRY.HEADER_MENU,
@@ -113,9 +113,9 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
         height: "17px",
     };
 
-    const closeMenuAndCall = (func: (() => void) | undefined) => {
-        if (func) {
-            func();
+    const closeMenuAndCall = (callback: (() => void) | undefined) => {
+        if (callback) {
+            callback();
             setShowMenu(false);
         }
     };

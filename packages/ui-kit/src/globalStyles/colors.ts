@@ -28,6 +28,7 @@ export const darkColors = {
     backgroundVariant1400: "var(--alpha-dark-filtered-200)", // color: rgba(0, 0, 0, 0.4) -- tutorial overlay
     backgroundVariant1500: "var(--alpha-dark-400)", // color: #25272C -- calendar events
     backgroundVariant1600: "var(--alpha-dark-filtered-300)", // color: rgba(0, 0, 0, 0.6) -- dialog overlay
+    backgroundVariant1700: "var(--alpha-dark-filtered-400)", // color: rgba(19, 21, 27, 0.7) -- tutorial overlay
     btnBackgroundVariant100: "var(--alpha-dark-1000)", // color: #222529 -- button bg primary
     btnBackgroundVariant200: "var(--alpha-dark-1200)", // color: #1E2124 -- button bg small
     btnBackgroundVariant300: "var(--alpha-dark-1300)", // color: #1C1E21 -- button bg extra small & pry btn focus

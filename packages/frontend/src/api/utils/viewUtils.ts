@@ -93,6 +93,11 @@ export const buildViewPath = (
     return buildViewPathFromHashOrSlug(view.slug ?? view.hash);
 };
 
+export const buildViewUrl = (hashOrSlug: string): string => {
+    const baseUrl = window.location.origin;
+    return `${baseUrl}${buildViewPathFromHashOrSlug(hashOrSlug)}`;
+};
+
 export const buildViewDraft = (
     viewData: TUserView,
     viewName?: string,

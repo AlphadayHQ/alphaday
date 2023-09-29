@@ -25,7 +25,7 @@ export default {
     },
     plugins: [
         typography,
-        themeSwapper(themes),
+        themeSwapper({ themes }),
         plugin(function ({ addUtilities }) {
             addUtilities({
                 ...fontUtilities,

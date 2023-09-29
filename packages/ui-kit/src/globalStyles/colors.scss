@@ -102,6 +102,7 @@ http://ionicframework.com/docs/theming/ */
   --alpha-dark-filtered-100: rgba(0, 0, 0, 0.2);
   --alpha-dark-filtered-200: rgba(0, 0, 0, 0.4);
   --alpha-dark-filtered-300: rgba(0, 0, 0, 0.6);
+  --alpha-dark-filtered-400:rgba(19, 21, 27, 0.7);
 
   /* secondary shades */
   --alpha-white: #ffffff;
@@ -153,6 +154,7 @@ http://ionicframework.com/docs/theming/ */
   --backgroundVariant1400: var(--alpha-dark-filtered-200);
   --backgroundVariant1500: var(--alpha-dark-400);
   --backgroundVariant1600: var(--alpha-dark-filtered-300);
+  --backgroundVariant1700: var(--alpha-dark-filtered-400);
   --btnBackgroundVariant100: var(--alpha-dark-1000);
   --btnBackgroundVariant200: var(--alpha-dark-1200);
   --btnBackgroundVariant300: var(--alpha-dark-1300);

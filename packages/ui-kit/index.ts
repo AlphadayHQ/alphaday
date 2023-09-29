@@ -10,7 +10,13 @@ import { Button } from "./src/components/buttons/Button";
 import { IconButton } from "./src/components/buttons/IconButton";
 import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
+import { ViewTabButton } from "./src/components/buttons/ViewTabButton";
 import { Dialog } from "./src/components/dialog/Dialog";
+import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
+import {
+    ViewDialog,
+    EViewDialogState,
+} from "./src/components/dialog/ViewDialog";
 import {
     Dropdown,
     DropdownAvatar,
@@ -44,17 +50,23 @@ import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
+import {
+    ViewTabMenu,
+    TViewTabMenuOption,
+} from "./src/components/view-tab-menu/ViewTabMenu";
 import { breakpoints } from "./src/globalStyles/breakpoints";
-import { darkColors as defaultColors } from "./src/globalStyles/colors";
+import { themeColors } from "./src/globalStyles/themes";
 
+export type { TViewTabMenuOption };
 export {
-    defaultColors,
+    themeColors,
     breakpoints,
     listItemVariants,
     Button,
     IconButton,
     NavTabButton,
     TabButton,
+    ViewTabButton,
     Footer,
     Logo,
     HeaderWrapper,
@@ -68,6 +80,10 @@ export {
     ScrollBar,
     SearchBar,
     SwitchWrap,
+    ViewTabMenu,
+    EViewDialogState,
+    ShareViewDialog,
+    ViewDialog,
     Dialog,
     Modal,
     Input,
