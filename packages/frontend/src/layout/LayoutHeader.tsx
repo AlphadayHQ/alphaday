@@ -169,20 +169,22 @@ const LayoutHeader: FC<IProps> = ({
                             />
                         )}
 
-                        {!hideFeatures && (
-                            <HeaderNavRight>
-                                {width > breakpoints.TwoColMinWidth && (
-                                    <>
-                                        {/* <NotificationDropdownContainer
+                        <HeaderNavRight
+                            className={`hidden two-col:${
+                                hideFeatures ? "hidden" : "flex"
+                            }`}
+                        >
+                            {width > breakpoints.TwoColMinWidth && (
+                                <>
+                                    {/* <NotificationDropdownContainer
                                             ml={["8px", "1px", "1px", "15px"]}
                                         /> */}
-                                        <HeaderNavElement className="single-col:ml-[15px] ml-[8px]">
-                                            <ProfileDropdownContainer />
-                                        </HeaderNavElement>
-                                    </>
-                                )}
-                            </HeaderNavRight>
-                        )}
+                                    <HeaderNavElement className="single-col:ml-[15px] ml-[8px]">
+                                        <ProfileDropdownContainer />
+                                    </HeaderNavElement>
+                                </>
+                            )}
+                        </HeaderNavRight>
                     </HeaderNavbar>
                 </HeaderWrapper>
             )}
