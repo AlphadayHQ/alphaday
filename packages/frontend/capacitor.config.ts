@@ -5,7 +5,8 @@ const config: CapacitorConfig = {
     appName: "alphaday",
     webDir: "dist",
     server: {
-        androidScheme: "https",
+        androidScheme: "http",
+        iosScheme: "http",
     },
 };
 
