@@ -20,13 +20,14 @@
     -moz-osx-font-smoothing: grayscale;
     box-sizing: border-box;
 }
-::-moz-selection { /* Code for Firefox */
-  color: inherit;
-  background: transparent;
+::-moz-selection {
+    /* Code for Firefox */
+    color: inherit;
+    background: transparent;
 }
 ::selection {
-  color: inherit;
-  background: transparent;
+    color: inherit;
+    background: transparent;
 }
 html {
     -webkit-text-size-adjust: 100%;
