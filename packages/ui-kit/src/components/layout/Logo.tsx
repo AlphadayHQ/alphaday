@@ -10,8 +10,7 @@ const Logo: FC = () => {
             >
                 <Logoday className="two-col:h-[30px] mr-[5px] mt-0.5 block h-6 focus:outline-none" />
                 <div className="font-montserrat two-col:text-[23.5px] text-[19px] text-white bg-transparent">
-                    {/* <span>alphaday</span> */}
-                    alphaday
+                    <span>alphaday</span>
                 </div>
             </a>
         </div>
