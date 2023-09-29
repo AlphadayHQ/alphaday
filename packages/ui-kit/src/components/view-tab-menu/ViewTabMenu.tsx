@@ -89,9 +89,9 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
         [layerProps, showMenu]
     );
 
-    const closeMenuAndCall = (func: (() => void) | undefined) => {
-        if (func) {
-            func();
+    const closeMenuAndCall = (callback: (() => void) | undefined) => {
+        if (callback) {
+            callback();
             onToggleMenu(false);
         }
     };

@@ -113,9 +113,9 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
         height: "17px",
     };
 
-    const closeMenuAndCall = (func: (() => void) | undefined) => {
-        if (func) {
-            func();
+    const closeMenuAndCall = (callback: (() => void) | undefined) => {
+        if (callback) {
+            callback();
             setShowMenu(false);
         }
     };
