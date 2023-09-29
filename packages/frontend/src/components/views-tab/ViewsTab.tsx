@@ -126,16 +126,12 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
         <div
             id="views-tab"
             data-testid="views-tab"
-            // $mobileOpen={mobileOpen}
-            // divide the width of the tab buttons equally
-            // $columnPercent={100 / tabsCount}
-            // $columnWidth={columnWidth}
             className={twMerge(
-                "h-auto w-screen bg-backgroundVariant100 border-t border-solid border-background twoCol:max-h-[41px]",
+                "h-auto w-screen bg-backgroundVariant100 border-t border-solid border-background two-col:max-h-[41px]",
                 mobileOpen && "border-b"
             )}
         >
-            <div className="flex h-full py-0 px-3 overflow-auto [&>.tabButton]:max-h-10 twoCol:py-0 twoCol:px-[15px] twoCol:w-full twoCol:flex twoCol:justify-start">
+            <div className="flex h-full py-0 px-3 overflow-auto [&>.tabButton]:max-h-10 two-col:py-0 two-col:px-4 two-col:w-full two-col:flex two-col:justify-start">
                 {/* {subscribedViews.length !== 0 && isWalletBoardAllowed && (
                     <span
                         style={walletViewState === EWalletViewState.Ready && tabButtonWrapperStyle}

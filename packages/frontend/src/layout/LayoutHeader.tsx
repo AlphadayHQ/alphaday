@@ -52,7 +52,7 @@ const LayoutHeader: FC<IProps> = ({
     const { width } = useWindowSize();
 
     return (
-        <div ref={headerRef} className="mb-[70px] md:mb-[100px]">
+        <div ref={headerRef}>
             {width >= breakpoints.TwoColMinWidth ? (
                 <HeaderWrapper
                     data-testid="header-nav"
