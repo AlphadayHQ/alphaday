@@ -311,7 +311,7 @@ function BasePage() {
                     }
                 }}
             >
-                <div className="grid grid-cols-1 two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 gap-4 w-full px-4">
+                <div className="grid grid-cols-1 two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 gap-5 w-full px-4">
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
