@@ -50,12 +50,12 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                     {tags && (
                         <span
                             data-testid="module-search-tags"
-                            className="pl-1.5 leading-[18px]"
+                            className="leading-[18px]"
                         >
                             {tags.map((tag) => (
                                 <span
                                     role="button"
-                                    className="items-end [&>svg]:self-end [&>svg]:pb-[3px]"
+                                    className="items-end [&>svg]:self-end [&>svg]:pb-[3px] fontGroup-supportBold ml-1.5"
                                     key={tag.id}
                                     tabIndex={0}
                                     onClick={(e) => {
@@ -72,6 +72,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                                             );
                                         }}
                                         title={tag.name}
+                                        uppercase
                                     >
                                         {tag.name}
                                     </TabButton>

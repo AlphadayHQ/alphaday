@@ -15,8 +15,6 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@alphaday/components": "0.0.0",
-    "@alphaday/shared": "0.0.0",
     "@alphaday/ui-kit": "0.0.0",
     "@capacitor/android": "5.4.1",
     "@capacitor/app": "5.0.6",

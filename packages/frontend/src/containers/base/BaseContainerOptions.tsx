@@ -8,7 +8,6 @@ import {
     ScrollBar,
     SearchBar,
     TabButton,
-    defaultColors,
 } from "@alphaday/ui-kit";
 import { ReactComponent as PinSVG } from "@alphaday/ui-kit/src/assets/svg/pin.svg";
 import { ReactComponent as PinnedSVG } from "@alphaday/ui-kit/src/assets/svg/pinned.svg";
@@ -139,30 +138,22 @@ const TagsOptions: FC<ITagsOptions> = ({
                     }
                     setSearchState("");
                 }}
-                customStyles={() => ({
-                    container: {
-                        maxWidth: "300px",
-                    },
-                    control: {
-                        padding: "0 10px",
-                        backgroundColor: disabled
-                            ? defaultColors.backgroundVariant800
-                            : defaultColors.backgroundVariant400,
-                    },
-                    menuList: {
-                        maxHeight: "100px",
-                    },
-                    input: {
-                        margin: "0px",
-                    },
-                    placeholder: {
-                        marginLeft: "0px",
-                    },
-                })}
+                componentClassNames={{
+                    container: () => "max-w-[300px]",
+                    control: () =>
+                        `p-0 h-[41px] cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none min-h-[41px] ${
+                            disabled
+                                ? "bg-backgroundVariant800"
+                                : "bg-backgroundVariant400"
+                        }`,
+                    menuList: () => "max-h-[100px]",
+                    input: () => "m-0 ml-[10px] p-0 text-primary border-0",
+                    placeholder: () => "ml-0",
+                }}
                 customComponents={customComponents}
                 disabled={disabled}
             />
-            <div className="m-2.5">
+            <div className="m-2.5 flex items-center">
                 {tags.map((tag) => (
                     <span
                         role="button"
@@ -179,7 +170,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                     >
                         <TabButton
                             variant="transparent"
-                            className="[&>.close]:stroke-secondaryOrange100"
+                            className="[&>.close]:stroke-secondaryOrange100 mr-1.5 uppercase fontGroup-supportBold"
                             open={false}
                             onClose={() => {
                                 onRemoveTag(tag.id);
@@ -229,7 +220,9 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                     ? headerHeight + footerHeight
                     : widgetHeight
             }
-            showSettings={showSettings}
+            className={`[transform:rotateX(180deg)] [backface-visibility:hidden] w-full ${
+                showSettings ? "" : "hidden"
+            }`}
         >
             <div ref={headerRef} {...dragProps}>
                 <BaseModuleHeader>

@@ -42,10 +42,8 @@ const discordApi = alphadayApi.injectEndpoints({
                     embeds: item.embeds,
                     pinned: item.pinned,
                     flags: item.flags,
-                    timestamp: new Date(item.timestamp),
-                    editedAt: item.edited_timestamp
-                        ? new Date(item.edited_timestamp)
-                        : undefined,
+                    timestamp: item.timestamp,
+                    editedAt: item.edited_timestamp || undefined,
                     source,
                 })),
             }),

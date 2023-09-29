@@ -7,25 +7,24 @@ interface IBaseModuleWrapper {
     children?: ReactNode;
     className?: string;
     height?: number;
-    showSettings: boolean | undefined;
 }
 export const BaseModuleWrapper = forwardRef<
     HTMLDivElement | null,
     IBaseModuleWrapper
->(({ children, className, showSettings, height }, ref) => {
+>(({ children, className, height }, ref) => {
     const style = height ? { height } : {};
     return (
         <div
             ref={ref}
             className={twMerge(
-                "border-background bg-backgroundVariant200 text-primary relative flex flex-col overflow-hidden rounded-[5px] border-2 border-solid shadow-[0px_0px_0px_1px_rgba(121,131,162,0.2)] transition-transform duration-[0.8s] [backface-visibility:hidden]",
-                className,
-                showSettings &&
-                    "absolute top-0 origin-top [transform:rotateX(180deg)]"
+                "absolute top-0 origin-center w-full h-full",
+                className
             )}
             style={style}
         >
-            {children}
+            <div className="w-full h-full border-background bg-backgroundVariant200 text-primary flex flex-col overflow-hidden rounded-[5px] border-2 border-solid shadow-[0px_0px_0px_1px_rgba(121,131,162,0.2)]">
+                {children}
+            </div>
         </div>
     );
 });
@@ -61,11 +60,12 @@ export const BaseModuleOptionsFooter = forwardRef<
 >(({ removeWidget }, ref) => {
     return (
         <div ref={ref}>
-            <div className="text-primaryVariant100 border-t-btnRingVariant500 flex w-full justify-center self-end border-t-[0.8px] border-solid">
+            <div className="py-2 text-primaryVariant100 border-t-btnRingVariant500 flex w-full justify-center self-end border-t-[0.8px] border-solid">
                 <Button
                     variant="small"
                     onClick={removeWidget}
                     title="Removes this widget from the current board"
+                    className="hover:border-btnRingVariant500 focus:border-btnRingVariant500 border-btnRingVariant500"
                 >
                     <TrashSVG className="w-[15px] fill-[inherit]" /> &nbsp;
                     Remove Widget

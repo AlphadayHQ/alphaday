@@ -55,6 +55,6 @@ export type TDiscordItem = {
     pinned: boolean;
     content: string;
     href: string;
-    timestamp: Date;
-    editedAt?: Date;
+    timestamp: string;
+    editedAt?: string;
 };
