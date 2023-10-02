@@ -31,7 +31,7 @@ export const BaseModuleWrapper = forwardRef<
 
 export const BaseModuleBody: FC<{ children: ReactNode }> = ({ children }) => {
     return (
-        <div className="p-0rch flex h-[inherit] max-h-[500px] min-h-[1px] flex-auto flex-col justify-between overflow-hidden">
+        <div className="p-0 flex h-[inherit] max-h-[calc(100%_-_40px)] min-h-[1px] flex-auto flex-col justify-between overflow-hidden">
             {children}
         </div>
     );

@@ -130,18 +130,18 @@ const LayoutHeader: FC<IProps> = ({
                     className={isBoardsLibOpen ? "static mb-[-110px]" : ""}
                 >
                     <HeaderNavbar mobileOpen={mobileOpen}>
-                        <div className="flex w-full flex-row items-center justify-between">
+                        <div className="flex w-full flex-row items-center justify-between py-5">
                             <Logo />
                             {!hideFeatures && (
                                 <HeaderNavRight>
                                     {mobileOpen ? (
                                         <Close2
                                             onClick={handleMobileOpen}
-                                            className="-mt-0.5"
+                                            className="-mt-0.5 cursor-pointer"
                                         />
                                     ) : (
                                         <MenuMobile
-                                            className="-mt-0.5"
+                                            className="-mt-0.5 cursor-pointer"
                                             onClick={handleMobileOpen}
                                         />
                                     )}
@@ -150,11 +150,11 @@ const LayoutHeader: FC<IProps> = ({
                         </div>
                         {mobileOpen && (
                             <div className="mx-2.5 my-auto flex w-full flex-row items-center justify-center">
-                                {/* <HeaderSearchContainer /> */}
+                                <HeaderSearchContainer />
                             </div>
                         )}
                         {mobileOpen && (
-                            <h3 className="two-col:pl-[15px] two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 text-sm">
+                            <h3 className="two-col:pl-[15px] two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
                                 Boards
                             </h3>
                         )}
@@ -169,20 +169,22 @@ const LayoutHeader: FC<IProps> = ({
                             />
                         )}
 
-                        {!hideFeatures && (
-                            <HeaderNavRight>
-                                {width > breakpoints.TwoColMinWidth && (
-                                    <>
-                                        {/* <NotificationDropdownContainer
+                        <HeaderNavRight
+                            className={`hidden two-col:${
+                                hideFeatures ? "hidden" : "flex"
+                            }`}
+                        >
+                            {width > breakpoints.TwoColMinWidth && (
+                                <>
+                                    {/* <NotificationDropdownContainer
                                             ml={["8px", "1px", "1px", "15px"]}
                                         /> */}
-                                        <HeaderNavElement className="single-col:ml-[15px] ml-[8px]">
-                                            <ProfileDropdownContainer />
-                                        </HeaderNavElement>
-                                    </>
-                                )}
-                            </HeaderNavRight>
-                        )}
+                                    <HeaderNavElement className="single-col:ml-[15px] ml-[8px]">
+                                        <ProfileDropdownContainer />
+                                    </HeaderNavElement>
+                                </>
+                            )}
+                        </HeaderNavRight>
                     </HeaderNavbar>
                 </HeaderWrapper>
             )}
