@@ -1,7 +1,4 @@
 import React, { FC, useState, useCallback } from "react";
-// import { validateEthAddr } from "src/api/utils/accountUtils";
-// import { truncateWithEllipsis } from "src/api/utils/textUtils";
-// import { EToastRole, toast } from "src/api/utils/toastUtils";
 import PreviewImage from "src/assets/img/defaultView2x.png";
 import { ReactComponent as PinSVG } from "src/assets/svg/pin.svg";
 import { ReactComponent as PinnedSVG } from "src/assets/svg/pinned.svg";
@@ -53,15 +50,9 @@ export const BoardPreview: FC<IPreview> = ({
     const handlePinClick: React.MouseEventHandler<HTMLDivElement> = useCallback(
         (event) => {
             event.stopPropagation();
-            if (isAuthenticated) {
-                onPin?.();
-            } else {
-                // toast("Sign up to pin boards and enjoy more customizations", {
-                //     type: EToastRole.Error,
-                // });
-            }
+            onPin?.();
         },
-        [isAuthenticated, onPin]
+        [onPin]
     );
 
     const handleRemoveClick: React.MouseEventHandler<HTMLDivElement> =
@@ -81,11 +72,6 @@ export const BoardPreview: FC<IPreview> = ({
             },
             [onEdit]
         );
-
-    const boardTitle = title;
-    // validateEthAddr(title)
-    // ? truncateWithEllipsis(title, 10)
-    // : title;
 
     return (
         <div
@@ -109,17 +95,15 @@ export const BoardPreview: FC<IPreview> = ({
                         "relative flex h-[110px] w-[154px] items-center justify-center"
                     )}
                 >
-                    <img
-                        alt="preview"
+                    <div
                         className="bg-start h-full w-full rounded-md bg-cover bg-no-repeat"
-                        src={previewImg || PreviewImage}
                         style={{
                             backgroundImage: `url(${
                                 previewImg || PreviewImage
                             })`,
                         }}
                     />
-                    <div className="absolute bottom-10 left-5 right-5 flex items-center justify-between">
+                    <div className="absolute bottom-[10%] left-5 right-5 flex items-center justify-between">
                         {onEdit && (
                             <div
                                 title="Edit board"
@@ -146,7 +130,9 @@ export const BoardPreview: FC<IPreview> = ({
                         {onPin && (
                             <div
                                 className={twMerge(
-                                    "border-btnRingVariant100 text-btnRingVariant100",
+                                    "bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 hover:text-btnRingVariant100 hover:border-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border",
+                                    restProps.pinned &&
+                                        "border-btnRingVariant100",
                                     isAuthenticated && "cursor-not-allowed"
                                 )}
                                 role="button"
@@ -177,7 +163,7 @@ export const BoardPreview: FC<IPreview> = ({
                 role="link"
                 tabIndex={0}
             >
-                {boardTitle}
+                {title}
             </div>
             <p className="text-primary mt-1.75 group-hover:text-primaryVariant800 text-[11px] leading-[14px] tracking-[0.2px]">
                 {description}
