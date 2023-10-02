@@ -1,4 +1,4 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useCallback } from "react";
 import {
     BoardPreview,
     ModuleLoader,
@@ -11,8 +11,11 @@ import {
     TRemoteUserViewPreview,
     TRemoteWidgetCategory,
 } from "src/api/services";
-import { TViewMeta } from "src/api/types";
+import { TUserViewPreview, TViewMeta } from "src/api/types";
+import { validateEthAddr } from "src/api/utils/accountUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import { truncateWithEllipsis } from "src/api/utils/textUtils";
+import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 
@@ -93,6 +96,23 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
             handlePaginate("next");
         }
     };
+
+    const onBoardPin = useCallback(
+        (view: Omit<TUserViewPreview, "id">, id: number) => {
+            if (isAuthenticated) {
+                if (view.is_subscribed) {
+                    onUnsubscribeView(id);
+                } else {
+                    onSubscribeView(id);
+                }
+            } else {
+                toast("Sign up to pin boards and enjoy more customizations", {
+                    type: EToastRole.Error,
+                });
+            }
+        },
+        [isAuthenticated, onSubscribeView, onUnsubscribeView]
+    );
 
     return (
         <div
@@ -286,7 +306,16 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                         previewImg={
                                                             view.icon || ""
                                                         }
-                                                        title={view.name}
+                                                        title={
+                                                            validateEthAddr(
+                                                                view.name
+                                                            )
+                                                                ? truncateWithEllipsis(
+                                                                      view.name,
+                                                                      10
+                                                                  )
+                                                                : view.name
+                                                        }
                                                         description={
                                                             view.description
                                                         }
@@ -304,17 +333,10 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                             onSelectView(id);
                                                         }}
                                                         onPin={() => {
-                                                            if (
-                                                                view.is_subscribed
-                                                            ) {
-                                                                onUnsubscribeView(
-                                                                    id
-                                                                );
-                                                            } else {
-                                                                onSubscribeView(
-                                                                    id
-                                                                );
-                                                            }
+                                                            onBoardPin(
+                                                                view,
+                                                                id
+                                                            );
                                                         }}
                                                     />
                                                 </div>
