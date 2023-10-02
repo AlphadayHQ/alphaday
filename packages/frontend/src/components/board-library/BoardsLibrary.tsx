@@ -98,9 +98,9 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         <div
             data-testid="boards-library"
             className={twMerge(
-                "bg-backgroundVariant900 transition-[max-height] max-h-0 ease-in-out duration-300 [&>*]:invisible",
+                "bg-backgroundVariant900 transition-all h-0 ease-in-out duration-300 [&>*]:invisible",
                 isBoardsLibOpen &&
-                    "max-h-[500px] [&>*]:visible [&>*]:delay-300 transition-[visibility]"
+                    "h-[500px] max-h-[500px] [&>*]:visible [&>*]:delay-300"
             )}
         >
             <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
@@ -108,7 +108,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     <div className="fontGroup-highlightSemi uppercase">
                         Boards Library
                     </div>
-                    <div className="text-sm leading-6">
+                    <div className="fontGroup-normal">
                         Switch between boards to optimize your workflow, and pin
                         the ones you use most often.
                     </div>
