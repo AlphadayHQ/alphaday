@@ -114,7 +114,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     </div>
                 </div>
                 <div
-                    className="cursor-pointer bg-btnBackgroundVariant100 border border-solid border-btnRingVariant300 flex p-1.5 hover:bg-backgroundVariant500"
+                    className="cursor-pointer bg-btnBackgroundVariant100 rounded-full border border-solid border-btnRingVariant300 flex p-1.5 hover:bg-backgroundVariant500"
                     tabIndex={0}
                     onClick={onToggleBoardsLib}
                     role="button"
@@ -122,7 +122,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     <CloseSVG className="w-3 h-3" />
                 </div>
             </div>
-            <div>
+            <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
                 <div className="flex justify-around items-center [&>span]:mr-[7px]">
                     <span className="text-primary mr-3">Categories</span>
                     <span className="wrap">
@@ -202,11 +202,11 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                     <PlusSVG />
                                 </span>
                             </div>
-                            <div className="h-60">
+                            <div className="h-[316px]">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex box-border flex-row flex-wrap h-80 w-full">
+                                    <div className="flex box-border flex-row flex-wrap h-[316px] w-full">
                                         {customBoards.length === 0 ? (
-                                            <p className="ml-[15px] font-normal text-primary">
+                                            <p className="ml-[15px] pr-3 font-normal text-primary">
                                                 {isAuthenticated
                                                     ? "You have not created any custom boards."
                                                     : "Connect and verify your wallet to see your custom boards"}
@@ -257,6 +257,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                 )
                                             )
                                         )}
+                                        <div className="spacer py-2 w-full" />
                                     </div>
                                 </ScrollBar>
                             </div>
