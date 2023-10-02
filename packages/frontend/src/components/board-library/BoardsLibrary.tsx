@@ -262,13 +262,15 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                 </ScrollBar>
                             </div>
                         </div>
-                        <div className="types">
-                            <div className="title">All Boards</div>
-                            <div className="boards-wrapper">
+                        <div className="w-full p-[25px]">
+                            <div className="flex fontGroup-highlightSemi p-[5px_15px] text-primary">
+                                All Boards
+                            </div>
+                            <div className="h-[316px]">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="boards">
+                                    <div className="flex box-border flex-row flex-wrap h-[316px] w-full">
                                         {allBoards.length === 0 ? (
-                                            <p className="empty">
+                                            <p className="ml-[15px] font-normal text-primary">
                                                 No boards found in this
                                                 category.
                                             </p>
@@ -317,6 +319,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                 </div>
                                             ))
                                         )}
+                                        <div className="spacer py-2 w-full" />
                                     </div>
                                 </ScrollBar>
                             </div>
