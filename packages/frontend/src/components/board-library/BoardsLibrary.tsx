@@ -118,9 +118,8 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         <div
             data-testid="boards-library"
             className={twMerge(
-                "bg-backgroundVariant900 transition-all h-0 ease-in-out duration-300 [&>*]:invisible",
-                isBoardsLibOpen &&
-                    "h-[500px] max-h-[500px] [&>*]:visible [&>*]:delay-300"
+                "bg-backgroundVariant900 transition-all max-h-0 ease-in-out duration-300 [&>*]:invisible",
+                isBoardsLibOpen && "max-h-[500px] [&>*]:visible [&>*]:delay-300"
             )}
         >
             <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
@@ -193,7 +192,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     )}
                 </div>
             </div>
-            <div className="h-80">
+            <div className="h-72">
                 {customBoards === undefined || allBoards === undefined ? (
                     <ModuleLoader $height="100%" />
                 ) : (
@@ -223,9 +222,9 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                     <PlusSVG />
                                 </span>
                             </div>
-                            <div className="h-[316px]">
+                            <div className="h-[234px]">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex box-border flex-row flex-wrap h-[316px] w-full">
+                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full">
                                         {customBoards.length === 0 ? (
                                             <p className="ml-[15px] pr-3 font-normal text-primary">
                                                 {isAuthenticated
@@ -287,9 +286,9 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                             <div className="flex fontGroup-highlightSemi p-[5px_15px] text-primary">
                                 All Boards
                             </div>
-                            <div className="h-[316px]">
+                            <div className="h-[234px]">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex box-border flex-row flex-wrap h-[316px] w-full">
+                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full">
                                         {allBoards.length === 0 ? (
                                             <p className="ml-[15px] font-normal text-primary">
                                                 No boards found in this

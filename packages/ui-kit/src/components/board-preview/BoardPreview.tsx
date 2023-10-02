@@ -91,7 +91,7 @@ export const BoardPreview: FC<IPreview> = ({
             >
                 <div
                     className={twMerge(
-                        padding || "p-[5px]",
+                        padding || "p-[0px]",
                         "relative flex h-[110px] w-[154px] items-center justify-center"
                     )}
                 >
@@ -103,7 +103,7 @@ export const BoardPreview: FC<IPreview> = ({
                             })`,
                         }}
                     />
-                    <div className="absolute bottom-[10%] left-5 right-5 flex items-center justify-between">
+                    <div className="absolute bottom-[10%] left-2.5 right-2.5 flex items-center justify-between">
                         {onEdit && (
                             <div
                                 title="Edit board"
