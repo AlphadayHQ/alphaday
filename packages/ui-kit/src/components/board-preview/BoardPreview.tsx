@@ -91,7 +91,7 @@ export const BoardPreview: FC<IPreview> = ({
             >
                 <div
                     className={twMerge(
-                        padding || "p-[0px]",
+                        padding || "p-0",
                         "relative flex h-[110px] w-[154px] items-center justify-center"
                     )}
                 >
