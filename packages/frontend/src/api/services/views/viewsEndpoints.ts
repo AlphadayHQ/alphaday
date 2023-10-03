@@ -1,4 +1,4 @@
-import queryString from "querystring";
+import queryString from "query-string";
 import { Logger } from "src/api/utils/logging";
 import { TEMPLATES_DICT } from "src/types";
 import CONFIG from "../../../config/config";

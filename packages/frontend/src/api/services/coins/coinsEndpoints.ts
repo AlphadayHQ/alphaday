@@ -1,4 +1,4 @@
-import querystring from "querystring";
+import querystring from "query-string";
 import { TCoin } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
