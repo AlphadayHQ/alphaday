@@ -11,6 +11,15 @@ import { IconButton } from "./src/components/buttons/IconButton";
 import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
 import { ViewTabButton } from "./src/components/buttons/ViewTabButton";
+import {
+    ApexAreaChart,
+    ApexBarChart,
+    ApexCandleChart,
+    ApexDonutChart,
+    ApexLineChart,
+    ApexPieChart,
+    ApexRadialChart,
+} from "./src/components/charts/apexchart";
 import { Dialog } from "./src/components/dialog/Dialog";
 import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
 import {
@@ -60,6 +69,13 @@ import { themeColors } from "./src/globalStyles/themes";
 
 export type { TViewTabMenuOption };
 export {
+    ApexAreaChart,
+    ApexBarChart,
+    ApexCandleChart,
+    ApexDonutChart,
+    ApexLineChart,
+    ApexPieChart,
+    ApexRadialChart,
     themeColors,
     breakpoints,
     listItemVariants,
