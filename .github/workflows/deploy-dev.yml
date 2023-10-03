@@ -1,4 +1,4 @@
-name: Deploy to zettaday (dev)
+name: Deploy to epsilonday (dev)
 
 on:
     # # deploy runs when merging on dev
