@@ -5,11 +5,7 @@ import { TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
-
-import {
-    StyledChart,
-    SpinnerWrapper,
-} from "src/components/market/MarketModule.style";
+import styles from "./Market.module.scss";
 
 type IProps = {
     data: number[][];
@@ -233,11 +229,11 @@ const LineChart: FC<IProps> = memo(function LineChart({
     return (
         <div className="p-0 flex-1 basis-auto min-h-[1px]">
             {isLoading ? (
-                <SpinnerWrapper>
+                <div className="flex w-full h-[200px] items-center justify-center">
                     <Spinner size="sm" />
-                </SpinnerWrapper>
+                </div>
             ) : (
-                <StyledChart>
+                <div className={`${styles.chart} candlestick`}>
                     <ApexAreaChart
                         key={zoomKey}
                         options={options}
@@ -251,7 +247,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                             className="zoom-reset"
                         />
                     )}
-                </StyledChart>
+                </div>
             )}
         </div>
     );
