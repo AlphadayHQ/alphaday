@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import { FC } from "react";
 import styles from "./Switch.module.scss";
 

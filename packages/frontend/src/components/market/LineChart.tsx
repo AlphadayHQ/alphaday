@@ -112,7 +112,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             tickAmount: 8,
             labels: {
                 datetimeUTC: false,
-                formatter(val: string, timestamp: number) {
+                formatter(_val: string, timestamp: number) {
                     return moment(timestamp).format(
                         selectedChartRange === "1D" ? "HH:mm" : "DD MMM"
                     );
