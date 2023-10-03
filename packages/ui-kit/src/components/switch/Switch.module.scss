@@ -1,0 +1,57 @@
+.label {
+    @apply relative inline-block text-primary;
+
+    input {
+        @apply opacity-0 w-0 h-0 absolute;
+    }
+    .slider {
+        @apply flex justify-between items-center cursor-pointer bg-btnBackgroundVariant1100 rounded-[10px] transition duration-[ms] ease-in-out;
+    }
+
+    .options {
+        @apply m-3 text-center capitalize fontGroup-highlightSemi z-[2] duration-[400ms] rounded-lg py-[3px] px-2 min-w-min two-col:min-w-max;
+    }
+
+    .option1:hover,
+    .option2:hover {
+        @apply bg-btnBackgroundVariant1200;
+    }
+
+    .option1:active,
+    .option2:active {
+        @apply bg-btnBackgroundVariant1600;
+    }
+
+    input:not(:checked) + .slider {
+        .option1 {
+            @apply bg-btnBackgroundVariant1400;
+        }
+    }
+
+    input:checked + .slider {
+        .option2 {
+            @apply bg-btnBackgroundVariant1400;
+        }
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(61px);
+        -ms-transform: translateX(61px);
+        transform: translateX(61px);
+    }
+}
+
+.disabled {
+        @apply text-primaryVariant300 pointer-events-none;
+        input:not(:checked) + .slider {
+            .option1 {
+                @apply bg-primaryVariant300;
+            }
+        }
+
+        input:checked + .slider {
+            .option2 {
+                @apply bg-primaryVariant300;
+            }
+        }
+    }
