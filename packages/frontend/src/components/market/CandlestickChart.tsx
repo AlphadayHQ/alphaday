@@ -212,7 +212,7 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
     ];
 
     return (
-        <div className="p-0 flex-1 basis-auto min-h-[1px]">
+        <div className="p-0 flex flex-1 basis-auto min-h-[1px]">
             {isLoading ? (
                 <div className="flex w-full h-[200px] items-center justify-center">
                     <Spinner size="sm" />
