@@ -1,6 +1,7 @@
 {
   "name": "alphaday",
-  "app_id": "",
-  "type": "react-vite",
-  "integrations": {}
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
 }

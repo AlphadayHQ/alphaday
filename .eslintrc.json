@@ -137,6 +137,7 @@
             "files": [
                 "setupTests.ts",
                 "vite.config.ts",
+                "capacitor.config.ts",
                 "*.test.ts",
                 "*.test.tsx"
             ],

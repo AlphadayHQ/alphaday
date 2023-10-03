@@ -19,7 +19,6 @@ import "@alphaday/ui-kit/global.scss";
 const App: React.FC = () => {
     return (
         <IonApp className="theme-dark">
-            {/** @ts-expect-error react16/18 type conflict */}
             <IonReactRouter>
                 <Suspense>
                     <IonRouterOutlet>
