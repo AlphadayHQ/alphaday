@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
-import styles from "./spinner.module.scss";
+import styles from "./Spinner.module.scss";
 
 export interface IProps {
     /**
