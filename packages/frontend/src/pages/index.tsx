@@ -28,6 +28,7 @@ import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
+import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
 import MainLayout from "src/layout/MainLayout";
 
 const { UI, VIEWS } = CONFIG;
@@ -338,6 +339,7 @@ function BasePage() {
                     ))}
                 </div>
             </DragDropContext>
+            <WalletConnectionDialogContainer />
         </MainLayout>
     );
 }
