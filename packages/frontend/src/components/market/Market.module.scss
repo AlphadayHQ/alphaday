@@ -6,14 +6,12 @@
         margin-right: -10px;
     }
 
-    @apply two-col:h-[284px]
+    @apply two-col:h-[284px];
     .apexcharts-xaxis {
         line {
             @apply stroke-1 stroke-btnBackgroundVariant500;
         }
     }
-
-
 
     .zoom-reset {
         position: absolute;
@@ -46,7 +44,7 @@
         }
     }
 
-        &.candlestick {
+    &.candlestick {
         margin-top: -12px;
         & > div {
             margin-left: -14px;
