@@ -46,6 +46,7 @@ import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { Spinner } from "./src/components/spinner/Spinner";
+import { Switch } from "./src/components/switch/Switch";
 import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
@@ -101,5 +102,6 @@ export {
     DropdownItem,
     DropdownMenu,
     Spinner,
+    Switch,
     ModulePreview,
 };
