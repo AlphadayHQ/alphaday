@@ -89,6 +89,7 @@ jobs:
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
 
                   AWS_S3_BUCKET: ${{ secrets.DEV__FRONTENDV2__S3_BUCKET }}
+                  DISTRIBUTION_ID: ${{ secrets.PROD__FRONTENDV2__DISTRIBUTION_ID }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
 
