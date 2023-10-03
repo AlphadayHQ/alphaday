@@ -79,9 +79,6 @@ jobs:
                   REACT_APP_FIRE_MESSAGE_SENDER_ID: ${{ secrets.DEV__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
                   REACT_APP_FIRE_APP_ID: ${{ secrets.DEV__REACT_APP_FIRE_APP_ID }}
 
-                  AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
-                  SOURCE_DIR: "packages/main/build"
-
                   NODE_OPTIONS: "--max_old_space_size=4096"
 
             # deploy: sync to s3 and invalidate cloudfront cache
@@ -95,7 +92,7 @@ jobs:
 
                   AWS_S3_BUCKET: ${{ secrets.DEV__FRONTENDV2__S3_BUCKET }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
-                  SOURCE_DIR: "packages/main/build"
+                  SOURCE_DIR: "dist"
 
     # Get message VARs and Notify team through discord of deployment
     notify:
