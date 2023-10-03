@@ -9,6 +9,7 @@
   "scripts": {
     "build:frontend": "yarn --cwd packages/frontend build",
     "build:ui": "yarn --cwd packages/ui-kit build",
+    "build:deploy": "yarn build:frontend && mv packages/frontend/dist dist",
     "dev:frontend": "yarn --cwd packages/frontend dev",
     "start": "yarn --cwd packages/frontend dev",
     "lint:frontend": "yarn --cwd packages/frontend lint",
