@@ -214,7 +214,7 @@
             }
         }
     }
-    &.leftArrow &.rightArrow {
+    &.leftArrow, &.rightArrow {
         background: var(--backgroundVariant1200);
         border: 1px solid var(--btnRingVariant300);
         border-radius: 100px;
