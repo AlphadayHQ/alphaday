@@ -61,6 +61,7 @@ const WalletConnectionDialogContainer: FC = () => {
                     title="Wallet Connection Error"
                     onClose={resetWalletConnection}
                     errorMessage={authWallet.error}
+                    size="sm"
                 >
                     An error ocurred trying to connect to your wallet provider.
                     Please make sure your wallet is correctly setup.
@@ -72,6 +73,7 @@ const WalletConnectionDialogContainer: FC = () => {
                     title="Wallet Verification Error"
                     onClose={resetWalletVerification}
                     errorMessage={authWallet.error}
+                    size="sm"
                 >
                     Authentication failed. Is your wallet unlocked? Have you
                     switched accounts?
@@ -105,6 +107,7 @@ const WalletConnectionDialogContainer: FC = () => {
                     title="Unexpected Error"
                     onClose={resetAuthState}
                     errorMessage={authWallet.error}
+                    size="sm"
                 >
                     Oops! Something went wrong. Please try again later.
                 </ErrorModal>

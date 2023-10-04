@@ -21,9 +21,10 @@ export interface IDialog {
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
 }
 
-export const Dialog: FC<
-    RequireAtLeastOne<IDialog, "triggerId" | "showDialog">
-> = ({
+export const Dialog: FC<RequireAtLeastOne<
+    IDialog,
+    "triggerId" | "showDialog"
+>> = ({
     children,
     title,
     onClose,
@@ -70,6 +71,7 @@ export const Dialog: FC<
             showModal={showDialog}
             ref={modalRef}
             data-testid="alpha-dialog"
+            onClose={onClose}
             {...restProps}
         >
             <div className="flex justify-between items-center border-0 p-[15px]">
