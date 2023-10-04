@@ -1,8 +1,8 @@
 import { lazy } from "react";
 
-const ErrorPage = lazy(() => import("./pages/error"));
 const PreloaderPage = lazy(() => import("./pages/preloader"));
 const BoardsPage = lazy(() => import("./pages/index"));
+const ErrorPage = lazy(() => import("./pages/error"));
 
 /**
  * A basic route.
@@ -31,10 +31,6 @@ export enum ERouteNames {
 
 /**
  * An array of all valid routes in the app.
- *
- * We reverse the array so that the fallback route is always the last one.
- * This is because its dx-wise, it's more intuitive to order the routes from
- * most specific to least specific.
  */
 export const appRoutes: IRoute[] = [
     {
@@ -46,21 +42,12 @@ export const appRoutes: IRoute[] = [
         path: ERouteNames.Boards,
         component: BoardsPage,
     },
-    {
-        path: ERouteNames.FallBack,
-        component: ErrorPage,
-    },
 ];
 
 /**
  * An array of routes in the app.
  */
 export const loadRoutes: IRoute[] = [
-    {
-        path: ERouteNames.Base,
-        component: BoardsPage,
-        exact: true,
-    },
     {
         path: ERouteNames.FallBack,
         component: PreloaderPage,

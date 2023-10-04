@@ -40,7 +40,9 @@ const AppRoutes = () => {
             const errorType = getRtkErrorCode(errorInfo);
             return errorRoutes.map((route) => ({
                 ...route,
-                component: () => <route.component type={errorType} />,
+                component: () => (
+                    <route.component key="error" type={errorType} />
+                ),
             }));
         }
         return appRoutes;
