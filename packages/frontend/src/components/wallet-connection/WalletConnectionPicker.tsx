@@ -15,7 +15,7 @@ interface IProps {
 
 const WalletConnectionPicker: React.FC<IProps> = ({ walletButtons }) => {
     return (
-        <div className="flex flex-row flex-wrap justify-evenly">
+        <div className="flex flex-wrap justify-evenly w-full">
             {walletButtons.map((wallet) => (
                 <Button
                     variant="primaryXL"

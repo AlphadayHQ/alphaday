@@ -21,9 +21,10 @@ export interface IDialog {
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
 }
 
-export const Dialog: FC<
-    RequireAtLeastOne<IDialog, "triggerId" | "showDialog">
-> = ({
+export const Dialog: FC<RequireAtLeastOne<
+    IDialog,
+    "triggerId" | "showDialog"
+>> = ({
     children,
     title,
     onClose,
@@ -72,7 +73,7 @@ export const Dialog: FC<
             data-testid="alpha-dialog"
             {...restProps}
         >
-            <div className="border-0 p-[15px]">
+            <div className="flex justify-between items-center border-0 p-[15px]">
                 <h6 className="text-primary self-center text-base leading-6">
                     {title}
                 </h6>

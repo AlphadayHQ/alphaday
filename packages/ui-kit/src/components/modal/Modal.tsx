@@ -49,7 +49,15 @@ export const Modal = forwardRef<
     RequireAtLeastOne<IModal, "triggerId" | "showModal">
 >(
     (
-        { className, children, onClose, triggerId, showModal, hideBackdrop },
+        {
+            className,
+            children,
+            onClose,
+            triggerId,
+            showModal,
+            hideBackdrop,
+            size,
+        },
         ref
     ) => {
         return (
@@ -66,7 +74,15 @@ export const Modal = forwardRef<
                 <div
                     style={{
                         boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
-                        maxWidth: "min(calc(100% - 20px), 1050px)",
+                        maxWidth: `min(calc(100% - 20px), ${
+                            size === "sm"
+                                ? "440px"
+                                : size === "lg"
+                                ? "800px"
+                                : size === "md"
+                                ? "650px"
+                                : "1050px"
+                        })`,
                     }}
                     className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
                 >

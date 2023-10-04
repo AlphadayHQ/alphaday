@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Dialog, Modal as ErrorModal } from "@alphaday/ui-kit";
+import { Dialog, ErrorModal } from "@alphaday/ui-kit";
 import { useWallet, useAccount, useFeatureFlags } from "src/api/hooks";
 import { WalletConnectionState, EWalletConnectionMethod } from "src/api/types";
 import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
-import { ReactComponent as WaletConnectSVG } from "src/assets/icons/wallet-connect.svg";
+import { ReactComponent as WalletConnectSVG } from "src/assets/icons/wallet-connect.svg";
 import WalletConnectionPicker from "src/components/wallet-connection/WalletConnectionPicker";
 import { EFeaturesRegistry } from "src/constants";
 import globalMessages from "src/globalMessages";
@@ -32,7 +32,7 @@ const WalletConnectionDialogContainer: FC = () => {
             title: `Wallet Connect ${
                 isWalletConnectFeatureAllowed ? "" : "(soon)"
             }`,
-            icon: WaletConnectSVG,
+            icon: WalletConnectSVG,
         },
         {
             id: "metamask",
@@ -50,6 +50,7 @@ const WalletConnectionDialogContainer: FC = () => {
                     onClose={resetWalletConnection}
                     showXButton
                     showDialog
+                    size="sm"
                 >
                     <WalletConnectionPicker walletButtons={wallets} />
                 </Dialog>
@@ -57,10 +58,9 @@ const WalletConnectionDialogContainer: FC = () => {
         case WalletConnectionState.ConnectionError:
             return (
                 <ErrorModal
-                    // title="Wallet Connection Error"
-                    showModal
+                    title="Wallet Connection Error"
                     onClose={resetWalletConnection}
-                    // errorMessage={authWallet.error}
+                    errorMessage={authWallet.error}
                 >
                     An error ocurred trying to connect to your wallet provider.
                     Please make sure your wallet is correctly setup.
@@ -69,10 +69,9 @@ const WalletConnectionDialogContainer: FC = () => {
         case WalletConnectionState.VerificationError:
             return (
                 <ErrorModal
-                    // title="Wallet Verification Error"
-                    showModal
+                    title="Wallet Verification Error"
                     onClose={resetWalletVerification}
-                    // errorMessage={authWallet.error}
+                    errorMessage={authWallet.error}
                 >
                     Authentication failed. Is your wallet unlocked? Have you
                     switched accounts?
@@ -91,6 +90,7 @@ const WalletConnectionDialogContainer: FC = () => {
                     }}
                     showXButton
                     showDialog
+                    size="sm"
                 >
                     <p>
                         Your wallet has been connected successfully. To save
@@ -102,10 +102,9 @@ const WalletConnectionDialogContainer: FC = () => {
         case WalletConnectionState.GenericError:
             return (
                 <ErrorModal
-                    // title="Unexpected Error"
-                    showModal
+                    title="Unexpected Error"
                     onClose={resetAuthState}
-                    // errorMessage={authWallet.error}
+                    errorMessage={authWallet.error}
                 >
                     Oops! Something went wrong. Please try again later.
                 </ErrorModal>
