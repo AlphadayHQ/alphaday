@@ -37,6 +37,6 @@ export const routes: IRoute[] = [
     },
     {
         path: ERouteNames.FallBack,
-        component: lazy(() => import("./pages/index")),
+        component: lazy(() => import("./pages/error")),
     },
 ];
