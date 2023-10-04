@@ -8,9 +8,9 @@ import {
     TBaseEntity,
 } from "src/api/types";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
-import ItemBookmark from "src/components/listItem/ItemBookmark";
 import globalMessages from "src/globalMessages";
 import CandlestickChart from "./CandlestickChart";
+import CoinInfo from "./CoinInfo";
 import DateRangeBar from "./DateRangeBar";
 import LineChart from "./LineChart";
 import MarketsList from "./MarketsList";
@@ -111,72 +111,16 @@ const MarketModule: FC<IMarketModule> = ({
                     <div className="flex flex-col mt-[11px] pl-[15px] pr-[15px] w-full self-start single-col:mt-5 single-col:pl-[10px]">
                         <div className="flex items-start">
                             <div className="flex justify-between flex-1 ml-[5px]">
-                                <div className="data-wrap">
-                                    <div className="flex fontGroup-normal mb-2 [&>*]:mr-1.5 [&>.bookmark]:flex [&>.bookmark]:items-center [&>.bookmark]:cursor-pointer">
-                                        {selectedMarket.icon && (
-                                            <img
-                                                src={selectedMarket.icon}
-                                                alt=""
-                                                className="w-[18px]"
-                                            />
-                                        )}
-                                        <span className="text-primary capitalize fontGroup-highlightSemi">
-                                            {selectedMarket.name}
-                                        </span>
-                                        <span className="text-primaryVariant100 fontGroup-highlight">
-                                            {selectedMarket.ticker.toUpperCase()}
-                                        </span>
-                                        <ItemBookmark
-                                            isAuthenticated={isAuthenticated}
-                                            onBookmark={async () => {
-                                                await onTogglePin(
-                                                    selectedMarket
-                                                );
-                                            }}
-                                            bookmarked={
-                                                pinnedCoins.find(
-                                                    (c) =>
-                                                        c.id ===
-                                                        selectedMarket.id
-                                                ) !== undefined
-                                            }
-                                            showSpacer={false}
-                                        />
-                                    </div>
-                                    {selectedMarket && (
-                                        <div className="flex flex-nowrap single-col:flex-wrap mb-[5px]">
-                                            <h2 className="mb-0 text-primary fontGroup-major">
-                                                {
-                                                    formatNumber({
-                                                        value: selectedMarket.price,
-                                                        style: ENumberStyle.Currency,
-                                                        currency: "USD",
-                                                    }).value
-                                                }
-                                            </h2>
-                                            <h6
-                                                className={twMerge(
-                                                    "fontGroup-support ml-[5px] mb-0 pt-[3px] self-start tiny:flex tiny:flex-nowrap tiny:whitespace-nowrap tiny:self-end",
-                                                    selectedMarket.percentChange24h <
-                                                        0
-                                                        ? "text-secondaryOrangeSoda"
-                                                        : "text-success"
-                                                )}
-                                            >
-                                                {
-                                                    formatNumber({
-                                                        value: selectedMarket.percentChange24h,
-                                                        style: ENumberStyle.Percent,
-                                                        normalise: true,
-                                                    }).value
-                                                }
-                                                <span className="lowercase text-primaryVariant100">
-                                                    / 24h
-                                                </span>
-                                            </h6>
-                                        </div>
-                                    )}
-                                </div>
+                                <CoinInfo
+                                    selectedMarket={selectedMarket}
+                                    isAuthenticated={isAuthenticated}
+                                    onTogglePin={onTogglePin}
+                                    isBookmarked={
+                                        pinnedCoins.find(
+                                            (c) => c.id === selectedMarket.id
+                                        ) !== undefined
+                                    }
+                                />
                                 <span className="switch">
                                     <Switch
                                         options={["Line", "Candlestick"]}
