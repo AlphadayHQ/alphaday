@@ -11,29 +11,29 @@ on:
     workflow_dispatch:
 
 env:
-    ENVIRONMENT: dev
+    VITE_ENVIRONMENT: dev
 
-    REACT_APP_LOGLEVEL: 0
-    REACT_APP_API_BASE_URL: https://api.zettaday.com/
-    REACT_APP_X_APP_ID: sBnL0RkWkM
-    REACT_APP_X_APP_SECRET: 21gPAwU3uOUisMJJFJjaotbDxCmvCHKMh76Xlvb8XK2RkkvZHhtSfcUfoz6QiFx8zhZf31vxvKAFD7pkdmbjHiKwoVuS2iDOLjvC
+    VITE_LOGLEVEL: 0
+    VITE_API_BASE_URL: https://api.zettaday.com/
+    VITE_X_APP_ID: sBnL0RkWkM
+    VITE_X_APP_SECRET: 21gPAwU3uOUisMJJFJjaotbDxCmvCHKMh76Xlvb8XK2RkkvZHhtSfcUfoz6QiFx8zhZf31vxvKAFD7pkdmbjHiKwoVuS2iDOLjvC
 
-    REACT_APP_ZAPPER_BASE_URL: https://api.zapper.fi/v1/
-    REACT_APP_ZAPPER_BASE_URL_V2: https://api.zapper.fi/v2/
-    REACT_APP_COINGECKO_BASE_URL: https://api.coingecko.com/api/v3/
-    REACT_APP_DEFIPULSE_BASE_URL: https://data-api.defipulse.com/api/v1/
-    REACT_APP_ETHERSCAN_BASE_URL: https://api.etherscan.io/api
-    REACT_APP_ULTRA_SOUND_MONEY_BASE_URL: https://api.ultrasound.money/
+    VITE_ZAPPER_BASE_URL: https://api.zapper.fi/v1/
+    VITE_ZAPPER_BASE_URL_V2: https://api.zapper.fi/v2/
+    VITE_COINGECKO_BASE_URL: https://api.coingecko.com/api/v3/
+    VITE_DEFIPULSE_BASE_URL: https://data-api.defipulse.com/api/v1/
+    VITE_ETHERSCAN_BASE_URL: https://api.etherscan.io/api
+    VITE_ULTRA_SOUND_MONEY_BASE_URL: https://api.ultrasound.money/
 
-    REACT_APP_SWAP_FEE: 10
-    REACT_APP_SWAP_FEE_ADDRESS: "0xeb2eCdDF7db14D4Ebca0848F2a879162eb8A43F1"
+    VITE_SWAP_FEE: 10
+    VITE_SWAP_FEE_ADDRESS: "0xeb2eCdDF7db14D4Ebca0848F2a879162eb8A43F1"
 
-    REACT_APP_GA_MEASUREMENT_ID: ""
+    VITE_GA_MEASUREMENT_ID: ""
 
-    REACT_APP_FIRE_PROJECT_ID: gammaday-staging
-    REACT_APP_FIRE_MEASUREMENT_ID: G-J6KTFT40XV
+    VITE_FIRE_PROJECT_ID: gammaday-staging
+    VITE_FIRE_MEASUREMENT_ID: G-J6KTFT40XV
 
-    REACT_APP_ALPHADAY_IPFS_GATEWAY: https://alphaday.infura-ipfs.io/ipfs/
+    VITE_ALPHADAY_IPFS_GATEWAY: https://alphaday.infura-ipfs.io/ipfs/
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -62,20 +62,20 @@ jobs:
             - name: build
               run: yarn build:deploy
               env:
-                  REACT_APP_ENVIRONMENT: ${{ env.ENVIRONMENT }}
+                  VITE_ENVIRONMENT: ${{ env.ENVIRONMENT }}
 
-                  REACT_APP_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
-                  REACT_APP_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
-                  REACT_APP_ETHPLORER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHPLORER }}
-                  REACT_APP_ZAPPER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ZAPPER }}
+                  VITE_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
+                  VITE_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
+                  VITE_ETHPLORER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHPLORER }}
+                  VITE_ZAPPER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ZAPPER }}
 
-                  REACT_APP_WALLET_CONNECT_PROJECT_ID: ${{ secrets.DEV__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
+                  VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.DEV__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
 
-                  REACT_APP_FIRE_API_KEY: ${{ secrets.DEV__REACT_APP_FIRE_API_KEY }}
-                  REACT_APP_FIRE_AUTH_DOMAIN: ${{ secrets.DEV__REACT_APP_FIRE_AUTH_DOMAIN }}
-                  REACT_APP_FIRE_STORAGE_BUCKET: ${{ secrets.DEV__REACT_APP_FIRE_STORAGE_BUCKET }}
-                  REACT_APP_FIRE_MESSAGE_SENDER_ID: ${{ secrets.DEV__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
-                  REACT_APP_FIRE_APP_ID: ${{ secrets.DEV__REACT_APP_FIRE_APP_ID }}
+                  VITE_FIRE_API_KEY: ${{ secrets.DEV__REACT_APP_FIRE_API_KEY }}
+                  VITE_FIRE_AUTH_DOMAIN: ${{ secrets.DEV__REACT_APP_FIRE_AUTH_DOMAIN }}
+                  VITE_FIRE_STORAGE_BUCKET: ${{ secrets.DEV__REACT_APP_FIRE_STORAGE_BUCKET }}
+                  VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.DEV__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
+                  VITE_FIRE_APP_ID: ${{ secrets.DEV__REACT_APP_FIRE_APP_ID }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
 
