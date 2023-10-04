@@ -21,10 +21,9 @@ export interface IDialog {
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
 }
 
-export const Dialog: FC<RequireAtLeastOne<
-    IDialog,
-    "triggerId" | "showDialog"
->> = ({
+export const Dialog: FC<
+    RequireAtLeastOne<IDialog, "triggerId" | "showDialog">
+> = ({
     children,
     title,
     onClose,
