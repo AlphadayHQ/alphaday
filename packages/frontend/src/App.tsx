@@ -3,13 +3,13 @@ import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { Route } from "react-router-dom";
+import * as userStore from "src/api/store/slices/user";
 import { useResolvedView } from "./api/hooks";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
-import { appRoutes, loadRoutes, errorRoutes } from "./routes";
-import * as userStore from "src/api/store/slices/user";
-import "@alphaday/ui-kit/global.scss";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
+import { appRoutes, loadRoutes, errorRoutes } from "./routes";
+import "@alphaday/ui-kit/global.scss";
 
 /**
  * The comments below are for notes and should be removed as this app grows.
