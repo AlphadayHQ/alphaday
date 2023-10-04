@@ -41,7 +41,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
         removeView,
         isViewModified,
         allowEmptyView,
-        // toggleAllowEmptyView,
+        toggleAllowEmptyView,
         navigateToView,
     } = useView();
     const { isAuthenticated, isStaff } = useAccount();
@@ -98,7 +98,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
                     isBoardsLibOpen={isBoardsLibOpen}
                     onToggleBoardsLib={onToggleBoardsLib}
                     onCreateNewView={() => {
-                        // toggleAllowEmptyView();
+                        toggleAllowEmptyView();
                         openSaveViewDialog();
                     }}
                     onEditView={(viewId: number, viewHash: string) => {
