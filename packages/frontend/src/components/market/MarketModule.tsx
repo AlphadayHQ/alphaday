@@ -151,8 +151,8 @@ const MarketModule: FC<IMarketModule> = ({
                     </div>
                 )}
 
-                <div className="w-full flex flex-col mt-[10px] single-col:flex-row two-col:mt-0">
-                    <div className="pt-0 pb-[5px] w-full border-none single-col:flex single-col:justify-end single-col:items-center">
+                <div className="w-full flex flex-col mt-[10px] two-col:mt-0">
+                    <div className="pt-0 pb-[5px] px-5 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
                         <DateRangeBar
                             selectedChartRange={selectedChartRange}
                             onSelectChartRange={onSelectChartRange}

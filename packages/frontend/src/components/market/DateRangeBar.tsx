@@ -15,7 +15,7 @@ const DateRangeBar: FC<Props> = memo(function DateRangeBar({
     selectedChartType,
 }) {
     return (
-        <div className="flex w-full justify-end border-none uppercase fontGroup-support mb-2">
+        <div className="flex w-full justify-end border-none uppercase mb-2">
             {Object.values(CHART_RANGE_OPTIONS).map((option) => (
                 <span key={option} className="ml-1.5 mt-1.5">
                     <TabButton
