@@ -6,7 +6,7 @@ const GeneralError: FC<{ children?: React.ReactNode }> = ({ children }) => {
     const isHome = window.location.pathname === "/";
     return (
         <div className="bg-background">
-            <div className="main h-screen flex justify-center items-center flex-col">
+            <div className="main h-[calc(100vh-200px)] flex justify-center items-center flex-col">
                 {children}
                 {isHome ? (
                     <div className="logo top mt-2">

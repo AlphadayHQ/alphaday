@@ -11,7 +11,7 @@ const getErrorMessage = ({
     if (status === "offline")
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-6xl leading-none">
+                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
                     You&apos;re{" "}
                     <span className="text-secondaryOrange pr-1">offline</span>
                 </h1>
@@ -25,7 +25,7 @@ const getErrorMessage = ({
     if (status === 503)
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-6xl leading-none">
+                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
                     System{" "}
                     <span className="text-secondaryOrange pr-1">
                         maintenance
@@ -52,7 +52,7 @@ const getErrorMessage = ({
     if (status === 403)
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-6xl leading-none">
+                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
                     unauthorised{" "}
                     <span className="text-secondaryOrange pr-1">403</span>
                 </h1>
@@ -65,7 +65,7 @@ const getErrorMessage = ({
     if (status === 404)
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-6xl leading-none">
+                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
                     <span className="text-secondaryOrange pr-1">404</span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant1000 text-xl mt-9 max-w-screen-sm">
@@ -77,7 +77,7 @@ const getErrorMessage = ({
     return (
         <>
             {status && typeof status === "number" && (
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-6xl leading-none">
+                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
                     <span className="text-secondaryOrange pr-1">{status}</span>
                 </h1>
             )}
