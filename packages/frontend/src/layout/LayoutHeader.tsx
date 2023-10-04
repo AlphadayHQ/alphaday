@@ -20,6 +20,8 @@ import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
 interface IProps {
     hideFeatures: boolean;
     toggleWidgetLib: (() => void) | undefined;
+    isBoardsLibOpen: boolean;
+    setIsBoardsLibOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>
         | undefined;
@@ -29,9 +31,10 @@ const LayoutHeader: FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
     setTutFocusElemRef,
+    isBoardsLibOpen,
+    setIsBoardsLibOpen,
 }) => {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const [isBoardsLibOpen, setIsBoardsLibOpen] = useState(false);
     const headerRef = useRef<HTMLDivElement>(null);
 
     const handleMobileOpen = () => setMobileOpen((prev) => !prev);
@@ -52,7 +55,7 @@ const LayoutHeader: FC<IProps> = ({
     const { width } = useWindowSize();
 
     return (
-        <div ref={headerRef}>
+        <div ref={headerRef} className="z-10 relative">
             {width >= breakpoints.TwoColMinWidth ? (
                 <HeaderWrapper
                     data-testid="header-nav"

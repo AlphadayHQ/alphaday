@@ -49,7 +49,7 @@ export const ViewTabButton: FC<ButtonProps> = ({
             disabled={selected ? false : disabled}
             aria-label={label}
             className={twMerge(
-                "outline-none inline-flex items-center justify-center text-center align-middle cursor-pointer select-none hover:outline-none active:outline-none focus:outline-none hover:bg-btnBackgroundVariant1000 active:bg-btnBackgroundVariant800 fontGroup-supportBold text-primaryVariant100 uppercase w-max two-col:w-full h-full py-[13px] px-5 bg-transparent border-l border-solid border-background ease-out duration-100 [&>svg]:cursor-pointer",
+                "outline-none inline-flex items-center justify-center text-center align-middle cursor-pointer select-none hover:outline-none active:outline-none focus:outline-none hover:bg-btnBackgroundVariant1000 active:bg-btnBackgroundVariant800 fontGroup-supportBold text-primaryVariant100 uppercase w-max two-col:w-full h-full py-[13px] px-5 bg-transparent border-l border-solid border-background ease-out duration-100 [&>svg]:cursor-pointer [&>span]:text-clip [&>span]:overflow-hidden [&>span]:whitespace-nowrap",
                 disabled && "text-primaryVariant300 pointer-events-none",
                 selected &&
                     "bg-background text-primary cursor-default hover:bg-background active:bg-background",
