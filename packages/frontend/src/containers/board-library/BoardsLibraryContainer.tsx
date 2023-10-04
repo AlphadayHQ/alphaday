@@ -40,7 +40,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
     onCreateNewView,
     onEditView,
 }) => {
-    const navigate = useHistory();
+    const history = useHistory();
 
     const [category, setCategory] = useState<string | undefined>();
     const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
@@ -132,9 +132,9 @@ const BoardsLibraryContainer: FC<IProps> = ({
                 );
                 return;
             }
-            navigate(buildViewPath(view));
+            history.push(buildViewPath(view));
         },
-        [allViews, navigate]
+        [allViews, history]
     );
 
     const handleSubscribe = useCallback(
@@ -192,7 +192,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
                             routeInfo?.value
                         ) !== -1
                     ) {
-                        navigate("/");
+                        history.push("/");
                     }
                     Logger.debug(
                         "BoardsLibraryContainer::handleUnsubscribe success",
@@ -219,7 +219,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
             removeViewFromCache,
             pathContainsHashOrSlug,
             routeInfo?.value,
-            navigate,
+            history,
         ]
     );
 
