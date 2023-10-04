@@ -1,4 +1,8 @@
-import { lazy, LazyExoticComponent } from "react";
+import { lazy } from "react";
+
+const ErrorPage = lazy(() => import("./pages/error"));
+const PreloaderPage = lazy(() => import("./pages/preloader"));
+const BoardsPage = lazy(() => import("./pages/index"));
 
 /**
  * A basic route.
@@ -7,7 +11,7 @@ import { lazy, LazyExoticComponent } from "react";
  */
 export interface IRoute {
     path: ERouteNames;
-    component: LazyExoticComponent<React.FC>;
+    component: typeof ErrorPage | typeof PreloaderPage | typeof BoardsPage;
     exact?: boolean;
 }
 
@@ -32,21 +36,21 @@ export enum ERouteNames {
  * This is because its dx-wise, it's more intuitive to order the routes from
  * most specific to least specific.
  */
-export const routes: IRoute[] = [
+export const appRoutes: IRoute[] = [
     {
         path: ERouteNames.Base,
-        component: lazy(() => import("./pages/index")),
+        component: BoardsPage,
         exact: true,
     },
     {
         path: ERouteNames.Boards,
-        component: lazy(() => import("./pages/index")),
+        component: BoardsPage,
     },
     {
         path: ERouteNames.FallBack,
-        component: lazy(() => import("./pages/error")),
+        component: ErrorPage,
     },
-].reverse();
+];
 
 /**
  * An array of routes in the app.
@@ -54,11 +58,21 @@ export const routes: IRoute[] = [
 export const loadRoutes: IRoute[] = [
     {
         path: ERouteNames.Base,
-        component: lazy(() => import("./pages/index")),
+        component: BoardsPage,
         exact: true,
     },
     {
         path: ERouteNames.FallBack,
-        component: lazy(() => import("./pages/preloader")),
+        component: PreloaderPage,
     },
-].reverse();
+];
+
+/**
+ * An array of routes in the app.
+ */
+export const errorRoutes: IRoute[] = [
+    {
+        path: ERouteNames.FallBack,
+        component: ErrorPage,
+    },
+];
