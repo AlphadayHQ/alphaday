@@ -1,7 +1,7 @@
 import { lazy } from "react";
 
 const PreloaderPage = lazy(() => import("./pages/preloader"));
-const BoardsPage = lazy(() => import("./pages/index"));
+const DashboardPage = lazy(() => import("./pages/index"));
 const ErrorPage = lazy(() => import("./pages/error"));
 
 /**
@@ -11,7 +11,7 @@ const ErrorPage = lazy(() => import("./pages/error"));
  */
 export interface IRoute {
     path: ERouteNames;
-    component: typeof ErrorPage | typeof PreloaderPage | typeof BoardsPage;
+    component: typeof ErrorPage | typeof PreloaderPage | typeof DashboardPage;
     exact?: boolean;
 }
 
@@ -35,12 +35,12 @@ export enum ERouteNames {
 export const appRoutes: IRoute[] = [
     {
         path: ERouteNames.Base,
-        component: BoardsPage,
+        component: DashboardPage,
         exact: true,
     },
     {
         path: ERouteNames.Boards,
-        component: BoardsPage,
+        component: DashboardPage,
     },
 ];
 
