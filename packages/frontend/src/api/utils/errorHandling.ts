@@ -1,4 +1,5 @@
 import logoDay from "@alphaday/ui-kit/src/assets/svg/logo-white.svg";
+import wideAlphaImage from "src/assets/placeholders/wide-alpha.png";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 
@@ -11,8 +12,17 @@ export const imgOnError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
 };
 /* eslint-enable no-param-reassign */
 
+/* eslint-disable no-param-reassign */
+export const wideImgOnError = (
+    e: React.SyntheticEvent<HTMLImageElement>
+): void => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = wideAlphaImage;
+};
+/* eslint-enable no-param-reassign */
+
 export type TErrorId = keyof Omit<
-    (typeof globalMessages)["error"],
+    typeof globalMessages["error"],
     "requestFailed" | "boardHasNoRequiredWidget"
 >;
 export const errorPatterns: Partial<Record<TErrorId, string>> = {

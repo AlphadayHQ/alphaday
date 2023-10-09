@@ -3,7 +3,7 @@ import { listItemVariants, HRElement } from "@alphaday/ui-kit";
 import moment from "moment";
 import ReactMarkdown from "react-markdown";
 import { TDiscordItem } from "src/api/types";
-import { imgOnError } from "src/api/utils/errorHandling";
+import { imgOnError, wideImgOnError } from "src/api/utils/errorHandling";
 import {
     remarkRegex,
     URL_GLOBAL_REGEX,
@@ -118,7 +118,7 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
                                                     src={embed.image.url}
                                                     alt={embed.title}
                                                     className="w-full h-1/2 my-2 rounded"
-                                                    onError={imgOnError}
+                                                    onError={wideImgOnError}
                                                 />
                                             )}
                                         </>
@@ -128,7 +128,7 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
                                                 src={embed.thumbnail.url}
                                                 alt={embed.title}
                                                 className="w-full h-1/2 my-2 rounded"
-                                                onError={imgOnError}
+                                                onError={wideImgOnError}
                                             />
                                         )
                                     )}
