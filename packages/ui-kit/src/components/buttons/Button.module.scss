@@ -284,7 +284,7 @@
 }
 
 .tabsButtonDisabled {
-    color: var(--primaryVariant300);
+    color: var(--primaryVariant300) !important;
     pointer-events: none;
     .tabButton {
         fill: var(--primaryVariant300);

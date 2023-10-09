@@ -95,7 +95,7 @@ const MarketModule: FC<IMarketModule> = ({
             );
     }
     return (
-        <div ref={squareRef}>
+        <div ref={squareRef} className="market-widget">
             <div className="p-0 flex items-center justify-between flex-wrap flex-1 basis-auto min-h-[1px]">
                 <MarketsList
                     pinnedCoins={pinnedCoins}
