@@ -184,8 +184,10 @@ const MarketModule: FC<IMarketModule> = ({
                                 </span>
                             </span>
                         </div>
-                        <div className="column">
-                            <span className="label">24 hours volume</span>
+                        <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
+                            <span className="fontGroup-mini text-primaryVariant100">
+                                24 hours volume
+                            </span>
                             <span className="value">
                                 <span>
                                     {selectedMarket?.volume !== undefined
