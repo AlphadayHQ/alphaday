@@ -42,10 +42,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
         lastPrice > startPrice || lastPrice === startPrice
             ? themeColors.success
             : themeColors.secondaryOrangeSoda;
-    const chartGradColor =
-        lastPrice > startPrice || lastPrice === startPrice
-            ? themeColors.successFiltered
-            : themeColors.secondaryOrangeSodaFiltered;
 
     const options = {
         chart: {
