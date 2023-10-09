@@ -1,6 +1,7 @@
 import logoDay from "@alphaday/ui-kit/src/assets/svg/logo-white.svg";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import wideAlphaImage from "src/assets/placeholders/wide-alpha.png";
 
 import globalMessages from "src/globalMessages";
 
@@ -8,6 +9,15 @@ import globalMessages from "src/globalMessages";
 export const imgOnError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
     e.currentTarget.onerror = null;
     e.currentTarget.src = logoDay;
+};
+/* eslint-enable no-param-reassign */
+
+/* eslint-disable no-param-reassign */
+export const wideImgOnError = (
+    e: React.SyntheticEvent<HTMLImageElement>
+): void => {
+    e.currentTarget.onerror = null;
+    e.currentTarget.src = wideAlphaImage;
 };
 /* eslint-enable no-param-reassign */
 
