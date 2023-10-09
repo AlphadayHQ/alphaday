@@ -35,6 +35,10 @@ interface IViewRouteInfo {
      * true if the current routeInfo contains a view hash
      */
     isViewHash: boolean;
+    /**
+     * true if the current path is root path
+     */
+    isRoot: boolean;
 }
 
 export const useViewRoute = (): IViewRouteInfo => {
@@ -50,9 +54,9 @@ export const useViewRoute = (): IViewRouteInfo => {
      * TODO: Remove this hack when react-router v6 support is added to ionic
      * Ref: https://github.com/ionic-team/ionic-framework/issues/24177
      */
-    const location = (
-        "location" in routeLocation ? routeLocation.location : routeLocation
-    ) as Location;
+    const location = ("location" in routeLocation
+        ? routeLocation.location
+        : routeLocation) as Location;
 
     const fullSizeWidgetPath = useMemo(() => {
         const fullSizeWidgetTest = CONFIG.ROUTING.REGEXPS.FULL_SIZE_WIDGET.exec(
@@ -112,6 +116,7 @@ export const useViewRoute = (): IViewRouteInfo => {
         fullSizeWidgetPath,
         isFullSize: fullSizeWidgetPath !== undefined,
         isViewHash,
+        isRoot: location.pathname === "/",
     };
 };
 

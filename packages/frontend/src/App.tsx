@@ -19,17 +19,17 @@ const AppRoutes = () => {
     });
 
     const resolvedView = useResolvedView();
-    const { pathContainsHashOrSlug } = useViewRoute();
+    const { pathContainsHashOrSlug, isRoot } = useViewRoute();
 
     const routes = useMemo(() => {
         if (resolvedView.isLoading) {
             return loadRoutes;
         }
-        if (
-            !pathContainsHashOrSlug &&
-            !resolvedView.currentData &&
-            !resolvedView.isUninitialized
-        ) {
+        /**
+         * At this moment, we do not support any other routes than the root and the hash/slug routes
+         * If the path does not contain a hash or slug, we show the error page
+         */
+        if (!pathContainsHashOrSlug && !isRoot) {
             return errorRoutes;
         }
         if (error || resolvedView.isError) {
@@ -42,6 +42,15 @@ const AppRoutes = () => {
         }
         return appRoutes;
     }, [resolvedView, error, pathContainsHashOrSlug]);
+
+    console.log(
+        "view",
+        resolvedView,
+        error,
+        pathContainsHashOrSlug,
+        isRoot,
+        routes
+    );
 
     /**
      * If the status check gives a 401 unauthorized error,
