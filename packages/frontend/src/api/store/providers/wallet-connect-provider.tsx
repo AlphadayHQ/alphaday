@@ -1,4 +1,3 @@
-// import { createConfig, configureChains, mainnet } from "@wagmi/core";
 import {
     EthereumClient,
     w3mConnectors,
@@ -7,8 +6,28 @@ import {
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config/config";
 import { configureChains, createConfig, mainnet } from "wagmi";
+import {
+    arbitrum,
+    optimism,
+    bsc,
+    goerli,
+    avalanche,
+    moonbeam,
+    polygon,
+    zkSync,
+} from "wagmi/chains";
 
-const chains = [mainnet];
+const chains = [
+    mainnet,
+    arbitrum,
+    optimism,
+    bsc,
+    goerli,
+    avalanche,
+    moonbeam,
+    polygon,
+    zkSync,
+];
 const projectId = CONFIG.WALLET_CONNECT.PROJECT_ID;
 
 if (!projectId) {
