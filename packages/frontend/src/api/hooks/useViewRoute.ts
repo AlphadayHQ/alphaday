@@ -54,9 +54,9 @@ export const useViewRoute = (): IViewRouteInfo => {
      * TODO: Remove this hack when react-router v6 support is added to ionic
      * Ref: https://github.com/ionic-team/ionic-framework/issues/24177
      */
-    const location = ("location" in routeLocation
-        ? routeLocation.location
-        : routeLocation) as Location;
+    const location = (
+        "location" in routeLocation ? routeLocation.location : routeLocation
+    ) as Location;
 
     const fullSizeWidgetPath = useMemo(() => {
         const fullSizeWidgetTest = CONFIG.ROUTING.REGEXPS.FULL_SIZE_WIDGET.exec(

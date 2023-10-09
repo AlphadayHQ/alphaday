@@ -41,16 +41,7 @@ const AppRoutes = () => {
             }));
         }
         return appRoutes;
-    }, [resolvedView, error, pathContainsHashOrSlug]);
-
-    console.log(
-        "view",
-        resolvedView,
-        error,
-        pathContainsHashOrSlug,
-        isRoot,
-        routes
-    );
+    }, [resolvedView, error, pathContainsHashOrSlug, isRoot]);
 
     /**
      * If the status check gives a 401 unauthorized error,
