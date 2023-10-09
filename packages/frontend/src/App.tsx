@@ -25,7 +25,12 @@ const AppRoutes = () => {
         if (resolvedView.isLoading) {
             return loadRoutes;
         }
-        if (!pathContainsHashOrSlug && !resolvedView.currentData) {
+        if (
+            !pathContainsHashOrSlug &&
+            !resolvedView.currentData &&
+            !resolvedView.isUninitialized
+        ) {
+            console.log("resolvedView", resolvedView);
             return errorRoutes;
         }
         if (error || resolvedView.isError) {
