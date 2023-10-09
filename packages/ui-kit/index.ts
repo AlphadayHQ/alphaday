@@ -6,6 +6,7 @@ import {
     BaseModuleHeader,
     BaseModuleOptionsFooter,
 } from "./src/components/base/BaseComponents";
+import { BoardPreview } from "./src/components/board-preview/BoardPreview";
 import { Button } from "./src/components/buttons/Button";
 import { IconButton } from "./src/components/buttons/IconButton";
 import { NavTabButton } from "./src/components/buttons/NavTabButton";
@@ -104,4 +105,5 @@ export {
     DropdownMenu,
     Spinner,
     ModulePreview,
+    BoardPreview,
 };

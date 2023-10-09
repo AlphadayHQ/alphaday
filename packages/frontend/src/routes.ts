@@ -1,4 +1,8 @@
-import { lazy, LazyExoticComponent } from "react";
+import { lazy } from "react";
+
+const PreloaderPage = lazy(() => import("./pages/preloader"));
+const DashboardPage = lazy(() => import("./pages/index"));
+const ErrorPage = lazy(() => import("./pages/error"));
 
 /**
  * A basic route.
@@ -7,7 +11,7 @@ import { lazy, LazyExoticComponent } from "react";
  */
 export interface IRoute {
     path: ERouteNames;
-    component: LazyExoticComponent<() => JSX.Element>;
+    component: typeof ErrorPage | typeof PreloaderPage | typeof DashboardPage;
     exact?: boolean;
 }
 
@@ -25,18 +29,37 @@ export enum ERouteNames {
     FallBack = "*",
 }
 
-export const routes: IRoute[] = [
+/**
+ * An array of all valid routes in the app.
+ */
+export const appRoutes: IRoute[] = [
     {
         path: ERouteNames.Base,
-        component: lazy(() => import("./pages/index")),
+        component: DashboardPage,
         exact: true,
     },
     {
         path: ERouteNames.Boards,
-        component: lazy(() => import("./pages/index")),
+        component: DashboardPage,
     },
+];
+
+/**
+ * An array of routes in the app.
+ */
+export const loadRoutes: IRoute[] = [
     {
         path: ERouteNames.FallBack,
-        component: lazy(() => import("./pages/index")),
+        component: PreloaderPage,
+    },
+];
+
+/**
+ * An array of routes in the app.
+ */
+export const errorRoutes: IRoute[] = [
+    {
+        path: ERouteNames.FallBack,
+        component: ErrorPage,
     },
 ];

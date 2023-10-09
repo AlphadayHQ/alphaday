@@ -7,7 +7,7 @@ import { TSubscribedView, TViewMeta } from "src/api/types";
 import ViewsTab from "src/components/views-tab/ViewsTab";
 import { EFeaturesRegistry } from "src/constants";
 import CONFIG from "../../config";
-// import BoardsLibraryContainer from "../board-library/BoardsLibraryContainer";
+import BoardsLibraryContainer from "../board-library/BoardsLibraryContainer";
 
 const { VIEW_NAME_LIMT } = CONFIG.VIEWS;
 
@@ -22,8 +22,8 @@ interface IViewsTab {
 }
 const ViewsTabContainer: FC<IViewsTab> = ({
     mobileOpen,
-    // isBoardsLibOpen,
-    // onToggleBoardsLib,
+    isBoardsLibOpen,
+    onToggleBoardsLib,
     headerRef,
     handleMobileOpen,
 }) => {
@@ -41,7 +41,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
         removeView,
         isViewModified,
         allowEmptyView,
-        // toggleAllowEmptyView,
+        toggleAllowEmptyView,
         navigateToView,
     } = useView();
     const { isAuthenticated, isStaff } = useAccount();
@@ -93,7 +93,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
 
     return (
         <>
-            {/* {!mobileOpen && (
+            {!mobileOpen && (
                 <BoardsLibraryContainer
                     isBoardsLibOpen={isBoardsLibOpen}
                     onToggleBoardsLib={onToggleBoardsLib}
@@ -101,12 +101,12 @@ const ViewsTabContainer: FC<IViewsTab> = ({
                         toggleAllowEmptyView();
                         openSaveViewDialog();
                     }}
-                    onEditView={(viewId, viewHash) => {
+                    onEditView={(viewId: number, viewHash: string) => {
                         setTargetViewMeta({ id: viewId, hash: viewHash });
                         openSaveViewDialog();
                     }}
                 />
-            )} */}
+            )}
             <ViewsTab
                 selectedView={selectedView}
                 subscribedViews={subscribedViews}
