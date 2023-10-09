@@ -1,7 +1,7 @@
 import logoDay from "@alphaday/ui-kit/src/assets/svg/logo-white.svg";
-import wideAlphaImage from "src/assets/placeholders/wide-alpha.png";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import wideAlphaImage from "src/assets/placeholders/wide-alpha.png";
 
 import globalMessages from "src/globalMessages";
 
