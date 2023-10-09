@@ -3,7 +3,6 @@ import { ApexCandleChart, Spinner, themeColors } from "@alphaday/ui-kit";
 import moment from "moment";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
-import styles from "./Market.module.scss";
 
 type IProps = {
     data: number[][];
@@ -218,7 +217,7 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
                     <Spinner size="sm" />
                 </div>
             ) : (
-                <div className={`${styles.chart} candlestick`}>
+                <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] candlestick-chart">
                     <ApexCandleChart
                         options={options}
                         series={chartSeries}

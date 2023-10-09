@@ -5,7 +5,6 @@ import { TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
-import styles from "./Market.module.scss";
 
 type IProps = {
     data: number[][];
@@ -90,9 +89,12 @@ const LineChart: FC<IProps> = memo(function LineChart({
             type: "gradient",
             gradient: {
                 type: "vertical",
-                gradientToColors: [chartGradColor, chartGradColor],
+                gradientToColors: [
+                    themeColors.background,
+                    themeColors.background,
+                ],
                 shadeIntensity: 0.01,
-                opacityFrom: 0.7,
+                opacityFrom: 0.5,
                 opacityTo: 0.1,
                 stops: [0, 90, 100],
             },
@@ -233,7 +235,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     <Spinner size="sm" />
                 </div>
             ) : (
-                <div className={`${styles.chart} candlestick`}>
+                <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">
                     <ApexAreaChart
                         key={zoomKey}
                         options={options}
