@@ -1,8 +1,8 @@
 import { Suspense, useMemo } from "react";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Web3Modal } from "@web3modal/react";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { Web3Modal } from "@web3modal/react";
 import { Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
 import { useResolvedView, useViewRoute } from "./api/hooks";
