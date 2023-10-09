@@ -1,7 +1,7 @@
 import { FC } from "react";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
 import moment from "moment";
-import { ModuleLoader } from "@alphaday/ui-kit";
 import { TNewsSummary } from "src/api/types";
 import CONFIG from "src/config/config";
 
@@ -10,7 +10,8 @@ interface ISummaryModule {
     summary: TNewsSummary | undefined;
 }
 
-const AMOUNT_REGEX = /\$\d{1,3}(,\d{3})*(\.\d+)?\s?(million|billion|thousand|K|k)?\s?(dollars)?/gi;
+const AMOUNT_REGEX =
+    /\$\d{1,3}(,\d{3})*(\.\d+)?\s?(million|billion|thousand|K|k)?\s?(dollars)?/gi;
 
 const getHighLights = (summary: TNewsSummary) => {
     let summaryText = summary.summary;
