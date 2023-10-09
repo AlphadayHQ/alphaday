@@ -228,28 +228,24 @@ const LineChart: FC<IProps> = memo(function LineChart({
         setShowResetZoom(false);
     };
 
+    if (isLoading)
+        return (
+            <div className="flex w-full h-[200px] items-center justify-center">
+                <Spinner size="sm" />
+            </div>
+        );
+
     return (
-        <div className="p-0 flex flex-1 basis-auto min-h-[1px]">
-            {isLoading ? (
-                <div className="flex w-full h-[200px] items-center justify-center">
-                    <Spinner size="sm" />
-                </div>
-            ) : (
-                <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">
-                    <ApexAreaChart
-                        key={zoomKey}
-                        options={options}
-                        series={chartSeries}
-                        width="100%"
-                        height="100%"
-                    />
-                    {showResetZoom && (
-                        <ZoomResetSVG
-                            onClick={resetZoom}
-                            className="zoom-reset"
-                        />
-                    )}
-                </div>
+        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">
+            <ApexAreaChart
+                key={zoomKey}
+                options={options}
+                series={chartSeries}
+                width="100%"
+                height="100%"
+            />
+            {showResetZoom && (
+                <ZoomResetSVG onClick={resetZoom} className="zoom-reset" />
             )}
         </div>
     );

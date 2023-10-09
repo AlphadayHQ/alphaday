@@ -210,22 +210,21 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
         },
     ];
 
+    if (isLoading)
+        return (
+            <div className="flex w-full h-[200px] items-center justify-center">
+                <Spinner size="sm" />
+            </div>
+        );
+
     return (
-        <div className="p-0 flex flex-1 basis-auto min-h-[1px]">
-            {isLoading ? (
-                <div className="flex w-full h-[200px] items-center justify-center">
-                    <Spinner size="sm" />
-                </div>
-            ) : (
-                <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] candlestick-chart">
-                    <ApexCandleChart
-                        options={options}
-                        series={chartSeries}
-                        width="99%"
-                        height="100%"
-                    />
-                </div>
-            )}
+        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] candlestick-chart">
+            <ApexCandleChart
+                options={options}
+                series={chartSeries}
+                width="99%"
+                height="100%"
+            />
         </div>
     );
 });
