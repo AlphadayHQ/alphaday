@@ -35,6 +35,10 @@ interface IViewRouteInfo {
      * true if the current routeInfo contains a view hash
      */
     isViewHash: boolean;
+    /**
+     * true if the current path is root path
+     */
+    isRoot: boolean;
 }
 
 export const useViewRoute = (): IViewRouteInfo => {
@@ -112,6 +116,7 @@ export const useViewRoute = (): IViewRouteInfo => {
         fullSizeWidgetPath,
         isFullSize: fullSizeWidgetPath !== undefined,
         isViewHash,
+        isRoot: location.pathname === "/",
     };
 };
 
