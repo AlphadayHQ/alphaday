@@ -30,7 +30,6 @@ const AppRoutes = () => {
             !resolvedView.currentData &&
             !resolvedView.isUninitialized
         ) {
-            console.log("resolvedView", resolvedView);
             return errorRoutes;
         }
         if (error || resolvedView.isError) {
