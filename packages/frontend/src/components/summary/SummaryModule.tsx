@@ -10,7 +10,8 @@ interface ISummaryModule {
     summary: TNewsSummary | undefined;
 }
 
-const AMOUNT_REGEX = /\$\d{1,3}(,\d{3})*(\.\d+)?\s?(million|billion|thousand|K|k)?\s?(dollars)?/gi;
+const AMOUNT_REGEX =
+    /\$\d{1,3}(,\d{3})*(\.\d+)?\s?(million|billion|thousand|K|k)?\s?(dollars)?/gi;
 
 const getHighLights = (summary: TNewsSummary) => {
     let summaryText = summary.summary;
