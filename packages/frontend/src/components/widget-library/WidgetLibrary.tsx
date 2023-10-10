@@ -180,106 +180,113 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 );
                             })}
                         </ScrollBar>
-                        {!isLoading ? (
-                            widgets.length > 0 ? (
-                                <ScrollBar className="relative">
-                                    <div className="absolute top-0 flex justify-between items-center p-[17px_25px] border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
-                                        <div className="flex justify-around items-center [&>span]:mr-[7px]" />
-                                        <div className="flex justify-around items-center [&>span]:mr-[7px] fontGroup-normal">
-                                            {SORT_BUTTONS.length > 0 && (
-                                                <>
-                                                    <span className="title">
-                                                        Sort by
-                                                    </span>
-                                                    {SORT_BUTTONS.map((nav) => (
-                                                        <span
-                                                            key={String(
-                                                                nav.value
-                                                            )}
-                                                            className="wrap"
-                                                        >
-                                                            <TabButton
-                                                                variant="small"
-                                                                uppercase={
-                                                                    false
-                                                                }
-                                                                open={
-                                                                    nav.value ===
-                                                                    sortBy
-                                                                }
-                                                                onClick={() =>
-                                                                    onSortBy(
-                                                                        nav.value
-                                                                    )
-                                                                }
-                                                            >
-                                                                {nav.label}
-                                                            </TabButton>
-                                                        </span>
-                                                    ))}
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
+
+                        <div className="w-full overflow-hidden pb-[110px]">
+                            <div className="flex justify-between items-center p-[17px_25px] border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
+                                <div className="flex justify-around items-center [&>span]:mr-[7px]" />
+                                <div className="flex justify-around items-center [&>span]:mr-[7px] fontGroup-normal">
+                                    {SORT_BUTTONS.length > 0 && (
+                                        <>
+                                            <span className="title">
+                                                Sort by
+                                            </span>
+                                            {SORT_BUTTONS.map((nav) => (
+                                                <span
+                                                    key={String(nav.value)}
+                                                    className="wrap"
+                                                >
+                                                    <TabButton
+                                                        variant="small"
+                                                        uppercase={false}
+                                                        open={
+                                                            nav.value === sortBy
+                                                        }
+                                                        onClick={() =>
+                                                            onSortBy(nav.value)
+                                                        }
+                                                    >
+                                                        {nav.label}
+                                                    </TabButton>
+                                                </span>
+                                            ))}
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                            {!isLoading ? (
+                                <>
                                     <div className="m-[25px_25px_10px] fontGroup-highlightSemi">
                                         {widgets.length} Widgets
                                     </div>
-                                    <div className="flex box-border flex-row flex-wrap w-full pl-[15px]">
-                                        {widgets.map((w) => {
-                                            const widgetCount =
-                                                cachedWidgets?.filter(
-                                                    (cw) => cw.slug === w.slug
-                                                ).length || 0;
-                                            return (
-                                                <div
-                                                    key={`${String(w.id)}${
-                                                        CONFIG.UI
-                                                            .NEW_WIDGET_IDENTIFIER
-                                                    }`}
-                                                    className="w-min max-w-min m-[10px]"
-                                                >
-                                                    <ModulePreview
-                                                        previewImg={
-                                                            w.icon || market
-                                                        }
-                                                        title={w.name}
-                                                        description={
-                                                            w.short_description
-                                                        }
-                                                        count={widgetCount}
-                                                        isMaxed={
-                                                            w.max_per_view !==
-                                                                null &&
-                                                            widgetCount >=
-                                                                w.max_per_view
-                                                        }
-                                                        onClick={() =>
-                                                            handleSelectWidget(
-                                                                w
-                                                            )
-                                                        }
-                                                        selected={
-                                                            w.slug ===
-                                                            selectedWidget?.slug
-                                                        }
-                                                    />
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </ScrollBar>
+                                    {widgets.length > 0 ? (
+                                        <ScrollBar>
+                                            <div className="flex box-border flex-row flex-wrap w-full pl-[15px]">
+                                                {widgets.map((w) => {
+                                                    const widgetCount =
+                                                        cachedWidgets?.filter(
+                                                            (cw) =>
+                                                                cw.slug ===
+                                                                w.slug
+                                                        ).length || 0;
+                                                    return (
+                                                        <div
+                                                            key={`${String(
+                                                                w.id
+                                                            )}${
+                                                                CONFIG.UI
+                                                                    .NEW_WIDGET_IDENTIFIER
+                                                            }`}
+                                                            className="w-min max-w-min m-[10px]"
+                                                        >
+                                                            <ModulePreview
+                                                                previewImg={
+                                                                    w.icon ||
+                                                                    market
+                                                                }
+                                                                title={w.name}
+                                                                description={
+                                                                    w.short_description
+                                                                }
+                                                                count={
+                                                                    widgetCount
+                                                                }
+                                                                isMaxed={
+                                                                    w.max_per_view !==
+                                                                        null &&
+                                                                    widgetCount >=
+                                                                        w.max_per_view
+                                                                }
+                                                                onClick={() =>
+                                                                    handleSelectWidget(
+                                                                        w
+                                                                    )
+                                                                }
+                                                                selected={
+                                                                    w.slug ===
+                                                                    selectedWidget?.slug
+                                                                }
+                                                            />
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </ScrollBar>
+                                    ) : (
+                                        <div className="flex items-center justify-center h-full">
+                                            No widgets found in this category
+                                            &#34;
+                                            {categories?.find(
+                                                (c) =>
+                                                    c.slug === selectedCategory
+                                            )?.name || "All"}
+                                            &#34;
+                                        </div>
+                                    )}
+                                </>
                             ) : (
-                                <div className="flex items-center justify-center h-full">
-                                    No widgets found in this category &#34;
-                                    {categories?.find(
-                                        (c) => c.slug === selectedCategory
-                                    )?.name || "All"}
-                                    &#34;
-                                </div>
-                            )
-                        ) : (
-                            <ModuleLoader $height="100%" />
-                        )}
+                                <ModuleLoader $height="100%" />
+                            )}
+                        </div>
                     </div>
                 ) : (
                     <ModuleLoader $height="var(--wlib-modal-height)" />
