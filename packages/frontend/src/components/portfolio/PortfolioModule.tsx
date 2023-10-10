@@ -82,7 +82,6 @@ const Portfolio: FC<IPortfolio> = ({
 
     const {
         squareRef,
-        channelsScroll: addrScroll,
         setHeaderRef,
         handleClickScroll,
         hideLeftPan,
@@ -121,7 +120,6 @@ const Portfolio: FC<IPortfolio> = ({
                                 <AddressTabSelect
                                     accounts={accounts}
                                     authAccount={authAccount}
-                                    addrScroll={addrScroll}
                                     setHeaderRef={setHeaderRef}
                                     handleClickScroll={handleClickScroll}
                                     hideLeftPan={hideLeftPan}
