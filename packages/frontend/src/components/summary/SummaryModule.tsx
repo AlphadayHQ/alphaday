@@ -10,8 +10,7 @@ interface ISummaryModule {
     summary: TNewsSummary | undefined;
 }
 
-const AMOUNT_REGEX =
-    /\$\d{1,3}(,\d{3})*(\.\d+)?\s?(million|billion|thousand|K|k)?\s?(dollars)?/gi;
+const AMOUNT_REGEX = /\$\d{1,3}(,\d{3})*(\.\d+)?\s?(million|billion|thousand|K|k)?\s?(dollars)?/gi;
 
 const getHighLights = (summary: TNewsSummary) => {
     let summaryText = summary.summary;
@@ -41,13 +40,13 @@ const getHighLights = (summary: TNewsSummary) => {
     }
 
     return (
-        <span
+        <p
             // DOMPurify will 100% secure dangerouslySetInnerHTML
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
                 __html: DOMPurify.sanitize(summaryText || ""),
             }}
-            className="text-primary"
+            className="py-2 text-primary text-justify"
         />
     );
 };
@@ -69,9 +68,7 @@ const SummaryModule: FC<ISummaryModule> = ({ isLoadingSummary, summary }) => {
                     {moment(summary.updated_at).format("Do MMMM, YYYY")}
                 </p>
             </h6>
-            <div className="p-5 pt-0">
-                <p className="py-2">{getHighLights(summary)}</p>
-            </div>
+            <div className="p-5 pt-0">{getHighLights(summary)}</div>
         </div>
     );
 };
