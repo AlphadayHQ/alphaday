@@ -4270,7 +4270,7 @@ anymatch@^3.1.0, anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apexcharts@^3.43.0:
+apexcharts@3.43.0:
   version "3.43.0"
   resolved "https://registry.yarnpkg.com/apexcharts/-/apexcharts-3.43.0.tgz#6906154605ae981f6e68c493ecfdfa57bdb55ce7"
   integrity sha512-YPw1aLatPQMUqVLMp5d+LDaXFi4QrRQND72/XO7/2NJdg+R5MjE9sifJ0GzOfgoZM7ltBUTjwfSxIvwR/9V8yw==
@@ -12158,7 +12158,7 @@ tailwind-variants@0.1.13:
   dependencies:
     tailwind-merge "^1.13.2"
 
-tailwindcss-theme-swapper@^0.7.3:
+tailwindcss-theme-swapper@0.7.3:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/tailwindcss-theme-swapper/-/tailwindcss-theme-swapper-0.7.3.tgz#fcacf4bf41f7af08b84003afc25168cdf89bccbb"
   integrity sha512-5SJfJCCRF1K8Hq9nJzWOu6b/bXhAwNQPcEpbV7L0YOLmD/x9PsLwDHTcDz2wFEFrS4uzecpjwoMEn+gjqi2wXg==
