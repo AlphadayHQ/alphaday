@@ -49,7 +49,8 @@ const WIDGETS_CONFIG = {
             name: "Ethereum",
             slug: "ethereum",
             ticker: "eth",
-            icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
+            icon:
+                "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png",
         },
         QUERY_HARD_LIMIT: 30,
         COIN_POLLING_INTERVAL: 60, // 1 min
@@ -190,10 +191,6 @@ const WIDGETS_CONFIG = {
         MAX_PAGE_NUMBER: 10,
         WIDGET_HEIGHT: 600,
         ADJUSTABLE: true,
-    },
-    [ETemplateNameRegistry.Sample]: {
-        ADJUSTABLE: false,
-        WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
 } as const;
 
