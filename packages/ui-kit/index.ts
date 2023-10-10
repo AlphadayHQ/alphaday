@@ -1,4 +1,5 @@
 import { useLayer } from "react-laag";
+import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 import {
     BaseModuleWrapper,
@@ -122,4 +123,5 @@ export {
     Switch,
     ModulePreview,
     BoardPreview,
+    Skeleton,
 };
