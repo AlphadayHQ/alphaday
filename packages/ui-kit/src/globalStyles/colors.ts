@@ -61,6 +61,7 @@ export const darkColors = {
     secondaryOrangeFiltered: "var(--alpha-orange-filtered)", // color: rgba(250, 162, 2, 0.9)
     secondaryRoseBrown: "var(--alpha-rose-brown)", // color: #C59592 -- calendar event weekend
     secondaryOrangeSoda: "var(--alpha-red)", // color: #F45532 -- downward market
+    secondaryOrangeSodaFiltered: "var(--alpha-red-filtered)", // color: rgba(255, 95, 88, 0.08)
     secondaryYellowGreen: "var(--alpha-yellow-green)", // color: #B9E187 -- upward market
     success: "var(--alpha-green)", // color: #6DD230
     successFiltered: "var(--alpha-green-filtered)", // color: rgba(109, 210, 48, 0.08)

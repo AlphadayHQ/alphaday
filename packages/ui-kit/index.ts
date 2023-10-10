@@ -12,6 +12,15 @@ import { IconButton } from "./src/components/buttons/IconButton";
 import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
 import { ViewTabButton } from "./src/components/buttons/ViewTabButton";
+import {
+    ApexAreaChart,
+    ApexBarChart,
+    ApexCandleChart,
+    ApexDonutChart,
+    ApexLineChart,
+    ApexPieChart,
+    ApexRadialChart,
+} from "./src/components/charts/apexchart";
 import { Dialog } from "./src/components/dialog/Dialog";
 import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
 import {
@@ -47,6 +56,7 @@ import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { Spinner } from "./src/components/spinner/Spinner";
+import { Switch } from "./src/components/switch/Switch";
 import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
@@ -60,6 +70,13 @@ import { themeColors } from "./src/globalStyles/themes";
 
 export type { TViewTabMenuOption };
 export {
+    ApexAreaChart,
+    ApexBarChart,
+    ApexCandleChart,
+    ApexDonutChart,
+    ApexLineChart,
+    ApexPieChart,
+    ApexRadialChart,
     themeColors,
     breakpoints,
     listItemVariants,
@@ -102,6 +119,7 @@ export {
     DropdownItem,
     DropdownMenu,
     Spinner,
+    Switch,
     ModulePreview,
     BoardPreview,
 };

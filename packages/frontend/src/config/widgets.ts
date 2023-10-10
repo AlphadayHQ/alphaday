@@ -55,7 +55,7 @@ const WIDGETS_CONFIG = {
         COIN_POLLING_INTERVAL: 60, // 1 min
         HISTORY_POLLING_INTERVAL: 5 * 60, // 5 min
         ADJUSTABLE: false,
-        WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
+        WIDGET_HEIGHT: 550,
     },
     [ETemplateNameRegistry.Media]: {
         YOUTUBE_EMBED_BASE_URL: "//www.youtube.com/embed/",

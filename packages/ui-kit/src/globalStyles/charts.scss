@@ -1,0 +1,89 @@
+// Styles to override default chart styles
+
+.market-widget {
+    .zoom-reset {
+        position: absolute;
+        bottom: 35px;
+        right: 10px;
+        border-radius: 8px;
+        padding: 6px;
+        width: 32px;
+        height: 26px;
+        cursor: pointer;
+        @apply stroke-primary bg-btnBackgroundVariant1400;
+    }
+    .price-tooltip {
+        padding: 0.6em 0.8em;
+        display: flex;
+        flex-direction: column;
+        word-wrap: break-word;
+        @apply bg-primaryVariant200 fontGroup-support text-primary;
+
+        .price {
+            @apply fontGroup-supportBold;
+
+            span {
+                @apply fontGroup-support;
+            }
+        }
+        .date {
+            padding-top: 1px;
+        }
+    }
+
+    .candlestick-chart {
+        margin-top: -12px;
+        .apexcharts-grid-borders {
+            line {
+                @apply stroke-1 stroke-btnBackgroundVariant500;
+            }
+        }
+
+        & > div {
+            margin-left: -14px;
+        }
+        .price-tooltip .price {
+            padding-top: 1px;
+        }
+        .apexcharts-graphical {
+            transform: translate(25px, 31px) scale(1);
+        }
+    }
+    .line-chart {
+        margin-top: -15px;
+        .apexcharts-grid-borders {
+            line {
+                @apply stroke-[1.5px] stroke-btnBackgroundVariant500;
+            }
+        }
+
+        .apexcharts-inner {
+            margin-top: -15px;
+            & > div {
+                margin-left: -10px;
+            }
+            .price-tooltip .price {
+                padding-top: 0px;
+            }
+
+            // hide first grid line in chart
+            .apexcharts-gridlines-vertical
+                > .apexcharts-gridline:nth-of-type(1) {
+                display: none;
+            }
+
+            // hide last grid line in chart
+            .apexcharts-gridlines-vertical
+                > .apexcharts-gridline:nth-last-of-type(1) {
+                display: none;
+            }
+
+            // hide x-axis first labels
+            .apexcharts-xaxis-texts-g {
+                .apexcharts-text.apexcharts-xaxis-label:nth-of-type(1) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

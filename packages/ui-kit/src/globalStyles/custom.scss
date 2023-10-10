@@ -1,7 +1,10 @@
 // file for all css styles not found in tailwind's library
 
-/* custom css */
+/* custom css for scrollbars */
 @import "./scrollbar.scss";
+
+/* custom css for charts */
+@import "./charts.scss";
 
 @layer utilities {
     .break-word {
