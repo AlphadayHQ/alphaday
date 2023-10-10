@@ -22,7 +22,7 @@ export const wideImgOnError = (
 /* eslint-enable no-param-reassign */
 
 export type TErrorId = keyof Omit<
-    typeof globalMessages["error"],
+    (typeof globalMessages)["error"],
     "requestFailed" | "boardHasNoRequiredWidget"
 >;
 export const errorPatterns: Partial<Record<TErrorId, string>> = {
