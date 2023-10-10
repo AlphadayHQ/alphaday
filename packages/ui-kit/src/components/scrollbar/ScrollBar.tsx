@@ -12,16 +12,14 @@ export const ScrollBar: FC<ScrollBarProps> = ({
     ...rest
 }) => {
     return (
-        <div className="relative h-full">
-            <PerfectScrollbar
-                className={twMerge(`unique-widget-scrollbar`, className)}
-                containerRef={containerRef}
-                onYReachEnd={onYReachEnd}
-                onScroll={onScroll}
-                {...rest}
-            >
-                {children}
-            </PerfectScrollbar>
-        </div>
+        <PerfectScrollbar
+            className={twMerge(`unique-widget-scrollbar`, className)}
+            containerRef={containerRef}
+            onYReachEnd={onYReachEnd}
+            onScroll={onScroll}
+            {...rest}
+        >
+            {children}
+        </PerfectScrollbar>
     );
 };
