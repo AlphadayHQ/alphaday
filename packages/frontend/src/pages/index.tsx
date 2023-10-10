@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useRef } from "react";
+import { useCallback, useState, useMemo, useRef, memo } from "react";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import {
     useView,
@@ -344,4 +344,4 @@ function BasePage() {
     );
 }
 
-export default BasePage;
+export default memo(BasePage);

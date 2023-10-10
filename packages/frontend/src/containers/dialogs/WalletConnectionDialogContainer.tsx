@@ -1,14 +1,24 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Dialog, ErrorModal } from "@alphaday/ui-kit";
 import { useWallet, useAccount, useFeatureFlags } from "src/api/hooks";
 import { WalletConnectionState, EWalletConnectionMethod } from "src/api/types";
 import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
 import { ReactComponent as WalletConnectSVG } from "src/assets/icons/wallet-connect.svg";
+import type { IDialog } from "src/components/dialog/Dialog";
 import WalletConnectionPicker from "src/components/wallet-connection/WalletConnectionPicker";
 import { EFeaturesRegistry } from "src/constants";
 import globalMessages from "src/globalMessages";
 
-const WalletConnectionDialogContainer: FC = () => {
+type TPropsDict = Partial<
+    Record<
+        WalletConnectionState,
+        Partial<IDialog> & {
+            content: React.ReactNode;
+        }
+    >
+>;
+
+const WalletConnectionDialogContainer: FC = memo(() => {
     const { authWallet, resetAuthState } = useAccount();
     const isWalletConnectFeatureAllowed = useFeatureFlags(
         EFeaturesRegistry.WalletConnect
@@ -42,79 +52,68 @@ const WalletConnectionDialogContainer: FC = () => {
         },
     ];
 
-    switch (authWallet.status) {
-        case WalletConnectionState.SelectingMethod:
-            return (
-                <Dialog
-                    title="Choose a Wallet Provider"
-                    onClose={resetWalletConnection}
-                    showXButton
-                    showDialog
-                    size="sm"
-                >
-                    <WalletConnectionPicker walletButtons={wallets} />
-                </Dialog>
-            );
-        case WalletConnectionState.ConnectionError:
-            return (
-                <ErrorModal
-                    title="Wallet Connection Error"
-                    onClose={resetWalletConnection}
-                    errorMessage={authWallet.error}
-                    size="sm"
-                >
-                    An error ocurred trying to connect to your wallet provider.
-                    Please make sure your wallet is correctly setup.
-                </ErrorModal>
-            );
-        case WalletConnectionState.VerificationError:
-            return (
-                <ErrorModal
-                    title="Wallet Verification Error"
-                    onClose={resetWalletVerification}
-                    errorMessage={authWallet.error}
-                    size="sm"
-                >
-                    Authentication failed. Is your wallet unlocked? Have you
-                    switched accounts?
-                </ErrorModal>
-            );
-        // we can have this state handle future prompts as well
-        case WalletConnectionState.Prompted:
-            return (
-                <Dialog
-                    title="Verify Wallet"
-                    onClose={resetWalletVerification}
-                    onSave={verifyWallet}
-                    saveButtonText="Verify Wallet"
-                    buttonProps={{
-                        title: globalMessages.portfolio.verifyWallet,
-                    }}
-                    showXButton
-                    showDialog
-                    size="sm"
-                >
-                    <p>
-                        Your wallet has been connected successfully. To save
-                        your customized boards please login to Alphaday by
-                        signing a text message.
-                    </p>
-                </Dialog>
-            );
-        case WalletConnectionState.GenericError:
-            return (
-                <ErrorModal
-                    title="Unexpected Error"
-                    onClose={resetAuthState}
-                    errorMessage={authWallet.error}
-                    size="sm"
-                >
-                    Oops! Something went wrong. Please try again later.
-                </ErrorModal>
-            );
-        default:
-            return null;
-    }
-};
+    const dialogPropsDict: TPropsDict = {
+        [WalletConnectionState.SelectingMethod]: {
+            title: "Choose a Wallet Provider",
+            onClose: resetWalletConnection,
+            content: <WalletConnectionPicker walletButtons={wallets} />,
+        },
+        [WalletConnectionState.Prompted]: {
+            title: "Verify Wallet",
+            saveButtonText: "Verify Wallet",
+            onSave: verifyWallet,
+            onClose: resetWalletVerification,
+            buttonProps: {
+                title: globalMessages.portfolio.verifyWallet,
+            },
+            content:
+                "Your wallet has been connected successfully. To save your customized boards please login to Alphaday by signing a text message.",
+        },
+    };
+    const errorPropsDict: TPropsDict = {
+        [WalletConnectionState.ConnectionError]: {
+            title: "Wallet Connection Error",
+            onClose: resetWalletConnection,
+            content:
+                "An error ocurred trying to connect to your wallet provider. Please make sure your wallet is correctly setup.",
+        },
+        [WalletConnectionState.VerificationError]: {
+            title: "Wallet Verification Error",
+            onClose: resetWalletVerification,
+            content:
+                "Authentication failed. Is your wallet unlocked? Have you switched accounts?",
+        },
+        [WalletConnectionState.GenericError]: {
+            title: "Unexpected Error",
+            onClose: resetAuthState,
+            content: "Oops! Something went wrong. Please try again later.",
+        },
+    };
+
+    const { content, ...props } = dialogPropsDict[authWallet.status] ?? {};
+    const { content: errorContent, ...errorProps } =
+        errorPropsDict[authWallet.status] ?? {};
+
+    return (
+        <>
+            <Dialog
+                size="sm"
+                showXButton
+                showDialog={authWallet.status in dialogPropsDict}
+                {...props}
+            >
+                {content}
+            </Dialog>
+            <ErrorModal
+                size="sm"
+                errorMessage={authWallet.error}
+                isHidden={!authWallet.error}
+                {...errorProps}
+            >
+                {errorContent}
+            </ErrorModal>
+        </>
+    );
+});
 
 export default WalletConnectionDialogContainer;

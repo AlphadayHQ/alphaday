@@ -7,12 +7,12 @@ import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
 export interface IDialog {
-    title: string;
+    title?: string;
     saveButtonText?: string;
     onSave?: () => MaybeAsync<void>;
     disableSave?: boolean;
     closeButtonText?: string;
-    onClose: () => void;
+    onClose?: () => void;
     showXButton: boolean;
     size?: "xl" | "lg" | "md" | "sm";
     children?: React.ReactNode;
@@ -53,7 +53,7 @@ export const Dialog: FC<
     // });
 
     const handleCloseDialog = async () => {
-        onClose();
+        onClose?.();
         await modalRef.current?.dismiss();
     };
     const handleSaveDialog = async () => {
