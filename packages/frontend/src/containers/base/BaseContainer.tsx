@@ -83,8 +83,9 @@ const BaseContainer: FC<IBaseContainerProps> = ({
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
     const isCollapsed = useAppSelector(selectIsMinimised(moduleData.hash));
-    const [alreadyCollapsed, setAlreadyCollapsed] =
-        useCallbackState(isCollapsed);
+    const [alreadyCollapsed, setAlreadyCollapsed] = useCallbackState(
+        isCollapsed
+    );
     const { removeTagFromViewWidget, includeTagInViewWidget } = useView();
 
     const adjustWidgetHeight = (height: number) => {
@@ -125,8 +126,9 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             width !== undefined &&
             width < breakpoints.TwoColMinWidth &&
             showFullSize === false
-        )
+        ) {
             setShowMobileDialog(true);
+        }
         // expand regular size module since full-size modal is already open
         if (onToggleShowFullSize != null) {
             if (showFullSize) onToggleShowFullSize("close");
@@ -173,6 +175,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
 
     const moduleId = `module-${moduleData.hash}`;
 
+    // TODO(elcharitas): Review this, Do we need to hide the module if it is not visible?
     if (visible === false) {
         return <div id={moduleId} {...dragProps} hidden />;
     }
@@ -180,22 +183,17 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     return (
         <>
             <div
-                className="flex flex-col [&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
                 id={moduleData.hash}
+                className="flex flex-col [&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
             >
-                <div
-                    className="group mb-4 w-full [perspective:1000px]"
-                    style={{
-                        height: isCollapsed ? HEADER_HEIGHT : widgetHeight,
-                    }}
-                >
+                <div className="mb-4 w-full [perspective:1000px]">
                     <div
-                        className={`relative w-full h-full transition-all duration-[0.5s] [transform-style:preserve-3d] ${
+                        ref={moduleWrapRef}
+                        className={`w-full h-full transition-all duration-[0.5s] [transform-style:preserve-3d] ${
                             showSettings ? "[transform:rotateX(180deg)]" : ""
                         }`}
                     >
                         <BaseModuleWrapper
-                            ref={moduleWrapRef}
                             className={showSettings ? "hidden" : ""}
                         >
                             <div
@@ -226,7 +224,15 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                                 />
                             </div>
                             {!alreadyCollapsed && !showFullSize && (
-                                <BaseModuleBody>{children}</BaseModuleBody>
+                                <BaseModuleBody
+                                    style={{
+                                        height: adjustable
+                                            ? widgetHeight
+                                            : undefined,
+                                    }}
+                                >
+                                    {children}
+                                </BaseModuleBody>
                             )}
                         </BaseModuleWrapper>
                         <BaseContainerOptions

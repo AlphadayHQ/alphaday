@@ -1,7 +1,6 @@
 // Seems overriding the default scrollbar styles is not with css modules or tailwind
 
 .unique-widget-scrollbar {
-    position: absolute;
     inset: 0px;
     height: auto;
     overscroll-behavior: contain;
