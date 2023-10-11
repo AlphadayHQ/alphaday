@@ -75,7 +75,7 @@ export const Dialog: FC<
             {...restProps}
         >
             <div className="border-0 p-[15px] flex flex-start justify-between">
-                <h6 className="text-primary self-center text-base leading-6">
+                <h6 className="text-primary self-center leading-6 mb-0 text-base font-normal">
                     {title}
                 </h6>
                 {showXButton && (
