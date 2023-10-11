@@ -1,7 +1,7 @@
 import { FC, useCallback, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { formatNumber } from "src/api/utils/format";
-import { ReactComponent as NoImageSVG } from "src/assets/svg/no-image.svg";
+import { ReactComponent as NoImageSVG } from "src/assets/icons/no-image.svg";
 
 interface INft {
     img: string | undefined;

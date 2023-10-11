@@ -2,7 +2,7 @@ import { FC } from "react";
 import { IconButton, TabButton } from "@alphaday/ui-kit";
 import { TCryptoAccount } from "src/api/types";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
-import { ReactComponent as PlusSVG } from "src/assets/alphadayAssets/icons/plus.svg";
+import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 import { TPortfolioTabAccount } from "./types";
 
 interface IAddressTabSelect {
