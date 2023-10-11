@@ -32,6 +32,10 @@ export interface IModal extends IProps {
      * Hide modal backdrop when modal is open.
      */
     hideBackdrop?: boolean;
+    /**
+     * Show a darker backdrop
+     */
+    darkerBackdrop?: boolean;
 }
 /**
  * This is a modal component uses the triggerId to open the modal.
@@ -56,6 +60,7 @@ export const Modal = forwardRef<
             triggerId,
             showModal,
             hideBackdrop,
+            darkerBackdrop,
             size,
         },
         ref
@@ -73,7 +78,10 @@ export const Modal = forwardRef<
                 isOpen={showModal}
                 onWillDismiss={() => onClose?.()} // for ion-modal esc key and backdrop click
                 className={twMerge(
-                    "bg-backgroundVariant1300 h-screen [&_.ion-delegate-host]:h-screen outline-none relative",
+                    "h-screen [&_.ion-delegate-host]:h-screen outline-none relative",
+                    darkerBackdrop
+                        ? "bg-backgroundVariant1400"
+                        : "bg-backgroundVariant1300",
                     className
                 )}
             >

@@ -18,6 +18,7 @@ export interface IDialog {
     children?: React.ReactNode;
     triggerId: string;
     showDialog?: boolean;
+    darkerBackdrop?: boolean;
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
 }
 
@@ -35,6 +36,7 @@ export const Dialog: FC<
     buttonProps,
     triggerId,
     showDialog,
+    darkerBackdrop,
     size,
     ...restProps
 }) => {
@@ -71,6 +73,7 @@ export const Dialog: FC<
             showModal={showDialog}
             ref={modalRef}
             size={size}
+            darkerBackdrop={darkerBackdrop}
             data-testid="alpha-dialog"
             {...restProps}
         >

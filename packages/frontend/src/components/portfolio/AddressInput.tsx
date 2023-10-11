@@ -25,6 +25,7 @@ const AddressInput: FC<IAddressInput> = ({
             onClose={onClose}
             saveButtonText="Save"
             showXButton
+            darkerBackdrop
             onSave={() => {
                 onAddAddress(value);
                 setValue("");
