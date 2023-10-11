@@ -5,7 +5,6 @@ import { TLensPost } from "src/api/types";
 import {
     URL_GLOBAL_REGEX,
     remarkRegex,
-    REMARK_MENTION_REGEX,
     REMARK_HASHTAG_REGEX,
 } from "src/api/utils/textUtils";
 import {
@@ -20,8 +19,10 @@ import {
 
 const URL_REGEX = /([a-z\d-]+\.)+[a-z\d]{2,}[\w/?&=#%]*/g;
 
+const LENS_MENTION_REGEX = /(@[a-zA-Z\d-_]{1,31}.lens)/g;
+
 const PLUGINS = [
-    remarkRegex(REMARK_MENTION_REGEX, (handle: string) => [
+    remarkRegex(LENS_MENTION_REGEX, (handle: string) => [
         `https://lenster.xyz/u/${handle.slice(1)}`,
         handle,
     ]),
@@ -123,6 +124,7 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                     <ReactMarkdown
                         remarkPlugins={PLUGINS}
                         className="[&_a]:text-primaryVariant100 [&_a:hover]:text-primary [&_a]:font-bold break-words break-all"
+                        linkTarget="_blank"
                     >
                         {tweet.metadata.content}
                     </ReactMarkdown>
