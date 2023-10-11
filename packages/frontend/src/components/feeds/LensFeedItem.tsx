@@ -78,7 +78,7 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                 }
             }}
         >
-            <TweetColumn className="pt-[15px] w-[68px]">
+            <TweetColumn className="pt-1 w-[68px] items-center justify-start">
                 <a href={profileUrl} target="_blank" rel="noopener noreferrer">
                     <AuthorImage
                         src={
@@ -89,43 +89,41 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                 </a>
             </TweetColumn>
             <TweetColumn className="w-[80%]">
-                {postType === "Mirror" && (
-                    <div className="meta meta-sm">
-                        <AuthorName
-                            href={profileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="meta-url"
-                        >
-                            <span className="meta">{tweet.profile.name}</span>
-                        </AuthorName>{" "}
-                        mirrored
-                    </div>
-                )}
+                <div className="text-primaryVariant100 hover:text-primary">
+                    {postType === "Mirror" && (
+                        <div className="meta meta-sm">
+                            <AuthorName
+                                href={profileUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                {tweet.profile.name}
+                            </AuthorName>{" "}
+                            mirrored
+                        </div>
+                    )}
 
-                <div>
                     <AuthorName
                         href={`https://lenster.xyz/u/${profile.handle}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="meta-url"
+                        className="block"
                     >
-                        {profile.name}{" "}
-                        <span className="meta">
-                            &#64;
-                            {profile.handle} •{" "}
-                            {moment(tweet.createdAt).fromNow()}
-                        </span>
+                        {profile.name} &#64;
+                        {profile.handle} • {moment(tweet.createdAt).fromNow()}
                     </AuthorName>
+                    {postType === "Comment" && (
+                        <div>
+                            Replying to &#64;
+                            {tweet.mainPost?.profile.handle}
+                        </div>
+                    )}
                 </div>
-                {postType === "Comment" && (
-                    <div className="meta">
-                        Replying to &#64;
-                        {tweet.mainPost?.profile.handle}
-                    </div>
-                )}
                 <TweetContent>
-                    <ReactMarkdown remarkPlugins={PLUGINS}>
+                    <ReactMarkdown
+                        remarkPlugins={PLUGINS}
+                        className="[&_a]:text-primaryVariant100 [&_a:hover]:text-primary [&_a]:font-bold"
+                    >
                         {tweet.metadata.content}
                     </ReactMarkdown>
                     {tweet.metadata.media?.length > 0 && (
