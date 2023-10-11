@@ -17,6 +17,7 @@ import {
     toggleShowBalance as toggleShowBalanceInStore,
     toggleShowAllAssets as toggleShowAllAssetsInStore,
     selectShowAllAssets,
+    setWidgetHeight,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TPortfolio, WalletConnectionState } from "src/api/types";
@@ -322,14 +323,28 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
         tokensBalanceForAddresses,
     ]);
 
+    const isLoading =
+        isConnectingWallet ||
+        isLoadingTokensBalanceForAddresses ||
+        isLoadingNftBalanceForAddresses || // TODO: separate nft isLoading state
+        isLoadingEthPrice; // At first, isLoading is true & portfolioDataForAddress is undefined
+
+    useEffect(() => {
+        // Reset the widget height to 130px when the selectedAddress is null and isLoading is false
+        dispatch(
+            setWidgetHeight({
+                widgetHash: moduleData.hash,
+                widgetHeight:
+                    selectedAddress === null && !isLoading ? 130 : 500,
+            })
+        );
+        // This should only run when the selectedAddress is null and isLoading is false
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [selectedAddress === null && !isLoading]);
+
     return (
         <PortfolioModule
-            isLoading={
-                isConnectingWallet ||
-                isLoadingTokensBalanceForAddresses ||
-                isLoadingNftBalanceForAddresses || // TODO: separate nft isLoading state
-                isLoadingEthPrice
-            } // At first, isLoading is true & portfolioDataForAddress is undefined
+            isLoading={isLoading}
             accounts={accounts}
             authAccount={authWallet.account}
             selectedAddress={selectedAddress}
