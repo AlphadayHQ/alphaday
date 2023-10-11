@@ -52,6 +52,7 @@ import {
 
 import { NoItems } from "./src/components/listItem/NoItems";
 import { Modal } from "./src/components/modal/Modal";
+import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
@@ -86,6 +87,7 @@ export {
     NavTabButton,
     TabButton,
     ViewTabButton,
+    ErrorModal,
     Footer,
     Logo,
     HeaderWrapper,

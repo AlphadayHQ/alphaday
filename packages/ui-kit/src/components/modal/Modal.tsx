@@ -71,6 +71,7 @@ export const Modal = forwardRef<
             md: "650px",
             sm: "450px",
         }[size || "xl"];
+
         return (
             <IonModal
                 ref={ref}
