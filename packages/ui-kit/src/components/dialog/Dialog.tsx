@@ -35,6 +35,7 @@ export const Dialog: FC<
     buttonProps,
     triggerId,
     showDialog,
+    size,
     ...restProps
 }) => {
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -69,6 +70,7 @@ export const Dialog: FC<
             triggerId={triggerId || "default-dialog-trigger"}
             showModal={showDialog}
             ref={modalRef}
+            size={size}
             data-testid="alpha-dialog"
             {...restProps}
         >
