@@ -94,6 +94,7 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
                                 }
                                 title={acct.address}
                                 disabled={disableAccountSelection}
+                                className="[&>svg]:pr-[1px]"
                             >
                                 {acct.ens ||
                                     truncateWithEllipsis(acct.address, 10)}
