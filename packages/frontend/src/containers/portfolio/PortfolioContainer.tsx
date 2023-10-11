@@ -334,8 +334,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
         dispatch(
             setWidgetHeight({
                 widgetHash: moduleData.hash,
-                widgetHeight:
-                    selectedAddress === null && !isLoading ? 130 : 500,
+                widgetHeight: selectedAddress === null && !isLoading ? 90 : 460,
             })
         );
         // This should only run when the selectedAddress is null and isLoading is false
