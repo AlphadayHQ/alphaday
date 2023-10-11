@@ -8,9 +8,18 @@ import {
     itemListsAreEqual,
 } from "src/api/utils/itemUtils";
 import { extractPaginationNumbers } from "src/api/utils/pagination";
-import LensFeedModule from "src/components/lens-feed/LensFeedModule";
+import LensFeedModule from "src/components/feeds/LensFeedModule";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
+
+// create function to debounce the paginate function
+const debounce = (func: () => void, wait: number) => {
+    let timeout: ReturnType<typeof setTimeout>;
+    return () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(func, wait);
+    };
+};
 
 const LensFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [posts, setItems] = useState<TLensPost[] | undefined>();
@@ -53,7 +62,7 @@ const LensFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     useEffect(() => {
         const newPosts = data?.results;
-        if (newPosts)
+        if (newPosts) {
             setItems((prevPosts) => {
                 if (prevPosts) {
                     return buildUniqueItemList<TLensPost>([
@@ -63,28 +72,23 @@ const LensFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 }
                 return newPosts;
             });
+        }
     }, [data?.results]);
 
     const pagination = extractPaginationNumbers(data?.links);
 
     /**
-     * creates a debounced function to handle pagination
+     * Create a debounced version of the paginate function to avoid calling it
+     * multiple times when the user scrolls. Only call it when the user has
+     * stopped scrolling for 500ms. Ensure repeated calls to the debounced
+     * function will not reset the timer.
      */
-    const debouncePaginate = useCallback(() => {
-        let timeout: NodeJS.Timeout;
-        return () => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                setCurrentPage(pagination.next);
-            }, 350);
-        };
-    }, [pagination.next]);
 
     return (
         <LensFeedModule
             posts={posts || []}
             isLoading={isLoading}
-            handlePaginate={debouncePaginate()}
+            handlePaginate={() => {}}
             widgetHeight={widgetHeight}
         />
     );

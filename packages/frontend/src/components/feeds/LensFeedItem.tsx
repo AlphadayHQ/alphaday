@@ -16,7 +16,7 @@ import {
     TweetContent,
     TweetAttachment,
     TweetMedia,
-} from "./LensFeedComponents";
+} from "./FeedComponents";
 
 const URL_REGEX = /([a-z\d-]+\.)+[a-z\d]{2,}[\w/?&=#%]*/g;
 

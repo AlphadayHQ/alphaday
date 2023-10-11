@@ -18,7 +18,7 @@ const LensFeedModule: FC<IPosts> = ({
     isLoading ? (
         <ModuleLoader $height={`${widgetHeight}px`} />
     ) : (
-        <ScrollBar onScroll={handlePaginate}>
+        <ScrollBar>
             {posts.map((post) => (
                 <LensFeedItem key={post.hash} {...post} />
             ))}
