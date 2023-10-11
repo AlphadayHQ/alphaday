@@ -62,6 +62,10 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     forum_template: lazy(() => import("./containers/items/ItemsContainer")),
     news_template: lazy(() => import("./containers/items/ItemsContainer")),
     reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
+    market_template: lazy(() => import("./containers/market/MarketContainer")),
+    summary_template: lazy(
+        () => import("./containers/summary/SummaryContainer")
+    ),
 };
 
 export type TFullSizeRoute = {
