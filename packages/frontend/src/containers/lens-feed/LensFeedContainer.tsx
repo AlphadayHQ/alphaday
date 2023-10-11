@@ -49,7 +49,7 @@ const LensFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
         }
         const timeout = setTimeout(() => {
             setCurrentPage(nextPage);
-        }, 350);
+        }, 500);
         return () => {
             clearTimeout(timeout);
         };

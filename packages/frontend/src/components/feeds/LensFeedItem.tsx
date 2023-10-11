@@ -21,16 +21,16 @@ import {
 const URL_REGEX = /([a-z\d-]+\.)+[a-z\d]{2,}[\w/?&=#%]*/g;
 
 const PLUGINS = [
-    remarkRegex(
-        REMARK_MENTION_REGEX,
-        (handle: string) => `https://lenster.xyz/u/${handle.slice(1)}`
-    ),
-    remarkRegex(
-        REMARK_HASHTAG_REGEX,
-        (handle: string) => `https://lenster.xyz/t/${handle.slice(1)}`
-    ),
+    remarkRegex(REMARK_MENTION_REGEX, (handle: string) => [
+        `https://lenster.xyz/u/${handle.slice(1)}`,
+        handle,
+    ]),
+    remarkRegex(REMARK_HASHTAG_REGEX, (handle: string) => [
+        `https://lenster.xyz/t/${handle.slice(1)}`,
+        handle,
+    ]),
     remarkRegex(URL_GLOBAL_REGEX), // match all valid urls
-    remarkRegex(URL_REGEX, (url: string) => `https://${url}`),
+    remarkRegex(URL_REGEX, (url: string) => [`https://${url}`, url]),
 ];
 
 const ALLOWED_IMAGE_TYPES = [
@@ -122,10 +122,11 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                 <TweetContent>
                     <ReactMarkdown
                         remarkPlugins={PLUGINS}
-                        className="[&_a]:text-primaryVariant100 [&_a:hover]:text-primary [&_a]:font-bold"
+                        className="[&_a]:text-primaryVariant100 [&_a:hover]:text-primary [&_a]:font-bold break-words break-all"
                     >
                         {tweet.metadata.content}
                     </ReactMarkdown>
+
                     {tweet.metadata.media?.length > 0 && (
                         <TweetAttachment>
                             {tweet.metadata.media.map((media, mediaIndex) => {
@@ -163,7 +164,6 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                                             key={`${media.original.url}${mediaIndex}`}
                                             src={media.original.url}
                                             mediaType={mediaType}
-                                            ratio={isImage ? 1 : 0}
                                         />
                                     )
                                 );

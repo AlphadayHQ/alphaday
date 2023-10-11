@@ -30,7 +30,9 @@ export const AuthorImage: FC<{ src: string }> = ({ src }) => {
 
 export const TweetContent: FC<PropsWithChildren> = ({ children }) => {
     return (
-        <div className="text-left mt-2 max-w-xl overflow-wrap">{children}</div>
+        <div className="text-left mt-2 max-w-xl break-before-auto">
+            {children}
+        </div>
     );
 };
 
@@ -62,7 +64,6 @@ export const TweetAttachment: FC<PropsWithChildren> = ({ children }) => {
 
 export interface ITweetMedia<T extends "img" | "video" | "audio", E>
     extends HTMLProps<E> {
-    ratio?: number;
     mediaType?: T;
 }
 
@@ -73,13 +74,13 @@ export function TweetMedia<
         : T extends "audio"
         ? HTMLAudioElement
         : HTMLImageElement
->({ ratio = 1, mediaType, className, ...props }: ITweetMedia<T, E>) {
+>({ mediaType, className, ...props }: ITweetMedia<T, E>) {
     const MediaComponent = (mediaType as unknown) as FC<HTMLProps<E>> | null;
     return (
         MediaComponent && (
             <MediaComponent
                 className={twMerge(
-                    "min-w-[64px] w-full rounded-md mb-2",
+                    "min-w-[64px] w-full max-w-full rounded-md mb-2",
                     className
                 )}
                 {...props}
