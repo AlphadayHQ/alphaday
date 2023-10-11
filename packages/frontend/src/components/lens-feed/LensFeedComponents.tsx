@@ -55,6 +55,7 @@ export const TweetMedia: FC<
             height: data ? 0 : "250px",
             ...style,
         }}
+        aria-label="Embedded Media"
         {...props}
     />
 );
