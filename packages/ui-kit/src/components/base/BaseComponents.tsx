@@ -16,10 +16,7 @@ export const BaseModuleWrapper = forwardRef<
     return (
         <div
             ref={ref}
-            className={twMerge(
-                "absolute top-0 origin-center w-full h-full",
-                className
-            )}
+            className={twMerge("origin-center w-full", className)}
             style={style}
         >
             <div className="w-full h-full border-background bg-backgroundVariant200 text-primary flex flex-col overflow-hidden rounded-[5px] border-2 border-solid shadow-[0px_0px_0px_1px_rgba(121,131,162,0.2)]">
@@ -29,9 +26,15 @@ export const BaseModuleWrapper = forwardRef<
     );
 });
 
-export const BaseModuleBody: FC<{ children: ReactNode }> = ({ children }) => {
+export const BaseModuleBody: FC<{
+    children?: ReactNode;
+    style?: React.CSSProperties;
+}> = ({ children, style }) => {
     return (
-        <div className="p-0 flex h-[inherit] max-h-[calc(100%_-_40px)] min-h-[1px] flex-auto flex-col justify-between overflow-hidden">
+        <div
+            className="p-0 flex h-[inherit] max-h-[calc(100%_-_40px)] min-h-[1px] flex-auto flex-col justify-between overflow-hidden"
+            style={style}
+        >
             {children}
         </div>
     );

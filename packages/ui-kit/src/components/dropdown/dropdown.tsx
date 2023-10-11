@@ -90,14 +90,13 @@ export const DropdownAvatar: FC = () => {
 export const DropdownToggle: FC<{ children: React.ReactNode }> = (props) => {
     const { children, ...restProps } = props;
     return (
-        <button
+        <div
             aria-label="DropdownToggle"
-            type="button"
             className="inline-flex cursor-pointer select-none items-center justify-center border-[none] p-0 text-center align-middle leading-normal transition-all"
             {...restProps}
         >
             {children}
-        </button>
+        </div>
     );
 };
 DropdownToggle.displayName = "DropdownToggle";

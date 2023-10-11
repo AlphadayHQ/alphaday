@@ -2,12 +2,15 @@ import { Suspense, useMemo } from "react";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { Web3Modal } from "@web3modal/react";
 import { Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
 import { useResolvedView, useViewRoute } from "./api/hooks";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
+import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
+import CONFIG from "./config/config";
 import { appRoutes, loadRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
@@ -72,6 +75,19 @@ const App: React.FC = () => {
                     </IonRouterOutlet>
                 </Suspense>
             </IonReactRouter>
+            <Web3Modal
+                projectId={CONFIG.WALLET_CONNECT.PROJECT_ID}
+                ethereumClient={walletConnectProvider}
+                themeMode="dark"
+                themeVariables={{
+                    "--w3m-background-color":
+                        "var(--colors-background-variant200, var(--alpha-dark-300))",
+                    "--w3m-accent-color":
+                        "var(--colors-btn-ring-variant100, var(--alpha-dark-300))",
+                    "--w3m-overlay-background-color":
+                        "var(--colors-background-variant1600, var(--alpha-dark-300))",
+                }}
+            />
         </IonApp>
     );
 };
