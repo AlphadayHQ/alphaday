@@ -1,5 +1,5 @@
-import { twMerge } from "@alphaday/ui-kit";
 import type { FC, PropsWithChildren, HTMLProps } from "react";
+import { twMerge } from "@alphaday/ui-kit";
 
 export const AuthorName: FC<HTMLProps<HTMLAnchorElement>> = ({
     children,

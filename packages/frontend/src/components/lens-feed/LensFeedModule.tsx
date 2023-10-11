@@ -1,7 +1,7 @@
 import { FC } from "react";
+import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { TLensPost } from "src/api/types";
 import LensFeedItem from "./LensFeedItem";
-import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 
 interface IPosts {
     posts: TLensPost[];
