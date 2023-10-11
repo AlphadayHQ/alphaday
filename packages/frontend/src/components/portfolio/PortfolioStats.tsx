@@ -178,6 +178,12 @@ const PortfolioStats: FC<IPortfolioStats> = ({
         }
     }, [widgetSize, selectedAddress, moduleId]);
 
+    const assetListHeight =
+        (chartRef.current
+            ? widgetHeight - chartRef.current.offsetHeight
+            : DEFAULT_ASSET_LIST_HEIGHT) -
+        2 * 53;
+
     return (
         <div className="p-[15px] pt-[5px] portfolio-widget">
             {balancesQueryFailed ? (
@@ -289,13 +295,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                         <div
                             className="m-[0_-15px_-15px_-15px]"
                             style={{
-                                height:
-                                    ((chartRef.current
-                                        ? widgetHeight -
-                                          chartRef.current.offsetHeight
-                                        : DEFAULT_ASSET_LIST_HEIGHT) -
-                                        2) *
-                                    53,
+                                height: assetListHeight,
                             }}
                         >
                             <ScrollBar>
