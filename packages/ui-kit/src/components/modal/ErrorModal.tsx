@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { twMerge } from "tailwind-merge";
 import { Button } from "../buttons/Button";
 import {
@@ -10,12 +10,13 @@ import {
 } from "./Modal";
 
 interface IModal {
-    title: string;
+    title?: string;
     variant?: "warning" | "error";
     errorMessage?: string | null;
-    onClose: () => void;
+    onClose?: () => void;
     size?: "xl" | "lg" | "md" | "sm";
     children?: React.ReactNode;
+    isHidden?: boolean;
 }
 export const ErrorModal: FC<IModal> = ({
     children,
@@ -23,10 +24,22 @@ export const ErrorModal: FC<IModal> = ({
     errorMessage,
     onClose,
     variant,
+    isHidden,
     ...restProps
 }) => {
+    const modalRef = useRef<HTMLIonModalElement>(null);
+    const handleCloseModal = async () => {
+        onClose?.();
+        await modalRef.current?.dismiss();
+    };
     return (
-        <Modal className="z-[10000]" showModal onClose={onClose} {...restProps}>
+        <Modal
+            ref={modalRef}
+            className="z-[10000]"
+            showModal={!isHidden}
+            onClose={onClose}
+            {...restProps}
+        >
             <ModalHeader
                 className={twMerge(
                     variant === "warning"
@@ -53,7 +66,7 @@ export const ErrorModal: FC<IModal> = ({
                 )}
             </ModalBody>
             <ModalFooter>
-                <Button onClick={onClose}>Close</Button>
+                <Button onClick={handleCloseModal}>Close</Button>
             </ModalFooter>
         </Modal>
     );

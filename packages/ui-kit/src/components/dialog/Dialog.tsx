@@ -7,12 +7,12 @@ import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
 export interface IDialog {
-    title: string;
+    title?: string;
     saveButtonText?: string;
     onSave?: () => MaybeAsync<void>;
     disableSave?: boolean;
     closeButtonText?: string;
-    onClose: () => void;
+    onClose?: () => void;
     showXButton: boolean;
     size?: "xl" | "lg" | "md" | "sm";
     children?: React.ReactNode;
@@ -53,7 +53,7 @@ export const Dialog: FC<
     // });
 
     const handleCloseDialog = async () => {
-        onClose();
+        onClose?.();
         await modalRef.current?.dismiss();
     };
     const handleSaveDialog = async () => {
@@ -70,9 +70,10 @@ export const Dialog: FC<
             showModal={showDialog}
             ref={modalRef}
             data-testid="alpha-dialog"
+            onClose={onClose}
             {...restProps}
         >
-            <div className="border-0 p-[15px]">
+            <div className="flex justify-between items-center border-0 p-[15px]">
                 <h6 className="text-primary self-center text-base leading-6">
                     {title}
                 </h6>

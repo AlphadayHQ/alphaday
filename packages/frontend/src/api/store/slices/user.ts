@@ -44,6 +44,8 @@ const userSlice = createSlice({
     reducers: {
         initWalletMethodSelection(draft) {
             draft.auth.wallet.status = WalletConnectionState.SelectingMethod;
+            draft.auth.wallet.method = undefined;
+            draft.auth.wallet.error = null;
         },
         setConnectionMethod(
             draft,
@@ -67,6 +69,8 @@ const userSlice = createSlice({
         },
         setWalletDisconnected(draft) {
             draft.auth.wallet.status = WalletConnectionState.Disconnected;
+            draft.auth.wallet.method = undefined;
+            draft.auth.wallet.error = null;
         },
         initWalletVerification(draft) {
             if (

@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useRef } from "react";
+import { useCallback, useState, useMemo, useRef, memo } from "react";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import {
     useView,
@@ -28,6 +28,7 @@ import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
+import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
 import MainLayout from "src/layout/MainLayout";
 
 const { UI, VIEWS } = CONFIG;
@@ -338,8 +339,9 @@ function BasePage() {
                     ))}
                 </div>
             </DragDropContext>
+            <WalletConnectionDialogContainer />
         </MainLayout>
     );
 }
 
-export default BasePage;
+export default memo(BasePage);
