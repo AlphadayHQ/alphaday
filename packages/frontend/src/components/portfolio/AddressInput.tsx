@@ -31,6 +31,7 @@ const AddressInput: FC<IAddressInput> = ({
                 onClose();
             }}
             disableSave={disabled}
+            size="sm"
         >
             <div className="flex justify-center w-full tiny:[&>input]:min-w-[200px] tiny:[&>input]:w-[calc(100vw_-_45px)]">
                 <Input
