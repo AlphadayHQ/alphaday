@@ -1,9 +1,7 @@
 import { FC } from "react";
 import { TLensPost } from "src/api/types";
-import ModuleLoader from "src/components/moduleLoader";
-import ScrollBar from "src/components/scrollbar";
-import { StyledTweetContainer } from "../twitter-feed/TwitterFeedModule.style";
 import LensFeedItem from "./LensFeedItem";
+import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 
 interface IPosts {
     posts: TLensPost[];
@@ -18,15 +16,13 @@ const LensFeedModule: FC<IPosts> = ({
     widgetHeight,
 }) =>
     isLoading ? (
-        <ModuleLoader height={`${widgetHeight}px`} />
+        <ModuleLoader $height={`${widgetHeight}px`} />
     ) : (
-        <StyledTweetContainer $height={widgetHeight}>
-            <ScrollBar onScroll={handlePaginate}>
-                {posts.map((post) => (
-                    <LensFeedItem key={post.hash} {...post} />
-                ))}
-            </ScrollBar>
-        </StyledTweetContainer>
+        <ScrollBar onScroll={handlePaginate}>
+            {posts.map((post) => (
+                <LensFeedItem key={post.hash} {...post} />
+            ))}
+        </ScrollBar>
     );
 
 export default LensFeedModule;
