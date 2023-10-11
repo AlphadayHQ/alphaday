@@ -63,6 +63,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     news_template: lazy(() => import("./containers/items/ItemsContainer")),
     reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
     market_template: lazy(() => import("./containers/market/MarketContainer")),
+    portfolio_template: lazy(
+        () => import("./containers/portfolio/PortfolioContainer")
+    ),
     sample_template: lazy(() => import("./containers/sample/SampleContainer")),
     summary_template: lazy(
         () => import("./containers/summary/SummaryContainer")
