@@ -1,6 +1,11 @@
 import type { FC, PropsWithChildren, HTMLProps } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 
+/**
+ * This renders the author`s name with a hyperlink.
+ * It accepts all the properties of an HTMLAnchorElement.
+ * The `children` prop is used to display the author`s name.
+ */
 export const AuthorName: FC<HTMLProps<HTMLAnchorElement>> = ({
     children,
     className,
@@ -19,6 +24,10 @@ export const AuthorName: FC<HTMLProps<HTMLAnchorElement>> = ({
     );
 };
 
+/**
+ * This displays the author`s image.
+ * It requires a `src` prop which is the URL of the image.
+ */
 export const AuthorImage: FC<{ src: string }> = ({ src }) => {
     return (
         <div
@@ -28,6 +37,10 @@ export const AuthorImage: FC<{ src: string }> = ({ src }) => {
     );
 };
 
+/**
+ * This displays the content of a tweet.
+ * The `children` prop is used to display the tweet`s content.
+ */
 export const TweetContent: FC<PropsWithChildren> = ({ children }) => {
     return (
         <div className="text-left mt-2 max-w-xl break-before-auto">
@@ -36,6 +49,11 @@ export const TweetContent: FC<PropsWithChildren> = ({ children }) => {
     );
 };
 
+/**
+ * This arranges tweets in a column.
+ * It accepts all the properties of an HTMLDivElement.
+ * The `children` prop is used to display the tweets.
+ */
 export const TweetColumn: FC<HTMLProps<HTMLDivElement>> = ({
     children,
     className,
@@ -54,6 +72,10 @@ export const TweetColumn: FC<HTMLProps<HTMLDivElement>> = ({
     );
 };
 
+/**
+ * This displays attachments to a tweet.
+ * The `children` prop is used to display the attachments.
+ */
 export const TweetAttachment: FC<PropsWithChildren> = ({ children }) => {
     return (
         <div className="flex mt-2 items-center justify-between flex-wrap">
@@ -67,15 +89,20 @@ export interface ITweetMedia<T extends "img" | "video" | "audio", E>
     mediaType?: T;
 }
 
+/**
+ * This displays media attached to a tweet.
+ * It accepts all the properties of an HTML element.
+ * The `mediaType` which may be `"img" | "video" | "audio"` is used to determine the type of media to display.
+ */
 export function TweetMedia<
     T extends "img" | "video" | "audio",
     E = T extends "video"
         ? HTMLVideoElement
         : T extends "audio"
         ? HTMLAudioElement
-        : HTMLImageElement,
+        : HTMLImageElement
 >({ mediaType, className, ...props }: ITweetMedia<T, E>) {
-    const MediaComponent = mediaType as unknown as FC<HTMLProps<E>> | null;
+    const MediaComponent = (mediaType as unknown) as FC<HTMLProps<E>> | null;
     return (
         MediaComponent && (
             <MediaComponent
@@ -89,6 +116,11 @@ export function TweetMedia<
     );
 }
 
+/**
+ * This wraps a tweet.
+ * It accepts all the properties of an HTMLDivElement.
+ * The `children` prop is used to display the tweet.
+ */
 export const TweetWrapper: FC<HTMLProps<HTMLDivElement>> = ({
     children,
     className,
@@ -107,10 +139,19 @@ export const TweetWrapper: FC<HTMLProps<HTMLDivElement>> = ({
     );
 };
 
+/**
+ * This displays options for a tweet.
+ * The `children` prop is used to display the options.
+ */
 export const TweetOptions: FC<PropsWithChildren> = ({ children }) => {
     return <div className="flex items-center mt-2">{children}</div>;
 };
 
+/**
+ * This contains a tweet.
+ * The `children` prop is used to display the tweet.
+ * The `height` prop is used to set the height of the container.
+ */
 export const TweetContainer: FC<PropsWithChildren<{ height: string }>> = ({
     children,
     height,
