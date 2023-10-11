@@ -145,6 +145,12 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                                 const isAudio = ALLOWED_AUDIO_TYPES.includes(
                                     media.original.mimeType
                                 );
+                                const audioVideoType = isAudio
+                                    ? "audio"
+                                    : "video";
+                                const mediaType = isImage
+                                    ? "img"
+                                    : audioVideoType;
                                 return (
                                     (isImage || isAudio || isVideo) && (
                                         <TweetMedia
@@ -157,12 +163,9 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                                              */
                                             // eslint-disable-next-line react/no-array-index-key
                                             key={`${media.original.url}${mediaIndex}`}
-                                            data={media.original.url}
-                                            ratio={
-                                                isAudio || isVideo
-                                                    ? 0
-                                                    : undefined
-                                            }
+                                            src={media.original.url}
+                                            mediaType={mediaType}
+                                            ratio={isImage ? 1 : 0}
                                         />
                                     )
                                 );

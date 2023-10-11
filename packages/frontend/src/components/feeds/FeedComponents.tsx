@@ -41,24 +41,32 @@ export const TweetAttachment: FC<PropsWithChildren> = ({ children }) => (
     </div>
 );
 
-export const TweetMedia: FC<
-    HTMLProps<HTMLObjectElement> & { ratio?: number }
-> = ({ data, ratio = 1, className, style, ...props }) => (
-    <object
-        data={data}
-        className={twMerge(
-            "min-w-64 w-full h-0 bg-cover rounded-md mt-1 ml-1",
-            className
-        )}
-        style={{
-            paddingTop: `${ratio * 100}%`,
-            height: data ? 0 : "250px",
-            ...style,
-        }}
-        aria-label="Embedded Media"
-        {...props}
-    />
-);
+interface ITweetMedia<T, E> extends HTMLProps<E> {
+    ratio?: number;
+    mediaType?: "img" | "video" | "audio";
+}
+
+export function TweetMedia<
+    T,
+    E = T extends "video"
+        ? HTMLVideoElement
+        : T extends "audio"
+        ? HTMLAudioElement
+        : HTMLImageElement
+>({ ratio = 1, mediaType, className, ...props }: ITweetMedia<T, E>) {
+    const MediaComponent = (mediaType as unknown) as FC<HTMLProps<E>>;
+    return (
+        MediaComponent && (
+            <MediaComponent
+                className={twMerge(
+                    "min-w-[64px] w-full rounded-md mb-4",
+                    className
+                )}
+                {...props}
+            />
+        )
+    );
+}
 
 export const TweetWrapper: FC<HTMLProps<HTMLDivElement>> = ({
     children,
