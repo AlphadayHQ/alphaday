@@ -129,7 +129,7 @@
             .apexcharts-legend-text span {
                 width: 90px !important;
                 div {
-                    @apply fontGroup-normal;
+                    @apply fontGroup-normal text-primaryVariant1000;
                 }
                 div:nth-child(2) {
                     @apply fontGroup-highlight text-primary;

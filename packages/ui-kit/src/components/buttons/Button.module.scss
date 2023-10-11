@@ -274,15 +274,6 @@
     }
 }
 
-.tabsButtonRemovable {
-    .close {
-        padding-left: 3px;
-        padding-right: 9px;
-        width: 18.5px;
-        cursor: pointer;
-    }
-}
-
 .tabsButtonDisabled {
     color: var(--primaryVariant300) !important;
     pointer-events: none;

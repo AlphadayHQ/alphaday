@@ -193,7 +193,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                     Total Balance{" "}
                                     <ShowSVG
                                         onClick={toggleBalance}
-                                        className="cursor-pointer"
+                                        className="cursor-pointer ml-0.5 p-[1px]"
                                     />
                                 </p>
                                 <h3 className="mb-0.5 fontGroup-major text-primary">
@@ -212,7 +212,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                     )}
                                 </h3>
                                 <div className="mb-[15px] flex flex-wrap">
-                                    <p className="fontGroup-normal mb-0 text-success [&:last-of-type]:ml-[10px]">
+                                    <p className="fontGroup-normal mb-0 text-success">
                                         {ethPrice === undefined ||
                                         portfolioData === undefined ? (
                                             <Skeleton width="80px" />
@@ -262,7 +262,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 
                         {donutData.series?.length ? (
                             <div className="mb-[10px] items-center justify-between flex flex-1">
-                                <div className="flex flex-2 justify-start">
+                                <div className="flex flex-[2_1_0%] justify-start">
                                     <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
                                         Asset
                                     </p>
@@ -308,10 +308,10 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 
                                     return (
                                         <div
-                                            className="flex pl-[15px] pr-[15px] border-x-0 justify-between fontGroup-normal border-btnRingVariant500 [&:last-child]:border-b-0"
+                                            className="flex py-[10px] px-[15px] border-t justify-between fontGroup-normal border-btnRingVariant500 [&:last-child]:border-b-0 rounded-sm"
                                             key={assetKey}
                                         >
-                                            <div className="flex flex-2 justify-start">
+                                            <div className="flex flex-[2_1_0%] justify-start">
                                                 <a
                                                     target="_blank"
                                                     rel="noopener noreferrer"
