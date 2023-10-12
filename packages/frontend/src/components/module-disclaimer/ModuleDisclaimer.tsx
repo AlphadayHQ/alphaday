@@ -29,7 +29,7 @@ const ModuleDisclaimer: FC<IProps> = ({
     return (
         <TextOverlay>
             <ScrollBar>
-                <div className="relative flex flex-col flex-wrap items-center justify-center m-15">
+                <div className="relative flex flex-col flex-wrap items-center justify-center m-[15px]">
                     <ReactMarkdown remarkPlugins={PLUGINS} linkTarget="_blank">
                         {disclaimer}
                     </ReactMarkdown>
