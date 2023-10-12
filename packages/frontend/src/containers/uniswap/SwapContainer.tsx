@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { themeColors } from "@alphaday/ui-kit";
-import { Theme } from "@uniswap/widgets";
+import { Theme, darkTheme } from "@uniswap/widgets";
 import { setAcceptedSwapToS } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import { Logger } from "src/api/utils/logging";
@@ -24,16 +23,7 @@ const SwapContainer: FC<IModuleContainer> = () => {
     };
 
     const theme: Theme = {
-        primary: themeColors.primary,
-        secondary: themeColors.primary,
-        interactive: themeColors.btnRingVariant200,
-        container: themeColors.backgroundVariant200,
-        module: themeColors.backgroundVariant500,
-        accent: themeColors.btnRingVariant200,
-        outline: themeColors.backgroundVariant200,
-        active: themeColors.btnBackgroundVariant1500,
-        activeSoft: themeColors.btnBackgroundVariant1500,
-        dialog: themeColors.primary,
+        ...darkTheme,
         fontFamily: "",
         borderRadius: {
             xsmall: 1,

@@ -9,8 +9,46 @@
         @apply font-bold;
         @apply leading-3;
     }
+    [class*="WidgetWrapper__StyledWidgetWrapper"], [class*="TokenSelect__SearchInputContainer"] {
+        @apply bg-backgroundVariant200;
+        @apply rounded-lg;
+        @apply shadow-none fontGroup-normal;
+        * {
+            @apply fontGroup-normal;
+        }
+    }
+    [class*="type__TextWrapper"] {
+        *:hover, *:focus {
+        @apply bg-backgroundVariant200;
+        border-color: transparent;
+    }
+    }
+    [class*="Button__BaseButton"] {
+        @apply rounded-lg;
+        @apply bg-btnRingVariant200 hover:bg-btnRingVariant500;
+        @apply font-bold;
+        @apply text-primary;
+        @apply shadow-none;
+        *:hover {
+            @apply bg-inherit;
+        }
+    }
+    [class*="Input__InputColumn"] {
+        @apply rounded-lg;
+        @apply bg-backgroundVariant500;
+    }
+    [class*="TokenOptions__TokenButton"] {
+        @apply rounded-sm;
+        @apply bg-backgroundVariant300;
+        [data-index="0"] {
+            @apply bg-btnRingVariant500;
+        }
+    }
     [class*="TokenInput"] {
         @apply text-primaryVariant100;
+        * {
+            @apply fontGroup-highlightSemi;
+        }
     }
     [class*="TokenSelect__SearchInputContainer"] {
         @apply rounded-lg;
@@ -26,7 +64,6 @@
         @apply justify-center;
     }
     [class*="ActionButton"] {
-        @apply bg-primaryVariant200;
         [class*="type__TextWrapper"].button {
             @apply font-bold;
         }
@@ -104,7 +141,7 @@
         @apply font-normal;
         [class*="CommonBases__BaseWrapper"] {
             @apply rounded-lg;
-            @apply bg-primaryVariant500;
+            @apply bg-backgroundVariant300;
         }
     }
 
@@ -126,7 +163,7 @@
 
     /** Swap success & error */
     [class*="Dialog__Modal"] {
-        @apply bg-primaryVariant300;
+        @apply bg-backgroundVariant300;
     }
 
     /** Swap warning */
