@@ -10,8 +10,7 @@ const ProfileDropdownContainer: FC = () => {
     const { openWalletConnectionDialog, verifyWallet, signout } = useWallet();
     const { authWallet, isAuthenticated, resetAuthState } = useAccount();
     const { setAllowFetchWalletView, walletViewState } = useWalletViewContext();
-    const { subscribedViews } = useView();
-    const { selectedView, navigateToView } = useView();
+    const { subscribedViews, selectedView, navigateToView } = useView();
     const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
 
     const navigateToWalletView = () => {
@@ -51,8 +50,9 @@ const ProfileDropdownContainer: FC = () => {
                 authWallet.status === WalletConnectionState.Verified ||
                 authWallet.status === WalletConnectionState.Disconnected
             )
-        )
+        ) {
             resetAuthState();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
