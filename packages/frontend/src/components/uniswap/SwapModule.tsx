@@ -35,7 +35,7 @@ const SwapModule: FC<IProps> = ({
                 onAccept={onAcceptToS}
             />
             <SwapWidget
-                theme={theme || darkTheme}
+                theme={darkTheme || theme}
                 width="100%"
                 convenienceFee={config.convenienceFee}
                 convenienceFeeRecipient={config.convenienceFeeRecipient}
