@@ -1,14 +1,7 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
-import { ChannelSkeleton, IconButton, Input } from "@alphaday/ui-kit";
+import { ChannelSkeleton, IconButton, Input, twMerge } from "@alphaday/ui-kit";
 import { TPodcastChannel } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
-
-import {
-    StyledChannel,
-    StyledChannels,
-    StyledHeader,
-    StyledTray,
-} from "./PodcastModule.style";
 
 interface IPodcastChannelsList {
     channels: TPodcastChannel[] | undefined;
@@ -99,12 +92,16 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
     }, [headerRef, preferredChannelIds]);
 
     return (
-        <StyledChannels
-            $show={showChannels}
-            $showAll={showAllChannels}
-            $height={channelsHeight}
+        <div
+            className="w-full border-b border-solid border-btnRingVariant500 transition-all duration-[400] relative cursor-pointer"
+            // $show={showChannels}
+            // $showAll={showAllChannels}
+            // $height={channelsHeight}
+            style={{
+                height: showAllChannels ? "600px" : `${channelsHeight}px`,
+            }}
         >
-            <div className="header">
+            <div className="flex w-full justify-between pt-[10px] px-[15px] pb-3 cursor-pointer">
                 <div
                     role="button"
                     tabIndex={-1}
@@ -113,36 +110,50 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                             setShowChannels((prev) => !prev);
                         }
                     }}
-                    className="channels"
+                    className="min-w-max flex"
                 >
-                    <span className="title">
+                    <span className="fontGroup-highlight uppercase text-primary m-0 transition-all duration-[400]">
                         {showAllChannels ? "Selected Channels" : "Channels"}
                     </span>
-                    <div className="svg-wrap">
-                        {!showAllChannels && <ChevronSVG className="chevron" />}
+                    <div className="flex items-center h-[17.5px]">
+                        {!showAllChannels && (
+                            <ChevronSVG
+                                className={twMerge(
+                                    "ml-1 w-[14px] h-[14.5px] stroke-primary duration-[400] transition-transform",
+                                    showAllChannels ? "rotate-90" : "rotate-0"
+                                )}
+                            />
+                        )}
                     </div>
                 </div>
                 <div
                     role="button"
                     tabIndex={-1}
                     onClick={onClickMore}
-                    className="more"
+                    className="capitalize"
                 >
                     <span
-                        className={`title ${showAllChannels ? "showAll" : ""}`}
+                        className={`fontGroup-highlight uppercase text-primary m-0 transition-all duration-[400] ${
+                            showAllChannels ? "text-btnRingVariant100" : ""
+                        }`}
                     >
                         {showAllChannels ? "less" : "more"}
                     </span>
                 </div>
             </div>
 
-            <StyledHeader
+            <div
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
-                $showChannels={showChannels}
+                className="flex overflow-y-hidden overflow-x-scroll pb-[13px]"
             >
                 <div className="spacer" />
                 {!hideLeftPan && (
-                    <span className="pan">
+                    <span
+                        className={twMerge(
+                            "absolute self-center top-[70px] left-[3px] z-[1]",
+                            showAllChannels ? "block" : "none"
+                        )}
+                    >
                         <IconButton
                             title="Pan Coins Left"
                             variant="leftArrow"
@@ -152,18 +163,23 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 )}
                 {selectedChannels?.length && !isLoadingChannels ? (
                     selectedChannels.map((channel) => (
-                        <span key={channel.id} className="wrap">
-                            <StyledChannel
+                        <span key={channel.id} className="mr-1.5">
+                            <div
+                                role="button"
+                                tabIndex={-1}
+                                className="flex w-[60px] flex-col"
                                 onClick={() => onSelectChannel(channel)}
                             >
                                 <img
                                     loading="lazy"
-                                    className="img"
+                                    className="w-[60px] h-[60px] z-1"
                                     src={channel.icon}
                                     alt=""
                                 />
-                                <span className="label">{channel.name}</span>
-                            </StyledChannel>
+                                <span className="relative text-ellipsis overflow-hidden fontGroup-supportBold [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
+                                    {channel.name}
+                                </span>
+                            </div>
                         </span>
                     ))
                 ) : (
@@ -173,9 +189,14 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                         ))}
                     </>
                 )}
-                <div className="spacer" />
+                <div className="min-w-[15px] h-5 self-center" />
                 {!hideRightPan && (
-                    <span className="pan right">
+                    <span
+                        className={twMerge(
+                            "absolute self-center top-[70px] z-[2] left-auto right-[3px]",
+                            showAllChannels ? "block" : "none"
+                        )}
+                    >
                         <IconButton
                             title="Pan Coins Right"
                             variant="rightArrow"
@@ -183,11 +204,13 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                         />
                     </span>
                 )}
-            </StyledHeader>
+            </div>
             {!isLoadingChannels && (
-                <StyledTray>
-                    <p className="title">All Channels</p>
-                    <div className="search">
+                <div className="h-[436px] p-[15px] m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-btnRingVariant500">
+                    <p className="fontGroup-highlight uppercase text-primary m-0 mb-[10px]">
+                        All Channels
+                    </p>
+                    <div className="mb-5 w-full">
                         <Input
                             value={searchState}
                             onChange={(e) => setSearchState(e.target.value)}
@@ -196,7 +219,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                             name="search podcast channels"
                         />
                     </div>
-                    <div className="channels">
+                    <div className="w-full flex flex-wrap justify-between">
                         {showAllChannels &&
                             filteredChannels.map((channel) => {
                                 const isSelectedChannel =
@@ -222,33 +245,41 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                                     }
                                 };
                                 return (
-                                    <span key={channel.id} className="wrap">
-                                        <StyledChannel onClick={onClick}>
+                                    <span
+                                        key={channel.id}
+                                        className="p-[10px] relative [&:last-of-type]:mr-auto"
+                                    >
+                                        <div
+                                            role="button"
+                                            tabIndex={-1}
+                                            className="flex w-[60px] flex-col"
+                                            onClick={onClick}
+                                        >
                                             <div
-                                                className={`overlay ${
+                                                className={`absolute inset-0 m-auto w-[95%] h-[93%] rounded-xl opacity-0 bg-primaryVariant300 transition-opacity duration-[0.05s] ease-in ${
                                                     isSelectedChannel
-                                                        ? "visible"
+                                                        ? "opacity-1"
                                                         : ""
                                                 }`}
                                             />
 
                                             <img
                                                 loading="lazy"
-                                                className="img"
+                                                className="w-[60px] h-[60px] z-1"
                                                 src={channel.icon}
                                                 alt=""
                                             />
-                                            <span className="label">
+                                            <span className="relative text-ellipsis overflow-hidden fontGroup-supportBold [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
                                                 {channel.name}
                                             </span>
-                                        </StyledChannel>
+                                        </div>
                                     </span>
                                 );
                             })}
                     </div>
-                </StyledTray>
+                </div>
             )}
-        </StyledChannels>
+        </div>
     );
 };
 
