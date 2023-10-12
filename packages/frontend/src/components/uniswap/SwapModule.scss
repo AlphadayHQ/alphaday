@@ -1,0 +1,137 @@
+
+.uniswap-widget {
+    & > div {
+        @apply m-auto;
+        @apply shadow-none;
+    }
+    .subhead {
+        @apply uppercase;
+        @apply font-bold;
+        @apply leading-2;
+    }
+    [class*="TokenInput"] {
+        @apply text-primary-100;
+    }
+    [class*="TokenSelect__SearchInputContainer"] {
+        @apply rounded-lg;
+    }
+    [class*="Input__Balance"] {
+        @apply font-normal;
+    }
+    [class*="type__TextWrapper"].button {
+        @apply text-primary;
+        @apply font-semibold;
+        @apply flex;
+        @apply items-center;
+        @apply justify-center;
+    }
+    [class*="ActionButton"] {
+        @apply bg-primary-200;
+        [class*="type__TextWrapper"].button {
+            @apply font-bold;
+        }
+    }
+    [class*="icons__LargeWrapper"] > svg {
+        @apply text-primary;
+    }
+    [class*="TokenOptions__OnHover"] {
+        @apply hidden;
+    }
+
+    /** Styles for the settings */
+    [class*="Popover__PopoverContainer"] {
+        @apply bg-primary-500;
+    }
+    [class*="Header__HeaderRow"]
+        > div
+        > div
+        > [class*="Popover__PopoverContainer"] {
+        @apply inset-50;
+        @apply transform-none;
+
+        [class*="Tooltip__IconTooltip"] {
+            @apply self-start;
+            svg {
+                @apply w-3;
+            }
+        }
+
+        [class*="Expando__ExpandoColumn"][open] {
+            @apply max-h-20;
+
+            [class*="Expando__InnerColumn"] {
+                @apply max-h-20;
+            }
+        }
+
+        [class*="Expando__IconPrefix"] {
+            @apply font-bold;
+        }
+
+        [class*="Input-sc"] {
+            @apply font-normal;
+            @apply p-0;
+            @apply rounded-lg;
+            @apply bg-primary-200;
+            @apply mr-1;
+            & + div {
+                @apply pr-4;
+                @apply flex;
+            }
+        }
+
+        [class*="MaxSlippageSelect__Custom"] {
+            @apply rounded-lg;
+            @apply bg-primary-200;
+            @apply pr-2;
+        }
+    }
+
+    /* * Toolbar that show details of your transaction above the large button */
+    [class*="Toolbar__StyledExpando"] {
+        @apply font-semibold;
+
+        [class*="Popover__Reference"] {
+            @apply font-normal;
+        }
+        [class*="type__TextWrapper-sc"] {
+            @apply font-normal;
+        }
+    }
+
+    /**  Styles for selecting tokens  */
+    [class*="CommonBases__BasesContainer"] {
+        @apply font-normal;
+        [class*="CommonBases__BaseWrapper"] {
+            @apply rounded-lg;
+            @apply bg-primary-500;
+        }
+    }
+
+    /**  Styles for Review Swap */
+    [class*="Details__Label"] {
+        @apply font-semibold;
+    }
+
+    [class*="headline"] {
+        @apply font-bold;
+        @apply leading-7;
+    }
+    [class*="body"] {
+        @apply font-normal;
+    }
+    [class*="Row-sc-1nzvhrh-0"] > div.Row-sc-1nzvhrh-0 {
+        @apply self-center;
+    }
+
+    /** Swap success & error */
+    [class*="Dialog__Modal"] {
+        @apply bg-primary-300;
+    }
+
+    /** Swap warning */
+    [class*="ErrorView__ExpandoContent"] {
+        @apply font-inter;
+        @apply font-body;
+    }
+}
