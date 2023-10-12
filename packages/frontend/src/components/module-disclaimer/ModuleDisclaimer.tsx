@@ -1,6 +1,6 @@
 import { FC } from "react";
-import ReactMarkdown from "react-markdown";
 import { Button, ScrollBar } from "@alphaday/ui-kit";
+import ReactMarkdown from "react-markdown";
 import { REMARK_URL_REGEX, remarkRegex } from "src/api/utils/textUtils";
 import TextOverlay from "../common/overlay/TextOverlay";
 
