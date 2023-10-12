@@ -3,7 +3,7 @@ import { Button } from "@alphaday/ui-kit";
 import useElementSize from "src/api/hooks/useElementSize";
 import { TVideoItem } from "src/api/types";
 import { computeDuration } from "src/api/utils/dateUtils";
-import { ReactComponent as ArrowSVG } from "src/assets/alphadayAssets/icons/arrow-right.svg";
+import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
 import ItemBookmark from "src/components/listItem/ItemBookmark";
 
 interface IVideoPlayer {
