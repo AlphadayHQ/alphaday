@@ -69,6 +69,7 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     summary_template: lazy(
         () => import("./containers/summary/SummaryContainer")
     ),
+    uniswap_template: lazy(() => import("./containers/uniswap/SwapContainer")),
 };
 
 export type TFullSizeRoute = {
