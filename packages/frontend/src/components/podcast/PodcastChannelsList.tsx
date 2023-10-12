@@ -75,6 +75,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
             }
             return channels.slice(0, 8);
         }
+        return undefined;
     }, [channels, preferredChannelIds]);
 
     // This effect keeps the channels scrolled to the right when the user adds a
