@@ -19,9 +19,9 @@
     }
     [class*="type__TextWrapper"] {
         *:hover, *:focus {
-        @apply bg-backgroundVariant200;
-        border-color: transparent;
-    }
+            @apply bg-backgroundVariant200;
+            border-color: transparent;
+        }
     }
     [class*="Button__BaseButton"] {
         @apply rounded-lg;
@@ -29,9 +29,14 @@
         @apply font-bold;
         @apply text-primary;
         @apply shadow-none;
+
         *:hover {
             @apply bg-inherit;
         }
+    }
+    [class*="Button__transparentButton"] {
+        @apply bg-transparent;
+        @apply font-bold;
     }
     [class*="Input__InputColumn"] {
         @apply rounded-lg;
