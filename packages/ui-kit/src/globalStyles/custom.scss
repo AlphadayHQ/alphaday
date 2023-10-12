@@ -22,4 +22,14 @@
         -webkit-line-clamp: 1; /* number of lines to show */
         -webkit-box-orient: vertical;
     }
+
+    .three-liner {
+        position: relative;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-overflow: elipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* trim after 3 lines*/
+        -webkit-box-orient: vertical;
+    }
 }

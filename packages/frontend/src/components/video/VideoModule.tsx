@@ -1,16 +1,10 @@
-import { FC, useMemo, useState, memo } from "react";
-import { TabButton } from "@alphaday/ui-kit";
+import { FC, useMemo, useState, memo, UIEvent } from "react";
+import { TabButton, twMerge } from "@alphaday/ui-kit";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { EItemFeedPreference, TVideoChannel, TVideoItem } from "src/api/types";
 import VideoPlayer from "src/components/video/VideoPlayer";
 import VideoChannelsList from "./VideoChannelsList";
 import VideoItemList from "./VideoItemList";
-import {
-    StyledContainer,
-    StyledList,
-    StyledSwitchWrap,
-    StyledPlayerWrap,
-} from "./VideoModule.style";
 
 interface IVideoModule {
     items: TVideoItem[] | undefined;
@@ -107,16 +101,34 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
         setSelectedVideo(null);
     };
     return (
-        <StyledContainer
-            onScroll={(e: Event) => e.preventDefault()}
-            $isFullSize={isFullSize}
-            $showVideo={showVideo}
+        <div
+            onScroll={(e: UIEvent<HTMLElement>) => e.preventDefault()}
+            className="overflow-hidden"
         >
-            <div className="slide-wrap">
-                <div ref={squareRef} className="list-wrap">
-                    <StyledSwitchWrap
-                        $height={SWITCH_HEIGHT}
-                        $isLoading={isLoadingItems || !items}
+            <div
+                className={twMerge(
+                    "flex transition-all duration-500 ease",
+                    isFullSize ? "w-full" : "w-[200%]",
+                    showVideo && !isFullSize
+                        ? "translate-x-[-50%]"
+                        : "translate-x-0"
+                )}
+            >
+                <div
+                    ref={squareRef}
+                    className={twMerge(
+                        isFullSize
+                            ? "basis-auto max-w-full"
+                            : "basis-[100%] max-w-[50%]"
+                    )}
+                    style={{ width: isFullSize ? "500px" : "100%" }}
+                >
+                    <div
+                        className={twMerge(
+                            "m-0 flex p-0 pl-[15px] items-center bg-backgroundVariant200 border-b border-btnRingVariant500 [&>.wrap]:mr-[10px] transition-all duration-400",
+                            (isLoadingItems || !items) && "bg-transparent"
+                        )}
+                        style={{ height: SWITCH_HEIGHT }}
                     >
                         {VIDEO_NAV_BUTTONS.map(
                             (nav) =>
@@ -139,7 +151,7 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                                     </span>
                                 )
                         )}
-                    </StyledSwitchWrap>
+                    </div>
 
                     <VideoChannelsList
                         channels={channels}
@@ -160,8 +172,12 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                         setPreferredChannelIds={setPreferredChannelIds}
                     />
 
-                    <StyledList
-                        $height={widgetHeight - SWITCH_HEIGHT - channelsHeight}
+                    <div
+                        className="transition-all duration-300 relative z-[1] [&_.title]:three-liner"
+                        style={{
+                            height:
+                                widgetHeight - SWITCH_HEIGHT - channelsHeight,
+                        }}
                     >
                         <VideoItemList
                             videos={items}
@@ -172,9 +188,14 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                             onBookmark={onBookmark}
                             isAuthenticated={isAuthenticated}
                         />
-                    </StyledList>
+                    </div>
                 </div>
-                <StyledPlayerWrap $isFullSize={isFullSize}>
+                <div
+                    className={twMerge(
+                        "flex overflow-hidden z-[1] bg-btnBackgroundVariant400",
+                        isFullSize ? `w-[calc(100%_-_500px)]` : "w-full"
+                    )}
+                >
                     <VideoPlayer
                         video={selectedVideo}
                         closePlayer={onClosePlayer}
@@ -182,9 +203,9 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                         isAuthenticated={isAuthenticated}
                         isFullSize={isFullSize}
                     />
-                </StyledPlayerWrap>
+                </div>
             </div>
-        </StyledContainer>
+        </div>
     );
 });
 export default VideoModule;
