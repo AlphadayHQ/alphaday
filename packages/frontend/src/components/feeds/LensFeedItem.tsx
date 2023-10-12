@@ -123,7 +123,7 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                 <TweetContent>
                     <ReactMarkdown
                         remarkPlugins={PLUGINS}
-                        className="[&_a]:text-primaryVariant100 [&_a:hover]:text-primary [&_a]:font-bold break-words break-all"
+                        className="[&_a]:text-primaryVariant100 [&_a:hover]:text-primary [&_a]:font-bold break-word"
                         linkTarget="_blank"
                     >
                         {tweet.metadata.content}
