@@ -7,7 +7,7 @@ import { Logger } from "src/api/utils/logging";
 import SwapModule from "src/components/uniswap/SwapModule";
 import CONFIG from "src/config/config";
 import { IModuleContainer } from "src/types";
-import termsOfService from "./termsOfService";
+import TermsOfService from "./termsOfService";
 
 Object.entries(CONFIG.UNISWAP).forEach(([key, value]) => {
     if (value === undefined) {
@@ -48,7 +48,7 @@ const SwapContainer: FC<IModuleContainer> = () => {
             theme={theme}
             config={CONFIG.UNISWAP}
             showToS={!acceptedSwapToS}
-            termsOfService={termsOfService}
+            termsOfService={TermsOfService}
             onAcceptToS={acceptToS}
         />
     );
