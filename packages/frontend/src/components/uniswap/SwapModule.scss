@@ -7,10 +7,10 @@
     .subhead {
         @apply uppercase;
         @apply font-bold;
-        @apply leading-2;
+        @apply leading-3;
     }
     [class*="TokenInput"] {
-        @apply text-primary-100;
+        @apply text-primaryVariant100;
     }
     [class*="TokenSelect__SearchInputContainer"] {
         @apply rounded-lg;
@@ -26,7 +26,7 @@
         @apply justify-center;
     }
     [class*="ActionButton"] {
-        @apply bg-primary-200;
+        @apply bg-primaryVariant200;
         [class*="type__TextWrapper"].button {
             @apply font-bold;
         }
@@ -40,13 +40,13 @@
 
     /** Styles for the settings */
     [class*="Popover__PopoverContainer"] {
-        @apply bg-primary-500;
+        @apply bg-primaryVariant500;
     }
     [class*="Header__HeaderRow"]
         > div
         > div
         > [class*="Popover__PopoverContainer"] {
-        @apply inset-50;
+        @apply inset-[50px];
         @apply transform-none;
 
         [class*="Tooltip__IconTooltip"] {
@@ -57,10 +57,10 @@
         }
 
         [class*="Expando__ExpandoColumn"][open] {
-            @apply max-h-20;
+            @apply max-h-[20px];
 
             [class*="Expando__InnerColumn"] {
-                @apply max-h-20;
+                @apply max-h-[20px];
             }
         }
 
@@ -72,7 +72,7 @@
             @apply font-normal;
             @apply p-0;
             @apply rounded-lg;
-            @apply bg-primary-200;
+            @apply bg-primaryVariant200;
             @apply mr-1;
             & + div {
                 @apply pr-4;
@@ -82,7 +82,7 @@
 
         [class*="MaxSlippageSelect__Custom"] {
             @apply rounded-lg;
-            @apply bg-primary-200;
+            @apply bg-primaryVariant200;
             @apply pr-2;
         }
     }
@@ -104,7 +104,7 @@
         @apply font-normal;
         [class*="CommonBases__BaseWrapper"] {
             @apply rounded-lg;
-            @apply bg-primary-500;
+            @apply bg-primaryVariant500;
         }
     }
 
@@ -126,12 +126,11 @@
 
     /** Swap success & error */
     [class*="Dialog__Modal"] {
-        @apply bg-primary-300;
+        @apply bg-primaryVariant300;
     }
 
     /** Swap warning */
     [class*="ErrorView__ExpandoContent"] {
-        @apply font-inter;
-        @apply font-body;
+        @apply fontGroup-supportBold;
     }
 }
