@@ -110,6 +110,7 @@ export function TweetMedia<
                     "min-w-[64px] w-full max-w-full rounded-md mb-2",
                     className
                 )}
+                controls
                 {...props}
             />
         )
