@@ -6,9 +6,20 @@
 /* custom css for charts */
 @import "./charts.scss";
 
+/* custom css for animations */
+@import "./animation.scss";
+
 @layer utilities {
     .break-word {
         word-break: break-word;
     }
+    .one-liner {
+        position: relative;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-overflow: elipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; /* number of lines to show */
+        -webkit-box-orient: vertical;
+    }
 }
-

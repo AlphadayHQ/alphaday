@@ -10,11 +10,6 @@ import { useAudioPosition } from "react-use-audio-player";
 import { TPodcastItem } from "src/api/types";
 import { ReactComponent as PauseSVG } from "src/assets/icons/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/icons/play2.svg";
-import {
-    StyledAudioPlayer,
-    StyledNoAudio,
-    StyledProgressBar,
-} from "./PodcastModule.style";
 
 interface IAudioPlayer {
     podcast: TPodcastItem | null;
@@ -29,8 +24,12 @@ const PlayPauseButton: FC<{
     isAudioPlaying: boolean;
     togglePlayPause: () => void;
 }> = ({ isAudioPlaying, togglePlayPause }) => {
-    const buttonClass = isAudioPlaying ? "pause" : "play";
-    const buttonTitle = isAudioPlaying ? "pause" : "play";
+    const buttonClass = isAudioPlaying
+        ? "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-secondaryOrange [&>svg]:w-[26.4px]"
+        : "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-transparent border-2 border-solid border-btnRingVariant100 [&>svg]:w-[13.2px] [&>svg]:h-[15.24px] [&>svg]:fill-btnRingVariant100";
+    const buttonTitle = isAudioPlaying
+        ? "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-secondaryOrange [&>svg]:w-[26.4px]"
+        : "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-transparent border-2 border-solid border-btnRingVariant100 [&>svg]:w-[13.2px] [&>svg]:h-[15.24px] [&>svg]:fill-btnRingVariant100";
     const buttonIcon = isAudioPlaying ? <PauseSVG /> : <PlaySVG />;
 
     const onPlayPauseClick = (e: React.MouseEvent) => {
@@ -123,30 +122,42 @@ const AudioPlayer: FC<IAudioPlayer> = ({
     }
 
     if (!isAudioReady && !isAudioLoading) {
-        return <StyledNoAudio>Something went wrong.</StyledNoAudio>;
+        return (
+            <div className="w-full flex items-center justify-center">
+                Something went wrong.
+            </div>
+        );
     }
 
     return (
         <div ref={audioPlayerRef} style={{ width: "100%" }}>
-            <StyledAudioPlayer onClick={setPlaybackPosition}>
-                <StyledProgressBar
+            <div
+                role="button"
+                tabIndex={-1}
+                className="w-full flex items-center justify-between"
+                onClick={setPlaybackPosition}
+            >
+                <div
+                    role="button"
+                    tabIndex={-1}
+                    className="h-full absolute bg-btnRingVariant200 rounded-tl-[5px] rounded-bl-[5px]"
                     onClick={(e: React.MouseEvent) => {
                         e.stopPropagation();
                         setPlaybackPosition(e);
                     }}
-                    $width={percentComplete}
+                    style={{ width: percentComplete }}
                 />
-                <div className="info">
+                <div className="z-[1] flex py-1.5 pl-1.5">
                     <img
                         src={podcast?.sourceIcon}
-                        className="img"
+                        className="w-10 h-10"
                         alt={podcast?.sourceName}
                     />
-                    <div className="details">
-                        <span className="title one-liner">
+                    <div className="self-start pt-1 flex flex-col pl-[9px] cursor-default">
+                        <span className="fontGroup-highlight one-liner">
                             {podcast?.title}
                         </span>
-                        <span className="time">
+                        <span className="fontGroup-mini">
                             {isAudioLoading
                                 ? "Buffering..."
                                 : `${parseProgressTime(
@@ -155,9 +166,9 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                         </span>
                     </div>
                 </div>
-                <div className="controls">
+                <div className="flex items-center py-2 px-[9px] z-[1]">
                     <span
-                        className="speed"
+                        className="fontGroup-highlight text-right pr-4 cursor-pointer"
                         onClick={togglePlaybackSpeed}
                         role="button"
                         tabIndex={-1}
@@ -172,14 +183,20 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                         togglePlayPause={togglePlayPause}
                     />
                     {!isAudioReady && (
-                        <div className="buffer">
-                            <div className="line">
-                                <div className="bar" />
+                        <div className="flex flex-col justify-center w-9 h-9 p-[3px] text-center">
+                            <div className="bg-primary w-full">
+                                <div
+                                    className="float-left w-[10px] h-0.5 rounded-full bg-btnRingVariant100"
+                                    style={{
+                                        animation:
+                                            "bounce 2s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite",
+                                    }}
+                                />
                             </div>
                         </div>
                     )}
                 </div>
-            </StyledAudioPlayer>
+            </div>
         </div>
     );
 };
