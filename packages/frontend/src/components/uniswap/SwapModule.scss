@@ -82,7 +82,7 @@
 
     /** Styles for the settings */
     [class*="Popover__PopoverContainer"] {
-        @apply bg-primaryVariant500;
+        @apply bg-backgroundVariant300 w-full h-full max-h-[90%];
     }
     [class*="Header__HeaderRow"]
         > div
@@ -99,10 +99,10 @@
         }
 
         [class*="Expando__ExpandoColumn"][open] {
-            @apply max-h-[20px];
+            @apply max-h-20;
 
             [class*="Expando__InnerColumn"] {
-                @apply max-h-[20px];
+                @apply max-h-20;
             }
         }
 
