@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { ChannelSkeleton, IconButton, Input, twMerge } from "@alphaday/ui-kit";
-import { TPodcastChannel } from "src/api/types";
+import { TVideoChannel } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 
-interface IPodcastChannelsList {
-    channels: TPodcastChannel[] | undefined;
+interface IVideoChannelsList {
+    channels: TVideoChannel[] | undefined;
     isLoadingChannels: boolean;
     headerRef: HTMLDivElement | null;
     setHeaderRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
@@ -14,14 +14,14 @@ interface IPodcastChannelsList {
     showChannels: boolean;
     setShowChannels: React.Dispatch<React.SetStateAction<boolean>>;
     channelsHeight: number;
-    onSelectChannel: (channel: TPodcastChannel) => void;
-    onRemoveChannel: (channel: TPodcastChannel) => void;
+    onSelectChannel: (channel: TVideoChannel) => void;
+    onRemoveChannel: (channel: TVideoChannel) => void;
     showAllChannels: boolean;
     setShowAllChannels: React.Dispatch<React.SetStateAction<boolean>>;
     preferredChannelIds: number[] | undefined;
-    setPreferredChannelIds: (channels: TPodcastChannel[]) => void;
+    setPreferredChannelIds: (channels: TVideoChannel[]) => void;
 }
-const PodcastChannelsList: FC<IPodcastChannelsList> = ({
+const VideoChannelsList: FC<IVideoChannelsList> = ({
     channels,
     isLoadingChannels,
     headerRef,
@@ -43,7 +43,6 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
     const preferredChannelIdsCountRef = useRef<number | undefined>(
         preferredChannelIds?.length
     );
-
     const onClickMore = () => {
         setSearchState("");
         setShowAllChannels((prev) => !prev);
@@ -169,13 +168,11 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                             >
                                 <img
                                     loading="lazy"
-                                    className="w-[60px] h-[60px] z-1"
+                                    className="w-[60px] h-[60px] z-1 rounded-full"
                                     src={channel.icon}
                                     alt=""
                                 />
-                                <span className="relative text-ellipsis overflow-hidden fontGroup-supportBold [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
-                                    {channel.name}
-                                </span>
+                                <span className="label">{channel.name}</span>
                             </div>
                         </span>
                     ))
@@ -206,14 +203,14 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 <div className="h-[436px] p-[15px] m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-btnRingVariant500">
                     <p className="fontGroup-highlight uppercase text-primary m-0 mb-[10px]">
                         All Channels
-                    </p>
+                    </p>{" "}
                     <div className="mb-5 w-full">
                         <Input
                             value={searchState}
                             onChange={(e) => setSearchState(e.target.value)}
                             placeholder="Filter channels..."
-                            id="search-podcast-channels"
-                            name="search podcast channels"
+                            id="search-video-channels"
+                            name="search video channels"
                         />
                     </div>
                     <div className="w-full flex flex-wrap justify-between">
@@ -246,6 +243,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                                         key={channel.id}
                                         className="p-[10px] relative [&:last-of-type]:mr-auto"
                                     >
+                                        {" "}
                                         <div
                                             role="button"
                                             tabIndex={-1}
@@ -280,4 +278,4 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
     );
 };
 
-export default PodcastChannelsList;
+export default VideoChannelsList;
