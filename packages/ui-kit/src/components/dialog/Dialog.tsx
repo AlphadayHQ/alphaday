@@ -78,22 +78,22 @@ export const Dialog: FC<
             onClose={onClose}
             {...restProps}
         >
-          <div className="flex justify-between items-center border-0 p-[15px]">
-              <h6 className="text-primary self-center text-base leading-6">
-                  {title}
-              </h6>
-              {showXButton && (
-                  <button
-                      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                      onClick={handleCloseDialog}
-                      className="border-primaryVariant200 bg-backgroundVariant200 flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
-                      title="close"
-                      type="button"
-                      data-testid="alpha-dialog-close-button"
-                  >
-                      <CloseSVG className="h-[8.4px] w-[8.4px]" />
-                  </button>
-              )}
+            <div className="flex justify-between items-center border-0 p-[15px]">
+                <h6 className="text-primary self-center text-base leading-6">
+                    {title}
+                </h6>
+                {showXButton && (
+                    <button
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                        onClick={handleCloseDialog}
+                        className="border-primaryVariant200 bg-backgroundVariant200 flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
+                        title="close"
+                        type="button"
+                        data-testid="alpha-dialog-close-button"
+                    >
+                        <CloseSVG className="h-[8.4px] w-[8.4px]" />
+                    </button>
+                )}
             </div>
             <div className="flex p-[15px]">{children}</div>
 
