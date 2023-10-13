@@ -117,7 +117,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                             <ChevronSVG
                                 className={twMerge(
                                     "ml-1 w-[14px] h-[14.5px] stroke-primary duration-[400] transition-transform",
-                                    showAllChannels ? "rotate-90" : "rotate-0"
+                                    showChannels ? "rotate-90" : "rotate-0"
                                 )}
                             />
                         )}
@@ -130,9 +130,12 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                     className="capitalize"
                 >
                     <span
-                        className={`fontGroup-highlight uppercase text-primary m-0 transition-all duration-[400] ${
-                            showAllChannels ? "text-btnRingVariant100" : ""
-                        }`}
+                        className={twMerge(
+                            "fontGroup-highlight  m-0 transition-all duration-[400]",
+                            showAllChannels
+                                ? "text-btnRingVariant100"
+                                : "text-primary"
+                        )}
                     >
                         {showAllChannels ? "less" : "more"}
                     </span>
@@ -141,7 +144,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
 
             <div
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
-                className="flex overflow-y-hidden overflow-x-scroll pb-[13px]"
+                className="flex overflow-y-hidden overflow-x-scroll py-3"
             >
                 <div className="min-w-[15px] h-5 self-center" />
                 {!hideLeftPan && (
@@ -160,7 +163,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                 )}
                 {selectedChannels?.length && !isLoadingChannels ? (
                     selectedChannels.map((channel) => (
-                        <span key={channel.id} className="mr-1.5">
+                        <span key={channel.id} className="mr-2">
                             <div
                                 role="button"
                                 tabIndex={-1}
@@ -173,7 +176,9 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                                     src={channel.icon}
                                     alt=""
                                 />
-                                <span className="label">{channel.name}</span>
+                                <span className="relative overflow-hidden pt-[3px] three-liner fontGroup-supportBold">
+                                    {channel.name}
+                                </span>
                             </div>
                         </span>
                     ))
@@ -252,11 +257,12 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                                             onClick={onClick}
                                         >
                                             <div
-                                                className={`absolute inset-0 m-auto w-[95%] h-[93%] rounded-xl opacity-0 bg-primaryVariant300 transition-opacity duration-[0.05s] ease-in ${
+                                                className={twMerge(
+                                                    "absolute inset-0 m-auto w-[95%] h-[93%] rounded-xl bg-primaryVariant300 transition-opacity duration-[0.05s] ease-in",
                                                     isSelectedChannel
                                                         ? "opacity-1"
-                                                        : ""
-                                                }`}
+                                                        : "opacity-0"
+                                                )}
                                             />
 
                                             <img
@@ -265,7 +271,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                                                 src={channel.icon}
                                                 alt=""
                                             />
-                                            <span className="relative text-ellipsis overflow-hidden fontGroup-supportBold [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
+                                            <span className="relative overflow-hidden fontGroup-supportBold three-liner">
                                                 {channel.name}
                                             </span>
                                         </div>

@@ -23,7 +23,8 @@ interface IAudioPlayer {
 const PlayPauseButton: FC<{
     isAudioPlaying: boolean;
     togglePlayPause: () => void;
-}> = ({ isAudioPlaying, togglePlayPause }) => {
+    isAudioReady: boolean;
+}> = ({ isAudioPlaying, togglePlayPause, isAudioReady }) => {
     const buttonClass = isAudioPlaying
         ? "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-secondaryOrange [&>svg]:w-[26.4px]"
         : "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-transparent border-2 border-solid border-btnRingVariant100 [&>svg]:w-[13.2px] [&>svg]:h-[15.24px] [&>svg]:fill-btnRingVariant100";
@@ -36,6 +37,22 @@ const PlayPauseButton: FC<{
         e.stopPropagation();
         togglePlayPause();
     };
+
+    if (!isAudioReady) {
+        return (
+            <div className="flex flex-col justify-center w-9 h-9 p-[3px] text-center">
+                <div className="bg-primary w-full">
+                    <div
+                        className="float-left w-[10px] h-0.5 rounded-full bg-btnRingVariant100"
+                        style={{
+                            animation:
+                                "bounce 2s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite",
+                        }}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div
@@ -181,20 +198,8 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                     <PlayPauseButton
                         isAudioPlaying={isAudioPlaying}
                         togglePlayPause={togglePlayPause}
+                        isAudioReady={isAudioReady}
                     />
-                    {!isAudioReady && (
-                        <div className="flex flex-col justify-center w-9 h-9 p-[3px] text-center">
-                            <div className="bg-primary w-full">
-                                <div
-                                    className="float-left w-[10px] h-0.5 rounded-full bg-btnRingVariant100"
-                                    style={{
-                                        animation:
-                                            "bounce 2s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite",
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>
