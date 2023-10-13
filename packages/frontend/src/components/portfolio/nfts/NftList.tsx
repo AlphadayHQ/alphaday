@@ -14,22 +14,22 @@ interface INftList {
     nftsQueryFailed: boolean;
 }
 
-const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
-    const getImage = (data: TZapperNftAsset): string | undefined => {
-        const imageMedia = data.token.medias.find(
-            (media) => media.type === "image"
-        );
-        let url;
-        if (imageMedia?.type === "image") {
-            url = imageMedia.originalUrl;
-        }
-        if (url?.includes("ipfs://")) {
-            const cid = url?.split("ipfs://")?.[1];
-            return cid ? `${API_BASE_URL}${String(cid)}` : undefined;
-        }
-        return url;
-    };
+const getImage = (data: TZapperNftAsset): string | undefined => {
+    const imageMedia = data.token.medias.find(
+        (media) => media.type === "image"
+    );
+    let url;
+    if (imageMedia?.type === "image") {
+        url = imageMedia.originalUrl;
+    }
+    if (url?.includes("ipfs://")) {
+        const cid = url?.split("ipfs://")?.[1];
+        return cid ? `${API_BASE_URL}${String(cid)}` : undefined;
+    }
+    return url;
+};
 
+const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
     const nftCards = nftData.items.map((item) => (
         <NftCard
             key={

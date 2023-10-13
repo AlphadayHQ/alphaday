@@ -51,8 +51,8 @@ import {
 } from "./src/components/listItem/ListItem";
 
 import { NoItems } from "./src/components/listItem/NoItems";
-import { Modal } from "./src/components/modal/Modal";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
+import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
