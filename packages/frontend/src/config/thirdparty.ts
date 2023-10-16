@@ -92,6 +92,12 @@ export const SUPPORTED_EVM_NETWORKS = {
         icon: "",
         explorerUrl: "https://evm.evmos.org/token",
     },
+    base: {
+        name: "base",
+        abbrev: "base",
+        icon: "",
+        explorerUrl: "https://basescan.org/",
+    },
 };
 
 const ZAPPER = {

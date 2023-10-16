@@ -18,6 +18,7 @@ export interface IDialog {
     children?: React.ReactNode;
     triggerId: string;
     showDialog?: boolean;
+    darkerBackdrop?: boolean;
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
 }
 
@@ -35,6 +36,8 @@ export const Dialog: FC<
     buttonProps,
     triggerId,
     showDialog,
+    darkerBackdrop,
+    size,
     ...restProps
 }) => {
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -69,6 +72,8 @@ export const Dialog: FC<
             triggerId={triggerId || "default-dialog-trigger"}
             showModal={showDialog}
             ref={modalRef}
+            size={size}
+            darkerBackdrop={darkerBackdrop}
             data-testid="alpha-dialog"
             onClose={onClose}
             {...restProps}
