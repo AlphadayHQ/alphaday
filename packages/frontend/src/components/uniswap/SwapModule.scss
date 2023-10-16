@@ -17,12 +17,6 @@
             @apply fontGroup-normal;
         }
     }
-    [class*="type__TextWrapper"] {
-        *:hover, *:focus {
-            @apply bg-backgroundVariant200;
-            border-color: transparent;
-        }
-    }
     [class*="Button__BaseButton"] {
         @apply rounded-lg;
         @apply bg-btnRingVariant200 hover:bg-btnRingVariant500;
@@ -31,7 +25,7 @@
         @apply shadow-none;
 
         *:hover {
-            @apply bg-inherit;
+            background-color: inherit !important;
         }
     }
     [class*="Button__transparentButton"] {
@@ -55,11 +49,22 @@
             @apply fontGroup-highlightSemi;
         }
     }
+    [class*="ValueInput"] {
+        @apply fontGroup-major;
+    }
     [class*="TokenSelect__SearchInputContainer"] {
         @apply rounded-lg;
+        * {
+            @apply bg-backgroundVariant200 border-transparent;
+        }
     }
     [class*="Input__Balance"] {
         @apply font-normal;
+    }
+    [class*="type__TextWrapper"] {
+        *:hover, *:focus {
+            border-color: transparent;
+        }
     }
     [class*="type__TextWrapper"].button {
         @apply text-primary;
@@ -82,7 +87,7 @@
 
     /** Styles for the settings */
     [class*="Popover__PopoverContainer"] {
-        @apply bg-backgroundVariant300 w-full h-full max-h-[90%];
+        @apply bg-backgroundVariant300 w-full h-full max-h-[88%];
     }
     [class*="Header__HeaderRow"]
         > div
@@ -146,7 +151,10 @@
         @apply font-normal;
         [class*="CommonBases__BaseWrapper"] {
             @apply rounded-lg;
-            @apply bg-backgroundVariant300;
+            @apply bg-backgroundVariant300 hover:border-btnRingVariant200;
+            * {
+                @apply hover:bg-transparent;
+            }
         }
     }
 
@@ -174,5 +182,16 @@
     /** Swap warning */
     [class*="ErrorView__ExpandoContent"] {
         @apply fontGroup-supportBold;
+    }
+
+    /** Connect Wallet Dialog buttons */
+    [class*="ConnectWalletDialog"] {
+        [class*="Button__BaseButton"] {
+            @apply bg-backgroundVariant200 hover:bg-backgroundVariant500;
+        }
+    }
+
+    input {
+        border: none !important;
     }
 }
