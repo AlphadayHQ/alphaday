@@ -87,3 +87,108 @@
         }
     }
 }
+
+.portfolio-widget {
+    .donut-chart {
+        div[type="donut"] {
+            display: flex;
+            width: 100%;
+            transform: scale(0.9) !important;
+        }
+
+        .apexcharts-canvas {
+            height: 190px !important;
+            svg {
+                width: 285px;
+                height: 200px !important;
+                margin-left: -10px;
+                foreignObject {
+                    height: 400px !important;
+                }
+            }
+        }
+        .apexcharts-legend {
+            width: 120px !important;
+            padding: 0px;
+            left: -5px !important;
+            top: 13px !important;
+        }
+        .apexcharts-graphical {
+            height: 88px;
+            transform: translate(160px, 41px);
+        }
+
+        .apexcharts-legend-series {
+            margin: 4px 5px !important;
+
+            .apexcharts-legend-marker {
+                width: 9px !important;
+                height: 9px !important;
+            }
+
+            .apexcharts-legend-text span {
+                width: 90px !important;
+                div {
+                    @apply fontGroup-normal text-primaryVariant1000;
+                }
+                div:nth-child(2) {
+                    @apply fontGroup-highlight text-primary;
+                }
+            }
+        }
+    }
+
+    .sm-donut-chart {
+        .apexcharts-canvas {
+            width: 135px !important;
+            svg {
+                width: 185px !important;
+
+                foreignObject {
+                    visibility: hidden;
+                }
+            }
+        }
+        .apexcharts-graphical {
+            transform: translate(30px, 41px);
+        }
+    }
+
+    .sm-legend-wrap {
+        display: flex;
+        width: 100% !important;
+
+        .apexcharts-legend-marker {
+            width: 9px !important;
+            height: 9px !important;
+        }
+
+        .apexcharts-legend {
+            height: auto !important;
+            width: 100% !important;
+            position: relative !important;
+            top: 0 !important;
+            left: 0 !important;
+            flex-direction: row !important;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 !important;
+
+            .apexcharts-legend-series {
+                width: 95px;
+                min-width: 95px;
+                flex-basis: 30%;
+                transform: scale(0.9) !important;
+            }
+            .apexcharts-legend-text span {
+                div {
+                    @apply fontGroup-normal;
+                }
+
+                div:nth-child(2) {
+                    @apply fontGroup-highlight text-primary;
+                }
+            }
+        }
+    }
+}
