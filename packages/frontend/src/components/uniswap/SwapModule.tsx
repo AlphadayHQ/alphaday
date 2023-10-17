@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SwapWidget, Theme, darkTheme } from "@uniswap/widgets";
 import ModuleDisclaimer from "../module-disclaimer/ModuleDisclaimer";
-import "./SwapModule.scss";
+import "./SwapModule.module.scss";
 
 interface IProps {
     config: {
