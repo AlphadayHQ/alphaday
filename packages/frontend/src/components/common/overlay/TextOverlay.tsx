@@ -15,7 +15,7 @@ const TextOverlay: FC<IProps> = ({ hide, children }) => {
 
     return (
         <div
-            className="absolute h-[calc(100%-40px)] left-0 transform translate-z-0 w-full bg-backgroundVariant1200"
+            className="absolute h-[calc(100%-45px)] left-0 transform w-full bg-backgroundVariant1200"
             style={{
                 zIndex: Z_INDEX_REGISTRY.OVERLAY,
             }}
