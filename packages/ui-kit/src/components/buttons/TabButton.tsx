@@ -90,7 +90,7 @@ export const TabButton: FC<ButtonProps> = ({
             {children}
             {(variant === "removable" || variant === "transparent") && (
                 <CloseSVG
-                    className="close w-2 h-2 ml-1"
+                    className="close w-2 h-2 ml-1 !p-0 !pt-0.5"
                     onClick={(e) => {
                         const handler = async () => {
                             e.stopPropagation();
