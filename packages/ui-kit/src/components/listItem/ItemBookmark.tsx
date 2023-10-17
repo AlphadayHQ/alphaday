@@ -24,7 +24,7 @@ const ItemBookmark: FC<IBookmark> = ({
         <>
             {showSpacer && <span className="spacer px-2">•</span>}
             <span
-                className="bookmark"
+                className="self-end"
                 role="button"
                 tabIndex={-1}
                 onClick={(e) => {
