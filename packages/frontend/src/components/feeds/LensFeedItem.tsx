@@ -92,11 +92,12 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
             <TweetColumn className="w-[80%]">
                 <div className="text-primaryVariant100 hover:text-primary">
                     {postType === "Mirror" && (
-                        <div className="meta meta-sm">
+                        <div className="fontGroup-supportBold">
                             <AuthorName
                                 href={profileUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                className="fontGroup-supportBold"
                             >
                                 {tweet.profile.name}
                             </AuthorName>{" "}
