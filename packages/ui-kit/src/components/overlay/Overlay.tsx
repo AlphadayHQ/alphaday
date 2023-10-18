@@ -49,7 +49,7 @@ interface IOverlayProps extends IOverlayWrapperProps {
  * However, it has only been tested in the CookieDisclaimer component (bottom
  * layout) so some tweaks maybe needed for other layouts.
  *
- * You can use the `style` or `className` props to customize the overlay.
+ * The `style` or `className` props can be used to customize the overlay.
  */
 export const Overlay: FC<IOverlayProps> = ({
     position = "top",
