@@ -27,7 +27,7 @@ const ItemBookmark: FC<IBookmark> = ({
         <>
             {showSpacer && <span className="spacer self-center mx-2">•</span>}
             <span
-                className={twMerge("bookmark self-center", className)}
+                className={twMerge("bookmark self-end", className)}
                 role="button"
                 tabIndex={-1}
                 onClick={(e) => {

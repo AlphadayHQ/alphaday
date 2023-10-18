@@ -118,7 +118,9 @@ const TagsOptions: FC<ITagsOptions> = ({
 
     return (
         <div key={setting.slug} className="setting" title={title}>
-            <div className="mb-2.5">{setting.name}:</div>
+            <div className="mb-2.5 fontGroup-highlightSemi">
+                {setting.name}:
+            </div>
             <SearchBar
                 initialInputValue={searchState}
                 options={searchState ? options : undefined}
