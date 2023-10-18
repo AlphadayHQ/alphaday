@@ -1,6 +1,8 @@
 import { FC } from "react";
-import Overlay from "src/components/common/overlay/Overlay";
-import { Button } from "@alphaday/ui-kit";
+import CONFIG from "src/config";
+import { Button, Overlay } from "@alphaday/ui-kit";
+
+const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
 export type TCookieChoiceProps = {
     key: number;
@@ -14,7 +16,13 @@ interface IProps {
     choices: Array<TCookieChoiceProps>;
 }
 const CookieDisclaimer: FC<IProps> = ({ choices }) => (
-    <Overlay position="bottom" isVisible>
+    <Overlay
+        isVisible
+        position="bottom"
+        style={{
+            zIndex: Z_INDEX_REGISTRY.OVERLAY,
+        }}
+    >
         <div className="p-2 flex flex-col w-full max-w-screen-lg overflow-hidden items-center lg:(p-5 flex-row)">
             <p className="text-primary mx-auto min-w-[280px] text-center lg:text-left">
                 We use essential cookies to make Alphaday work. We&apos;d like
