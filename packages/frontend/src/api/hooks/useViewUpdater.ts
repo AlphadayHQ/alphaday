@@ -177,7 +177,7 @@ export const useViewUpdater: () => void = () => {
 
     /**
      * Handle stale views
-     * Stale views are system views that have been recently modified
+     * Stale views are views that have been recently modified on the backend
      * and hence should be updated in the local cache.
      * We check this when a new view is selected
      */
