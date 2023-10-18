@@ -7783,6 +7783,11 @@ hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.0, hoist-non-react-
   dependencies:
     react-is "^16.7.0"
 
+howler@^2.2.1:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/howler/-/howler-2.2.4.tgz#bd3df4a4f68a0118a51e4bd84a2bfc2e93e6e5a1"
+  integrity sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==
+
 html2canvas@1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/html2canvas/-/html2canvas-1.4.1.tgz#7cef1888311b5011d507794a066041b14669a543"
@@ -10960,6 +10965,12 @@ react-transition-group@^4.3.0:
     dom-helpers "^5.0.1"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-use-audio-player@AlphadayHQ/useAudioPlayer:
+  version "1.2.6"
+  resolved "https://codeload.github.com/AlphadayHQ/useAudioPlayer/tar.gz/538eec76a556693f53467f8e7d020dbdc46378c0"
+  dependencies:
+    howler "^2.2.1"
 
 react@18.2.0:
   version "18.2.0"
