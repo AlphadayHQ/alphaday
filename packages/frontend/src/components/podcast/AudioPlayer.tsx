@@ -67,6 +67,15 @@ const PlayPauseButton: FC<{
     );
 };
 
+const parseProgressTime = (count: number) =>
+    `${Math.floor(count / 60).toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+    })}:${Math.floor(count % 60).toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+    })}`;
+
 const AudioPlayer: FC<IAudioPlayer> = ({
     isAudioReady,
     isAudioLoading,
@@ -103,15 +112,6 @@ const AudioPlayer: FC<IAudioPlayer> = ({
         },
         [playbackSpeed, speed]
     );
-
-    const parseProgressTime = (count: number) =>
-        `${Math.floor(count / 60).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-        })}:${Math.floor(count % 60).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false,
-        })}`;
 
     const setPlaybackPosition = useCallback(
         (event: React.MouseEvent) => {
