@@ -38,9 +38,9 @@ interface IOverlayProps extends IOverlayWrapperProps {
     /**
      * The position of the overlay.
      *
-     * @default "bottom"
+     * @default "top"
      */
-    position: "left" | "right" | "top" | "bottom";
+    position?: "left" | "right" | "top" | "bottom";
 }
 
 /**
@@ -52,7 +52,7 @@ interface IOverlayProps extends IOverlayWrapperProps {
  * You can use the `style` or `className` props to customize the overlay.
  */
 export const Overlay: FC<IOverlayProps> = ({
-    position,
+    position = "top",
     isVisible,
     children,
     className,
