@@ -1,4 +1,3 @@
-
 .uniswap-widget {
     & > div {
         margin: auto;
@@ -6,13 +5,14 @@
     }
     .subhead {
         text-transform: uppercase;
-        font-weight: theme('fontWeight.bold');
-        line-height: theme('lineHeight.3');
+        font-weight: theme("fontWeight.bold");
+        line-height: theme("lineHeight.3");
         @apply fontGroup-supportBold;
     }
-    [class*="WidgetWrapper__StyledWidgetWrapper"], [class*="TokenSelect__SearchInputContainer"] {
-        background-color: theme('colors.backgroundVariant200');
-        border-radius: theme('borderRadius.lg');
+    [class*="WidgetWrapper__StyledWidgetWrapper"],
+    [class*="TokenSelect__SearchInputContainer"] {
+        background-color: theme("colors.backgroundVariant200");
+        border-radius: theme("borderRadius.lg");
         box-shadow: none;
         @apply fontGroup-normal;
         *:not(.subhead):not(input) {
@@ -20,41 +20,42 @@
         }
     }
     [class*="Button__BaseButton"] {
-        border-radius: theme('borderRadius.lg');
-        background-color: theme('colors.btnRingVariant200');
+        border-radius: theme("borderRadius.lg");
+        background-color: theme("colors.btnRingVariant200");
         font-weight: bold;
-        color: theme('colors.primary');
+        color: theme("colors.primary");
         box-shadow: none;
 
         *:hover {
             background-color: inherit !important;
         }
     }
-    [class*="Button__BaseButton"]:hover:not([disabled]):not([class*="transparentButton"]):not([class*="Custom"]) {
-        background-color: theme('colors.btnBackgroundVariant1500');
+    [class*="Button__BaseButton"]:hover:not([disabled]):not([class*="transparentButton"]):not([class*="Custom"]):not([class*="TokenOptions__TokenButton"]) {
+        background-color: theme("colors.btnBackgroundVariant1500");
     }
-    [class*="transparentButton"], [class*="transparentButton"]:hover {
+    [class*="transparentButton"],
+    [class*="transparentButton"]:hover {
         background-color: transparent;
     }
     [class*="Button__transparentButton"] {
         background-color: transparent;
-        font-weight: theme('fontWeight.bold');
+        font-weight: theme("fontWeight.bold");
     }
     [class*="Input__InputColumn"] {
-        border-radius: theme('borderRadius.lg');
-        background-color: theme('colors.backgroundVariant500');
+        border-radius: theme("borderRadius.lg");
+        background-color: theme("colors.backgroundVariant500");
     }
 
     /** Styles for the token input */
     [class*="TokenOptions__TokenButton"] {
-        border-radius: theme('borderRadius.sm');
-        background-color: theme('colors.backgroundVariant300');
-        [data-index="0"] {
-            background-color: theme('colors.btnRingVariant500');
-        }
+        border-radius: theme("borderRadius.sm");
+        background-color: theme("colors.backgroundVariant300");
+    }
+    [class*="TokenOptions__TokenButton"]:hover {
+        background-color: theme("colors.btnRingVariant500") !important;
     }
     [class*="TokenInput"] {
-        color: theme('colors.primaryVariant100');
+        color: theme("colors.primaryVariant100");
         * {
             @apply fontGroup-highlightSemi;
         }
@@ -63,25 +64,26 @@
         @apply fontGroup-major;
     }
     [class*="TokenSelect__SearchInputContainer"] {
-        border-radius: theme('borderRadius.lg');
+        border-radius: theme("borderRadius.lg");
         * {
-            background-color: theme('colors.backgroundVariant200');
+            background-color: theme("colors.backgroundVariant200");
             border-color: transparent;
         }
     }
     [class*="ReverseButton__Underlayer"] {
-        background-color: theme('colors.backgroundVariant200');
+        background-color: theme("colors.backgroundVariant200");
         [class*="ReverseButton"] {
-            border-color: theme('colors.backgroundVariant200');
-            background-color: theme('colors.backgroundVariant500');
+            border-color: theme("colors.backgroundVariant200");
+            background-color: theme("colors.backgroundVariant500");
         }
     }
     [class*="Input__Balance"] {
-        font-weight: theme('fontWeight.normal');
+        font-weight: theme("fontWeight.normal");
     }
     [class*="type__TextWrapper"] {
-        color: theme('colors.primary');
-        *:hover, *:focus {
+        color: theme("colors.primary");
+        *:hover,
+        *:focus {
             border-color: transparent;
         }
     }
@@ -89,8 +91,8 @@
         background-color: inherit !important;
     }
     [class*="type__TextWrapper"].button {
-        color: theme('colors.primary');
-        font-weight: theme('fontWeight.semibold');
+        color: theme("colors.primary");
+        font-weight: theme("fontWeight.semibold");
         display: flex;
         align-items: center;
         justify-content: center;
@@ -101,7 +103,7 @@
         }
     }
     [class*="icons__LargeWrapper"] > svg {
-        color: theme('colors.primary');
+        color: theme("colors.primary");
     }
     [class*="TokenOptions__OnHover"] {
         display: none;
@@ -109,7 +111,7 @@
 
     /** Styles for the settings */
     [class*="Popover__PopoverContainer"] {
-        background-color: theme('colors.backgroundVariant300');
+        background-color: theme("colors.backgroundVariant300");
         width: 100%;
         height: 100%;
         max-height: 88%;
@@ -132,15 +134,15 @@
         [class*="Tooltip__IconTooltip"] {
             align-self: start;
             svg {
-                width: theme('spacing.3');
+                width: theme("spacing.3");
             }
         }
 
         [class*="Expando__ExpandoColumn"][open] {
-            max-height: theme('spacing.20');
+            max-height: theme("spacing.20");
 
             [class*="Expando__InnerColumn"] {
-                max-height: theme('spacing.20');
+                max-height: theme("spacing.20");
             }
         }
 
@@ -151,24 +153,24 @@
         [class*="Input-sc"] {
             font-weight: normal;
             padding: 0;
-            border-radius: theme('borderRadius.lg');
-            background-color: theme('colors.backgroundVariant200');
-            margin-right: theme('spacing.1');
+            border-radius: theme("borderRadius.lg");
+            background-color: theme("colors.backgroundVariant200");
+            margin-right: theme("spacing.1");
             & + div {
-                padding-right: theme('spacing.4');
+                padding-right: theme("spacing.4");
                 display: flex;
             }
         }
 
         [class*="MaxSlippageSelect__Custom"] {
-            border-radius: theme('borderRadius.lg');
-            background-color: theme('colors.backgroundVariant200');
-            padding-right: theme('spacing.2');
+            border-radius: theme("borderRadius.lg");
+            background-color: theme("colors.backgroundVariant200");
+            padding-right: theme("spacing.2");
         }
 
         [class*="TransactionTtlInput__Input-sc"] {
-            padding: theme('spacing.3');
-            border-radius: theme('borderRadius.lg');
+            padding: theme("spacing.3");
+            border-radius: theme("borderRadius.lg");
             input:active {
                 border-color: transparent !important;
             }
@@ -177,7 +179,7 @@
 
     /* * Toolbar that show details of your transaction above the large button */
     [class*="Toolbar__StyledExpando"] {
-        font-weight: theme('fontWeight.semibold');
+        font-weight: theme("fontWeight.semibold");
 
         [class*="Popover__Reference"] {
             font-weight: normal;
@@ -191,23 +193,20 @@
     [class*="CommonBases__BasesContainer"] {
         font-weight: normal;
         [class*="CommonBases__BaseWrapper"] {
-            border-radius: theme('borderRadius.lg');
-            background-color: theme('colors.backgroundVariant300');
-            border-color: theme('colors.btnRingVariant200');
-            * {
-                background-color: transparent;
-            }
+            border-radius: theme("borderRadius.lg");
+            background-color: theme("colors.backgroundVariant300");
+            border-color: theme("colors.btnRingVariant200");
         }
     }
 
     /**  Styles for Review Swap */
     [class*="Details__Label"] {
-        font-weight: theme('fontWeight.semibold');
+        font-weight: theme("fontWeight.semibold");
     }
 
     [class*="headline"] {
-        font-weight: theme('fontWeight.bold');
-        line-height: theme('lineHeight.7');
+        font-weight: theme("fontWeight.bold");
+        line-height: theme("lineHeight.7");
     }
     [class*="body"] {
         font-weight: normal;
@@ -218,7 +217,7 @@
 
     /** Swap success & error */
     [class*="Dialog__Modal"] {
-        background-color: theme('colors.backgroundVariant300');
+        background-color: theme("colors.backgroundVariant300");
     }
 
     /** Swap warning */
@@ -229,10 +228,10 @@
     /** Connect Wallet Dialog buttons */
     [class*="ConnectWalletDialog"] {
         [class*="Button__BaseButton"] {
-            background-color: theme('colors.backgroundVariant200');
+            background-color: theme("colors.backgroundVariant200");
         }
         [class*="Button__BaseButton"]:hover {
-            background-color: theme('colors.backgroundVariant500') !important;
+            background-color: theme("colors.backgroundVariant500") !important;
         }
     }
 
