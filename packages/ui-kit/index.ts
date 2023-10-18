@@ -55,6 +55,7 @@ import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
+import { OverlayWrapper } from "./src/components/overlay/OverlayWrapper";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { ChannelSkeleton } from "./src/components/skeletons/ChannelSkeleton";
@@ -130,4 +131,5 @@ export {
     ChannelSkeleton,
     ItemSkeleton,
     Skeleton,
+    OverlayWrapper,
 };
