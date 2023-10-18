@@ -1,6 +1,6 @@
 import { FC } from "react";
-import CONFIG from "src/config";
 import { Button, Overlay } from "@alphaday/ui-kit";
+import CONFIG from "src/config";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
