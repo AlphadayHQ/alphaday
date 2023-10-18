@@ -54,7 +54,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
     return variants[variant];
 };
 
-const CollapseListItem: FC<ICollapseListItem> = ({
+export const CollapseListItem: FC<ICollapseListItem> = ({
     openAccordion,
     author,
     title,

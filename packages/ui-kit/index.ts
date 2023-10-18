@@ -44,6 +44,7 @@ import {
     HeaderNavElement,
 } from "./src/components/layout/Header";
 import Logo from "./src/components/layout/Logo";
+import { CollapseListItem } from "./src/components/listItem/CollapseListItem";
 import {
     ListItem,
     HRElement,
@@ -130,4 +131,5 @@ export {
     ChannelSkeleton,
     ItemSkeleton,
     Skeleton,
+    CollapseListItem,
 };
