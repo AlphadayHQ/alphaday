@@ -1,4 +1,5 @@
 import { useLayer } from "react-laag";
+import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 import {
     BaseModuleWrapper,
@@ -50,12 +51,14 @@ import {
 } from "./src/components/listItem/ListItem";
 
 import { NoItems } from "./src/components/listItem/NoItems";
-import { Modal } from "./src/components/modal/Modal";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
+import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
+import { ChannelSkeleton } from "./src/components/skeletons/ChannelSkeleton";
+import { ItemSkeleton } from "./src/components/skeletons/ItemSkeleton";
 import { Spinner } from "./src/components/spinner/Spinner";
 import { Switch } from "./src/components/switch/Switch";
 import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
@@ -124,4 +127,7 @@ export {
     Switch,
     ModulePreview,
     BoardPreview,
+    ChannelSkeleton,
+    ItemSkeleton,
+    Skeleton,
 };

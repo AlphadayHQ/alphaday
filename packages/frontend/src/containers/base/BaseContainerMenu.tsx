@@ -182,9 +182,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                         tabIndex={0}
                         role="button"
                         className={twMerge(
-                            "flex cursor-pointer items-center px-3 py-1.5",
-                            toggleMinimize === undefined &&
-                                "cursor-not-allowed bg-transparent opacity-50"
+                            "flex cursor-pointer items-center px-3 py-1.5"
                         )}
                     >
                         {toggleExpand ? (

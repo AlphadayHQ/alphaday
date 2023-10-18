@@ -242,9 +242,8 @@ p {
 input,
 select,
 textarea {
-    transition: all 0.4s ease 0s;
     width: 100%;
-    @apply text-primary fontGroup-normal bg-transparent border-btnRingVariant100 border border-solid active:border-primary active:outline-none focus:border-primary focus:outline-none;
+    @apply text-primary fontGroup-normal bg-transparent border border-transparent border-solid active:border-none active:border-primaryVariant100 active:outline-none focus:border-primaryVariant100 focus:outline-none;
 }
 input,
 select {

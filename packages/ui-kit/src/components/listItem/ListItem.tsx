@@ -33,11 +33,11 @@ export const listItemVariants = (variant: IList["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.listItem,
-            "flex flex-row items-start w-full p-3.5 bg-backgroundVariant800  hover:bg-backgroundVariant900 active:bg-backgroundVariant1000"
+            "flex relative flex-row items-start w-full p-3.5 bg-backgroundVariant800  hover:bg-backgroundVariant900 active:bg-backgroundVariant1000"
         ),
         info: "grow-[1]",
         date: "fontGroup-mini min-w-[45px] text-primaryVariant100 mr-[5px]",
-        title: "fontGroup-highlightSemi text-primary self-stretch grow-0 flex items-center",
+        title: "fontGroup-highlightSemi text-primary self-stretch grow-0 flex items-center mb-0",
         content:
             "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlight prose-h3:fontGroup-highlight prose-h5:fontGroup-highlight prose-a:secondaryOrange break-word m-0 text-primary [&>p>a]:text-secondaryOrange",
         readMore: "fontGroup-highlight flex justify-end text-primaryVariant100",
@@ -201,23 +201,30 @@ export const ListItem: FC<IList> = ({
                     onClick={onClick}
                     className={variantStyle.base}
                 >
-                    <div className="top">
+                    <div className="flex flex-row">
                         <img
                             src={tagImg}
                             alt=""
                             className={variantStyle.img}
                             onError={imgOnError}
                         />
-                        <div className={variantStyle.info}>
-                            <p className="source">{tag}</p>
-                            <p className="time">{duration}</p>
+                        <div className="grow-[1]">
+                            <p className="fontGroup-supportBold mb-0">{tag}</p>
+                            <p className="fontGroup-mini text-primaryVariant100">
+                                {duration}
+                            </p>
                         </div>
                     </div>
-                    <div className="text">
+                    <div className="mt-[7px]">
                         <p className={variantStyle.title}>{title}</p>
-                        <p className="desc">{description}</p>
+                        <p className="mt-[3px]">{description}</p>
                     </div>
-                    <p className="lastLine center">
+                    <p
+                        className={twMerge(
+                            variantStyle.lastLine,
+                            "lastLine center"
+                        )}
+                    >
                         <span
                             className={twMerge(
                                 "fontGroup-normal border-primaryVariant200 bg-btnBackgroundVariant300 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
@@ -237,6 +244,7 @@ export const ListItem: FC<IList> = ({
                             isAuthenticated={isAuthenticated}
                             onBookmark={onBookmark}
                             bookmarked={bookmarked}
+                            className="self-center"
                         />
                     </p>
                 </li>
@@ -257,13 +265,18 @@ export const ListItem: FC<IList> = ({
                     <img
                         src={image}
                         alt=""
-                        className="image"
+                        className="min-w-[142.22px] h-20 object-cover rounded-none"
                         onError={imgOnError}
                     />
-                    <div className="text">
+                    <div className="ml-[10px] flex flex-col justify-between h-[initial]">
                         <p className={variantStyle.title}>{title}</p>
 
-                        <p className={twMerge(variantStyle.lastLine, "center")}>
+                        <p
+                            className={twMerge(
+                                variantStyle.lastLine,
+                                "center absolute bottom-4"
+                            )}
+                        >
                             <span>{tag}</span>{" "}
                             <span className={variantStyle.spacer}>•</span>
                             <span className={variantStyle.date}>
