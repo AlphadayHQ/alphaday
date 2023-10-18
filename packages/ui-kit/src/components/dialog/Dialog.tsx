@@ -79,7 +79,7 @@ export const Dialog: FC<
             {...restProps}
         >
             <div className="flex justify-between items-center border-0 p-[15px]">
-                <h6 className="text-primary self-center text-base leading-6">
+                <h6 className="text-primary self-center leading-6 fontGroup-highlightSemi !text-sm m-0">
                     {title}
                 </h6>
                 {showXButton && (
@@ -91,7 +91,7 @@ export const Dialog: FC<
                         type="button"
                         data-testid="alpha-dialog-close-button"
                     >
-                        <CloseSVG className="h-[8.4px] w-[8.4px]" />
+                        <CloseSVG className="h-[8.4px] w-[8.4px] text-primary" />
                     </button>
                 )}
             </div>

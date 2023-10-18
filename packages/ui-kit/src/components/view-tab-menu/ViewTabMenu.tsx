@@ -97,7 +97,7 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
     };
 
     return (
-        <div>
+        <div className="absolute right-1.5">
             <div
                 className="fill-primaryVariant100 cursor-pointer flex items-center self-center"
                 onClick={(e) => {

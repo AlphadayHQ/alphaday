@@ -60,7 +60,7 @@ export const Modal = forwardRef<
             triggerId,
             showModal,
             hideBackdrop,
-            darkerBackdrop,
+            darkerBackdrop = true,
             size,
         },
         ref
