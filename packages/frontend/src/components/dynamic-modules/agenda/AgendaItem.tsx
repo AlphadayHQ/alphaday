@@ -4,7 +4,6 @@ import moment from "moment";
 import { TAgendaItem } from "src/api/types/agenda";
 import { Logger } from "src/api/utils/logging";
 import { useDynamicWidgetItem } from "../hooks/useDynamicWidgetItem";
-import { StyledListItem } from "./Agenda.style";
 
 interface Item {
     item: TAgendaItem;
