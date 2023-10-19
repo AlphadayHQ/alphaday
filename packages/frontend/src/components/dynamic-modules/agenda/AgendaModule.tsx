@@ -45,7 +45,7 @@ const AgendaModule: FC<IAgenda> = ({
             ) : (
                 <ScrollBar containerRef={setScrollRef}>
                     <div
-                        className="contents overflow-hidden"
+                        className="contents overflow-hidden [&>*:first-child]:pt-7"
                         style={{
                             height: `${String(itemsHeight)}px`,
                         }}

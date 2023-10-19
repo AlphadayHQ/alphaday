@@ -3,7 +3,10 @@ import { CollapseListItem, themeColors } from "@alphaday/ui-kit";
 import moment from "moment";
 import { TAgendaItem } from "src/api/types/agenda";
 import { Logger } from "src/api/utils/logging";
+import { remarkRegex, REMARK_URL_REGEX } from "src/api/utils/textUtils";
 import { useDynamicWidgetItem } from "../hooks/useDynamicWidgetItem";
+
+const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
 
 interface Item {
     item: TAgendaItem;
@@ -49,7 +52,7 @@ const AgendaItem: FC<Item> = ({ item, catColor, setItemsHeight }) => {
 
     return (
         <div
-            className="flex flex-row items-start p-[14px] w-full bg-backgroundVariant800 border-none pb-0 pt-5 cursor-pointer flex-grow hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 hover:[&>.right]:border hover:[&>.right]:border-solid hover:[&>.right]:border-backgroundVariant900"
+            className="list-group-item flex flex-row items-start p-[14px] w-full bg-backgroundVariant800 border-none pb-0 pt-5 cursor-pointer flex-grow hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 hover:[&_.info]:border-none"
             onClick={toggleAccordion}
             tabIndex={-1}
             role="button"
@@ -95,6 +98,7 @@ const AgendaItem: FC<Item> = ({ item, catColor, setItemsHeight }) => {
                 description={description}
                 variant="agenda"
                 fullHeight={paddedDescHeight}
+                remarkPlugins={PLUGINS}
             />
         </div>
     );
