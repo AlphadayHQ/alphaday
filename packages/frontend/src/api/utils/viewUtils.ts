@@ -29,17 +29,14 @@ export const isViewModified = (view: TCachedViewMeta): boolean => {
 };
 
 /**
- * @param cachedView A system view in local cache
- * @param remoteViewMeta Metadata for the same system view given by the BE
+ * @param cachedView A view in local cache
+ * @param remoteViewMeta Metadata for the same view given by the BE
  * @returns true if the local view is not up-to-date wrt the BE
  */
 export const isViewStale = (
     cachedView: TCachedViewMeta,
     remoteViewMeta: TUserViewPreview
 ): boolean => {
-    if (!cachedView.data.is_system_view) {
-        return false;
-    }
     const lastUpdateObserved = moment(cachedView.data.updated_at);
     const lastUpdate = moment(remoteViewMeta.updated_at);
     if (lastUpdate.isAfter(lastUpdateObserved)) {
