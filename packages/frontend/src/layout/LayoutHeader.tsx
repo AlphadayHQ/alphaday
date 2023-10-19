@@ -65,7 +65,7 @@ const LayoutHeader: FC<IProps> = ({
                         <Logo />
                         {!hideFeatures && (
                             <>
-                                <div className="two-col:w-[404px] three-col:w-[524px] order-2 flex w-[300px] flex-1 items-center justify-center">
+                                <div className="z-20 two-col:w-[404px] three-col:w-[524px] order-2 flex w-[300px] flex-1 items-center justify-center">
                                     <HeaderSearchContainer />
                                 </div>
                                 <HeaderNavRight className="p-0">
