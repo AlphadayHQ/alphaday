@@ -11,7 +11,7 @@ const GeneralError: FC<{ children?: React.ReactNode }> = ({ children }) => {
                 {isHome ? (
                     <div className="logo top mt-2">
                         <img
-                            src="/images/alphaday-logo-with-text.png"
+                            src={logoDay}
                             alt="alphaday logo"
                             className="w-[36px]"
                         />
