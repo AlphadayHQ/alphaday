@@ -97,7 +97,7 @@ export const textHasTags = (text: string, tags: TTag[]): boolean =>
  * Typically used in the function below, when parsing markdown urls
  */
 export const REMARK_URL_REGEX =
-    /https?:\/\/([a-z\d-]+\.)+[a-z\d]{2,}[\w/?&=#%]*/g;
+    /\b(https?|ftp|file):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]*[-A-Za-z0-9+&@#/%=~_|]/g;
 
 /**
  * Typically used optionally in the function below, when parsing markdown content
@@ -163,6 +163,7 @@ export const remarkRegex = (
                                 hProperties: {
                                     target: "_blank",
                                     rel: "noopener noreferrer",
+                                    className: "regex-link",
                                 },
                             },
                             children: [{ type: "text", value: text }],
