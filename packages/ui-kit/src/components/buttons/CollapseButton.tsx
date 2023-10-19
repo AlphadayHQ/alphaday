@@ -14,9 +14,10 @@ const CollapseButton: FC<IProps> = ({ isCollapsed, className }) => (
         title="Open/close details"
     >
         <span
-            className={`expand-collapse-icon ${
-                isCollapsed ? "collapsed" : ""
-            } `}
+            className={twMerge(
+                styles["expand-collapse-icon"],
+                isCollapsed && styles.collapsed
+            )}
         />
     </div>
 );
