@@ -24,11 +24,11 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
         ),
         title: "flex justify-between",
         collapseButton: "ml-[5px]",
-        desc: "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 transition-[height] duration-[0.25s,opacity]",
+        desc: "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 ease-in-out transition-[height] duration-[0.25s,opacity]",
         wrap: "wrap flex flex-wrap whitespace-pre-wrap prose-p:primary prose-a:secondaryOrange",
         noDesc: "mx-0 my-2.5",
         fullHeight:
-            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 transition-[height] duration-[0.25s,opacity]",
+            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-in-out transition-[height] duration-[0.25s,opacity]",
     };
     const variants = {
         agenda: {
