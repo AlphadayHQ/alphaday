@@ -22,8 +22,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            // "@": path.resolve(__dirname, "src"),
-            //   hack to prevent uniswap widgets error on vite (see https://github.com/Uniswap/sdk-core/issues/20)
+            // hack to prevent uniswap widgets error on vite (see https://github.com/Uniswap/sdk-core/issues/20)
             jsbi: path.resolve(
                 __dirname,
                 "../..",
