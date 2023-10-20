@@ -1,11 +1,9 @@
 import { FC, RefObject } from "react";
 import ReactMarkdown from "react-markdown";
-// import { remarkRegex, REMARK_URL_REGEX } from "src/api/utils/textUtils";
+import { PluggableList } from "react-markdown/lib/react-markdown";
 import { twMerge } from "tailwind-merge";
 import CollapseButton from "../buttons/CollapseButton";
 import styles from "./ListItem.module.scss";
-
-//  TODO (xavier-charles)::  const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
 
 interface ICollapseListItem {
     openAccordion: boolean;
@@ -15,25 +13,28 @@ interface ICollapseListItem {
     description: string;
     fullHeight: number | undefined;
     variant: "faq" | "agenda" | "roadmap";
+    remarkPlugins?: PluggableList;
 }
 
 const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.collapseItem,
-            " ml-5 min-h-[45px] w-full self-auto border-b border-solid border-b-btnRingVariant500 px-0 pb-[5px] pt-[3px]"
+            "info ml-5 min-h-[45px] w-full [align-self:normal] border-b border-solid border-b-btnRingVariant500 px-0 pb-[5px] pt-[3px]"
         ),
         title: "flex justify-between",
         collapseButton: "ml-[5px]",
-        desc: "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 transition-[height] delay-[0.25s] duration-[0.25s,opacity]",
+        desc: "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 ease-in-out transition-[height] duration-300 duration-[0.25s,opacity]",
         wrap: "wrap flex flex-wrap whitespace-pre-wrap prose-p:primary prose-a:secondaryOrange",
         noDesc: "mx-0 my-2.5",
         fullHeight:
-            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 transition-[height] delay-[0.25s] duration-[0.25s,opacity]",
+            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-in-out transition-[height] duration-300  duration-[0.25s,opacity]",
     };
     const variants = {
         agenda: {
             ...defaults,
+            wrap: twMerge(defaults.wrap, "[&_a]:text-secondaryOrange"),
+            title: twMerge(defaults.title, "fontGroup-highlightSemi"),
         },
         faq: {
             ...defaults,
@@ -54,7 +55,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
     return variants[variant];
 };
 
-const CollapseListItem: FC<ICollapseListItem> = ({
+export const CollapseListItem: FC<ICollapseListItem> = ({
     openAccordion,
     author,
     title,
@@ -62,6 +63,7 @@ const CollapseListItem: FC<ICollapseListItem> = ({
     description,
     variant,
     fullHeight,
+    remarkPlugins,
 }) => {
     return (
         <div className={collapseItemVaraints(variant).base}>
@@ -91,7 +93,9 @@ const CollapseListItem: FC<ICollapseListItem> = ({
                 )}
             </div>
             {variant === "agenda" && author && (
-                <div className="speaker">{author}</div>
+                <div className="speaker fontGroup-supportBold text-primaryVariant100">
+                    {author}
+                </div>
             )}
             <div
                 ref={descHeightRef}
@@ -109,7 +113,7 @@ const CollapseListItem: FC<ICollapseListItem> = ({
                     <div className={collapseItemVaraints(variant).wrap}>
                         {description.length > 0 ? (
                             <ReactMarkdown
-                                // remarkPlugins={PLUGINS}
+                                remarkPlugins={remarkPlugins}
                                 linkTarget="_blank"
                             >
                                 {description}

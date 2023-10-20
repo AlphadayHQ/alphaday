@@ -44,6 +44,7 @@ import {
     HeaderNavElement,
 } from "./src/components/layout/Header";
 import Logo from "./src/components/layout/Logo";
+import { CollapseListItem } from "./src/components/listItem/CollapseListItem";
 import {
     ListItem,
     HRElement,
@@ -55,6 +56,7 @@ import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
+import { Overlay } from "./src/components/overlay/Overlay";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { ChannelSkeleton } from "./src/components/skeletons/ChannelSkeleton";
@@ -65,6 +67,7 @@ import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
+import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import {
     ViewTabMenu,
     TViewTabMenuOption,
@@ -108,6 +111,7 @@ export {
     ShareViewDialog,
     ViewDialog,
     Dialog,
+    TextOverlay,
     Modal,
     Input,
     ModuleLoader,
@@ -130,4 +134,6 @@ export {
     ChannelSkeleton,
     ItemSkeleton,
     Skeleton,
+    CollapseListItem,
+    Overlay,
 };

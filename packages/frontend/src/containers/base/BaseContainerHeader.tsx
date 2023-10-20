@@ -73,6 +73,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                                         }}
                                         title={tag.name}
                                         uppercase
+                                        className="pb-[1.85px]"
                                     >
                                         {tag.name}
                                     </TabButton>

@@ -1,6 +1,6 @@
 import { FC } from "react";
-import styles from "Button.module.scss";
 import { twMerge } from "tailwind-merge";
+import styles from "./Button.module.scss";
 
 interface IProps {
     isCollapsed: boolean;
@@ -14,9 +14,10 @@ const CollapseButton: FC<IProps> = ({ isCollapsed, className }) => (
         title="Open/close details"
     >
         <span
-            className={`expand-collapse-icon ${
-                isCollapsed ? "collapsed" : ""
-            } `}
+            className={twMerge(
+                styles["expand-collapse-icon"],
+                isCollapsed && styles.collapsed
+            )}
         />
     </div>
 );

@@ -11,6 +11,7 @@ import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
 import CONFIG from "./config/config";
+import PreloaderPage from "./pages/preloader";
 import { appRoutes, loadRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
@@ -69,7 +70,7 @@ const App: React.FC = () => {
     return (
         <IonApp className="theme-dark">
             <IonReactRouter>
-                <Suspense>
+                <Suspense fallback={<PreloaderPage />}>
                     <IonRouterOutlet>
                         <AppRoutes />
                     </IonRouterOutlet>
