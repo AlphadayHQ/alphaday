@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+import * as path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
@@ -18,5 +19,19 @@ export default defineConfig({
     test: {
         globals: true,
         environment: "happy-dom",
+    },
+    resolve: {
+        alias: {
+            // "@": path.resolve(__dirname, "src"),
+            //   hack to prevent uniswap widgets error on vite (see https://github.com/Uniswap/sdk-core/issues/20)
+            jsbi: path.resolve(
+                __dirname,
+                "../..",
+                "node_modules",
+                "jsbi",
+                "dist",
+                "jsbi-cjs.js"
+            ),
+        },
     },
 });
