@@ -163,7 +163,6 @@ export const remarkRegex = (
                                 hProperties: {
                                     target: "_blank",
                                     rel: "noopener noreferrer",
-                                    className: "regex-link",
                                 },
                             },
                             children: [{ type: "text", value: text }],
