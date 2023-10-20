@@ -20,6 +20,11 @@ export default defineConfig({
         globals: true,
         environment: "happy-dom",
     },
+    build: {
+        commonjsOptions: {
+            transformMixedEsModules: true,
+        },
+    },
     resolve: {
         alias: {
             // hack to prevent uniswap widgets error on vite (see https://github.com/Uniswap/sdk-core/issues/20)
