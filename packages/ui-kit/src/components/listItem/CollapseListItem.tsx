@@ -34,6 +34,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
         agenda: {
             ...defaults,
             wrap: twMerge(defaults.wrap, "[&_a]:text-secondaryOrange"),
+            title: twMerge(defaults.title, "fontGroup-highlightSemi"),
         },
         faq: {
             ...defaults,
@@ -92,7 +93,9 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                 )}
             </div>
             {variant === "agenda" && author && (
-                <div className="speaker">{author}</div>
+                <div className="speaker fontGroup-supportBold text-primaryVariant100">
+                    {author}
+                </div>
             )}
             <div
                 ref={descHeightRef}
