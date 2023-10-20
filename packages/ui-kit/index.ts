@@ -66,6 +66,7 @@ import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
+import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import {
     ViewTabMenu,
     TViewTabMenuOption,
@@ -109,6 +110,7 @@ export {
     ShareViewDialog,
     ViewDialog,
     Dialog,
+    TextOverlay,
     Modal,
     Input,
     ModuleLoader,

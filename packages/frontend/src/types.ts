@@ -63,18 +63,19 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     lens_template: lazy(
         () => import("./containers/lens-feed/LensFeedContainer")
     ),
-    news_template: lazy(() => import("./containers/items/ItemsContainer")),
-    reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
     market_template: lazy(() => import("./containers/market/MarketContainer")),
-    portfolio_template: lazy(
-        () => import("./containers/portfolio/PortfolioContainer")
-    ),
-    summary_template: lazy(
-        () => import("./containers/summary/SummaryContainer")
-    ),
+    news_template: lazy(() => import("./containers/items/ItemsContainer")),
     podcast_template: lazy(
         () => import("./containers/podcast/PodcastContainer")
     ),
+    portfolio_template: lazy(
+        () => import("./containers/portfolio/PortfolioContainer")
+    ),
+    reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
+    summary_template: lazy(
+        () => import("./containers/summary/SummaryContainer")
+    ),
+    uniswap_template: lazy(() => import("./containers/uniswap/SwapContainer")),
     video_template: lazy(() => import("./containers/video/VideoContainer")),
 };
 
