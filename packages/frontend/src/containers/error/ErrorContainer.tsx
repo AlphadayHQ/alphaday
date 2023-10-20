@@ -8,7 +8,7 @@ const getErrorMessage = ({
 }: {
     status: number | undefined | string;
 }): React.ReactNode => {
-    if (status === "offline")
+    if (status === "offline") {
         return (
             <>
                 <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
@@ -21,8 +21,9 @@ const getErrorMessage = ({
                 </p>
             </>
         );
+    }
 
-    if (status === 503)
+    if (status === 503) {
         return (
             <>
                 <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
@@ -48,8 +49,9 @@ const getErrorMessage = ({
                 </p>
             </>
         );
+    }
 
-    if (status === 403)
+    if (status === 403) {
         return (
             <>
                 <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
@@ -61,8 +63,9 @@ const getErrorMessage = ({
                 </p>
             </>
         );
+    }
 
-    if (status === 404)
+    if (status === 404) {
         return (
             <>
                 <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
@@ -73,6 +76,7 @@ const getErrorMessage = ({
                 </p>
             </>
         );
+    }
 
     return (
         <>
