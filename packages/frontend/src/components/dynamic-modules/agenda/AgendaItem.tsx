@@ -58,11 +58,13 @@ const AgendaItem: FC<Item> = ({ item, catColor, setItemsHeight }) => {
             role="button"
         >
             <div className="h-full min-w-[135px] flex flex-col items-end p-[5px_15px_5px_0]">
-                <div className="flex justify-end min-w-[58px] tracking-tight-[0.5px] mr-[5px] text-primaryVariant100 m-[0_0_3px] fontGroup-supportBold">
+                <div className="flex justify-end min-w-[58px] tracking-tight-[0.5px] text-primaryVariant100 m-[0_0_3px] fontGroup-supportBold">
                     {dateField}
-                    <span className="ml-[5px] fontGroup-normal text-primary">
-                        {timeField}
-                    </span>
+                    {timeField && (
+                        <span className="ml-2 fontGroup-normal text-primary">
+                            {timeField}
+                        </span>
+                    )}
                 </div>
 
                 {source && (
