@@ -21,4 +21,12 @@ declare global {
             [K in Keys]-?: Required<Pick<T, K>> &
                 Partial<Pick<T, Exclude<Keys, K>>>;
         }[Keys];
+
+    type JSONValue = string | number | boolean | null | JSONArray | JSONObject;
+
+    interface JSONObject {
+        [k: string]: JSONValue;
+    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface JSONArray extends Array<JSONValue> {}
 }

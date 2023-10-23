@@ -36,6 +36,10 @@ export type TRemoteColumnData = {
     name: string;
 };
 
+/**
+ * @deprecated
+ * This field has been deprecated in favor of `custom_data` and `custom_meta`.
+ */
 export type TRemoteFormatStructure<T> = {
     data?: T;
     columns?: TRemoteFormatStructureColumns[];
@@ -75,51 +79,6 @@ export enum ERemoteWidgetStatus {
  * Types related to custom widgets
  */
 
-export enum ECustomDefaultIcons {
-    SignalSuccess = "signal_success",
-    SignalWarning = "signal_warning",
-    SignalDanger = "signal_danger",
-    ExternalLink = "external_link",
-}
-
-export type TRemoteCustomIcon =
-    | {
-          type: "external";
-          url: "string";
-          position: "left" | "right";
-      }
-    | {
-          type: "internal";
-          id: ECustomDefaultIcons;
-          position?: "left" | "right";
-      };
-
-export type TRemoteCustomDataField =
-    | {
-          name?: string;
-          value: string | undefined | null;
-          type: "string";
-          icon?: TRemoteCustomIcon;
-      }
-    | {
-          name?: string;
-          value: number | undefined | null;
-          type: "number";
-          icon?: TRemoteCustomIcon;
-      }
-    | {
-          name?: string;
-          value: boolean | undefined | null;
-          type: "boolean";
-          icon?: TRemoteCustomIcon;
-      }
-    | {
-          name?: string;
-          value: string[] | undefined | null;
-          type: "array";
-          icon?: TRemoteCustomIcon;
-      };
-
 export type TRemoteFormat =
     | "plain-text"
     | "date"
@@ -133,72 +92,92 @@ export type TRemoteFormat =
     | "percentage"
     | "checkmark";
 
-export type TRemoteCustomExtraStyle = {
-    capitalize?: boolean;
-    signed_number?: boolean;
-    hide_in_header?: boolean;
-    hidden?: boolean;
-    icon?: TRemoteCustomIcon;
-};
-
-export type TCustomLayoutEntry = {
-    name: string;
-    title: string; // eg. the column name displayed in tables
+// types to define the layout of a table column
+export type TRemoteCustomLayoutEntry = {
+    id: number; // note: this is added on the frontend when transforming response
+    title?: string; // eg. the column name displayed in tables
     desc?: string;
-    template?: string; // eg "{{field_name}}" or "{{field_name_a}} {{field_name_b}}"
+    /**
+     * eg. "field_name", "{{field_name}}" or, for composite values, "{{field_name_a}} {{field_name_b}}"
+     */
+    template?: string;
     format?: TRemoteFormat;
-    extra_style?: TRemoteCustomExtraStyle;
-    width: number;
+    width?: number;
     uri_ref?: string; // should point to data field entry
     image_uri_ref?: string; // should point to data field entry
+    capitalize?: boolean;
+    signed_number?: boolean;
+    hide_title?: boolean; // hides title in table
+    hidden?: boolean; // hides whole column
+    justify?: "left" | "center" | "right";
+    prefix?: string; // eg. "$"
+    suffix?: string; // eg. "B"
 };
 
-export type TCustomRowProps = {
-    clickable?: boolean;
-    uri_ref?: string;
+export type TRemoteCustomRowProps = {
+    uri_ref?: string; // if given, whole row should point to this url (with highest predecence)
 };
 
 // tables consume data from either data.items or from an API
 export type TCustomLayoutTable = {
-    layout_type: "table";
-    columns: TCustomLayoutEntry[];
-    row_props?: TCustomRowProps;
+    columns: TRemoteCustomLayoutEntry[];
+    row_props?: TRemoteCustomRowProps;
 };
 
 export type TCustomLayoutChart = {
-    layout_type: "chart";
-    variant?: "bar" | "pie" | "lines"; // etc
-    data: {
-        series_ref: string;
-        label_ref?: string;
-        title?: string;
-        x_label?: string;
-        y_label?: string;
+    variant?: "bar" | "pie" | "lines" | "area" | "donut";
+    title?: string; // unsure if this is going to be used since there is a widget name
+    series: {
+        data_ref: string; // a field from custom_data
         color?: string;
-        // possibly more styling properties
     }[];
 };
 
-export type TCustomLayoutDefault = {
-    layout_type: "default";
-    layout: Record<string, TCustomLayoutEntry>;
+/**
+ * For simplicity we model a Card as a Table containing 1 cell.
+ * This way we avoid introducing a new custom model.
+ */
+export type TCustomLayoutCard = {
+    columns: [TRemoteCustomLayoutEntry];
+    row_props?: TRemoteCustomRowProps;
 };
 
-export type TRemoteCustomData = {
-    fields?: Record<string, TRemoteCustomDataField>;
-    items?: Record<string, TRemoteCustomDataField>[]; // typically used in table widgets
-    data_sets?: Record<string, [number, number][]>;
-};
+export type TRemoteCustomDatum = { id: number | string } & Record<
+    string,
+    number | string | boolean | null
+>;
 
-export type TRemoteCustomMeta = {
+export type TRemoteCustomData = TRemoteCustomDatum[];
+
+// note: not consumed anywhere so far
+type TLayoutSettings = {
     settings?: {
         show_header?: boolean;
         text_wrap?: "truncate" | "break";
     };
-    layout: TCustomLayoutTable | TCustomLayoutChart | TCustomLayoutDefault;
 };
 
-export interface TBaseRemoteWidget<T = undefined> {
+export type TCustomMetaTable = TLayoutSettings & {
+    layout_type: "table";
+    layout: TCustomLayoutTable;
+};
+
+export type TCustomMetaChart = TLayoutSettings & {
+    layout_type: "chart";
+    layout: TCustomLayoutChart;
+};
+
+export type TCustomMetaCard = TLayoutSettings & {
+    layout_type: "card";
+    layout?: TCustomLayoutCard;
+};
+
+export type TRemoteCustomMeta =
+    | TCustomMetaTable
+    | TCustomMetaChart
+    | TCustomMetaCard;
+
+export interface TBaseRemoteRawWidget<T = undefined> {
     id: number;
     name: string;
     slug: TWidgetSlug;
@@ -208,9 +187,9 @@ export interface TBaseRemoteWidget<T = undefined> {
     description: string;
     template: TRemoteWidgetTemplate;
     endpoint_header: Record<string, unknown>;
-    format_structure: TRemoteFormatStructure<T>; // deprecated
-    custom_data: TRemoteCustomData | Record<string, never>;
-    custom_meta: TRemoteCustomMeta | Record<string, never>;
+    format_structure: TRemoteFormatStructure<T>;
+    custom_data: JSONValue;
+    custom_meta: JSONValue;
     settings: TRemoteWidgetSetting[];
     max_per_view: number | null;
     refresh_interval: number | null;
@@ -220,19 +199,27 @@ export interface TBaseRemoteWidget<T = undefined> {
     categories: TRemoteWidgetCategory[];
 }
 
-export interface IRemoteStaticDataWidget<T> extends TBaseRemoteWidget<T> {
+export interface IRemoteStaticDataWidget<T> extends TBaseRemoteRawWidget<T> {
     data_type: EWidgetData.Static;
     endpoint_url: null;
 }
 
-export interface IRemoteApiDataWidget<T> extends TBaseRemoteWidget<T> {
+export interface IRemoteApiDataWidget<T> extends TBaseRemoteRawWidget<T> {
     data_type: EWidgetData.External | EWidgetData.Internal;
     endpoint_url: string;
 }
 
-export type IRemoteWidget<T = undefined> =
+export type IRemoteRawWidget<T = undefined> =
     | IRemoteApiDataWidget<T>
     | IRemoteStaticDataWidget<T>;
+
+export type IRemoteWidget<T = undefined> = Omit<
+    IRemoteRawWidget<T>,
+    "custom_data" | "custom_meta"
+> & {
+    custom_data: TRemoteCustomData | undefined;
+    custom_meta: TRemoteCustomMeta | undefined;
+};
 
 export type TRemoteUserViewWidgetSetting = {
     setting: {
@@ -248,12 +235,20 @@ export type TRemoteBaseUserViewWidget = {
     sort_order: number;
 };
 
-export type TRemoteUserViewWidget<T = unknown> = TRemoteBaseUserViewWidget & {
-    id: number;
-    hash: string;
-    name: string;
+export type TRemoteRawUserViewWidget<T = unknown> =
+    TRemoteBaseUserViewWidget & {
+        id: number;
+        hash: string;
+        name: string;
+        widget: IRemoteRawWidget<T>;
+        settings: TRemoteUserViewWidgetSetting[];
+    };
+
+export type TRemoteUserViewWidget<T = unknown> = Omit<
+    TRemoteRawUserViewWidget,
+    "widget"
+> & {
     widget: IRemoteWidget<T>;
-    settings: TRemoteUserViewWidgetSetting[];
 };
 
 export type TRemoteBaseUserView = {
@@ -278,17 +273,22 @@ export type TRemoteUserViewMeta = {
 
 export type TRemoteUserViewPreview = TRemoteUserViewMeta & TRemoteBaseUserView;
 
-export type TRemoteUserView = TRemoteBaseUserView & {
+// Full view data before data validation
+export type TRemoteRawUserView = TRemoteBaseUserView & {
     id: number;
     hash: string;
     icon: string | null;
-    widgets: TRemoteUserViewWidget[];
+    widgets: TRemoteRawUserViewWidget[];
     keywords: {
         id: number;
         name: string;
         tag: TRemoteTagReadOnly;
     }[];
     max_widgets: number;
+};
+
+export type TRemoteUserView = Omit<TRemoteRawUserView, "widgets"> & {
+    widgets: TRemoteUserViewWidget[];
 };
 
 export type TRemoteViewCategory = {
@@ -306,6 +306,22 @@ export type TRemoteWidgetCategory = {
     featured: boolean;
     sort_order: number;
 };
+
+export type TRemoteWidgetMini = Pick<
+    TBaseRemoteRawWidget,
+    | "id"
+    | "name"
+    | "slug"
+    | "icon"
+    | "short_description"
+    | "description"
+    | "template"
+    | "max_per_view"
+    | "refresh_interval"
+    | "sort_order"
+    | "featured"
+    | "categories"
+>;
 
 /**
  * "Draft" types are those used to build views locally
@@ -371,14 +387,16 @@ export type TViewCategoriesRawResponse = ReadonlyArray<TRemoteViewCategory>;
 export type TViewCategoriesResponse = TViewCategoriesRawResponse;
 
 export type TViewByIdRequest = { id: number };
-export type TViewByIdRawResponse = Readonly<TRemoteUserView>;
-export type TViewByIdResponse = TViewByIdRawResponse;
+export type TViewByIdRawResponse = Readonly<TRemoteRawUserView>;
+export type TViewByIdResponse = Readonly<TRemoteUserView>;
 
 export type TViewByHashOrSlugRequest = { hash?: string } | { slug?: string };
-export type TViewByHashOrSlugResponse = TViewByIdResponse;
+export type TViewByHashOrSlugRawResponse = Readonly<TRemoteRawUserView>;
+export type TViewByHashOrSlugResponse = Readonly<TRemoteUserView>;
 
 export type TViewForWalletRequest = void;
-export type TViewForWalletResponse = TViewByIdResponse;
+export type TViewForWalletRawResponse = Readonly<TRemoteRawUserView>;
+export type TViewForWalletResponse = Readonly<TRemoteUserView>;
 
 export type TSaveViewAsRequest = TRemoteUserViewDraft;
 export type TSaveViewAsResponse = TRemoteUserView;
@@ -399,12 +417,12 @@ export type TSubscribeViewRequest = { id: number };
 export type TSubscribeViewResponse = null;
 
 export type TWidgetsRequest = { sortBy?: EItemsSortBy } | void;
-export type TWidgetsRawResponse = ReadonlyArray<IRemoteWidget>;
+export type TWidgetsRawResponse = ReadonlyArray<TRemoteWidgetMini>;
 export type TWidgetsResponse = TWidgetsRawResponse;
 
 export type TWidgetByIdRequest = { id: number };
-export type TWidgetByIdRawResponse = Readonly<IRemoteWidget>;
-export type TWidgetByIdResponse = TWidgetByIdRawResponse;
+export type TWidgetByIdRawResponse = Readonly<IRemoteRawWidget>;
+export type TWidgetByIdResponse = Readonly<IRemoteWidget>;
 
 export type TWidgetsCategoryRequest = {
     page?: number;
