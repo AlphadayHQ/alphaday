@@ -25,31 +25,17 @@ const Item: FC<IProps> = ({
         if (type) {
             return (
                 <div className="flex w-full items-center justify-between relative">
-                    <span className={`ml-10 ${type ? "ml-0" : "ml-10"}`}>
-                        {title}
-                    </span>
+                    <span className="ml-0">{title}</span>
                     <div className="grid grid-cols-3 gap-10 float-right">
-                        <span
-                            className={`ml-auto text-right ${
-                                type ? "text-primaryVariant100" : "text-primary"
-                            }`}
-                        >
+                        <span className="ml-auto text-right text-primaryVariant100">
                             Fast (est.)
                         </span>
 
-                        <span
-                            className={`ml-auto text-right ${
-                                type ? "text-primaryVariant100" : "text-primary"
-                            }`}
-                        >
+                        <span className="ml-auto text-right text-primaryVariant100">
                             Standard (est.)
                         </span>
 
-                        <span
-                            className={`ml-auto text-right ${
-                                type ? "text-primaryVariant100" : "text-primary"
-                            }`}
-                        >
+                        <span className="ml-auto text-right text-primaryVariant100">
                             Slow (est.)
                         </span>
                     </div>
@@ -64,9 +50,7 @@ const Item: FC<IProps> = ({
                         src={img}
                         alt="Item"
                     />
-                    <span className={`ml-10 ${type ? "ml-0" : "ml-10"}`}>
-                        {title}
-                    </span>
+                    <span className="ml-10">{title}</span>
                 </div>
 
                 <div className="values grid grid-cols-3 gap-10 float-right">
@@ -74,11 +58,7 @@ const Item: FC<IProps> = ({
                         Object.entries(gasPrices).map(([key, value]) => (
                             <span
                                 key={key}
-                                className={`ml-auto text-right ${
-                                    type
-                                        ? "text-primaryVariant100"
-                                        : "text-primary"
-                                }`}
+                                className="ml-auto text-right text-primary"
                             >
                                 {Intl.NumberFormat("en-US", {
                                     style: "currency",
@@ -94,7 +74,7 @@ const Item: FC<IProps> = ({
             </div>
         );
     }
-    return <></>;
+    return null;
 };
 
 export default Item;

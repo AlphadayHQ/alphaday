@@ -35,41 +35,35 @@ const GasContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.NETWORK.POLLING_INTERVAL) * 1000;
 
-    const {
-        data: gasData,
-        isLoading: isLoadingGasData,
-    } = useGetMultiKeyValueQuery(
-        {
-            keys: Object.keys(GAS_PRICE_DATA),
-        },
-        { pollingInterval }
-    );
+    const { data: gasData, isLoading: isLoadingGasData } =
+        useGetMultiKeyValueQuery(
+            {
+                keys: Object.keys(GAS_PRICE_DATA),
+            },
+            { pollingInterval }
+        );
 
-    const {
-        data: ethPriceResponse,
-        isLoading: isLoadingEthPrice,
-    } = useGetMarketDataQuery(
-        {
-            tags: "ethereum",
-            limit: 1,
-        },
-        {
-            pollingInterval,
-        }
-    );
+    const { data: ethPriceResponse, isLoading: isLoadingEthPrice } =
+        useGetMarketDataQuery(
+            {
+                tags: "ethereum",
+                limit: 1,
+            },
+            {
+                pollingInterval,
+            }
+        );
 
-    const {
-        data: beaconData,
-        isLoading: isLoadingBeaconChain,
-    } = useGetMultiKeyValueQuery(
-        {
-            keys: Object.keys(BEACON_CHAIN_DATA),
-        },
-        {
-            pollingInterval,
-            skip: !isBeaconWidget,
-        }
-    );
+    const { data: beaconData, isLoading: isLoadingBeaconChain } =
+        useGetMultiKeyValueQuery(
+            {
+                keys: Object.keys(BEACON_CHAIN_DATA),
+            },
+            {
+                pollingInterval,
+                skip: !isBeaconWidget,
+            }
+        );
 
     const ethPrice =
         ethPriceResponse?.results[0]?.price !== undefined

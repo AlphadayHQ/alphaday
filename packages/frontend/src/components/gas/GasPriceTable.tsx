@@ -13,7 +13,7 @@ export type TGasPriceTable = {
     finalizedEpoch: number;
     activeValidators: number;
     avgValidatorBalance: number;
-    rewardsApr: number;
+    // rewardsApr: number;
 };
 
 const GasPriceTable: FC<TGasPriceTable> = ({

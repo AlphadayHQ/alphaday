@@ -1,7 +1,5 @@
 import { FC, HTMLProps } from "react";
-import { twMerge } from "@alphaday/ui-kit";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { twMerge, Skeleton } from "@alphaday/ui-kit";
 
 const GasSkeleton = () => (
     <div className="h-10">

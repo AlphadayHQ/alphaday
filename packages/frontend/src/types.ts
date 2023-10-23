@@ -60,6 +60,7 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     dao_template: lazy(() => import("./containers/items/ItemsContainer")),
     discord_template: lazy(() => import("./containers/items/ItemsContainer")),
     forum_template: lazy(() => import("./containers/items/ItemsContainer")),
+    gas_template: lazy(() => import("./containers/gas/GasContainer")),
     lens_template: lazy(
         () => import("./containers/lens-feed/LensFeedContainer")
     ),
