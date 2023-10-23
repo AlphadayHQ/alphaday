@@ -24,7 +24,7 @@ const Item: FC<IProps> = ({
     if (ethPrice && gasPrices) {
         if (type) {
             return (
-                <div className="flex w-full items-center justify-between relative">
+                <div className="flex w-full items-center justify-between relative uppercase fontGroup-support">
                     <span className="ml-0">{title}</span>
                     <div className="grid grid-cols-3 gap-10 float-right">
                         <span className="ml-auto text-right text-primaryVariant100">
@@ -43,17 +43,17 @@ const Item: FC<IProps> = ({
             );
         }
         return (
-            <div className="flex w-full items-center justify-between relative">
-                <div className="item-wrapper">
+            <div className="flex w-full items-center justify-between relative py-3 [&:last-child]:pb-0">
+                <div className="item-wrapper flex items-center">
                     <img
-                        className="w-21 h-21 relative top-[-1px] rounded-full"
+                        className="w-5 h-5 rounded-full"
                         src={img}
                         alt="Item"
                     />
-                    <span className="ml-10">{title}</span>
+                    <span className="ml-3 font-bold">{title}</span>
                 </div>
 
-                <div className="values grid grid-cols-3 gap-10 float-right">
+                <div className="grid grid-cols-3 gap-10 float-right">
                     {gasPrices &&
                         Object.entries(gasPrices).map(([key, value]) => (
                             <span

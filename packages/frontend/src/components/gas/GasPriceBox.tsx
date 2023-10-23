@@ -28,7 +28,7 @@ const GasPriceTitle: FC<HTMLProps<HTMLHeadingElement>> = ({
 }) => (
     <h6
         className={twMerge(
-            "text-support text-center text-uppercase mb-7",
+            "fontGroup-support text-center uppercase mb-2",
             className
         )}
         {...props}
@@ -45,7 +45,7 @@ interface IGasPriceBox {
 
 const GasPriceBox: FC<IGasPriceBox> = ({ type, gweiPrice, usdPrice }) => {
     return (
-        <div className="flex flex-col justify-center items-center border btn-ring-variant-300 box-border rounded-10 min-w-90 p-0 w-30 h-91">
+        <div className="flex flex-col justify-center items-center border border-btnRingVariant500 box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
             {type === "fast" && (
                 <GasPriceTitle className="text-success">{type}</GasPriceTitle>
             )}
@@ -57,13 +57,13 @@ const GasPriceBox: FC<IGasPriceBox> = ({ type, gweiPrice, usdPrice }) => {
             {type === "slow" && (
                 <GasPriceTitle className="text-red-400">{type}</GasPriceTitle>
             )}
-            <div className="whitespace-nowrap text-major text-center">
+            <div className="whitespace-nowrap text-center">
                 {gweiPrice && usdPrice ? (
                     <div>
-                        <p className="text-primary mb-0 text-center">
+                        <p className="fontGroup-major text-primary mb-0 text-center">
                             {gweiPrice}
                         </p>
-                        <p className="text-primary mb-0 text-center text-primary-variant-100 mt-6">
+                        <p className="fontGroup-support mb-0 text-center text-primaryVariant100 mt-1">
                             ${usdPrice.toFixed(2)}
                         </p>
                     </div>
