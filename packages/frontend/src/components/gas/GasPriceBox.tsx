@@ -55,7 +55,9 @@ const GasPriceBox: FC<IGasPriceBox> = ({ type, gweiPrice, usdPrice }) => {
                 </GasPriceTitle>
             )}
             {type === "slow" && (
-                <GasPriceTitle className="text-red-400">{type}</GasPriceTitle>
+                <GasPriceTitle className="text-secondaryOrangeSoda">
+                    {type}
+                </GasPriceTitle>
             )}
             <div className="whitespace-nowrap text-center">
                 {gweiPrice && usdPrice ? (
