@@ -19,18 +19,18 @@ const FaqItem: FC<IItem> = ({ item, setItemsHeight }) => {
             title="Open/close details"
             role="button"
             onClick={toggleAccordion}
-            className="flex flex-row items-start p-[14px] w-full bg-backgroundVariant800 border-none pb-0 pt-5 cursor-pointer flex-grow hover:bg-backgroundVariant900 duration-200 ease-in-out hover:[&_.right]:border hover:[&_.right]:border-backgroundVariant900 active:bg-backgroundVariant1000"
+            className="list-group-item flex flex-row items-start p-[14px] w-full bg-backgroundVariant800 pb-0 pt-5 cursor-pointer flex-grow hover:bg-backgroundVariant900 duration-200 ease-[ease] border-b border-btnRingVariant500 active:bg-backgroundVariant1000 [&:nth-of-type(1)]:pt-[30px] [&:nth-of-type(1)>.line]:-bottom-3 [&:nth-of-type(1)>.line]:h-full [&:nth-of-type(1)>.line]:top-auto"
         >
-            <div className="flex">
-                <CollapseListItem
-                    title={name}
-                    openAccordion={openAccordion}
-                    descHeightRef={descHeightRef}
-                    description={description}
-                    variant="faq"
-                    fullHeight={descHeight}
-                />
-            </div>
+            {/* <div className="flex w"> */}
+            <CollapseListItem
+                title={name}
+                openAccordion={openAccordion}
+                descHeightRef={descHeightRef}
+                description={description}
+                variant="faq"
+                fullHeight={descHeight}
+            />
+            {/* </div> */}
         </div>
     );
 };

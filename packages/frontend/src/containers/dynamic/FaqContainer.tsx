@@ -6,7 +6,6 @@ import { IModuleContainer, TItem } from "src/types";
 const FaqContainer: FC<IModuleContainer<TItem[][]>> = ({ moduleData }) => {
     const widgetHeight = useWidgetHeight(moduleData);
     const items = moduleData.widget.format_structure.data?.[0] || [];
-
     return (
         <FaqModule
             widgetHeight={widgetHeight}

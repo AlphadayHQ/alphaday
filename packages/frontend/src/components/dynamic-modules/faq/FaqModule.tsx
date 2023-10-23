@@ -27,7 +27,7 @@ const FaqModule: FC<IAgenda> = ({
 
     return (
         <span
-            className="border-none block relative min-h-[110px] [&:nth-of-type(1)]:pt-[30px] [&:nth-of-type(1)>.line]:-bottom-3 [&:nth-of-type(1)>.line]:h-full [&:nth-of-type(1)>.line]:top-auto"
+            className="border-none block relative min-h-[110px]"
             style={{
                 // height of the table should not be greater than max-content
                 height: `${Math.min(initialItemsHeight, widgetHeight)}px`,

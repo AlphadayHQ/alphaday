@@ -82,7 +82,7 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     roadmap_template: lazy(
         () => import("./containers/dynamic/RoadmapContainer")
     ),
-    faq_template: lazy(() => import("./containers/dynamic/AgendaContainer")),
+    faq_template: lazy(() => import("./containers/dynamic/FaqContainer")),
 };
 
 export type TFullSizeRoute = {

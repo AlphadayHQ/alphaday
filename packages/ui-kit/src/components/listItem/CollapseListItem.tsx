@@ -40,7 +40,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "faq w-full min-h-[45px] pt-[3px] pb-[5px] px-0 border-[none]"
+                "faq w-full min-h-[45px] pt-[3px] pb-[5px] px-0 border-[none] border-0"
             ),
             title: twMerge(
                 defaults.title,
@@ -50,7 +50,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
                 defaults.desc,
                 "h-0 pointer-events-none mx-0 my-[5px]"
             ),
-            wrap: twMerge(defaults.wrap, "p-[5px 0 0 28px]"),
+            wrap: twMerge(defaults.wrap, "p-0 pt-[5px] pl-7"),
         },
         roadmap: {
             ...defaults,
@@ -86,9 +86,10 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                         >
                             <span
                                 className={twMerge(
-                                    openAccordion &&
-                                        "collapsed before:rotate-[0]",
-                                    "before:text-secondaryOrange100 relative inline-block h-[1em] w-[1em] text-lg before:absolute before:top-px before:origin-center before:rotate-90 before:transition-[0.2s] before:duration-[transform] before:ease-[ease] before:content-['▶']"
+                                    openAccordion
+                                        ? "collapsed before:rotate-90"
+                                        : "before:rotate-[0]",
+                                    "before:text-secondaryOrange100 relative inline-block h-[1em] w-[1em] text-lg before:absolute before:top-px before:origin-center before:transition-[0.2s] before:duration-[transform] before:ease-[ease] before:content-['▶']"
                                 )}
                             />
                         </div>
