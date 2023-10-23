@@ -42,7 +42,10 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
                 defaults.base,
                 "faq w-full min-h-[45px] pt-[3px] pb-[5px] px-0 border-[none]"
             ),
-            title: twMerge(defaults.title, "justify-start"),
+            title: twMerge(
+                defaults.title,
+                "fontGroup-highlightSemi text-primary self-stretch items-baseline flex-grow-0 justify-start"
+            ),
             desc: twMerge(
                 defaults.desc,
                 "h-0 pointer-events-none mx-0 my-[5px]"
@@ -89,7 +92,7 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                                 )}
                             />
                         </div>
-                        <span className="label">{title}</span>
+                        <span className="mr-[5px] ml-[10px]">{title}</span>
                     </>
                 ) : (
                     <>
