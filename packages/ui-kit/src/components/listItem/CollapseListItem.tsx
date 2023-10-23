@@ -49,7 +49,13 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
             ),
             wrap: twMerge(defaults.wrap, "p-[5px 0 0 28px]"),
         },
-        roadmap: { ...defaults },
+        roadmap: {
+            ...defaults,
+            title: twMerge(
+                defaults.title,
+                "text-primary self-stretch flex-grow-0"
+            ),
+        },
     };
 
     return variants[variant];

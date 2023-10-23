@@ -37,7 +37,7 @@ const RoadmapModule: FC<IRoadmap> = ({
     if (items.length > 0)
         return (
             <div
-                className="bg-backgroundVariant800 flex flex-col flex-grow [&_scrollbar-container]:flex [&_scrollbar-container]:flex-col"
+                className="bg-backgroundVariant800 flex flex-col flex-grow [&_scrollbar-container]:flex [&_scrollbar-container]:flex-col [&:nth-of-type(1)]:pt-[30px] [&:nth-of-type(1)>.line]:-bottom-3 [&:nth-of-type(1)>.line]:h-full [&:nth-of-type(1)>.line]:top-auto"
                 style={{
                     height: `${Math.min(initialItemsHeight, widgetHeight)}px`,
                 }}
