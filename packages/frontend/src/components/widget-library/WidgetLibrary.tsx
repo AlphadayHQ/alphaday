@@ -9,7 +9,7 @@ import {
     twMerge,
 } from "@alphaday/ui-kit";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
-import { TWidget } from "src/api/types";
+import { TWidget, TWidgetMini } from "src/api/types";
 import { ReactComponent as ChartSVG } from "src/assets/icons/chart.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as DefiSVG } from "src/assets/icons/defi.svg";
@@ -55,11 +55,11 @@ interface IWidgetLibProps {
     /**
      * Widgets to display in the library
      */
-    widgets: ReadonlyArray<TWidget> | undefined;
+    widgets: ReadonlyArray<TWidgetMini> | undefined;
     /**
      * Currently selected widget
      */
-    selectedWidget: TWidget | undefined;
+    selectedWidget: TWidgetMini | undefined;
     cachedWidgets: ReadonlyArray<TWidget> | undefined;
     categories: ReadonlyArray<TRemoteWidgetCategory>;
     selectedCategory: string | undefined;
@@ -69,7 +69,7 @@ interface IWidgetLibProps {
      *
      * @param w
      */
-    handleSelectWidget: (w: TWidget) => void;
+    handleSelectWidget: (w: TWidgetMini) => void;
     onFilter(filter: string): void;
     /**
      * Handler to sort the widgets
