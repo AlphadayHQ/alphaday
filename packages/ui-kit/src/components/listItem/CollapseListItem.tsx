@@ -56,8 +56,9 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
             ...defaults,
             title: twMerge(
                 defaults.title,
-                "text-primary self-stretch flex-grow-0"
+                "text-primary fontGroup-highlightSemi self-stretch flex-grow-0"
             ),
+            wrap: twMerge(defaults.wrap, "pt-[5px]"),
         },
     };
 
