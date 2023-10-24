@@ -72,7 +72,7 @@ export type TPagination = {
     total: number;
 };
 
-export type TProjectType = "protocol" | "chain";
+export type TRemoteProjectType = "protocol" | "chain";
 
 export type TRemoteChain = {
     name: string;
@@ -87,9 +87,10 @@ export type TRemoteLink = {
 export type TRemoteBaseProject = {
     name: string;
     slug: string;
-    project_type: TProjectType;
+    project_type: TRemoteProjectType;
     network_id: number;
     icon?: string;
+    url?: string;
 };
 
 export type TBaseCoin = {
