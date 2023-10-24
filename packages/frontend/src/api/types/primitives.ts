@@ -97,6 +97,6 @@ export type TCryptoAccount = {
 
 export enum ECookieChoice {
     RejectAll,
-    AccpetEssential,
+    AcceptEssential,
     AcceptAll,
 }
