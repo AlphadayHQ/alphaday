@@ -51,6 +51,9 @@ import {
     listItemVariants,
 } from "./src/components/listItem/ListItem";
 
+import { Carousel } from "./src/components/carousel/Carousel";
+import { Lightbox } from "./src/components/carousel/Lightbox";
+import { CarouselImage } from "./src/components/carousel/CarouselImage";
 import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { NoItems } from "./src/components/listItem/NoItems";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
@@ -93,6 +96,9 @@ export {
     NavTabButton,
     TabButton,
     ViewTabButton,
+    Carousel,
+    CarouselImage,
+    Lightbox,
     ErrorModal,
     Footer,
     Logo,
