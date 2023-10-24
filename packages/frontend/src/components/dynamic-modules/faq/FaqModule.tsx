@@ -34,7 +34,7 @@ const FaqModule: FC<IAgenda> = ({
             }}
         >
             {!items || items?.length < 1 ? (
-                <ModuleLoader $height={`${String(widgetHeight)}px`} />
+                <ModuleLoader $height={`${widgetHeight}px`} />
             ) : (
                 <ScrollBar containerRef={setScrollRef}>
                     <div
