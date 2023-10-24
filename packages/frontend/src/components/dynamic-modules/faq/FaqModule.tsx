@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { ModuleLoader } from "@alphaday/ui-kit";
-import ScrollBar from "react-perfect-scrollbar";
+import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useDynamicWidgetHeight } from "src/components/dynamic-modules/hooks/useDynamicWidgetHeight";
 import CONFIG from "src/config/config";
 import { TItem } from "src/types";
