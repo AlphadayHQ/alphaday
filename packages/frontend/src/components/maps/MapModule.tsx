@@ -5,7 +5,7 @@ const MapModule: FC<{ url: string; title?: string }> = memo(function MapModule({
     title,
 }) {
     return (
-        <iframe src={url} className="w-full h-full border-0" title={title} />
+        <iframe src={url} className="w-full h-[500px] border-0" title={title} />
     );
 });
 export default MapModule;
