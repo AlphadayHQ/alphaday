@@ -1,6 +1,7 @@
 import { useLayer } from "react-laag";
 import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
+import { Arrow } from "./src/components/arrow/Arrow";
 import {
     BaseModuleWrapper,
     BaseModuleBody,
@@ -51,7 +52,6 @@ import {
     listItemVariants,
 } from "./src/components/listItem/ListItem";
 
-import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { NoItems } from "./src/components/listItem/NoItems";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { Modal } from "./src/components/modal/Modal";
@@ -68,6 +68,7 @@ import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
+import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import {
     ViewTabMenu,
@@ -85,6 +86,7 @@ export {
     ApexLineChart,
     ApexPieChart,
     ApexRadialChart,
+    Arrow,
     themeColors,
     breakpoints,
     listItemVariants,
