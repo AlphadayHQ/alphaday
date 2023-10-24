@@ -35,8 +35,8 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
                 icon: "table-template.png",
                 status: 1,
             },
-            custom_data: {},
-            custom_meta: {},
+            custom_data: undefined,
+            custom_meta: undefined,
             format_structure: {
                 data: [
                     { name: "John Doe", age: "30" },
@@ -114,8 +114,8 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
                 icon: "table-template.png",
                 status: 1,
             },
-            custom_data: {},
-            custom_meta: {},
+            custom_data: undefined,
+            custom_meta: undefined,
             format_structure: {
                 data: [
                     { job: "Developer", pay: "50.670090" },
@@ -196,53 +196,36 @@ export const customTableModuleDataMock: TUserViewWidget[] = [
                 icon: "table-template.png",
                 status: 1,
             },
-            custom_data: {
-                items: [
-                    {
-                        category: {
-                            name: "category",
-                            value: "Beginners",
-                            type: "string",
-                        },
-                        link_name: {
-                            name: "link_name",
-                            value: "coinbase.com",
-                            type: "string",
-                        },
-                        exchange_url: {
-                            name: "exchange_url",
-                            value: "http://coinbase.com/",
-                            type: "string",
-                        },
-                        exchange_name: {
-                            name: "exchange_name",
-                            value: "Coinbase",
-                            type: "string",
-                        },
-                    },
-                ],
-            },
+            custom_data: [
+                {
+                    id: 0,
+                    category: "Beginners",
+                    link_name: "coinbase.com",
+                    exchange_url: "http://coinbase.com/",
+                    exchange_name: "Coinbase",
+                },
+            ],
             custom_meta: {
+                layout_type: "table",
                 layout: {
-                    layout_type: "table",
                     columns: [
                         {
+                            id: 0,
                             title: "Best for",
-                            name: "category",
                             template: "{{category}}",
                             format: "plain-text",
                             width: 1,
                         },
                         {
+                            id: 1,
                             title: "Exchange Name",
-                            name: "exchange_name",
                             template: "{{exchange_name}}",
                             format: "plain-text",
                             width: 1,
                         },
                         {
+                            id: 2,
                             title: "URL",
-                            name: "exchange_url",
                             template: "{{exchange_url}}",
                             format: "link",
                             width: 1,
@@ -301,36 +284,27 @@ export const customTableModuleDataMock: TUserViewWidget[] = [
                 icon: "table-template.png",
                 status: 1,
             },
-            custom_data: {
-                items: [
-                    {
-                        job: {
-                            name: "job",
-                            value: "Developer",
-                            type: "string",
-                        },
-                        pay: {
-                            name: "pay",
-                            value: 50.67009,
-                            type: "number",
-                        },
-                    },
-                ],
-            },
+            custom_data: [
+                {
+                    id: 0,
+                    job: "Developer",
+                    pay: 50.67009,
+                },
+            ],
             custom_meta: {
+                layout_type: "table",
                 layout: {
-                    layout_type: "table",
                     columns: [
                         {
+                            id: 0,
                             title: "Jobs",
-                            name: "jobs",
                             template: "{{job}}",
                             format: "plain-text",
                             width: 1,
                         },
                         {
+                            id: 1,
                             title: "Pay",
-                            name: "pay",
                             template: "{{pay}}",
                             format: "decimal",
                             width: 1,
