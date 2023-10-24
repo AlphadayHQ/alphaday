@@ -24,11 +24,11 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
         ),
         title: "flex justify-between",
         collapseButton: "ml-[5px]",
-        desc: "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 ease-in-out transition-[height] duration-300 duration-[0.25s,opacity]",
+        desc: "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 ease-[ease] transition-all duration-300",
         wrap: "wrap flex flex-wrap whitespace-pre-wrap prose-p:primary prose-a:secondaryOrange",
         noDesc: "mx-0 my-2.5",
         fullHeight:
-            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-in-out transition-[height] duration-300  duration-[0.25s,opacity]",
+            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-[ease] transition-all duration-300 ",
     };
     const variants = {
         agenda: {
@@ -40,16 +40,26 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "faq w-full min-h-[45px] pt-[3px] pb-[5px] px-0 border-[none]"
+                "faq w-full min-h-[45px] pt-[3px] pb-[5px] px-0 border-[none] border-0"
             ),
-            title: twMerge(defaults.title, "justify-start"),
+            title: twMerge(
+                defaults.title,
+                "fontGroup-highlightSemi text-primary self-stretch items-baseline flex-grow-0 justify-start"
+            ),
             desc: twMerge(
                 defaults.desc,
                 "h-0 pointer-events-none mx-0 my-[5px]"
             ),
-            wrap: twMerge(defaults.wrap, "p-[5px 0 0 28px]"),
+            wrap: twMerge(defaults.wrap, "p-0 pt-[5px] pl-7"),
         },
-        roadmap: { ...defaults },
+        roadmap: {
+            ...defaults,
+            title: twMerge(
+                defaults.title,
+                "text-primary fontGroup-highlightSemi self-stretch flex-grow-0"
+            ),
+            wrap: twMerge(defaults.wrap, "pt-[5px]"),
+        },
     };
 
     return variants[variant];
@@ -77,13 +87,14 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                         >
                             <span
                                 className={twMerge(
-                                    openAccordion &&
-                                        "collapsed before:rotate-[0]",
-                                    "before:text-secondaryOrange100 relative inline-block h-[1em] w-[1em] text-lg before:absolute before:top-px before:origin-center before:rotate-90 before:transition-[0.2s] before:duration-[transform] before:ease-[ease] before:content-['▶']"
+                                    openAccordion
+                                        ? "collapsed before:rotate-90"
+                                        : "before:rotate-[0]",
+                                    "before:text-secondaryOrange100 relative inline-block h-[1em] w-[1em] text-lg before:absolute before:top-px before:origin-center before:transition-[0.2s] before:duration-[transform] before:ease-[ease] before:content-['▶']"
                                 )}
                             />
                         </div>
-                        <span className="label">{title}</span>
+                        <span className="mr-[5px] ml-[10px]">{title}</span>
                     </>
                 ) : (
                     <>
