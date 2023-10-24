@@ -51,6 +51,7 @@ import {
     listItemVariants,
 } from "./src/components/listItem/ListItem";
 
+import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { NoItems } from "./src/components/listItem/NoItems";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { Modal } from "./src/components/modal/Modal";
@@ -135,5 +136,6 @@ export {
     ItemSkeleton,
     Skeleton,
     CollapseListItem,
+    KeyValueTable,
     Overlay,
 };
