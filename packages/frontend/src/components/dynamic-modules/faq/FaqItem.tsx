@@ -21,7 +21,6 @@ const FaqItem: FC<IItem> = ({ item, setItemsHeight }) => {
             onClick={toggleAccordion}
             className="list-group-item flex flex-row items-start p-[14px] w-full bg-backgroundVariant800 pb-0 pt-5 cursor-pointer flex-grow hover:bg-backgroundVariant900 duration-200 ease-[ease] border-b border-btnRingVariant500 active:bg-backgroundVariant1000 [&:nth-of-type(1)]:pt-[30px] [&:nth-of-type(1)>.line]:-bottom-3 [&:nth-of-type(1)>.line]:h-full [&:nth-of-type(1)>.line]:top-auto"
         >
-            {/* <div className="flex w"> */}
             <CollapseListItem
                 title={name}
                 openAccordion={openAccordion}
@@ -30,7 +29,6 @@ const FaqItem: FC<IItem> = ({ item, setItemsHeight }) => {
                 variant="faq"
                 fullHeight={descHeight}
             />
-            {/* </div> */}
         </div>
     );
 };
