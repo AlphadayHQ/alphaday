@@ -97,6 +97,7 @@ export const ViewDialog: FC<IProps> = ({
                     onSave={async () => {
                         await onRemove();
                     }}
+                    size="sm"
                 >
                     Are you sure you want to remove this board?
                 </Dialog>
