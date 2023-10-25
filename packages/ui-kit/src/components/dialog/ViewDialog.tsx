@@ -65,6 +65,7 @@ export const ViewDialog: FC<IProps> = ({
                         await onSave(value.trim());
                         setValue("");
                     }}
+                    size="sm"
                 >
                     <Input
                         value={value}
