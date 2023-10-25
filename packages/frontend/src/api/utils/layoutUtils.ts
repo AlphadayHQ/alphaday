@@ -43,7 +43,7 @@ export const getItemStyle = (
     draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
     isDraggingWidget: boolean
 ): DraggingStyle | { zIndex: number } => {
-    if (draggableStyle !== undefined)
+    if (draggableStyle !== undefined) {
         return {
             // styles we need to apply on draggables
             ...draggableStyle,
@@ -53,6 +53,7 @@ export const getItemStyle = (
                 ? Z_INDEX_REGISTRY.DRAGGING
                 : Z_INDEX_REGISTRY.DRAGGABLE,
         };
+    }
     return {
         zIndex: Z_INDEX_REGISTRY.DRAGGABLE,
     };
@@ -195,8 +196,9 @@ export const getColType = (windowWidth: number): EColumnType => {
     if (windowWidth >= singleCol && windowWidth < threeCol) {
         return EColumnType.TwoCol;
     }
-    if (windowWidth >= twoCol && windowWidth < fourCol)
+    if (windowWidth >= twoCol && windowWidth < fourCol) {
         return EColumnType.ThreeCol;
+    }
 
     return EColumnType.FourCol;
 };

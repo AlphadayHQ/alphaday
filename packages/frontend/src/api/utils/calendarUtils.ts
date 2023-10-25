@@ -137,7 +137,7 @@ export const getClosestEvent = (
     let minDiff = 768; // 24h * 32days so at least an event matches
     let nearestEvent;
 
-    if (events)
+    if (events) {
         events.forEach((event) => {
             const diff = moment(date).diff(moment(event.start), "hours");
             const diffAbs = Math.abs(diff);
@@ -146,6 +146,7 @@ export const getClosestEvent = (
                 nearestEvent = event;
             }
         });
+    }
     return nearestEvent;
 };
 

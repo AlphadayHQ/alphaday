@@ -113,13 +113,14 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
 
     const handleWalletCopy = () => {
         const walletAddress = authWallet.account?.address;
-        if (walletAddress)
+        if (walletAddress) {
             navigator.clipboard
                 .writeText(walletAddress)
                 .then(() => toast("Copied Wallet address!"))
                 .catch(() =>
                     toast("Failed to copy address!", { type: EToastRole.Error })
                 );
+        }
     };
 
     useEffect(() => {

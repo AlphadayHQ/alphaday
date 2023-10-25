@@ -265,13 +265,14 @@ const PodcastContainer: FC<IModuleContainer> = ({ moduleData }) => {
     useEffect(() => {
         if (selectedPodcast?.id === selectedPodcastRef.current?.id) return;
         selectedPodcastRef.current = selectedPodcast;
-        if (selectedPodcast?.id)
+        if (selectedPodcast?.id) {
             openPodcastItemMut({ id: selectedPodcast.id }).catch((err) =>
                 Logger.error(
                     "PodcastContainer::openPodcastItemMut: Failed to send click event",
                     err
                 )
             );
+        }
     }, [openPodcastItemMut, selectedPodcast]);
 
     return (
