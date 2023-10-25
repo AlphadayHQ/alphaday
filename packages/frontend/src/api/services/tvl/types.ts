@@ -1,20 +1,18 @@
-import { TProjectData, TProjectTvlHistory } from "src/api/types";
-import { TTvlDatum, TPagination } from "../baseTypes";
+import { TProjectData } from "src/api/types";
+import {
+    TTvlDatum,
+    TRemoteBaseProject,
+    TRemoteProjectType,
+    TPagination,
+} from "../baseTypes";
 
 /**
  * Primitive types
  */
-type TRemoteTvlProject = {
-    name: string;
-    slug: string;
-    network_id: number;
-    icon?: string;
-    url?: string;
-};
 
 export type TRemoteProjectTvlHistoryRead = {
     id: number;
-    project: TRemoteTvlProject;
+    project: TRemoteBaseProject;
     interval: string;
     currency: string;
     history: TRemoteTvlHistory;
@@ -23,7 +21,7 @@ export type TRemoteProjectTvlHistoryRead = {
 
 export type TRemoteProjectDataRead = TTvlDatum & {
     id: number;
-    project: TRemoteTvlProject;
+    project: TRemoteBaseProject;
     tvl_histories: TRemoteProjectTvlHistoryRead[];
 };
 
@@ -42,6 +40,7 @@ export type TRemoteTvlHistory =
 
 export type TGetTvlRequest = {
     tags: string | undefined;
+    project_type?: TRemoteProjectType | undefined;
     page?: number | undefined;
     limit?: number | undefined;
 };
@@ -50,19 +49,4 @@ export type TGetTvlRawResponse = TPagination & {
 };
 export type TGetTvlResponse = TPagination & {
     results: TProjectData[];
-};
-
-/**
- * deprecated endpoint
- */
-export type TGetTvlHistoryRequest = {
-    projects: string | undefined; // comma separated list of project slugs
-    page?: number | undefined;
-    limit?: number | undefined;
-};
-export type TGetTvlHistoryRawResponse = TPagination & {
-    results: TRemoteProjectTvlHistoryRead[];
-};
-export type TGetTvlHistoryResponse = TPagination & {
-    results: TProjectTvlHistory[];
 };

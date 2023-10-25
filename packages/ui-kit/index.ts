@@ -1,6 +1,7 @@
 import { useLayer } from "react-laag";
 import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
+import { Arrow } from "./src/components/arrow/Arrow";
 import {
     BaseModuleWrapper,
     BaseModuleBody,
@@ -50,7 +51,6 @@ import {
     HRElement,
     listItemVariants,
 } from "./src/components/listItem/ListItem";
-
 import { Carousel } from "./src/components/carousel/Carousel";
 import { Lightbox } from "./src/components/carousel/Lightbox";
 import { CarouselImage } from "./src/components/carousel/CarouselImage";
@@ -71,6 +71,7 @@ import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
+import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import {
     ViewTabMenu,
@@ -88,6 +89,7 @@ export {
     ApexLineChart,
     ApexPieChart,
     ApexRadialChart,
+    Arrow,
     themeColors,
     breakpoints,
     listItemVariants,

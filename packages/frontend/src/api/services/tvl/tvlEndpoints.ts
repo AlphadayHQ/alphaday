@@ -11,9 +11,6 @@ import {
     TGetTvlRequest,
     TGetTvlRawResponse,
     TGetTvlResponse,
-    TGetTvlHistoryRequest,
-    TGetTvlHistoryRawResponse,
-    TGetTvlHistoryResponse,
 } from "./types";
 
 const { TVL } = CONFIG.API.DEFAULT.ROUTES;
@@ -45,6 +42,7 @@ const mapTvlHistoryResponse = (
             slug: data.project.slug,
             networkId: data.project.network_id,
             url: data.project.url,
+            projectType: data.project.project_type,
         },
         interval: data.interval,
         currency: data.currency,
@@ -86,6 +84,7 @@ const tvlApi = alphadayApi.injectEndpoints({
                                 project: {
                                     name: data.project.name,
                                     slug: data.project.slug,
+                                    projectType: data.project.project_type,
                                     networkId: data.project.network_id,
                                     icon: data.project.icon,
                                     url: data.project.url,
@@ -117,47 +116,8 @@ const tvlApi = alphadayApi.injectEndpoints({
                 }
             },
         }),
-        getTvlHistory: builder.query<
-            TGetTvlHistoryResponse,
-            TGetTvlHistoryRequest
-        >({
-            query: (req) => {
-                const params: string = queryString.stringify({
-                    ...req,
-                    limit: 30,
-                });
-                const query = `${TVL.BASE}${TVL.HISTORY}?${params}`;
-                Logger.debug("getTvlHistory: querying", query);
-                return query;
-            },
-            transformResponse: (
-                r: TGetTvlHistoryRawResponse,
-                _meta,
-                _arg
-            ): TGetTvlHistoryResponse => {
-                const facadeData = r.results.map((data) => {
-                    return {
-                        id: data.id,
-                        project: {
-                            name: data.project.name,
-                            slug: data.project.slug,
-                            networkId: data.project.network_id,
-                            url: data.project.url,
-                        },
-                        interval: data.interval,
-                        currency: data.currency,
-                        history: mapTvlHistoryData(data.history),
-                        requestedAt: data.requested_at,
-                    };
-                });
-                return {
-                    ...r,
-                    results: facadeData,
-                };
-            },
-        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetTvlQuery, useGetTvlHistoryQuery } = tvlApi;
+export const { useGetTvlQuery } = tvlApi;

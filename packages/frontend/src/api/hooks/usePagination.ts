@@ -6,8 +6,15 @@ import {
 } from "src/api/utils/pagination";
 
 interface IPaginationState {
+    /**
+     *  note: usually the current page state is kept in the parent component
+     */
     nextPage: number | undefined;
     handleNextPage: (type: "next" | "previous") => void;
+    /**
+     * should be called when previous request parameters changed
+     */
+    reset: () => void;
 }
 
 export const usePagination = (
@@ -15,8 +22,9 @@ export const usePagination = (
     maxPaginationNumber: number,
     wasLastRequestSuccessful: boolean
 ): IPaginationState => {
-    // note: usually the current page state is kept in the parent component
     const [nextPage, setNextPage] = useState<number | undefined>(undefined);
+
+    const reset = () => setNextPage(undefined);
 
     const handleNextPage = useCallback(
         (type: TPaginationAction): void => {
@@ -41,5 +49,6 @@ export const usePagination = (
     return {
         nextPage,
         handleNextPage,
+        reset,
     };
 };

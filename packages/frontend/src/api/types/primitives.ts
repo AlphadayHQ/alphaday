@@ -1,3 +1,5 @@
+import { TRemoteProjectType } from "../services";
+
 export enum ETag {
     Global = "global",
     Local = "local",
@@ -54,10 +56,12 @@ export type TCoin = {
     volume?: number;
 };
 
+export type TProjectType = TRemoteProjectType;
+
 export type TBaseProject = {
     name: string;
     slug: string;
-    projectType?: string;
+    projectType: TProjectType;
     networkId: number;
     icon?: string;
     url?: string;

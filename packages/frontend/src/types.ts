@@ -82,6 +82,7 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     venue_template: lazy(() => import("./containers/maps/VenueMapContainer")),
     video_template: lazy(() => import("./containers/video/VideoContainer")),
     talks_template: lazy(() => import("./containers/dynamic/AgendaContainer")),
+    tvl_template: lazy(() => import("./containers/tvl/TvlContainer")),
     roadmap_template: lazy(
         () => import("./containers/dynamic/RoadmapContainer")
     ),

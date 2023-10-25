@@ -1,8 +1,6 @@
 import "src/mocks/libraryMocks";
 import { EItemFeedPreference } from "src/api/types";
-// @ts-ignore these types do not exist yet // TODO add types
 import { ECalendarType } from "src/components/calendar/types";
-// @ts-ignore these types do not exist yet // TODO add types
 import { EChartType } from "src/components/market/types";
 import { RootState } from "../store";
 import widgetsReducer, {
@@ -35,18 +33,25 @@ import widgetsReducer, {
     setWidgetHeight,
     toggleShowAllAssets,
     toggleCollapse,
+    selectTvlProjectType,
+    setSelectedTvlProjectType,
 } from "./widgets";
 
 let initialState: IWidgetsState;
 let rootState: RootState;
 
 const widgetHash = "widgetHash";
+const tvlWidgetHash = "tvl-widget-hash";
 
 beforeEach(() => {
     initialState = {
         common: {
             [widgetHash]: {
                 isMinimised: true,
+                widgetHeight: 500,
+            },
+            [tvlWidgetHash]: {
+                isMinimised: false,
                 widgetHeight: 500,
             },
         },
@@ -63,6 +68,11 @@ beforeEach(() => {
         podcast: {},
         video: {},
         blog: {},
+        tvl: {
+            [tvlWidgetHash]: {
+                selectedProjectType: "chain",
+            },
+        },
     };
 
     rootState = {
@@ -210,7 +220,8 @@ describe("setSelectedMarket", () => {
     };
 
     it("should set the selectedMarket", () => {
-        expect(initialState.market.selectedMarket).toBeUndefined();
+        expect(initialState.market[widgetHash]).not.toBe(undefined);
+        expect(initialState.market[widgetHash].selectedMarket).toBeUndefined();
 
         const action = setSelectedMarket({ market: marketMeta, widgetHash });
         const state = widgetsReducer(initialState, action);
@@ -435,5 +446,29 @@ describe("setSelectedChartRange", () => {
         const state = widgetsReducer(initialState, action);
 
         expect(state.market[widgetHash].selectedChartRange).toEqual(chartRange);
+    });
+});
+
+describe("selectedTvlProjectType", () => {
+    const selectedProjectTypeSelector = selectTvlProjectType(tvlWidgetHash);
+
+    it("should select the selected tvl project type", () => {
+        const selectedTvlProjectType = selectedProjectTypeSelector(rootState);
+        expect(selectedTvlProjectType).toBe("chain");
+    });
+
+    it("should set the selected project type", () => {
+        const action = setSelectedTvlProjectType({
+            widgetHash: tvlWidgetHash,
+            projectType: "protocol",
+        });
+        const state = widgetsReducer(initialState, action);
+
+        const newSelectedProjectType = selectedProjectTypeSelector({
+            ...rootState,
+            widgets: state,
+        });
+
+        expect(newSelectedProjectType).toEqual("protocol");
     });
 });

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TChartRange, EItemFeedPreference } from "src/api/types";
+import { TChartRange, EItemFeedPreference, TProjectType } from "src/api/types";
 import { ECalendarType } from "src/components/calendar/types";
 import { EChartType, TMarketMeta } from "src/components/market/types";
 import { TEventCategory } from "src/components/types";
@@ -41,6 +41,10 @@ export interface IVideosWidgetState {
     preferredChannelIds: number[];
 }
 
+export interface ITvlWidgetState {
+    selectedProjectType: TProjectType;
+}
+
 export interface IWidgetsState {
     common: Record<string, ICommonWidgetState>;
     market: Record<string, IMarketWidgetState>;
@@ -50,6 +54,7 @@ export interface IWidgetsState {
     calendar: Record<string, ICalendarWidgetState>;
     podcast: Record<string, IPodcastsWidgetState>;
     video: Record<string, IVideosWidgetState>;
+    tvl: Record<string, ITvlWidgetState>;
 }
 
 const initialState: IWidgetsState = {
@@ -61,6 +66,7 @@ const initialState: IWidgetsState = {
     podcast: {},
     video: {},
     blog: {},
+    tvl: {},
 };
 
 const widgetsSlice = createSlice({
@@ -69,7 +75,10 @@ const widgetsSlice = createSlice({
     reducers: {
         setSelectedMarket(
             draft,
-            action: PayloadAction<{ widgetHash: string; market: TMarketMeta }>
+            action: PayloadAction<{
+                widgetHash: string;
+                market: TMarketMeta | undefined;
+            }>
         ) {
             const {
                 payload: { widgetHash, market },
@@ -317,6 +326,22 @@ const widgetsSlice = createSlice({
                 },
             };
         },
+        setSelectedTvlProjectType(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                projectType: TProjectType;
+            }>
+        ) {
+            const {
+                payload: { widgetHash, projectType },
+            } = action;
+
+            draft.tvl[widgetHash] = {
+                ...draft.tvl[widgetHash],
+                selectedProjectType: projectType,
+            };
+        },
     },
 });
 
@@ -337,6 +362,7 @@ export const {
     toggleShowAllAssets,
     removeWidgetStateFromCache,
     setWidgetHeight,
+    setSelectedTvlProjectType,
 } = widgetsSlice.actions;
 export default widgetsSlice.reducer;
 
@@ -403,3 +429,8 @@ export const selectWidgetHeight =
     (widgetHash: string) =>
     (state: RootState): number | undefined =>
         state.widgets.common[widgetHash]?.widgetHeight;
+
+export const selectTvlProjectType =
+    (widgetHash: string) =>
+    (state: RootState): TProjectType | undefined =>
+        state.widgets.tvl[widgetHash]?.selectedProjectType;
