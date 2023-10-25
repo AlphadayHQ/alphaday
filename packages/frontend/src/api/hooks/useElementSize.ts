@@ -27,13 +27,15 @@ function useElementSize<T extends HTMLElement = HTMLDivElement>(): [
     // Prevent too many rendering using useCallback
     const handleSize = useCallback(() => {
         if (ref) {
-            if (ref.offsetHeight !== size.height)
+            if (ref.offsetHeight !== size.height) {
                 setSize((prev) => ({ ...prev, height: ref.offsetHeight || 0 }));
-            if (ref.offsetWidth !== size.width)
+            }
+            if (ref.offsetWidth !== size.width) {
                 setSize((prev) => ({
                     ...prev,
                     width: ref.offsetWidth || 0,
                 }));
+            }
         }
     }, [ref, size.height, size.width]);
 

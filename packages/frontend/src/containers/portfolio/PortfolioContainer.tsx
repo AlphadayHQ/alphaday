@@ -163,13 +163,14 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             totalValue: 0,
         };
 
-        if (tokensBalanceForAddresses)
+        if (tokensBalanceForAddresses) {
             Object.keys(tokensBalanceForAddresses).forEach((addr) => {
                 balances.assets = [
                     ...balances.assets,
                     ...(tokensBalanceForAddresses[addr] ?? []),
                 ];
             });
+        }
 
         balances.totalValue = computeAssetTotal(balances.assets);
         // merge assets with similar address
@@ -208,11 +209,12 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             totalValue: 0,
         };
 
-        if (nftBalanceForAddresses)
+        if (nftBalanceForAddresses) {
             balances.items = [
                 ...balances.items,
                 ...nftBalanceForAddresses.items,
             ];
+        }
 
         balances.totalValue = computeNftAssetTotal(balances.items);
         return balances;

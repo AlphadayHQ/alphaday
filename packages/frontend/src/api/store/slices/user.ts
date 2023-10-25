@@ -107,13 +107,14 @@ const userSlice = createSlice({
                     ({ address }) =>
                         address === newAccount.address?.toLowerCase()
                 ).length
-            )
+            ) {
                 draft.portfolioAccounts.push({
                     address: newAccount.address
                         ? newAccount.address.toLowerCase()
                         : null,
                     ens: newAccount.ens,
                 });
+            }
         },
         setPortfolioAccounts(
             draft,

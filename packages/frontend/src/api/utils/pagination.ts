@@ -29,11 +29,12 @@ export type TPaginationNumbers = {
 export const extractPaginationNumbers: (
     links: TPaginationLinks
 ) => TPaginationNumbers = (links) => {
-    if (links === undefined)
+    if (links === undefined) {
         return {
             next: undefined,
             previous: undefined,
         };
+    }
     return {
         next: extractPageNumber(links.next),
         previous: extractPageNumber(links.previous),

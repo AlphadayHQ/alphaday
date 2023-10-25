@@ -224,12 +224,13 @@ const LineChart: FC<IProps> = memo(function LineChart({
         setShowResetZoom(false);
     };
 
-    if (isLoading)
+    if (isLoading) {
         return (
             <div className="flex w-full h-[200px] items-center justify-center">
                 <Spinner size="sm" />
             </div>
         );
+    }
 
     return (
         <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">

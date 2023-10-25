@@ -31,10 +31,11 @@ const RoadmapModule: FC<IRoadmap> = ({
             adjustHeightCallback: onAdjustWidgetHeight,
         });
 
-    if (items.length < 1)
+    if (items.length < 1) {
         return <ModuleLoader $height={`${String(widgetHeight)}px`} />;
+    }
 
-    if (items.length > 0)
+    if (items.length > 0) {
         return (
             <div
                 className="bg-backgroundVariant800 h-full flex flex-col flex-grow [&_scrollbar-container]:flex [&_scrollbar-container]:flex-col"
@@ -64,6 +65,7 @@ const RoadmapModule: FC<IRoadmap> = ({
                 </ScrollBar>
             </div>
         );
+    }
 
     return (
         <div className="flex w-full h-80 justify-center items-center">

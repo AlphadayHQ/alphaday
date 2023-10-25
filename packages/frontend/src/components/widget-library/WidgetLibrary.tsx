@@ -101,7 +101,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
 
     const modalRef = useRef<HTMLIonModalElement>(null);
 
-    if (widgets)
+    if (widgets) {
         return (
             <Modal
                 ref={modalRef}
@@ -293,6 +293,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                 )}
             </Modal>
         );
+    }
     return null;
 };
 

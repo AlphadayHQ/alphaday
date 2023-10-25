@@ -121,8 +121,9 @@ export const getErrorStatus = (err: unknown): number | string | undefined => {
     if (
         status !== undefined &&
         (typeof status === "number" || typeof status === "string")
-    )
+    ) {
         return status;
+    }
     return undefined;
 };
 

@@ -98,7 +98,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
         : undefined;
 
     const handleCopyViewUrl = () => {
-        if (sharedViewUrl)
+        if (sharedViewUrl) {
             navigator.clipboard
                 .writeText(sharedViewUrl)
                 .then(() => toast("Board URL copied!"))
@@ -107,6 +107,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                         type: EToastRole.Error,
                     })
                 );
+        }
     };
 
     const columnPercent = 100 / tabsCount;

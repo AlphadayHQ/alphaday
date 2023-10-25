@@ -152,10 +152,11 @@ export const zapperApi = createApi({
                 const data = {} as TTokensBalanceForAddressesResponse;
                 let error;
 
-                if (addresses == null)
+                if (addresses == null) {
                     throw new Error(
                         "zapperApi::getTokensBalance: selectedAddress is null"
                     );
+                }
                 const params: string = queryString.stringify({
                     "addresses[]": addresses,
                     "networks[]": Object.keys(SUPPORTED_EVM_NETWORKS),
