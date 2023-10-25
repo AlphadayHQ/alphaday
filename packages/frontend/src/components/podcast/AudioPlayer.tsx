@@ -162,7 +162,7 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                         e.stopPropagation();
                         setPlaybackPosition(e);
                     }}
-                    style={{ width: percentComplete }}
+                    style={{ width: `${percentComplete}%` }}
                 />
                 <div className="z-[1] flex py-1.5 pl-1.5">
                     <img
