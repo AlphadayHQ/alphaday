@@ -1,19 +1,31 @@
 import { Suspense, useMemo } from "react";
+import { ErrorModal } from "@alphaday/ui-kit";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { Web3Modal } from "@web3modal/react";
 import { Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
-import { useResolvedView, useViewRoute } from "./api/hooks";
+import {
+    useAppInit,
+    useGlobalHooks,
+    useResolvedView,
+    useViewRoute,
+} from "./api/hooks";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
+import { checkCookie } from "./api/utils/cookie";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
 import { appRoutes, loadRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
+
+const landingPage = CONFIG.SEO.DOMAIN;
+const goToLandingPage = () => {
+    window.location.href = landingPage;
+};
 
 const AppRoutes = () => {
     const dispatch = useAppDispatch();
@@ -67,29 +79,40 @@ const AppRoutes = () => {
 };
 
 const App: React.FC = () => {
+    useAppInit();
+    useGlobalHooks();
+    if (checkCookie()) {
+        return (
+            <IonApp className="theme-dark">
+                <IonReactRouter>
+                    <Suspense fallback={<PreloaderPage />}>
+                        <IonRouterOutlet>
+                            <AppRoutes />
+                        </IonRouterOutlet>
+                    </Suspense>
+                </IonReactRouter>
+                <Web3Modal
+                    projectId={CONFIG.WALLET_CONNECT.PROJECT_ID}
+                    ethereumClient={walletConnectProvider}
+                    themeMode="dark"
+                    themeVariables={{
+                        "--w3m-background-color":
+                            "var(--colors-background-variant200, var(--alpha-dark-300))",
+                        "--w3m-accent-color":
+                            "var(--colors-btn-ring-variant100, var(--alpha-dark-300))",
+                        "--w3m-overlay-background-color":
+                            "var(--colors-background-variant1600, var(--alpha-dark-300))",
+                    }}
+                />
+            </IonApp>
+        );
+    }
     return (
-        <IonApp className="theme-dark">
-            <IonReactRouter>
-                <Suspense fallback={<PreloaderPage />}>
-                    <IonRouterOutlet>
-                        <AppRoutes />
-                    </IonRouterOutlet>
-                </Suspense>
-            </IonReactRouter>
-            <Web3Modal
-                projectId={CONFIG.WALLET_CONNECT.PROJECT_ID}
-                ethereumClient={walletConnectProvider}
-                themeMode="dark"
-                themeVariables={{
-                    "--w3m-background-color":
-                        "var(--colors-background-variant200, var(--alpha-dark-300))",
-                    "--w3m-accent-color":
-                        "var(--colors-btn-ring-variant100, var(--alpha-dark-300))",
-                    "--w3m-overlay-background-color":
-                        "var(--colors-background-variant1600, var(--alpha-dark-300))",
-                }}
-            />
-        </IonApp>
+        <ErrorModal
+            title="Cookie Error"
+            onClose={goToLandingPage}
+            errorMessage="Cookies must be enabled to use Alphaday."
+        />
     );
 };
 
