@@ -15,12 +15,12 @@ import {
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
+import { checkCookie } from "./api/utils/cookie";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
 import { appRoutes, loadRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
-import { checkCookie } from "./api/utils/cookie";
 
 const landingPage = CONFIG.SEO.DOMAIN;
 const goToLandingPage = () => {
