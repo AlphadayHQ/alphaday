@@ -14,6 +14,9 @@ import { IconButton } from "./src/components/buttons/IconButton";
 import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
 import { ViewTabButton } from "./src/components/buttons/ViewTabButton";
+import { Carousel } from "./src/components/carousel/Carousel";
+import { CarouselImage } from "./src/components/carousel/CarouselImage";
+import { Lightbox } from "./src/components/carousel/Lightbox";
 import {
     ApexAreaChart,
     ApexBarChart,
@@ -51,10 +54,6 @@ import {
     HRElement,
     listItemVariants,
 } from "./src/components/listItem/ListItem";
-import { Carousel } from "./src/components/carousel/Carousel";
-import { Lightbox } from "./src/components/carousel/Lightbox";
-import { CarouselImage } from "./src/components/carousel/CarouselImage";
-import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { NoItems } from "./src/components/listItem/NoItems";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { Modal } from "./src/components/modal/Modal";
