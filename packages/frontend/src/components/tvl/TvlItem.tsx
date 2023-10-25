@@ -135,7 +135,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
      * 2-row per cell layout
      * Improves UI when little space available
      */
-    if (twoRowCellLayout)
+    if (twoRowCellLayout) {
         return (
             <div className="flex flex-col flex-[1_auto] py-[10px] px-0">
                 <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px]">
@@ -249,6 +249,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                 </div>
             </div>
         );
+    }
 
     /**
      * Standard table view
