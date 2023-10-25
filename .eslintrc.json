@@ -98,7 +98,8 @@
                     "caseInsensitive": true
                 }
             }
-        ]
+        ],
+        "curly": ["error", "multi-line"]
     },
     "overrides": [
         {
