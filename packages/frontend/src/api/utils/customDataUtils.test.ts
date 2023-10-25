@@ -1,58 +1,36 @@
 import "src/mocks/libraryMocks";
 import { TCustomItem } from "src/api/types";
-import {
-    validateCustomData,
-    evaluateTemplate,
-    EItemValidationErrorCodes,
-} from "./customDataUtils";
+import { validateCustomData, evaluateTemplate } from "./customDataUtils";
 
-export const validCustomData: Record<string, Record<string, unknown>>[] = [
-    {
-        category: {
-            name: "category",
-            value: "Beginners",
-            type: "string",
+export const validCustomData: JSONValue = [
+    null,
+    [],
+    {},
+    [
+        {
+            category: "Beginners",
+            link_name: "coinbase.com",
+            exchange_url: "http://coinbase.com/",
+            exchange_name: "Coinbase",
         },
-        link_name: {
-            name: "link_name",
-            value: "coinbase.com",
-            type: "string",
+        {
+            category: "Advanced",
+            link_name: "curve.fi",
+            exchange_url: "http://curve.fi/",
+            exchange_name: "Curve",
         },
-        exchange_url: {
-            name: "exchange_url",
-            value: "http://coinbase.com/",
-            type: "string",
-        },
-        exchange_name: {
-            name: "exchange_name",
-            value: "Coinbase",
-            type: "string",
-        },
-    },
+    ],
 ];
 
-export const invalidCustomData: Record<string, Record<string, unknown>>[] = [
+export const invalidCustomData = [
+    1,
+    true,
+    "string",
     {
-        category: {
-            name: "category",
-            value: "Beginners",
-            type: "number",
-        },
-        tvl: {
-            name: "tvl",
-            value: 8,
-            type: "string",
-        },
-        exchange_url: {
-            name: "exchange_url",
-            value: "http://coinbase.com/",
-            type: "string",
-        },
-        exchange_name: {
-            name: "exchange_name",
-            value: "Coinbase",
-            type: "string",
-        },
+        category: "Beginners",
+        link_name: "coinbase.com",
+        exchange_url: "http://coinbase.com/",
+        exchange_name: "Coinbase",
     },
 ];
 
@@ -80,25 +58,36 @@ const invalidTemplates = [
 
 describe("Tests for custom data utilities", () => {
     test("validateCustomData", () => {
-        const result = validateCustomData(validCustomData);
-        expect(result.errorCode).toBe(undefined);
-        expect(result.items).not.toBe(undefined);
-        expect(result.items?.length).toBe(validCustomData.length);
-
-        const invalidResult = validateCustomData(invalidCustomData);
-        expect(invalidResult.errorCode).toBe(
-            EItemValidationErrorCodes.InvalidType
-        );
+        validCustomData.forEach((data) => {
+            const result = validateCustomData(data);
+            if (result.items !== undefined) {
+                // @ts-expect-error
+                expect(result.items.length).toBe(data.length);
+            }
+            result.items?.forEach((item) =>
+                expect(item.id).not.toBe(undefined)
+            );
+            expect(result.errorCode).toBe(undefined);
+        });
+        invalidCustomData.forEach((invalidData) => {
+            const result = validateCustomData(invalidData);
+            expect(result.items).toBe(undefined);
+            expect(result.errorCode).not.toBe(undefined);
+        });
     });
 
     test("evaluateTemplate", () => {
         [...validTemplates, ...invalidTemplates].forEach((template) => {
-            expect(
-                evaluateTemplate(
-                    template.input,
-                    validCustomData[0] as TCustomItem
-                )
-            ).toEqual(template.output);
+            const data: TCustomItem = {
+                id: 0,
+                category: "Beginners",
+                link_name: "coinbase.com",
+                exchange_url: "http://coinbase.com/",
+                exchange_name: "Coinbase",
+            };
+            expect(evaluateTemplate(template.input, data)).toEqual(
+                template.output
+            );
         });
     });
 });

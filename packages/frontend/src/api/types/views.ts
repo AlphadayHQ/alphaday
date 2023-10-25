@@ -13,12 +13,15 @@ import {
     TRemoteSourceData,
     TRemoteBaseUserView,
     TRemoteUserViewPreview,
+    TRemoteWidgetMini,
 } from "src/api/services";
 import { TKeyword } from "src/api/types/primitives";
 
 export type TWidgetSetting = TRemoteWidgetSetting;
 
 export type TWidget = IRemoteWidget;
+
+export type TWidgetMini = TRemoteWidgetMini;
 
 export type TUserViewWidgetSetting = TRemoteUserViewWidgetSetting;
 
