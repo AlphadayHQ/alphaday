@@ -5,7 +5,12 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { Web3Modal } from "@web3modal/react";
 import { Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
-import { useResolvedView, useViewRoute } from "./api/hooks";
+import {
+    useAppInit,
+    useGlobalHooks,
+    useResolvedView,
+    useViewRoute,
+} from "./api/hooks";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
@@ -67,6 +72,8 @@ const AppRoutes = () => {
 };
 
 const App: React.FC = () => {
+    useAppInit();
+    useGlobalHooks();
     return (
         <IonApp className="theme-dark">
             <IonReactRouter>
