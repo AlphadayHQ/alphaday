@@ -27,10 +27,13 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
     const [squareRef, { width }] = useElementSize();
 
     const THRESHOLD = 475;
-    const HEADER_HEIGHT = 34;
+    const SWITCH_HEIGHT = 51;
+    const LIST_HEADER_HEIGHT = 28;
     const LIST_HEIGHT = useMemo(
         () =>
-            width >= THRESHOLD ? widgetHeight - HEADER_HEIGHT : widgetHeight,
+            width >= THRESHOLD
+                ? widgetHeight - (SWITCH_HEIGHT + LIST_HEADER_HEIGHT)
+                : widgetHeight - SWITCH_HEIGHT,
         [widgetHeight, width]
     );
 
