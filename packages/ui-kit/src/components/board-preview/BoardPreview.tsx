@@ -117,13 +117,13 @@ export const BoardPreview: FC<IPreview> = ({
                         )}
                         {onRemove && (
                             <div
-                                className="bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 hover:text-btnRingVariant100 hover:border-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border hover:border-danger hover:text-danger"
+                                className="bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border hover:border-secondaryOrangeSoda hover:text-secondaryOrangeSoda hover:stroke-secondaryOrangeSoda"
                                 role="button"
                                 tabIndex={0}
                                 onClick={handleRemoveClick}
                                 title="Remove board"
                             >
-                                <TrashSVG className="h-[15px]" />
+                                <TrashSVG className="h-[15px] text-inherit" />
                             </div>
                         )}
                         {onPin && (

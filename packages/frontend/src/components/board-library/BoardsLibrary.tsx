@@ -198,7 +198,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                 ) : (
                     <div className="flex flex-row justify-between">
                         <div className="w-full p-6 max-w-[405px] border-r border-solid border-btnRingVariant500">
-                            <div className="flex fontGroup-highlightSemi p-[5px_15px] text-primary">
+                            <div className="flex fontGroup-highlightSemi py-[5px] text-primary">
                                 Custom Boards
                                 <span
                                     role="button"
@@ -209,7 +209,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                         }
                                     }}
                                     className={twMerge(
-                                        "flex justify-center items-center ml-[10px] w-5 h-5 rounded-full border border-solid border-primary cursor-pointer hover:border-btnRingVariant100 hover:text-primary",
+                                        "flex justify-center items-center ml-[10px] w-[18px] h-[18px] rounded-full border border-solid border-primary cursor-pointer hover:border-btnRingVariant100 hover:text-primary",
                                         !isAuthenticated && "cursor-not-allowed"
                                     )}
                                     title={
@@ -224,7 +224,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                             </div>
                             <div className="h-[234px]">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full">
+                                    <div className="flex justify-between box-border flex-row flex-wrap h-[234px] w-full">
                                         {customBoards.length === 0 ? (
                                             <p className="ml-[15px] pr-3 font-normal text-primary">
                                                 {isAuthenticated
@@ -239,41 +239,51 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                     slug,
                                                     ...view
                                                 }) => (
-                                                    <BoardPreview
+                                                    <div
                                                         key={id}
-                                                        previewImg={
-                                                            view.icon || ""
-                                                        }
-                                                        title={view.name}
-                                                        padding="none"
-                                                        pinned={
-                                                            view.is_subscribed
-                                                        }
-                                                        active={
-                                                            selectedViewId ===
-                                                            id
-                                                        }
-                                                        isAuthenticated={
-                                                            isAuthenticated
-                                                        }
-                                                        onClick={() => {
-                                                            onSelectView(id);
-                                                        }}
-                                                        onRemove={() => {
-                                                            onRemoveView({
-                                                                id,
-                                                                isReadOnly:
-                                                                    false,
-                                                                hash,
-                                                                slug,
-                                                                isWalletView:
-                                                                    view.is_smart,
-                                                            });
-                                                        }}
-                                                        onEdit={() =>
-                                                            onEditView(id, hash)
-                                                        }
-                                                    />
+                                                        className="w-min max-w-min my-[10px]"
+                                                    >
+                                                        <BoardPreview
+                                                            key={id}
+                                                            previewImg={
+                                                                view.icon || ""
+                                                            }
+                                                            title={view.name}
+                                                            padding="none"
+                                                            pinned={
+                                                                view.is_subscribed
+                                                            }
+                                                            active={
+                                                                selectedViewId ===
+                                                                id
+                                                            }
+                                                            isAuthenticated={
+                                                                isAuthenticated
+                                                            }
+                                                            onClick={() => {
+                                                                onSelectView(
+                                                                    id
+                                                                );
+                                                            }}
+                                                            onRemove={() => {
+                                                                onRemoveView({
+                                                                    id,
+                                                                    isReadOnly:
+                                                                        false,
+                                                                    hash,
+                                                                    slug,
+                                                                    isWalletView:
+                                                                        view.is_smart,
+                                                                });
+                                                            }}
+                                                            onEdit={() =>
+                                                                onEditView(
+                                                                    id,
+                                                                    hash
+                                                                )
+                                                            }
+                                                        />
+                                                    </div>
                                                 )
                                             )
                                         )}
