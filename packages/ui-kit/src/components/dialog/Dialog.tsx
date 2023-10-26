@@ -104,6 +104,7 @@ export const Dialog: FC<
                             data-testid="alpha-dialog-action-button"
                             onClick={handleSaveDialog}
                             disabled={disableSave === true}
+                            className="py-3 px-12 my-3"
                             {...buttonProps}
                         >
                             {saveButtonText}
