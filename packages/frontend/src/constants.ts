@@ -43,10 +43,13 @@ export enum EFeaturesRegistry {
  * Depending on the toggle on the backend, a widget may or may not be available to the user.
  */
 export enum ETemplateNameRegistry {
+    AlphaGpt = "ALPHAGPT",
     Blog = "BLOG",
     Calendar = "CALENDAR",
     Chat = "CHAT",
     Countdown = "COUNTDOWN",
+    CustomCard = "CUSTOM_CARD",
+    CustomChart = "CUSTOM_CHART",
     CustomTable = "CUSTOM_TABLE",
     Dao = "DAO",
     Discord = "DISCORD",
@@ -60,7 +63,8 @@ export enum ETemplateNameRegistry {
     Media = "MEDIA",
     Network = "NETWORK",
     News = "NEWS",
-    PieChart = "PIE_CHART",
+    // Note(v-almonacid): we'll add this back soon
+    // PieChart = "PIE_CHART",
     Podcast = "PODCAST",
     Polls = "POLLS",
     Portfolio = "PORTFOLIO",
@@ -75,5 +79,6 @@ export enum ETemplateNameRegistry {
     TwitterList = "TWITTER_LIST",
     Uniswap = "UNISWAP",
     VenueMap = "VENUE",
+    VerasityTokenomics = "VERASITY_TOKENOMICS",
     Video = "VIDEO",
 }
