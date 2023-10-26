@@ -1,6 +1,6 @@
 import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { Button, ScrollBar, IconButton, ChatForm } from "@alphaday/ui-kit";
-import { TCryptoAccount, TConversation } from "src/api/types";
+import { TConversation } from "src/api/types";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import globalMessages from "src/globalMessages";
 import QnAGroup from "./ConversationGroup";
@@ -30,7 +30,6 @@ interface IQnAModule {
     conversation: TConversation;
     handleSend: (m: string) => void;
     isAuthenticated: boolean;
-    userAccount: TCryptoAccount | undefined;
     widgetHeight: number;
     hasReadIntro: boolean;
     onReadIntro: () => void;
@@ -138,13 +137,13 @@ const QnAModule: FC<IQnAModule> = ({
                     </div>
                 </ScrollBar>
                 {showToBottom && (
-                    <div
+                    <button
                         className="w-35 h-35 rounded-full p-1.5 absolute bottom-20 right-25 flex border-none cursor-pointer bg-secondaryOrange shadow-md hover:opacity-80 active:opacity-90"
                         onClick={handleScrollToBottom}
                         title="Scroll to Bottom"
                     >
                         <IconButton disabled variant="downArrow" />
-                    </div>
+                    </button>
                 )}
             </div>
             <div className="absolute bottom-0 left-0 right-0">

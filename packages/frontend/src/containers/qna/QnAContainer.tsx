@@ -38,7 +38,7 @@ const QnAContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const widgetHeight = useWidgetHeight(moduleData);
 
-    //TODO: move to widgets store
+    // TODO: move to widgets store
     const [hasReadIntro, setHasReadIntro] = useState(false);
 
     const onReadIntro = () => {
@@ -73,7 +73,6 @@ const QnAContainer: FC<IModuleContainer> = ({ moduleData }) => {
         <QnAModule
             handleSend={handleSend}
             isAuthenticated={isAuthenticated}
-            userAccount={authWallet.account}
             widgetHeight={widgetHeight}
             hasReadIntro={hasReadIntro}
             onReadIntro={onReadIntro}

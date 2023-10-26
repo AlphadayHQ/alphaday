@@ -16,18 +16,16 @@ const QnAGroup: FC<IConversation> = ({ qna }) => {
     return (
         <div className="w-full p-2">
             <div className="question">{question}</div>
-            {answer ? (
+            {answer === undefined ? (
+                <div className="response">
+                    <ModuleLoader $height="70px" />
+                </div>
+            ) : (
                 <div className="response">
                     <ReactMarkdown remarkPlugins={REMARK_PLUGINS}>
                         {answer}
                     </ReactMarkdown>
                 </div>
-            ) : (
-                (answer === undefined && (
-                    <div className="response">
-                        <ModuleLoader $height="70px" />
-                    </div>
-                )) || <></>
             )}
         </div>
     );
