@@ -28,6 +28,7 @@ const CoinInfo: FC<{
                 }}
                 bookmarked={isBookmarked}
                 showSpacer={false}
+                className="self-center"
             />
         </div>
         {selectedMarket && (

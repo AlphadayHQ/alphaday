@@ -115,18 +115,17 @@ export const BoardPreview: FC<IPreview> = ({
                                 <EditSVG className="h-[15px]" />
                             </div>
                         )}
-                        <div
-                            className={
-                                onRemove
-                                    ? "hover:border-danger hover:text-danger"
-                                    : "placeholder"
-                            }
-                            role="button"
-                            tabIndex={0}
-                            onClick={handleRemoveClick}
-                        >
-                            {onRemove && <TrashSVG className="h-[15px]" />}
-                        </div>
+                        {onRemove && (
+                            <div
+                                className="bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border hover:border-secondaryOrangeSoda hover:text-secondaryOrangeSoda hover:stroke-secondaryOrangeSoda"
+                                role="button"
+                                tabIndex={0}
+                                onClick={handleRemoveClick}
+                                title="Remove board"
+                            >
+                                <TrashSVG className="h-[15px] text-inherit" />
+                            </div>
+                        )}
                         {onPin && (
                             <div
                                 className={twMerge(
