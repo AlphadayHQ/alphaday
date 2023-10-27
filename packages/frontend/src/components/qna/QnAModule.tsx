@@ -120,7 +120,7 @@ const QnAModule: FC<IQnAModule> = ({
 
     return (
         <div className="w-full" style={{ height: widgetHeight }}>
-            <div className="w-full h-[calc(100%-47px)]">
+            <div className="w-full h-[calc(100%-47px)] flex flex-col justify-end">
                 <ScrollBar
                     containerRef={(el) => {
                         containerRef.current = el;
@@ -130,16 +130,14 @@ const QnAModule: FC<IQnAModule> = ({
                         setShowToBottom(false);
                     }}
                 >
-                    <div className="flex flex-col justify-end">
-                        {conversation.map((qna) => (
-                            <QnAGroup key={qna.id} qna={qna} />
-                        ))}
-                    </div>
+                    {conversation.map((qna) => (
+                        <QnAGroup key={qna.id} qna={qna} />
+                    ))}
                 </ScrollBar>
                 {showToBottom && (
                     <button
                         type="button"
-                        className="w-35 h-35 rounded-full p-1.5 absolute bottom-20 right-25 flex border-none cursor-pointer bg-secondaryOrange shadow-md hover:opacity-80 active:opacity-90"
+                        className="w-[35px] h-[35px] rounded-full p-1.5 absolute bottom-20 right-[25px] flex border-none cursor-pointer bg-secondaryOrange shadow-md hover:opacity-80 active:opacity-90"
                         onClick={handleScrollToBottom}
                         title="Scroll to Bottom"
                     >

@@ -63,24 +63,23 @@ export const ChatForm: FC<IForm> = ({ handleSend, isAuthenticated }) => {
     );
 
     return (
-        <div className="h-full w-full p-4 flex justify-between bg-backgroundVariant200 border-t border-background">
-            <div>
-                <textarea
-                    ref={textAreaRef}
-                    className="font-normal border-0 bg-transparent self-center text-primary w-full resize-none overflow-hidden min-h-auto transition-none"
-                    name="message"
-                    placeholder={
-                        isAuthenticated
-                            ? "Message..."
-                            : "Connect your wallet to chat"
-                    }
-                    rows={1}
-                    onInput={autoGrow}
-                    value={message}
-                    onChange={handleMessage}
-                    onKeyPress={handleKeyPress}
-                />
-            </div>
+        <div className="h-[50px] w-full flex justify-between bg-backgroundVariant200 border-t border-background">
+            <textarea
+                ref={textAreaRef}
+                className="font-normal border-0 bg-transparent self-center text-primary w-full resize-none overflow-hidden min-h-auto px-4 transition-none"
+                name="message"
+                placeholder={
+                    isAuthenticated
+                        ? "Message..."
+                        : "Connect your wallet to chat"
+                }
+                rows={1}
+                onInput={autoGrow}
+                value={message}
+                onChange={handleMessage}
+                onKeyUp={handleKeyPress}
+            />
+
             <button
                 disabled={isMessageInvalid}
                 title={
