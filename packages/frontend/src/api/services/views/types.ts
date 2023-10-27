@@ -235,15 +235,14 @@ export type TRemoteBaseUserViewWidget = {
     sort_order: number;
 };
 
-export type TRemoteRawUserViewWidget<
-    T = unknown
-> = TRemoteBaseUserViewWidget & {
-    id: number;
-    hash: string;
-    name: string;
-    widget: IRemoteRawWidget<T>;
-    settings: TRemoteUserViewWidgetSetting[];
-};
+export type TRemoteRawUserViewWidget<T = unknown> =
+    TRemoteBaseUserViewWidget & {
+        id: number;
+        hash: string;
+        name: string;
+        widget: IRemoteRawWidget<T>;
+        settings: TRemoteUserViewWidgetSetting[];
+    };
 
 export type TRemoteUserViewWidget<T = unknown> = Omit<
     TRemoteRawUserViewWidget,
