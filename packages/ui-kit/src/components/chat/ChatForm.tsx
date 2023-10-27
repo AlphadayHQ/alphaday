@@ -88,7 +88,7 @@ export const ChatForm: FC<IForm> = ({ handleSend, isAuthenticated }) => {
                         : "Verify your wallet to chat"
                 }
                 onClick={handleSubmit}
-                className={`w-12 flex items-center justify-center bg-backgroundVariant500 border-none border-l border-background ${
+                className={`w-12 p-3 flex items-center justify-center bg-backgroundVariant500 border-none border-l border-background ${
                     isAuthenticated && !isMessageInvalid
                         ? "cursor-pointer"
                         : "opacity-40 cursor-auto !important"
