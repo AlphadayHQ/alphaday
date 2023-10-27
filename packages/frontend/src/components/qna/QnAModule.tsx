@@ -138,6 +138,7 @@ const QnAModule: FC<IQnAModule> = ({
                 </ScrollBar>
                 {showToBottom && (
                     <button
+                        type="button"
                         className="w-35 h-35 rounded-full p-1.5 absolute bottom-20 right-25 flex border-none cursor-pointer bg-secondaryOrange shadow-md hover:opacity-80 active:opacity-90"
                         onClick={handleScrollToBottom}
                         title="Scroll to Bottom"
