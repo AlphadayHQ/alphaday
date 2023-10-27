@@ -13,6 +13,7 @@ import Select, {
     OptionProps,
     PlaceholderProps,
     ValueContainerProps,
+    ContainerProps,
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
@@ -28,7 +29,8 @@ interface IProps {
     $uppercase?: boolean;
 }
 
-const { Input, NoOptionsMessage, MenuList, Option } = components;
+const { Input, NoOptionsMessage, MenuList, Option, SelectContainer } =
+    components;
 
 const CustomInput = <Option,>(props: InputProps<Option>) => {
     const { isDisabled, value, hasValue } = props;
@@ -78,6 +80,20 @@ const CustomMenuList = (showTrending: boolean) => {
             </>
         );
     };
+};
+
+const CustomSelectContainer = <Option,>(
+    props: ContainerProps<Option, true, GroupBase<Option>>
+) => {
+    const { isFocused } = props;
+    return (
+        <>
+            {isFocused && (
+                <div className="bg-background w-full h-full top-0 left-0 fixed opacity-40" />
+            )}
+            <SelectContainer {...props} />
+        </>
+    );
 };
 
 const CustomOption = <Option,>(
@@ -278,6 +294,7 @@ export const SearchBar = <T,>({
                 value={searchValues}
                 closeMenuOnSelect={closeMenuOnSelect}
                 components={{
+                    SelectContainer: CustomSelectContainer,
                     DropdownIndicator: null,
                     NoOptionsMessage: CustomNoOptionsMessage(isFetching),
                     MenuList: CustomMenuList(showTrending),
