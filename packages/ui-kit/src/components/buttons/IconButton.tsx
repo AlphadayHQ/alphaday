@@ -10,10 +10,10 @@ import { ReactComponent as InfoSVG } from "src/assets/svg/info.svg";
 import { ReactComponent as StarSVG } from "src/assets/svg/star.svg";
 import { ReactComponent as StarFilledSVG } from "src/assets/svg/starFilled.svg";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
+import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
 import { ReactComponent as TrashSVG } from "../../assets/svg/trash.svg";
 import styles from "./Button.module.scss";
-import { twMerge } from "tailwind-merge";
 
 const buttonVariants = tv({
     base: `${styles.IconButton} inline-flex items-center justify-center tracking-[0.2px] text-center align-middle cursor-pointer leading-normal select-none p-0 border-0`,

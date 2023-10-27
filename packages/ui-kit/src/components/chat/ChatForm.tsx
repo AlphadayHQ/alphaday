@@ -48,7 +48,7 @@ export const ChatForm: FC<IForm> = ({ handleSend, isAuthenticated }) => {
             return;
         }
         textAreaRef.current.style.height = "auto";
-    }, [handleSend, isAuthenticated, isMessageInvalid, message]);
+    }, [handleSend, isMessageInvalid, message]);
 
     const handleKeyPress = useCallback(
         (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -81,6 +81,7 @@ export const ChatForm: FC<IForm> = ({ handleSend, isAuthenticated }) => {
             />
 
             <button
+                type="button"
                 disabled={isMessageInvalid}
                 title={
                     isAuthenticated
