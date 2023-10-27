@@ -1,6 +1,6 @@
 import { FC, useRef } from "react";
 import {
-    CalendarList,
+    CalendarList as CalList,
     EventClickArg,
     ScrollBar,
     Switch,
@@ -20,7 +20,7 @@ const { WIDGET_HEIGHT } = CONFIG.WIDGETS.CALENDAR;
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
 const FULLSIZE_CAL_HEIGHT = 660;
 
-const CalendarLiss: FC<ICalendarBaseProps> = ({
+const CalendarList: FC<ICalendarBaseProps> = ({
     events,
     onClickEvent,
     calendarType,
@@ -68,7 +68,7 @@ const CalendarLiss: FC<ICalendarBaseProps> = ({
                             />
                         </div>
                     )}
-                    <CalendarList
+                    <CalList
                         eventClickHandler={(e: EventClickArg) =>
                             eventClickHandler(e, onClickEvent)
                         }
@@ -91,4 +91,4 @@ const CalendarLiss: FC<ICalendarBaseProps> = ({
     );
 };
 
-export default CalendarLiss;
+export default CalendarList;

@@ -4,8 +4,8 @@ import { TEvent } from "src/api/types";
 import { defaultEventCategory } from "../calendarCategories";
 import { TEventCategory } from "../types";
 import CalendarFull from "./calendar-full/CalendarFull";
-import CalendarList from "./calendar-list/CalendarList";
 import CalendarMonth from "./calendar-month/CalendarMonth";
+import CalendarList from "./CalendarList";
 import { ECalendarType, ICalendarBaseProps } from "./types";
 
 const CalendarModule: FC<ICalendarBaseProps> = ({
