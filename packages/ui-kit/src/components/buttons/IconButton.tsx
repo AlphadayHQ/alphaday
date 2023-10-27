@@ -13,6 +13,7 @@ import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 import { tv, VariantProps } from "tailwind-variants";
 import { ReactComponent as TrashSVG } from "../../assets/svg/trash.svg";
 import styles from "./Button.module.scss";
+import { twMerge } from "tailwind-merge";
 
 const buttonVariants = tv({
     base: `${styles.IconButton} inline-flex items-center justify-center tracking-[0.2px] text-center align-middle cursor-pointer leading-normal select-none p-0 border-0`,
@@ -42,6 +43,7 @@ const buttonVariants = tv({
 type TButtonVariants = VariantProps<typeof buttonVariants>;
 
 export interface ButtonProps extends TButtonVariants {
+    className?: string;
     disabled?: boolean;
     label?: string;
     title?: string;
@@ -95,13 +97,17 @@ export const IconButton: FC<ButtonProps> = ({
     label,
     children,
     selected,
+    className,
     ...restProps
 }) => {
     return (
         <button
             disabled={disabled}
             aria-label={label}
-            className={buttonVariants({ variant, disabled })}
+            className={twMerge(
+                buttonVariants({ variant, disabled }),
+                className
+            )}
             {...restProps}
         >
             {iconSelector(variant, selected)}
