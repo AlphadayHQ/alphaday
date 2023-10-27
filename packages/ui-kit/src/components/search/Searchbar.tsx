@@ -82,18 +82,20 @@ const CustomMenuList = (showTrending: boolean) => {
     };
 };
 
-const CustomSelectContainer = <Option,>(
-    props: ContainerProps<Option, true, GroupBase<Option>>
-) => {
-    const { isFocused } = props;
-    return (
-        <>
-            {isFocused && (
-                <div className="bg-background w-full h-full top-0 left-0 fixed opacity-40" />
-            )}
-            <SelectContainer {...props} />
-        </>
-    );
+const CustomSelectContainer = (showBackdrop?: boolean) => {
+    return <Option,>(
+        props: ContainerProps<Option, true, GroupBase<Option>>
+    ) => {
+        const { isFocused } = props;
+        return (
+            <>
+                {isFocused && showBackdrop && (
+                    <div className="bg-black w-full h-full top-0 left-0 fixed opacity-40" />
+                )}
+                <SelectContainer {...props} />
+            </>
+        );
+    };
 };
 
 const CustomOption = <Option,>(
@@ -142,6 +144,7 @@ export interface ISearchProps<Option = unknown> {
     updateSearch?: boolean;
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
+    showBackdrop?: boolean;
     customComponents?:
         | Partial<SelectComponentsConfig<Option, true, GroupBase<Option>>>
         | undefined;
@@ -171,6 +174,7 @@ export const SearchBar = <T,>({
     initialInputValue,
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
+    showBackdrop,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
@@ -294,7 +298,7 @@ export const SearchBar = <T,>({
                 value={searchValues}
                 closeMenuOnSelect={closeMenuOnSelect}
                 components={{
-                    SelectContainer: CustomSelectContainer,
+                    SelectContainer: CustomSelectContainer(showBackdrop),
                     DropdownIndicator: null,
                     NoOptionsMessage: CustomNoOptionsMessage(isFetching),
                     MenuList: CustomMenuList(showTrending),
