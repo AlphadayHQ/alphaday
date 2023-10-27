@@ -185,7 +185,7 @@ export interface TBaseRemoteRawWidget<T = undefined> {
     status: ERemoteWidgetStatus;
     short_description: string;
     description: string;
-    template: TRemoteWidgetTemplate | null;
+    template: TRemoteWidgetTemplate;
     endpoint_header: Record<string, unknown>;
     format_structure: TRemoteFormatStructure<T>;
     custom_data: JSONValue;
@@ -235,14 +235,15 @@ export type TRemoteBaseUserViewWidget = {
     sort_order: number;
 };
 
-export type TRemoteRawUserViewWidget<T = unknown> =
-    TRemoteBaseUserViewWidget & {
-        id: number;
-        hash: string;
-        name: string;
-        widget: IRemoteRawWidget<T>;
-        settings: TRemoteUserViewWidgetSetting[];
-    };
+export type TRemoteRawUserViewWidget<
+    T = unknown
+> = TRemoteBaseUserViewWidget & {
+    id: number;
+    hash: string;
+    name: string;
+    widget: IRemoteRawWidget<T>;
+    settings: TRemoteUserViewWidgetSetting[];
+};
 
 export type TRemoteUserViewWidget<T = unknown> = Omit<
     TRemoteRawUserViewWidget,
