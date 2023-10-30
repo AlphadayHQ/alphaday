@@ -178,6 +178,7 @@ const HeaderSearchContainer: FC = () => {
                 }
             >
                 <SearchBar<TOption>
+                    showBackdrop
                     onChange={handleChange}
                     onInputChange={debounce((e: string) => {
                         setSearchState(e);

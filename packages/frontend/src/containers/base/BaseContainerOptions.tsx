@@ -141,7 +141,7 @@ const TagsOptions: FC<ITagsOptions> = ({
                     setSearchState("");
                 }}
                 componentClassNames={{
-                    container: () => "max-w-[300px]",
+                    container: () => "max-w-[300px] z-10",
                     control: () =>
                         `p-0 h-[41px] cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none min-h-[41px] ${
                             disabled
