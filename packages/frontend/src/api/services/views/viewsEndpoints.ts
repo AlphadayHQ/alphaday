@@ -42,7 +42,12 @@ const viewCheck = (view: TRemoteUserView): TRemoteUserView => {
     const viewWidgets = [...view.widgets];
     const filteredWidgets: TRemoteUserViewWidget[] = [];
     viewWidgets.forEach((viewWidget) => {
-        if (!(viewWidget.widget.template.slug in TEMPLATES_DICT)) {
+        if (!viewWidget.widget.template) {
+            Logger.warn(
+                "viewsEndpoints::viewCheck: widget with no template found:",
+                viewWidget.widget.slug
+            );
+        } else if (!(viewWidget.widget.template.slug in TEMPLATES_DICT)) {
             Logger.warn(
                 "viewsEndpoints::viewCheck: unknown widget template found:",
                 viewWidget.widget.template.slug
@@ -202,6 +207,13 @@ const viewsApi = alphadayApi.injectEndpoints({
             },
             transformResponse: (r: TWidgetsResponse): TWidgetsResponse => {
                 return r.filter((widget) => {
+                    if (!widget.template) {
+                        Logger.warn(
+                            "viewsEndpoints::getWidgets: widget with no template found:",
+                            widget.slug
+                        );
+                        return false;
+                    }
                     if (!(widget.template.slug in TEMPLATES_DICT)) {
                         Logger.warn(
                             "viewsEndpoints::getWidgets: unknown widget template found:",
