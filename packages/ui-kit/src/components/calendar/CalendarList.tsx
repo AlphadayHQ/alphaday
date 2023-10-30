@@ -6,8 +6,7 @@ import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import moment from "moment";
-import { TEventDetails } from "./event";
-// import { ECalendarType, ICalendarBaseProps } from "../types";
+import { TEvent, TEventDetails } from "./event";
 
 export type EventMeta = {
     id: string;
@@ -87,7 +86,7 @@ export const CalendarList: FC<ICalendarList> = ({
                 onDatesSet(info.view.currentStart.toString());
             }
         },
-        [onDatesSet, showFullSize, widgetHash]
+        [handleHeaderTooltips, onDatesSet, showFullSize, widgetHash]
     );
 
     const eventRender = useCallback(
@@ -166,15 +165,13 @@ export const CalendarList: FC<ICalendarList> = ({
             if (listEventClick === false && showFullSize) {
                 const t: string = moment(selectedDate).format("YYYY-MM-DD");
                 setTimeout(() => {
-                    const ev = document.querySelector(
+                    const ev: HTMLElement | null = document.querySelector(
                         `.fc-list-day.fc-day[data-date='${t}']`
                     );
 
-                    if (scrollRef.current && ev) {
+                    if (scrollRef.current && ev?.offsetTop) {
                         scrollRef.current.scrollBy({
-                            top:
-                                (ev as HTMLElement)?.offsetTop -
-                                scrollRef.current.scrollTop,
+                            top: ev.offsetTop - scrollRef.current.scrollTop,
                             left: 0,
                             // behavior: "smooth", this doesn't work on chrome or firefox anymore
                         });
@@ -251,15 +248,8 @@ export const CalendarList: FC<ICalendarList> = ({
         });
     });
 
-    const noEvents = events === undefined || events?.length === 0;
-
     return (
-        <div
-            // $noEvents={noEvents}
-            // $isFullSize={!!showFullSize}
-            // $height={widgetHeight}
-            className="calendar-list"
-        >
+        <div className="calendar-list">
             <FullCalendar
                 initialDate={selectedDate}
                 plugins={[
