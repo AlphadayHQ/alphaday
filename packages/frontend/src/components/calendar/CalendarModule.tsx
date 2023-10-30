@@ -6,7 +6,10 @@ import { TEventCategory } from "../types";
 import CalendarFull from "./calendar-full/CalendarFull";
 // import CalendarMonth from "./calendar-month/CalendarMonth";
 import CalendarList from "./CalendarList";
-import { ECalendarType, ICalendarBaseProps } from "./types";
+import {
+    // ECalendarType,
+    ICalendarBaseProps,
+} from "./types";
 
 const CalendarModule: FC<ICalendarBaseProps> = ({
     events,
@@ -75,7 +78,7 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
          * isLoadingEvents is true.
          */
         if (events === undefined && isLoadingEvents) {
-            return <ModuleLoader $height={`${String(widgetHeight)}px`} />;
+            return <ModuleLoader $height={`${widgetHeight}px`} />;
         }
         if (showFullSize) {
             return (
@@ -99,46 +102,45 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
                 />
             );
         }
-        if (calendarType === ECalendarType.List) {
-            return (
-                <CalendarList
-                    events={eventsList}
-                    fetchEvents={fetchEvents}
-                    onClickEvent={onClickEvent}
-                    onDatesSet={onDatesSet}
-                    calendarType={calendarType}
-                    switchCalendarType={switchCalendarType}
-                    selectedEventDetails={selectedEventDetails}
-                    selectedDate={selectedDate}
-                    catFilters={catFilters}
-                    setCatFilters={handleCatFilter}
-                    widgetHash={widgetHash}
-                    widgetHeight={widgetHeight}
-                    allowedCategories={allowedCategories}
-                    isLoadingEvents={isLoadingEvents}
-                />
-            );
-        }
-
+        // if (calendarType === ECalendarType.List) {
         return (
-            <div />
-            // <CalendarMonth
-            //     events={eventsList}
-            //     fetchEvents={fetchEvents}
-            //     onClickEvent={onClickEvent}
-            //     onDatesSet={onDatesSet}
-            //     calendarType={calendarType}
-            //     switchCalendarType={switchCalendarType}
-            //     selectedEventDetails={selectedEventDetails}
-            //     setCatFilters={handleCatFilter}
-            //     catFilters={catFilters}
-            //     selectedDate={selectedDate}
-            //     widgetHash={widgetHash}
-            //     toggleAllFilters={toggleAllFilters}
-            //     showAllFilters={showAllFilters}
-            //     allowedCategories={allowedCategories}
-            // />
+            <CalendarList
+                events={eventsList}
+                fetchEvents={fetchEvents}
+                onClickEvent={onClickEvent}
+                onDatesSet={onDatesSet}
+                calendarType={calendarType}
+                switchCalendarType={switchCalendarType}
+                selectedEventDetails={selectedEventDetails}
+                selectedDate={selectedDate}
+                catFilters={catFilters}
+                setCatFilters={handleCatFilter}
+                widgetHash={widgetHash}
+                widgetHeight={widgetHeight}
+                allowedCategories={allowedCategories}
+                isLoadingEvents={isLoadingEvents}
+            />
         );
+        // }
+
+        // return (
+        // <CalendarMonth
+        //     events={eventsList}
+        //     fetchEvents={fetchEvents}
+        //     onClickEvent={onClickEvent}
+        //     onDatesSet={onDatesSet}
+        //     calendarType={calendarType}
+        //     switchCalendarType={switchCalendarType}
+        //     selectedEventDetails={selectedEventDetails}
+        //     setCatFilters={handleCatFilter}
+        //     catFilters={catFilters}
+        //     selectedDate={selectedDate}
+        //     widgetHash={widgetHash}
+        //     toggleAllFilters={toggleAllFilters}
+        //     showAllFilters={showAllFilters}
+        //     allowedCategories={allowedCategories}
+        // />
+        // );
     };
 
     return <span id={`cal-${widgetHash}`}>{renderCalendar()}</span>;

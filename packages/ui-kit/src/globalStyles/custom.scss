@@ -9,6 +9,9 @@
 /* custom css for animations */
 @import "./animation.scss";
 
+/* custom css for calendar */
+@import "./calendar.scss";
+
 @layer utilities {
     .break-word {
         word-break: break-word;

@@ -67,7 +67,7 @@
                     height: 49px;
                     border-bottom: 1px solid theme("colors.btnRingVariant500");
                     margin-bottom: 0 !important;
-                    justify-content: end;
+                    justify-content: flex-end;
                     padding: 10px;
                     button,
                     button:focus {
@@ -79,7 +79,7 @@
                     z-index: 1;
                     width: calc(100% - 4px);
 
-                    @apply oneCol:justify-between two-col:p-[0_15px];
+                    @apply single-col:justify-between two-col:p-[0_15px];
                 }
                 .fc {
                     &:first-child {
@@ -96,7 +96,7 @@
                             align-items: center;
                             margin-left: 120px;
 
-                            @apply twoCol:ml-[105px];
+                            @apply two-col:ml-[105px];
                             .fc-toolbar-title {
                                 color: theme("colors.primary");
                                 cursor: default;
@@ -161,7 +161,7 @@
 
                         /* identical to box height, or 183% */
                         letter-spacing: 0.2px;
-                        @apply oneCol:block fontGroup-normal;
+                        @apply single-col:block fontGroup-normal;
                         &:disabled {
                             background-color: theme(
                                 "colors.btnBackgroundVariant100"
@@ -264,6 +264,8 @@
                                     cursor: default !important;
                                     text-align: center;
 
+                                    @apply fontGroup-support;
+
                                     &:hover {
                                         text-decoration: none;
                                     }
@@ -293,7 +295,7 @@
                             flex: 0 0 calc(90% - 80px);
                             max-width: calc(90% - 80px);
                             cursor: pointer;
-                            @apply tiny:flex-[0_0_calc(100%_-_50px)] tiny:max-w-[calc(100%_-_79px)] 
+                            @apply tiny:flex-[0_0_calc(100%_-_50px)] tiny:max-w-[calc(100%_-_79px)];
 
                             &:hover {
                                 background-color: theme(
@@ -309,16 +311,16 @@
                                 }
                             }
 
-                            @apply flex-[0_0_calc(85%_-_80px)] max-w-[calc(85%_-_80px)] two-col:flex-[0_0_calc(88%_-_80px)] two-col:max-w-[calc(88%_-_80px)] three-col:flex-[0_0_calc(90%_-_80px)] three-col:max-w-[calc(90%_-_80px)]
+                            @apply flex-[0_0_calc(85%_-_80px)] max-w-[calc(85%_-_80px)] two-col:flex-[0_0_calc(88%_-_80px)] two-col:max-w-[calc(88%_-_80px)] three-col:flex-[0_0_calc(90%_-_80px)] three-col:max-w-[calc(90%_-_80px)];
                             & + .fc-list-event {
                                 margin-left: 10%;
                                 flex: 0 0 100%;
                                 max-width: 90%;
                                 padding-left: 80px;
-                                @apply tiny:ml-[15%] ml-[12%] twoCol:ml-[20%];
+                                @apply tiny:ml-[15%] ml-[12%] two-col:ml-[20%];
                             }
-                            &:first-child {
-                            }
+                            // &:first-child {
+                            // }
                             & > td {
                                 border-width: 0;
                             }
