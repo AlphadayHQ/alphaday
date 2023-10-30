@@ -13,7 +13,6 @@ import Select, {
     OptionProps,
     PlaceholderProps,
     ValueContainerProps,
-    ContainerProps,
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
@@ -29,8 +28,7 @@ interface IProps {
     $uppercase?: boolean;
 }
 
-const { Input, NoOptionsMessage, MenuList, Option, SelectContainer } =
-    components;
+const { Input, NoOptionsMessage, MenuList, Option } = components;
 
 const CustomInput = <Option,>(props: InputProps<Option>) => {
     const { isDisabled, value, hasValue } = props;
@@ -77,22 +75,6 @@ const CustomMenuList = (showTrending: boolean) => {
                 <div data-testid="searchbar-menu">
                     <MenuList {...props} />
                 </div>
-            </>
-        );
-    };
-};
-
-const CustomSelectContainer = (showBackdrop?: boolean) => {
-    return <Option,>(
-        props: ContainerProps<Option, true, GroupBase<Option>>
-    ) => {
-        const { isFocused } = props;
-        return (
-            <>
-                {isFocused && showBackdrop && (
-                    <div className="bg-black w-full h-full top-0 left-0 fixed opacity-40" />
-                )}
-                <SelectContainer {...props} />
             </>
         );
     };
@@ -176,6 +158,7 @@ export const SearchBar = <T,>({
     isFetchingTrendingKeywordResults,
     showBackdrop,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
+    const [isFocused, setIsFocused] = useState(false);
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
     const [inputValue, setInputValue] = useState("");
 
@@ -289,7 +272,12 @@ export const SearchBar = <T,>({
 
     return (
         <div className="text-primary h-[41px] w-full max-w-[524px]">
+            {isFocused && showBackdrop && (
+                <div className="bg-black w-full h-full top-0 left-0 fixed opacity-40" />
+            )}
             <Select
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
                 onChange={(e, changeType) => handleSearchValues(e, changeType)}
                 onInputChange={handleInputChange}
                 isClearable
@@ -298,7 +286,6 @@ export const SearchBar = <T,>({
                 value={searchValues}
                 closeMenuOnSelect={closeMenuOnSelect}
                 components={{
-                    SelectContainer: CustomSelectContainer(showBackdrop),
                     DropdownIndicator: null,
                     NoOptionsMessage: CustomNoOptionsMessage(isFetching),
                     MenuList: CustomMenuList(showTrending),
