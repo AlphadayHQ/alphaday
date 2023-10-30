@@ -17,9 +17,10 @@ export const ChatForm: FC<IForm> = ({ handleSend, isAuthenticated }) => {
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const [message, setMessage] = useState("");
 
-    const isMessageInvalid = useMemo(() => message === "\n" || message === "", [
-        message,
-    ]);
+    const isMessageInvalid = useMemo(
+        () => message === "\n" || message === "",
+        [message]
+    );
 
     const autoGrow = useCallback(() => {
         if (!textAreaRef.current) {
