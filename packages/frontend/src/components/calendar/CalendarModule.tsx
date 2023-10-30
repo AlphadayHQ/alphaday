@@ -4,7 +4,7 @@ import { TEvent } from "src/api/types";
 import { defaultEventCategory } from "../calendarCategories";
 import { TEventCategory } from "../types";
 import CalendarFull from "./calendar-full/CalendarFull";
-import CalendarMonth from "./calendar-month/CalendarMonth";
+// import CalendarMonth from "./calendar-month/CalendarMonth";
 import CalendarList from "./CalendarList";
 import { ECalendarType, ICalendarBaseProps } from "./types";
 
@@ -121,22 +121,23 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
         }
 
         return (
-            <CalendarMonth
-                events={eventsList}
-                fetchEvents={fetchEvents}
-                onClickEvent={onClickEvent}
-                onDatesSet={onDatesSet}
-                calendarType={calendarType}
-                switchCalendarType={switchCalendarType}
-                selectedEventDetails={selectedEventDetails}
-                setCatFilters={handleCatFilter}
-                catFilters={catFilters}
-                selectedDate={selectedDate}
-                widgetHash={widgetHash}
-                toggleAllFilters={toggleAllFilters}
-                showAllFilters={showAllFilters}
-                allowedCategories={allowedCategories}
-            />
+            <div />
+            // <CalendarMonth
+            //     events={eventsList}
+            //     fetchEvents={fetchEvents}
+            //     onClickEvent={onClickEvent}
+            //     onDatesSet={onDatesSet}
+            //     calendarType={calendarType}
+            //     switchCalendarType={switchCalendarType}
+            //     selectedEventDetails={selectedEventDetails}
+            //     setCatFilters={handleCatFilter}
+            //     catFilters={catFilters}
+            //     selectedDate={selectedDate}
+            //     widgetHash={widgetHash}
+            //     toggleAllFilters={toggleAllFilters}
+            //     showAllFilters={showAllFilters}
+            //     allowedCategories={allowedCategories}
+            // />
         );
     };
 

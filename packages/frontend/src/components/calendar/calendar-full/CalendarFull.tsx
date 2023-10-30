@@ -1,7 +1,7 @@
 import { FC, useRef } from "react";
-import EventDetails from "src/components/calendar/calendar-full/event-details/EventDetails";
+// import EventDetails from "src/components/calendar/calendar-full/event-details/EventDetails";
 import { Z_INDEX_REGISTRY } from "src/config/zIndexRegistry";
-import CalendarMonth from "../calendar-month/CalendarMonth";
+// import CalendarMonth from "../calendar-month/CalendarMonth";
 import CalendarList from "../CalendarList";
 import { ICalendarBaseProps } from "../types";
 
@@ -17,10 +17,10 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
     setCatFilters,
     catFilters,
     selectedEventDetails,
-    isLoadingEventDetails,
+    // isLoadingEventDetails,
     selectedDate,
-    toggleAllFilters,
-    showAllFilters,
+    // toggleAllFilters,
+    // showAllFilters,
     widgetHash,
     allowedCategories,
     isLoadingEvents,
@@ -32,7 +32,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
             ref={fullCalendarWrapRef}
         >
             <div className="column flex-[35.3%] relative">
-                <CalendarMonth
+                {/* <CalendarMonth
                     events={events}
                     fetchEvents={fetchEvents}
                     onClickEvent={onClickEvent}
@@ -49,7 +49,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                     widgetHash={widgetHash}
                     allowedCategories={allowedCategories}
                     fullCalendarWrapRef={fullCalendarWrapRef}
-                />
+                /> */}
             </div>
             <div
                 className="column flex-[23.1%]"
@@ -85,11 +85,11 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                     zIndex: CALENDAR_EVENT_DETAILS,
                 }}
             >
-                <EventDetails
+                {/* <EventDetails
                     isLoadingEventDetails={!!isLoadingEventDetails}
                     event={selectedEventDetails}
                     eventFilters={catFilters}
-                />
+                /> */}
             </div>
         </div>
     );
