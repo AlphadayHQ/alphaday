@@ -47,6 +47,9 @@ export * from "./views/types";
 export * from "./twitter-feed/twitterEndpoints";
 export * from "./twitter-feed/types";
 
+export * from "./llm/llmEndpoints";
+export * from "./llm/types";
+
 // TODO: remove
 export * from "./dynamic-modules/dynamicEndpoints";
 export * from "./dynamic-modules/types";

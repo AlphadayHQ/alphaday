@@ -40,6 +40,7 @@ import {
     DropdownMenu,
 } from "./src/components/dropdown/dropdown";
 import { Input } from "./src/components/input/Input";
+import { ChatForm } from "./src/components/chat/ChatForm";
 import Footer from "./src/components/layout/Footer";
 import {
     HeaderWrapper,
@@ -145,4 +146,5 @@ export {
     CollapseListItem,
     KeyValueTable,
     Overlay,
+    ChatForm,
 };

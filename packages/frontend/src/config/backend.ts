@@ -58,6 +58,10 @@ const API_V0 = {
                 ETHEREUM_LAST_BLOCK: "ETHEREUM_LAST_BLOCK",
             },
         },
+        LLM: {
+            BASE: "llm",
+            QNA: "/",
+        },
         TAGS: {
             BASE: "tags",
             LIST: "/",

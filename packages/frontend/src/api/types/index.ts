@@ -22,3 +22,4 @@ export * from "./portfolio";
 export * from "./lens";
 export * from "./features";
 export * from "./discord";
+export * from "./qna";

@@ -8,6 +8,10 @@ const WIDGETS_CONFIG = {
         HEADER_HEIGHT: 42,
         DEFAULT_WIDGET_HEIGHT,
     },
+    [ETemplateNameRegistry.AlphaGpt]: {
+        ADJUSTABLE: true,
+        WIDGET_HEIGHT: 500,
+    },
     [ETemplateNameRegistry.Calendar]: {
         TAG_ITEM_TYPE: "event",
         QUERY_EVENTS_HARD_LIMIT: 200,

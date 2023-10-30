@@ -43,6 +43,7 @@ export enum EFeaturesRegistry {
  * Depending on the toggle on the backend, a widget may or may not be available to the user.
  */
 export enum ETemplateNameRegistry {
+    AlphaGpt = "ALPHAGPT",
     Blog = "BLOG",
     Calendar = "CALENDAR",
     Chat = "CHAT",

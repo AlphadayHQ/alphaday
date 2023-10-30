@@ -56,9 +56,11 @@ export type TTemplatesDict = {
 };
 
 export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
+    alphagpt_template: lazy(() => import("./containers/qna/QnAContainer")),
     blog_template: lazy(() => import("./containers/items/ItemsContainer")),
     dao_template: lazy(() => import("./containers/items/ItemsContainer")),
     discord_template: lazy(() => import("./containers/items/ItemsContainer")),
+    faq_template: lazy(() => import("./containers/dynamic/FaqContainer")),
     forum_template: lazy(() => import("./containers/items/ItemsContainer")),
     gas_template: lazy(() => import("./containers/gas/GasContainer")),
     lens_template: lazy(
@@ -75,18 +77,17 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/portfolio/PortfolioContainer")
     ),
     reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
-    summary_template: lazy(
-        () => import("./containers/summary/SummaryContainer")
-    ),
-    uniswap_template: lazy(() => import("./containers/uniswap/SwapContainer")),
-    venue_template: lazy(() => import("./containers/maps/VenueMapContainer")),
-    video_template: lazy(() => import("./containers/video/VideoContainer")),
-    talks_template: lazy(() => import("./containers/dynamic/AgendaContainer")),
-    tvl_template: lazy(() => import("./containers/tvl/TvlContainer")),
     roadmap_template: lazy(
         () => import("./containers/dynamic/RoadmapContainer")
     ),
-    faq_template: lazy(() => import("./containers/dynamic/FaqContainer")),
+    summary_template: lazy(
+        () => import("./containers/summary/SummaryContainer")
+    ),
+    talks_template: lazy(() => import("./containers/dynamic/AgendaContainer")),
+    tvl_template: lazy(() => import("./containers/tvl/TvlContainer")),
+    uniswap_template: lazy(() => import("./containers/uniswap/SwapContainer")),
+    venue_template: lazy(() => import("./containers/maps/VenueMapContainer")),
+    video_template: lazy(() => import("./containers/video/VideoContainer")),
 };
 
 export type TFullSizeRoute = {
