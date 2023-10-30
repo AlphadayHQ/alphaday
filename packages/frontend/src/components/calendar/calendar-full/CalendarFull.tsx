@@ -1,8 +1,8 @@
 import { FC, useRef } from "react";
 import EventDetails from "src/components/calendar/calendar-full/event-details/EventDetails";
 import { Z_INDEX_REGISTRY } from "src/config/zIndexRegistry";
-import CalendarList from "../calendar-list/CalendarList";
 import CalendarMonth from "../calendar-month/CalendarMonth";
+import CalendarList from "../CalendarList";
 import { ICalendarBaseProps } from "../types";
 
 const { CALENDAR_LIST, CALENDAR_EVENT_DETAILS } = Z_INDEX_REGISTRY;
