@@ -1,4 +1,7 @@
-export function checkCookie(): boolean {
+/**
+ * `isCookieEnabled` checks if the current user has disabled browser cookies or not.
+ */
+export function isCookieEnabled(): boolean {
     let { cookieEnabled } = navigator;
     if (!cookieEnabled) {
         document.cookie = "testcookie";

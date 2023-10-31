@@ -47,16 +47,6 @@ export const appRoutes: IRoute[] = [
 /**
  * An array of routes in the app.
  */
-export const loadRoutes: IRoute[] = [
-    {
-        path: ERouteNames.FallBack,
-        component: PreloaderPage,
-    },
-];
-
-/**
- * An array of routes in the app.
- */
 export const errorRoutes: IRoute[] = [
     {
         path: ERouteNames.FallBack,
