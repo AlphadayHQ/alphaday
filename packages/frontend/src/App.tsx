@@ -38,7 +38,7 @@ const AppRoutes = () => {
     const resolvedView = useResolvedView();
     const { pathContainsHashOrSlug, isRoot } = useViewRoute();
 
-    const errorType = useMemo<number | undefined>(() => {
+    const errorCode = useMemo<number | undefined>(() => {
         /**
          * At this moment, we do not support any other routes than the root and the hash/slug routes
          * If the path does not contain a hash or slug, we show the 404 error page
@@ -51,11 +51,11 @@ const AppRoutes = () => {
     }, [error, resolvedView.error, pathContainsHashOrSlug, isRoot]);
 
     const routes = useMemo(() => {
-        if (error || errorType) {
+        if (error || errorCode) {
             return errorRoutes;
         }
         return appRoutes;
-    }, [error, errorType]);
+    }, [error, errorCode]);
 
     /**
      * If the status check gives a 401 unauthorized error,
@@ -73,7 +73,7 @@ const AppRoutes = () => {
                     key={route.path}
                     path={route.path}
                     exact={route.exact}
-                    render={() => <route.component type={errorType} />}
+                    render={() => <route.component type={errorCode} />}
                 />
             ))}
         </Suspense>
