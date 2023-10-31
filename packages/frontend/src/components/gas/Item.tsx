@@ -24,9 +24,9 @@ const Item: FC<IProps> = ({
     if (ethPrice && gasPrices) {
         if (type === "title") {
             return (
-                <div className="flex w-full items-center justify-between uppercase fontGroup-support text-primaryVariant100 mb-2">
-                    <span className="ml-0">{title}</span>
-                    <div className="grid grid-cols-3 gap-10 float-right">
+                <div className="uppercase fontGroup-support text-primaryVariant100 mb-2">
+                    <div className="grid grid-cols-4 md-gap-10 gap-5">
+                        <span className="ml-0">{title}</span>
                         <span className="ml-auto text-right">Fast (est.)</span>
 
                         <span className="ml-auto text-right">
@@ -39,23 +39,19 @@ const Item: FC<IProps> = ({
             );
         }
         return (
-            <div className="flex w-full items-center justify-between py-2.5 [&:last-child]:pb-0">
-                <div className="item-wrapper flex items-center">
-                    <img
-                        className="w-5 h-5 rounded-full"
-                        src={img}
-                        alt="Item"
-                    />
-                    <span className="ml-3 font-bold">{title}</span>
-                </div>
-
-                <div className="grid grid-cols-3 gap-10 min-w-[68%] float-right">
+            <div className="py-2.5 [&:last-child]:pb-0">
+                <div className="grid grid-cols-4 md-gap-10 gap-5">
+                    <div className="flex">
+                        <img
+                            className="w-5 h-5 rounded-full"
+                            src={img}
+                            alt="Item"
+                        />
+                        <span className="ml-3 font-bold">{title}</span>
+                    </div>
                     {gasPrices &&
                         Object.entries(gasPrices).map(([key, value]) => (
-                            <span
-                                key={key}
-                                className="ml-auto text-right text-primary"
-                            >
+                            <div key={key} className="text-right text-primary">
                                 {Intl.NumberFormat("en-US", {
                                     style: "currency",
                                     currency: "USD",
@@ -64,7 +60,7 @@ const Item: FC<IProps> = ({
                                         Number(value) *
                                         ethPrice.value
                                 )}
-                            </span>
+                            </div>
                         ))}
                 </div>
             </div>
