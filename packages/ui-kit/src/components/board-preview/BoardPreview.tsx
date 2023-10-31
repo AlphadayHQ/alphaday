@@ -132,7 +132,7 @@ export const BoardPreview: FC<IPreview> = ({
                                     "bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 hover:text-btnRingVariant100 hover:border-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border",
                                     restProps.pinned &&
                                         "border-btnRingVariant100",
-                                    isAuthenticated && "cursor-not-allowed"
+                                    !isAuthenticated && "cursor-not-allowed"
                                 )}
                                 role="button"
                                 tabIndex={0}
