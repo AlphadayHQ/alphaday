@@ -58,6 +58,9 @@ export type TTemplatesDict = {
 export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     alphagpt_template: lazy(() => import("./containers/qna/QnAContainer")),
     blog_template: lazy(() => import("./containers/items/ItemsContainer")),
+    custom_table_template: lazy(
+        () => import("./containers/custom-modules/CustomTableContainer")
+    ),
     dao_template: lazy(() => import("./containers/items/ItemsContainer")),
     discord_template: lazy(() => import("./containers/items/ItemsContainer")),
     faq_template: lazy(() => import("./containers/dynamic/FaqContainer")),

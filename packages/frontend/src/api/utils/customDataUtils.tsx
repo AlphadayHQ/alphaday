@@ -6,8 +6,8 @@ import {
     TRemoteCustomData,
     TRemoteCustomDatum,
     TRemoteCustomMeta,
-    TCustomMetaCard,
     TCustomMetaChart,
+    TCustomMetaCard,
 } from "src/api/services";
 import { TCustomItem, TCustomSeries } from "src/api/types";
 import { getErrorMessage } from "src/api/utils/errorHandling";
@@ -147,7 +147,11 @@ export const validateCustomMeta: (
             errorCode: EWidgetValidationErrorCodes.MissingField,
         };
     }
-    if (meta.layout_type !== "table" && meta.layout_type !== "chart") {
+    if (
+        meta.layout_type !== "table" &&
+        meta.layout_type !== "chart" &&
+        meta.layout_type !== "card"
+    ) {
         return {
             meta: undefined,
             errorCode: EWidgetValidationErrorCodes.InvalidDataFieldType,
@@ -448,7 +452,7 @@ export const getYSeries: (
  */
 export const customDataAsCardData: (
     customData: TRemoteCustomData,
-    meta: TCustomMetaCard | undefined,
+    customMeta: TCustomMetaCard | undefined,
     widgetName: string
 ) => { title?: string; value?: string | React.ReactNode } | undefined = (
     customData,
