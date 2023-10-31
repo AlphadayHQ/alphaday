@@ -1,4 +1,4 @@
-import { Suspense, useMemo } from "react";
+import { Suspense, memo, useMemo } from "react";
 import { ErrorModal } from "@alphaday/ui-kit";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
@@ -15,14 +15,15 @@ import {
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
-import { checkCookie } from "./api/utils/cookie";
+import { isCookieEnabled } from "./api/utils/cookie";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
-import { appRoutes, loadRoutes, errorRoutes } from "./routes";
+import { appRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
 const landingPage = CONFIG.SEO.DOMAIN;
+
 const goToLandingPage = () => {
     window.location.href = landingPage;
 };
@@ -37,27 +38,24 @@ const AppRoutes = () => {
     const resolvedView = useResolvedView();
     const { pathContainsHashOrSlug, isRoot } = useViewRoute();
 
-    const routes = useMemo(() => {
-        if (resolvedView.isLoading) {
-            return loadRoutes;
-        }
+    const errorCode = useMemo<number | undefined>(() => {
         /**
          * At this moment, we do not support any other routes than the root and the hash/slug routes
-         * If the path does not contain a hash or slug, we show the error page
+         * If the path does not contain a hash or slug, we show the 404 error page
          */
         if (!pathContainsHashOrSlug && !isRoot) {
+            return 404;
+        }
+        const errorInfo = error ?? resolvedView.error;
+        return errorInfo && getRtkErrorCode(errorInfo);
+    }, [error, resolvedView.error, pathContainsHashOrSlug, isRoot]);
+
+    const routes = useMemo(() => {
+        if (error || errorCode) {
             return errorRoutes;
         }
-        if (error || resolvedView.isError) {
-            const errorInfo = error ?? resolvedView.error;
-            const errorType = getRtkErrorCode(errorInfo);
-            return errorRoutes.map((route) => ({
-                ...route,
-                component: () => <route.component type={errorType} />,
-            }));
-        }
         return appRoutes;
-    }, [resolvedView, error, pathContainsHashOrSlug, isRoot]);
+    }, [error, errorCode]);
 
     /**
      * If the status check gives a 401 unauthorized error,
@@ -68,52 +66,58 @@ const AppRoutes = () => {
         location.reload();
     }
 
-    return routes.map((route) => (
-        <Route
-            key={route.path}
-            path={route.path}
-            exact={route.exact}
-            component={route.component}
-        />
-    ));
+    return (
+        <Suspense fallback={<PreloaderPage />}>
+            {routes.map((route) => (
+                <Route
+                    key={route.path}
+                    path={route.path}
+                    exact={route.exact}
+                    render={() => <route.component type={errorCode} />}
+                />
+            ))}
+        </Suspense>
+    );
 };
 
 const App: React.FC = () => {
     useAppInit();
     useGlobalHooks();
-    if (checkCookie()) {
+
+    if (!isCookieEnabled()) {
         return (
             <IonApp className="theme-dark">
-                <IonReactRouter>
-                    <Suspense fallback={<PreloaderPage />}>
-                        <IonRouterOutlet>
-                            <AppRoutes />
-                        </IonRouterOutlet>
-                    </Suspense>
-                </IonReactRouter>
-                <Web3Modal
-                    projectId={CONFIG.WALLET_CONNECT.PROJECT_ID}
-                    ethereumClient={walletConnectProvider}
-                    themeMode="dark"
-                    themeVariables={{
-                        "--w3m-background-color":
-                            "var(--colors-background-variant200, var(--alpha-dark-300))",
-                        "--w3m-accent-color":
-                            "var(--colors-btn-ring-variant100, var(--alpha-dark-300))",
-                        "--w3m-overlay-background-color":
-                            "var(--colors-background-variant1600, var(--alpha-dark-300))",
-                    }}
+                <ErrorModal
+                    title="Cookie Error"
+                    onClose={goToLandingPage}
+                    errorMessage="Cookies must be enabled to use Alphaday."
                 />
             </IonApp>
         );
     }
+
     return (
-        <ErrorModal
-            title="Cookie Error"
-            onClose={goToLandingPage}
-            errorMessage="Cookies must be enabled to use Alphaday."
-        />
+        <IonApp className="theme-dark">
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    <AppRoutes />
+                </IonRouterOutlet>
+            </IonReactRouter>
+            <Web3Modal
+                projectId={CONFIG.WALLET_CONNECT.PROJECT_ID}
+                ethereumClient={walletConnectProvider}
+                themeMode="dark"
+                themeVariables={{
+                    "--w3m-background-color":
+                        "var(--colors-background-variant200, var(--alpha-dark-300))",
+                    "--w3m-accent-color":
+                        "var(--colors-btn-ring-variant100, var(--alpha-dark-300))",
+                    "--w3m-overlay-background-color":
+                        "var(--colors-background-variant1600, var(--alpha-dark-300))",
+                }}
+            />
+        </IonApp>
     );
 };
 
-export default App;
+export default memo(App);

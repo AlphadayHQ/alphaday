@@ -1,8 +1,9 @@
 // TODO (xavier-charles): uncomment the commented code
-import { FC, useState, useCallback, memo } from "react";
+import { FC, useState, useCallback, memo, Suspense } from "react";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import { Draggable } from "react-beautiful-dnd";
 // import { useNavigate } from "react-router-dom";
-import { useTutorial } from "src/api/hooks";
+import { useTutorial, useWidgetHeight } from "src/api/hooks";
 import { useAppSelector } from "src/api/store/hooks";
 import * as viewsStore from "src/api/store/slices/views";
 import { ETutorialTipId, TUserViewWidget } from "src/api/types";
@@ -50,6 +51,8 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         () => setIsAdjustable((prev) => !prev),
         []
     );
+
+    const WIDGET_HEIGHT = useWidgetHeight(moduleData);
 
     /**
      * The registered container component for this widget
@@ -137,11 +140,17 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                         moduleData={moduleData}
                         adjustable={isAdjustable}
                     >
-                        <ModuleContainer
-                            moduleData={moduleData}
-                            showFullSize={showFullSize}
-                            toggleAdjustable={handleAdjustable}
-                        />
+                        <Suspense
+                            fallback={
+                                <ModuleLoader $height={`${WIDGET_HEIGHT}px`} />
+                            }
+                        >
+                            <ModuleContainer
+                                moduleData={moduleData}
+                                showFullSize={showFullSize}
+                                toggleAdjustable={handleAdjustable}
+                            />
+                        </Suspense>
                     </BaseContainer>
                 </div>
             )}
