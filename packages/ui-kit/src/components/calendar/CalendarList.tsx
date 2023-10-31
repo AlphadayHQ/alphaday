@@ -101,18 +101,28 @@ export const CalendarList: FC<ICalendarList> = ({
             if (selectedEvent === undefined) return;
 
             if (view.type === "listMonth" || view.type === "listWeek") {
-                const dates = document.querySelectorAll(".fc-list-day-text");
-                const title = el.querySelector<HTMLElement>(
+                const dates =
+                    document.querySelectorAll<HTMLElement>(".fc-list-day-text");
+                const eventTimeEl = el.querySelector<HTMLElement>(
                     ".fc-list-event-time"
                 );
-                const time = title?.innerHTML;
+                const titleText = document.createElement("td");
+                eventTimeEl?.parentNode?.insertBefore(
+                    titleText,
+                    eventTimeEl.nextSibling
+                );
+                const time = eventTimeEl?.innerHTML;
 
-                (title?.parentNode as HTMLElement)?.classList?.add(
+                (eventTimeEl?.parentNode as HTMLElement)?.classList?.add(
                     `list-event-${e.event.id}`
                 );
 
-                if (title != null) {
-                    title.innerHTML = `
+                if (eventTimeEl?.style) {
+                    eventTimeEl.style.display = "none";
+                }
+
+                titleText.classList.add("fc-list-event-time");
+                titleText.innerHTML = `
             <div style="width: 100%; display:flex; align-items: center; font-size: 12px; flex-wrap: wrap;">
             <div style="width:7px; height:7px; border-radius:4px; margin-right: 5px; display: inline-block; background-color: ${backgroundColor}"></div>
             <span style="color:${String(
@@ -127,18 +137,21 @@ export const CalendarList: FC<ICalendarList> = ({
             )}</span>
             </div>
             `;
-                }
 
                 dates.forEach((date) => {
-                    const item = date;
                     const text = date.textContent?.split(" ");
-                    if (!text) return;
+                    if (!text || text[1] === undefined) return;
+                    if (date.classList.contains("cal-time-edited")) return;
+
+                    date?.classList?.add("cal-time-edited");
                     const now = moment().format("DD");
-                    if (text.length > 1) {
-                        item.innerHTML = `${text[1]}<span>${text[0]}</span>`;
-                        if (now === text[0]) {
-                            item.classList.add("now");
-                        }
+                    const newDate = document.createElement("div");
+                    date?.parentNode?.insertBefore(newDate, date.nextSibling);
+                    date?.style.setProperty("display", "none");
+                    newDate.classList.add("fc-list-day-text");
+                    newDate.innerHTML = `${text[1]}<span>${text[0]}</span>`;
+                    if (now === text[0]) {
+                        newDate.classList.add("now");
                     }
                 });
             }
