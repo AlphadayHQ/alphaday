@@ -1,7 +1,7 @@
 // TODO (xavier-charles): uncomment the commented code
 import { FC, useState, useCallback, memo, Suspense } from "react";
-import { Draggable } from "react-beautiful-dnd";
 import { ModuleLoader } from "@alphaday/ui-kit";
+import { Draggable } from "react-beautiful-dnd";
 // import { useNavigate } from "react-router-dom";
 import { useTutorial, useWidgetHeight } from "src/api/hooks";
 import { useAppSelector } from "src/api/store/hooks";

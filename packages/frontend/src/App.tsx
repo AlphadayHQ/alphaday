@@ -38,24 +38,24 @@ const AppRoutes = () => {
     const resolvedView = useResolvedView();
     const { pathContainsHashOrSlug, isRoot } = useViewRoute();
 
-    const routes = useMemo(() => {
+    const errorType = useMemo<number | undefined>(() => {
         /**
          * At this moment, we do not support any other routes than the root and the hash/slug routes
-         * If the path does not contain a hash or slug, we show the error page
+         * If the path does not contain a hash or slug, we show the 404 error page
          */
         if (!pathContainsHashOrSlug && !isRoot) {
+            return 404;
+        }
+        const errorInfo = error ?? resolvedView.error;
+        return errorInfo && getRtkErrorCode(errorInfo);
+    }, [error, resolvedView.error, pathContainsHashOrSlug, isRoot]);
+
+    const routes = useMemo(() => {
+        if (error || errorType) {
             return errorRoutes;
         }
-        if (error || resolvedView.isError) {
-            const errorInfo = error ?? resolvedView.error;
-            const errorType = getRtkErrorCode(errorInfo);
-            return errorRoutes.map((route) => ({
-                ...route,
-                component: () => <route.component type={errorType} />,
-            }));
-        }
         return appRoutes;
-    }, [resolvedView, error, pathContainsHashOrSlug, isRoot]);
+    }, [error, errorType]);
 
     /**
      * If the status check gives a 401 unauthorized error,
@@ -69,7 +69,12 @@ const AppRoutes = () => {
     return (
         <Suspense fallback={<PreloaderPage />}>
             {routes.map((route) => (
-                <Route key={route.path} {...route} />
+                <Route
+                    key={route.path}
+                    path={route.path}
+                    exact={route.exact}
+                    render={() => <route.component type={errorType} />}
+                />
             ))}
         </Suspense>
     );
