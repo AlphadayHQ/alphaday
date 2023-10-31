@@ -194,35 +194,38 @@ export const CalendarList: FC<ICalendarList> = ({
         }
     }, [listEventClick, selectedDate, selectedEventDetails, showFullSize]);
 
-    // remove class event-highlight from elements that are not of the selectedEvent
-    [
-        ...document.getElementsByClassName("fc-list-event event-highlight"),
-    ].forEach((el) => {
-        if (
-            !(el as HTMLElement).classList.contains(
+    if (showFullSize) {
+        // remove class event-highlight from elements that are not of the selectedEvent
+        [
+            ...document.getElementsByClassName("fc-list-event event-highlight"),
+        ].forEach((el) => {
+            if (
+                !(el as HTMLElement).classList.contains(
+                    `list-event-${selectedEventDetails?.id}`
+                )
+            ) {
+                (el as HTMLElement).classList.remove("event-highlight");
+                const sibling = el.previousSibling as HTMLElement;
+                if (sibling?.classList.contains("fc-list-day")) {
+                    sibling.classList.remove("event-highlight");
+                }
+            }
+        });
+
+        // add class event-highlight from elements that are of the selectedEvent
+
+        [
+            ...document.getElementsByClassName(
                 `list-event-${selectedEventDetails?.id}`
-            )
-        ) {
-            (el as HTMLElement).classList.remove("event-highlight");
+            ),
+        ].forEach((el) => {
+            (el as HTMLElement).classList.add("event-highlight");
             const sibling = el.previousSibling as HTMLElement;
             if (sibling?.classList.contains("fc-list-day")) {
-                sibling.classList.remove("event-highlight");
+                sibling.classList.add("event-highlight");
             }
-        }
-    });
-
-    // add class event-highlight from elements that are of the selectedEvent
-    [
-        ...document.getElementsByClassName(
-            `list-event-${selectedEventDetails?.id}`
-        ),
-    ].forEach((el) => {
-        (el as HTMLElement).classList.add("event-highlight");
-        const sibling = el.previousSibling as HTMLElement;
-        if (sibling?.classList.contains("fc-list-day")) {
-            sibling.classList.add("event-highlight");
-        }
-    });
+        });
+    }
 
     document
         .getElementsByClassName(
