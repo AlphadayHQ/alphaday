@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TEvent } from "src/api/types";
 import { getClosestEvent } from "src/api/utils/calendarUtils";
 import { filteringListToStr } from "src/api/utils/filterUtils";
+import { Logger } from "src/api/utils/logging";
 import { buildViewPath } from "src/api/utils/viewUtils";
 import CalendarModule from "src/components/calendar/CalendarModule";
 import { ECalendarType } from "src/components/calendar/types";
@@ -208,8 +209,9 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
          * When a view is stale, it can be removed and re-added to the cache,
          * so selectedView can be undefined for a transient interval
          */
-        if (viewPath === "/" || selectedView === undefined) return;
-        navigate.push(`${viewPath}calendar/event/${eventId}/${eventUrlTitle}`);
+        // if (viewPath === "/" || selectedView === undefined) return;
+        // navigate.push(`${viewPath}calendar/event/${eventId}/${eventUrlTitle}`);
+        Logger.debug("onClickEvent", eventId, eventUrlTitle);
     };
 
     const onDatesSet = useCallback(
