@@ -6,19 +6,12 @@ import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import moment from "moment";
-import { TEvent, TEventDetails } from "./event";
+import { ICalendarBaseProps, TEventCategory, TEventDetails } from "./event";
 
 export type EventMeta = {
     id: string;
     title: string;
     location: string;
-};
-
-export type TEventCategory = {
-    value: string;
-    label: string;
-    category: string;
-    color: string;
 };
 
 const NoEvents: FC<{ msg: string }> = ({ msg }) => {
@@ -28,16 +21,6 @@ const NoEvents: FC<{ msg: string }> = ({ msg }) => {
         </div>
     );
 };
-
-export interface ICalendarBaseProps {
-    events: TEvent[] | undefined;
-    onDatesSet?: (d: string) => void;
-    selectedEventDetails?: TEventDetails;
-    catFilters: TEventCategory[];
-    showFullSize?: boolean;
-    selectedDate?: Date;
-    widgetHash: string;
-}
 
 interface ICalendarList extends ICalendarBaseProps {
     eventClickHandler: (e: EventClickArg) => void;

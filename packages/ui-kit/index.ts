@@ -16,6 +16,8 @@ import { NavTabButton } from "./src/components/buttons/NavTabButton";
 import { TabButton } from "./src/components/buttons/TabButton";
 import { ViewTabButton } from "./src/components/buttons/ViewTabButton";
 import { CalendarList } from "./src/components/calendar/CalendarList";
+import { CalendarMonth } from "./src/components/calendar/CalendarMonth";
+import { TDatePos } from "./src/components/calendar/event";
 import { Carousel } from "./src/components/carousel/Carousel";
 import { CarouselImage } from "./src/components/carousel/CarouselImage";
 import { Lightbox } from "./src/components/carousel/Lightbox";
@@ -28,6 +30,7 @@ import {
     ApexPieChart,
     ApexRadialChart,
 } from "./src/components/charts/apexchart";
+import { ChatForm } from "./src/components/chat/ChatForm";
 import { Dialog } from "./src/components/dialog/Dialog";
 import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
 import {
@@ -42,7 +45,6 @@ import {
     DropdownMenu,
 } from "./src/components/dropdown/dropdown";
 import { Input } from "./src/components/input/Input";
-import { ChatForm } from "./src/components/chat/ChatForm";
 import Footer from "./src/components/layout/Footer";
 import {
     HeaderWrapper,
@@ -75,6 +77,7 @@ import SyncIndicator, {
 } from "./src/components/syncIndicator/SyncIndicator";
 import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
+import { CalendarTooltip } from "./src/components/tooltips/CalendarTooltip";
 import {
     ViewTabMenu,
     TViewTabMenuOption,
@@ -82,7 +85,13 @@ import {
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
 
-export type { TViewTabMenuOption, DatesSetArg, EventClickArg, EventMountArg };
+export type {
+    TViewTabMenuOption,
+    DatesSetArg,
+    EventClickArg,
+    EventMountArg,
+    TDatePos,
+};
 export {
     ApexAreaChart,
     ApexBarChart,
@@ -93,6 +102,8 @@ export {
     ApexRadialChart,
     Arrow,
     CalendarList,
+    CalendarMonth,
+    CalendarTooltip,
     themeColors,
     breakpoints,
     listItemVariants,
