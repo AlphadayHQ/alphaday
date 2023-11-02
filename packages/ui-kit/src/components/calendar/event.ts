@@ -45,3 +45,37 @@ export type TEventDetails = {
     backgroundColor?: string;
     borderColor?: string;
 };
+
+export type TEventCategory = {
+    value: string;
+    label: string;
+    category: string;
+    color: string;
+};
+
+export interface ICalendarBaseProps {
+    events: TEvent[] | undefined;
+    onDatesSet?: (d: string) => void;
+    selectedEventDetails?: TEventDetails;
+    catFilters: TEventCategory[];
+    showFullSize?: boolean;
+    selectedDate?: Date;
+    widgetHash: string;
+}
+
+export type TDatePos = {
+    top: number;
+} & (
+    | {
+          left: number;
+      }
+    | {
+          right: number;
+      }
+);
+
+export interface TElemCoords {
+    top: number;
+    left: number;
+    right: number;
+}

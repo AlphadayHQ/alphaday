@@ -4,12 +4,9 @@ import { TEvent } from "src/api/types";
 import { defaultEventCategory } from "../calendarCategories";
 import { TEventCategory } from "../types";
 import CalendarFull from "./calendar-full/CalendarFull";
-// import CalendarMonth from "./calendar-month/CalendarMonth";
 import CalendarList from "./CalendarList";
-import {
-    // ECalendarType,
-    ICalendarBaseProps,
-} from "./types";
+import CalendarMonth from "./CalendarMonth";
+import { ECalendarType, ICalendarBaseProps } from "./types";
 
 const CalendarModule: FC<ICalendarBaseProps> = ({
     events,
@@ -102,9 +99,29 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
                 />
             );
         }
-        // if (calendarType === ECalendarType.List) {
+        if (calendarType === ECalendarType.List) {
+            return (
+                <CalendarList
+                    events={eventsList}
+                    fetchEvents={fetchEvents}
+                    onClickEvent={onClickEvent}
+                    onDatesSet={onDatesSet}
+                    calendarType={calendarType}
+                    switchCalendarType={switchCalendarType}
+                    selectedEventDetails={selectedEventDetails}
+                    selectedDate={selectedDate}
+                    catFilters={catFilters}
+                    setCatFilters={handleCatFilter}
+                    widgetHash={widgetHash}
+                    widgetHeight={widgetHeight}
+                    allowedCategories={allowedCategories}
+                    isLoadingEvents={isLoadingEvents}
+                />
+            );
+        }
+
         return (
-            <CalendarList
+            <CalendarMonth
                 events={eventsList}
                 fetchEvents={fetchEvents}
                 onClickEvent={onClickEvent}
@@ -112,35 +129,15 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
                 calendarType={calendarType}
                 switchCalendarType={switchCalendarType}
                 selectedEventDetails={selectedEventDetails}
-                selectedDate={selectedDate}
-                catFilters={catFilters}
                 setCatFilters={handleCatFilter}
+                catFilters={catFilters}
+                selectedDate={selectedDate}
                 widgetHash={widgetHash}
-                widgetHeight={widgetHeight}
+                toggleAllFilters={toggleAllFilters}
+                showAllFilters={showAllFilters}
                 allowedCategories={allowedCategories}
-                isLoadingEvents={isLoadingEvents}
             />
         );
-        // }
-
-        // return (
-        // <CalendarMonth
-        //     events={eventsList}
-        //     fetchEvents={fetchEvents}
-        //     onClickEvent={onClickEvent}
-        //     onDatesSet={onDatesSet}
-        //     calendarType={calendarType}
-        //     switchCalendarType={switchCalendarType}
-        //     selectedEventDetails={selectedEventDetails}
-        //     setCatFilters={handleCatFilter}
-        //     catFilters={catFilters}
-        //     selectedDate={selectedDate}
-        //     widgetHash={widgetHash}
-        //     toggleAllFilters={toggleAllFilters}
-        //     showAllFilters={showAllFilters}
-        //     allowedCategories={allowedCategories}
-        // />
-        // );
     };
 
     return <span id={`cal-${widgetHash}`}>{renderCalendar()}</span>;
