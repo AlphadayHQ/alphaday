@@ -8,6 +8,7 @@ import { useAccount, useWallet } from "src/api/hooks";
 import {
     useConnectWalletMutation,
     useGetFeaturesQuery,
+    useGetSubscribedViewsQuery,
 } from "src/api/services";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
@@ -16,6 +17,13 @@ import { Logger } from "src/api/utils/logging";
 import { useAccount as useWagmiAccount } from "wagmi";
 
 export const useAppInit: () => void = () => {
+    /**
+     * Fetch the features on app load, then we rely on redux cache to
+     * ensure subsequent calls are cached.
+     */
+    useGetFeaturesQuery();
+    useGetSubscribedViewsQuery();
+
     const dispatch = useAppDispatch();
     const authToken = useAppSelector(userStore.selectAuthToken);
 
@@ -25,12 +33,6 @@ export const useAppInit: () => void = () => {
     const { isConnected, address: wagmiAddress } = useWagmiAccount();
 
     const [connectWalletMut] = useConnectWalletMutation();
-
-    /**
-     * Fetch the features on app load, then we rely on redux cache to
-     * ensure subsequent calls are cached.
-     */
-    useGetFeaturesQuery();
 
     useEffect(() => {
         Logger.debug("useAppInit effect called");
