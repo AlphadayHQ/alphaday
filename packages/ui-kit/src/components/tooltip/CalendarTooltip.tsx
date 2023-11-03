@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import { FC, RefObject } from "react";
 import moment from "moment";
 import { createPortal } from "react-dom";
