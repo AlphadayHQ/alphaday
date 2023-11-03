@@ -153,7 +153,7 @@ const CalendarMonth: FC<
                                 "flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer text-primary rounded-sm hover:text-white switch",
                                 "relative w-10 h-[22px] ml-[7px] pl-2 whitespace-nowrap rounded-[5px] my-0 mx-[10px] hover:bg-backgroundVariant200 group",
                                 showAllFilters &&
-                                    "opacity-60 [&>.switch-knob]:translate-x-0"
+                                    "opacity-60 [&_.switch-knob]:translate-x-0"
                             )}
                             title="Toggle All Filters  On/Off"
                         >
