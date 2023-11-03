@@ -463,7 +463,7 @@
                     height: 50px;
                     margin-bottom: 0 !important;
                     display: flex;
-                    justify-content: end;
+                    justify-content: flex-end;
                     padding: 0 10px;
                     @apply single-col:justify-between two-col:p-[0_15px];
                 }
