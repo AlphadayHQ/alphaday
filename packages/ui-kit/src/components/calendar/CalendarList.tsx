@@ -62,6 +62,8 @@ export const CalendarList: FC<ICalendarList> = ({
     // tracks if the SelectedEvent was updated from the CalendarList
     const [listEventClick, setlistEventClick] = useState(false);
 
+    const [key, setKey] = useState(0); // to force calendar to rerender
+
     const handleDateset = useCallback(
         (info: DatesSetArg) => {
             handleHeaderTooltips(info, widgetHash, showFullSize);
@@ -210,6 +212,11 @@ export const CalendarList: FC<ICalendarList> = ({
         });
     }
 
+    useEffect(() => {
+        // to refresh eventsMeta when events change
+        setKey((prev) => prev + 1);
+    }, [events]);
+
     document
         .getElementsByClassName(
             "fc-timeGridWeek-button fc-button fc-button-primary"
@@ -250,6 +257,7 @@ export const CalendarList: FC<ICalendarList> = ({
     return (
         <div className="calendar-list">
             <FullCalendar
+                key={key}
                 initialDate={selectedDate}
                 plugins={[
                     dayGridPlugin,
