@@ -4,21 +4,19 @@ import {
     Switch,
     TDatePos,
     CalendarMonth as CalMonth,
+    twMerge,
 } from "@alphaday/ui-kit";
 import { TEvent } from "src/api/types";
 import { ReactComponent as ArrowUpSVG } from "src/assets/alphadayAssets/icons/arrow-up.svg";
+import UI_CONFIG from "src/config/ui";
 import { useClickOutside } from "src/hooks";
-import {
-    StyledWrap,
-    StyledSwitcher,
-    StyledLegend,
-} from "./calendar-month/CalendarMonth.style";
 import {
     eventTooltipClickHandler,
     handleHeaderTooltips,
 } from "./calendarHelpers";
 import { ECalendarType, ICalendarBaseProps } from "./types";
 
+const { Z_INDEX_REGISTRY } = UI_CONFIG;
 const CAL_CONTAINER_ID = "cal-month-container";
 
 const CalendarMonth: FC<
@@ -76,16 +74,22 @@ const CalendarMonth: FC<
 
     return (
         <div>
-            <StyledWrap id={CAL_CONTAINER_ID} $isFullsize={!!showFullSize}>
+            <div
+                id={CAL_CONTAINER_ID}
+                className={twMerge(
+                    "calendar-month",
+                    showFullSize && "full-size"
+                )}
+            >
                 {!showFullSize && (
-                    <StyledSwitcher>
+                    <div className="flex absolute top-[12.5px] left-[10px] two-col:left-[14px] three-col:left-5">
                         <Switch
                             title="Switch Calendar Type"
                             options={["Calendar", "List"]}
                             onChange={switchCalendarType}
                             checked={calendarType === ECalendarType.List}
                         />
-                    </StyledSwitcher>
+                    </div>
                 )}
                 <CalMonth
                     events={events}
@@ -101,8 +105,8 @@ const CalendarMonth: FC<
                     isAlphaModalOpen={isAlphaModalOpen}
                     handleIsAlphaModalOpen={handleIsAlphaModalOpen}
                 />
-                <StyledLegend>
-                    <div className="legendWrap">
+                <div className="w-full flex">
+                    <div className="w-full h-auto flex flex-wrap items-center mt-[10px] mr-0 mb-[10px] ml-[7px]">
                         {allowedCategories
                             .slice(0, showAllLegends ? undefined : 9)
                             .map((cat) => (
@@ -110,7 +114,7 @@ const CalendarMonth: FC<
                                     onClick={() => setCatFilters([cat])}
                                     role="button"
                                     tabIndex={0}
-                                    className={`cat-wrap ${
+                                    className={`flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer text-primary rounded-sm hover:text-white ${
                                         catFilters?.some(
                                             (c) => c.value === cat.value
                                         )
@@ -123,46 +127,57 @@ const CalendarMonth: FC<
                                         className="dot"
                                         style={{ backgroundColor: cat.color }}
                                     />
-                                    <span className="label">{cat.label}</span>
+                                    <span className="fontGroup-support">
+                                        {cat.label}
+                                    </span>
                                 </span>
                             ))}
                         <span
                             role="button"
                             tabIndex={0}
-                            className="cat-wrap toggleLegend"
+                            className="flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer rounded-sm hover:text-white text-btnRingVariant100 fontGroup-support"
                             onClick={() => setShowAllLegends((show) => !show)}
                         >
                             {showAllLegends ? "less" : "more"}{" "}
                             <ArrowUpSVG
-                                className={showAllLegends ? "toggled" : ""}
+                                className={showAllLegends ? "rotate-180" : ""}
                                 height="10px"
                             />
                         </span>
                     </div>
-                    <div className="toggleWrap">
+                    <div className="flex justify-center items-center">
                         <label
                             htmlFor="checkbox"
-                            className={`cat-wrap switch ${
-                                showAllFilters ? "" : "hideAll"
-                            }`}
+                            className={twMerge(
+                                "flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer text-primary rounded-sm hover:text-white switch",
+                                "relative w-10 h-[22px] ml-[7px] pl-2 whitespace-nowrap rounded-[5px] my-0 mx-[10px] hover:bg-backgroundVariant200 group",
+                                showAllFilters &&
+                                    "opacity-60 [&>.switch-knob]:translate-x-0"
+                            )}
                             title="Toggle All Filters  On/Off"
                         >
                             <input
                                 id="checkbox"
                                 type="checkbox"
                                 aria-label="checkbox"
+                                className="hidden w-full"
                                 onClick={toggleAllFilters}
                                 checked={showAllFilters}
                                 readOnly
                             />
-                            <span className="slider">
-                                <span className="knob" />
-                                <span className="line" />
+                            <span className="w-10 h-full flex items-center absolute bottom-0 right-0 rounded-[22px] cursor-pointer overflow-hidden transition-all duration-200">
+                                <span className="switch-knob absolute w-[13px] h-[13px] bg-primary rounded-full transition-all translate-x-[20px] group-hover:bg-white" />
+                                <span
+                                    className="w-[22px] absolute right-[13px] h-[5px] rounded-sm leading-[104%] opacity-60 bg-primary group-hover:bg-white"
+                                    style={{
+                                        zIndex: Z_INDEX_REGISTRY.CALENDAR_FILTER_TOGGLE,
+                                    }}
+                                />
                             </span>
                         </label>
                     </div>
-                </StyledLegend>
-            </StyledWrap>
+                </div>
+            </div>
             {isAlphaModalOpen &&
                 clickDateEvents?.date &&
                 clickDateEvents.events.length > 0 && (
