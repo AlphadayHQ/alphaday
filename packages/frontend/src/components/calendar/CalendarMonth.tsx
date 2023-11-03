@@ -152,7 +152,7 @@ const CalendarMonth: FC<
                                 "flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer text-primary rounded-sm hover:text-white switch",
                                 "relative w-10 h-[22px] ml-[7px] pl-2 whitespace-nowrap rounded-[5px] my-0 mx-[10px] hover:bg-backgroundVariant200 group",
                                 showAllFilters &&
-                                    "opacity-60 [&_.switch-knob]:translate-x-0"
+                                    "[&_.switch-knob]:translate-x-5"
                             )}
                             title="Toggle All Filters  On/Off"
                         >
@@ -166,7 +166,7 @@ const CalendarMonth: FC<
                                 readOnly
                             />
                             <span className="w-10 h-full flex items-center absolute bottom-0 right-0 rounded-[22px] cursor-pointer overflow-hidden transition-all duration-200">
-                                <span className="switch-knob absolute w-[13px] h-[13px] bg-primary rounded-full transition-all translate-x-[20px] group-hover:bg-white" />
+                                <span className="switch-knob absolute w-[13px] h-[13px] bg-primary rounded-full transition-all translate-x-0 group-hover:bg-white" />
                                 <span
                                     className="w-[22px] absolute right-[13px] h-[5px] rounded-sm leading-[104%] opacity-60 bg-primary group-hover:bg-white"
                                     style={{
