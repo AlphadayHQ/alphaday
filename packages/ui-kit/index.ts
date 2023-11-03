@@ -77,7 +77,7 @@ import SyncIndicator, {
 } from "./src/components/syncIndicator/SyncIndicator";
 import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
-import { CalendarTooltip } from "./src/components/tooltips/CalendarTooltip";
+import { CalendarTooltip } from "./src/components/tooltip/CalendarTooltip";
 import {
     ViewTabMenu,
     TViewTabMenuOption,

@@ -7,6 +7,7 @@ import {
     twMerge,
 } from "@alphaday/ui-kit";
 import { TEvent } from "src/api/types";
+import { getEventCategoryByType } from "src/api/utils/calendarUtils";
 import { ReactComponent as ArrowUpSVG } from "src/assets/alphadayAssets/icons/arrow-up.svg";
 import UI_CONFIG from "src/config/ui";
 import { useClickOutside } from "src/hooks";
@@ -192,6 +193,7 @@ const CalendarMonth: FC<
                         position={clickDateEvents.position}
                         catFilters={catFilters}
                         isFullsize={!!showFullSize}
+                        getEventCategoryByType={getEventCategoryByType}
                     />
                 )}
         </div>
