@@ -116,19 +116,18 @@ const CalendarMonth: FC<
                                     role="button"
                                     tabIndex={0}
                                     className={`flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer text-primary rounded-sm hover:text-white ${
-                                        catFilters?.some(
+                                        !catFilters?.some(
                                             (c) => c.value === cat.value
-                                        )
-                                            ? ""
-                                            : "deselect"
+                                        ) &&
+                                        "opacity-60 [&_.label]:text-primary"
                                     }`}
                                     key={cat.value}
                                 >
                                     <span
-                                        className="dot"
+                                        className="w-2 h-2 rounded-full mr-[2.5px]"
                                         style={{ backgroundColor: cat.color }}
                                     />
-                                    <span className="fontGroup-support">
+                                    <span className="fontGroup-support label">
                                         {cat.label}
                                     </span>
                                 </span>
