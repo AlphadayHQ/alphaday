@@ -1,11 +1,16 @@
 import { twMerge } from "@alphaday/ui-kit";
-import { TRemoteCustomLayoutEntry, TRemoteFormat } from "src/api/services";
+import {
+    TRemoteCustomLayoutEntry,
+    TRemoteCustomRowProps,
+    TRemoteFormat,
+} from "src/api/services";
 import { TCustomItem } from "src/api/types";
 import {
     formatCustomDataField,
     evaluateTemplate,
     getColumnJustification,
 } from "src/api/utils/customDataUtils";
+import { ReactComponent as LinkSVG } from "src/assets/icons/external-link.svg";
 
 interface ITableCellProps {
     children?: React.ReactNode;
@@ -14,6 +19,7 @@ interface ITableCellProps {
     width?: number;
     justify?: "left" | "center" | "right";
     href?: string;
+    hasRowLink?: boolean;
 }
 export const TableCell: React.FC<ITableCellProps> = ({
     children,
@@ -22,6 +28,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     width,
     justify,
     href,
+    hasRowLink,
 }) => {
     const handleOnClick = () => {
         if (href) window.open(href, "_blank");
@@ -37,6 +44,9 @@ export const TableCell: React.FC<ITableCellProps> = ({
             )}
             {...(href && { onClick: handleOnClick })}
         >
+            {href && !hasRowLink && (
+                <LinkSVG className="w-2 h-2 mr-2 self-center" />
+            )}
             {children}
         </div>
     );
@@ -64,12 +74,19 @@ export const TableHeader: React.FC<{
 interface ITableRowProps {
     columnsLayout: TRemoteCustomLayoutEntry[];
     rowData: TCustomItem;
+    rowProps: TRemoteCustomRowProps | undefined;
 }
 
 export const TableRow: React.FC<ITableRowProps> = ({
     columnsLayout,
     rowData,
+    rowProps,
 }) => {
+    let rowLink: string | undefined;
+    if (rowProps?.uri_ref !== undefined) {
+        const uriRef = rowData[rowProps.uri_ref];
+        rowLink = typeof uriRef === "string" ? uriRef : undefined;
+    }
     return (
         <div className="flex flex-row py-2 px-5">
             {columnsLayout.map((column) => {
@@ -99,6 +116,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                         format={column.format}
                         justify={column.justify}
                         href={href}
+                        hasRowLink={rowLink !== undefined}
                     >
                         {formattedValue?.field}
                     </TableCell>

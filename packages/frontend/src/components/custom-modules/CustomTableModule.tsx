@@ -77,6 +77,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
                         <TableRow
                             columnsLayout={columns}
                             rowData={item}
+                            rowProps={rowProps}
                             key={item.id}
                         />
                     );
