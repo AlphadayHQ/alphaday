@@ -13,6 +13,7 @@ interface ITableCellProps {
     isHeader?: boolean;
     width?: number;
     justify?: "left" | "center" | "right";
+    href?: string;
 }
 export const TableCell: React.FC<ITableCellProps> = ({
     children,
@@ -20,18 +21,26 @@ export const TableCell: React.FC<ITableCellProps> = ({
     isHeader,
     width,
     justify,
-}) => (
-    <div
-        className={twMerge(
-            "flex flex-1",
-            format && getColumnJustification(format, justify),
-            width ? `flex-${width}-${width}-0%` : "flex-1",
-            isHeader && "uppercase"
-        )}
-    >
-        {children}
-    </div>
-);
+    href,
+}) => {
+    const handleOnClick = () => {
+        if (href) window.open(href, "_blank");
+    };
+    return (
+        <div
+            className={twMerge(
+                "flex flex-1",
+                format && getColumnJustification(format, justify),
+                width ? `flex-${width}-${width}-0%` : "flex-1",
+                href && "cursor-pointer",
+                isHeader && "uppercase"
+            )}
+            {...(href && { onClick: handleOnClick })}
+        >
+            {children}
+        </div>
+    );
+};
 
 export const TableHeader: React.FC<{
     layout: TRemoteCustomLayoutEntry[];
@@ -76,7 +85,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                               format: column.format,
                           })
                         : undefined;
-                const cellLink =
+                const href =
                     column.uri_ref && rowData[column.uri_ref]
                         ? String(rowData[column.uri_ref])
                         : undefined;
@@ -89,6 +98,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                         width={column.width}
                         format={column.format}
                         justify={column.justify}
+                        href={href}
                     >
                         {formattedValue?.field}
                     </TableCell>
