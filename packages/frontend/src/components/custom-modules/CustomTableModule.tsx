@@ -6,7 +6,6 @@ import {
     TCustomRowProps,
     TCustomItem,
 } from "src/api/types";
-import { getColumnJustification } from "src/api/utils/customDataUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import CONFIG from "src/config/config";
 import { TableHeader, TableRow } from "./TableComponents";
@@ -72,19 +71,17 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     return (
         <>
             <TableHeader layout={columns} />
-            <div>
-                <ScrollBar onScroll={handleScroll} containerRef={setScrollRef}>
-                    {items.map((item) => {
-                        return (
-                            <TableRow
-                                columnsLayout={columns}
-                                rowData={item}
-                                key={item.id}
-                            />
-                        );
-                    })}
-                </ScrollBar>
-            </div>
+            <ScrollBar onScroll={handleScroll} containerRef={setScrollRef}>
+                {items.map((item) => {
+                    return (
+                        <TableRow
+                            columnsLayout={columns}
+                            rowData={item}
+                            key={item.id}
+                        />
+                    );
+                })}
+            </ScrollBar>
         </>
     );
 };

@@ -314,7 +314,8 @@ export const formatCustomDataField: (
     }
 };
 
-type TJustification = "flex-start" | "flex-end" | "center";
+// these correspond to tailwind jargon
+type TJustification = "justify-start" | "justify-end" | "justify-center";
 export const getColumnJustification: (
     f: TRemoteFormat,
     j?: "left" | "center" | "right" | undefined
@@ -322,18 +323,18 @@ export const getColumnJustification: (
     if (justify) {
         switch (justify) {
             case "left":
-                return "flex-start";
+                return "justify-start";
             case "center":
-                return "center";
+                return "justify-center";
             case "right":
-                return "flex-end";
+                return "justify-end";
             default:
         }
     }
     if (format && ["number", "decimal", "currency"].indexOf(format) !== -1) {
-        return "flex-end";
+        return "justify-end";
     }
-    return "flex-start";
+    return "justify-start";
 };
 
 export const customDataAsSeries: (items: TRemoteCustomData) => TCustomSeries = (
