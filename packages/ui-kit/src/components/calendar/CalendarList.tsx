@@ -6,7 +6,12 @@ import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import moment from "moment";
-import { ICalendarBaseProps, TEventCategory, TEventDetails } from "./event";
+import {
+    ICalendarBaseProps,
+    TEvent,
+    TEventCategory,
+    TEventDetails,
+} from "./event";
 
 export type EventMeta = {
     id: string;
@@ -24,7 +29,6 @@ const NoEvents: FC<{ msg: string }> = ({ msg }) => {
 
 interface ICalendarList extends ICalendarBaseProps {
     eventClickHandler: (e: EventClickArg) => void;
-    getEventMeta: (e: EventMountArg | EventClickArg) => EventMeta | undefined;
     handleHeaderTooltips: (
         info: DatesSetArg,
         widgetHash: string,
@@ -50,7 +54,6 @@ export const CalendarList: FC<ICalendarList> = ({
     catFilters,
     widgetHash,
     eventClickHandler,
-    getEventMeta,
     handleHeaderTooltips,
     getValidCalendarDateRange,
     noEventsMsg,
@@ -75,13 +78,17 @@ export const CalendarList: FC<ICalendarList> = ({
     );
 
     const eventRender = useCallback(
-        (e: EventMountArg, categoryFilters: TEventCategory[]): void => {
+        (
+            e: EventMountArg,
+            categoryFilters: TEventCategory[],
+            evts: TEvent[] | undefined
+        ): void => {
             const { el, view, backgroundColor } = e;
             const category = getEventCategoryByColor(
                 backgroundColor,
                 categoryFilters
             );
-            const selectedEvent = getEventMeta(e);
+            const selectedEvent = evts?.find((evt) => evt.id === e.event.id);
 
             if (selectedEvent === undefined) return;
 
@@ -141,11 +148,11 @@ export const CalendarList: FC<ICalendarList> = ({
                 });
             }
         },
-        [getEventMeta, getEventCategoryByColor]
+        [getEventCategoryByColor]
     );
 
     const handleEventDidMount = (e: EventMountArg) => {
-        eventRender(e, catFilters);
+        eventRender(e, catFilters, events);
     };
     useEffect(() => {
         /**
@@ -214,7 +221,8 @@ export const CalendarList: FC<ICalendarList> = ({
 
     useEffect(() => {
         // to refresh eventsMeta when events change
-        setKey((prev) => prev + 1);
+        // setKey((prev) => prev + 1);
+        calendarRef.current?.getApi().refetchEvents();
     }, [events]);
 
     document

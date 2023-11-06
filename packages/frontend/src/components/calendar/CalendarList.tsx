@@ -10,7 +10,6 @@ import CONFIG from "src/config";
 import { calendarMessages } from "src/globalMessages";
 import {
     eventClickHandler,
-    getEventMeta,
     handleHeaderTooltips,
     getValidCalendarDateRange,
 } from "./calendarHelpers";
@@ -70,9 +69,8 @@ const CalendarList: FC<ICalendarBaseProps> = ({
                     )}
                     <CalList
                         eventClickHandler={(e: EventClickArg) =>
-                            eventClickHandler(e, onClickEvent)
+                            eventClickHandler(e, events, onClickEvent)
                         }
-                        getEventMeta={getEventMeta}
                         handleHeaderTooltips={handleHeaderTooltips}
                         getValidCalendarDateRange={getValidCalendarDateRange}
                         noEventsMsg={noEventsMsg}

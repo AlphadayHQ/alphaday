@@ -1,4 +1,4 @@
-import { EventClickArg, EventMountArg, DatesSetArg } from "@fullcalendar/core";
+import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
 import { useLayer } from "react-laag";
 import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
@@ -85,13 +85,7 @@ import {
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
 
-export type {
-    TViewTabMenuOption,
-    DatesSetArg,
-    EventClickArg,
-    EventMountArg,
-    TDatePos,
-};
+export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
     ApexAreaChart,
     ApexBarChart,
