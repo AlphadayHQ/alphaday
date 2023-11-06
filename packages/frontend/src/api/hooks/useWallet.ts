@@ -1,6 +1,8 @@
-import "@wagmi/core/window"; // this provide as with types for window.ethereum
+import "@wagmi/core/window"; // this provide as with types for window.ethereumimpo
 import { useCallback, useState } from "react";
 import { useWeb3Modal } from "@web3modal/react";
+import { SiweMessage } from "siwe";
+import { getAddress } from 'viem'
 import { MetamaskNotInstalledError } from "src/api/errors";
 import {
     useLogoutMutation,
@@ -66,6 +68,19 @@ interface IWallet {
      * This will remove the auth token and disconnect the wallet.
      */
     signout: () => Promise<void>;
+}
+
+async function createSiweMessage(nonce: string, address: string, statement: string) {
+    const message = new SiweMessage({
+        domain: location.host,
+        address: getAddress(address),
+        statement,
+        uri: location.origin,
+        version: '1',
+        chainId: 1,
+        nonce
+    });
+    return message.prepareMessage() as unknown as `0x${string}`;
 }
 
 /**
@@ -189,10 +204,7 @@ export const useWallet: () => IWallet = () => {
                             genMsgResp
                         );
                         const { message } = genMsgResp;
-                        const signatureRequest: `0x${string}` = `0x${Buffer.from(
-                            message,
-                            "utf8"
-                        ).toString("hex")}`;
+                        const signatureRequest = await createSiweMessage(message, address, "");
                         Logger.debug(
                             "useWallet:verifyWallet:signatureRequest",
                             signatureRequest
