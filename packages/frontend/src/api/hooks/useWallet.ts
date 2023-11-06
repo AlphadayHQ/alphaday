@@ -70,6 +70,9 @@ interface IWallet {
     signout: () => Promise<void>;
 }
 
+/**
+ * Create a message to be signed by the user's wallet
+ */
 function createSiweMessage(nonce: string, address: string, statement: string) {
     const message = new SiweMessage({
         domain: location.host,
