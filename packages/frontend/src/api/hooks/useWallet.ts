@@ -232,7 +232,7 @@ export const useWallet: () => IWallet = () => {
                                 "useWallet:verifyWallet: signing through wagmi"
                             );
                             signature = await signMessageAsync({
-                                message,
+                                message: signatureRequest,
                             });
                         }
                         Logger.debug(
