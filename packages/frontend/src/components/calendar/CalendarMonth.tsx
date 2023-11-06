@@ -43,7 +43,6 @@ const CalendarMonth: FC<
 }) => {
     const [isAlphaModalOpen, setisAlphaModalOpen] = useState(false);
     const [showAllLegends, setShowAllLegends] = useState(false);
-    // const [key, setKey] = useState(0); // to force calendar to rerender
 
     const [clickDateEvents, setClickDateEvents] = useState<{
         date: Date | undefined;
