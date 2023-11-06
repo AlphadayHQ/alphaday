@@ -55,6 +55,7 @@
     "react-use-audio-player": "AlphadayHQ/useAudioPlayer",
     "redux-persist": "6.0.0",
     "remark-breaks": "3.0.3",
+    "siwe": "2.1.4",
     "unist-util-visit": "5.0.0",
     "uuid": "9.0.0",
     "viem": "1.2.5",
