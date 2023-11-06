@@ -79,15 +79,3 @@ export const handleHeaderTooltips = (
         ?.getElementsByClassName("fc-today-button")[0]
         .setAttribute("title", "Go to Today");
 };
-
-export const getValidCalendarDateRange = () => {
-    const today = new Date();
-    const todayPlus2Years = new Date(
-        // A large because this restricts month navigation
-        today.getFullYear() + 2,
-        today.getMonth(),
-        0
-    );
-
-    return { start: today, end: todayPlus2Years };
-};

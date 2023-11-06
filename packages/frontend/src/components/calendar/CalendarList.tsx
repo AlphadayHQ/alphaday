@@ -8,11 +8,7 @@ import {
 import { getEventCategoryByColor } from "src/api/utils/calendarUtils";
 import CONFIG from "src/config";
 import { calendarMessages } from "src/globalMessages";
-import {
-    eventClickHandler,
-    handleHeaderTooltips,
-    getValidCalendarDateRange,
-} from "./calendarHelpers";
+import { eventClickHandler, handleHeaderTooltips } from "./calendarHelpers";
 import { ECalendarType, ICalendarBaseProps } from "./types";
 
 const { WIDGET_HEIGHT } = CONFIG.WIDGETS.CALENDAR;
@@ -72,7 +68,6 @@ const CalendarList: FC<ICalendarBaseProps> = ({
                             eventClickHandler(e, events, onClickEvent)
                         }
                         handleHeaderTooltips={handleHeaderTooltips}
-                        getValidCalendarDateRange={getValidCalendarDateRange}
                         noEventsMsg={noEventsMsg}
                         getEventCategoryByColor={getEventCategoryByColor}
                         events={events}

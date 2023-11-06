@@ -27,6 +27,18 @@ const NoEvents: FC<{ msg: string }> = ({ msg }) => {
     );
 };
 
+const getValidCalendarDateRange = () => {
+    const today = new Date();
+    const todayPlus2Years = new Date(
+        // A large because this restricts month navigation
+        today.getFullYear() + 2,
+        today.getMonth(),
+        0
+    );
+
+    return { start: today, end: todayPlus2Years };
+};
+
 interface ICalendarList extends ICalendarBaseProps {
     eventClickHandler: (e: EventClickArg) => void;
     handleHeaderTooltips: (
@@ -34,10 +46,6 @@ interface ICalendarList extends ICalendarBaseProps {
         widgetHash: string,
         showFullSize: boolean | undefined
     ) => void;
-    getValidCalendarDateRange: () => {
-        start: Date;
-        end: Date;
-    };
     noEventsMsg: string;
     getEventCategoryByColor: (
         color: string | undefined,
@@ -55,7 +63,6 @@ export const CalendarList: FC<ICalendarList> = ({
     widgetHash,
     eventClickHandler,
     handleHeaderTooltips,
-    getValidCalendarDateRange,
     noEventsMsg,
     getEventCategoryByColor,
 }) => {
@@ -64,8 +71,6 @@ export const CalendarList: FC<ICalendarList> = ({
     const eventDetailsRef = useRef<TEventDetails>();
     // tracks if the SelectedEvent was updated from the CalendarList
     const [listEventClick, setlistEventClick] = useState(false);
-
-    const [key, setKey] = useState(0); // to force calendar to rerender
 
     const handleDateset = useCallback(
         (info: DatesSetArg) => {
@@ -265,7 +270,6 @@ export const CalendarList: FC<ICalendarList> = ({
     return (
         <div className="calendar-list">
             <FullCalendar
-                key={key}
                 initialDate={selectedDate}
                 plugins={[
                     dayGridPlugin,
