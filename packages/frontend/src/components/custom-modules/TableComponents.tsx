@@ -40,7 +40,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
                 "flex mr-2.5 items-center",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
-                isHeader && "uppercase fontGroup-mini"
+                isHeader && "fontGroup-support"
             )}
             {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
@@ -125,6 +125,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                                 src={imageUri}
                                 alt=""
                                 onError={handleTableImgError(imageUri)}
+                                className="w-8 h-8 rounded-full"
                             />
                         ) : (
                             formattedValue?.field
