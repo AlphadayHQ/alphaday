@@ -2,6 +2,7 @@ import { FC, RefObject } from "react";
 import moment from "moment";
 import { createPortal } from "react-dom";
 import ScrollBar from "react-perfect-scrollbar";
+import { twMerge } from "tailwind-merge";
 import { TDatePos, TEvent, TEventCategory } from "../calendar/event";
 
 export interface ITooltipProps {
@@ -83,32 +84,41 @@ export const CalendarTooltip: FC<ITooltipProps> = ({
 
     return createPortal(
         <div
-            className="absolute"
+            className="absolute w-0"
             style={{
                 top: position.top,
                 ...("left" in position && { left: position.left }),
                 ...("right" in position && { right: position.right }),
             }}
         >
-            <div
-                ref={tooltipRef}
-                style={{
-                    width,
-                    zIndex: isFullsize ? 1050 : 50,
-                }}
-            >
-                <div className="tooltip">
-                    <div className="tooltip-wrapper calendar-wrap">
-                        <div className="events">
-                            <div className="date">
-                                <span className="date-text">
+            <div>
+                <div
+                    className="relative inline-block"
+                    ref={tooltipRef}
+                    style={{
+                        width,
+                        zIndex: isFullsize ? 1050 : 50,
+                    }}
+                >
+                    <div
+                        className={twMerge(
+                            "bg-primaryVariant200 flex w-full text-primary items-center justify-center text-left rounded-md pt-4 pr-0 pb-4 pl-3 absolute -ml-[60px] cursor-auto top-[120%] left -[50%] z-[1]",
+                            "pl-3 justify-start bg-backgroundVariant1100 border border-btnRingVariant500 shadow-backgroundVariant1700 shadow-[0px_0px_35px_9px] rounded-[5px]"
+                        )}
+                        style={{
+                            width,
+                        }}
+                    >
+                        <div className="flex flex-1 w-full">
+                            <div className="w-10 mr-4 flex flex-col">
+                                <span className=" fontGroup-support m-0.5 mt-0 text-center text-primaryVariant100">
                                     {curDate.format("ddd")}
                                 </span>
-                                <span className="date-number">
+                                <span className="fontGroup-major text-center -tracking-[0.5px]">
                                     {curDate.format("DD")}
                                 </span>
                             </div>
-                            <div className="list">
+                            <div className="mt-[1.5px] mix-blend-lighten max-h-[300px] [&>div]:pr-[10px]">
                                 <ScrollBar>
                                     {events.map((event, i) => {
                                         const category = getEventCategoryByType(
@@ -119,45 +129,45 @@ export const CalendarTooltip: FC<ITooltipProps> = ({
                                         return (
                                             <span
                                                 key={event.id}
-                                                className="pointer"
+                                                className="cursor-pointer"
                                                 onClick={() =>
                                                     handleEventClick(event)
                                                 }
                                                 role="button"
                                                 tabIndex={0}
                                             >
-                                                <p className="eventItem">
+                                                <p className="flex fontGroup-support flex-wrap mb-1 text-primaryVariant100">
                                                     <span
-                                                        className="dot"
+                                                        className="w-2 h-2 self-center block rounded-full m-0 mr-[5px] flex-none order-none grow-0"
                                                         style={{
                                                             backgroundColor:
                                                                 category.color,
                                                         }}
                                                     />
-                                                    <span className="event-category">
+                                                    <span className="text-secondaryOrange self-center">
                                                         {category.label}
                                                     </span>
-                                                    <span className="separator">
+                                                    <span className="static w-[5px] h-[14px] text-primaryVariant100 m-0 mx-[7px] self-center">
                                                         •
                                                     </span>
-                                                    <span className="dates">
+                                                    <span className="whitespace-nowrap self-center">
                                                         {handleDate(
                                                             event.start,
                                                             event.end
                                                         )}
                                                     </span>
-                                                    <span className="separator">
+                                                    <span className="static w-[5px] h-[14px] text-primaryVariant100 m-0 mx-[7px] self-center">
                                                         •
                                                     </span>
                                                     <span>
                                                         {event.location}
                                                     </span>
                                                 </p>
-                                                <p className="event-title">
+                                                <p className="fontGroup-highlightSemi text-primary flex-none m-[1px] max-w-[200px] break-word">
                                                     {event.title}
                                                 </p>
                                                 <hr
-                                                    className="hr"
+                                                    className="mt-[10px] bg-btnRingVariant500 border-primaryVariant200"
                                                     style={{
                                                         display:
                                                             i + 1 ===

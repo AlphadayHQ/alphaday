@@ -388,13 +388,14 @@
 
 .calendar-month {
     background: theme("colors.backgroundVariant200");
+    position: relative;
+    display: block;
+    transition: all 0.3s;
 
     .full-size {
         background-color: theme("colors.backgroundVariant800");
     }
-    position: relative;
-    display: block;
-    transition: all 0.3s;
+    
 
     .fc-daygrid-day-events {
         display: flex;
