@@ -110,9 +110,10 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
     );
 
     const defaultCalenderType =
-        storedCalType || moduleData.widget?.data_type === EWidgetData.Static
+        storedCalType ||
+        (moduleData.widget?.data_type === EWidgetData.Static
             ? ECalendarType.List
-            : ECalendarType.Month; // Change the default CalType to based on the widget's data_type
+            : ECalendarType.Month); // Change the default CalType to based on the widget's data_type
 
     const [calendarType, setCalendarType] =
         useState<ECalendarType>(defaultCalenderType);
