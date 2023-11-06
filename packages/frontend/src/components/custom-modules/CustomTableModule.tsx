@@ -1,4 +1,4 @@
-import { FC, useState, FormEvent, useMemo, useRef } from "react";
+import { FC, FormEvent } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useWidgetSize } from "src/api/hooks";
 import {
@@ -7,11 +7,7 @@ import {
     TCustomItem,
 } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import CONFIG from "src/config/config";
 import { TableHeader, TableRow } from "./TableComponents";
-
-const { WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
-const HEADER_HEIGHT = 37;
 
 interface ICustomTableProps {
     items: TCustomItem[];
@@ -30,21 +26,8 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     isLoadingItems,
     handlePaginate,
 }) => {
-    const headerRef = useRef<HTMLDivElement>(null);
-    const [scrollRef, setScrollRef] = useState<HTMLElement | null>(null);
     const widgetSize = useWidgetSize([450]);
     const isCompactMode = widgetSize === "sm" || columns.length > 5;
-
-    const maxHeight = useMemo(
-        () =>
-            scrollRef
-                ? Array.from(scrollRef.children).reduce(
-                      (partialSum, child) => partialSum + child.clientHeight,
-                      0
-                  ) + 7 // 7px added to hide scrollbar, [second])
-                : WIDGET_HEIGHT,
-        [scrollRef]
-    );
 
     const handleScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
         if (shouldFetchMoreItems(currentTarget)) {
@@ -53,8 +36,6 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     };
 
     const addLinkColumn = rowProps?.uri_ref !== undefined;
-
-    const headerHeight = headerRef.current?.clientHeight || HEADER_HEIGHT;
 
     if (isLoadingItems) {
         return <ModuleLoader $height={`${String(widgetHeight)}px`} />;
@@ -69,9 +50,9 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     }
 
     return (
-        <>
-            <TableHeader layout={columns} />
-            <ScrollBar onScroll={handleScroll} containerRef={setScrollRef}>
+        <div className="h-25">
+            <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
+            <ScrollBar onScroll={handleScroll}>
                 {items.map((item) => {
                     return (
                         <TableRow
@@ -83,7 +64,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
                     );
                 })}
             </ScrollBar>
-        </>
+        </div>
     );
 };
 

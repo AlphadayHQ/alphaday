@@ -2,8 +2,9 @@ import logoDay from "@alphaday/ui-kit/src/assets/svg/logo-white.svg";
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import wideAlphaImage from "src/assets/placeholders/wide-alpha.png";
-
+import CONFIG from "src/config";
 import globalMessages from "src/globalMessages";
+import { Logger } from "./logging";
 
 /* eslint-disable no-param-reassign */
 export const imgOnError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
@@ -19,6 +20,18 @@ export const wideImgOnError = (
     e.currentTarget.onerror = null;
     e.currentTarget.src = wideAlphaImage;
 };
+/* eslint-enable no-param-reassign */
+
+/* eslint-disable no-param-reassign */
+export const handleTableImgError =
+    (path: string | undefined) =>
+    (e: React.SyntheticEvent<HTMLImageElement>): void => {
+        e.currentTarget.onerror = null;
+        e.currentTarget.src = logoDay;
+        if (CONFIG.IS_PROD && path) {
+            Logger.error("handleTableImgError: could not resolve image", path);
+        }
+    };
 /* eslint-enable no-param-reassign */
 
 export type TErrorId = keyof Omit<

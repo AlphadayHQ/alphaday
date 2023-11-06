@@ -10,6 +10,7 @@ import {
     evaluateTemplate,
     getColumnJustification,
 } from "src/api/utils/customDataUtils";
+import { handleTableImgError } from "src/api/utils/errorHandling";
 import { ReactComponent as LinkSVG } from "src/assets/icons/external-link.svg";
 
 interface ITableCellProps {
@@ -36,12 +37,12 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-1",
+                "flex",
                 format && getColumnJustification(format, justify),
-                width ? `flex-${width}-${width}-0%` : "flex-1",
                 href && "cursor-pointer",
-                isHeader && "uppercase"
+                isHeader && "uppercase fontGroup-mini"
             )}
+            {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
         >
             {href && !hasRowLink && (
@@ -54,7 +55,8 @@ export const TableCell: React.FC<ITableCellProps> = ({
 
 export const TableHeader: React.FC<{
     layout: TRemoteCustomLayoutEntry[];
-}> = ({ layout }) => {
+    addExtraColumn?: boolean;
+}> = ({ layout, addExtraColumn }) => {
     return (
         <div className="flex flex-row py-2 px-5">
             {layout.map((columnLayout) => (
@@ -67,6 +69,7 @@ export const TableHeader: React.FC<{
                     {columnLayout.title}
                 </TableCell>
             ))}
+            {addExtraColumn && <TableCell width={0.5} />}
         </div>
     );
 };
@@ -87,6 +90,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
         const uriRef = rowData[rowProps.uri_ref];
         rowLink = typeof uriRef === "string" ? uriRef : undefined;
     }
+
     return (
         <div className="flex flex-row py-2 px-5">
             {columnsLayout.map((column) => {
@@ -118,10 +122,29 @@ export const TableRow: React.FC<ITableRowProps> = ({
                         href={href}
                         hasRowLink={rowLink !== undefined}
                     >
-                        {formattedValue?.field}
+                        {column.format === "image" && imageUri ? (
+                            <img
+                                src={imageUri}
+                                alt=""
+                                onError={handleTableImgError(imageUri)}
+                            />
+                        ) : (
+                            formattedValue?.field
+                        )}
                     </TableCell>
                 );
             })}
+            {rowLink && (
+                <TableCell
+                    width={0.5}
+                    format="icon"
+                    justify="right"
+                    href={rowLink}
+                    hasRowLink={rowLink !== undefined}
+                >
+                    <LinkSVG className="w-3" />
+                </TableCell>
+            )}
         </div>
     );
 };
