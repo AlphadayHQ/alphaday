@@ -224,12 +224,6 @@ export const CalendarList: FC<ICalendarList> = ({
         });
     }
 
-    useEffect(() => {
-        // to refresh eventsMeta when events change
-        // setKey((prev) => prev + 1);
-        calendarRef.current?.getApi().refetchEvents();
-    }, [events]);
-
     document
         .getElementsByClassName(
             "fc-timeGridWeek-button fc-button fc-button-primary"

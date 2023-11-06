@@ -69,10 +69,6 @@ const CalendarMonth: FC<
         fullCalendarWrapRef
     );
 
-    // useEffect(() => {
-    //     setKey((prev) => prev + 1);
-    // }, [events, catFilters]);
-
     return (
         <div>
             <div
