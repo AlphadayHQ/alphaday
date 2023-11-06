@@ -50,7 +50,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     }
 
     return (
-        <div className="h-25">
+        <div className="h-25" style={{ height: widgetHeight }}>
             <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
             <ScrollBar onScroll={handleScroll}>
                 {items.map((item) => {

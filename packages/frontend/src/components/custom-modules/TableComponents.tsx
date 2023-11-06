@@ -37,7 +37,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex",
+                "flex mr-2.5 items-center",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
                 isHeader && "uppercase fontGroup-mini"
@@ -45,9 +45,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
             {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
         >
-            {href && !hasRowLink && (
-                <LinkSVG className="w-2 h-2 mr-2 self-center" />
-            )}
+            {href && !hasRowLink && <LinkSVG className="w-2 h-2 mr-2" />}
             {children}
         </div>
     );
