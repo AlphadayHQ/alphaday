@@ -2,7 +2,6 @@ import "@wagmi/core/window"; // this provide as with types for window.ethereumim
 import { useCallback, useState } from "react";
 import { useWeb3Modal } from "@web3modal/react";
 import { SiweMessage } from "siwe";
-import { getAddress } from 'viem'
 import { MetamaskNotInstalledError } from "src/api/errors";
 import {
     useLogoutMutation,
@@ -16,6 +15,7 @@ import { WalletConnectionState, EWalletConnectionMethod } from "src/api/types";
 import assert from "src/api/utils/assert";
 import { isString, ignoreConcurrentAsync } from "src/api/utils/helpers";
 import { Logger } from "src/api/utils/logging";
+import { getAddress } from "viem";
 import {
     useAccount as useWagmiAccount,
     useDisconnect as useWagmiDisconnect,
@@ -70,15 +70,15 @@ interface IWallet {
     signout: () => Promise<void>;
 }
 
-async function createSiweMessage(nonce: string, address: string, statement: string) {
+function createSiweMessage(nonce: string, address: string, statement: string) {
     const message = new SiweMessage({
         domain: location.host,
         address: getAddress(address),
         statement,
         uri: location.origin,
-        version: '1',
+        version: "1",
         chainId: 1,
-        nonce
+        nonce,
     });
     return message.prepareMessage() as unknown as `0x${string}`;
 }
@@ -204,7 +204,11 @@ export const useWallet: () => IWallet = () => {
                             genMsgResp
                         );
                         const { message } = genMsgResp;
-                        const signatureRequest = await createSiweMessage(message, address, "");
+                        const signatureRequest = createSiweMessage(
+                            message,
+                            address,
+                            "Signing allows you to create and customize boards."
+                        );
                         Logger.debug(
                             "useWallet:verifyWallet:signatureRequest",
                             signatureRequest
