@@ -60,10 +60,11 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-1 mr-2.5 items-center !mb-0",
+                "flex flex-1 mr-2.5 [&>p]:mb-0 break-words",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
-                isHeader && "fontGroup-support"
+                isHeader && "fontGroup-support",
+                !isCompactMode && "items-center"
             )}
             {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
@@ -117,8 +118,18 @@ export const TableRow: React.FC<ITableRowProps> = ({
         rowLink = typeof uriRef === "string" ? uriRef : undefined;
     }
 
+    const handleOnClick = () => {
+        if (rowLink) window.open(rowLink, "_blank");
+    };
+
     return (
-        <div className="flex flex-row py-2 px-5">
+        <div
+            className={twMerge(
+                "flex flex-row py-2 px-5 hover:bg-backgroundVariant900",
+                rowLink && "cursor-pointer"
+            )}
+            {...(rowLink && { onClick: handleOnClick })}
+        >
             {columnsLayout.map((column) => {
                 if (column.hidden) return null;
                 const rawValue =
@@ -179,7 +190,6 @@ export const TableRow: React.FC<ITableRowProps> = ({
 export const CompactTableRow: React.FC<ITableRowProps> = ({
     columnsLayout,
     rowData,
-    rowProps,
 }) => {
     const imageField = columnsLayout.find(
         (column) => column.image_uri_ref !== undefined
@@ -188,7 +198,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
         ? getFieldDetails(imageField, rowData)
         : undefined;
     return (
-        <div className="flex flex-row py-2 px-5">
+        <div className="flex flex-row py-2 px-5 hover:bg-backgroundVariant900">
             {imageFieldDetails !== undefined && (
                 <div className="flex flex-col flex-[0.5_0.5_0%]">
                     <TableCell
@@ -236,11 +246,12 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                         return null;
                     }
                     return (
-                        <div className="flex flex-1 items-center">
+                        <div className="flex flex-1">
                             <TableCell
                                 format={column.format}
                                 justify="left"
                                 isHeader
+                                isCompactMode
                             >
                                 {column.title}
                             </TableCell>

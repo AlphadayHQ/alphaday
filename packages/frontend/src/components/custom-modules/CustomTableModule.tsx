@@ -54,7 +54,10 @@ const CustomTableModule: FC<ICustomTableProps> = ({
             {!useCompactMode && (
                 <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
             )}
-            <ScrollBar onScroll={handleScroll}>
+            <ScrollBar
+                onScroll={handleScroll}
+                className="divide-y divide-solid divide-btnRingVariant500"
+            >
                 {items.map((item) => {
                     return useCompactMode ? (
                         <CompactTableRow
