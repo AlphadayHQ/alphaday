@@ -6,19 +6,17 @@ import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import moment from "moment";
-import { TEvent, TEventDetails } from "./event";
+import {
+    ICalendarBaseProps,
+    TEvent,
+    TEventCategory,
+    TEventDetails,
+} from "./event";
 
 export type EventMeta = {
     id: string;
     title: string;
     location: string;
-};
-
-export type TEventCategory = {
-    value: string;
-    label: string;
-    category: string;
-    color: string;
 };
 
 const NoEvents: FC<{ msg: string }> = ({ msg }) => {
@@ -29,28 +27,25 @@ const NoEvents: FC<{ msg: string }> = ({ msg }) => {
     );
 };
 
-export interface ICalendarBaseProps {
-    events: TEvent[] | undefined;
-    onDatesSet?: (d: string) => void;
-    selectedEventDetails?: TEventDetails;
-    catFilters: TEventCategory[];
-    showFullSize?: boolean;
-    selectedDate?: Date;
-    widgetHash: string;
-}
+const getValidCalendarDateRange = () => {
+    const today = new Date();
+    const todayPlus2Years = new Date(
+        // A large because this restricts month navigation
+        today.getFullYear() + 2,
+        today.getMonth(),
+        0
+    );
+
+    return { start: today, end: todayPlus2Years };
+};
 
 interface ICalendarList extends ICalendarBaseProps {
     eventClickHandler: (e: EventClickArg) => void;
-    getEventMeta: (e: EventMountArg | EventClickArg) => EventMeta | undefined;
     handleHeaderTooltips: (
         info: DatesSetArg,
         widgetHash: string,
         showFullSize: boolean | undefined
     ) => void;
-    getValidCalendarDateRange: () => {
-        start: Date;
-        end: Date;
-    };
     noEventsMsg: string;
     getEventCategoryByColor: (
         color: string | undefined,
@@ -67,9 +62,7 @@ export const CalendarList: FC<ICalendarList> = ({
     catFilters,
     widgetHash,
     eventClickHandler,
-    getEventMeta,
     handleHeaderTooltips,
-    getValidCalendarDateRange,
     noEventsMsg,
     getEventCategoryByColor,
 }) => {
@@ -90,13 +83,17 @@ export const CalendarList: FC<ICalendarList> = ({
     );
 
     const eventRender = useCallback(
-        (e: EventMountArg, categoryFilters: TEventCategory[]): void => {
+        (
+            e: EventMountArg,
+            categoryFilters: TEventCategory[],
+            evts: TEvent[] | undefined
+        ): void => {
             const { el, view, backgroundColor } = e;
             const category = getEventCategoryByColor(
                 backgroundColor,
                 categoryFilters
             );
-            const selectedEvent = getEventMeta(e);
+            const selectedEvent = evts?.find((evt) => evt.id === e.event.id);
 
             if (selectedEvent === undefined) return;
 
@@ -156,11 +153,11 @@ export const CalendarList: FC<ICalendarList> = ({
                 });
             }
         },
-        [getEventMeta, getEventCategoryByColor]
+        [getEventCategoryByColor]
     );
 
     const handleEventDidMount = (e: EventMountArg) => {
-        eventRender(e, catFilters);
+        eventRender(e, catFilters, events);
     };
     useEffect(() => {
         /**

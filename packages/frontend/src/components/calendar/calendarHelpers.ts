@@ -1,44 +1,9 @@
-import { DatesSetArg, EventClickArg, EventMountArg } from "@alphaday/ui-kit";
+import { DatesSetArg, EventClickArg } from "@alphaday/ui-kit";
 import moment from "moment";
 import ReactGA from "react-ga4";
 import { TEvent } from "src/api/types";
 import { slugify } from "src/api/utils/textUtils";
 import { calendarMessages } from "src/globalMessages";
-import { Logger } from "../../api/utils/logging";
-
-type EventMeta = {
-    id: string;
-    title: string;
-    location: string;
-};
-export const getEventMeta: (
-    e: EventMountArg | EventClickArg
-) => EventMeta | undefined = (e) => {
-    const { id } = e.event;
-    const eventsMeta = e?.event?.source?.internalEventSource?.meta;
-
-    if (eventsMeta == null || !Array.isArray(eventsMeta)) {
-        Logger.warn(
-            "calendarHelpers::getEventMeta: Could not retrieve eventsMeta"
-        );
-        return undefined;
-    }
-
-    const selectedEventMeta = eventsMeta.find(
-        (item: { id: string }) => item.id === id
-    );
-
-    if (selectedEventMeta === undefined) {
-        Logger.warn("calendarHelpers::getEventMeta: Could not retrieve event");
-        return undefined;
-    }
-
-    return {
-        id: selectedEventMeta.id,
-        title: selectedEventMeta.title,
-        location: selectedEventMeta.location,
-    };
-};
 
 type TOnclickEvent = (
     eId: string,
@@ -48,9 +13,10 @@ type TOnclickEvent = (
 
 export const eventClickHandler = (
     e: EventClickArg,
+    events: TEvent[] | undefined,
     onClickEvent?: TOnclickEvent
 ): void => {
-    const selectedEvent = getEventMeta(e);
+    const selectedEvent = events?.find((evt) => evt.id === e.event.id);
     if (selectedEvent === undefined) return;
     ReactGA.event({
         category: "Event",
@@ -112,16 +78,4 @@ export const handleHeaderTooltips = (
     cal
         ?.getElementsByClassName("fc-today-button")[0]
         .setAttribute("title", "Go to Today");
-};
-
-export const getValidCalendarDateRange = () => {
-    const today = new Date();
-    const todayPlus2Years = new Date(
-        // A large because this restricts month navigation
-        today.getFullYear() + 2,
-        today.getMonth(),
-        0
-    );
-
-    return { start: today, end: todayPlus2Years };
 };
