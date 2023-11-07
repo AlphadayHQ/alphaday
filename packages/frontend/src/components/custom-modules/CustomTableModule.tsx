@@ -7,7 +7,7 @@ import {
     TCustomItem,
 } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { TableHeader, TableRow } from "./TableComponents";
+import { CompactTableRow, TableHeader, TableRow } from "./TableComponents";
 
 interface ICustomTableProps {
     items: TCustomItem[];
@@ -27,7 +27,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     handlePaginate,
 }) => {
     const widgetSize = useWidgetSize([450]);
-    const isCompactMode = widgetSize === "sm" || columns.length > 5;
+    const useCompactMode = widgetSize === "sm" || columns.length > 5;
 
     const handleScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
         if (shouldFetchMoreItems(currentTarget)) {
@@ -51,10 +51,19 @@ const CustomTableModule: FC<ICustomTableProps> = ({
 
     return (
         <div className="h-25" style={{ height: widgetHeight }}>
-            <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
+            {!useCompactMode && (
+                <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
+            )}
             <ScrollBar onScroll={handleScroll}>
                 {items.map((item) => {
-                    return (
+                    return useCompactMode ? (
+                        <CompactTableRow
+                            columnsLayout={columns}
+                            rowData={item}
+                            rowProps={rowProps}
+                            key={item.id}
+                        />
+                    ) : (
                         <TableRow
                             columnsLayout={columns}
                             rowData={item}

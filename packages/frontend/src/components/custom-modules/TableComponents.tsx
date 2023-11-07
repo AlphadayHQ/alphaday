@@ -4,7 +4,7 @@ import {
     TRemoteCustomRowProps,
     TRemoteFormat,
 } from "src/api/services";
-import { TCustomItem } from "src/api/types";
+import { TCustomItem, TCustomLayoutEntry } from "src/api/types";
 import {
     formatCustomDataField,
     evaluateTemplate,
@@ -12,6 +12,27 @@ import {
 } from "src/api/utils/customDataUtils";
 import { handleTableImgError } from "src/api/utils/errorHandling";
 import { ReactComponent as LinkSVG } from "src/assets/icons/external-link.svg";
+
+const getFieldDetails = (field: TCustomLayoutEntry, item: TCustomItem) => {
+    const rawField =
+        field.template !== undefined
+            ? evaluateTemplate(field.template, item)
+            : "Error: Missing template";
+    const formattedField = formatCustomDataField({
+        rawField,
+        format: field.format,
+    });
+    const href =
+        field.uri_ref && item[field.uri_ref] ? item[field.uri_ref] : undefined;
+    const imageUri =
+        field.image_uri_ref &&
+        item[field.image_uri_ref] &&
+        typeof item[field.image_uri_ref] === "string"
+            ? item[field.image_uri_ref]
+            : undefined;
+
+    return { formattedField, href, imageUri };
+};
 
 interface ITableCellProps {
     children?: React.ReactNode;
@@ -21,6 +42,7 @@ interface ITableCellProps {
     justify?: "left" | "center" | "right";
     href?: string;
     hasRowLink?: boolean;
+    isCompactMode?: boolean;
 }
 export const TableCell: React.FC<ITableCellProps> = ({
     children,
@@ -30,6 +52,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     justify,
     href,
     hasRowLink,
+    isCompactMode,
 }) => {
     const handleOnClick = () => {
         if (href) window.open(href, "_blank");
@@ -37,7 +60,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex mr-2.5 items-center",
+                "flex flex-1 mr-2.5 items-center !mb-0",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
                 isHeader && "fontGroup-support"
@@ -45,8 +68,13 @@ export const TableCell: React.FC<ITableCellProps> = ({
             {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
         >
-            {href && !hasRowLink && <LinkSVG className="w-2 h-2 mr-2" />}
+            {href && !isCompactMode && !hasRowLink && (
+                <LinkSVG className="w-2 h-2 mr-2" />
+            )}
             {children}
+            {href && isCompactMode && !hasRowLink && (
+                <LinkSVG className="w-2 h-2 ml-2 self-center" />
+            )}
         </div>
     );
 };
@@ -144,6 +172,90 @@ export const TableRow: React.FC<ITableRowProps> = ({
                     <LinkSVG className="w-3" />
                 </TableCell>
             )}
+        </div>
+    );
+};
+
+export const CompactTableRow: React.FC<ITableRowProps> = ({
+    columnsLayout,
+    rowData,
+    rowProps,
+}) => {
+    const imageField = columnsLayout.find(
+        (column) => column.image_uri_ref !== undefined
+    );
+    const imageFieldDetails = imageField
+        ? getFieldDetails(imageField, rowData)
+        : undefined;
+    return (
+        <div className="flex flex-row py-2 px-5">
+            {imageFieldDetails !== undefined && (
+                <div className="flex flex-col flex-[0.5_0.5_0%]">
+                    <TableCell
+                        format="image"
+                        {...(imageFieldDetails.href && {
+                            href: String(imageFieldDetails.href),
+                        })}
+                    >
+                        <img
+                            className="w-8 rounded-full self-center"
+                            src={String(imageFieldDetails.imageUri)}
+                            alt=""
+                            onError={handleTableImgError(
+                                String(imageFieldDetails.imageUri)
+                            )}
+                        />
+                    </TableCell>
+                </div>
+            )}
+            <div className="flex flex-col flex-[2_2_0%]">
+                {columnsLayout.map((column) => {
+                    if (column.hidden) return null;
+                    const rawValue =
+                        column.template !== undefined
+                            ? evaluateTemplate(column.template, rowData)
+                            : undefined;
+                    const formattedValue =
+                        rawValue !== undefined
+                            ? formatCustomDataField({
+                                  rawField: rawValue,
+                                  format: column.format,
+                              })
+                            : undefined;
+                    const href =
+                        column.uri_ref && rowData[column.uri_ref]
+                            ? String(rowData[column.uri_ref])
+                            : undefined;
+                    const imageUri =
+                        column.image_uri_ref && rowData[column.image_uri_ref]
+                            ? String(rowData[column.image_uri_ref])
+                            : undefined;
+                    // recall: in compact mode we only display one image,
+                    // which is featured on the left side
+                    if (imageFieldDetails && imageUri) {
+                        return null;
+                    }
+                    return (
+                        <div className="flex flex-1 items-center">
+                            <TableCell
+                                format={column.format}
+                                justify="left"
+                                isHeader
+                            >
+                                {column.title}
+                            </TableCell>
+                            <TableCell
+                                format={column.format}
+                                justify="left"
+                                href={href}
+                                isCompactMode
+                            >
+                                {formattedValue?.field}
+                            </TableCell>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 };
