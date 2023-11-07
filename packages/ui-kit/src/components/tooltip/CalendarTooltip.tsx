@@ -2,7 +2,6 @@ import { FC, RefObject } from "react";
 import moment from "moment";
 import { createPortal } from "react-dom";
 import ScrollBar from "react-perfect-scrollbar";
-import { twMerge } from "tailwind-merge";
 import { TDatePos, TEvent, TEventCategory } from "../calendar/event";
 
 export interface ITooltipProps {
@@ -101,10 +100,7 @@ export const CalendarTooltip: FC<ITooltipProps> = ({
                     }}
                 >
                     <div
-                        className={twMerge(
-                            "bg-primaryVariant200 flex w-full text-primary items-center justify-center text-left rounded-md pt-4 pr-0 pb-4 pl-3 absolute -ml-[60px] cursor-auto top-[120%] left -[50%] z-[1]",
-                            "pl-3 justify-start bg-backgroundVariant1100 border border-btnRingVariant500 shadow-backgroundVariant1700 shadow-[0px_0px_35px_9px] rounded-[5px]"
-                        )}
+                        className="flex w-full text-primary items-center text-left pt-4 pr-0 pb-4 pl-3 absolute -ml-[60px] cursor-auto top-[120%] left -[50%] z-[1] justify-start bg-backgroundVariant1100 border border-btnRingVariant500 shadow-backgroundVariant1700 shadow-[0px_0px_35px_9px] rounded-[5px]"
                         style={{
                             width,
                         }}
