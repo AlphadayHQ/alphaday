@@ -1,4 +1,4 @@
-import { FC, FormEvent } from "react";
+import { FC, FormEvent, useRef, useState } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useWidgetSize } from "src/api/hooks";
 import {
@@ -7,7 +7,11 @@ import {
     TCustomItem,
 } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import CONFIG from "src/config";
 import { CompactTableRow, TableHeader, TableRow } from "./TableComponents";
+
+const { WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
+const HEADER_HEIGHT = 31;
 
 interface ICustomTableProps {
     items: TCustomItem[];
@@ -16,6 +20,7 @@ interface ICustomTableProps {
     widgetHeight: number;
     isLoadingItems: boolean;
     handlePaginate: (type: "next" | "previous") => void;
+    setWidgetHeight: (size: number) => void;
 }
 
 const CustomTableModule: FC<ICustomTableProps> = ({
@@ -25,9 +30,24 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     widgetHeight,
     isLoadingItems,
     handlePaginate,
+    setWidgetHeight,
 }) => {
     const widgetSize = useWidgetSize([450]);
     const useCompactMode = widgetSize === "sm" || columns.length > 5;
+    const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
+    const prevScrollRef = useRef<HTMLElement | undefined>();
+
+    if (scrollRef !== prevScrollRef.current) {
+        if (scrollRef) {
+            const height =
+                Array.from(scrollRef.children).reduce(
+                    (partialSum, child) => partialSum + child.clientHeight,
+                    0
+                ) + HEADER_HEIGHT;
+            setWidgetHeight(Math.min(height, DEFAULT_WIDGET_HEIGHT));
+        }
+        prevScrollRef.current = scrollRef;
+    }
 
     const handleScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
         if (shouldFetchMoreItems(currentTarget)) {
@@ -50,13 +70,17 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     }
 
     return (
-        <div className="h-25" style={{ height: widgetHeight }}>
+        <div className="h-25">
             {!useCompactMode && (
                 <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
             )}
             <ScrollBar
                 onScroll={handleScroll}
                 className="divide-y divide-solid divide-btnRingVariant500"
+                containerRef={setScrollRef}
+                style={{
+                    height: widgetHeight - HEADER_HEIGHT,
+                }}
             >
                 {items.map((item) => {
                     return useCompactMode ? (

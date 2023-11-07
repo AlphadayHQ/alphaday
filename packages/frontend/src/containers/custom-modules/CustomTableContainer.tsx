@@ -1,17 +1,29 @@
 import { FC, useMemo } from "react";
 import { useWidgetHeight } from "src/api/hooks";
 import { EWidgetData, useGetCustomItemsQuery } from "src/api/services";
+import { setWidgetHeight } from "src/api/store";
+import { useAppDispatch } from "src/api/store/hooks";
 import { Logger } from "src/api/utils/logging";
 import CustomTableModule from "src/components/custom-modules/CustomTableModule";
 import { IModuleContainer } from "src/types";
 
 const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
+    const dispatch = useAppDispatch();
+
     /* eslint-disable @typescript-eslint/naming-convention */
     const { custom_data, custom_meta, endpoint_url, data_type } =
         moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
     const widgetHeight = useWidgetHeight(moduleData);
+    const handleSetWidgetHeight = (height: number) => {
+        dispatch(
+            setWidgetHeight({
+                widgetHash: moduleData.hash,
+                widgetHeight: height,
+            })
+        );
+    };
 
     const { data, isLoading } = useGetCustomItemsQuery(
         {
@@ -60,6 +72,7 @@ const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             isLoadingItems={isLoading}
             handlePaginate={() => ({})}
             widgetHeight={widgetHeight}
+            setWidgetHeight={handleSetWidgetHeight}
         />
     );
 };
