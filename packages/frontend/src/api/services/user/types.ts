@@ -67,6 +67,7 @@ export type TGenerateMessageResponse = {
 export type TVerifySignatureRequest = {
     address: string;
     signature: `0x${string}`;
+    message: string;
 };
 export type TVerifySignatureResponse = {
     token?: string;

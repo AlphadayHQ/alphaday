@@ -1,4 +1,4 @@
-import "@wagmi/core/window"; // this provide as with types for window.ethereumimpo
+import "@wagmi/core/window"; // this provide as with types for window.ethereum
 import { useCallback, useState } from "react";
 import { useWeb3Modal } from "@web3modal/react";
 import { SiweMessage } from "siwe";
@@ -210,7 +210,7 @@ export const useWallet: () => IWallet = () => {
                         const signatureRequest = createSiweMessage(
                             message,
                             address,
-                            "Signing allows you to create and customize boards."
+                            "Signing will create an account which allows you to create and customize boards."
                         );
                         Logger.debug(
                             "useWallet:verifyWallet:signatureRequest",
@@ -248,6 +248,7 @@ export const useWallet: () => IWallet = () => {
                         verifySignatureMut({
                             address,
                             signature,
+                            message: signatureRequest,
                         })
                             .unwrap()
                             .then((verifyResp) => {
