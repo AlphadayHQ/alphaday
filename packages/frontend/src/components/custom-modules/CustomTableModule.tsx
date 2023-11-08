@@ -35,7 +35,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     setWidgetHeight,
 }) => {
     const widgetSize = useWidgetSize([450]);
-    const useCompactMode =
+    const isCompactMode =
         widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const prevScrollRef = useRef<HTMLElement | undefined>();
@@ -61,7 +61,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     const addLinkColumn = rowProps?.uri_ref !== undefined;
 
     if (isLoadingItems) {
-        return <ModuleLoader $height={`${String(widgetHeight)}px`} />;
+        return <ModuleLoader $height={`${widgetHeight}px`} />;
     }
 
     if (items.length === 0) {
@@ -74,7 +74,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
 
     return (
         <div className="h-25">
-            {!useCompactMode && (
+            {!isCompactMode && (
                 <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
             )}
             <ScrollBar
@@ -86,7 +86,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
                 }}
             >
                 {items.map((item) => {
-                    return useCompactMode ? (
+                    return isCompactMode ? (
                         <CompactTableRow
                             columnsLayout={columns}
                             rowData={item}
