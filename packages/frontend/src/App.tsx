@@ -73,7 +73,12 @@ const AppRoutes = () => {
                     key={route.path}
                     path={route.path}
                     exact={route.exact}
-                    render={() => <route.component type={errorCode} />}
+                    render={() => (
+                        <route.component
+                            isFullsize={route.isFullsize}
+                            type={errorCode}
+                        />
+                    )}
                 />
             ))}
         </Suspense>

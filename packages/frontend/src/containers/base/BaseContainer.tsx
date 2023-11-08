@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import {
-    // Dialog,
-    // Modal,
+    Dialog,
+    Modal,
     BaseModuleWrapper,
     breakpoints,
     BaseModuleBody,
@@ -95,11 +95,11 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             })
         );
     };
-    const [, /* showMobileDialog */ setShowMobileDialog] = useState(false);
+    const [showMobileDialog, setShowMobileDialog] = useState(false);
     const [showSettings, setShowSettings] = useState<boolean | undefined>();
-    // const handleShowDialog = () => {
-    //     setShowMobileDialog(false);
-    // };
+    const handleShowDialog = () => {
+        setShowMobileDialog(false);
+    };
     const toggleCollapse = useCallback(() => {
         dispatch(toggleCollapseInStore({ widgetHash: moduleData.hash }));
         if (onToggleCollapse != null) onToggleCollapse();
@@ -257,7 +257,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     )}
                 </div>
             </div>
-            {/* {onToggleShowFullSize && allowFullSize && (
+            {onToggleShowFullSize && allowFullSize && (
                 <Modal showModal={!!showFullSize} onClose={handleShowFullSize}>
                     <BaseContainerHeader
                         headerRef={headerRef}
@@ -277,8 +277,8 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     {children}
                     <div className="foot-block" />
                 </Modal>
-            )} */}
-            {/* <Dialog
+            )}
+            <Dialog
                 title="Alphaday"
                 showXButton
                 saveButtonText="Close"
@@ -287,7 +287,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 onClose={handleShowDialog}
             >
                 <p>Switch to Desktop to get the best experience of {title}</p>
-            </Dialog> */}
+            </Dialog>
         </>
     );
 };
