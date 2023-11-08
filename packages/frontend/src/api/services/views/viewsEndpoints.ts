@@ -39,6 +39,9 @@ import {
     TViewForWalletRequest,
     TViewForWalletResponse,
     TRemoteRawUserView,
+    TViewByIdRawResponse,
+    TViewByHashOrSlugRawResponse,
+    TViewForWalletRawResponse,
 } from "./types";
 
 const { VIEWS } = CONFIG.API.DEFAULT.ROUTES;
@@ -126,7 +129,7 @@ const viewsApi = alphadayApi.injectEndpoints({
                 Logger.debug("getViewById: querying", path);
                 return path;
             },
-            transformResponse: (r: TViewByIdResponse): TViewByIdResponse =>
+            transformResponse: (r: TViewByIdRawResponse): TViewByIdResponse =>
                 viewCheck(r),
         }),
         getViewByHash: builder.query<
@@ -140,7 +143,7 @@ const viewsApi = alphadayApi.injectEndpoints({
                 return path;
             },
             transformResponse: (
-                r: TViewByHashOrSlugResponse
+                r: TViewByHashOrSlugRawResponse
             ): TViewByHashOrSlugResponse => viewCheck(r),
             providesTags: ["CurrentView"],
         }),
@@ -154,8 +157,8 @@ const viewsApi = alphadayApi.injectEndpoints({
                 return path;
             },
             transformResponse: (
-                r: TViewByHashOrSlugResponse
-            ): TViewByHashOrSlugResponse => viewCheck(r),
+                r: TViewForWalletRawResponse
+            ): TViewForWalletResponse => viewCheck(r),
             providesTags: ["CurrentView"],
         }),
         getViewCategories: builder.query<
