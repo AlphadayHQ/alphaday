@@ -54,7 +54,10 @@ const EventDetails: FC<IDetails> = ({
         const category = getEventCategoryByType(event.type, eventFilters);
         return (
             <div className="h-full bg-btnBackgroundVariant400">
-                <div className="relative pt-[10px] pr-[15px] pb-5 pl-5 border-b-0 flex flex-col rounded-tl rounded-tr" key={event?.id}>
+                <div
+                    className="relative pt-[10px] pr-[15px] pb-5 pl-5 border-b-0 flex flex-col rounded-tl rounded-tr"
+                    key={event?.id}
+                >
                     <p className="flex mt-[22px] mx-0 mb-[10px] text-primaryVariant100 fontGroup-normal">
                         <span
                             className="w-[7px] h-[7px] m-0 mr-[5px] self-center block rounded-full flex-none order-0 flex-grow-0"
@@ -62,11 +65,17 @@ const EventDetails: FC<IDetails> = ({
                                 backgroundColor: category.color,
                             }}
                         />
-                        <span className="text-secondaryOrange self-center">{category.label}</span>
-                        <span className="static w-[5px] h-[14px] fontGroup-support text-primaryVariant100 my-0 mx-[7px] self-center">•</span>
+                        <span className="text-secondaryOrange self-center">
+                            {category.label}
+                        </span>
+                        <span className="static w-[5px] h-[14px] fontGroup-support text-primaryVariant100 my-0 mx-[7px] self-center">
+                            •
+                        </span>
                         <span>{event.location}</span>
                     </p>
-                    <div className="fontGroup-major mt-[5px] mb-0 order-2 single-col:mt-0 single-col:order-1">{event?.title}</div>
+                    <div className="fontGroup-major mt-[5px] mb-0 order-2 single-col:mt-0 single-col:order-1">
+                        {event?.title}
+                    </div>
                 </div>
                 <div className="py-5 px-6">
                     <div>
@@ -104,7 +113,9 @@ const EventDetails: FC<IDetails> = ({
                                 }`}
                             >
                                 <div className="mb-[22px]">
-                                    <div className="fontGroup-mini text-primaryVariant100 mb-1">Start Date</div>
+                                    <div className="fontGroup-mini text-primaryVariant100 mb-1">
+                                        Start Date
+                                    </div>
                                     <div className="flex flex-col text-primary fontGroup-normal">
                                         {`${String(
                                             moment(event?.start).format(
@@ -121,7 +132,9 @@ const EventDetails: FC<IDetails> = ({
                                     </div>
                                 </div>
                                 <div className="mb-[22px]">
-                                    <div className="fontGroup-mini text-primaryVariant100 mb-1">End Date</div>
+                                    <div className="fontGroup-mini text-primaryVariant100 mb-1">
+                                        End Date
+                                    </div>
                                     <div className="flex flex-col text-primary fontGroup-normal">
                                         <span>
                                             {`${String(
