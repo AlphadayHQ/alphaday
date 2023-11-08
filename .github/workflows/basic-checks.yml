@@ -1,0 +1,38 @@
+name: Basic Checks Dev
+
+on:
+    pull_request:
+        types: ready_for_review
+        branches: [dev]
+env:
+    ENVIRONMENT: test
+
+    VITE_ZAPPER_BASE_URL: https://api.zapper.fi/v1/
+    VITE_ZAPPER_BASE_URL_V2: https://api.zapper.fi/v2/
+    VITE_APP_ZAPPER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ZAPPER }}
+
+jobs:
+    basic-checks:
+        if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) }}
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  ref: ${{ github.event.pull_request.head.sha }}
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: "18.15.0"
+                  cache: "yarn"
+                  cache-dependency-path: |
+                      yarn.lock
+            - name: "Log current branch info"
+              run: |
+                  echo "On branch $( git rev-parse --abbrev-ref HEAD )"
+                  echo "On commit $( git rev-parse --short HEAD )"
+            - name: "Check node env"
+              run: |
+                  echo "node version $( node --version )"
+                  echo "yarn version $( yarn --version )"
+            - run: yarn
+            - run: yarn typecheck
+            - run: yarn lint
