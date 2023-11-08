@@ -258,7 +258,11 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 </div>
             </div>
             {onToggleShowFullSize && allowFullSize && (
-                <Modal showModal={!!showFullSize} onClose={handleShowFullSize}>
+                <Modal
+                    size="max"
+                    showModal={!!showFullSize}
+                    onClose={handleShowFullSize}
+                >
                     <BaseContainerHeader
                         headerRef={headerRef}
                         toggleCollapse={toggleCollapse}

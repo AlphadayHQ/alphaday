@@ -23,7 +23,7 @@ export interface IModal extends IProps {
     /**
      * Modal Sizes
      */
-    size?: "xl" | "lg" | "md" | "sm";
+    size?: "max" | "xl" | "lg" | "md" | "sm";
     /**
      * Callback function for close modal
      */
@@ -66,6 +66,7 @@ export const Modal = forwardRef<
         ref
     ) => {
         const maxWidth = {
+            max: "1600px",
             xl: "1050px",
             lg: "800px",
             md: "650px",
