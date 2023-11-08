@@ -210,8 +210,8 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
          * When a view is stale, it can be removed and re-added to the cache,
          * so selectedView can be undefined for a transient interval
          */
-        // if (viewPath === "/" || selectedView === undefined) return;
-        // navigate.push(`${viewPath}calendar/event/${eventId}/${eventUrlTitle}`);
+        if (viewPath === "/" || selectedView === undefined) return;
+        navigate.push(`${viewPath}calendar/event/${eventId}/${eventUrlTitle}`);
         Logger.debug("onClickEvent", eventId, eventUrlTitle);
     };
 

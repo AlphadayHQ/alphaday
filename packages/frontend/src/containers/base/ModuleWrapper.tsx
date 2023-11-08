@@ -2,7 +2,6 @@
 import { FC, useState, useCallback, memo, Suspense } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { Draggable } from "react-beautiful-dnd";
-// import { useNavigate } from "react-router-dom";
 import { useTutorial, useWidgetHeight } from "src/api/hooks";
 import { useAppSelector } from "src/api/store/hooks";
 import * as viewsStore from "src/api/store/slices/views";
@@ -18,6 +17,7 @@ import {
     IModuleContainer,
 } from "src/types";
 import BaseContainer from "./BaseContainer";
+import { useHistory } from "react-router";
 
 interface IModuleWrapper {
     rowIndex: number;
@@ -38,6 +38,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     fullSizeWidgetConfig,
 }) => {
     // const navigate = useNavigate();
+    const history = useHistory();
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
 
@@ -106,6 +107,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                             dragProps: provided.dragHandleProps ?? undefined,
                             isDragging,
                             onToggleShowFullSize: (val: "open" | "close") => {
+                                console.log("onToggleShowFullSize", val);
                                 if (val === "open") {
                                     const fullSizePath =
                                         FULLSIZE_ROUTES_DICT[templateSlug]
@@ -119,11 +121,11 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                                             templateSlug
                                         );
                                     }
-                                    // navigate(
-                                    //     `${viewPath}${fullSizePath.substring(
-                                    //         1 // remove the `/` at the beginning
-                                    //     )}`
-                                    // );
+                                    history.push(
+                                        `${viewPath}${fullSizePath?.substring(
+                                            1 // remove the `/` at the beginning
+                                        )}`
+                                    );
                                 } else {
                                     // navigate(viewPath);
                                 }
