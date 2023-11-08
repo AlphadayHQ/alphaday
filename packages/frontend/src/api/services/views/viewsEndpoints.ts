@@ -1,4 +1,8 @@
 import queryString from "query-string";
+import {
+    validateCustomData,
+    validateCustomMeta,
+} from "src/api/utils/customDataUtils";
 import { Logger } from "src/api/utils/logging";
 import { TEMPLATES_DICT } from "src/types";
 import CONFIG from "../../../config/config";
@@ -34,26 +38,50 @@ import {
     TSaveViewMetaRequest,
     TViewForWalletRequest,
     TViewForWalletResponse,
+    TRemoteRawUserView,
 } from "./types";
 
 const { VIEWS } = CONFIG.API.DEFAULT.ROUTES;
 
-const viewCheck = (view: TRemoteUserView): TRemoteUserView => {
+const viewCheck = (
+    view: Readonly<TRemoteRawUserView>
+): Readonly<TRemoteUserView> => {
     const viewWidgets = [...view.widgets];
     const filteredWidgets: TRemoteUserViewWidget[] = [];
     viewWidgets.forEach((viewWidget) => {
-        if (!viewWidget.widget.template) {
-            Logger.warn(
-                "viewsEndpoints::viewCheck: widget with no template found:",
-                viewWidget.widget.slug
-            );
-        } else if (!(viewWidget.widget.template.slug in TEMPLATES_DICT)) {
+        const widgetSlug = viewWidget.widget.template.slug;
+        if (!(widgetSlug in TEMPLATES_DICT)) {
             Logger.warn(
                 "viewsEndpoints::viewCheck: unknown widget template found:",
                 viewWidget.widget.template.slug
             );
         } else {
-            filteredWidgets.push(viewWidget);
+            const dataValidationResult = validateCustomData(
+                viewWidget.widget.custom_data
+            );
+            const metaValidationResult = validateCustomMeta(
+                viewWidget.widget.custom_meta
+            );
+            if (
+                dataValidationResult.errorCode ||
+                metaValidationResult.errorCode
+            ) {
+                Logger.warn(
+                    `viewsEndpoints::viewCheck: data validation failed for widget ${widgetSlug}`,
+                    dataValidationResult.errorCode ??
+                        metaValidationResult.errorCode
+                );
+            }
+            // recall: if data (meta) validation failed, data (meta) will be undefined
+            const validWidget = {
+                ...viewWidget,
+                widget: {
+                    ...viewWidget.widget,
+                    custom_data: dataValidationResult.items,
+                    custom_meta: metaValidationResult.meta,
+                },
+            };
+            filteredWidgets.push(validWidget);
         }
     });
     return {

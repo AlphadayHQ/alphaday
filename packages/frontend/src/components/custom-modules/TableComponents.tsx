@@ -88,6 +88,7 @@ export const TableHeader: React.FC<{
         <div className="flex flex-row py-2 px-5">
             {layout.map((columnLayout) => (
                 <TableCell
+                    key={columnLayout.id}
                     format={columnLayout.format}
                     justify={columnLayout.justify}
                     isHeader
@@ -153,6 +154,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                         : undefined;
                 return (
                     <TableCell
+                        key={column.id}
                         width={column.width}
                         format={column.format}
                         justify={column.justify}
@@ -246,7 +248,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                         return null;
                     }
                     return (
-                        <div className="flex flex-1">
+                        <div key={column.id} className="flex flex-1">
                             <TableCell
                                 format={column.format}
                                 justify="left"
