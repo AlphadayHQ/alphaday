@@ -60,7 +60,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-1 mr-2.5 [&>p]:mb-0 break-words",
+                "flex flex-1 flex-wrap mr-2.5 [&>p]:mb-0 break-all",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
                 isHeader && "fontGroup-support",
