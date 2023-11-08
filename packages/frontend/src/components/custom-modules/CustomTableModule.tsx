@@ -12,6 +12,8 @@ import { CompactTableRow, TableHeader, TableRow } from "./TableComponents";
 
 const { WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
 const HEADER_HEIGHT = 31;
+// allow standard layout for tables of up to STD_LAYOUT_MAX_SIZE columns
+const STD_LAYOUT_MAX_SIZE = 4;
 
 interface ICustomTableProps {
     items: TCustomItem[];
@@ -33,7 +35,8 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     setWidgetHeight,
 }) => {
     const widgetSize = useWidgetSize([450]);
-    const useCompactMode = widgetSize === "sm" || columns.length > 5;
+    const useCompactMode =
+        widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const prevScrollRef = useRef<HTMLElement | undefined>();
 
