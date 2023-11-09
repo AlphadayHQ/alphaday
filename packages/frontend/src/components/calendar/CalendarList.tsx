@@ -13,7 +13,7 @@ import { ECalendarType, ICalendarBaseProps } from "./types";
 
 const { WIDGET_HEIGHT } = CONFIG.WIDGETS.CALENDAR;
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
-const FULLSIZE_CAL_HEIGHT = 660;
+const FULLSIZE_CAL_HEIGHT = 604;
 
 const CalendarList: FC<ICalendarBaseProps> = ({
     events,
