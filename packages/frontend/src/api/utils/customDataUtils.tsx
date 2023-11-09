@@ -6,8 +6,8 @@ import {
     TRemoteCustomData,
     TRemoteCustomDatum,
     TRemoteCustomMeta,
-    TCustomMetaCard,
     TCustomMetaChart,
+    TCustomMetaCard,
 } from "src/api/services";
 import { TCustomItem, TCustomSeries } from "src/api/types";
 import { getErrorMessage } from "src/api/utils/errorHandling";
@@ -147,7 +147,11 @@ export const validateCustomMeta: (
             errorCode: EWidgetValidationErrorCodes.MissingField,
         };
     }
-    if (meta.layout_type !== "table" && meta.layout_type !== "chart") {
+    if (
+        meta.layout_type !== "table" &&
+        meta.layout_type !== "chart" &&
+        meta.layout_type !== "card"
+    ) {
         return {
             meta: undefined,
             errorCode: EWidgetValidationErrorCodes.InvalidDataFieldType,
@@ -310,7 +314,8 @@ export const formatCustomDataField: (
     }
 };
 
-type TJustification = "flex-start" | "flex-end" | "center";
+// these correspond to tailwind jargon
+type TJustification = "justify-start" | "justify-end" | "justify-center";
 export const getColumnJustification: (
     f: TRemoteFormat,
     j?: "left" | "center" | "right" | undefined
@@ -318,18 +323,18 @@ export const getColumnJustification: (
     if (justify) {
         switch (justify) {
             case "left":
-                return "flex-start";
+                return "justify-start";
             case "center":
-                return "center";
+                return "justify-center";
             case "right":
-                return "flex-end";
+                return "justify-end";
             default:
         }
     }
     if (format && ["number", "decimal", "currency"].indexOf(format) !== -1) {
-        return "flex-end";
+        return "justify-end";
     }
-    return "flex-start";
+    return "justify-start";
 };
 
 export const customDataAsSeries: (items: TRemoteCustomData) => TCustomSeries = (
@@ -448,7 +453,7 @@ export const getYSeries: (
  */
 export const customDataAsCardData: (
     customData: TRemoteCustomData,
-    meta: TCustomMetaCard | undefined,
+    customMeta: TCustomMetaCard | undefined,
     widgetName: string
 ) => { title?: string; value?: string | React.ReactNode } | undefined = (
     customData,
