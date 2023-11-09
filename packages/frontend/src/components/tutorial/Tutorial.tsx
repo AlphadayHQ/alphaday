@@ -1,10 +1,13 @@
 import { FC } from "react";
+import { twMerge, Button, FadeIn } from "@alphaday/ui-kit";
 import {
     ETutorialIndicatorType,
     ETutorialTipId,
     TTutorial,
 } from "src/api/types";
-import { twMerge, Button, FadeIn } from "@alphaday/ui-kit";
+import CONFIG from "src/config";
+
+const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
 interface ITutorialItem {
     tutorial: TTutorial;
@@ -21,8 +24,8 @@ const TutorialItem: FC<ITutorialItem> = ({
         <div
             className="fixed top-0 w-full h-[100vh]"
             data-testid="tutorial-wrapper"
-            onDoubleClick={closeTutorial}
-            style={{ zIndex: 100_000 }}
+            onClick={closeTutorial}
+            style={{ zIndex: Z_INDEX_REGISTRY.TUTORIAL_MODAL }}
         >
             <div className="fixed top-0 w-full h-full bg-backgroundVariant400 opacity-70" />
             {tip && pos && (
