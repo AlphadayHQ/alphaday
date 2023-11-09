@@ -27,17 +27,17 @@ try {
     // eslint-disable-next-line
     const { cookieChoice } = JSON.parse(persistedState?.ui || "{}");
     if (
-        cookieChoice != null &&
-        typeof cookieChoice === "number" &&
-        cookieChoice === ECookieChoice.AcceptAll &&
-        CONFIG.IS_PROD &&
-        CONFIG.SENTRY.ENABLE
+        CONFIG.SENTRY.ENABLE &&
+        (!CONFIG.IS_PROD ||
+            (cookieChoice != null &&
+                typeof cookieChoice === "number" &&
+                cookieChoice === ECookieChoice.AcceptAll))
     ) {
         Logger.debug("initializing sentry...");
         Sentry.init({
             dsn: CONFIG.SENTRY.DSN,
             integrations: [new BrowserTracing()],
-
+            environment: CONFIG.ENVIRONMENT,
             // Set tracesSampleRate to 1.0 to capture 100%
             // of transactions for performance monitoring.
             // We recommend adjusting this value in production
