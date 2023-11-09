@@ -196,10 +196,9 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
             id: params.eventId ? params.eventId : closestEvent?.id || "",
         },
         {
-            skip: !selectedDate || !closestEvent?.id,
+            skip: !selectedDate || !(params.eventId || closestEvent?.id),
         }
     );
-
     const onClickEvent = (
         eventId: string,
         eventUrlTitle: string,
