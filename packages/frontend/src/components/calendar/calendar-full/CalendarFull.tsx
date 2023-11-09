@@ -31,7 +31,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
             className="w-full flex bg-backgroundVariant800"
             ref={fullCalendarWrapRef}
         >
-            <div className="column flex-[35.3%] relative">
+            <div className="column flex-[35.3%] relative bg-backgroundVariant200">
                 <CalendarMonth
                     events={events}
                     fetchEvents={fetchEvents}
