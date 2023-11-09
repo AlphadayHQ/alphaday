@@ -45,7 +45,6 @@ const TutorialContainer: FC = () => {
                 }}
                 tutorial={currentTutorial}
                 toggleNextTutorial={toggleNextTutorial}
-                tutFocusElemRef={tutFocusElemRef}
             />
         );
     }

@@ -13,7 +13,6 @@ interface ITutorialItem {
     tutorial: TTutorial;
     closeTutorial: () => void;
     toggleNextTutorial: () => void;
-    tutFocusElemRef: HTMLElement | null;
 }
 const TutorialItem: FC<ITutorialItem> = ({
     tutorial: { tip, pos, tipCount, indicator },
@@ -22,6 +21,8 @@ const TutorialItem: FC<ITutorialItem> = ({
 }) => {
     return (
         <div
+            tabIndex={-1}
+            role="button"
             className="fixed top-0 w-full h-[100vh]"
             data-testid="tutorial-wrapper"
             onClick={closeTutorial}
@@ -68,6 +69,8 @@ const TutorialItem: FC<ITutorialItem> = ({
                             <div
                                 className="bg-primary w-[360px] flex flex-col justify-between rounded-[5px] p-[30px] text-background"
                                 onClick={(e) => e.stopPropagation()}
+                                role="button"
+                                tabIndex={0}
                             >
                                 {tip?.title && (
                                     <div className="flex justify-between mb-[15px] fontGroup-highlightSemi uppercase">
@@ -80,6 +83,8 @@ const TutorialItem: FC<ITutorialItem> = ({
                             <div
                                 className="w-[360px] flex mt-[6px] justify-center gap-1.5"
                                 onClick={(e) => e.stopPropagation()}
+                                role="button"
+                                tabIndex={0}
                             >
                                 {tip.id !== ETutorialTipId.ComeBack && (
                                     <>
