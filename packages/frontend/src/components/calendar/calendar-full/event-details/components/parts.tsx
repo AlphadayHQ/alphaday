@@ -86,9 +86,13 @@ export const EventLink: FC<{ event: TEventDetails }> = ({ event }) => {
             target="_blank"
             rel="noreferrer"
         >
-            <Button variant="secondary">
-                <ExternalLinkSVG />
-                <span className="pt-[3.5px] pl-[5px]">More Details</span>
+            <Button className="min-w-max" variant="secondary">
+                <span className="text-primary">
+                    <ExternalLinkSVG />
+                </span>
+                <span className="pt-[3.5px] pl-[5px] min-w-full whitespace-nowrap">
+                    More Details
+                </span>
             </Button>
         </a>
     );

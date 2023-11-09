@@ -1,5 +1,13 @@
 .calendar-list {
     transition: all 0.3s;
+    &.full-size {
+        .fc-toolbar {
+            display: none !important;
+        }
+        .fc-list-table {
+            margin-top: 0 !important;
+        }
+    }
     tbody {
         justify-content: flex-end;
         margin-left: -12%;

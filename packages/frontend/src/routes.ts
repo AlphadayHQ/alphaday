@@ -53,9 +53,10 @@ export const appRoutes: IRoute[] = [
         exact: true,
     },
     {
-        path: ERouteNames.Calendar,
+        path: ERouteNames.CalendarEvent,
         component: DashboardPage,
         isFullsize: true,
+        exact: true,
     },
 ];
 

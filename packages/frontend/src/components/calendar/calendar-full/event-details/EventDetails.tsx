@@ -79,7 +79,7 @@ const EventDetails: FC<IDetails> = ({
                 </div>
                 <div className="py-5 px-6">
                     <div>
-                        <div className="row grid grid-cols-12 gap-4">
+                        <div className="row grid grid-cols-12 gap-8">
                             <div
                                 className={`mb-4 ${
                                     windowSize.width > 1024
@@ -167,7 +167,7 @@ const EventDetails: FC<IDetails> = ({
                         {windowSize.width < 1024 && (
                             <>
                                 <EventDesc event={event} />
-                                <div className="row grid grid-cols-12 gap-4">
+                                <div className="row grid grid-cols-12 gap-8">
                                     <div className="mb-4 col-span-6">
                                         <div
                                             style={{
@@ -186,7 +186,7 @@ const EventDetails: FC<IDetails> = ({
                                 </div>
                             </>
                         )}
-                        <div className="row grid grid-cols-12 gap-4">
+                        <div className="row grid grid-cols-12 gap-8">
                             <EventLink event={event} />
                         </div>
                     </div>

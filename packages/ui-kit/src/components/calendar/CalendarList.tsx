@@ -262,7 +262,7 @@ export const CalendarList: FC<ICalendarList> = ({
     });
 
     return (
-        <div className="calendar-list">
+        <div className={`${showFullSize && "full-size"} calendar-list`}>
             <FullCalendar
                 initialDate={selectedDate}
                 plugins={[
