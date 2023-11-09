@@ -10,6 +10,7 @@ import CONFIG from "src/config";
 import { calendarMessages } from "src/globalMessages";
 import { eventClickHandler, handleHeaderTooltips } from "./calendarHelpers";
 import { ECalendarType, ICalendarBaseProps } from "./types";
+import "./calendar.scss";
 
 const { WIDGET_HEIGHT } = CONFIG.WIDGETS.CALENDAR;
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
@@ -36,12 +37,12 @@ const CalendarList: FC<ICalendarBaseProps> = ({
 
     return (
         <span
-            className="border-none block min-h-[50px] relative"
-            style={{
-                height: showFullSize
-                    ? FULLSIZE_CAL_HEIGHT
-                    : widgetHeight ?? WIDGET_HEIGHT,
-            }}
+            className={`border-none block min-h-[50px] relative ${
+                showFullSize ? "calendar-list-full-size-wrap" : ""
+            }`}
+            style={
+                !showFullSize ? { height: widgetHeight ?? WIDGET_HEIGHT } : {}
+            }
         >
             <ScrollBar
                 containerRef={(el) => {
