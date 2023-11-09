@@ -113,7 +113,7 @@ const EventDetails: FC<IDetails> = ({
                                 }`}
                             >
                                 <div className="mb-[22px]">
-                                    <div className="fontGroup-mini text-primaryVariant100 mb-1">
+                                    <div className="fontGroup-mini text-primaryVariant100 mb-[3px]">
                                         Start Date
                                     </div>
                                     <div className="flex flex-col text-primary fontGroup-normal">
@@ -132,7 +132,7 @@ const EventDetails: FC<IDetails> = ({
                                     </div>
                                 </div>
                                 <div className="mb-[22px]">
-                                    <div className="fontGroup-mini text-primaryVariant100 mb-1">
+                                    <div className="fontGroup-mini text-primaryVariant100 mb-[3px]">
                                         End Date
                                     </div>
                                     <div className="flex flex-col text-primary fontGroup-normal">

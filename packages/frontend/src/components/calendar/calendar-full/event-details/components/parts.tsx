@@ -8,9 +8,7 @@ export const EventOrganizer: FC<{ event: TEventDetails }> = ({ event }) => {
     return (
         <div className="my-4 mx-0 flex flex-col" data-tip="Event Organizer">
             <div className="inline-block mt-[3px] mr-[3px] mb-0 ml-0">
-                <div className="fontGroup-mini text-primaryVariant100 mb-1">
-                    Organizers
-                </div>
+                <div className="fontGroup-supportBold mb-[3px]">Organizers</div>
             </div>
             <span className="text-primary fontGroup-normal">
                 {event.organizers.join(", ")}
@@ -25,9 +23,7 @@ export const EventSpeakers: FC<{
     return (
         <div className="my-4 mx-0 flex flex-col">
             <div className="label">
-                <div className="fontGroup-mini text-primaryVariant100 mb-1">
-                    Speakers
-                </div>
+                <div className="fontGroup-supportBold mb-[3px]">Speakers</div>
             </div>
             <span className="text-primary fontGroup-normal">
                 {event.speakers.join(", ")}
@@ -40,7 +36,7 @@ export const EventLocation: FC<{ event: TEventDetails }> = ({ event }) => {
     return (
         <div className="my-4 mx-0">
             <div
-                className="fontGroup-mini text-primaryVariant100 mb-1"
+                className="fontGroup-supportBold mb-[3px]"
                 data-tip="Event Location"
             >
                 {event.location?.toLowerCase() !== "online" ? (
@@ -80,12 +76,7 @@ export const EventLocation: FC<{ event: TEventDetails }> = ({ event }) => {
 
 export const EventLink: FC<{ event: TEventDetails }> = ({ event }) => {
     return (
-        <a
-            className="ml-[15px]"
-            href={event.eventRegLink}
-            target="_blank"
-            rel="noreferrer"
-        >
+        <a href={event.eventRegLink} target="_blank" rel="noreferrer">
             <Button className="min-w-max" variant="secondary">
                 <span className="text-primary">
                     <ExternalLinkSVG />
