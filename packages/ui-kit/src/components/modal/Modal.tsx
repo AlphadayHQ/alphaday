@@ -80,7 +80,7 @@ export const Modal = forwardRef<
                 isOpen={showModal}
                 onWillDismiss={() => onClose?.()} // for ion-modal esc key and backdrop click
                 className={twMerge(
-                    "h-screen [&_.ion-delegate-host]:h-screen outline-none relative",
+                    "h-screen [&_.ion-delegate-host]:h-screen outline-none relative flex w-screen justify-center items-center [&>div]:overflow-y-scroll [&>div]:overflow-x-hidden [&>div]:h-screen [&>div]:flex [&>div]:w-screen [&>div]:justify-start [&>div]:items-center",
                     darkerBackdrop
                         ? "bg-backgroundVariant1400"
                         : "bg-backgroundVariant1300",
@@ -92,7 +92,7 @@ export const Modal = forwardRef<
                         boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
                         maxWidth: `min(calc(100% - 20px), ${maxWidth})`,
                     }}
-                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full"
+                    className="bg-backgroundVariant200 m-auto text-primary border-2 border-solid border-background rounded-[5px] w-full"
                 >
                     {children}
                 </div>

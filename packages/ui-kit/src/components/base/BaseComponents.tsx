@@ -48,7 +48,7 @@ export const BaseModuleHeader = forwardRef<
         <div
             ref={ref}
             className={twMerge(
-                "border-b-background bg-backgroundVariant300 text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] pl-[15px] pr-[9px] bg-blend-soft-light",
+                "border-b-background bg-backgroundVariant300 text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] px-[15px] bg-blend-soft-light",
                 className
             )}
         >
