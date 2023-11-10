@@ -137,7 +137,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                     </div>
                 </div>
                 {categories.length > 0 ? (
-                    <div className="flex bg-backgroundVariant1500 h-[var(--wlib-modal-height)]">
+                    <div className="flex bg-backgroundVariant1500">
                         <ScrollBar className="min-w-[250px] bg-backgroundVariant800 fontGroup-highlight">
                             <div
                                 role="button"
@@ -181,7 +181,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                             })}
                         </ScrollBar>
 
-                        <div className="w-full overflow-hidden pb-[110px]">
+                        <div className="w-full overflow-hidden">
                             <div className="flex justify-between items-center p-[17px_25px] border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
                                 <div className="flex justify-around items-center [&>span]:mr-[7px]" />
                                 <div className="flex justify-around items-center [&>span]:mr-[7px] fontGroup-normal">
@@ -219,8 +219,8 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                         {widgets.length} Widgets
                                     </div>
                                     {widgets.length > 0 ? (
-                                        <ScrollBar>
-                                            <div className="flex box-border flex-row flex-wrap w-full pl-[15px]">
+                                        <ScrollBar className="pb-[10px]">
+                                            <div className="grid grid-cols-3 gap-2.5 pl-[15px] h-[60vh]">
                                                 {widgets.map((w) => {
                                                     const widgetCount =
                                                         cachedWidgets?.filter(
@@ -236,7 +236,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                                                 CONFIG.UI
                                                                     .NEW_WIDGET_IDENTIFIER
                                                             }`}
-                                                            className="w-min max-w-min m-[10px]"
+                                                            className="w-min max-w-min"
                                                         >
                                                             <ModulePreview
                                                                 previewImg={
@@ -284,12 +284,12 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                     )}
                                 </>
                             ) : (
-                                <ModuleLoader $height="100%" />
+                                <ModuleLoader $height="60vh" />
                             )}
                         </div>
                     </div>
                 ) : (
-                    <ModuleLoader $height="var(--wlib-modal-height)" />
+                    <ModuleLoader $height="calc(85vh - 100px)" />
                 )}
             </Modal>
         );
