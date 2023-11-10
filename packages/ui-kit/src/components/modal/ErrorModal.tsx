@@ -33,13 +33,7 @@ export const ErrorModal: FC<IModal> = ({
         await modalRef.current?.dismiss();
     };
     return (
-        <Modal
-            ref={modalRef}
-            className="z-[10000]"
-            showModal={!isHidden}
-            onClose={onClose}
-            {...restProps}
-        >
+        <Modal showModal={!isHidden} onClose={onClose} {...restProps}>
             <ModalHeader
                 className={twMerge(
                     variant === "warning"

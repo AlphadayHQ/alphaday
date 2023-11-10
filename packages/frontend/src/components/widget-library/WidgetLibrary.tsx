@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, useRef } from "react";
+import { FC, ChangeEvent } from "react";
 import {
     Input,
     Modal,
@@ -98,15 +98,9 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
         onFilter(e.target.value);
     };
 
-    const modalRef = useRef<HTMLIonModalElement>(null);
-
     if (widgets) {
         return (
-            <Modal
-                ref={modalRef}
-                onClose={onCloseWidgetLib}
-                showModal={showWidgetLib}
-            >
+            <Modal onClose={onCloseWidgetLib} showModal={showWidgetLib}>
                 <div className="flex flex-col w-full h-full">
                     <div className="bg-backgroundVariant300 text-primaryVariant100 bg-blend-soft-light p-[4.5px_15px_4.5px_15px] border-b-[1.2px] border-solid border-b-background rounded-[3px]">
                         <div className="w-full flex items-center justify-between">
