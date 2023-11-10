@@ -141,7 +141,7 @@ export const getClosestEvent = (
         events.forEach((event) => {
             const diff = moment(date).diff(moment(event.start), "hours");
             const diffAbs = Math.abs(diff);
-            if (diff < 0 && diffAbs < minDiff) {
+            if (diff <= 0 && diffAbs < minDiff) {
                 minDiff = diffAbs;
                 nearestEvent = event;
             }

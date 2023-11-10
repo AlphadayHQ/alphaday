@@ -63,7 +63,7 @@ export const typeOptions: { value: string; color: string }[] = [
     },
     {
         value: "WK",
-        color: "rgb(106, 4, 15)",
+        color: "rgb(126, 74, 15)",
     },
     {
         value: "Unfiltered",

@@ -13,6 +13,7 @@ export interface IRoute {
     path: ERouteNames;
     component: typeof ErrorPage | typeof PreloaderPage | typeof DashboardPage;
     exact?: boolean;
+    isFullsize?: boolean;
 }
 
 /**
@@ -26,6 +27,8 @@ export interface IRoute {
 export enum ERouteNames {
     Base = "/",
     Boards = "/b/:slug",
+    Calendar = "/b/:slug/calendar",
+    CalendarEvent = "/b/:slug/calendar/event/:eventId/:eventTitle",
     FallBack = "*",
 }
 
@@ -41,6 +44,19 @@ export const appRoutes: IRoute[] = [
     {
         path: ERouteNames.Boards,
         component: DashboardPage,
+        exact: true,
+    },
+    {
+        path: ERouteNames.Calendar,
+        component: DashboardPage,
+        isFullsize: true,
+        exact: true,
+    },
+    {
+        path: ERouteNames.CalendarEvent,
+        component: DashboardPage,
+        isFullsize: true,
+        exact: true,
     },
 ];
 
