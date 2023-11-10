@@ -30,6 +30,7 @@ import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
+import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 
 const { UI, VIEWS } = CONFIG;
@@ -342,6 +343,7 @@ function BasePage() {
             </DragDropContext>
             <CookieDisclaimerContainer />
             <WalletConnectionDialogContainer />
+            <TutorialContainer />
         </MainLayout>
     );
 }

@@ -1,23 +1,23 @@
 import { FC, useEffect } from "react";
-// import { breakpoints } from "@alphaday/shared/styled"; // TODO: use import from ui-kit
-import { useAvailableViews /* useWindowSize */ } from "src/api/hooks";
+import { breakpoints } from "@alphaday/ui-kit";
+import { useAvailableViews, useWindowSize } from "src/api/hooks";
 import { useTutorial } from "src/api/hooks/useTutorial";
-// import Tutorial from "src/components/tutorial/Tutorial";
+import Tutorial from "src/components/tutorial/Tutorial";
 import CONFIG from "src/config/config";
 
 const TutorialContainer: FC = () => {
-    // const windowSize = useWindowSize();
+    const windowSize = useWindowSize();
     const availableViews = useAvailableViews();
     const {
         showTutorial,
-        // currentTutorial,
-        // toggleNextTutorial,
-        // tutFocusElemRef,
+        currentTutorial,
+        toggleNextTutorial,
+        tutFocusElemRef,
         toggleShowTutorial,
     } = useTutorial();
 
     // we don't want to show tutorial on mobile
-    // const isMobile = windowSize.width < breakpoints[2];
+    const isMobile = windowSize.width < breakpoints.TwoColMinWidth;
 
     useEffect(() => {
         /**
@@ -37,18 +37,17 @@ const TutorialContainer: FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [availableViews !== undefined]);
 
-    // if (!isMobile && showTutorial && tutFocusElemRef) {
-    //     return (
-    //         <Tutorial
-    //             closeTutorial={() => {
-    //                 toggleShowTutorial(false);
-    //             }}
-    //             tutorial={currentTutorial}
-    //             toggleNextTutorial={toggleNextTutorial}
-    //             tutFocusElemRef={tutFocusElemRef}
-    //         />
-    //     );
-    // }
+    if (!isMobile && showTutorial && tutFocusElemRef) {
+        return (
+            <Tutorial
+                closeTutorial={() => {
+                    toggleShowTutorial(false);
+                }}
+                tutorial={currentTutorial}
+                toggleNextTutorial={toggleNextTutorial}
+            />
+        );
+    }
     return null;
 };
 
