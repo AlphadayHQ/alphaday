@@ -1,4 +1,5 @@
 .calendar-list {
+    min-width: 300px;
     transition: all 0.3s;
     &.full-size {
         .fc-toolbar {

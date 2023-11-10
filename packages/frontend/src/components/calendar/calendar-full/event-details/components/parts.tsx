@@ -14,7 +14,9 @@ export const EventOrganizer: FC<{
             data-tip="Event Organizer"
         >
             <div className="inline-block mt-[3px] mr-[3px] mb-0 ml-0">
-                <div className="fontGroup-supportBold mb-[3px]">Organizers</div>
+                <div className="fontGroup-supportBold text-primaryVariant100 mb-[3px]">
+                    Organizers
+                </div>
             </div>
             <span className="text-primary fontGroup-normal">
                 {event.organizers.join(", ")}
@@ -30,7 +32,9 @@ export const EventSpeakers: FC<{
     return (
         <div className={twMerge("my-4 mx-0 flex flex-col", className)}>
             <div className="label">
-                <div className="fontGroup-supportBold mb-[3px]">Speakers</div>
+                <div className="fontGroup-supportBold text-primaryVariant100 mb-[3px]">
+                    Speakers
+                </div>
             </div>
             <span className="text-primary fontGroup-normal">
                 {event.speakers.join(", ")}

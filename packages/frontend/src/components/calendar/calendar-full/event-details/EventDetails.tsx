@@ -155,13 +155,6 @@ const EventDetails: FC<IDetails> = ({
                         <EventDesc className="three-col:hidden" event={event} />
                         <div className="three-col:hidden row grid grid-cols-12 gap-8">
                             <div className="mb-4 col-span-6">
-                                <div
-                                    style={{
-                                        display: "inline-block",
-                                    }}
-                                >
-                                    <EventLocation event={event} />
-                                </div>
                                 {event?.organizers?.length !== 0 && (
                                     <EventOrganizer event={event} />
                                 )}
