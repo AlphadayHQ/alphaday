@@ -14,7 +14,6 @@ import "./calendar.scss";
 
 const { WIDGET_HEIGHT } = CONFIG.WIDGETS.CALENDAR;
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
-const FULLSIZE_CAL_HEIGHT = 604;
 
 const CalendarList: FC<ICalendarBaseProps> = ({
     events,

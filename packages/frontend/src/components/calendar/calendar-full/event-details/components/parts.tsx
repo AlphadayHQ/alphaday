@@ -1,12 +1,18 @@
 import { FC } from "react";
-import { Button } from "@alphaday/ui-kit";
+import { Button, twMerge } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
 import { TEventDetails } from "src/api/types";
 import { ExternalLinkSVG, MapSVG, GlobeSVG } from "./icons";
 
-export const EventOrganizer: FC<{ event: TEventDetails }> = ({ event }) => {
+export const EventOrganizer: FC<{
+    event: TEventDetails;
+    className?: string;
+}> = ({ event, className }) => {
     return (
-        <div className="my-4 mx-0 flex flex-col" data-tip="Event Organizer">
+        <div
+            className={twMerge("my-4 mx-0 flex flex-col", className)}
+            data-tip="Event Organizer"
+        >
             <div className="inline-block mt-[3px] mr-[3px] mb-0 ml-0">
                 <div className="fontGroup-supportBold mb-[3px]">Organizers</div>
             </div>
@@ -19,9 +25,10 @@ export const EventOrganizer: FC<{ event: TEventDetails }> = ({ event }) => {
 
 export const EventSpeakers: FC<{
     event: TEventDetails;
-}> = ({ event }) => {
+    className?: string;
+}> = ({ event, className }) => {
     return (
-        <div className="my-4 mx-0 flex flex-col">
+        <div className={twMerge("my-4 mx-0 flex flex-col", className)}>
             <div className="label">
                 <div className="fontGroup-supportBold mb-[3px]">Speakers</div>
             </div>
@@ -89,9 +96,17 @@ export const EventLink: FC<{ event: TEventDetails }> = ({ event }) => {
     );
 };
 
-export const EventDesc: FC<{ event: TEventDetails }> = ({ event }) => {
+export const EventDesc: FC<{ event: TEventDetails; className?: string }> = ({
+    event,
+    className,
+}) => {
     return (
-        <div className="mt-[5px] text-primary break-word mb-4 fontGroup-normal [&_*]:text-primary">
+        <div
+            className={twMerge(
+                "mt-[5px] text-primary break-word mb-4 fontGroup-normal [&_*]:text-primary",
+                className
+            )}
+        >
             <span
                 // DOMPurify will 100% secure dangerouslySetInnerHTML
                 // eslint-disable-next-line react/no-danger

@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import moment from "moment";
-import { useWindowSize } from "src/api/hooks";
 import { TEventDetails } from "src/api/types";
 import { getEventCategoryByType } from "src/api/utils/calendarUtils";
 import { TEventCategory } from "src/components/types";
@@ -25,8 +24,6 @@ const EventDetails: FC<IDetails> = ({
     eventFilters,
     isLoadingEventDetails,
 }) => {
-    const windowSize = useWindowSize();
-
     const isEventFilteredOut = !eventFilters.some(
         (filter) => filter.value === event?.type
     );
@@ -80,13 +77,7 @@ const EventDetails: FC<IDetails> = ({
                 <div className="py-5 px-6">
                     <div>
                         <div className="row grid grid-cols-12 gap-8">
-                            <div
-                                className={`mb-4 ${
-                                    windowSize.width > 1024
-                                        ? "col-span-8"
-                                        : "col-span-6"
-                                }`}
-                            >
+                            <div className="mb-4 three-col:col-span-8 col-span-6">
                                 <div className="flex justify-center w-full h-[175px] bg-primary">
                                     <img
                                         style={{
@@ -101,17 +92,12 @@ const EventDetails: FC<IDetails> = ({
                                     />
                                 </div>
                                 <br />
-                                {windowSize.width > 1024 && (
-                                    <EventDesc event={event} />
-                                )}
+                                <EventDesc
+                                    className="hidden three-col:block"
+                                    event={event}
+                                />
                             </div>
-                            <div
-                                className={`mb-4 ${
-                                    windowSize.width > 1024
-                                        ? "col-span-4"
-                                        : "col-span-6"
-                                }`}
-                            >
+                            <div className="mb-4 three-col:col-span-4 col-span-6">
                                 <div className="mb-[22px]">
                                     <div className="fontGroup-mini text-primaryVariant100 mb-[3px]">
                                         Start Date
@@ -152,40 +138,38 @@ const EventDetails: FC<IDetails> = ({
                                         </span>
                                     </div>
                                 </div>
-                                {windowSize.width > 1024 && (
-                                    <>
-                                        {event?.organizers?.length !== 0 && (
-                                            <EventOrganizer event={event} />
-                                        )}
-                                        {event?.speakers?.length !== 0 && (
-                                            <EventSpeakers event={event} />
-                                        )}
-                                    </>
+                                {event?.organizers?.length !== 0 && (
+                                    <EventOrganizer
+                                        className="hidden three-col:flex"
+                                        event={event}
+                                    />
+                                )}
+                                {event?.speakers?.length !== 0 && (
+                                    <EventSpeakers
+                                        className="hidden three-col:flex"
+                                        event={event}
+                                    />
                                 )}
                             </div>
                         </div>
-                        {windowSize.width < 1024 && (
-                            <>
-                                <EventDesc event={event} />
-                                <div className="row grid grid-cols-12 gap-8">
-                                    <div className="mb-4 col-span-6">
-                                        <div
-                                            style={{
-                                                display: "inline-block",
-                                            }}
-                                        >
-                                            <EventLocation event={event} />
-                                        </div>
-                                        {event?.organizers?.length !== 0 && (
-                                            <EventOrganizer event={event} />
-                                        )}
-                                        {event?.speakers?.length !== 0 && (
-                                            <EventSpeakers event={event} />
-                                        )}
-                                    </div>
+                        <EventDesc className="three-col:hidden" event={event} />
+                        <div className="three-col:hidden row grid grid-cols-12 gap-8">
+                            <div className="mb-4 col-span-6">
+                                <div
+                                    style={{
+                                        display: "inline-block",
+                                    }}
+                                >
+                                    <EventLocation event={event} />
                                 </div>
-                            </>
-                        )}
+                                {event?.organizers?.length !== 0 && (
+                                    <EventOrganizer event={event} />
+                                )}
+                                {event?.speakers?.length !== 0 && (
+                                    <EventSpeakers event={event} />
+                                )}
+                            </div>
+                        </div>
                         <div className="row grid grid-cols-12 gap-8">
                             <EventLink event={event} />
                         </div>
