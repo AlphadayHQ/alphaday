@@ -8,7 +8,6 @@ import globalMessages from "src/globalMessages";
 import {
     EventDesc,
     EventLink,
-    EventLocation,
     EventOrganizer,
     EventSpeakers,
 } from "./components/parts";

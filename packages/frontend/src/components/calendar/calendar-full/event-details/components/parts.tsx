@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Button, twMerge } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
 import { TEventDetails } from "src/api/types";
-import { ExternalLinkSVG, MapSVG, GlobeSVG } from "./icons";
+import { ReactComponent as ExternalLinkSVG } from "src/assets/icons/external-link.svg";
 
 export const EventOrganizer: FC<{
     event: TEventDetails;
@@ -43,56 +43,14 @@ export const EventSpeakers: FC<{
     );
 };
 
-export const EventLocation: FC<{ event: TEventDetails }> = ({ event }) => {
-    return (
-        <div className="my-4 mx-0">
-            <div
-                className="fontGroup-supportBold mb-[3px]"
-                data-tip="Event Location"
-            >
-                {event.location?.toLowerCase() !== "online" ? (
-                    <>
-                        <MapSVG />
-                        {["TBD", "TBC", "ONCHAIN"].includes(
-                            String(event.location)?.toUpperCase()
-                        ) ? (
-                            <span className="ml-1 normal-case fontGroup-normal">
-                                {event.location}
-                            </span>
-                        ) : (
-                            <a
-                                href={`https://www.google.com/maps/search/${String(
-                                    event.location?.split(" ").join("+")
-                                )}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="ml-1 normal-case fontGroup-normal"
-                            >
-                                {event.location}
-                            </a>
-                        )}
-                    </>
-                ) : (
-                    <>
-                        <GlobeSVG />
-                        <span className="ml-1 normal-case fontGroup-normal">
-                            Virtual
-                        </span>
-                    </>
-                )}
-            </div>
-        </div>
-    );
-};
-
 export const EventLink: FC<{ event: TEventDetails }> = ({ event }) => {
     return (
         <a href={event.eventRegLink} target="_blank" rel="noreferrer">
             <Button className="min-w-max" variant="secondary">
                 <span className="text-primary">
-                    <ExternalLinkSVG />
+                    <ExternalLinkSVG className="w-3.5 h-3.5 pt-[1px] text-primaryVariant100 stroke-3" />
                 </span>
-                <span className="pt-[3.5px] pl-[5px] min-w-full whitespace-nowrap">
+                <span className="pt-0.5 min-w-full whitespace-nowrap">
                     More Details
                 </span>
             </Button>
