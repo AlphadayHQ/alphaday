@@ -47,11 +47,12 @@ const CalendarList: FC<ICalendarBaseProps> = ({
                 containerRef={(el) => {
                     scrollRef.current = el;
                 }}
+                className="relative"
             >
                 <div className={noEvents ? "mb-0" : "mb-5"}>
                     {!showFullSize && (
                         <div
-                            className="flex fixed top-14 left-[10px] single-col:left-4 two-col:left-5"
+                            className="flex absolute top-3 left-[10px] single-col:left-4 two-col:left-5"
                             style={{
                                 zIndex: Z_INDEX_REGISTRY.CALENDAR_LIST_SWITCH,
                             }}

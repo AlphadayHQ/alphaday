@@ -78,7 +78,7 @@ const CalendarMonth: FC<
                 )}
             >
                 {!showFullSize && (
-                    <div className="flex absolute top-[12.5px] left-[10px] two-col:left-[14px] three-col:left-5">
+                    <div className="flex absolute top-3 left-[10px] two-col:left-[14px] three-col:left-5">
                         <Switch
                             title="Switch Calendar Type"
                             options={["Calendar", "List"]}
