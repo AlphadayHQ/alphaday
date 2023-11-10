@@ -20,7 +20,6 @@ import { ReactComponent as OtherSVG } from "src/assets/icons/other.svg";
 import { ReactComponent as UsersSVG } from "src/assets/icons/users.svg";
 import market from "src/assets/img/preview/marketModule2x.png";
 import CONFIG from "src/config/config";
-import "./WidgetLibrary.module.scss";
 
 const CAT_ICONS = {
     defi: <DefiSVG />,

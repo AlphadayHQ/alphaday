@@ -30,57 +30,58 @@ const CalendarList: FC<ICalendarBaseProps> = ({
     isLoadingEvents,
 }) => {
     const scrollRef = useRef<HTMLElement>();
-
-    const noEvents = events === undefined || events?.length === 0;
     const noEventsMsg = isLoadingEvents ? "" : calendarMessages.noEvents;
 
     return (
-        <span
-            className="border-none block min-h-[50px] relative"
+        <div
+            className="border-none min-h-[50px] relative"
             style={{
                 height: showFullSize
                     ? FULLSIZE_CAL_HEIGHT
                     : widgetHeight ?? WIDGET_HEIGHT,
             }}
         >
+            {!showFullSize && (
+                <div
+                    className="flex fixed top-14 left-[10px] single-col:left-4 two-col:left-5"
+                    style={{
+                        zIndex: Z_INDEX_REGISTRY.CALENDAR_LIST_SWITCH,
+                    }}
+                >
+                    <Switch
+                        options={["Calendar", "List"]}
+                        onChange={switchCalendarType}
+                        checked={calendarType === ECalendarType.List}
+                    />
+                </div>
+            )}
             <ScrollBar
                 containerRef={(el) => {
                     scrollRef.current = el;
                 }}
+                style={{
+                    height: showFullSize
+                        ? FULLSIZE_CAL_HEIGHT
+                        : widgetHeight ?? WIDGET_HEIGHT,
+                }}
             >
-                <div className={noEvents ? "mb-0" : "mb-5"}>
-                    {!showFullSize && (
-                        <div
-                            className="flex fixed top-14 left-[10px] single-col:left-4 two-col:left-5"
-                            style={{
-                                zIndex: Z_INDEX_REGISTRY.CALENDAR_LIST_SWITCH,
-                            }}
-                        >
-                            <Switch
-                                options={["Calendar", "List"]}
-                                onChange={switchCalendarType}
-                                checked={calendarType === ECalendarType.List}
-                            />
-                        </div>
-                    )}
-                    <CalList
-                        eventClickHandler={(e: EventClickArg) =>
-                            eventClickHandler(e, events, onClickEvent)
-                        }
-                        handleHeaderTooltips={handleHeaderTooltips}
-                        noEventsMsg={noEventsMsg}
-                        getEventCategoryByColor={getEventCategoryByColor}
-                        events={events}
-                        onDatesSet={onDatesSet}
-                        selectedEventDetails={selectedEventDetails}
-                        catFilters={catFilters}
-                        showFullSize={showFullSize}
-                        selectedDate={selectedDate}
-                        widgetHash={widgetHash}
-                    />
-                </div>
+                <CalList
+                    eventClickHandler={(e: EventClickArg) =>
+                        eventClickHandler(e, events, onClickEvent)
+                    }
+                    handleHeaderTooltips={handleHeaderTooltips}
+                    noEventsMsg={noEventsMsg}
+                    getEventCategoryByColor={getEventCategoryByColor}
+                    events={events}
+                    onDatesSet={onDatesSet}
+                    selectedEventDetails={selectedEventDetails}
+                    catFilters={catFilters}
+                    showFullSize={showFullSize}
+                    selectedDate={selectedDate}
+                    widgetHash={widgetHash}
+                />
             </ScrollBar>
-        </span>
+        </div>
     );
 };
 
