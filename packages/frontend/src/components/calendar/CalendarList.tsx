@@ -10,10 +10,10 @@ import CONFIG from "src/config";
 import { calendarMessages } from "src/globalMessages";
 import { eventClickHandler, handleHeaderTooltips } from "./calendarHelpers";
 import { ECalendarType, ICalendarBaseProps } from "./types";
+import "./calendar.scss";
 
 const { WIDGET_HEIGHT } = CONFIG.WIDGETS.CALENDAR;
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
-const FULLSIZE_CAL_HEIGHT = 660;
 
 const CalendarList: FC<ICalendarBaseProps> = ({
     events,
@@ -34,16 +34,16 @@ const CalendarList: FC<ICalendarBaseProps> = ({
 
     return (
         <div
-            className="border-none min-h-[50px] relative"
-            style={{
-                height: showFullSize
-                    ? FULLSIZE_CAL_HEIGHT
-                    : widgetHeight ?? WIDGET_HEIGHT,
-            }}
+            className={`border-none block min-h-[50px] relative ${
+                showFullSize ? "calendar-list-full-size-wrap" : ""
+            }`}
+            style={
+                !showFullSize ? { height: widgetHeight ?? WIDGET_HEIGHT } : {}
+            }
         >
             {!showFullSize && (
                 <div
-                    className="flex fixed top-14 left-[10px] single-col:left-4 two-col:left-5"
+                    className="flex absolute top-3 left-[10px] single-col:left-4 two-col:left-5"
                     style={{
                         zIndex: Z_INDEX_REGISTRY.CALENDAR_LIST_SWITCH,
                     }}
@@ -59,11 +59,11 @@ const CalendarList: FC<ICalendarBaseProps> = ({
                 containerRef={(el) => {
                     scrollRef.current = el;
                 }}
-                style={{
-                    height: showFullSize
-                        ? FULLSIZE_CAL_HEIGHT
-                        : widgetHeight ?? WIDGET_HEIGHT,
-                }}
+                style={
+                    !showFullSize
+                        ? { height: widgetHeight ?? WIDGET_HEIGHT }
+                        : {}
+                }
             >
                 <CalList
                     eventClickHandler={(e: EventClickArg) =>

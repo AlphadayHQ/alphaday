@@ -1,5 +1,14 @@
 .calendar-list {
+    min-width: 300px;
     transition: all 0.3s;
+    &.full-size {
+        .fc-toolbar {
+            display: none !important;
+        }
+        .fc-list-table {
+            margin-top: 0 !important;
+        }
+    }
     tbody {
         justify-content: flex-end;
         margin-left: -12%;
@@ -64,7 +73,7 @@
                     // display: ${({ $isFullSize: isFullSize }) =>
                     //     isFullSize ? "none" : "flex"};
                     display: flex;
-                    height: 49px;
+                    height: 50px;
                     border-bottom: 1px solid theme("colors.btnRingVariant500");
                     margin-bottom: 0 !important;
                     justify-content: flex-end;
@@ -151,9 +160,10 @@
                         display: none;
                         cursor: pointer;
                         text-transform: capitalize;
-                        background-color: theme("colors.primaryVariant300");
+                        background-color: theme(
+                            "colors.btnBackgroundVariant300"
+                        );
                         background-clip: padding-box;
-                        border-color: theme("colors.primaryVariant600");
                         .fc-daygrid-day-frame {
                             border: 1px solid
                                 theme("colors.backgroundVariant100");
@@ -164,7 +174,7 @@
                         @apply single-col:block fontGroup-normal;
                         &:disabled {
                             background-color: theme(
-                                "colors.btnBackgroundVariant100"
+                                "colors.btnBackgroundVariant300"
                             );
                             opacity: 0.4;
                             cursor: default;
@@ -395,7 +405,6 @@
     .full-size {
         background-color: theme("colors.backgroundVariant800");
     }
-    
 
     .fc-daygrid-day-events {
         display: flex;
@@ -470,7 +479,7 @@
                 }
                 button {
                     height: 32px;
-                    background-color: theme("colors.btnBackgroundVariant1100");
+                    background-color: theme("colors.btnBackgroundVariant300");
                     background-image: none;
                     border: 1px solid theme("colors.btnRingVariant300");
                     color: theme("colors.primary") !important;
