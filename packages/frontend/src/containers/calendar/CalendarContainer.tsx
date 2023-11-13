@@ -121,7 +121,6 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
     const handleCalType = useCallback(
         (calType: ECalendarType) => {
             setCalendarType(calType);
-            toggleAdjustable();
 
             dispatch(
                 setSelectedCalendarType({
@@ -130,17 +129,18 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
                 })
             );
         },
-        [dispatch, moduleData.hash, toggleAdjustable]
+        [dispatch, moduleData.hash]
     );
 
     const switchCalendarType = useCallback(() => {
         if (calendarType === ECalendarType.Month) {
             handleCalType(ECalendarType.List);
+            toggleAdjustable();
         }
         if (calendarType === ECalendarType.List) {
             handleCalType(ECalendarType.Month);
         }
-    }, [calendarType, handleCalType]);
+    }, [calendarType, handleCalType, toggleAdjustable]);
 
     const [selectedDate, setSelectedDate] = useState<Date>(storedDate);
 
