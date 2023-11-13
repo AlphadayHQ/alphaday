@@ -143,7 +143,7 @@ const Portfolio: FC<IPortfolio> = ({
                                         showBalance={showBalance}
                                         showAllAssets={showAllAssets}
                                         portfolioData={portfolioData}
-                                        ethPrice={ethPrice}
+                                        ethPrice={undefined}
                                         balancesQueryFailed={
                                             balancesQueryFailed
                                         }

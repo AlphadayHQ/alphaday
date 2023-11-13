@@ -202,8 +202,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                         className="cursor-pointer ml-0.5 p-[1px]"
                                     />
                                 </p>
-                                {portfolioData === undefined ||
-                                ethPrice === undefined ? (
+                                {portfolioData === undefined ? (
                                     <div className="flex justify-center">
                                         <Spinner size="xs" />
                                     </div>
