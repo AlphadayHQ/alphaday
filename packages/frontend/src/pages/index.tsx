@@ -26,6 +26,7 @@ import {
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
+import { buildViewPath } from "src/api/utils/viewUtils";
 import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CalendarFullContainer from "src/containers/calendar/CalendarFullContainer";
@@ -364,6 +365,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 <CalendarFullContainer
                     moduleData={calendarWidget}
                     isFullsize={isFullsize}
+                    viewPath={buildViewPath(selectedView?.data)}
                 />
             )}
         </MainLayout>

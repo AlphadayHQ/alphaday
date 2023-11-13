@@ -19,6 +19,7 @@ export interface IDialog {
     triggerId: string;
     showDialog?: boolean;
     darkerBackdrop?: boolean;
+    className?: string;
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
 }
 
@@ -38,6 +39,7 @@ export const Dialog: FC<
     showDialog,
     darkerBackdrop,
     size,
+    className,
     ...restProps
 }) => {
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -76,6 +78,7 @@ export const Dialog: FC<
             darkerBackdrop={darkerBackdrop}
             data-testid="alpha-dialog"
             onClose={onClose}
+            className={className}
             {...restProps}
         >
             <div className="flex justify-between items-center border-0 p-[15px]">

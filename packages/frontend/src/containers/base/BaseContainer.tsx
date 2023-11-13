@@ -1,18 +1,11 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-import {
-    Dialog,
-    Modal,
-    BaseModuleWrapper,
-    breakpoints,
-    BaseModuleBody,
-} from "@alphaday/ui-kit";
+import { BaseModuleWrapper, BaseModuleBody } from "@alphaday/ui-kit";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import {
     useCallbackState,
     useKeyPress,
     useView,
     useWidgetHeight,
-    useWindowSize,
 } from "src/api/hooks";
 import {
     toggleCollapse as toggleCollapseInStore,
@@ -69,7 +62,6 @@ const BaseContainer: FC<IBaseContainerProps> = ({
         setTutFocusElemRef,
     } = uiProps;
     const dispatch = useAppDispatch();
-    const { width } = useWindowSize();
     const moduleWrapRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
     const widgetHeight = useWidgetHeight(moduleData);
@@ -95,11 +87,8 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             })
         );
     };
-    const [showMobileDialog, setShowMobileDialog] = useState(false);
     const [showSettings, setShowSettings] = useState<boolean | undefined>();
-    const handleShowDialog = () => {
-        setShowMobileDialog(false);
-    };
+
     const toggleCollapse = useCallback(() => {
         dispatch(toggleCollapseInStore({ widgetHash: moduleData.hash }));
         if (onToggleCollapse != null) onToggleCollapse();
@@ -121,19 +110,12 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     }, [isCollapsed, setAlreadyCollapsed]);
 
     const handleShowFullSize = useCallback(() => {
-        if (
-            width !== undefined &&
-            width < breakpoints.TwoColMinWidth &&
-            showFullSize === false
-        ) {
-            setShowMobileDialog(true);
-        }
         // expand regular size module since full-size modal is already open
         if (onToggleShowFullSize != null) {
             if (showFullSize) onToggleShowFullSize("close");
             else onToggleShowFullSize("open");
         }
-    }, [onToggleShowFullSize, showFullSize, width]);
+    }, [onToggleShowFullSize, showFullSize]);
 
     const removeWidget = useCallback(() => {
         dispatch(removeWidgetFromView({ widgetHash: moduleData.hash }));
@@ -180,119 +162,80 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     }
 
     return (
-        <>
-            <div
-                id={moduleData.hash}
-                className="flex flex-col [&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
-            >
-                <div className="mb-4 w-full [perspective:1000px]">
-                    <div
-                        ref={moduleWrapRef}
-                        className={`w-full h-full transition-all duration-[0.5s] [transform-style:preserve-3d] ${
-                            showSettings ? "[transform:rotateX(180deg)]" : ""
-                        }`}
-                    >
-                        <BaseModuleWrapper
-                            className={showSettings ? "hidden" : ""}
-                        >
-                            <div
-                                ref={(ref) =>
-                                    setTutFocusElemRef &&
-                                    ref &&
-                                    setTutFocusElemRef(ref)
-                                }
-                                id={moduleId}
-                                {...dragProps}
-                            >
-                                <BaseContainerHeader
-                                    headerRef={headerRef}
-                                    toggleCollapse={toggleCollapse}
-                                    tags={tags}
-                                    handleShowFullSize={handleShowFullSize}
-                                    title={title}
-                                    removeTagFromViewWidget={
-                                        removeTagFromViewWidget
-                                    }
-                                    widgetDescription={widgetDescription}
-                                    removeWidget={removeWidget}
-                                    toggleSettings={toggleSettings}
-                                    alreadyCollapsed={alreadyCollapsed}
-                                    moduleData={moduleData}
-                                    showFullSize={showFullSize}
-                                    allowFullSize={allowFullSize}
-                                />
-                            </div>
-                            {!alreadyCollapsed && !showFullSize && (
-                                <BaseModuleBody
-                                    style={{
-                                        height: adjustable
-                                            ? widgetHeight
-                                            : undefined,
-                                    }}
-                                >
-                                    {children}
-                                </BaseModuleBody>
-                            )}
-                        </BaseModuleWrapper>
-                        <BaseContainerOptions
-                            showSettings={showSettings}
-                            onIncludeTag={includeTagInViewWidget}
-                            onRemoveTag={removeTagFromViewWidget}
-                            toggleCollapse={toggleCollapse}
-                            toggleSettings={toggleSettings}
-                            headerRef={headerRef}
-                            removeWidget={removeWidget}
-                            moduleData={moduleData}
-                            dragProps={dragProps}
-                        />
-                    </div>
-                    {adjustable && !isCollapsed && (
-                        <div
-                            onMouseDown={adjustHeight}
-                            className="absolute bottom-[-18px] left-[-3px] h-[15px] w-[calc(100%_+_6px)] cursor-row-resize border-[none]"
-                            role="button"
-                            title="Adjust widget height"
-                            tabIndex={-1}
-                        />
-                    )}
-                </div>
-            </div>
-            {onToggleShowFullSize && allowFullSize && (
-                <Modal
-                    size="max"
-                    showModal={!!showFullSize}
-                    onClose={handleShowFullSize}
+        <div
+            id={moduleData.hash}
+            className="flex flex-col [&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
+        >
+            <div className="mb-4 w-full [perspective:1000px]">
+                <div
+                    ref={moduleWrapRef}
+                    className={`w-full h-full transition-all duration-[0.5s] [transform-style:preserve-3d] ${
+                        showSettings ? "[transform:rotateX(180deg)]" : ""
+                    }`}
                 >
-                    <BaseContainerHeader
-                        headerRef={headerRef}
+                    <BaseModuleWrapper className={showSettings ? "hidden" : ""}>
+                        <div
+                            ref={(ref) =>
+                                setTutFocusElemRef &&
+                                ref &&
+                                setTutFocusElemRef(ref)
+                            }
+                            id={moduleId}
+                            {...dragProps}
+                        >
+                            <BaseContainerHeader
+                                headerRef={headerRef}
+                                toggleCollapse={toggleCollapse}
+                                tags={tags}
+                                handleShowFullSize={handleShowFullSize}
+                                title={title}
+                                removeTagFromViewWidget={
+                                    removeTagFromViewWidget
+                                }
+                                widgetDescription={widgetDescription}
+                                removeWidget={removeWidget}
+                                toggleSettings={toggleSettings}
+                                alreadyCollapsed={alreadyCollapsed}
+                                moduleData={moduleData}
+                                showFullSize={showFullSize}
+                                allowFullSize={allowFullSize}
+                            />
+                        </div>
+                        {!alreadyCollapsed && !showFullSize && (
+                            <BaseModuleBody
+                                style={{
+                                    height: adjustable
+                                        ? widgetHeight
+                                        : undefined,
+                                }}
+                            >
+                                {children}
+                            </BaseModuleBody>
+                        )}
+                    </BaseModuleWrapper>
+                    <BaseContainerOptions
+                        showSettings={showSettings}
+                        onIncludeTag={includeTagInViewWidget}
+                        onRemoveTag={removeTagFromViewWidget}
                         toggleCollapse={toggleCollapse}
-                        tags={tags}
-                        handleShowFullSize={handleShowFullSize}
-                        title={title}
-                        removeTagFromViewWidget={removeTagFromViewWidget}
-                        widgetDescription={widgetDescription}
-                        removeWidget={removeWidget}
                         toggleSettings={toggleSettings}
-                        alreadyCollapsed={alreadyCollapsed}
+                        headerRef={headerRef}
+                        removeWidget={removeWidget}
                         moduleData={moduleData}
-                        showFullSize={showFullSize}
-                        allowFullSize={allowFullSize}
+                        dragProps={dragProps}
                     />
-                    {children}
-                    <div className="foot-block" />
-                </Modal>
-            )}
-            <Dialog
-                title="Alphaday"
-                showXButton
-                saveButtonText="Close"
-                showDialog={showMobileDialog}
-                onSave={handleShowDialog}
-                onClose={handleShowDialog}
-            >
-                <p>Switch to Desktop to get the best experience of {title}</p>
-            </Dialog>
-        </>
+                </div>
+                {adjustable && !isCollapsed && (
+                    <div
+                        onMouseDown={adjustHeight}
+                        className="absolute bottom-[-18px] left-[-3px] h-[15px] w-[calc(100%_+_6px)] cursor-row-resize border-[none]"
+                        role="button"
+                        title="Adjust widget height"
+                        tabIndex={-1}
+                    />
+                )}
+            </div>
+        </div>
     );
 };
 
