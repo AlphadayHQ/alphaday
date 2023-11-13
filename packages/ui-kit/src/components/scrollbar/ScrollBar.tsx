@@ -28,6 +28,7 @@ export const ScrollBar: FC<ScrollBarProps> = ({
                 "overflow-hidden hover:overflow-y-auto scrollbar-track-backgroundVariant1800 scrollbar-thumb-primaryVariant800 scrollbar scrollbar-w-[5px] overscroll-contain",
                 className
             )}
+            style={{ scrollbarGutter: "stable" }}
             onScroll={(e) => {
                 if (
                     e.currentTarget.scrollTop + e.currentTarget.clientHeight ===
