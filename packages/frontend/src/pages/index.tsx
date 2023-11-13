@@ -28,6 +28,7 @@ import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
+import CalendarFullContainer from "src/containers/calendar/CalendarFullContainer";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
@@ -89,6 +90,13 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         return { ...mousePos, intersects: false };
     }, [mousePos]);
 
+    const calendarWidget = useMemo(
+        () =>
+            selectedView?.data.widgets.find(
+                (w) => w.widget.template.slug === "calendar_template"
+            ),
+        [selectedView?.data.widgets]
+    );
     /**
      * A full-size module is a module/widget that takes the whole width of the page.
      * It is not draggable and is not part of the layout grid.
@@ -106,12 +114,10 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 ? {
                       slug: "calendar_template", // TODO (xavier-charles) replace hardcoded slug with a dynamic one
                       // we should not check the hash if `fullSizeWidgetSlug` is undefined.
-                      hash: selectedView?.data.widgets.find(
-                          (w) => w.widget.template.slug === "calendar_template"
-                      )?.hash,
+                      hash: calendarWidget?.hash,
                   }
                 : undefined,
-        [isFullsize, selectedView?.data.widgets]
+        [calendarWidget?.hash, isFullsize]
     );
     const layoutGrid = useMemo(
         () => computeLayoutGrid(selectedView?.data.widgets),
@@ -354,6 +360,12 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             <CookieDisclaimerContainer />
             <WalletConnectionDialogContainer />
             <TutorialContainer />
+            {calendarWidget !== undefined && (
+                <CalendarFullContainer
+                    moduleData={calendarWidget}
+                    isFullsize={isFullsize}
+                />
+            )}
         </MainLayout>
     );
 }
