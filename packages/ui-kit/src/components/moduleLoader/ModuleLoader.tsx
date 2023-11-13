@@ -14,7 +14,7 @@ export const ModuleLoader: FC<IModuleLoaderProps> = ({
 }) => (
     <div
         className={twMerge(
-            "flex h-full w-full items-center justify-center",
+            "h-full w-full items-center justify-center",
             collapse ? "hidden" : "flex"
         )}
         style={{
