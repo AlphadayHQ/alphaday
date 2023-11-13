@@ -140,7 +140,7 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
         );
     };
 
-    return <span id={`cal-${widgetHash}`}>{renderCalendar()}</span>;
+    return <div id={`cal-${widgetHash}`}>{renderCalendar()}</div>;
 };
 
 export default CalendarModule;

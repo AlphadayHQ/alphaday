@@ -1,8 +1,8 @@
 import { FC, RefObject } from "react";
 import moment from "moment";
 import { createPortal } from "react-dom";
-import ScrollBar from "react-perfect-scrollbar";
 import { TDatePos, TEvent, TEventCategory } from "../calendar/event";
+import { ScrollBar } from "../scrollbar/ScrollBar";
 
 export interface ITooltipProps {
     disabled?: boolean;
