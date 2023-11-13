@@ -195,7 +195,7 @@ export const ListItem: FC<IList> = ({
 
         return (
             <>
-                <li
+                <div
                     role="button"
                     tabIndex={0}
                     onClick={onClick}
@@ -247,7 +247,7 @@ export const ListItem: FC<IList> = ({
                             className="self-center"
                         />
                     </p>
-                </li>
+                </div>
                 <HRElement />
             </>
         );
@@ -256,7 +256,7 @@ export const ListItem: FC<IList> = ({
         const variantStyle = listItemVariants("video");
         return (
             <>
-                <li
+                <div
                     role="button"
                     tabIndex={0}
                     onClick={onClick}
@@ -289,7 +289,7 @@ export const ListItem: FC<IList> = ({
                             />
                         </p>
                     </div>
-                </li>
+                </div>
                 <HRElement />
             </>
         );
