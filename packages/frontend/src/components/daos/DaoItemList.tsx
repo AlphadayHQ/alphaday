@@ -18,7 +18,7 @@ const DaoItemList: FC<IDaoItemList> = ({ items, handlePaginate }) => {
         if (items.length === 0) {
             return (
                 <NoItems>
-                    <p>{globalMessages.queries.noMatchFound("Items")}</p>
+                    <p>{globalMessages.queries.noMatchFound("items")}</p>
                 </NoItems>
             );
         }

@@ -23,7 +23,7 @@ const LensFeedModule: FC<IPosts> = ({
     if (posts.length === 0) {
         return (
             <NoItems>
-                <p>{globalMessages.queries.noMatchFound("Lens Posts")}</p>
+                <p>{globalMessages.queries.noMatchFound("lens posts")}</p>
             </NoItems>
         );
     }
