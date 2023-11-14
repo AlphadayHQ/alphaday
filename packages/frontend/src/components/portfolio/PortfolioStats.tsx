@@ -2,9 +2,9 @@ import { FC, useMemo, useEffect, useRef } from "react";
 import {
     ApexDonutChart,
     ScrollBar,
+    Skeleton,
     themeColors,
     twMerge,
-    Spinner,
 } from "@alphaday/ui-kit";
 import { useWidgetSize } from "src/api/hooks";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
@@ -204,7 +204,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                 </p>
                                 {portfolioData === undefined ? (
                                     <div className="flex justify-center">
-                                        <Spinner size="xs" />
+                                        <Skeleton className="w-20" />
                                     </div>
                                 ) : (
                                     <h3 className="mb-0.5 fontGroup-major text-primary">
