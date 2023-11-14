@@ -3,21 +3,8 @@ import { twMerge, Skeleton } from "@alphaday/ui-kit";
 
 const GasSkeleton = () => (
     <div className="h-10">
-        <Skeleton
-            style={{
-                minWidth: "30px",
-                width: "40px",
-                height: "22px",
-            }}
-        />
-        <Skeleton
-            style={{
-                minWidth: "30px",
-                width: "40px",
-                height: "12px",
-                marginTop: "8px",
-            }}
-        />
+        <Skeleton className="min-w-[30px] w-10 h-[22px]" />
+        <Skeleton className="min-w-[30px] w-10 h-3 mt-2" />
     </div>
 );
 
