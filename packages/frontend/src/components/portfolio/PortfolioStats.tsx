@@ -219,8 +219,19 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                 </h3>
                                 <div className="mb-[15px] flex flex-wrap">
                                     <p className="fontGroup-normal mb-0 text-success">
-                                        <Skeleton className="w-20" />
-
+                                        {ethPrice === undefined ||
+                                        portfolioData === undefined ? (
+                                            <Skeleton className="w-20" />
+                                        ) : (
+                                            handleBalanceFigures(
+                                                formatNumber({
+                                                    value:
+                                                        totalValue / ethPrice,
+                                                    style: ENumberStyle.Decimal,
+                                                }).value,
+                                                showBalance
+                                            )
+                                        )}{" "}
                                         {showBalance &&
                                             portfolioData !== undefined && (
                                                 <span className="fontGroup-normal mr-[5px] text-primaryVariant500">
