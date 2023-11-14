@@ -124,7 +124,7 @@ export const ViewDialog: FC<IProps> = ({
                     onClose={onClose}
                     size="sm"
                 >
-                    <div className="flex justify-center items-center flex-1">
+                    <div className="flex justify-center items-center flex-1 h-36">
                         <Spinner size="md" color="primary" />
                     </div>
                 </Dialog>
