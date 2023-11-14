@@ -98,7 +98,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
         onFilter(e.target.value);
     };
 
-    if (widgets) {
+    if (widgets !== undefined) {
         return (
             <Modal onClose={onCloseWidgetLib} showModal={showWidgetLib}>
                 <div className="flex flex-col w-full h-full">
