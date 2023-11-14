@@ -126,6 +126,7 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                             <ReactMarkdown
                                 remarkPlugins={remarkPlugins}
                                 linkTarget="_blank"
+                                className="prose-a:text-secondaryOrange"
                             >
                                 {description}
                             </ReactMarkdown>
