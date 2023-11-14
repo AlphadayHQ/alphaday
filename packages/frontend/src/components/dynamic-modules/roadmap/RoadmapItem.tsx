@@ -3,8 +3,11 @@ import { CollapseListItem } from "@alphaday/ui-kit";
 import moment from "moment";
 import { useWidgetSize } from "src/api/hooks";
 import { Logger } from "src/api/utils/logging";
+import { REMARK_URL_REGEX, remarkRegex } from "src/api/utils/textUtils";
 import { useDynamicWidgetItem } from "../hooks/useDynamicWidgetItem";
 import { ERoadmapStatus } from "../types";
+
+const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
 
 interface IList {
     date: string | undefined;
@@ -91,6 +94,7 @@ const RoadmapItem: FC<IList> = ({
                 description={desc}
                 variant="roadmap"
                 fullHeight={paddedDescHeight}
+                remarkPlugins={PLUGINS}
             />
         </div>
     );

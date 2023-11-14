@@ -1,7 +1,10 @@
 import { FC } from "react";
 import { CollapseListItem } from "@alphaday/ui-kit";
+import { REMARK_URL_REGEX, remarkRegex } from "src/api/utils/textUtils";
 import { TItem } from "src/types";
 import { useDynamicWidgetItem } from "../hooks/useDynamicWidgetItem";
+
+const PLUGINS = [remarkRegex(REMARK_URL_REGEX)];
 
 interface IItem {
     item: TItem;
@@ -28,6 +31,7 @@ const FaqItem: FC<IItem> = ({ item, setItemsHeight }) => {
                 description={description}
                 variant="faq"
                 fullHeight={descHeight}
+                remarkPlugins={PLUGINS}
             />
         </div>
     );
