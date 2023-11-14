@@ -1,6 +1,5 @@
 import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
 import { useLayer } from "react-laag";
-import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 import { Arrow } from "./src/components/arrow/Arrow";
 import {
@@ -44,6 +43,7 @@ import {
     DropdownItem,
     DropdownMenu,
 } from "./src/components/dropdown/dropdown";
+import { FadeIn } from "./src/components/fade-in-out/FadeIn";
 import { Input } from "./src/components/input/Input";
 import Footer from "./src/components/layout/Footer";
 import {
@@ -65,11 +65,11 @@ import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { Overlay } from "./src/components/overlay/Overlay";
-import { FadeIn } from "./src/components/fade-in-out/FadeIn";
 import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { ChannelSkeleton } from "./src/components/skeletons/ChannelSkeleton";
 import { ItemSkeleton } from "./src/components/skeletons/ItemSkeleton";
+import { Skeleton } from "./src/components/skeletons/Skeleton";
 import { Spinner } from "./src/components/spinner/Spinner";
 import { Switch } from "./src/components/switch/Switch";
 import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";

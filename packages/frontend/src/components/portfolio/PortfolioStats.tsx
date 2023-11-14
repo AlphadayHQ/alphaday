@@ -205,7 +205,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                 <h3 className="mb-0.5 fontGroup-major text-primary">
                                     {ethPrice === undefined ||
                                     portfolioData === undefined ? (
-                                        <Skeleton width="80px" />
+                                        <Skeleton className="w-20" />
                                     ) : (
                                         handleBalanceFigures(
                                             formatNumber({
@@ -219,19 +219,8 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                 </h3>
                                 <div className="mb-[15px] flex flex-wrap">
                                     <p className="fontGroup-normal mb-0 text-success">
-                                        {ethPrice === undefined ||
-                                        portfolioData === undefined ? (
-                                            <Skeleton width="80px" />
-                                        ) : (
-                                            handleBalanceFigures(
-                                                formatNumber({
-                                                    value:
-                                                        totalValue / ethPrice,
-                                                    style: ENumberStyle.Decimal,
-                                                }).value,
-                                                showBalance
-                                            )
-                                        )}{" "}
+                                        <Skeleton className="w-20" />
+
                                         {showBalance &&
                                             portfolioData !== undefined && (
                                                 <span className="fontGroup-normal mr-[5px] text-primaryVariant500">
