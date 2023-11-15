@@ -202,44 +202,43 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                         className="cursor-pointer ml-0.5 p-[1px]"
                                     />
                                 </p>
-                                <h3 className="mb-0.5 fontGroup-major text-primary">
-                                    {ethPrice === undefined ||
-                                    portfolioData === undefined ? (
+                                {portfolioData === undefined ? (
+                                    <div className="flex justify-center">
                                         <Skeleton className="w-20" />
-                                    ) : (
-                                        handleBalanceFigures(
+                                    </div>
+                                ) : (
+                                    <h3 className="mb-0.5 fontGroup-major text-primary">
+                                        {handleBalanceFigures(
                                             formatNumber({
                                                 value: totalValue,
                                                 style: ENumberStyle.Currency,
                                                 currency: "USD",
                                             }).value,
                                             showBalance
-                                        )
-                                    )}
-                                </h3>
-                                <div className="mb-[15px] flex flex-wrap">
-                                    <p className="fontGroup-normal mb-0 text-success">
-                                        {ethPrice === undefined ||
-                                        portfolioData === undefined ? (
-                                            <Skeleton className="w-20" />
-                                        ) : (
-                                            handleBalanceFigures(
+                                        )}
+                                    </h3>
+                                )}
+                                {portfolioData && ethPrice && (
+                                    <div className="mb-[15px] flex flex-wrap">
+                                        <p className="fontGroup-normal mb-0 text-success">
+                                            {handleBalanceFigures(
                                                 formatNumber({
                                                     value:
                                                         totalValue / ethPrice,
                                                     style: ENumberStyle.Decimal,
                                                 }).value,
                                                 showBalance
-                                            )
-                                        )}{" "}
-                                        {showBalance &&
-                                            portfolioData !== undefined && (
-                                                <span className="fontGroup-normal mr-[5px] text-primaryVariant500">
-                                                    ETH
-                                                </span>
-                                            )}
-                                    </p>
-                                </div>
+                                            )}{" "}
+                                            {showBalance &&
+                                                totalValue &&
+                                                ethPrice && (
+                                                    <span className="fontGroup-normal mr-[5px] text-primaryVariant500">
+                                                        ETH
+                                                    </span>
+                                                )}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                             <div
                                 className={twMerge(
