@@ -57,22 +57,20 @@ const WalletViewTabButton: FC<IWalletViewTabButton> = ({
     };
 
     return (
-        <div className="[&.name]:text-secondaryOrange">
-            <ViewTabButton
-                className={isSelected ? "tabButton selected" : "tabButton"}
-                onClick={onButtonClick}
-                title={getWalletViewStateMessages(walletViewState)}
-                modified={isModified}
-                selected={isSelected}
-                options={
-                    walletViewState === EWalletViewState.Ready
-                        ? options
-                        : undefined
-                }
-            >
-                {getViewTabButtonChild(walletViewState, walletViewName)}
-            </ViewTabButton>
-        </div>
+        <ViewTabButton
+            className={`[&_.name]:text-secondaryOrange ${
+                isSelected ? "tabButton selected" : "tabButton"
+            }`}
+            onClick={onButtonClick}
+            title={getWalletViewStateMessages(walletViewState)}
+            modified={isModified}
+            selected={isSelected}
+            options={
+                walletViewState === EWalletViewState.Ready ? options : undefined
+            }
+        >
+            {getViewTabButtonChild(walletViewState, walletViewName)}
+        </ViewTabButton>
     );
 };
 
