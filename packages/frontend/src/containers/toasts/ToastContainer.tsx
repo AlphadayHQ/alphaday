@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Button } from "@alphaday/ui-kit";
 import { ToastOptions, ToastBar, Toaster, toast } from "react-hot-toast";
 
@@ -35,4 +35,4 @@ const ToastContainer: FC<ToastOptions> = (options) => {
     );
 };
 
-export default ToastContainer;
+export default memo(ToastContainer);
