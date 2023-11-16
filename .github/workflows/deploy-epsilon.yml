@@ -2,11 +2,11 @@ name: Deploy to epsilonday (dev)
 
 on:
     # # deploy runs when merging on dev
-    # pull_request:
-    #     types:
-    #         - closed
-    #     branches:
-    #         - dev
+    pull_request:
+        types:
+            - closed
+        branches:
+            - dev
     # and can be triggered manually also
     workflow_dispatch:
 
