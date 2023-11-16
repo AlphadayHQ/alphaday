@@ -27,10 +27,9 @@ const CalendarList: FC<ICalendarBaseProps> = ({
     catFilters,
     widgetHash,
     widgetHeight,
-    isLoadingEvents,
+    isFetchingEvents,
 }) => {
     const scrollRef = useRef<HTMLElement>();
-    const noEventsMsg = isLoadingEvents ? "" : calendarMessages.noEvents;
 
     return (
         <div
@@ -60,9 +59,9 @@ const CalendarList: FC<ICalendarBaseProps> = ({
                     scrollRef.current = el;
                 }}
                 style={
-                    !showFullSize
-                        ? { height: widgetHeight ?? WIDGET_HEIGHT }
-                        : {}
+                    showFullSize
+                        ? {}
+                        : { height: widgetHeight ?? WIDGET_HEIGHT }
                 }
             >
                 <CalList
@@ -70,7 +69,8 @@ const CalendarList: FC<ICalendarBaseProps> = ({
                         eventClickHandler(e, events, onClickEvent)
                     }
                     handleHeaderTooltips={handleHeaderTooltips}
-                    noEventsMsg={noEventsMsg}
+                    noEventsMsg={calendarMessages.noEvents}
+                    isFetchingEvents={!!isFetchingEvents}
                     getEventCategoryByColor={getEventCategoryByColor}
                     events={events}
                     onDatesSet={onDatesSet}

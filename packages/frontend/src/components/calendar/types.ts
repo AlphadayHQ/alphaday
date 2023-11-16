@@ -9,6 +9,7 @@ export enum ECalendarType {
 export interface ICalendarBaseProps {
     events: TEvent[] | undefined;
     isLoadingEvents?: boolean;
+    isFetchingEvents?: boolean;
     fetchEvents: (d: Date) => void;
     onClickEvent?: (eId: string, eUrlTitle: string, eStart: string) => void;
     onDatesSet?: (d: string) => void;
