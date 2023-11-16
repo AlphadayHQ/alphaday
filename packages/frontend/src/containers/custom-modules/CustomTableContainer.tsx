@@ -33,8 +33,6 @@ const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             skip: data_type === EWidgetData.Static,
         }
     );
-    console.log("data", data);
-    console.log("custom_meta", custom_meta);
 
     const items = useMemo(() => {
         if (data_type === EWidgetData.Static) {
