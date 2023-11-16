@@ -69,13 +69,10 @@ export const TableCell: React.FC<ITableCellProps> = ({
             {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
         >
-            {href && !isCompactMode && !hasRowLink && (
-                <LinkSVG className="shrink-0 w-2 h-2 mr-2" />
+            {href && !hasRowLink && (
+                <LinkSVG className="shrink-0 self-center w-2 h-2 mr-2" />
             )}
             {children}
-            {href && isCompactMode && !hasRowLink && (
-                <LinkSVG className="shrink-0 w-2 h-2 ml-2 self-center" />
-            )}
         </div>
     );
 };
