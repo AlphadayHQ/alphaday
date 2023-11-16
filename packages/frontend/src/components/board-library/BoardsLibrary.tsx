@@ -34,6 +34,63 @@ const SORT_BUTTONS: { label: string; value: EItemsSortBy }[] = [
     },
 ];
 
+const BoardPreviewWrap: FC<{
+    view: TRemoteUserViewPreview;
+    selectedViewId: number | undefined;
+    isAuthenticated: boolean;
+    isCustomBoard: boolean;
+    onSelectView: (viewId: number) => void;
+    onRemoveView?: ({
+        id,
+        isReadOnly,
+        hash,
+        slug,
+        isWalletView,
+    }: TViewMeta) => void;
+    onEditView?: (viewId: number, viewHash: string) => void;
+    onBoardPin?: (view: Omit<TUserViewPreview, "id">, id: number) => void;
+}> = ({
+    view,
+    selectedViewId,
+    isAuthenticated,
+    isCustomBoard,
+    onEditView,
+    onSelectView,
+    onRemoveView,
+    onBoardPin,
+}) => (
+    <div className="w-min max-w-min">
+        <BoardPreview
+            previewImg={view.icon || ""}
+            title={
+                validateEthAddr(view.name)
+                    ? truncateWithEllipsis(view.name, 10)
+                    : view.name
+            }
+            padding="none"
+            description={view.description}
+            active={selectedViewId === view.id}
+            isAuthenticated={isAuthenticated}
+            onClick={() => onSelectView(view.id)}
+            onRemove={() => {
+                if (isCustomBoard) {
+                    onRemoveView?.({
+                        id: view.id,
+                        isReadOnly: false,
+                        hash: view.hash,
+                        slug: view.slug,
+                        isWalletView: view.is_smart,
+                    });
+                }
+            }}
+            onEdit={() => onEditView?.(view.id, view.hash)}
+            onPin={
+                !isCustomBoard ? () => onBoardPin?.(view, view.id) : undefined
+            }
+        />
+    </div>
+);
+
 interface IBoardsLibrary {
     category: string | undefined;
     boards: ReadonlyArray<TRemoteUserViewPreview> | undefined;
@@ -91,11 +148,14 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
             is_subscribed: !!subscribedViews?.some((sv) => sv.id === v.id),
         }));
 
-    const handleScrollEvent = ({ currentTarget }: FormEvent<HTMLElement>) => {
-        if (shouldFetchMoreItems(currentTarget)) {
-            handlePaginate("next");
-        }
-    };
+    const handleScrollEvent = useCallback(
+        ({ currentTarget }: FormEvent<HTMLElement>) => {
+            if (shouldFetchMoreItems(currentTarget)) {
+                handlePaginate("next");
+            }
+        },
+        [handlePaginate]
+    );
 
     const onBoardPin = useCallback(
         (view: Omit<TUserViewPreview, "id">, id: number) => {
@@ -113,6 +173,12 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         },
         [isAuthenticated, onSubscribeView, onUnsubscribeView]
     );
+
+    const handleCreateEmptyBoard = useCallback(() => {
+        if (isAuthenticated) {
+            onCreateEmptyBoard();
+        }
+    }, [isAuthenticated, onCreateEmptyBoard]);
 
     return (
         <div
@@ -197,17 +263,13 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     <ModuleLoader $height="100%" />
                 ) : (
                     <div className="flex flex-row justify-between">
-                        <div className="w-full p-6 max-w-[405px] border-r border-solid border-btnRingVariant500">
+                        <div className="w-full p-[25px] pr-[15px] max-w-[395px] border-r border-solid border-btnRingVariant500">
                             <div className="flex fontGroup-highlightSemi py-[5px] text-primary">
                                 Custom Boards
                                 <span
                                     role="button"
                                     tabIndex={0}
-                                    onClick={() => {
-                                        if (isAuthenticated) {
-                                            onCreateEmptyBoard();
-                                        }
-                                    }}
+                                    onClick={handleCreateEmptyBoard}
                                     className={twMerge(
                                         "flex justify-center items-center ml-[10px] w-[18px] h-[18px] rounded-full border border-solid border-primary cursor-pointer hover:border-btnRingVariant100 hover:text-primary",
                                         !isAuthenticated && "cursor-not-allowed"
@@ -224,7 +286,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                             </div>
                             <div className="h-[234px]">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex justify-between box-border flex-row flex-wrap h-[234px] w-full">
+                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full gap-5 mt-[10px]">
                                         {customBoards.length === 0 ? (
                                             <p className="ml-[15px] pr-3 font-normal text-primary">
                                                 {isAuthenticated
@@ -232,60 +294,22 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                     : "Connect and verify your wallet to see your custom boards"}
                                             </p>
                                         ) : (
-                                            customBoards.map(
-                                                ({
-                                                    id,
-                                                    hash,
-                                                    slug,
-                                                    ...view
-                                                }) => (
-                                                    <div
-                                                        key={id}
-                                                        className="w-min max-w-min my-[10px]"
-                                                    >
-                                                        <BoardPreview
-                                                            key={id}
-                                                            previewImg={
-                                                                view.icon || ""
-                                                            }
-                                                            title={view.name}
-                                                            padding="none"
-                                                            pinned={
-                                                                view.is_subscribed
-                                                            }
-                                                            active={
-                                                                selectedViewId ===
-                                                                id
-                                                            }
-                                                            isAuthenticated={
-                                                                isAuthenticated
-                                                            }
-                                                            onClick={() => {
-                                                                onSelectView(
-                                                                    id
-                                                                );
-                                                            }}
-                                                            onRemove={() => {
-                                                                onRemoveView({
-                                                                    id,
-                                                                    isReadOnly:
-                                                                        false,
-                                                                    hash,
-                                                                    slug,
-                                                                    isWalletView:
-                                                                        view.is_smart,
-                                                                });
-                                                            }}
-                                                            onEdit={() =>
-                                                                onEditView(
-                                                                    id,
-                                                                    hash
-                                                                )
-                                                            }
-                                                        />
-                                                    </div>
-                                                )
-                                            )
+                                            customBoards.map((view) => (
+                                                <BoardPreviewWrap
+                                                    key={view.id}
+                                                    view={view}
+                                                    selectedViewId={
+                                                        selectedViewId
+                                                    }
+                                                    isAuthenticated={
+                                                        isAuthenticated
+                                                    }
+                                                    isCustomBoard
+                                                    onSelectView={onSelectView}
+                                                    onRemoveView={onRemoveView}
+                                                    onEditView={onEditView}
+                                                />
+                                            ))
                                         )}
                                         <div className="spacer py-2 w-full" />
                                     </div>
@@ -298,57 +322,27 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                             </div>
                             <div className="h-[234px]">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full">
+                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full gap-5 mt-[10px]">
                                         {allBoards.length === 0 ? (
                                             <p className="ml-[15px] font-normal text-primary">
                                                 No boards found in this
                                                 category.
                                             </p>
                                         ) : (
-                                            allBoards.map(({ id, ...view }) => (
-                                                <div
-                                                    key={id}
-                                                    className="w-min max-w-min m-[10px]"
-                                                >
-                                                    <BoardPreview
-                                                        key={id}
-                                                        previewImg={
-                                                            view.icon || ""
-                                                        }
-                                                        title={
-                                                            validateEthAddr(
-                                                                view.name
-                                                            )
-                                                                ? truncateWithEllipsis(
-                                                                      view.name,
-                                                                      10
-                                                                  )
-                                                                : view.name
-                                                        }
-                                                        description={
-                                                            view.description
-                                                        }
-                                                        pinned={
-                                                            view.is_subscribed
-                                                        }
-                                                        active={
-                                                            selectedViewId ===
-                                                            id
-                                                        }
-                                                        isAuthenticated={
-                                                            isAuthenticated
-                                                        }
-                                                        onClick={() => {
-                                                            onSelectView(id);
-                                                        }}
-                                                        onPin={() => {
-                                                            onBoardPin(
-                                                                view,
-                                                                id
-                                                            );
-                                                        }}
-                                                    />
-                                                </div>
+                                            allBoards.map((view) => (
+                                                <BoardPreviewWrap
+                                                    key={view.id}
+                                                    view={view}
+                                                    selectedViewId={
+                                                        selectedViewId
+                                                    }
+                                                    isAuthenticated={
+                                                        isAuthenticated
+                                                    }
+                                                    isCustomBoard
+                                                    onSelectView={onSelectView}
+                                                    onBoardPin={onBoardPin}
+                                                />
                                             ))
                                         )}
                                         <div className="spacer py-2 w-full" />

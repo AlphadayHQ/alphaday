@@ -24,7 +24,7 @@ const getViewTabButtonChild = (
     walletViewName: string | undefined
 ) => {
     if (walletViewState === EWalletViewState.Fetching) {
-        return <Spinner className="spinner" />;
+        return <Spinner className="w-3 h-3" />;
     }
     if (walletViewState === EWalletViewState.Ready && walletViewName) {
         return (
