@@ -144,7 +144,8 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                                         media.original.mimeType
                                     ) &&
                                     !media.original.url.includes("livepeer") && // TODO(elcharitas): Add support for livepeer videos
-                                    !media.original.url.includes("m3u8"); // TODO(elcharitas): Add support for m3u8 videos
+                                    !media.original.url.includes("m3u8") && // TODO(elcharitas): Add support for m3u8 videos
+                                    !media.original.url.includes("ipfs"); // TODO(elcharitas): Add support for m3u8 videos
                                 const isAudio = ALLOWED_AUDIO_TYPES.includes(
                                     media.original.mimeType
                                 );
