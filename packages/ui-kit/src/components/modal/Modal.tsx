@@ -1,5 +1,6 @@
-import { FC, forwardRef } from "react";
-import { IonModal, IonBackdrop } from "@ionic/react";
+import { FC, Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+
 import { twMerge } from "tailwind-merge";
 
 export interface IProps {
@@ -17,10 +18,6 @@ export interface IModal extends IProps {
      */
     showModal?: boolean;
     /**
-     * Id of element to trigger the modal to open.
-     */
-    triggerId?: string;
-    /**
      * Modal Sizes
      */
     size?: "max" | "xl" | "lg" | "md" | "sm";
@@ -28,14 +25,6 @@ export interface IModal extends IProps {
      * Callback function for close modal
      */
     onClose?: () => void;
-    /**
-     * Hide modal backdrop when modal is open.
-     */
-    hideBackdrop?: boolean;
-    /**
-     * Show a darker backdrop
-     */
-    darkerBackdrop?: boolean;
 }
 /**
  * This is a modal component uses the triggerId to open the modal.
@@ -48,61 +37,70 @@ export interface IModal extends IProps {
  * IonBackdrop enables the click outside to close functionality.
  */
 
-export const Modal = forwardRef<
-    HTMLIonModalElement | null,
-    RequireAtLeastOne<IModal, "triggerId" | "showModal">
->(
-    (
-        {
-            className,
-            children,
-            onClose,
-            triggerId,
-            showModal,
-            hideBackdrop,
-            darkerBackdrop = true,
-            size,
-        },
-        ref
-    ) => {
-        const maxWidth = {
-            max: "1600px",
-            xl: "1050px",
-            lg: "800px",
-            md: "650px",
-            sm: "450px",
-        }[size || "xl"];
+export const Modal: FC<IModal> = ({
+    onClose,
+    size,
+    className,
+    children,
+    showModal,
+}) => {
+    const maxWidth = {
+        max: "1600px",
+        xl: "1050px",
+        lg: "800px",
+        md: "650px",
+        sm: "450px",
+    }[size || "xl"];
 
-        return (
-            <IonModal
-                ref={ref}
-                trigger={triggerId}
-                isOpen={showModal}
-                onWillDismiss={() => onClose?.()} // for ion-modal esc key and backdrop click
-                className={twMerge(
-                    "h-screen [&_.ion-delegate-host]:h-screen outline-none relative flex w-screen justify-center items-center [&>div]:overflow-y-scroll [&>div]:overflow-x-scroll [&>div]:h-screen [&>div]:flex [&>div]:w-screen [&>div]:justify-start [&>div]:items-center",
-                    darkerBackdrop
-                        ? "bg-backgroundVariant1400"
-                        : "bg-backgroundVariant1300",
-                    className
-                )}
-            >
-                <div
-                    style={{
-                        boxShadow: "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
-                        maxWidth: `min(calc(100% - 20px), ${maxWidth})`,
-                    }}
-                    className="bg-backgroundVariant200 min-w-min m-auto text-primary border-2 border-solid border-background rounded-[5px] w-full"
+    const handleClose = (val: boolean) => {
+        if (!val) onClose?.();
+    };
+    return (
+        <Transition.Root show={showModal} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={handleClose}>
+                <Transition.Child
+                    as={Fragment}
+                    enter="ease-out duration-300"
+                    enterFrom="opacity-0"
+                    enterTo="opacity-100"
+                    leave="ease-in duration-200"
+                    leaveFrom="opacity-100"
+                    leaveTo="opacity-0"
                 >
-                    {children}
+                    <div className="fixed inset-0 bg-opacity-75 transition-opacity bg-backgroundVariant1400" />
+                </Transition.Child>
+
+                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                    <div className="flex min-h-full items-center justify-center">
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                            enterTo="opacity-100 translate-y-0 sm:scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                        >
+                            <Dialog.Panel
+                                style={{
+                                    boxShadow:
+                                        "0px 0px 0px 1px rgba(121, 131, 162, 0.2)",
+                                    maxWidth: `min(calc(100% - 20px), ${maxWidth})`,
+                                }}
+                                className={twMerge(
+                                    "flex bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full",
+                                    className
+                                )}
+                            >
+                                <div className="w-full">{children}</div>
+                            </Dialog.Panel>
+                        </Transition.Child>
+                    </div>
                 </div>
-                {!hideBackdrop && (
-                    <IonBackdrop className="h-full w-full absolute z-[-1]" />
-                )}
-            </IonModal>
-        );
-    }
-);
+            </Dialog>
+        </Transition.Root>
+    );
+};
 
 export const ModalHeader: FC<IProps> = ({
     className,
@@ -128,7 +126,10 @@ export const ModalTitle: FC<IProps> = ({
     ...restProps
 }) => {
     return (
-        <h6 className={twMerge(className, "mb-0 leading-6")} {...restProps}>
+        <h6
+            className={twMerge(className, "mb-0 leading-6 text-white")}
+            {...restProps}
+        >
             {children}
         </h6>
     );

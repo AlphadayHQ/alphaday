@@ -1,6 +1,5 @@
 import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
 import { useLayer } from "react-laag";
-import Skeleton from "react-loading-skeleton";
 import { twMerge } from "tailwind-merge";
 import { Arrow } from "./src/components/arrow/Arrow";
 import {
@@ -70,6 +69,7 @@ import { ScrollBar } from "./src/components/scrollbar/ScrollBar";
 import { SearchBar } from "./src/components/search/Searchbar";
 import { ChannelSkeleton } from "./src/components/skeletons/ChannelSkeleton";
 import { ItemSkeleton } from "./src/components/skeletons/ItemSkeleton";
+import { Skeleton } from "./src/components/skeletons/Skeleton";
 import { Spinner } from "./src/components/spinner/Spinner";
 import { Switch } from "./src/components/switch/Switch";
 import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
