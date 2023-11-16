@@ -35,7 +35,7 @@ const getViewTabButtonChild = (
             </span>
         );
     }
-    return <WandSVG className="wand" />;
+    return <WandSVG className="text-secondaryOrange" />;
 };
 
 const WalletViewTabButton: FC<IWalletViewTabButton> = ({
