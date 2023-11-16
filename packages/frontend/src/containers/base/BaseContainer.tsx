@@ -127,11 +127,11 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             showFullSize === false
         ) {
             setShowMobileDialog(true);
+            return;
         }
         // expand regular size module since full-size modal is already open
-        if (onToggleShowFullSize != null) {
-            if (showFullSize) onToggleShowFullSize("close");
-            else onToggleShowFullSize("open");
+        if (onToggleShowFullSize) {
+            onToggleShowFullSize(showFullSize ? "close" : "open");
         }
     }, [onToggleShowFullSize, showFullSize, width]);
 
@@ -289,6 +289,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                 showDialog={showMobileDialog}
                 onSave={handleShowDialog}
                 onClose={handleShowDialog}
+                size="sm"
             >
                 <p>Switch to Desktop to get the best experience of {title}</p>
             </Dialog>
