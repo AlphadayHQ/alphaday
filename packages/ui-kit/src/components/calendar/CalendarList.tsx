@@ -31,7 +31,7 @@ const NoEvents: FC<{ msg: string }> = ({ msg }) => {
 const getValidCalendarDateRange = () => {
     const today = new Date();
     const todayPlus2Years = new Date(
-        // A large because this restricts month navigation
+        // A large number because this restricts month navigation
         today.getFullYear() + 2,
         today.getMonth(),
         0
