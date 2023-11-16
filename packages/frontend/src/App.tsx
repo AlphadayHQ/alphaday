@@ -122,7 +122,7 @@ const App: React.FC = () => {
                         "var(--colors-background-variant1600, var(--alpha-dark-300))",
                 }}
             />
-            <ToastContainer options={{ duration: UI.TOAST_DURATION }} />
+            <ToastContainer duration={CONFIG.UI.TOAST_DURATION} />
         </IonApp>
     );
 };

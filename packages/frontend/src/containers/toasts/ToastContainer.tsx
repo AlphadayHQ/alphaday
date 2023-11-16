@@ -1,15 +1,37 @@
 import { FC } from "react";
-import { ToastOptions, useToaster } from "react-hot-toast";
-import ToastWrapper from "src/components/toasts/ToastWrapper";
+import { Button } from "@alphaday/ui-kit";
+import { ToastOptions, ToastBar, Toaster, toast } from "react-hot-toast";
 
-interface IToastContainer {
-    options: ToastOptions;
-}
-
-const ToastContainer: FC<IToastContainer> = ({ options }) => {
-    const { toasts, handlers } = useToaster(options);
+const ToastContainer: FC<ToastOptions> = (options) => {
     return (
-        <ToastWrapper toasts={toasts} handlers={handlers} options={options} />
+        <Toaster position="top-right" toastOptions={options}>
+            {(t) => (
+                <ToastBar
+                    toast={t}
+                    style={{
+                        background:
+                            "var(--colors-secondary-orange, var(--alpha-orange))",
+                        color: "var(--colors-text-primary, var(--alpha-white))",
+                    }}
+                >
+                    {({ icon, message }) => (
+                        <>
+                            {icon}
+                            {message}
+                            {t.type !== "loading" && (
+                                <Button
+                                    onClick={() => toast.dismiss(t.id)}
+                                    variant="extraSmall"
+                                    className="bg-transparent hover:bg-transparent border-0 text-white"
+                                >
+                                    X
+                                </Button>
+                            )}
+                        </>
+                    )}
+                </ToastBar>
+            )}
+        </Toaster>
     );
 };
 
