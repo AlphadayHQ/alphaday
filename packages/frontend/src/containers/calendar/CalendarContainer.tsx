@@ -310,6 +310,7 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
             widgetHeight={widgetHeight}
             allowedCategories={allowedCategories}
             isLoadingEvents={isLoadingEvents}
+            isFetchingEvents={isFetchingEvents}
         />
     );
 };

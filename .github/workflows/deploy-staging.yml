@@ -1,20 +1,19 @@
-name: Deploy to epsilonday (dev)
+name: Deploy to gammaday (staging)
 
 on:
-    # deploy runs when merging on dev
-    # pull_request:
-    #     types:
-    #         - closed
-    #     branches:
-    #         - dev
+    # deploy runs on push of new tags and not branches
+    push:
+        branches:
+            - "!*"
+        tags:
+            - "v*"
     # and can be triggered manually also
     workflow_dispatch:
-
 env:
-    ENVIRONMENT: dev
+    ENVIRONMENT: staging
 
     VITE_LOGLEVEL: 0
-    VITE_API_BASE_URL: https://api.zettaday.com/
+    VITE_API_BASE_URL: https://api.gammaday.com/
     VITE_X_APP_ID: sBnL0RkWkM
     VITE_X_APP_SECRET: 21gPAwU3uOUisMJJFJjaotbDxCmvCHKMh76Xlvb8XK2RkkvZHhtSfcUfoz6QiFx8zhZf31vxvKAFD7pkdmbjHiKwoVuS2iDOLjvC
 
@@ -28,7 +27,7 @@ env:
     VITE_SWAP_FEE: 10
     VITE_SWAP_FEE_ADDRESS: "0xeb2eCdDF7db14D4Ebca0848F2a879162eb8A43F1"
 
-    VITE_GA_MEASUREMENT_ID: ""
+    VITE_GA_MEASUREMENT_ID: G-98K3VCHZTK
 
     VITE_FIRE_PROJECT_ID: gammaday-staging
     VITE_FIRE_MEASUREMENT_ID: G-J6KTFT40XV
@@ -42,7 +41,6 @@ concurrency:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) && (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true) }} # runs only if triggered manually or via merged pr
         steps:
             - uses: actions/checkout@v2
 
@@ -62,7 +60,7 @@ jobs:
             - name: build
               run: yarn build:deploy
               env:
-                  VITE_ENVIRONMENT: ${{ env.ENVIRONMENT }}
+                  ENVIRONMENT: ${{ env.ENVIRONMENT }}
 
                   VITE_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
                   VITE_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
@@ -71,11 +69,11 @@ jobs:
 
                   VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.DEV__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
 
-                  VITE_FIRE_API_KEY: ${{ secrets.DEV__REACT_APP_FIRE_API_KEY }}
-                  VITE_FIRE_AUTH_DOMAIN: ${{ secrets.DEV__REACT_APP_FIRE_AUTH_DOMAIN }}
-                  VITE_FIRE_STORAGE_BUCKET: ${{ secrets.DEV__REACT_APP_FIRE_STORAGE_BUCKET }}
-                  VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.DEV__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
-                  VITE_FIRE_APP_ID: ${{ secrets.DEV__REACT_APP_FIRE_APP_ID }}
+                  VITE_FIRE_API_KEY: ${{ secrets.STAGING__REACT_APP_FIRE_API_KEY }}
+                  VITE_FIRE_AUTH_DOMAIN: ${{ secrets.STAGING__REACT_APP_FIRE_AUTH_DOMAIN }}
+                  VITE_FIRE_STORAGE_BUCKET: ${{ secrets.STAGING__REACT_APP_FIRE_STORAGE_BUCKET }}
+                  VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.STAGING__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
+                  VITE_FIRE_APP_ID: ${{ secrets.STAGING__REACT_APP_FIRE_APP_ID }}
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
@@ -84,15 +82,24 @@ jobs:
             - name: deploy
               uses: kefranabg/s3-sync-action@master # https://github.com/kefranabg/s3-sync-action
               with:
-                  args: --acl public-read --follow-symlinks
+                  args: --acl public-read --follow-symlinks --delete
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
 
-                  AWS_S3_BUCKET: ${{ secrets.DEV__FRONTEND__S3_BUCKET }}
-                  DISTRIBUTION_ID: ${{ secrets.DEV__FRONTEND__DISTRIBUTION_ID }}
+                  AWS_S3_BUCKET: ${{ secrets.STAGING__FRONTEND__S3_BUCKET }}
+                  DISTRIBUTION_ID: ${{ secrets.STAGING__FRONTEND__DISTRIBUTION_ID }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
+
+    set-cache-control:
+        uses: ./.github/workflows/set-cache-control.yml
+        needs: deploy
+        if: needs.deploy.result == 'success'
+        with:
+            ENVIRONMENT: gamma
+            MAX_AGE: 86400
+        secrets: inherit
 
     # Get message VARs and Notify team through discord of deployment
     notify:

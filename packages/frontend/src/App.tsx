@@ -6,6 +6,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { Web3Modal } from "@web3modal/react";
 import { Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
+import ToastContainer from "src/containers/toasts/ToastContainer";
 import {
     useAppInit,
     useGlobalHooks,
@@ -96,6 +97,7 @@ const App: React.FC = () => {
                     title="Cookie Error"
                     onClose={goToLandingPage}
                     errorMessage="Cookies must be enabled to use Alphaday."
+                    size="sm"
                 />
             </IonApp>
         );
@@ -120,6 +122,10 @@ const App: React.FC = () => {
                     "--w3m-overlay-background-color":
                         "var(--colors-background-variant1600, var(--alpha-dark-300))",
                 }}
+            />
+            <ToastContainer
+                duration={CONFIG.UI.TOAST_DURATION}
+                className="fontGroup-supportBold"
             />
         </IonApp>
     );

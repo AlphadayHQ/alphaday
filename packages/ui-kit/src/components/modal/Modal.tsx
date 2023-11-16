@@ -110,7 +110,7 @@ export const ModalHeader: FC<IProps> = ({
     return (
         <div
             className={twMerge(
-                "flex items-start justify-between rounded-t-[calc(0.3rem-1px)] p-4",
+                "flex items-start justify-between rounded-t-[calc(0.3rem-1px)] px-4 py-3",
                 className
             )}
             {...restProps}
