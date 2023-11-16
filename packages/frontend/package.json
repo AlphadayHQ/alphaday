@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "prepare": "export VITE_COMMIT=$(git rev-parse --short HEAD)",
+    "dev": "VITE_COMMIT=$(git rev-parse --short HEAD) vite",
+    "build": "VITE_COMMIT=$(git rev-parse --short HEAD) vite build",
     "build:apk": "ionic capacitor build android",
     "platform:add": "ionic capacitor add",
     "preview": "vite preview",
