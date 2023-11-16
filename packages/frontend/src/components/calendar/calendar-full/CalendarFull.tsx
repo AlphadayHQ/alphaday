@@ -23,7 +23,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
     showAllFilters,
     widgetHash,
     allowedCategories,
-    isLoadingEvents,
+    isFetchingEvents,
 }) => {
     const fullCalendarWrapRef = useRef<HTMLDivElement>(null);
     return (
@@ -76,7 +76,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                     setCatFilters={setCatFilters}
                     widgetHash={widgetHash}
                     allowedCategories={allowedCategories}
-                    isLoadingEvents={isLoadingEvents}
+                    isFetchingEvents={isFetchingEvents}
                 />
             </div>
             <div

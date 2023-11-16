@@ -97,6 +97,7 @@ const App: React.FC = () => {
                     title="Cookie Error"
                     onClose={goToLandingPage}
                     errorMessage="Cookies must be enabled to use Alphaday."
+                    size="sm"
                 />
             </IonApp>
         );
