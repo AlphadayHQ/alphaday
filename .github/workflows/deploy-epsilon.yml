@@ -1,12 +1,12 @@
 name: Deploy to epsilonday (dev)
 
 on:
-    # deploy runs when merging on dev
-    # pull_request:
-    #     types:
-    #         - closed
-    #     branches:
-    #         - dev
+    # # deploy runs when merging on dev
+    pull_request:
+        types:
+            - closed
+        branches:
+            - dev
     # and can be triggered manually also
     workflow_dispatch:
 
@@ -42,7 +42,7 @@ concurrency:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) && (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true) }} # runs only if triggered manually or via merged pr
+        if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) && (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true) }} # run only if triggered manually or via merged pr
         steps:
             - uses: actions/checkout@v2
 
@@ -89,8 +89,8 @@ jobs:
                   AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
 
-                  AWS_S3_BUCKET: ${{ secrets.DEV__FRONTEND__S3_BUCKET }}
-                  DISTRIBUTION_ID: ${{ secrets.DEV__FRONTEND__DISTRIBUTION_ID }}
+                  AWS_S3_BUCKET: ${{ secrets.DEV__FRONTENDV2__S3_BUCKET }}
+                  DISTRIBUTION_ID: ${{ secrets.DEV__FRONTENDV2__DISTRIBUTION_ID }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
 
@@ -109,14 +109,10 @@ jobs:
             - name: Get Repo Name
               run: echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 
-            - name: "Get Latest Tag"
-              id: previoustag
-              uses: "WyriHaximus/github-action-get-previous-tag@v1"
-
               # Notify Discord
             - name: Discord notification
               env:
                   DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK__OPS_CHANNEL }}
               uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
               with:
-                  args: "${{ env.REPOSITORY_NAME }}-${{ steps.previoustag.outputs.tag }} (${{ github.event.pull_request.title }}) has been deployed on ${{ env.ENVIRONMENT }}."
+                  args: "${{ env.REPOSITORY_NAME }} has been deployed on app.epsilon.com"

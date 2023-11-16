@@ -1,0 +1,60 @@
+name: Set Cache Control
+
+on:
+    workflow_dispatch:
+        inputs:
+            MAX_AGE:
+                required: true
+                type: number
+            ENVIRONMENT:
+                description: "Environment to set the cache control header of index.html"
+                required: true
+                default: "zetta"
+                type: choice
+                options:
+                    - "zetta"
+                    - "gamma"
+                    - "alpha"
+
+    workflow_call:
+        inputs:
+            MAX_AGE:
+                required: true
+                type: number
+            ENVIRONMENT:
+                required: true
+                default: "zetta"
+                type: string
+
+jobs:
+    set-cache-control:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Sets env vars for production
+              run: |
+                  echo "BUCKET=${{ secrets.PROD__FRONTEND__S3_BUCKET }}" >> $GITHUB_ENV
+              if: contains(inputs.ENVIRONMENT, 'alpha')
+
+            - name: Sets env vars for staging
+              run: |
+                  echo "BUCKET=${{ secrets.STAGING__FRONTEND__S3_BUCKET }}" >> $GITHUB_ENV
+              if: contains(inputs.ENVIRONMENT, 'gamma')
+
+            - name: Sets env vars for development
+              run: |
+                  echo "BUCKET=${{ secrets.DEV__FRONTEND__S3_BUCKET }}" >> $GITHUB_ENV
+              if: contains(inputs.ENVIRONMENT, 'zetta')
+
+            - uses: keithweaver/aws-s3-github-action@v1.0.0
+              with:
+                  command: cp
+                  source: ${{ env.AWS_S3_PATH }}
+                  destination: ${{ env.AWS_S3_PATH }}
+                  flags: "--cache-control max-age=${{ inputs.MAX_AGE }}"
+                  aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
+                  aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+                  aws_region: us-west-1
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
+                  AWS_S3_PATH: s3://${{ env.BUCKET }}/index.html

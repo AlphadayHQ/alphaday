@@ -1,20 +1,12 @@
-name: Deploy to epsilonday (dev)
+name: Deploy to alphaday (production)
 
 on:
-    # deploy runs when merging on dev
-    # pull_request:
-    #     types:
-    #         - closed
-    #     branches:
-    #         - dev
-    # and can be triggered manually also
     workflow_dispatch:
-
 env:
-    ENVIRONMENT: dev
+    ENVIRONMENT: production
 
-    VITE_LOGLEVEL: 0
-    VITE_API_BASE_URL: https://api.zettaday.com/
+    VITE_LOGLEVEL: 2
+    VITE_API_BASE_URL: https://api.alphaday.com/
     VITE_X_APP_ID: sBnL0RkWkM
     VITE_X_APP_SECRET: 21gPAwU3uOUisMJJFJjaotbDxCmvCHKMh76Xlvb8XK2RkkvZHhtSfcUfoz6QiFx8zhZf31vxvKAFD7pkdmbjHiKwoVuS2iDOLjvC
 
@@ -24,16 +16,15 @@ env:
     VITE_DEFIPULSE_BASE_URL: https://data-api.defipulse.com/api/v1/
     VITE_ETHERSCAN_BASE_URL: https://api.etherscan.io/api
     VITE_ULTRA_SOUND_MONEY_BASE_URL: https://api.ultrasound.money/
+    VITE_ALPHADAY_IPFS_GATEWAY: https://alphaday.infura-ipfs.io/ipfs/
 
     VITE_SWAP_FEE: 10
     VITE_SWAP_FEE_ADDRESS: "0xeb2eCdDF7db14D4Ebca0848F2a879162eb8A43F1"
 
-    VITE_GA_MEASUREMENT_ID: ""
+    VITE_GA_MEASUREMENT_ID: G-8G37CL2HMF
 
-    VITE_FIRE_PROJECT_ID: gammaday-staging
-    VITE_FIRE_MEASUREMENT_ID: G-J6KTFT40XV
-
-    VITE_ALPHADAY_IPFS_GATEWAY: https://alphaday.infura-ipfs.io/ipfs/
+    VITE_FIRE_PROJECT_ID: alphaday
+    VITE_FIRE_MEASUREMENT_ID: G-D024QSX252
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -42,7 +33,6 @@ concurrency:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) && (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true) }} # runs only if triggered manually or via merged pr
         steps:
             - uses: actions/checkout@v2
 
@@ -62,20 +52,20 @@ jobs:
             - name: build
               run: yarn build:deploy
               env:
-                  VITE_ENVIRONMENT: ${{ env.ENVIRONMENT }}
+                  ENVIRONMENT: ${{ env.ENVIRONMENT }}
 
-                  VITE_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
-                  VITE_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
-                  VITE_ETHPLORER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHPLORER }}
-                  VITE_ZAPPER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ZAPPER }}
+                  VITE_DEFIPULSE_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_DEFIPULSE }}
+                  VITE_ETHERSCAN_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ETHERSCAN }}
+                  VITE_ETHPLORER_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ETHPLORER }}
+                  VITE_ZAPPER_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ZAPPER }}
 
-                  VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.DEV__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
+                  VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.PROD__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
 
-                  VITE_FIRE_API_KEY: ${{ secrets.DEV__REACT_APP_FIRE_API_KEY }}
-                  VITE_FIRE_AUTH_DOMAIN: ${{ secrets.DEV__REACT_APP_FIRE_AUTH_DOMAIN }}
-                  VITE_FIRE_STORAGE_BUCKET: ${{ secrets.DEV__REACT_APP_FIRE_STORAGE_BUCKET }}
-                  VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.DEV__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
-                  VITE_FIRE_APP_ID: ${{ secrets.DEV__REACT_APP_FIRE_APP_ID }}
+                  VITE_FIRE_API_KEY: ${{ secrets.PROD__REACT_APP_FIRE_API_KEY }}
+                  VITE_FIRE_AUTH_DOMAIN: ${{ secrets.PROD__REACT_APP_FIRE_AUTH_DOMAIN }}
+                  VITE_FIRE_STORAGE_BUCKET: ${{ secrets.PROD__REACT_APP_FIRE_STORAGE_BUCKET }}
+                  VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.PROD__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
+                  VITE_FIRE_APP_ID: ${{ secrets.PROD__REACT_APP_FIRE_APP_ID }}
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
@@ -89,10 +79,19 @@ jobs:
                   AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
 
-                  AWS_S3_BUCKET: ${{ secrets.DEV__FRONTEND__S3_BUCKET }}
-                  DISTRIBUTION_ID: ${{ secrets.DEV__FRONTEND__DISTRIBUTION_ID }}
+                  AWS_S3_BUCKET: ${{ secrets.PROD__FRONTEND__S3_BUCKET }}
+                  DISTRIBUTION_ID: ${{ secrets.PROD__FRONTEND__DISTRIBUTION_ID }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
+
+    set-cache-control:
+        uses: ./.github/workflows/set-cache-control.yml
+        needs: deploy
+        if: needs.deploy.result == 'success'
+        with:
+            ENVIRONMENT: alpha
+            MAX_AGE: 86400
+        secrets: inherit
 
     # Get message VARs and Notify team through discord of deployment
     notify:
