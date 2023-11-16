@@ -6,6 +6,7 @@ import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import moment from "moment";
+import { Spinner } from "../spinner/Spinner";
 import {
     ICalendarBaseProps,
     TEvent,
@@ -47,6 +48,7 @@ interface ICalendarList extends ICalendarBaseProps {
         showFullSize: boolean | undefined
     ) => void;
     noEventsMsg: string;
+    isFetchingEvents: boolean;
     getEventCategoryByColor: (
         color: string | undefined,
         options: TEventCategory[]
@@ -64,6 +66,7 @@ export const CalendarList: FC<ICalendarList> = ({
     eventClickHandler,
     handleHeaderTooltips,
     noEventsMsg,
+    isFetchingEvents,
     getEventCategoryByColor,
 }) => {
     const calendarRef = useRef<FullCalendar>(null);
@@ -260,6 +263,14 @@ export const CalendarList: FC<ICalendarList> = ({
             sibling?.classList.remove("event-hover-highlight");
         });
     });
+
+    if (isFetchingEvents) {
+        return (
+            <div className="w-full h-full flex justify-center items-center">
+                <Spinner />
+            </div>
+        );
+    }
 
     return (
         <div className={`${showFullSize && "full-size"} calendar-list`}>
