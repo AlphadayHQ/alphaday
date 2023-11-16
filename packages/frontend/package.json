@@ -79,7 +79,10 @@
     "cypress": "12.7.0",
     "happy-dom": "10.5.2",
     "react-test-renderer": "18.2.0",
+    "sharp": "0.32.6",
+    "svgo": "3.0.3",
     "terser": "5.18.2",
+    "vite-plugin-image-optimizer": "1.1.7",
     "vite-plugin-svgr": "3.2.0"
   }
 }
