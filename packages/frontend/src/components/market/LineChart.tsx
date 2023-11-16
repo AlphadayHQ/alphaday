@@ -4,6 +4,7 @@ import moment from "moment";
 import { TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
+import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
 
 type IProps = {
@@ -160,12 +161,9 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 formatter: undefined,
                 title: {
                     formatter: (val: string) => {
-                        return `
-                        <span
-                            style="color:${String(themeColors.white)};"
-                        >
-                            ${val}:
-                        </span>`;
+                        return renderToString(
+                            <span className="text-white">${val}:</span>
+                        );
                     },
                 },
             },
@@ -175,26 +173,25 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 dataPointIndex,
                 w,
             }: TCustomTooltip) => {
-                return `
-                <div
-                    class="price-tooltip"
-                >
-                <span class="price">
-                    ${String(w.globals.seriesNames[0])}: ${String(
-                        formatNumber({
-                            value: series[seriesIndex][dataPointIndex],
-                            style: ENumberStyle.Currency,
-                            currency: "USD",
-                        }).value
-                    )}
-                </span>
-                <span class="date">
-                    ${moment(data[dataPointIndex][0]).format(
-                        "YYYY-MM-DD  HH:mm"
-                    )}
-                </span>
-                </div>
-                `;
+                return renderToString(
+                    <div className="price-tooltip">
+                        <span className="price">
+                            {w.globals.seriesNames[0]}: {}
+                            {
+                                formatNumber({
+                                    value: series[seriesIndex][dataPointIndex],
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
+                        </span>
+                        <span className="date">
+                            {moment(data[dataPointIndex][0]).format(
+                                "YYYY-MM-DD  HH:mm"
+                            )}
+                        </span>
+                    </div>
+                );
             },
         },
         responsive: [
