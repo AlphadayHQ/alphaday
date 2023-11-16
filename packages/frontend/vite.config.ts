@@ -38,4 +38,9 @@ export default defineConfig({
             ),
         },
     },
+    define: {
+        "import.meta.env.VITE_VERSION": JSON.stringify(
+            process.env.npm_package_version
+        ),
+    },
 });
