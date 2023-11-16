@@ -54,18 +54,18 @@ jobs:
               env:
                   ENVIRONMENT: ${{ env.ENVIRONMENT }}
 
-                  VITE_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
-                  VITE_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
-                  VITE_ETHPLORER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHPLORER }}
-                  VITE_ZAPPER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ZAPPER }}
+                  VITE_DEFIPULSE_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_DEFIPULSE }}
+                  VITE_ETHERSCAN_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ETHERSCAN }}
+                  VITE_ETHPLORER_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ETHPLORER }}
+                  VITE_ZAPPER_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ZAPPER }}
 
-                  VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.DEV__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
+                  VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.PROD__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
 
-                  VITE_FIRE_API_KEY: ${{ secrets.STAGING__REACT_APP_FIRE_API_KEY }}
-                  VITE_FIRE_AUTH_DOMAIN: ${{ secrets.STAGING__REACT_APP_FIRE_AUTH_DOMAIN }}
-                  VITE_FIRE_STORAGE_BUCKET: ${{ secrets.STAGING__REACT_APP_FIRE_STORAGE_BUCKET }}
-                  VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.STAGING__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
-                  VITE_FIRE_APP_ID: ${{ secrets.STAGING__REACT_APP_FIRE_APP_ID }}
+                  VITE_FIRE_API_KEY: ${{ secrets.PROD__REACT_APP_FIRE_API_KEY }}
+                  VITE_FIRE_AUTH_DOMAIN: ${{ secrets.PROD__REACT_APP_FIRE_AUTH_DOMAIN }}
+                  VITE_FIRE_STORAGE_BUCKET: ${{ secrets.PROD__REACT_APP_FIRE_STORAGE_BUCKET }}
+                  VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.PROD__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
+                  VITE_FIRE_APP_ID: ${{ secrets.PROD__REACT_APP_FIRE_APP_ID }}
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
