@@ -68,6 +68,7 @@ const BoardPreviewWrap: FC<{
                     : view.name
             }
             padding="none"
+            pinned={view.is_subscribed}
             description={view.description}
             active={selectedViewId === view.id}
             isAuthenticated={isAuthenticated}

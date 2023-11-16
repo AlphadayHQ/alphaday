@@ -31,6 +31,7 @@ export const BoardPreview: FC<IPreview> = ({
     isAuthenticated,
     active,
     padding,
+    pinned,
     ...restProps
 }) => {
     const [pinHovered, setPinHovered] = useState(false);
@@ -130,8 +131,7 @@ export const BoardPreview: FC<IPreview> = ({
                             <div
                                 className={twMerge(
                                     "bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 hover:text-btnRingVariant100 hover:border-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border",
-                                    restProps.pinned &&
-                                        "border-btnRingVariant100",
+                                    pinned && "border-btnRingVariant100",
                                     !isAuthenticated && "cursor-not-allowed"
                                 )}
                                 role="button"
@@ -140,12 +140,12 @@ export const BoardPreview: FC<IPreview> = ({
                                 onMouseEnter={handlePinMouseEnter}
                                 onMouseLeave={handlePinMouseLeave}
                                 title={
-                                    isAuthenticated && restProps.pinned
+                                    isAuthenticated && pinned
                                         ? "Unpin this board from boards tab"
                                         : "Pin this board to boards tab"
                                 }
                             >
-                                {restProps.pinned || pinHovered ? (
+                                {pinned || pinHovered ? (
                                     <PinnedSVG />
                                 ) : (
                                     <PinSVG />
