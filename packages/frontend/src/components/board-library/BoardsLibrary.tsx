@@ -38,7 +38,7 @@ const BoardPreviewWrap: FC<{
     view: TRemoteUserViewPreview;
     selectedViewId: number | undefined;
     isAuthenticated: boolean;
-    isCustomBoard: boolean;
+    isCustomBoard?: boolean;
     onSelectView: (viewId: number) => void;
     onRemoveView?: ({
         id,
@@ -72,17 +72,18 @@ const BoardPreviewWrap: FC<{
             active={selectedViewId === view.id}
             isAuthenticated={isAuthenticated}
             onClick={() => onSelectView(view.id)}
-            onRemove={() => {
-                if (isCustomBoard) {
-                    onRemoveView?.({
-                        id: view.id,
-                        isReadOnly: false,
-                        hash: view.hash,
-                        slug: view.slug,
-                        isWalletView: view.is_smart,
-                    });
-                }
-            }}
+            onRemove={
+                isCustomBoard
+                    ? () =>
+                          onRemoveView?.({
+                              id: view.id,
+                              isReadOnly: false,
+                              hash: view.hash,
+                              slug: view.slug,
+                              isWalletView: view.is_smart,
+                          })
+                    : undefined
+            }
             onEdit={() => onEditView?.(view.id, view.hash)}
             onPin={
                 !isCustomBoard ? () => onBoardPin?.(view, view.id) : undefined
@@ -339,7 +340,6 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                     isAuthenticated={
                                                         isAuthenticated
                                                     }
-                                                    isCustomBoard
                                                     onSelectView={onSelectView}
                                                     onBoardPin={onBoardPin}
                                                 />
