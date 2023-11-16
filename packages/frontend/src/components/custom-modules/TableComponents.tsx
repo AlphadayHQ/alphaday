@@ -60,7 +60,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-1 flex-wrap mr-2.5 [&>p]:mb-0 break-all",
+                "flex flex-1 mr-2.5 [&>p]:mb-0",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
                 isHeader && "fontGroup-support",
@@ -70,11 +70,11 @@ export const TableCell: React.FC<ITableCellProps> = ({
             {...(href && { onClick: handleOnClick })}
         >
             {href && !isCompactMode && !hasRowLink && (
-                <LinkSVG className="w-2 h-2 mr-2" />
+                <LinkSVG className="shrink-0 w-2 h-2 mr-2" />
             )}
             {children}
             {href && isCompactMode && !hasRowLink && (
-                <LinkSVG className="w-2 h-2 ml-2 self-center" />
+                <LinkSVG className="shrink-0 w-2 h-2 ml-2 self-center" />
             )}
         </div>
     );
@@ -254,6 +254,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                                 justify="left"
                                 isHeader
                                 isCompactMode
+                                width={1}
                             >
                                 {column.title}
                             </TableCell>
@@ -262,6 +263,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                                 justify="left"
                                 href={href}
                                 isCompactMode
+                                width={2}
                             >
                                 {formattedValue?.field}
                             </TableCell>
