@@ -12,6 +12,7 @@ import {
     useSaveViewMutation,
 } from "src/api/services";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
+import * as userStore from "src/api/store/slices/user";
 import * as viewsStore from "src/api/store/slices/views";
 import { Logger } from "src/api/utils/logging";
 import {
@@ -53,6 +54,10 @@ export const useViewUpdater: () => void = () => {
     const [, { isLoading: isLoadingSaveView }] = useSaveViewMutation({
         fixedCacheKey: RTK_VIEW_CACHE_KEYS.SAVE_VIEW,
     });
+
+    const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
+    const [prevIsAuthenticated, setPrevIsAuthenticated] =
+        useState(isAuthenticated);
 
     useWalletView();
 
@@ -136,6 +141,24 @@ export const useViewUpdater: () => void = () => {
             resolvedView.currentData.name
         );
         addViewToCache(resolvedView.currentData);
+    }
+
+    /**
+     * Handle login/logout transitions
+     */
+    if (isAuthenticated !== prevIsAuthenticated) {
+        Logger.debug("useViewUpdater: isAuthenticated changed");
+        if (!isAuthenticated) {
+            /**
+             * If user has logged out and the current view is a custom view,
+             * we navigate to the root
+             */
+            // eslint-disable-next-line no-lonely-if
+            if (!selectedView?.data.is_system_view) {
+                navigate.push("/");
+            }
+        }
+        setPrevIsAuthenticated(isAuthenticated);
     }
 
     /**

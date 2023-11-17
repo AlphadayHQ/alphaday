@@ -1,6 +1,7 @@
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config";
 import { setWalletVerified, setAuthToken } from "../../store/slices/user";
+import { setSelectedViewId } from "../../store/slices/views";
 import { alphadayApi } from "../alphadayApi";
 import {
     TRemoteLogin,
@@ -84,6 +85,12 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "POST",
                 body: undefined,
             }),
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                const isLoggedOut = !!(await queryFulfilled);
+                if (isLoggedOut) {
+                    dispatch(setSelectedViewId(undefined));
+                }
+            },
             invalidatesTags: ["Views", "SubscribedViews"],
         }),
         connectWallet: builder.mutation<
