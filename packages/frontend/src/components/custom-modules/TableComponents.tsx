@@ -69,8 +69,13 @@ export const TableCell: React.FC<ITableCellProps> = ({
             {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
         >
-            {href && !hasRowLink && (
-                <LinkSVG className="shrink-0 self-center w-2 h-2 mr-2" />
+            {href !== undefined && !hasRowLink && (
+                <LinkSVG
+                    className={twMerge(
+                        "shrink-0 self-center w-2 h-2 mr-2",
+                        href === "" && "invisible"
+                    )}
+                />
             )}
             {children}
         </div>
@@ -141,10 +146,20 @@ export const TableRow: React.FC<ITableRowProps> = ({
                               format: column.format,
                           })
                         : undefined;
-                const href =
-                    column.uri_ref && rowData[column.uri_ref]
+                /**
+                 * When href is defined but we fail to retrrive the url,
+                 * we do href = "". This is because sometimes some entries
+                 * do not have a url (eg. a team table with a team member
+                 * that doesn't have a linkedin page). So when href="" we'll
+                 * hide the link icon
+                 */
+                // eslint-disable-next-line no-nested-ternary
+                const href = column.uri_ref
+                    ? rowData[column.uri_ref]
                         ? String(rowData[column.uri_ref])
-                        : undefined;
+                        : ""
+                    : undefined;
+
                 const imageUri =
                     column.image_uri_ref && rowData[column.image_uri_ref]
                         ? String(rowData[column.image_uri_ref])
