@@ -8,12 +8,10 @@ import {
     useAvailableViews,
 } from "src/api/hooks";
 import {
-    alphadayApi,
     useGetSubscribedViewsQuery,
     useSaveViewMutation,
 } from "src/api/services";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
-import * as userStore from "src/api/store/slices/user";
 import * as viewsStore from "src/api/store/slices/views";
 import { Logger } from "src/api/utils/logging";
 import {
@@ -55,10 +53,6 @@ export const useViewUpdater: () => void = () => {
     const [, { isLoading: isLoadingSaveView }] = useSaveViewMutation({
         fixedCacheKey: RTK_VIEW_CACHE_KEYS.SAVE_VIEW,
     });
-
-    const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const [prevIsAuthenticated, setPrevIsAuthenticated] =
-        useState(isAuthenticated);
 
     useWalletView();
 
@@ -142,37 +136,6 @@ export const useViewUpdater: () => void = () => {
             resolvedView.currentData.name
         );
         addViewToCache(resolvedView.currentData);
-    }
-
-    /**
-     * Handle loging/logout transitions
-     */
-    if (isAuthenticated !== prevIsAuthenticated) {
-        Logger.debug("useViewUpdater: isAuthenticated changed");
-        if (isAuthenticated) {
-            /**
-             * Invalidate view-related RTK-query tags upon login
-             *
-             * We can't just use RTK query tag invalidation to refetch views
-             * because right after wallet verification, when tag invalidation
-             * triggers a new getViews/getSubscribedViews request, the user token
-             * is still not updated in the store and the request does not include
-             * it in the header.
-             */
-            dispatch(
-                alphadayApi.util.invalidateTags(["Views", "SubscribedViews"])
-            );
-        } else {
-            /**
-             * If user has logged out and the current view is a custom view,
-             * we navigate to the root
-             */
-            // eslint-disable-next-line no-lonely-if
-            if (!selectedView?.data.is_system_view) {
-                navigate.push("/");
-            }
-        }
-        setPrevIsAuthenticated(isAuthenticated);
     }
 
     /**

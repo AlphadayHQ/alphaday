@@ -125,7 +125,22 @@ const userApi = alphadayApi.injectEndpoints({
                         })
                     );
                     dispatch(setWalletVerified());
-                    dispatch(alphadayApi.util.invalidateTags(["Account"]));
+                    /**
+                     * Invalidate view-related RTK-query tags upon login
+                     *
+                     * We can't just use RTK query tag invalidation to refetch views
+                     * because right after wallet verification, when tag invalidation
+                     * triggers a new getViews/getSubscribedViews request, the user token
+                     * is still not updated in the store and the request does not include
+                     * it in the header.
+                     */
+                    dispatch(
+                        alphadayApi.util.invalidateTags([
+                            "Account",
+                            "Views",
+                            "SubscribedViews",
+                        ])
+                    );
                     return;
                 }
                 Logger.error(
