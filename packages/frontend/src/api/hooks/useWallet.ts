@@ -39,7 +39,7 @@ interface IWallet {
     openWalletConnectionDialog: () => void;
     /**
      * @param method Specify whether to use wallet connect or metamask
-     * @param newAddress Necessar when called after an account change event
+     * @param newAddress Necessary when called after an account change event
      * @returns void
      */
     connectWallet: (
@@ -231,26 +231,6 @@ export const useWallet: () => IWallet = () => {
                             signature,
                         })
                             .unwrap()
-                            .then((verifyResp) => {
-                                const { token } = verifyResp;
-                                if (token) {
-                                    Logger.debug(
-                                        "useWallet:verifyWallet: success",
-                                        verifyResp
-                                    );
-                                    dispatch(
-                                        userStore.setAuthToken({
-                                            value: token,
-                                        })
-                                    );
-                                    dispatch(userStore.setWalletVerified());
-                                    return;
-                                }
-                                Logger.error(
-                                    "useWallet:verifyWallet: response does not include token",
-                                    verifyResp
-                                );
-                            })
                             .catch((rejected) => {
                                 handleError(
                                     rejected,

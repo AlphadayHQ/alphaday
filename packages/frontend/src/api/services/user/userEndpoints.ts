@@ -1,5 +1,6 @@
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config";
+import { setWalletVerified, setAuthToken } from "../../store/slices/user";
 import { alphadayApi } from "../alphadayApi";
 import {
     TRemoteLogin,
@@ -114,12 +115,31 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "POST",
                 body: request,
             }),
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                const verifyResp = (await queryFulfilled).data;
+                if (verifyResp.token) {
+                    Logger.debug("verifySignature: success", verifyResp);
+                    dispatch(
+                        setAuthToken({
+                            value: verifyResp.token,
+                        })
+                    );
+                    dispatch(setWalletVerified());
+                    dispatch(alphadayApi.util.invalidateTags(["Account"]));
+                    return;
+                }
+                Logger.error(
+                    "verifySignature: response does not include token",
+                    verifyResp
+                );
+            },
         }),
         getUserProfile: builder.query<
             TGetUserProfileResponse,
             TGetUserProfileRequest
         >({
             query: () => `${USER.BASE}${USER.PROFILE}`,
+            providesTags: ["Account"], // refetch if a user account is updated
         }),
     }),
     overrideExisting: false,
