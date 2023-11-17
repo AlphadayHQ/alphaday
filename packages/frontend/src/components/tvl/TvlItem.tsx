@@ -17,6 +17,12 @@ const COLUMN_WIDTHS = {
 const computePercentageChange: (a: number, b: number) => number = (a, b) =>
     ((b - a) * 100) / a;
 
+const handleOnClick = (projectData: TProjectData) => () => {
+    if (projectData.project.url) {
+        window.open(projectData.project.url, "_blank");
+    }
+};
+
 export const TvlItemsHeader: FC<{ projectType: TProjectType }> = ({
     projectType,
 }) => {
@@ -137,7 +143,12 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
      */
     if (twoRowCellLayout) {
         return (
-            <div className="flex flex-col flex-[1_auto] py-[10px] px-0">
+            <div
+                className="flex flex-col flex-[1_auto] py-[10px] px-0"
+                onClick={handleOnClick(projectData)}
+                role="button"
+                tabIndex={0}
+            >
                 <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px]">
                     <div className="flex flex-row flex-1 items-center">
                         <div className="flex flex-row mr-1 flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-start">
@@ -161,14 +172,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                             />
                         </div>
                         <div className="text-primary fontGroup-highlight">
-                            <a
-                                href={projectData.project.url}
-                                target="_blank"
-                                title={`Open ${projectData.project.name}`}
-                                rel="noreferrer"
-                            >
-                                {projectData.project.name}
-                            </a>
+                            {projectData.project.name}
                         </div>
                     </div>
                     <div className="flex flex-row flex-1 items-center justify-center">
@@ -255,7 +259,12 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
      * Standard table view
      */
     return (
-        <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px]">
+        <div
+            className="flex flex-row flex-[1_auto] py-[10px] px-[15px]"
+            onClick={handleOnClick(projectData)}
+            role="button"
+            tabIndex={0}
+        >
             <div
                 className="flex flex-row flex-1 items-center"
                 style={{
@@ -292,14 +301,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                     />
                 </div>
                 <div className="text-primary fontGroup-highlight ml-1.5">
-                    <a
-                        href={projectData.project.url}
-                        target="_blank"
-                        title={`Open ${projectData.project.name}`}
-                        rel="noreferrer"
-                    >
-                        {projectData.project.name}
-                    </a>
+                    {projectData.project.name}
                 </div>
             </div>
             <div
@@ -385,7 +387,12 @@ interface IChainlTvlProps {
  */
 export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
     return (
-        <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px]">
+        <div
+            className="flex flex-row flex-[1_auto] py-[10px] px-[15px]"
+            onClick={handleOnClick(projectData)}
+            role="button"
+            tabIndex={0}
+        >
             <div
                 className="flex flex-row flex-1 items-center"
                 style={{
