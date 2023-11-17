@@ -19,8 +19,9 @@ const Seo = () => {
     const routeInfo = CONFIG.ROUTING.REGEXPS.VIEW.exec(location.pathname) ?? [];
 
     if (
-        routeInfo[1] !== selectedView?.data.slug ||
-        routeInfo[1] !== selectedView?.data.hash
+        location.pathname.length > 1 && // not the root path
+        (routeInfo[1] !== selectedView?.data.slug ||
+            routeInfo[1] !== selectedView?.data.hash)
     ) {
         return (
             <SuperSEO
