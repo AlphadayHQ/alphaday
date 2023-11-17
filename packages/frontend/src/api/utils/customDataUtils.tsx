@@ -13,6 +13,7 @@ import { TCustomItem, TCustomSeries } from "src/api/types";
 import { getErrorMessage } from "src/api/utils/errorHandling";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
+import { getValueByPath } from "./itemUtils";
 import { truncateWithEllipsis } from "./textUtils";
 
 export enum EWidgetValidationErrorCodes {
@@ -216,7 +217,7 @@ export const evaluateTemplate: (
 ) => string = (template, data) => {
     const TEMPLATE_REGEX = /\{\{(\w+)\}\}/g;
     if (!TEMPLATE_REGEX.test(template)) {
-        const value = data[template];
+        const value = getValueByPath(data, template);
         if (value === undefined) {
             Logger.warn(`evaluateTemplate: template "${template}" is invalid`);
             return template;
@@ -229,7 +230,7 @@ export const evaluateTemplate: (
     // eslint-disable-next-line no-cond-assign
     while ((matches = TEMPLATE_REGEX.exec(template)) !== null) {
         const dataKey = matches[1];
-        if (data[dataKey] == null) {
+        if (getValueByPath(data, dataKey) == null) {
             Logger.warn(
                 `evaluateTemplate: template "${template}" refers to non-existing or null data. Data:`,
                 data

@@ -25,7 +25,7 @@ export const Lightbox: FC<LightboxProps> = ({ speed, children }) => {
                 {children}
             </Carousel>
 
-            <Modal triggerId={triggerId}>
+            <Modal>
                 <Carousel speed={0} showPointers={false} startIndex={index}>
                     {children}
                 </Carousel>

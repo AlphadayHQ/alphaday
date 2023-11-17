@@ -60,7 +60,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-1 flex-wrap mr-2.5 [&>p]:mb-0 break-all",
+                "flex flex-1 mr-2.5 [&>p]:mb-0",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
                 isHeader && "fontGroup-support",
@@ -69,13 +69,15 @@ export const TableCell: React.FC<ITableCellProps> = ({
             {...(width && { style: { display: "flex", flex: width } })}
             {...(href && { onClick: handleOnClick })}
         >
-            {href && !isCompactMode && !hasRowLink && (
-                <LinkSVG className="w-2 h-2 mr-2" />
+            {href !== undefined && !hasRowLink && (
+                <LinkSVG
+                    className={twMerge(
+                        "shrink-0 self-center w-2 h-2 mr-2",
+                        href === "" && "invisible"
+                    )}
+                />
             )}
             {children}
-            {href && isCompactMode && !hasRowLink && (
-                <LinkSVG className="w-2 h-2 ml-2 self-center" />
-            )}
         </div>
     );
 };
@@ -144,10 +146,19 @@ export const TableRow: React.FC<ITableRowProps> = ({
                               format: column.format,
                           })
                         : undefined;
+                /**
+                 * When uri_ref is defined but data[uri_ref]="", it is
+                 * important to keep href="" and not href=undefined. This
+                 * is because sometimes some entries do not have a url (eg.
+                 * a team table with a team member that doesn't have a
+                 * linkedin page). So when href="" we'll hide the link icon
+                 * for those specific entries.
+                 */
                 const href =
-                    column.uri_ref && rowData[column.uri_ref]
+                    column.uri_ref && rowData[column.uri_ref] !== undefined
                         ? String(rowData[column.uri_ref])
                         : undefined;
+
                 const imageUri =
                     column.image_uri_ref && rowData[column.image_uri_ref]
                         ? String(rowData[column.image_uri_ref])
@@ -254,6 +265,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                                 justify="left"
                                 isHeader
                                 isCompactMode
+                                width={1}
                             >
                                 {column.title}
                             </TableCell>
@@ -262,6 +274,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                                 justify="left"
                                 href={href}
                                 isCompactMode
+                                width={2}
                             >
                                 {formattedValue?.field}
                             </TableCell>

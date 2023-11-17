@@ -1,8 +1,8 @@
 import { FC, useRef } from "react";
-// import EventDetails from "src/components/calendar/calendar-full/event-details/EventDetails";
+import EventDetails from "src/components/calendar/calendar-full/event-details/EventDetails";
 import { Z_INDEX_REGISTRY } from "src/config/zIndexRegistry";
-// import CalendarMonth from "../calendar-month/CalendarMonth";
 import CalendarList from "../CalendarList";
+import CalendarMonth from "../CalendarMonth";
 import { ICalendarBaseProps } from "../types";
 
 const { CALENDAR_LIST, CALENDAR_EVENT_DETAILS } = Z_INDEX_REGISTRY;
@@ -17,13 +17,13 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
     setCatFilters,
     catFilters,
     selectedEventDetails,
-    // isLoadingEventDetails,
+    isLoadingEventDetails,
     selectedDate,
-    // toggleAllFilters,
-    // showAllFilters,
+    toggleAllFilters,
+    showAllFilters,
     widgetHash,
     allowedCategories,
-    isLoadingEvents,
+    isFetchingEvents,
 }) => {
     const fullCalendarWrapRef = useRef<HTMLDivElement>(null);
     return (
@@ -31,8 +31,8 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
             className="w-full flex bg-backgroundVariant800"
             ref={fullCalendarWrapRef}
         >
-            <div className="column flex-[35.3%] relative">
-                {/* <CalendarMonth
+            <div className="column flex-[35.3%] relative bg-backgroundVariant200">
+                <CalendarMonth
                     events={events}
                     fetchEvents={fetchEvents}
                     onClickEvent={onClickEvent}
@@ -49,7 +49,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                     widgetHash={widgetHash}
                     allowedCategories={allowedCategories}
                     fullCalendarWrapRef={fullCalendarWrapRef}
-                /> */}
+                />
             </div>
             <div
                 className="column flex-[23.1%]"
@@ -76,7 +76,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                     setCatFilters={setCatFilters}
                     widgetHash={widgetHash}
                     allowedCategories={allowedCategories}
-                    isLoadingEvents={isLoadingEvents}
+                    isFetchingEvents={isFetchingEvents}
                 />
             </div>
             <div
@@ -85,11 +85,11 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                     zIndex: CALENDAR_EVENT_DETAILS,
                 }}
             >
-                {/* <EventDetails
+                <EventDetails
                     isLoadingEventDetails={!!isLoadingEventDetails}
                     event={selectedEventDetails}
                     eventFilters={catFilters}
-                /> */}
+                />
             </div>
         </div>
     );

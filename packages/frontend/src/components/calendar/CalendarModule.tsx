@@ -11,6 +11,7 @@ import { ECalendarType, ICalendarBaseProps } from "./types";
 const CalendarModule: FC<ICalendarBaseProps> = ({
     events,
     isLoadingEvents,
+    isFetchingEvents,
     fetchEvents,
     onClickEvent,
     onDatesSet,
@@ -96,6 +97,7 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
                     showAllFilters={showAllFilters}
                     allowedCategories={allowedCategories}
                     isLoadingEvents={isLoadingEvents}
+                    isFetchingEvents={isFetchingEvents}
                 />
             );
         }
@@ -116,6 +118,7 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
                     widgetHeight={widgetHeight}
                     allowedCategories={allowedCategories}
                     isLoadingEvents={isLoadingEvents}
+                    isFetchingEvents={isFetchingEvents}
                 />
             );
         }
@@ -140,7 +143,7 @@ const CalendarModule: FC<ICalendarBaseProps> = ({
         );
     };
 
-    return <span id={`cal-${widgetHash}`}>{renderCalendar()}</span>;
+    return <div id={`cal-${widgetHash}`}>{renderCalendar()}</div>;
 };
 
 export default CalendarModule;

@@ -17,6 +17,7 @@ const featuresApi = alphadayApi.injectEndpoints({
                 );
                 return `${FEATURES.BASE}${FEATURES.LIST}?${params}`;
             },
+            providesTags: ["Account"], // refetch if a user account is updated
         }),
     }),
     overrideExisting: false,

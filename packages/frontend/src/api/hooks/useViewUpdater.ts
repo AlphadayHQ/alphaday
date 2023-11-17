@@ -8,7 +8,6 @@ import {
     useAvailableViews,
 } from "src/api/hooks";
 import {
-    alphadayApi,
     useGetSubscribedViewsQuery,
     useSaveViewMutation,
 } from "src/api/services";
@@ -145,24 +144,11 @@ export const useViewUpdater: () => void = () => {
     }
 
     /**
-     * Handle loging/logout transitions
+     * Handle login/logout transitions
      */
     if (isAuthenticated !== prevIsAuthenticated) {
         Logger.debug("useViewUpdater: isAuthenticated changed");
-        if (isAuthenticated) {
-            /**
-             * Invalidate view-related RTK-query tags upon login
-             *
-             * We can't just use RTK query tag invalidation to refetch views
-             * because right after wallet verification, when tag invalidation
-             * triggers a new getViews/getSubscribedViews request, the user token
-             * is still not updated in the store and the request does not include
-             * it in the header.
-             */
-            dispatch(
-                alphadayApi.util.invalidateTags(["Views", "SubscribedViews"])
-            );
-        } else {
+        if (!isAuthenticated) {
             /**
              * If user has logged out and the current view is a custom view,
              * we navigate to the root

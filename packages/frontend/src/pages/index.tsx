@@ -30,11 +30,13 @@ import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
+import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
+import { TTemplateSlug } from "src/types";
 
 const { UI, VIEWS } = CONFIG;
 
-function BasePage() {
+function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
 
     const {
@@ -93,18 +95,24 @@ function BasePage() {
      *
      * Full-size modules are resolved from the location pathname in App.tsx
      */
-    // const fullSizeWidgetConfig = useMemo(
-    //     () =>
-    //         fullSizeWidgetSlug && {
-    //             slug: fullSizeWidgetSlug,
-    //             // we should not check the hash if `fullSizeWidgetSlug` is undefined.
-    //             hash: selectedView?.data.widgets.find(
-    //                 (w) => w.widget.template.slug === fullSizeWidgetSlug
-    //             )?.hash,
-    //         },
-    //     [fullSizeWidgetSlug, selectedView?.data.widgets]
-    // );
-
+    const fullSizeWidgetConfig:
+        | {
+              slug: TTemplateSlug;
+              hash: string | undefined;
+          }
+        | undefined = useMemo(
+        () =>
+            isFullsize
+                ? {
+                      slug: "calendar_template", // TODO (xavier-charles) replace hardcoded slug with a dynamic one
+                      // we should not check the hash if `fullSizeWidgetSlug` is undefined.
+                      hash: selectedView?.data.widgets.find(
+                          (w) => w.widget.template.slug === "calendar_template"
+                      )?.hash,
+                  }
+                : undefined,
+        [isFullsize, selectedView?.data.widgets]
+    );
     const layoutGrid = useMemo(
         () => computeLayoutGrid(selectedView?.data.widgets),
         [selectedView]
@@ -292,8 +300,8 @@ function BasePage() {
             toggleWidgetLib={toggleWidgetLib}
             layoutState={layoutState}
             hideFooter={
-                showTutorial && !!availableViews?.length // do not show the tutorial if there are no views
-                // fullSizeWidgetConfig !== undefined
+                (showTutorial && !!availableViews?.length) || // do not show the tutorial if there are no views
+                fullSizeWidgetConfig !== undefined
             }
             setTutFocusElemRef={
                 currentTutorial.tip?.id === ETutorialTipId.UseWidgetLib
@@ -331,6 +339,9 @@ function BasePage() {
                                             moduleData={widget}
                                             rowIndex={rowIndex}
                                             colIndex={colIndex}
+                                            fullSizeWidgetConfig={
+                                                fullSizeWidgetConfig
+                                            }
                                         />
                                     ))}
                                     {provided.placeholder}
@@ -342,6 +353,7 @@ function BasePage() {
             </DragDropContext>
             <CookieDisclaimerContainer />
             <WalletConnectionDialogContainer />
+            <TutorialContainer />
         </MainLayout>
     );
 }

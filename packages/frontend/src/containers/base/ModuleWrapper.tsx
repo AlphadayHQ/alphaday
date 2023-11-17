@@ -2,7 +2,7 @@
 import { FC, useState, useCallback, memo, Suspense } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { Draggable } from "react-beautiful-dnd";
-// import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router";
 import { useTutorial, useWidgetHeight } from "src/api/hooks";
 import { useAppSelector } from "src/api/store/hooks";
 import * as viewsStore from "src/api/store/slices/views";
@@ -37,7 +37,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     preferredDragTutorialWidget,
     fullSizeWidgetConfig,
 }) => {
-    // const navigate = useNavigate();
+    const history = useHistory();
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
 
@@ -71,7 +71,6 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     }
 
     const viewPath = buildViewPath(selectedView?.data);
-
     const showFullSize = fullSizeWidgetConfig?.hash === moduleData.hash;
 
     // if the widget template slug is defined as a full-size widget, then we should allow it to be full-sized
@@ -119,13 +118,13 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                                             templateSlug
                                         );
                                     }
-                                    // navigate(
-                                    //     `${viewPath}${fullSizePath.substring(
-                                    //         1 // remove the `/` at the beginning
-                                    //     )}`
-                                    // );
+                                    history.push(
+                                        `${viewPath}${fullSizePath?.substring(
+                                            1 // remove the `/` at the beginning
+                                        )}`
+                                    );
                                 } else {
-                                    // navigate(viewPath);
+                                    history.push(viewPath);
                                 }
                             },
                             allowFullSize,

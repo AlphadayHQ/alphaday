@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 import { FC } from "react";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play2.svg";
@@ -195,7 +194,7 @@ export const ListItem: FC<IList> = ({
 
         return (
             <>
-                <li
+                <div
                     role="button"
                     tabIndex={0}
                     onClick={onClick}
@@ -247,7 +246,7 @@ export const ListItem: FC<IList> = ({
                             className="self-center"
                         />
                     </p>
-                </li>
+                </div>
                 <HRElement />
             </>
         );
@@ -256,7 +255,7 @@ export const ListItem: FC<IList> = ({
         const variantStyle = listItemVariants("video");
         return (
             <>
-                <li
+                <div
                     role="button"
                     tabIndex={0}
                     onClick={onClick}
@@ -289,7 +288,7 @@ export const ListItem: FC<IList> = ({
                             />
                         </p>
                     </div>
-                </li>
+                </div>
                 <HRElement />
             </>
         );

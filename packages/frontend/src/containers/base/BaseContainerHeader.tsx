@@ -84,7 +84,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                 </div>
                 {showFullSize ? (
                     <div
-                        className="fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center"
+                        className="fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center pr-1.5"
                         onClick={handleShowFullSize}
                         role="button"
                         title="Close full-size view"

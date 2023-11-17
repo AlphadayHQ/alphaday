@@ -3,6 +3,7 @@ import { ApexCandleChart, Spinner, themeColors } from "@alphaday/ui-kit";
 import moment from "moment";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
+import { renderToString } from "src/api/utils/textUtils";
 
 type IProps = {
     data: number[][];
@@ -129,63 +130,62 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
                 formatter: undefined,
                 title: {
                     formatter: (val: string) => {
-                        return `
-                        <span
-                            style="color:${String(themeColors.white)};"
-                        >
-                            ${val}:
-                        </span>`;
+                        return renderToString(
+                            <span className="text-white">${val}:</span>
+                        );
                     },
                 },
             },
             custom: ({ dataPointIndex }: TCustomTooltip) => {
-                return `
-                <div
-                    class="price-tooltip"
-                >
-                <span class="date">
-                    ${moment(data[dataPointIndex][0]).format(
-                        "YYYY-MM-DD  hh:mm"
-                    )}
-                </span>
-                <span class="price">
-                    <span classname="tag">O</span>: $${String(
-                        formatNumber({
-                            value: data[dataPointIndex][1],
-                            style: ENumberStyle.Currency,
-                            currency: "USD",
-                        }).value
-                    )}
-                </span>
-                <span class="price">
-                    <span classname="tag">H</span>: $${String(
-                        formatNumber({
-                            value: data[dataPointIndex][2],
-                            style: ENumberStyle.Currency,
-                            currency: "USD",
-                        }).value
-                    )}
-                </span>
-                <span class="price">
-                    <span classname="tag">L</span>: $${String(
-                        formatNumber({
-                            value: data[dataPointIndex][3],
-                            style: ENumberStyle.Currency,
-                            currency: "USD",
-                        }).value
-                    )}
-                </span>
-                <span class="price">
-                    <span classname="tag">C</span>: $${String(
-                        formatNumber({
-                            value: data[dataPointIndex][4],
-                            style: ENumberStyle.Currency,
-                            currency: "USD",
-                        }).value
-                    )}
-                </span>
-                </div>
-                `;
+                return renderToString(
+                    <div className="price-tooltip">
+                        <span className="date">
+                            {moment(data[dataPointIndex][0]).format(
+                                "YYYY-MM-DD  hh:mm"
+                            )}
+                        </span>
+                        <span className="price">
+                            <span className="tag">O</span>: {}
+                            {
+                                formatNumber({
+                                    value: data[dataPointIndex][1],
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
+                        </span>
+                        <span className="price">
+                            <span className="tag">H</span>: {}
+                            {
+                                formatNumber({
+                                    value: data[dataPointIndex][2],
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
+                        </span>
+                        <span className="price">
+                            <span className="tag">L</span>: {}
+                            {
+                                formatNumber({
+                                    value: data[dataPointIndex][3],
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
+                        </span>
+                        <span className="price">
+                            <span className="tag">C</span>: {}
+                            {
+                                formatNumber({
+                                    value: data[dataPointIndex][4],
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
+                        </span>
+                    </div>
+                );
             },
         },
         responsive: [

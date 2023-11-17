@@ -1,8 +1,5 @@
 // file for all css styles not found in tailwind's library
 
-/* custom css for scrollbars */
-@import "./scrollbar.scss";
-
 /* custom css for charts */
 @import "./charts.scss";
 
@@ -33,6 +30,16 @@
         text-overflow: elipsis;
         display: -webkit-box;
         -webkit-line-clamp: 3; /* trim after 3 lines*/
+        -webkit-box-orient: vertical;
+    }
+
+    .nine-liner {
+        position: relative;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-overflow: elipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 9; /* trim after 9 lines*/
         -webkit-box-orient: vertical;
     }
 }

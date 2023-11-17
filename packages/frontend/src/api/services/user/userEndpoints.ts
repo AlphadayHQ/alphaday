@@ -1,5 +1,7 @@
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config";
+import { setWalletVerified, setAuthToken } from "../../store/slices/user";
+import { setSelectedViewId } from "../../store/slices/views";
 import { alphadayApi } from "../alphadayApi";
 import {
     TRemoteLogin,
@@ -83,6 +85,12 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "POST",
                 body: undefined,
             }),
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                const isLoggedOut = !!(await queryFulfilled);
+                if (isLoggedOut) {
+                    dispatch(setSelectedViewId(undefined));
+                }
+            },
             invalidatesTags: ["Views", "SubscribedViews"],
         }),
         connectWallet: builder.mutation<
@@ -114,12 +122,46 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "POST",
                 body: request,
             }),
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                const verifyResp = (await queryFulfilled).data;
+                if (verifyResp.token) {
+                    Logger.debug("verifySignature: success", verifyResp);
+                    dispatch(
+                        setAuthToken({
+                            value: verifyResp.token,
+                        })
+                    );
+                    dispatch(setWalletVerified());
+                    /**
+                     * Invalidate view-related RTK-query tags upon login
+                     *
+                     * We can't just use RTK query tag invalidation to refetch views
+                     * because right after wallet verification, when tag invalidation
+                     * triggers a new getViews/getSubscribedViews request, the user token
+                     * is still not updated in the store and the request does not include
+                     * it in the header.
+                     */
+                    dispatch(
+                        alphadayApi.util.invalidateTags([
+                            "Account",
+                            "Views",
+                            "SubscribedViews",
+                        ])
+                    );
+                    return;
+                }
+                Logger.error(
+                    "verifySignature: response does not include token",
+                    verifyResp
+                );
+            },
         }),
         getUserProfile: builder.query<
             TGetUserProfileResponse,
             TGetUserProfileRequest
         >({
             query: () => `${USER.BASE}${USER.PROFILE}`,
+            providesTags: ["Account"], // refetch if a user account is updated
         }),
     }),
     overrideExisting: false,

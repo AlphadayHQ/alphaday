@@ -1,3 +1,5 @@
+import { flushSync } from "react-dom";
+import { createRoot } from "react-dom/client";
 import type { Node, Parent, Literal } from "unist";
 import { visit } from "unist-util-visit";
 import { v4 as uuidv4 } from "uuid";
@@ -193,4 +195,17 @@ export const remarkRegex = (
             }
         });
     };
+};
+
+/**
+ * Renders a valid react node to a string
+ *
+ * @param node - react node to be rendered
+ */
+
+export const renderToString = (node: JSX.Element): string => {
+    const wrapper = document.createElement("div");
+    const root = createRoot(wrapper);
+    flushSync(() => root.render(node));
+    return wrapper.innerHTML;
 };

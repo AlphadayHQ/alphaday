@@ -108,6 +108,7 @@ export const ViewDialog: FC<IProps> = ({
                     title="Max Widgets Reached"
                     onClose={onClose}
                     errorMessage={errorMessage}
+                    size="sm"
                 >
                     You have reached the maximum number of widgets in your
                     board. Please remove some widgets or try creating multiple
@@ -122,8 +123,9 @@ export const ViewDialog: FC<IProps> = ({
                     showDialog
                     showXButton
                     onClose={onClose}
+                    size="sm"
                 >
-                    <div className="flex justify-center items-center flex-1">
+                    <div className="flex justify-center items-center flex-1 h-36">
                         <Spinner size="md" color="primary" />
                     </div>
                 </Dialog>
@@ -134,6 +136,7 @@ export const ViewDialog: FC<IProps> = ({
                     title="Error"
                     onClose={onClose}
                     errorMessage={errorMessage}
+                    size="sm"
                 >
                     We were not able to save your board preferences.
                 </ErrorModal>

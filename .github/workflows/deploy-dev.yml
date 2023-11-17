@@ -1,7 +1,7 @@
 name: Deploy to epsilonday (dev)
 
 on:
-    # # deploy runs when merging on dev
+    # deploy runs when merging on dev
     # pull_request:
     #     types:
     #         - closed
@@ -11,7 +11,7 @@ on:
     workflow_dispatch:
 
 env:
-    VITE_ENVIRONMENT: dev
+    ENVIRONMENT: dev
 
     VITE_LOGLEVEL: 0
     VITE_API_BASE_URL: https://api.zettaday.com/
@@ -42,7 +42,7 @@ concurrency:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-        if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) && (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true) }} # run only if triggered manually or via merged pr
+        if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) && (github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true) }} # runs only if triggered manually or via merged pr
         steps:
             - uses: actions/checkout@v2
 
@@ -89,8 +89,8 @@ jobs:
                   AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
 
-                  AWS_S3_BUCKET: ${{ secrets.DEV__FRONTENDV2__S3_BUCKET }}
-                  DISTRIBUTION_ID: ${{ secrets.DEV__FRONTENDV2__DISTRIBUTION_ID }}
+                  AWS_S3_BUCKET: ${{ secrets.DEV__FRONTEND__S3_BUCKET }}
+                  DISTRIBUTION_ID: ${{ secrets.DEV__FRONTEND__DISTRIBUTION_ID }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
 

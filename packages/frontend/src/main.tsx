@@ -13,6 +13,7 @@ import { ECookieChoice } from "./api/types";
 import { Logger } from "./api/utils/logging";
 import App from "./App";
 import CONFIG from "./config";
+import SeoContainer from "./containers/seo/SeoContainer";
 
 /**
  * at this point, the store is still not loaded and we can't read the state
@@ -61,6 +62,7 @@ const root = createRoot(container);
 root.render(
     <Provider store={store}>
         <PersistProvider>
+            <SeoContainer />
             <AppContextProvider>
                 {/* <ThemeProvider> */}
                 <WagmiConfig config={wagmiConfig}>

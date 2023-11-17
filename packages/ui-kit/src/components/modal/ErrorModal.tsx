@@ -33,26 +33,20 @@ export const ErrorModal: FC<IModal> = ({
         await modalRef.current?.dismiss();
     };
     return (
-        <Modal
-            ref={modalRef}
-            className="z-[10000]"
-            showModal={!isHidden}
-            onClose={onClose}
-            {...restProps}
-        >
+        <Modal showModal={!isHidden} onClose={onClose} {...restProps}>
             <ModalHeader
                 className={twMerge(
                     variant === "warning"
-                        ? "bg-secondaryOrange [&>.modal-header]:bg-secondaryOrange"
-                        : "bg-secondaryOrangeSoda [&>.modal-header]:bg-secondaryOrangeSoda"
+                        ? "bg-secondaryOrange"
+                        : "bg-secondaryOrangeSoda"
                 )}
             >
                 <ModalTitle>{title}</ModalTitle>
             </ModalHeader>
             <ModalBody>
                 {variant !== "warning" && (
-                    <div className="flex justify-center items-center">
-                        <b>Oh snaps!</b>
+                    <div className="flex justify-center items-center mt-4">
+                        <p className="fontGroup-highlight">Oh snaps!</p>
                     </div>
                 )}
                 <br />
@@ -60,13 +54,14 @@ export const ErrorModal: FC<IModal> = ({
                 {errorMessage && (
                     <>
                         <br />
-                        <br />
                         Error message: {errorMessage}
                     </>
                 )}
             </ModalBody>
             <ModalFooter>
-                <Button onClick={handleCloseModal}>Close</Button>
+                <Button className="pt-1.5" onClick={handleCloseModal}>
+                    Close
+                </Button>
             </ModalFooter>
         </Modal>
     );
