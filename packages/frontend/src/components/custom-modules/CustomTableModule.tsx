@@ -34,7 +34,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     handlePaginate,
     setWidgetHeight,
 }) => {
-    const widgetSize = useWidgetSize([450]);
+    const widgetSize = useWidgetSize([500]);
     const isCompactMode =
         widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
