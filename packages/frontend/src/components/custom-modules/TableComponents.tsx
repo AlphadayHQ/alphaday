@@ -147,18 +147,17 @@ export const TableRow: React.FC<ITableRowProps> = ({
                           })
                         : undefined;
                 /**
-                 * When href is defined but we fail to retrrive the url,
-                 * we do href = "". This is because sometimes some entries
-                 * do not have a url (eg. a team table with a team member
-                 * that doesn't have a linkedin page). So when href="" we'll
-                 * hide the link icon
+                 * When uri_ref is defined but data[uri_ref]="", it is
+                 * important to keep href="" and not href=undefined. This
+                 * is because sometimes some entries do not have a url (eg.
+                 * a team table with a team member that doesn't have a
+                 * linkedin page). So when href="" we'll hide the link icon
+                 * for those specific entries.
                  */
-                // eslint-disable-next-line no-nested-ternary
-                const href = column.uri_ref
-                    ? rowData[column.uri_ref]
+                const href =
+                    column.uri_ref && rowData[column.uri_ref] !== undefined
                         ? String(rowData[column.uri_ref])
-                        : ""
-                    : undefined;
+                        : undefined;
 
                 const imageUri =
                     column.image_uri_ref && rowData[column.image_uri_ref]
