@@ -12,6 +12,7 @@ import { store } from "./api/store/store";
 import { ECookieChoice } from "./api/types";
 import { Logger } from "./api/utils/logging";
 import App from "./App";
+import Seo from "./components/seo/Seo";
 import CONFIG from "./config";
 
 /**
@@ -61,6 +62,7 @@ const root = createRoot(container);
 root.render(
     <Provider store={store}>
         <PersistProvider>
+            <Seo />
             <AppContextProvider>
                 {/* <ThemeProvider> */}
                 <WagmiConfig config={wagmiConfig}>
