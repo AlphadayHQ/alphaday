@@ -20,8 +20,8 @@ const Seo = () => {
 
     if (
         location.pathname.length > 1 && // not the root path
-        (routeInfo[1] !== selectedView?.data.slug ||
-            routeInfo[1] !== selectedView?.data.hash)
+        routeInfo[1] !== selectedView?.data.hash &&
+        routeInfo[1] !== selectedView?.data.slug
     ) {
         return (
             <SuperSEO
