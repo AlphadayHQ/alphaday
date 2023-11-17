@@ -24,7 +24,7 @@ const Seo = () => {
     ) {
         return (
             <SuperSEO
-                title="Board not found - Alphaday"
+                title="Not found - Alphaday"
                 description={DESCRIPTION}
                 lang="en"
                 robots="noindex"
