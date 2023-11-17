@@ -11,8 +11,8 @@ export const alphadayApi = createApi({
         "Views",
         "SubscribedViews",
         "CurrentView",
-        "Portfolio",
-        "AccountPortfolio",
+        "Account", // verified account
+        "AccountPortfolio", // account portfolio
         "PinnedCoins",
     ],
     baseQuery: fetchBaseQuery({

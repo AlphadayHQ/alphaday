@@ -1,4 +1,4 @@
-import React, { FC, memo, useState } from "react";
+import { FC, memo, useState, useCallback } from "react";
 import {
     TViewTabMenuOption,
     breakpoints,
@@ -17,7 +17,7 @@ import {
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { buildViewUrl, isViewModified } from "src/api/utils/viewUtils";
-// import WalletViewTabButton from "./WalletViewTabButton";
+import WalletViewTabButton from "./WalletViewTabButton";
 
 interface IViewsTabProps {
     selectedView: TCachedView | undefined;
@@ -54,9 +54,9 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
     currentTutorialTipId,
     setTutFocusElemRef,
     handleSelectTab,
-    // onAllowFetchWalletView,
-    // walletViewState,
-    // isWalletBoardAllowed,
+    onAllowFetchWalletView,
+    walletViewState,
+    isWalletBoardAllowed,
 }) {
     const [sharedView, setSharedView] = useState<TSubscribedView | undefined>(
         undefined
@@ -71,22 +71,22 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
     // 145 is the minimum width of the tab button
     const columnWidth = Math.min(width / (tabsCount + 0.5), 145);
 
-    // const walletView = subscribedViews.find(
-    //     (view: TSubscribedView) => view.data.is_smart
-    // );
+    const walletView = subscribedViews.find(
+        (view: TSubscribedView) => view.data.is_smart
+    );
 
     const filteredSubscribedViews = subscribedViews.filter(
         (view: TSubscribedView) => view.data.is_smart === false
     );
 
-    // const onWalletViewTabClick = useCallback(() => {
-    //     if (walletView && walletViewState === EWalletViewState.Ready) {
-    //         handleSelectTab(walletView);
-    //     }
-    //     if (walletViewState === EWalletViewState.Authenticated) {
-    //         onAllowFetchWalletView();
-    //     }
-    // }, [walletView, walletViewState, handleSelectTab, onAllowFetchWalletView]);
+    const onWalletViewTabClick = useCallback(() => {
+        if (walletView && walletViewState === EWalletViewState.Ready) {
+            handleSelectTab(walletView);
+        }
+        if (walletViewState === EWalletViewState.Authenticated) {
+            onAllowFetchWalletView();
+        }
+    }, [walletView, walletViewState, handleSelectTab, onAllowFetchWalletView]);
 
     const handleShareView = (view: TSubscribedView) => {
         setShowShareViewDialog(true);
@@ -133,9 +133,13 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
             )}
         >
             <div className="flex h-full py-0 px-3 overflow-auto [&>.tabButton]:max-h-10 two-col:py-0 two-col:px-4 two-col:w-full two-col:flex two-col:justify-start">
-                {/* {subscribedViews.length !== 0 && isWalletBoardAllowed && (
+                {subscribedViews.length !== 0 && isWalletBoardAllowed && (
                     <span
-                        style={walletViewState === EWalletViewState.Ready && tabButtonWrapperStyle}
+                        style={
+                            walletViewState === EWalletViewState.Ready
+                                ? tabButtonWrapperStyle
+                                : {}
+                        }
                         ref={(ref) =>
                             currentTutorialTipId ===
                                 ETutorialTipId.WalletView &&
@@ -184,7 +188,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                             ]}
                         />
                     </span>
-                )} */}
+                )}
                 {filteredSubscribedViews.map((view, index) => {
                     /**
                      *  note: only including actions allowed for custom views for now
