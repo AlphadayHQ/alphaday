@@ -11,22 +11,40 @@ const Seo = () => {
     const selectedViewId = useAppSelector(
         (state) => state.views.selectedViewId
     );
+    const { allowTracking } = useCookieChoice();
+
     const selectedView = availableViews?.find(
         (v) => v.data.id === selectedViewId
     );
+    const routeInfo = CONFIG.ROUTING.REGEXPS.VIEW.exec(location.pathname) ?? [];
+
+    if (
+        routeInfo[1] !== selectedView?.data.slug ||
+        routeInfo[1] !== selectedView?.data.hash
+    ) {
+        return (
+            <SuperSEO
+                title="Board not found - Alphaday"
+                description={DESCRIPTION}
+                lang="en"
+                robots="noindex"
+            />
+        );
+    }
 
     const hotjarId = Number(HOTJAR.SITE_ID);
     const hotjarVersion = Number(HOTJAR.SNIPPET_VERSION);
-    const { allowTracking } = useCookieChoice();
+
+    const title = getBoardTitle(selectedView?.data.name) ?? DEFAULT_TITLE;
+    const description =
+        getBoardDescription(selectedView?.data.name) ??
+        selectedView?.data.description ??
+        DESCRIPTION;
 
     return (
         <SuperSEO
-            title={getBoardTitle(selectedView?.data.name) ?? DEFAULT_TITLE}
-            description={
-                getBoardDescription(selectedView?.data.name) ??
-                selectedView?.data.description ??
-                DESCRIPTION
-            }
+            title={title}
+            description={description}
             lang="en"
             openGraph={{
                 ogImage: {
