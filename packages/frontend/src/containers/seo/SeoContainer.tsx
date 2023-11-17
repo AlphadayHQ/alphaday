@@ -6,7 +6,7 @@ import CONFIG from "../../config";
 
 const { DEFAULT_TITLE, DESCRIPTION, HOTJAR } = CONFIG.SEO;
 
-const Seo = () => {
+const SeoContainer = () => {
     const availableViews = useAvailableViews();
     const selectedViewId = useAppSelector(
         (state) => state.views.selectedViewId
@@ -76,4 +76,4 @@ const Seo = () => {
     );
 };
 
-export default Seo;
+export default SeoContainer;
