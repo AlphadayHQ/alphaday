@@ -1,7 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from "react";
-import { ModuleLoader, Timer } from "@alphaday/ui-kit";
+import { KeyValueTable, ModuleLoader, Timer } from "@alphaday/ui-kit";
 import moment from "moment";
-import KeyValueTable from "../common/table/KeyValueTable";
 
 interface IProps {
     targetDate: number; // unix timestamp in s
