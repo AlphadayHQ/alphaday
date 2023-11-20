@@ -1,11 +1,10 @@
 import { FC, ReactNode, useEffect, useState } from "react";
-import { KeyValueTable, ModuleLoader, Timer } from "@alphaday/ui-kit";
+import { KeyValueTable, Timer, twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
 
 interface IProps {
     targetDate: number; // unix timestamp in s
     announcement?: ReactNode;
-    isLoading: boolean;
     children?: ReactNode;
     items?: {
         title: ReactNode;
@@ -17,7 +16,6 @@ const CountdownModule: FC<IProps> = ({
     targetDate,
     announcement,
     children,
-    isLoading,
     items,
 }) => {
     const [secondsToDate, setSecondsToDate] = useState<number>(
@@ -36,16 +34,17 @@ const CountdownModule: FC<IProps> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    if (isLoading) {
-        return <ModuleLoader $height="400px" />;
-    }
-
     return (
         <div className="flex flex-col flex-1">
             <div className="items-center justify-center flex m-5 tiny:m-[5px]">
                 <Timer secondsToDate={secondsToDate} />
             </div>
-            <div className="fontGroup-normal flex flex-col mt-[10px] ml-30px">
+            <div
+                className={twMerge(
+                    "fontGroup-normal flex flex-col ml-30px",
+                    secondsToDate <= 0 && "my-[10px]"
+                )}
+            >
                 {secondsToDate <= 0 && (
                     <div className="flex flex-col text-secondaryOrange fontGroup-major uppercase justify-center items-center">
                         {announcement}

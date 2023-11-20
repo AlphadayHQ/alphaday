@@ -23,6 +23,3 @@ export type TGetMultiKeyValueRawResponse = TPagination & {
 
 export type TGetKeyValueResponse = TGetKeyValueRawResponse;
 export type TGetMultiKeyValueResponse = TGetMultiKeyValueRawResponse;
-
-export type TGetEthereumLastBlockRequest = void;
-export type TGetEthereumLastBlockResponse = TGetKeyValueRawResponse;

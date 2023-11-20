@@ -9,8 +9,6 @@ import {
     TGetMultiKeyValueResponse,
     TGetMultiKeyValueRawResponse,
     TGetKeyValueRawResponse,
-    TGetEthereumLastBlockRequest,
-    TGetEthereumLastBlockResponse,
 } from "./types";
 
 const API_CONFIG = CONFIG.API.DEFAULT;
@@ -46,27 +44,8 @@ const keyValueApi = alphadayApi.injectEndpoints({
                 r: TGetMultiKeyValueRawResponse
             ): TGetMultiKeyValueResponse => r,
         }),
-        getEthereumLastBlock: builder.query<
-            TGetEthereumLastBlockResponse,
-            TGetEthereumLastBlockRequest
-        >({
-            query: () => {
-                const path = `${String(KEY_VALUE.BASE)}/${String(
-                    KEY_VALUE.STORE.ETHEREUM_LAST_BLOCK
-                )}/`;
-                Logger.debug("getKeyValue: querying...", path);
-                return path;
-            },
-            transformResponse: (
-                r: TGetKeyValueRawResponse
-            ): TGetKeyValueResponse => r,
-        }),
     }),
     overrideExisting: false,
 });
 
-export const {
-    useGetKeyValueQuery,
-    useGetMultiKeyValueQuery,
-    useGetEthereumLastBlockQuery,
-} = keyValueApi;
+export const { useGetKeyValueQuery, useGetMultiKeyValueQuery } = keyValueApi;
