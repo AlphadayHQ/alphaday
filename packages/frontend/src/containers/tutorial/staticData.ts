@@ -11,7 +11,6 @@ export const tutorials = [
         text: "Optimize your workflow by using different boards curated with various widgets, or create your own.",
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
-        indicatorAnimationScale: 1.1,
     },
     {
         id: ETutorialTipId.WalletView,
@@ -19,7 +18,6 @@ export const tutorials = [
         text: "Keep track of all information on alphaday regarding assets in your wallet.",
         align: ETutorialTipAlign.Left,
         indicatorType: ETutorialIndicatorType.Rect,
-        indicatorAnimationScale: 1.1,
     },
     {
         id: ETutorialTipId.UseSeachBar,
@@ -27,7 +25,6 @@ export const tutorials = [
         text: "Search for your favorite tokens, projects, or topics to filter the content inside the widgets.",
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
-        indicatorAnimationScale: 1.04,
     },
     {
         id: ETutorialTipId.ReArrangeWidget,
@@ -35,7 +32,6 @@ export const tutorials = [
         text: "Click and drag widgets by the top bar to change their position in the dashboard, or click once to minimize.",
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
-        indicatorAnimationScale: 1.03,
     },
     // {
     //     id: ETutorialTipId.ResizeWidget,
@@ -57,7 +53,6 @@ export const tutorials = [
         text: "There are dozens of useful widgets available for you in the Widgets Library to pick and choose from.",
         align: ETutorialTipAlign.Right,
         indicatorType: ETutorialIndicatorType.Rect,
-        indicatorAnimationScale: 1.09,
     },
     {
         id: ETutorialTipId.ComeBack,
@@ -65,6 +60,5 @@ export const tutorials = [
         text: "Come back to the walk-through at any time in the user menu.",
         align: ETutorialTipAlign.Right,
         indicatorType: ETutorialIndicatorType.Ring,
-        indicatorAnimationScale: 1.15,
     },
 ];
