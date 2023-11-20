@@ -29,6 +29,7 @@ export const RTK_USER_CACHE_KEYS = {
 
 const RPC_ERROR_CODES = {
     REJECTED_BY_USER: 4001,
+    NON_AUTHORIZED_BY_USER: 4100,
     DENIED_SIGNATURE: -32603,
 } as const;
 
@@ -125,6 +126,7 @@ export const useWallet: () => IWallet = () => {
             const errorCode = getErrorCode(err);
             if (
                 errorCode === RPC_ERROR_CODES.REJECTED_BY_USER ||
+                errorCode === RPC_ERROR_CODES.NON_AUTHORIZED_BY_USER ||
                 errorCode === RPC_ERROR_CODES.DENIED_SIGNATURE
             ) {
                 // if action is rejected, no need to move to error state
