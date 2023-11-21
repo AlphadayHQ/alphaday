@@ -80,6 +80,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/portfolio/PortfolioContainer")
     ),
     reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
+    reports_template: lazy(
+        () => import("./containers/dynamic/ReportsContainer")
+    ),
     roadmap_template: lazy(
         () => import("./containers/dynamic/RoadmapContainer")
     ),
@@ -93,6 +96,12 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     video_template: lazy(() => import("./containers/video/VideoContainer")),
     calendar_template: lazy(
         () => import("./containers/calendar/CalendarContainer")
+    ),
+    countdown_template: lazy(
+        () => import("./containers/countdown/CountdownContainer")
+    ),
+    verasity_tokenomics_template: lazy(
+        () => import("./containers/client/VerasityTokenomicsContainer")
     ),
 };
 

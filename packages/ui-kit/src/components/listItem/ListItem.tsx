@@ -16,8 +16,7 @@ interface IList {
     title: string;
     description?: string;
     source?: string;
-    tag: string;
-    // tagShortName?: string; // TODO (xavier-charles):: remove this if we no longer need it
+    tag?: string;
     tagImg?: string;
     mediaLength?: string;
     bookmarked?: boolean;
@@ -171,9 +170,15 @@ export const ListItem: FC<IList> = ({
                             </a>
                         </div>
                         <p className={variantStyle.lastLine}>
-                            <a href={tagImg} target="_blank" rel="noreferrer">
-                                <span>{tag}</span>{" "}
-                            </a>
+                            {tag && (
+                                <a
+                                    href={tagImg}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    <span>{tag}</span>{" "}
+                                </a>
+                            )}
                             <span className={variantStyle.spacer}>•</span>
                             <img
                                 src={source} // TODO (xavier-charles):: source is image url for tag pill
@@ -181,6 +186,7 @@ export const ListItem: FC<IList> = ({
                                 className={variantStyle.img}
                                 onError={imgOnError}
                             />
+                            <span className="capitalize">{source}</span>
                         </p>
                     </div>
                 </li>

@@ -1,3 +1,6 @@
+import { TItem } from "src/types";
+import { TRemoteCustomData, TRemoteCustomDatum } from "../services";
+
 /**
  * This type is used to define the root type of items which include news, daos, tweets etc
  */
@@ -157,3 +160,19 @@ export const buildMultiValue = <
             [key]: curr.value,
         };
     }, {} as T);
+
+/**
+ * Transforms a TCustomDatum dict into a TItem dict
+ */
+export const customDatumAsItem: (datum: TRemoteCustomDatum) => TItem = (d) => {
+    return Object.entries(d).reduce((acc, curr) => {
+        const [currKey, currVal] = curr;
+        return {
+            ...acc,
+            [currKey]: String(currVal),
+        };
+    }, {} as TItem);
+};
+
+export const customDataAsItems: (data: TRemoteCustomData) => TItem[] = (d) =>
+    d.map(customDatumAsItem);

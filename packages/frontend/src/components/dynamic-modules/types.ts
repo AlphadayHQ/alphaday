@@ -29,7 +29,7 @@ export interface ITable<T> {
     onAdjustWidgetHeight: Dispatch<SetStateAction<number>>;
 }
 
-export type IReports = Omit<ITable<string>, "onAdjustWidgetHeight">;
+export type IReports = Omit<ITable<string>, "onAdjustWidgetHeight" | "columns">;
 
 export interface IDynamicTable<TItem> {
     endpointUrl: string;

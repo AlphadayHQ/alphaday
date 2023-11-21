@@ -263,13 +263,13 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
      *
      * the function checks these widgets exist.
      */
-    // const preferredDragTutorialWidget = useMemo(() => {
-    //     if (!layoutState) return undefined;
-    //     if (layoutState[0][1]) return [1, 0]; // second widget first row
-    //     if (layoutState[0][2]) return [2, 0]; // third widget first row
-    //     if (layoutState[0][0]) return [0, 0]; // first widget first row
-    //     return undefined;
-    // }, [layoutState]);
+    const preferredDragTutorialWidget = useMemo(() => {
+        if (!layoutState) return undefined;
+        if (layoutState[0][1]) return [1, 0]; // second widget first row
+        if (layoutState[0][2]) return [2, 0]; // third widget first row
+        if (layoutState[0][0]) return [0, 0]; // first widget first row
+        return undefined;
+    }, [layoutState]);
 
     useViewUpdater();
     useWalletViewStateUpdater();
@@ -341,6 +341,9 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                             colIndex={colIndex}
                                             fullSizeWidgetConfig={
                                                 fullSizeWidgetConfig
+                                            }
+                                            preferredDragTutorialWidget={
+                                                preferredDragTutorialWidget
                                             }
                                         />
                                     ))}

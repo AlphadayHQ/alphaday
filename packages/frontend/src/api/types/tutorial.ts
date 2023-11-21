@@ -29,7 +29,6 @@ export type TTutorial = {
     tipCount: string;
     indicator: {
         type: ETutorialIndicatorType | undefined;
-        animationScale: number | undefined;
 
         // ? Undecided if we would need this
         // action: {

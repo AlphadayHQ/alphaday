@@ -166,7 +166,7 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
     [ETemplateNameRegistry.Countdown]: {
-        ADJUSTABLE: true,
+        ADJUSTABLE: false,
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
     [ETemplateNameRegistry.Talks]: {
@@ -186,6 +186,10 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
     [ETemplateNameRegistry.Uniswap]: {
+        ADJUSTABLE: false,
+        WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
+    },
+    [ETemplateNameRegistry.VerasityTokenomics]: {
         ADJUSTABLE: false,
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
