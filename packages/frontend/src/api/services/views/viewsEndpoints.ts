@@ -55,8 +55,7 @@ const viewCheck = (
         const widgetSlug = viewWidget.widget.template.slug;
         if (!(widgetSlug in TEMPLATES_DICT)) {
             Logger.warn(
-                "viewsEndpoints::viewCheck: unknown widget template found:",
-                viewWidget.widget.template.slug
+                `viewsEndpoints::viewCheck: unknown widget template ${viewWidget.widget.template.slug} found in view ${view.name}`
             );
         } else {
             const dataValidationResult = validateCustomData(
@@ -247,8 +246,7 @@ const viewsApi = alphadayApi.injectEndpoints({
                     }
                     if (!(widget.template.slug in TEMPLATES_DICT)) {
                         Logger.warn(
-                            "viewsEndpoints::getWidgets: unknown widget template found:",
-                            widget.template.slug
+                            `viewsEndpoints::getWidgets: could not find template ${widget.template.slug} of widget ${widget.name}`
                         );
                         return false;
                     }
