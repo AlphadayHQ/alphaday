@@ -38,8 +38,8 @@ const TutorialItem: FC<ITutorialItem> = ({
                     <div
                         className="h-[350px] relative bg-transparent flex flex-col items-center"
                         style={{
-                            top: pos.y - 1.72,
-                            left: pos.x - 1.72,
+                            top: pos.y,
+                            left: pos.x,
                             width: pos.width,
                         }}
                     >

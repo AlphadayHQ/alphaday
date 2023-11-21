@@ -107,7 +107,6 @@ export const useTutorial: () => ITutorial = () => {
                 : undefined,
             indicator: {
                 type: currentTutorialTip?.indicatorType,
-                animationScale: currentTutorialTip?.indicatorAnimationScale,
                 // ? Undecided if we would need this
                 // action: {
                 //     onClick: undefined,
