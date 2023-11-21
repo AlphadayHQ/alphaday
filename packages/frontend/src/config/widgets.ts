@@ -189,6 +189,10 @@ const WIDGETS_CONFIG = {
         ADJUSTABLE: false,
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
+    [ETemplateNameRegistry.VerasityTokenomics]: {
+        ADJUSTABLE: false,
+        WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
+    },
     [ETemplateNameRegistry.Discord]: {
         POLLING_INTERVAL: 15 * 60,
         MAX_PAGE_NUMBER: 10,
