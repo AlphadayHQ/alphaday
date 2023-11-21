@@ -78,6 +78,7 @@ import SyncIndicator, {
 } from "./src/components/syncIndicator/SyncIndicator";
 import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
+import { Timer } from "./src/components/timer/Timer";
 import { CalendarTooltip } from "./src/components/tooltip/CalendarTooltip";
 import {
     ViewTabMenu,
@@ -110,6 +111,7 @@ export {
     Carousel,
     CarouselImage,
     Lightbox,
+    Timer,
     ErrorModal,
     Footer,
     Logo,

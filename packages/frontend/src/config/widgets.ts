@@ -166,7 +166,7 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
     [ETemplateNameRegistry.Countdown]: {
-        ADJUSTABLE: true,
+        ADJUSTABLE: false,
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
     },
     [ETemplateNameRegistry.Talks]: {

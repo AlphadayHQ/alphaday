@@ -94,6 +94,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     calendar_template: lazy(
         () => import("./containers/calendar/CalendarContainer")
     ),
+    countdown_template: lazy(
+        () => import("./containers/countdown/CountdownContainer")
+    ),
 };
 
 export type TFullSizeRoute = {
