@@ -80,6 +80,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/portfolio/PortfolioContainer")
     ),
     reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
+    reports_template: lazy(
+        () => import("./containers/dynamic/ReportsContainer")
+    ),
     roadmap_template: lazy(
         () => import("./containers/dynamic/RoadmapContainer")
     ),

@@ -17,7 +17,6 @@ interface IList {
     description?: string;
     source?: string;
     tag: string;
-    // tagShortName?: string; // TODO (xavier-charles):: remove this if we no longer need it
     tagImg?: string;
     mediaLength?: string;
     bookmarked?: boolean;
