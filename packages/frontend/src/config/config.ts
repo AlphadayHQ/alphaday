@@ -82,7 +82,7 @@ const CONFIG = {
     APP: {
         VERSION: import.meta.env.VITE_VERSION || "",
         STORAGE_KEY: "alphaday",
-        STORAGE_VERSION: 19,
+        STORAGE_VERSION: 100,
         COMMIT: import.meta.env.VITE_COMMIT,
         X_APP_ID: import.meta.env.VITE_X_APP_ID || "",
         X_APP_SECRET: import.meta.env.VITE_X_APP_SECRET || "",
