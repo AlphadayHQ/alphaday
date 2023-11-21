@@ -100,6 +100,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     countdown_template: lazy(
         () => import("./containers/countdown/CountdownContainer")
     ),
+    verasity_tokenomics_template: lazy(
+        () => import("./containers/client/VerasityTokenomicsContainer")
+    ),
 };
 
 export type TFullSizeRoute = {
