@@ -66,7 +66,7 @@ interface IWallet {
      * A util function to sign out the user.
      * This will remove the auth token and disconnect the wallet.
      */
-    signout: () => Promise<void>;
+    signout: (isVerified?: boolean) => Promise<void>;
 }
 
 /**
@@ -124,6 +124,7 @@ export const useWallet: () => IWallet = () => {
             errorContext?: string
         ) => {
             const errorCode = getErrorCode(err);
+            Logger.debug("useWallet::handleError::errorCode", errorCode);
             if (
                 errorCode === RPC_ERROR_CODES.REJECTED_BY_USER ||
                 errorCode === RPC_ERROR_CODES.NON_AUTHORIZED_BY_USER ||
@@ -187,7 +188,7 @@ export const useWallet: () => IWallet = () => {
                     let signature: `0x${string}` | undefined;
                     try {
                         Logger.debug(
-                            "useWallet:verifyWallet:genMsgResp",
+                            "useWallet::verifyWallet:genMsgResp",
                             genMsgResp
                         );
                         const { message } = genMsgResp;
@@ -196,13 +197,23 @@ export const useWallet: () => IWallet = () => {
                             "utf8"
                         ).toString("hex")}`;
                         Logger.debug(
-                            "useWallet:verifyWallet:signatureRequest",
+                            "useWallet::verifyWallet:signatureRequest",
                             signatureRequest
                         );
                         if (
                             authWallet.method ===
-                            EWalletConnectionMethod.Metamask
+                            EWalletConnectionMethod.WalletConnect
                         ) {
+                            Logger.debug(
+                                "useWallet::verifyWallet: signing through wagmi"
+                            );
+                            signature = await signMessageAsync({
+                                message,
+                            });
+                        } else {
+                            Logger.debug(
+                                "useWallet::verifyWallet: signing through metamask"
+                            );
                             if (window.ethereum == null) {
                                 throw new MetamaskNotInstalledError();
                             }
@@ -210,19 +221,15 @@ export const useWallet: () => IWallet = () => {
                                 method: "personal_sign",
                                 params: [signatureRequest, address],
                             });
-                        } else {
-                            Logger.debug(
-                                "useWallet:verifyWallet: signing through wagmi"
-                            );
-                            signature = await signMessageAsync({
-                                message,
-                            });
                         }
                         Logger.debug(
-                            "useWallet:verifyWallet:signature",
+                            "useWallet::verifyWallet:signature",
                             signature
                         );
-                        Logger.debug("useWallet:verifyWallet:address", address);
+                        Logger.debug(
+                            "useWallet::verifyWallet:address",
+                            address
+                        );
                         if (signature === undefined) {
                             throw new Error(
                                 "useWallet::verifyWallet: signature is undefined"
@@ -238,7 +245,7 @@ export const useWallet: () => IWallet = () => {
                                     rejected,
                                     WalletConnectionState.Verifying,
                                     "Could not verify signature",
-                                    "useWallet:verifyWallet::verifySignatureMut"
+                                    "useWallet::verifyWallet::verifySignatureMut"
                                 );
                             });
                     } catch (err) {
@@ -277,46 +284,55 @@ export const useWallet: () => IWallet = () => {
         verifySignatureMut,
     ]);
 
-    const signout = useCallback(async () => {
-        await ignoreConcurrentAsync<void, void>(async () => {
-            Logger.debug("useWallet::signout called");
-            if (authWallet.status === WalletConnectionState.SigningOut) {
-                /**
-                 * On rare occasions, the user can click the signout button multiple times
-                 * before the wallet is actually disconnected. This is a safeguard to prevent
-                 * multiple signout requests/state changes.
-                 */
-                Logger.debug("useWallet::signout: already signing out");
-                return;
-            }
-            try {
-                dispatch(userStore.initSignOut());
-                if (isConnected) {
-                    disconnect();
+    const signout = useCallback(
+        async (isVerified = false) => {
+            await ignoreConcurrentAsync<void, void>(async () => {
+                Logger.debug("useWallet::signout called");
+                if (authWallet.status === WalletConnectionState.SigningOut) {
+                    /**
+                     * On rare occasions, the user can click the signout button multiple times
+                     * before the wallet is actually disconnected. This is a safeguard to prevent
+                     * multiple signout requests/state changes.
+                     */
+                    Logger.debug("useWallet::signout: already signing out");
+                    return;
                 }
-                if (!logoutMutResult.isLoading) {
-                    const response = await logoutMut();
-                    Logger.debug(
-                        "useWallet::signout endpoint call success",
-                        response
+                if (!isVerified) {
+                    dispatch(userStore.reset());
+                    return;
+                }
+                try {
+                    dispatch(userStore.initSignOut());
+                    if (isConnected) {
+                        disconnect();
+                    }
+                    if (!logoutMutResult.isLoading) {
+                        const response = await logoutMut();
+                        Logger.debug(
+                            "useWallet::signout endpoint call success",
+                            response
+                        );
+                    }
+                    // note: wallet state is reset in user store extra reducers
+                    // so no need to handle it here
+                } catch (error) {
+                    Logger.error("useWallet::signout failed", error);
+                    dispatch(userStore.setWalletInGenericError());
+                    dispatch(
+                        userStore.setWalletAuthError(JSON.stringify(error))
                     );
                 }
-                // note: wallet state is reset in user store extra reducers
-                // so no need to handle it here
-            } catch (error) {
-                Logger.error("useWallet::signout failed", error);
-                dispatch(userStore.setWalletInGenericError());
-                dispatch(userStore.setWalletAuthError(JSON.stringify(error)));
-            }
-        }, 5000)();
-    }, [
-        authWallet.status,
-        dispatch,
-        isConnected,
-        logoutMutResult.isLoading,
-        disconnect,
-        logoutMut,
-    ]);
+            }, 5000)();
+        },
+        [
+            authWallet.status,
+            dispatch,
+            isConnected,
+            logoutMutResult.isLoading,
+            disconnect,
+            logoutMut,
+        ]
+    );
 
     const connectAndSyncWallet = (address: string) => {
         if (!connectMutResult.isLoading) {
@@ -324,7 +340,7 @@ export const useWallet: () => IWallet = () => {
                 .unwrap()
                 .then((connectionResponse) => {
                     Logger.debug(
-                        "useWallet:connectAndSyncWallet::connectWalletMut: success",
+                        "useWallet::connectAndSyncWallet::connectWalletMut: success",
                         connectionResponse
                     );
                     const normalisedAccount = {
@@ -336,7 +352,7 @@ export const useWallet: () => IWallet = () => {
                     // when user connects a wallet, it becomes the selected
                     // address in the portfolio widget
                     Logger.debug(
-                        "useWallet:connectAndSyncWallet: setting new selected account",
+                        "useWallet::connectAndSyncWallet: setting new selected account",
                         address
                     );
                     dispatch(
