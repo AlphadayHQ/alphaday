@@ -19,19 +19,19 @@ export const useGlobalHooks: () => void = () => {
     );
 
     const attemptReconnect = useCallback(
-        (account: string) => {
+        (account: string, method: EWalletConnectionMethod | undefined) => {
             Logger.debug(
                 "useGlobalHooks::attemptReconnect: attempting to reconnect to the new account",
                 account
             );
             connectWallet(
-                authWallet.method ?? EWalletConnectionMethod.Metamask,
+                method ?? EWalletConnectionMethod.Metamask,
                 account.toLowerCase()
             ).catch((e) =>
                 Logger.error("useGlobalHooks::attemptReconnect: error", e)
             );
         },
-        [authWallet.method, connectWallet]
+        [connectWallet]
     );
 
     const handleAccountChange = useCallback(
@@ -56,6 +56,7 @@ export const useGlobalHooks: () => void = () => {
                     "handleAccountChange: Account switch, wallet state:",
                     authWallet
                 );
+                const { method } = authWallet;
                 if (authWallet.status === WalletConnectionState.Verified) {
                     Logger.debug(
                         "handleAccountChange: signing out...",
@@ -63,7 +64,8 @@ export const useGlobalHooks: () => void = () => {
                     );
                     signout()
                         .then(() => {
-                            attemptReconnect(account);
+                            // heads-up: after signout authWallet context is lost
+                            attemptReconnect(account, method);
                         })
                         .catch(() => ({}));
                 } else {
@@ -72,7 +74,7 @@ export const useGlobalHooks: () => void = () => {
                     );
                     cleanAuthState();
                     resetWalletConnection();
-                    attemptReconnect(account);
+                    attemptReconnect(account, method);
                 }
             }
         },

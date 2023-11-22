@@ -107,7 +107,7 @@ const WalletConnectionDialogContainer: FC = memo(() => {
             <ErrorModal
                 size="sm"
                 errorMessage={authWallet.error}
-                isHidden={!authWallet.error}
+                isHidden={!(authWallet.status in errorPropsDict)}
                 {...errorProps}
             >
                 {errorContent}
