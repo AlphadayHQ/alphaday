@@ -9,7 +9,6 @@ import {
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import {
     useCallbackState,
-    useKeyPress,
     useView,
     useWidgetHeight,
     useWindowSize,
@@ -167,12 +166,6 @@ const BaseContainer: FC<IBaseContainerProps> = ({
         document.addEventListener("mouseleave", stopResize, false);
         document.addEventListener("mousemove", resize, false);
     };
-
-    useKeyPress({
-        targetKey: "Escape",
-        callback: handleShowFullSize,
-        skip: !showFullSize,
-    });
 
     const moduleId = `module-${moduleData.hash}`;
 
