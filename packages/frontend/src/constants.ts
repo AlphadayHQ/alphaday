@@ -48,6 +48,7 @@ export enum ETemplateNameRegistry {
     Calendar = "CALENDAR",
     Chat = "CHAT",
     Countdown = "COUNTDOWN",
+    CustomChart = "CUSTOM_CHART",
     CustomTable = "CUSTOM_TABLE",
     Dao = "DAO",
     Discord = "DISCORD",
