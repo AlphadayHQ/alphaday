@@ -60,7 +60,7 @@ const ProfileDropdownContainer: FC = () => {
         <ProfileDropdownWrapper
             onConnectWallet={openWalletConnectionDialog}
             onVerifyWallet={verifyWallet}
-            onDisconnectWallet={signout}
+            onDisconnectWallet={() => signout(false)}
             isAuthenticated={isAuthenticated}
             onShowTutorial={toggleShowTutorial}
             showTutorial={showTutorial}
