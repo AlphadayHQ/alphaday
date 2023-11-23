@@ -13,6 +13,8 @@ export interface ScrollBarProps extends HTMLProps<HTMLDivElement> {
     onYReachEnd?: (container: HTMLElement) => void;
 }
 
+const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
 export const ScrollBar: FC<ScrollBarProps> = ({
     children,
     onScroll,
@@ -26,7 +28,8 @@ export const ScrollBar: FC<ScrollBarProps> = ({
         <div
             ref={(ref) => ref && containerRef?.(ref)}
             className={twMerge(
-                "overflow-hidden overflow-y-auto scrollbar-track-backgroundVariant1800 scrollbar-thumb-primaryVariant800 scrollbar scrollbar-w-[5px] overscroll-contain h-full",
+                "overflow-hidden hover:none:text-blue hover:overflow-y-auto scrollbar-track-backgroundVariant1800 scrollbar-thumb-primaryVariant800 scrollbar scrollbar-w-[5px] overscroll-contain h-full",
+                isTouchDevice && "overflow-y-auto",
                 className
             )}
             style={{ scrollbarGutter: "stable", ...style }}
