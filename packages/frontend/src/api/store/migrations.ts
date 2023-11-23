@@ -1,4 +1,4 @@
-import { MigrationManifest, PersistedState } from "redux-persist";
+import { PersistedState } from "redux-persist";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 
@@ -13,18 +13,28 @@ type PersistedRootState = PersistedState & RootState;
  */
 
 /**
- * when storage gets modified to v 101 or greater, RootStateV100 should be re-defined
+ * when storage gets modified to v101 or greater, RootStateV100 should be re-defined
  * as something like:
- * type RootStatev100 = Omit<PersistedRootState, "new added field">
+ *   type RootStatev100 = Omit<PersistedRootState, "new added field in v101">.
+ * The corresponding migration function should take the form:
+ *   101: (s: RootStateV100) => PersistedRootState
+ * Similarly, when storage gets to v102, we'll need to redefine RootStatev100, eg:
+ *   type RootStatev100 = Omit<RootStatev101, "new added field in v101">
+ * and
+ *   type RootStatev101 = Omit<PersistedRootState, "new added field in v102">
+ * The new  migration function should look like:
+ *   102: (s: RootStateV101) => PersistedRootState
  */
-type RootStateV100 = PersistedRootState;
+
+// type RootStateV100 = PersistedRootState;
 
 export type TMigrationFunction = (
     state: Partial<PersistedRootState>
 ) => MaybeAsync<PersistedRootState>;
 
-type TMigrations = MigrationManifest & {
-    [100]: (s: RootStateV100) => PersistedRootState;
+type TMigrations = {
+    // 101: (s: RootStateV100) => PersistedRootState
+    100: (s: unknown) => undefined;
 };
 
 /**
@@ -109,7 +119,7 @@ export const removeFieldFromState = <S extends Record<string, unknown>>(
  * TMigrationStateVariant type.
  */
 const migrations: TMigrations = {
-    100: (_s: RootStateV100) => undefined,
+    100: (_s: unknown) => undefined,
 };
 
 export default migrations;
