@@ -95,7 +95,9 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             })
         );
     };
-    const [showMobileDialog, setShowMobileDialog] = useState(false);
+    const [showMobileDialog, setShowMobileDialog] = useState(
+        width <= breakpoints.TwoColMinWidth && showFullSize
+    );
     const [showSettings, setShowSettings] = useState<boolean | undefined>();
     const handleShowDialog = () => {
         setShowMobileDialog(false);
@@ -257,38 +259,43 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     )}
                 </div>
             </div>
-            {onToggleShowFullSize && allowFullSize && (
-                <Modal
-                    size="max"
-                    showModal={!!showFullSize}
-                    onClose={handleShowFullSize}
-                >
-                    <BaseContainerHeader
-                        headerRef={headerRef}
-                        toggleCollapse={toggleCollapse}
-                        tags={tags}
-                        handleShowFullSize={handleShowFullSize}
-                        title={title}
-                        removeTagFromViewWidget={removeTagFromViewWidget}
-                        widgetDescription={widgetDescription}
-                        removeWidget={removeWidget}
-                        toggleSettings={toggleSettings}
-                        alreadyCollapsed={alreadyCollapsed}
-                        moduleData={moduleData}
-                        showFullSize={showFullSize}
-                        allowFullSize={allowFullSize}
-                    />
-                    {children}
-                    <div className="foot-block" />
-                </Modal>
-            )}
+            {onToggleShowFullSize &&
+                allowFullSize &&
+                width > breakpoints.TwoColMinWidth && (
+                    <Modal
+                        size="max"
+                        showModal={!!showFullSize}
+                        onClose={handleShowFullSize}
+                    >
+                        <BaseContainerHeader
+                            headerRef={headerRef}
+                            toggleCollapse={toggleCollapse}
+                            tags={tags}
+                            handleShowFullSize={handleShowFullSize}
+                            title={title}
+                            removeTagFromViewWidget={removeTagFromViewWidget}
+                            widgetDescription={widgetDescription}
+                            removeWidget={removeWidget}
+                            toggleSettings={toggleSettings}
+                            alreadyCollapsed={alreadyCollapsed}
+                            moduleData={moduleData}
+                            showFullSize={showFullSize}
+                            allowFullSize={allowFullSize}
+                        />
+                        {children}
+                        <div className="foot-block" />
+                    </Modal>
+                )}
             <Dialog
                 title="Alphaday"
                 showXButton
                 saveButtonText="Close"
                 showDialog={showMobileDialog}
                 onSave={handleShowDialog}
-                onClose={handleShowDialog}
+                onClose={() => {
+                    handleShowDialog();
+                    handleShowFullSize();
+                }}
                 size="sm"
             >
                 <p>Switch to Desktop to get the best experience of {title}</p>
