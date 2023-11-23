@@ -60,7 +60,7 @@ jobs:
             - name: build
               run: yarn build:deploy
               env:
-                  ENVIRONMENT: ${{ env.ENVIRONMENT }}
+                  VITE_ENVIRONMENT: ${{ env.ENVIRONMENT }}
 
                   VITE_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
                   VITE_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
