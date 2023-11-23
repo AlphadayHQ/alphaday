@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { twMerge } from "tailwind-merge";
-import styles from "./Switch.module.scss";
 
 export interface SwitchProps {
     options: [string, string];
@@ -27,7 +26,7 @@ export const Switch: FC<SwitchProps> = ({
             aria-label={label}
             className={twMerge(
                 "relative inline-block text-primary",
-                disabled ? styles.disabled : "",
+                disabled && "text-primaryVariant300 pointer-events-none",
                 className
             )}
             {...restProps}
@@ -44,7 +43,8 @@ export const Switch: FC<SwitchProps> = ({
                 <span
                     className={twMerge(
                         "m-[3px] text-center capitalize fontGroup-highlightSemi duration-[400ms] rounded-lg py-[3px] px-2 min-w-min two-col:min-w-[62px] hover:bg-btnBackgroundVariant1200 active:bg-btnBackgroundVariant1600 option1",
-                        !checked && "bg-btnBackgroundVariant1400"
+                        !checked && "bg-btnBackgroundVariant1400",
+                        !checked && disabled && "bg-primaryVariant300"
                     )}
                 >
                     {options[0]}
@@ -52,7 +52,8 @@ export const Switch: FC<SwitchProps> = ({
                 <span
                     className={twMerge(
                         "m-[3px] text-center capitalize fontGroup-highlightSemi duration-[400ms] rounded-lg py-[3px] px-2 min-w-min two-col:min-w-[62px] hover:bg-btnBackgroundVariant1200 active:bg-btnBackgroundVariant1600 option2",
-                        checked && "bg-btnBackgroundVariant1400"
+                        checked && "bg-btnBackgroundVariant1400",
+                        checked && disabled && "bg-primaryVariant300"
                     )}
                 >
                     {options[1]}
