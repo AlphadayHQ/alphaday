@@ -1,7 +1,4 @@
 import { FC, useRef } from "react";
-// TODO (xavier-charles):: Add useKeyPress hook and Logger
-// import { useKeyPress } from "src/api/hooks";
-// import { Logger } from "src/api/utils/logging";
 import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
 import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
@@ -16,14 +13,11 @@ export interface IDialog {
     showXButton: boolean;
     size?: "xl" | "lg" | "md" | "sm";
     children?: React.ReactNode;
-    triggerId: string;
     showDialog?: boolean;
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
 }
 
-export const Dialog: FC<
-    RequireAtLeastOne<IDialog, "triggerId" | "showDialog">
-> = ({
+export const Dialog: FC<IDialog> = ({
     children,
     title,
     onClose,
@@ -38,19 +32,6 @@ export const Dialog: FC<
     ...restProps
 }) => {
     const modalRef = useRef<HTMLIonModalElement>(null);
-
-    // useKeyPress({
-    //     targetKey: "Enter",
-    //     callback: () => {
-    //         onSave?.()?.catch((err) =>
-    //             Logger.error(
-    //                 "Dialog:UsekeyPress::Could not save with Enter key",
-    //                 err
-    //             )
-    //         );
-    //     },
-    //     skip: disableSave,
-    // });
 
     const handleCloseDialog = async () => {
         onClose?.();
