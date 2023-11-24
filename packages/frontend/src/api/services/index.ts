@@ -1,3 +1,6 @@
+export * from "./activity-log/activityEndpoints";
+export * from "./activity-log/types";
+
 export * from "./coins/coinsEndpoints";
 export * from "./coins/types";
 

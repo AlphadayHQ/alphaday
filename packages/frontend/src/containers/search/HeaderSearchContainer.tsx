@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
 import { ActionMeta } from "react-select";
-import { useGlobalSearch } from "src/api/hooks";
+import { useGlobalSearch, useActivityLogger } from "src/api/hooks";
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import { useTutorial } from "src/api/hooks/useTutorial";
 import { ETag, useUpdateKeywordFreqMutation } from "src/api/services";
@@ -42,6 +42,7 @@ const HeaderSearchContainer: FC = () => {
     } = useKeywordSearch();
 
     const [updateKeywordFreq] = useUpdateKeywordFreqMutation({});
+    const { logKeywordSelected } = useActivityLogger();
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
 
     const handleChange = (
@@ -101,6 +102,7 @@ const HeaderSearchContainer: FC = () => {
             setLastSelectedKeyword(newSelectedKeyword);
 
             if (newSelectedKeyword) {
+                logKeywordSelected(newSelectedKeyword.id);
                 updateKeywordFreq({
                     name: newSelectedKeyword.name,
                 })
