@@ -1,5 +1,5 @@
 import React from "react";
-import { useTutorial } from "src/api/hooks";
+import { useTutorial, useActivityLogger } from "src/api/hooks";
 import { useGetIpMetadataQuery } from "src/api/services";
 import { setCookieChoice } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
@@ -13,10 +13,13 @@ const CookieDisclaimerContainer: React.FC = () => {
     const dispatch = useAppDispatch();
     const cookieChoice = useAppSelector((state) => state.ui.cookieChoice);
 
+    const { logCookieChoice } = useActivityLogger();
+
     const { showTutorial } = useTutorial();
 
     const setChoice = (choice: ECookieChoice) => {
         dispatch(setCookieChoice(choice));
+        logCookieChoice(choice);
     };
 
     const { data: ipMeta, isLoading } = useGetIpMetadataQuery(undefined, {
