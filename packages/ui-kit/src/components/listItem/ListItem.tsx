@@ -270,7 +270,7 @@ export const ListItem: FC<IList> = ({
                     <img
                         src={image}
                         alt=""
-                        className="min-w-[142.22px] h-20 object-cover rounded-none"
+                        className="min-w-[100px] two-col:min-w-[142.22px] h-20 object-cover rounded-none"
                         onError={imgOnError}
                     />
                     <div className="ml-[10px] flex flex-col justify-between h-[initial]">
