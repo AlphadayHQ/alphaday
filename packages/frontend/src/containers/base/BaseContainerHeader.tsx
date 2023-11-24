@@ -42,7 +42,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                     role="button"
                     tabIndex={0}
                     onClick={toggleCollapse}
-                    className="flex h-[inherit] w-full pb-0.5"
+                    className="flex h-[inherit] w-full pb-0.5 focus-visible:outline-none"
                 >
                     <h6 className="text-primaryVariant100 fontGroup-highlight m-0 inline-flex uppercase">
                         {title}
