@@ -274,7 +274,14 @@ export const ListItem: FC<IList> = ({
                         onError={imgOnError}
                     />
                     <div className="ml-[10px] flex flex-col justify-between h-[initial]">
-                        <p className={variantStyle.title}>{title}</p>
+                        <p
+                            className={twMerge(
+                                variantStyle.title,
+                                "three-liner"
+                            )}
+                        >
+                            {title}
+                        </p>
 
                         <p
                             className={twMerge(
