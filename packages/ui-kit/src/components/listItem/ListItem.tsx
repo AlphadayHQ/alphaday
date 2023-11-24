@@ -40,7 +40,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlight prose-h3:fontGroup-highlight prose-h5:fontGroup-highlight prose-a:secondaryOrange break-word m-0 text-primary [&>p>a]:text-secondaryOrange",
         readMore: "fontGroup-highlight flex justify-end text-primaryVariant100",
         lastLine: "lastLine fontGroup-mini flex text-primaryVariant100 mt-2",
-        spacer: "mx-[7px] my-0",
+        spacer: "mx-[7px] my-0 self-center",
         bookmark: "block cursor-pointer mt-px",
         img: "w-[15px] h-[15px] mr-[5px] rounded-[100px]",
     };
@@ -83,7 +83,12 @@ export const listItemVariants = (variant: IList["variant"]) => {
                 defaults.base,
                 "video bg-backgroundVariant200 cursor-pointer p-[15px] rounded-none"
             ),
-            date: twMerge(defaults.date, "fontGroup-mini min-w-min m-0"),
+            date: twMerge(
+                defaults.date,
+                "fontGroup-mini min-w-min m-0 whitespace-nowrap self-center"
+            ),
+            bookmark: twMerge(defaults.bookmark, "self-center"),
+            lastLine: twMerge(defaults.lastLine, "center absolute bottom-4"),
         },
         reports: { ...defaults },
     };
@@ -270,19 +275,23 @@ export const ListItem: FC<IList> = ({
                     <img
                         src={image}
                         alt=""
-                        className="min-w-[142.22px] h-20 object-cover rounded-none"
+                        className="min-w-[100px] two-col:min-w-[142.22px] h-20 object-cover rounded-none"
                         onError={imgOnError}
                     />
                     <div className="ml-[10px] flex flex-col justify-between h-[initial]">
-                        <p className={variantStyle.title}>{title}</p>
-
                         <p
                             className={twMerge(
-                                variantStyle.lastLine,
-                                "center absolute bottom-4"
+                                variantStyle.title,
+                                "three-liner"
                             )}
                         >
-                            <span>{tag}</span>{" "}
+                            {title}
+                        </p>
+
+                        <p className={variantStyle.lastLine}>
+                            <span className="one-liner max-w-[90px] sm:max-w-max">
+                                {tag}
+                            </span>
                             <span className={variantStyle.spacer}>•</span>
                             <span className={variantStyle.date}>
                                 {duration}
@@ -291,6 +300,7 @@ export const ListItem: FC<IList> = ({
                                 isAuthenticated={isAuthenticated}
                                 onBookmark={onBookmark}
                                 bookmarked={bookmarked}
+                                className="self-center"
                             />
                         </p>
                     </div>

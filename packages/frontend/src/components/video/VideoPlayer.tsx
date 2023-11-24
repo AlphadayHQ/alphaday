@@ -99,7 +99,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
                             {video.title}
                         </p>
 
-                        <p className="flex mt-[8.5px] fontGroup-support text-primaryVariant100 text-center [&_.bookmark]:block [&_.bookmark]:mt-[1px] [&_.bookmark]:cursor-pointer">
+                        <p className="flex mt-[8.5px] fontGroup-mini text-primaryVariant100 text-center [&_.bookmark]:block [&_.bookmark]:mt-[1px] [&_.bookmark]:cursor-pointer">
                             <span>{video.sourceName}</span>
                             <span className="my-0 mx-[7px]">•</span>
                             <span className="date">{duration}</span>
