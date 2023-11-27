@@ -1,3 +1,4 @@
+export * from "./useActivityLogger";
 export * from "./useAppInit";
 export * from "./useAccount";
 export * from "./useAvailableViews";

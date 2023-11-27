@@ -1,6 +1,11 @@
 import { FC, useState } from "react";
 import { ViewDialog } from "@alphaday/ui-kit";
-import { useView, useAccount, useFeatureFlags } from "src/api/hooks";
+import {
+    useView,
+    useAccount,
+    useFeatureFlags,
+    useActivityLogger,
+} from "src/api/hooks";
 import { useTutorial } from "src/api/hooks/useTutorial";
 import { useWalletViewContext } from "src/api/store/providers/wallet-view-context";
 import { TSubscribedView, TViewMeta } from "src/api/types";
@@ -48,6 +53,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
     const { setAllowFetchWalletView, walletViewState } = useWalletViewContext();
     const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
+    const { logViewVisited } = useActivityLogger();
 
     const [targetViewMeta, setTargetViewMeta] = useState<TViewMeta | undefined>(
         undefined
@@ -86,6 +92,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
             // this read/scrollTo would only happen when the user clicks on a tab
             window.scrollTo(0, headerRef.current.offsetTop);
         }
+        logViewVisited(view.data.id);
         // the views tab is open on mobile, so we need to close it
         handleMobileOpen();
         navigateToView(view.data);

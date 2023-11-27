@@ -31,13 +31,13 @@
     "react-router-dom": "5.3.4",
     "react-select": "5.7.0",
     "tailwind-merge": "1.13.2",
-    "tailwind-variants": "0.1.13",
+    "tailwind-variants": "0.1.18",
     "url": "0.11.1"
   },
   "devDependencies": {
     "@tailwindcss/typography": "0.5.9",
     "autoprefixer": "10.4.14",
-    "postcss": "8.4.25",
+    "postcss": "8.4.31",
     "prettier-plugin-tailwindcss": "0.4.1",
     "sass": "1.63.6",
     "tailwind-scrollbar": "3.0.5",
