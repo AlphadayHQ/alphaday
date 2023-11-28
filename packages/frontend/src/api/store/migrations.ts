@@ -26,7 +26,7 @@ type PersistedRootState = PersistedState & RootState;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-// type RootStateV100 = PersistedRootState;
+type RootStateV100 = PersistedRootState;
 
 export type TMigrationFunction = (
     state: Partial<PersistedRootState>
@@ -34,7 +34,7 @@ export type TMigrationFunction = (
 
 type TMigrations = {
     // 101: (s: RootStateV100) => PersistedRootState
-    100: (s: unknown) => undefined;
+    100: (s: PersistedState) => RootStateV100 | undefined;
 };
 
 /**
@@ -119,7 +119,26 @@ export const removeFieldFromState = <S extends Record<string, unknown>>(
  * TMigrationStateVariant type.
  */
 const migrations: TMigrations = {
-    100: (_s: unknown) => undefined,
+    100: (s: PersistedState) => {
+        // eslint-disable-next-line no-underscore-dangle
+        const version = s?._persist?.version;
+        // v21 was last storage version in legacy repo
+        // we'll reset state for versions older than that
+        if (version && version < 21) {
+            Logger.warn(
+                `Found old storage version ${version}, resetting state`
+            );
+            return undefined;
+        }
+        if (version && version === 21) {
+            Logger.debug("migrations: found version 21, preserving");
+            return s as RootStateV100;
+        }
+        Logger.warn(
+            `migrations: unexpected version ${version}, reseting state`
+        );
+        return undefined;
+    },
 };
 
 export default migrations;
