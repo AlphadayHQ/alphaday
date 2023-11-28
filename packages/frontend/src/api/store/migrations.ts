@@ -130,11 +130,11 @@ const migrations: TMigrations = {
             );
             return undefined;
         }
-        if (version && version === 22) {
-            Logger.debug("migrations: found version 22, preserving");
+        if (version && version === 21) {
+            Logger.debug("migrations: found version 21, preserving");
             return s as RootStateV100;
         }
-        Logger.debug(
+        Logger.warn(
             `migrations: unexpected version ${version}, reseting state`
         );
         return undefined;
