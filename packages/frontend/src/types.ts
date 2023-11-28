@@ -66,6 +66,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     faq_template: lazy(() => import("./containers/dynamic/FaqContainer")),
     forum_template: lazy(() => import("./containers/items/ItemsContainer")),
     gas_template: lazy(() => import("./containers/gas/GasContainer")),
+    latest_video_template: lazy(
+        () => import("./containers/media/MediaContainer")
+    ),
     lens_template: lazy(
         () => import("./containers/lens-feed/LensFeedContainer")
     ),
