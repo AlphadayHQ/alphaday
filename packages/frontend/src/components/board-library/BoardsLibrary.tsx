@@ -85,7 +85,9 @@ const BoardPreviewWrap: FC<{
                           })
                     : undefined
             }
-            onEdit={() => onEditView?.(view.id, view.hash)}
+            onEdit={
+                onEditView ? () => onEditView(view.id, view.hash) : undefined
+            }
             onPin={
                 !isCustomBoard ? () => onBoardPin?.(view, view.id) : undefined
             }
