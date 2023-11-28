@@ -185,7 +185,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                     </TableCell>
                 );
             })}
-            {rowLink && (
+            {rowLink !== undefined && (
                 <TableCell
                     width={0.5}
                     format="icon"
@@ -193,7 +193,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                     href={rowLink}
                     hasRowLink={rowLink !== undefined}
                 >
-                    <LinkSVG className="w-3" />
+                    {rowLink && <LinkSVG className="w-3" />}
                 </TableCell>
             )}
         </div>
