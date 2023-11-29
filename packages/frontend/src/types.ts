@@ -106,6 +106,12 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     verasity_tokenomics_template: lazy(
         () => import("./containers/client/VerasityTokenomicsContainer")
     ),
+    custom_chart_template: lazy(
+        () => import("./containers/custom-modules/CustomChartContainer")
+    ),
+    custom_card_template: lazy(
+        () => import("./containers/custom-modules/CustomCardContainer")
+    ),
 };
 
 export type TFullSizeRoute = {

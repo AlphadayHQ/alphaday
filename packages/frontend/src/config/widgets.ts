@@ -134,6 +134,16 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 400,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.CustomCard]: {
+        MAX_PAGE_NUMBER: 10,
+        WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
+        ADJUSTABLE: false,
+    },
+    [ETemplateNameRegistry.CustomChart]: {
+        MAX_PAGE_NUMBER: 10,
+        WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
+        ADJUSTABLE: false,
+    },
     [ETemplateNameRegistry.CustomTable]: {
         MAX_PAGE_NUMBER: 10,
         WIDGET_HEIGHT: 400,
