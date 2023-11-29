@@ -239,7 +239,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
 
     const { nextPage, handleNextPage } = usePagination(
         viewsDataResponse?.links,
-        CONFIG.UI.BOARD_LIBRARY.LIMIT,
+        CONFIG.UI.BOARD_LIBRARY.MAX_PAGE_NUMBER,
         isSuccess
     );
 

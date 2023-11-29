@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from "react";
+import { FC, ChangeEvent, FormEvent } from "react";
 import {
     Input,
     Modal,
@@ -20,6 +20,7 @@ import { ReactComponent as OtherSVG } from "src/assets/icons/other.svg";
 import { ReactComponent as UsersSVG } from "src/assets/icons/users.svg";
 import market from "src/assets/img/preview/marketModule2x.png";
 import CONFIG from "src/config/config";
+import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 
 const CAT_ICONS = {
     defi: <DefiSVG />,
@@ -78,6 +79,7 @@ interface IWidgetLibProps {
     onSortBy(sort: EItemsSortBy): void;
     onCloseWidgetLib: () => void;
     handleSelectCategory: (c: string | undefined) => void;
+    handlePaginate: (type: "next" | "previous") => void;
 }
 const WidgetLibrary: FC<IWidgetLibProps> = ({
     showWidgetLib,
@@ -93,9 +95,16 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
     sortBy,
     onSortBy,
     isLoading,
+    handlePaginate,
 }) => {
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
         onFilter(e.target.value);
+    };
+
+    const handleScrollEvent = ({ currentTarget }: FormEvent<HTMLElement>) => {
+        if (shouldFetchMoreItems(currentTarget)) {
+            handlePaginate("next");
+        }
     };
 
     return (
@@ -212,7 +221,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                         {widgets.length} Widgets
                                     </div>
                                     {widgets.length > 0 ? (
-                                        <ScrollBar>
+                                        <ScrollBar onScroll={handleScrollEvent}>
                                             <div className="grid grid-cols-3 gap-2.5 pl-[15px] h-[60vh]">
                                                 {widgets.map((w) => {
                                                     const widgetCount =
