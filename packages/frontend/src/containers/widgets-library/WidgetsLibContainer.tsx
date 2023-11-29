@@ -43,7 +43,11 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
 
     const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
 
-    const { currentData: currentWidgetsData, isSuccess } = useGetWidgetsQuery(
+    const {
+        currentData: currentWidgetsData,
+        isFetching,
+        isSuccess,
+    } = useGetWidgetsQuery(
         { sortBy, page: currentPage, limit: CONFIG.UI.WIDGETS_LIBRARY.LIMIT },
         { refetchOnMountOrArgChange: true }
     );
@@ -166,6 +170,13 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         setFilter(value.toLowerCase());
     };
 
+    const handleSortBy = (sort: EItemsSortBy): void => {
+        if (isFetching || sortBy === sort) return;
+        if (widgets.length > 0) setWidgets([]);
+        if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
+        setSortBy(sort);
+    };
+
     const onCloseWidgetLib = useCallback(() => {
         if (showWidgetLib) {
             toggleWidgetLib();
@@ -216,7 +227,7 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 (sw) => sw.widget as TWidget
             )}
             sortBy={sortBy}
-            onSortBy={setSortBy}
+            onSortBy={handleSortBy}
             onFilter={handleFilter}
             isLoading={widgets === undefined}
             onCloseWidgetLib={onCloseWidgetLib}
