@@ -274,14 +274,15 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                             </div>
                                         </ScrollBar>
                                     ) : (
-                                        <div className="flex items-center justify-center h-full">
+                                        <div className="flex items-center justify-center h-[60vh]">
                                             No widgets found in this category
-                                            &#34;
-                                            {categories?.find(
-                                                (c) =>
-                                                    c.slug === selectedCategory
-                                            )?.name || "All"}
-                                            &#34;
+                                            {` (${
+                                                categories?.find(
+                                                    (c) =>
+                                                        c.slug ===
+                                                        selectedCategory
+                                                )?.name || "All"
+                                            })`}
                                         </div>
                                     )}
                                 </>
