@@ -23,6 +23,7 @@ export enum EEnvironments {
 }
 
 const IS_TEST = import.meta.env.VITE_ENVIRONMENT === EEnvironments.Test;
+const IS_LOCAL = import.meta.env.MODE === "development" && import.meta.env.DEV;
 const IS_DEV =
     import.meta.env.VITE_ENVIRONMENT === EEnvironments.Development ||
     !import.meta.env.VITE_ENVIRONMENT;
@@ -60,6 +61,7 @@ export type TFeatureEnvironment = EEnvironments | "none";
 const CONFIG = {
     ENVIRONMENT,
     IS_TEST,
+    IS_LOCAL,
     IS_DEV,
     IS_STAGING,
     IS_PROD,

@@ -13,7 +13,7 @@ export enum ELogLevel {
 
 let logLevel: ELogLevel;
 
-const notProd = CONFIG.IS_DEV || CONFIG.IS_STAGING;
+const notProd = CONFIG.IS_LOCAL || CONFIG.IS_DEV || CONFIG.IS_STAGING;
 
 logLevel = ((): ELogLevel => {
     if (LOGLEVEL in ELogLevel) {
