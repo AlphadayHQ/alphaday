@@ -10,6 +10,7 @@ import {
 } from "@alphaday/ui-kit";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget, TWidgetMini } from "src/api/types";
+import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { ReactComponent as ChartSVG } from "src/assets/icons/chart.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as DefiSVG } from "src/assets/icons/defi.svg";
@@ -20,7 +21,6 @@ import { ReactComponent as OtherSVG } from "src/assets/icons/other.svg";
 import { ReactComponent as UsersSVG } from "src/assets/icons/users.svg";
 import market from "src/assets/img/preview/marketModule2x.png";
 import CONFIG from "src/config/config";
-import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 
 const CAT_ICONS = {
     defi: <DefiSVG />,
