@@ -418,6 +418,7 @@ export type TSubscribeViewResponse = null;
 
 export type TWidgetsRequest = {
     sortBy?: EItemsSortBy;
+    search?: string;
     limit?: number;
     page?: number;
 } | void;

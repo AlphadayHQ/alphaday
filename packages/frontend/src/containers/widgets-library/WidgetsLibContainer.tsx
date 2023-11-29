@@ -48,7 +48,12 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         isFetching,
         isSuccess,
     } = useGetWidgetsQuery(
-        { sortBy, page: currentPage, limit: CONFIG.UI.WIDGETS_LIBRARY.LIMIT },
+        {
+            sortBy,
+            search: filter,
+            page: currentPage,
+            limit: CONFIG.UI.WIDGETS_LIBRARY.LIMIT,
+        },
         { refetchOnMountOrArgChange: true }
     );
     const { data: widgetsCategory } = useGetWidgetsCategoryQuery();
@@ -167,7 +172,11 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     }
 
     const handleFilter = (value: string) => {
-        setFilter(value.toLowerCase());
+        const normalizedValue = value.toLowerCase();
+        if (isFetching || filter === normalizedValue) return;
+        if (widgets.length > 0) setWidgets([]);
+        if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
+        setFilter(normalizedValue);
     };
 
     const handleSortBy = (sort: EItemsSortBy): void => {
@@ -204,22 +213,15 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     return (
         <WidgetLibrary
             showWidgetLib={showWidgetLib}
-            widgets={[...(widgets ?? [])]
-                .filter((w) => {
-                    // filter by category. If no category is selected, show all widgets
-                    return (
-                        !selectedCategory ||
-                        w.categories.some((c) => {
-                            return c.slug === selectedCategory;
-                        })
-                    );
-                })
-                .filter((w) =>
-                    filter
-                        ? w.name.toLowerCase().includes(filter) ||
-                          w.description.toLowerCase().includes(filter)
-                        : true
-                )}
+            widgets={[...(widgets ?? [])].filter((w) => {
+                // filter by category. If no category is selected, show all widgets
+                return (
+                    !selectedCategory ||
+                    w.categories.some((c) => {
+                        return c.slug === selectedCategory;
+                    })
+                );
+            })}
             categories={[...(widgetsCategory?.results || [])].sort(
                 (a, d) => a.sort_order - d.sort_order
             )}
