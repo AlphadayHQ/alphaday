@@ -416,8 +416,15 @@ export type TDeleteViewResponse = null;
 export type TSubscribeViewRequest = { id: number };
 export type TSubscribeViewResponse = null;
 
-export type TWidgetsRequest = { sortBy?: EItemsSortBy } | void;
-export type TWidgetsRawResponse = ReadonlyArray<TRemoteWidgetMini>;
+export type TWidgetsRequest = {
+    sortBy?: EItemsSortBy;
+    search?: string;
+    limit?: number;
+    page?: number;
+} | void;
+export type TWidgetsRawResponse = TPagination & {
+    results: ReadonlyArray<TRemoteWidgetMini>;
+};
 export type TWidgetsResponse = TWidgetsRawResponse;
 
 export type TWidgetByIdRequest = { id: number };

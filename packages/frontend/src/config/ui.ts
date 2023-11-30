@@ -67,6 +67,11 @@ const UI_CONFIG = {
     BOARD_LIBRARY: {
         LIMIT: 25,
         MAX_SUBSCRIPTIONS: 15,
+        MAX_PAGE_NUMBER: 10,
+    },
+    WIDGETS_LIBRARY: {
+        LIMIT: 25,
+        MAX_PAGE_NUMBER: 10,
     },
 };
 

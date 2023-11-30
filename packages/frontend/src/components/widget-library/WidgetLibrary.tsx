@@ -1,4 +1,4 @@
-import { FC, ChangeEvent } from "react";
+import { FC, ChangeEvent, FormEvent } from "react";
 import {
     Input,
     Modal,
@@ -10,6 +10,7 @@ import {
 } from "@alphaday/ui-kit";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget, TWidgetMini } from "src/api/types";
+import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { ReactComponent as ChartSVG } from "src/assets/icons/chart.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as DefiSVG } from "src/assets/icons/defi.svg";
@@ -78,6 +79,7 @@ interface IWidgetLibProps {
     onSortBy(sort: EItemsSortBy): void;
     onCloseWidgetLib: () => void;
     handleSelectCategory: (c: string | undefined) => void;
+    handlePaginate: (type: "next" | "previous") => void;
 }
 const WidgetLibrary: FC<IWidgetLibProps> = ({
     showWidgetLib,
@@ -93,9 +95,16 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
     sortBy,
     onSortBy,
     isLoading,
+    handlePaginate,
 }) => {
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
         onFilter(e.target.value);
+    };
+
+    const handleScrollEvent = ({ currentTarget }: FormEvent<HTMLElement>) => {
+        if (shouldFetchMoreItems(currentTarget)) {
+            handlePaginate("next");
+        }
     };
 
     return (
@@ -212,7 +221,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                         {widgets.length} Widgets
                                     </div>
                                     {widgets.length > 0 ? (
-                                        <ScrollBar>
+                                        <ScrollBar onScroll={handleScrollEvent}>
                                             <div className="grid grid-cols-3 gap-2.5 pl-[15px] h-[60vh]">
                                                 {widgets.map((w) => {
                                                     const widgetCount =
@@ -265,14 +274,15 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                             </div>
                                         </ScrollBar>
                                     ) : (
-                                        <div className="flex items-center justify-center h-full">
+                                        <div className="flex items-center justify-center h-[60vh]">
                                             No widgets found in this category
-                                            &#34;
-                                            {categories?.find(
-                                                (c) =>
-                                                    c.slug === selectedCategory
-                                            )?.name || "All"}
-                                            &#34;
+                                            {` (${
+                                                categories?.find(
+                                                    (c) =>
+                                                        c.slug ===
+                                                        selectedCategory
+                                                )?.name || "All"
+                                            })`}
                                         </div>
                                     )}
                                 </>
