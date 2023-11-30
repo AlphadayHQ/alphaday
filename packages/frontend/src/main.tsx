@@ -29,6 +29,7 @@ try {
     const { cookieChoice } = JSON.parse(persistedState?.ui || "{}");
     if (
         CONFIG.SENTRY.ENABLE &&
+        !CONFIG.IS_LOCAL &&
         (!CONFIG.IS_PROD ||
             (cookieChoice != null &&
                 typeof cookieChoice === "number" &&
