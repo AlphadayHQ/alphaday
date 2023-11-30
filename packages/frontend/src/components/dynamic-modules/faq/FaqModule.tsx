@@ -25,7 +25,7 @@ const FaqModule: FC<IAgenda> = ({
         });
 
     return (
-        <span
+        <div
             className="border-none block relative min-h-[110px]"
             style={{
                 // height of the table should not be greater than max-content
@@ -52,7 +52,7 @@ const FaqModule: FC<IAgenda> = ({
                     </div>
                 </ScrollBar>
             )}
-        </span>
+        </div>
     );
 };
 
