@@ -228,7 +228,11 @@ const viewsApi = alphadayApi.injectEndpoints({
         }),
         getWidgets: builder.query<TWidgetsResponse, TWidgetsRequest>({
             query: (req) => {
-                const params = req ? queryString.stringify(req) : "";
+                const { sortBy, ...rest } = req ?? {};
+                const params = queryString.stringify({
+                    ...rest,
+                    sort_by: sortBy,
+                });
                 const path = `${VIEWS.BASE}${VIEWS.WIDGETS}?${params}`;
                 Logger.debug("getWidgets: querying", path);
                 return path;
