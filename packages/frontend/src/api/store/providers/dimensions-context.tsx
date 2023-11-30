@@ -1,5 +1,6 @@
 import { createContext, FC, useEffect, useRef, useState } from "react";
 import { IWindowsSize, useWindowSize } from "src/api/hooks";
+import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
 
 const { WIDGET_SIZE_TRACKING_ID } = CONFIG.UI;
@@ -29,7 +30,15 @@ export const DimensionsProvider: FC<{ children?: React.ReactNode }> = ({
     const [widgetsSize, setWidgetSize] = useState<IWidgetsSize>();
     const timeOutRef = useRef<ReturnType<typeof setTimeout>>();
 
+    const previousElement = useRef<HTMLElement | null>(null);
+    const currElement = document.getElementById(WIDGET_SIZE_TRACKING_ID);
+
+    const shouldReRegister =
+        previousElement.current !== null &&
+        previousElement.current !== currElement;
+
     useEffect(() => {
+        Logger.debug("dimensions-context: registering observer");
         function handleResize() {
             const elem = document.getElementById(WIDGET_SIZE_TRACKING_ID);
 
@@ -45,12 +54,14 @@ export const DimensionsProvider: FC<{ children?: React.ReactNode }> = ({
                 150
             );
         }
+        previousElement.current = null;
 
         const resizeObserver = new ResizeObserver(handleResize);
 
         const mutationObserver = new MutationObserver(function Observe() {
             const elem = document.getElementById(WIDGET_SIZE_TRACKING_ID);
             if (elem) {
+                previousElement.current = elem;
                 resizeObserver.observe(elem);
                 mutationObserver.disconnect();
             }
@@ -59,12 +70,13 @@ export const DimensionsProvider: FC<{ children?: React.ReactNode }> = ({
         mutationObserver.observe(document, { childList: true, subtree: true });
 
         return () => {
+            Logger.debug("dimensions-context: unmounting, cleaning up");
             const elem = document.getElementById(WIDGET_SIZE_TRACKING_ID);
             if (elem) resizeObserver?.unobserve(elem);
             if (timeOutRef.current) clearTimeout(timeOutRef.current);
             mutationObserver.disconnect();
         };
-    }, []);
+    }, [shouldReRegister]);
     return (
         // eslint-disable-next-line react/jsx-no-constructed-context-values
         <DimensionsContext.Provider value={{ widgetsSize, windowSize }}>
