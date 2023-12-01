@@ -21,13 +21,9 @@ const AgendaContainer: FC<IModuleContainer<TAgendaItem[]>> = ({
         () => moduleData.widget.format_structure.data || [],
         [moduleData.widget.format_structure.data]
     );
-    if (
-        Array.isArray(legacyItems) &&
-        legacyItems.length > 0 &&
-        items.length === 0
-    ) {
+    if (Array.isArray(legacyItems) && legacyItems.length > 0) {
         Logger.warn(
-            `AgendaContainer: widget ${moduleData.widget.name} is using format_structure which has been deprecated`
+            `AgendaContainer: widget ${moduleData.widget.name} contains data in format_structure which has been deprecated`
         );
     }
 
