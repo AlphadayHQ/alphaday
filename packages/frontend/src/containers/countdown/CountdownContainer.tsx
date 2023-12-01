@@ -11,7 +11,6 @@ const DEFAULT_TARGET_DATE = moment().unix();
 const CountdownContainer: FC<IModuleContainer<TCounterData[]>> = ({
     moduleData,
 }) => {
-    // const [data] = moduleData.widget.format_structure.data || [];
     const isBeaconWidget = moduleData.widget.slug === "merge_countdown_widget";
 
     const data = useMemo(() => {

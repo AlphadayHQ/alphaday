@@ -14,10 +14,7 @@ const RoadmapContainer: FC<IModuleContainer<TItem[]>> = ({ moduleData }) => {
     );
 
     // TODO(v-almonacid): remove this block when format_structure is removed from db model
-    const legacyItems = useMemo(
-        () => moduleData.widget.format_structure.data || [],
-        [moduleData.widget.format_structure.data]
-    );
+    const legacyItems = moduleData.widget.format_structure.data || [];
     if (Array.isArray(legacyItems) && legacyItems.length > 0) {
         Logger.warn(
             `RoadmapContainer: widget ${moduleData.widget.name} contains data in format_structure which has been deprecated`
