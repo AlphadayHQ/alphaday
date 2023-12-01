@@ -13,6 +13,7 @@ const FaqContainer: FC<IModuleContainer<TItem[][]>> = ({ moduleData }) => {
         [moduleData.widget.custom_data]
     );
 
+    // TODO(v-almonacid): Remove this block once format_structure is deleted
     const data = moduleData.widget.format_structure.data?.[0];
     if (Array.isArray(data) && data.length > 0 && items.length === 0) {
         Logger.warn("FaqContainer: format_structure has been deprecated");

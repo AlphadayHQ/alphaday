@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TEvent } from "src/api/types";
 import { getClosestEvent } from "src/api/utils/calendarUtils";
 import { filteringListToStr } from "src/api/utils/filterUtils";
+import { customDataAsItems } from "src/api/utils/itemUtils";
 import { Logger } from "src/api/utils/logging";
 import { buildViewPath } from "src/api/utils/viewUtils";
 import CalendarModule from "src/components/calendar/CalendarModule";
@@ -78,7 +79,15 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
 
     const viewPath = buildViewPath(selectedView?.data);
 
-    const widgetCats = moduleData.widget.format_structure.data?.[0];
+    const widgetCats = customDataAsItems(moduleData.widget.custom_data ?? []);
+
+    // TODO(v-almonacid): remove this block when format_structure is removed from db model
+    const legacyWidgetCats = moduleData.widget.format_structure?.data?.[0];
+    if (Array.isArray(legacyWidgetCats) && legacyWidgetCats.length > 0) {
+        Logger.warn(
+            `CalendarContainer: widget ${moduleData.widget.name} is using format_structure which has been deprecated`
+        );
+    }
 
     const allowedCategories: TEventCategory[] =
         widgetCats?.map((wCat) => {

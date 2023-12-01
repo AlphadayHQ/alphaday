@@ -1,5 +1,6 @@
 import { TItem } from "src/types";
 import { TRemoteCustomData, TRemoteCustomDatum } from "../services";
+import { Logger } from "./logging";
 
 /**
  * This type is used to define the root type of items which include news, daos, tweets etc
@@ -174,5 +175,11 @@ export const customDatumAsItem: (datum: TRemoteCustomDatum) => TItem = (d) => {
     }, {} as TItem);
 };
 
-export const customDataAsItems: (data: TRemoteCustomData) => TItem[] = (d) =>
-    d.map(customDatumAsItem);
+export const customDataAsItems: (data: TRemoteCustomData) => TItem[] = (d) => {
+    try {
+        return d.map(customDatumAsItem);
+    } catch (error) {
+        Logger.error("customDataAsItems: unexpected error", error);
+        return [];
+    }
+};
