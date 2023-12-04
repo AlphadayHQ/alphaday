@@ -13,17 +13,17 @@ export const darkColors = {
     primaryVariant1000: "var(--alpha-dark-grey-300)", // color: #656A7B -- close button disabled
     borderLine: "var(--alpha-border)", // color: #4c4c4c00 -- border
     background: "var(--alpha-dark-base)", // color: #111213 -- background
-    backgroundVariant100: "var(--alpha-dark-100)", // color: #191C1F -- background variant 100
-    backgroundVariant200: "var(--alpha-dark-200)", // color: #212328 -- background variant 200
-    backgroundVariant300: "var(--alpha-filtered-white)", // color: #27292E -- module header
-    backgroundVariant400: "var(--alpha-dark-800)", // color: #0A0A0B -- search bg focus
-    backgroundVariant500: "var(--alpha-dark-blue-200)", // color: #2C2E35 -- module preview bg
-    backgroundVariant600: "var(--alpha-dark-2600)", // color: rgba(58, 63, 70, 0.15) -- btn bg:active
-    backgroundVariant700: "var(--alpha-dark-2700)", // color: rgba(12, 13, 14, 0.15) -- card selector bg:active
-    backgroundVariant800: "var(--alpha-dark-300)", // color: #1E2024 -- card bg
-    backgroundVariant900: "var(--alpha-dark-600)", // color: #27292F -- card bg:hover
-    backgroundVariant1000: "var(--alpha-dark-900)", // color: #23242A -- card bg:active
-    backgroundVariant1100: "var(--alpha-dark-blue-300)", // color: #272A30 -- tooltip
+    // backgroundVariant100: "var(--alpha-dark-100)", // color: #191C1F -- background variant 100
+    // backgroundVariant200: "var(--alpha-dark-200)", // color: #212328 -- background variant 200
+    // backgroundVariant300: "var(--alpha-filtered-white)", // color: #27292E -- module header
+    // backgroundVariant400: "var(--alpha-dark-800)", // color: #0A0A0B -- search bg focus
+    // backgroundVariant500: "var(--alpha-dark-blue-200)", // color: #2C2E35 -- module preview bg
+    // backgroundVariant600: "var(--alpha-dark-2600)", // color: rgba(58, 63, 70, 0.15) -- btn bg:active
+    // backgroundVariant700: "var(--alpha-dark-2700)", // color: rgba(12, 13, 14, 0.15) -- card selector bg:active
+    // backgroundVariant800: "var(--alpha-dark-300)", // color: #1E2024 -- card bg
+    // backgroundVariant900: "var(--alpha-dark-600)", // color: #27292F -- card bg:hover
+    // backgroundVariant1000: "var(--alpha-dark-900)", // color: #23242A -- card bg:active
+    // backgroundVariant1100: "var(--alpha-dark-blue-300)", // color: #272A30 -- tooltip
     backgroundVariant1200: "var(--alpha-dark-filtered)", // color: rgba(0, 0, 0, 0.8) -- modal overlay
     backgroundVariant1300: "var(--alpha-dark-filtered-100)", // color: rgba(0, 0, 0, 0.2) -- modal overlay
     backgroundVariant1400: "var(--alpha-dark-filtered-200)", // color: rgba(0, 0, 0, 0.4) -- tutorial overlay
@@ -52,9 +52,9 @@ export const darkColors = {
     btnBackgroundVariant1900: "var(--alpha-dark-2500)", // color: #25272D -- card selector bg:active
     btnRingVariant100: "var(--alpha-light-blue)", // color: #477FF7 -- button Ring Primary
     btnRingVariant200: "var(--alpha-dark-blue)", // color: #263964 -- button Ring PrimaryXL
-    btnRingVariant300: "var(--alpha-filtered-light-grey)", // color: rgba(121, 131, 162, 0.2) -- button Ring SecodaryXL
+    // btnRingVariant300: "var(--alpha-filtered-light-grey)", // color: rgba(121, 131, 162, 0.2) -- button Ring SecodaryXL
     btnRingVariant400: "var(--alpha-light-blue-100)", // color: #5E8FF8 -- button Ring Primary
-    btnRingVariant500: "var(--alpha-dark-1100)", // color: #393C46 -- button btn Ring
+    // btnRingVariant500: "var(--alpha-dark-1100)", // color: #393C46 -- button btn Ring
 
     secondaryOrange: "var(--alpha-orange)", // color: #FAA202 -- calendar event category
     secondaryOrange50: "var(--alpha-orange-50)", // color: #E1B74F

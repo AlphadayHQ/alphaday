@@ -60,15 +60,15 @@ http://ionicframework.com/docs/theming/ */
 
     /** alphaday background shades **/
     --alpha-dark-base: #121212;
-    --alpha-dark-100: #191c1f;
-    --alpha-dark-200: #212328;
-    --alpha-dark-300: #1e2024;
+    // --alpha-dark-100: #191c1f;
+    // --alpha-dark-200: #212328;
+    // --alpha-dark-300: #1e2024;
     --alpha-dark-400: #25272c;
     --alpha-dark-500: #2e3037;
-    --alpha-dark-600: #27292f;
+    // --alpha-dark-600: #27292f;
     --alpha-dark-700: #15161a;
-    --alpha-dark-800: #0a0a0b;
-    --alpha-dark-900: #23242a;
+    // --alpha-dark-800: #0a0a0b;
+    // --alpha-dark-900: #23242a;
     --alpha-dark-1000: #222529;
     --alpha-dark-1100: #393c46;
     --alpha-dark-1200: #1e2124;
@@ -85,8 +85,8 @@ http://ionicframework.com/docs/theming/ */
     --alpha-dark-2300: #2c2e35;
     --alpha-dark-2400: #383a43;
     --alpha-dark-2500: #25272d;
-    --alpha-dark-2600: rgba(58, 63, 70, 0.15);
-    --alpha-dark-2700: rgba(12, 13, 14, 0.15);
+    // --alpha-dark-2600: rgba(58, 63, 70, 0.15);
+    // --alpha-dark-2700: rgba(12, 13, 14, 0.15);
 
     /* primary shades */
     --alpha-light: #c2c5d6;
@@ -103,7 +103,7 @@ http://ionicframework.com/docs/theming/ */
     --alpha-dark-grey-filtered: rgba(118, 124, 143, 0.2);
     --alpha-dark-grey-filtered-100: rgba(34, 37, 41, 0.2);
     --alpha-darker-grey: #505562;
-    --alpha-filtered-white: #27292e;
+    // --alpha-filtered-white: #27292e;
     --alpha-filtered-light-grey: rgba(121, 131, 162, 0.2);
     --alpha-dark-filtered: rgba(0, 0, 0, 0.8);
     --alpha-dark-filtered-100: rgba(0, 0, 0, 0.2);
@@ -118,8 +118,8 @@ http://ionicframework.com/docs/theming/ */
     --alpha-light-blue-100: #5e8ff8;
     --alpha-dark-blue: #263964;
     --alpha-dark-blue-100: #2d4476;
-    --alpha-dark-blue-200: #2c2e35;
-    --alpha-dark-blue-300: #272a30;
+    // --alpha-dark-blue-200: #2c2e35;
+    // --alpha-dark-blue-300: #272a30;
     --alpha-red: #f45532;
     --alpha-red-filtered: rgba(255, 95, 88, 0.08);
     --alpha-green: #6dd230;
@@ -148,17 +148,17 @@ http://ionicframework.com/docs/theming/ */
 
     // TODO remove unused colors
     --background: var(--alpha-base);
-    --backgroundVariant100: var(--alpha-dark-100);
-    --backgroundVariant200: var(--alpha-dark-200);
-    --backgroundVariant300: var(--alpha-filtered-white);
-    --backgroundVariant400: var(--alpha-dark-800);
-    --backgroundVariant500: var(--alpha-dark-blue-200);
-    --backgroundVariant600: var(--alpha-dark-2600);
-    --backgroundVariant700: var(--alpha-dark-2700);
-    --backgroundVariant800: var(--alpha-dark-300);
-    --backgroundVariant900: var(--alpha-dark-600);
-    --background0: var(--alpha-dark-900);
-    --backgroundVariant1100: var(--alpha-dark-blue-300);
+    // --backgroundVariant100: var(--alpha-dark-100);
+    // --backgroundVariant200: var(--alpha-dark-200);
+    // --backgroundVariant300: var(--alpha-filtered-white);
+    // --backgroundVariant400: var(--alpha-dark-800);
+    // --backgroundVariant500: var(--alpha-dark-blue-200);
+    // --backgroundVariant600: var(--alpha-dark-2600);
+    // --backgroundVariant700: var(--alpha-dark-2700);
+    // --backgroundVariant800: var(--alpha-dark-300);
+    // --backgroundVariant900: var(--alpha-dark-600);
+    // --background0: var(--alpha-dark-900);
+    // --backgroundVariant1100: var(--alpha-dark-blue-300);
 
     // Borders
     --borderLine: var(--alpha-border);
