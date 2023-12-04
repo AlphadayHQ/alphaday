@@ -31,7 +31,7 @@ export type TWidgetSlug = `${string}_${TBaseWidgetSlug}` | TBaseWidgetSlug;
  *
  * Here we define types for each module containers
  */
-export type TItem = { id: string | number } & TDynamicItem<string>;
+export type TItem = TDynamicItem<string>;
 
 export type TCategoryData = {
     name: string;
