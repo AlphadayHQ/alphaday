@@ -184,7 +184,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                         </ScrollBar>
 
                         <div className="w-full overflow-hidden h-full pb-[120px]">
-                            <div className="flex justify-between items-center p-[17px_25px] border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
+                            <div className="flex justify-between items-center p-[17px_25px] border-b border-borderLine text-primaryVariant100 font-normal">
                                 <div className="flex justify-around items-center [&>span]:mr-[7px]" />
                                 <div className="flex justify-around items-center [&>span]:mr-[7px] fontGroup-normal">
                                     {SORT_BUTTONS.length > 0 && (

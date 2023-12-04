@@ -24,7 +24,7 @@ const MarketsList: FC<IMarketsList> = ({
     pinnedCoins,
 }) => {
     return (
-        <div className="w-full border-b border-solid border-btnRingVariant500 transition-[height] duration-[400ms] relative cursor-pointer">
+        <div className="w-full border-b border-solid border-borderLine transition-[height] duration-[400ms] relative cursor-pointer">
             <div
                 className="flex overflow-x-auto overflow-y-hidden px-0 py-[13px]"
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}

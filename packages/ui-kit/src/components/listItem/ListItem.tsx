@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 import ItemBookmark from "./ItemBookmark";
 import styles from "./ListItem.module.scss";
 
-export const HRElement = () => <hr className="border-btnRingVariant500 m-0" />;
+export const HRElement = () => <hr className="border-borderLine m-0" />;
 
 interface IList {
     variant: "news" | "dao" | "podcast" | "video" | "reports" | "discord";

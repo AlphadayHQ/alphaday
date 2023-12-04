@@ -56,7 +56,7 @@ http://ionicframework.com/docs/theming/ */
     --alpha-brown-base: #111213;
     --alpha-primary: #f2f2f2;
     --alpha-secondary: #1e1e1e;
-    --alpha-border: #2c2c2c;
+    --alpha-border: #3b3a3a;
 
     /** alphaday background shades **/
     --alpha-dark-base: #121212;
@@ -145,6 +145,8 @@ http://ionicframework.com/docs/theming/ */
     --primaryVariant800: var(--alpha-dark-grey-100);
     --primaryVariant900: var(--alpha-dark-grey-200);
     --primaryVariant1000: var(--alpha-dark-grey-300);
+
+    // TODO remove unused colors
     --background: var(--alpha-base);
     --backgroundVariant100: var(--alpha-dark-100);
     --backgroundVariant200: var(--alpha-dark-200);
@@ -157,6 +159,10 @@ http://ionicframework.com/docs/theming/ */
     --backgroundVariant900: var(--alpha-dark-600);
     --background0: var(--alpha-dark-900);
     --backgroundVariant1100: var(--alpha-dark-blue-300);
+
+    // Borders
+    --borderLine: var(--alpha-border);
+  
     // TODO: update filtered
     --backgroundVariant1200: var(--alpha-dark-filtered);
     --backgroundVariant1300: var(--alpha-dark-filtered-100);
@@ -165,7 +171,7 @@ http://ionicframework.com/docs/theming/ */
     --backgroundVariant1600: var(--alpha-dark-filtered-300);
     --backgroundVariant1700: var(--alpha-dark-filtered-400);
 
-    
+
     --btnBackgroundVariant100: var(--alpha-dark-1000);
     --btnBackgroundVariant200: var(--alpha-dark-1200);
     --btnBackgroundVariant300: var(--alpha-dark-1300);
@@ -185,11 +191,12 @@ http://ionicframework.com/docs/theming/ */
     --btnBackgroundVariant1700: var(--alpha-dark-2300);
     --btnBackgroundVariant1800: var(--alpha-dark-2400);
     --btnBackgroundVariant1900: var(--alpha-dark-2500);
+
     --btnRingVariant100: var(--alpha-light-blue);
     --btnRingVariant200: var(--alpha-dark-blue);
-    --btnRingVariant300: var(--alpha-filtered-light-grey);
+    // --btnRingVariant300: var(--alpha-filtered-light-grey);
     --btnRingVariant400: var(--alpha-light-blue-100);
-    --btnRingVariant500: var(--alpha-dark-1100);
+    // --btnRingVariant500: var(--alpha-dark-1100);
     --secondaryOrange: var(--alpha-orange);
     --secondaryOrange50: var(--alpha-orange-50);
     --secondaryOrange100: var(--alpha-orange-100);

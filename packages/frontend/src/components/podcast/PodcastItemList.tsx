@@ -69,7 +69,7 @@ const PodcastItemList: FC<IPodcastItemList> = ({
                 return (
                     <div className="abs" key={item}>
                         <ItemSkeleton />
-                        <hr className="m-0 border-btnRingVariant500" />
+                        <hr className="m-0 border-borderLine" />
                     </div>
                 );
             })}

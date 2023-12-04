@@ -94,7 +94,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
 
     return (
         <div
-            className="w-full border-b border-solid border-btnRingVariant500 transition-all duration-[400] relative cursor-pointer"
+            className="w-full border-b border-solid border-borderLine transition-all duration-[400] relative cursor-pointer"
             style={{
                 height: showAllChannels ? "600px" : `${channelsHeight}px`,
             }}
@@ -207,7 +207,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 )}
             </div>
             {!isLoadingChannels && (
-                <div className="h-[436px] p-[15px] m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-btnRingVariant500">
+                <div className="h-[436px] p-[15px] m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-borderLine">
                     <p className="fontGroup-highlight uppercase text-primary m-0 mb-[10px]">
                         All Channels
                     </p>

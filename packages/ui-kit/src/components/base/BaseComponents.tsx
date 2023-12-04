@@ -19,7 +19,7 @@ export const BaseModuleWrapper = forwardRef<
             className={twMerge("origin-center w-full", className)}
             style={style}
         >
-            <div className="w-full h-full border-background bg-background text-primary flex flex-col overflow-hidden rounded-[5px] border-2 border-solid shadow-[0px_0px_0px_1px_rgba(121,131,162,0.2)]">
+            <div className="w-full h-full border-borderLine bg-background text-primary flex flex-col overflow-hidden rounded-[5px] border border-solid">
                 {children}
             </div>
         </div>
@@ -68,7 +68,7 @@ export const BaseModuleOptionsFooter = forwardRef<
                     variant="small"
                     onClick={removeWidget}
                     title="Removes this widget from the current board"
-                    className="hover:border-btnRingVariant500 focus:border-btnRingVariant500 border-btnRingVariant500"
+                    className="hover:border-borderLine focus:border-borderLine border-borderLine"
                 >
                     <TrashSVG className="w-[15px] fill-[inherit]" /> &nbsp;
                     Remove Widget

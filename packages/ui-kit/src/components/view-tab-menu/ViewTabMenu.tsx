@@ -141,7 +141,7 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
                     ))}
                     {menuDescription && (
                         <>
-                            <div className="h-0 hidden border-t border-btnRingVariant500 m-0 w-[200px]" />
+                            <div className="h-0 hidden border-t border-borderLine m-0 w-[200px]" />
                             <span className="description +++++++++">
                                 <InfoSVG
                                     style={{

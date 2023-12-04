@@ -37,7 +37,7 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
     authAccount,
 }) => {
     return (
-        <div className="w-ful relative border-b border-solid border-btnRingVariant500 transition-[height] duration-300 cursor-pointer">
+        <div className="w-ful relative border-b border-solid border-borderLine transition-[height] duration-300 cursor-pointer">
             <div
                 className="flex items-center h-[53px] overflow-y-hidden overflow-x-scroll py-[13px] px-0"
                 id="portfolioAddrContainer"

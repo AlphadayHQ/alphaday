@@ -125,7 +125,7 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                 >
                     <div
                         className={twMerge(
-                            "m-0 flex p-0 pl-[15px] items-center bg-background border-b border-btnRingVariant500 [&>.wrap]:mr-[10px] transition-all duration-400",
+                            "m-0 flex p-0 pl-[15px] items-center bg-background border-b border-borderLine [&>.wrap]:mr-[10px] transition-all duration-400",
                             (isLoadingItems || !items) && "bg-transparent"
                         )}
                         style={{ height: SWITCH_HEIGHT }}

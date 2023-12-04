@@ -40,7 +40,7 @@ interface IProps {
 }
 
 const Divider = () => (
-    <div className="border-btnRingVariant500 m-0 h-0 border-t border-solid" />
+    <div className="border-borderLine m-0 h-0 border-t border-solid" />
 );
 
 const ProfileDropdownWrapper: React.FC<IProps> = ({

@@ -11,6 +11,7 @@ export const darkColors = {
     primaryVariant800: "var(--alpha-dark-grey-100)", // color: #84899A -- info button hover
     primaryVariant900: "var(--alpha-dark-grey-200)", // color: #5E6373 -- info button disabled
     primaryVariant1000: "var(--alpha-dark-grey-300)", // color: #656A7B -- close button disabled
+    borderLine: "var(--alpha-border)", // color: #4c4c4c00 -- border
     background: "var(--alpha-dark-base)", // color: #111213 -- background
     backgroundVariant100: "var(--alpha-dark-100)", // color: #191C1F -- background variant 100
     backgroundVariant200: "var(--alpha-dark-200)", // color: #212328 -- background variant 200

@@ -192,7 +192,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                 isBoardsLibOpen && "max-h-[500px] [&>*]:visible [&>*]:delay-300"
             )}
         >
-            <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
+            <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-borderLine text-primaryVariant100 font-normal">
                 <div className="meta">
                     <div className="fontGroup-highlightSemi uppercase">
                         Boards Library
@@ -212,7 +212,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     <CloseSVG className="w-3 h-3" />
                 </div>
             </div>
-            <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-btnRingVariant500 text-primaryVariant100 font-normal">
+            <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-borderLine text-primaryVariant100 font-normal">
                 <div className="flex justify-around items-center [&>span]:mr-[7px]">
                     <span className="text-primary mr-3">Categories</span>
                     <span className="wrap">
@@ -267,7 +267,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     <ModuleLoader $height="100%" />
                 ) : (
                     <div className="flex flex-row justify-between">
-                        <div className="w-full p-[25px] pr-[15px] max-w-[395px] border-r border-solid border-btnRingVariant500">
+                        <div className="w-full p-[25px] pr-[15px] max-w-[395px] border-r border-solid border-borderLine">
                             <div className="flex fontGroup-highlightSemi py-[5px] text-primary">
                                 Custom Boards
                                 <span

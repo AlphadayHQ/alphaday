@@ -56,7 +56,7 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
                     onChange={onSwitchProjectType}
                     className="m-[10px_15px]"
                 />
-                <div className="h-0 m-0 overflow-hidden border-t border-solid border-btnRingVariant500" />
+                <div className="h-0 m-0 overflow-hidden border-t border-solid border-borderLine" />
                 {projectsTvlData?.length !== 0 && width >= THRESHOLD && (
                     <TvlItemsHeader projectType={selectedProjectType} />
                 )}
@@ -66,7 +66,7 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
                         <ScrollBar onScroll={handleListScroll}>
                             {projectsTvlData?.map((project, i) => (
                                 <li
-                                    className="flex items-center border-b border-btnRingVariant500 cursor-pointer p-0 [&:nth-of-type(1)]:border-top-0"
+                                    className="flex items-center border-b border-borderLine cursor-pointer p-0 [&:nth-of-type(1)]:border-top-0"
                                     key={project.id}
                                 >
                                     {selectedProjectType === "protocol" ? (

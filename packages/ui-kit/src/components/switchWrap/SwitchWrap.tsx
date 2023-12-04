@@ -8,7 +8,7 @@ export const SwitchWrap: FC<{
     <div
         className={`m-0 flex p-2 h-${$height} items-center ${
             $isLoading ? "bg-transparent" : "bg-background"
-        } border-btnRingVariant500 border-b border-solid`}
+        } border-borderLine border-b border-solid`}
     >
         {children}
     </div>

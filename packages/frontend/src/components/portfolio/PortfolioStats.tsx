@@ -307,7 +307,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 
                                     return (
                                         <div
-                                            className="flex py-[10px] px-[15px] border-t justify-between fontGroup-normal border-btnRingVariant500 [&:last-child]:border-b-0 rounded-sm"
+                                            className="flex py-[10px] px-[15px] border-t justify-between fontGroup-normal border-borderLine [&:last-child]:border-b-0 rounded-sm"
                                             key={assetKey}
                                         >
                                             <div className="flex flex-[2_1_0%] justify-start">
