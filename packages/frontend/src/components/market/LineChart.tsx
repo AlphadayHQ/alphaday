@@ -117,7 +117,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     );
                 },
                 style: {
-                    colors: themeColors.btnRingVariant500,
+                    colors: themeColors.borderLine,
                     fontSize: "10px",
                     fontFamily: "Arial, sans-serif",
                     fontWeight: 700,
@@ -135,7 +135,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             decimalsInFloat: false,
         },
         grid: {
-            borderColor: themeColors.btnRingVariant500,
+            borderColor: themeColors.borderLine,
             strokeDashArray: 5,
             xaxis: {
                 lines: {
@@ -148,7 +148,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 },
             },
             column: {
-                colors: themeColors.btnRingVariant500,
+                colors: themeColors.borderLine,
                 opacity: 1,
             },
         },

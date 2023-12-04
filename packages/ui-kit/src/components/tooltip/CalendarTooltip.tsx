@@ -163,7 +163,7 @@ export const CalendarTooltip: FC<ITooltipProps> = ({
                                                     {event.title}
                                                 </p>
                                                 <hr
-                                                    className="mt-[10px] bg-btnRingVariant500 border-primaryVariant200"
+                                                    className="mt-[10px] bg-borderLine border-primaryVariant200"
                                                     style={{
                                                         display:
                                                             i + 1 ===

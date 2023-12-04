@@ -1,7 +1,7 @@
 export const darkColors = {
     white: "var(--alpha-white)", // color: #FFFFFF -- white
     primary: "var(--alpha-light)", // color: #C2C5D6 -- primary light
-    primaryVariant100: "var(--alpha-dark-grey)", // color: #767C8F -- primary dark grey
+    primaryVariant100: "var(--alpha-primary-100)", // color: #767C8F -- primary dark grey
     primaryVariant200: "var(--alpha-darker-grey)", // color: #505562 -- primary darker grey
     primaryVariant300: "var(--alpha-dark-grey-filtered)", // color: rgba(118, 124, 143, 0.2) -- primary dark grey opacity 0.2
     primaryVariant400: "var(--alpha-light-100)", // color: #D1D4E0 -- hover checkbox
@@ -52,9 +52,9 @@ export const darkColors = {
     btnBackgroundVariant1900: "var(--alpha-dark-2500)", // color: #25272D -- card selector bg:active
     btnRingVariant100: "var(--alpha-light-blue)", // color: #477FF7 -- button Ring Primary
     btnRingVariant200: "var(--alpha-dark-blue)", // color: #263964 -- button Ring PrimaryXL
-    // btnRingVariant300: "var(--alpha-filtered-light-grey)", // color: rgba(121, 131, 162, 0.2) -- button Ring SecodaryXL
+    // borderLine: "var(--alpha-filtered-light-grey)", // color: rgba(121, 131, 162, 0.2) -- button Ring SecodaryXL
     btnRingVariant400: "var(--alpha-light-blue-100)", // color: #5E8FF8 -- button Ring Primary
-    // btnRingVariant500: "var(--alpha-dark-1100)", // color: #393C46 -- button btn Ring
+    // borderLine: "var(--alpha-dark-1100)", // color: #393C46 -- button btn Ring
 
     secondaryOrange: "var(--alpha-orange)", // color: #FAA202 -- calendar event category
     secondaryOrange50: "var(--alpha-orange-50)", // color: #E1B74F

@@ -33,9 +33,7 @@ export const ModulePreview: FC<IPreview> = ({
             <div
                 className={twMerge(
                     "flex justify-center items-center max-w-[250px] max-h-[167px] bg-background border-[2px_solid] rounded-[10px]",
-                    isMaxed
-                        ? "border-btnRingVariant1400"
-                        : "border-btnRingVariant300",
+                    isMaxed ? "border-btnRingVariant1400" : "border-borderLine",
                     selected && "border-btnRingVariant100"
                 )}
             >

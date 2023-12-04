@@ -11,12 +11,12 @@ const buttonVariants = tv({
     variants: {
         variant: {
             primaryXL: `box-border h-[54px] border-2 border-solid border-btnRingVariant200 px-[25px] py-4 hover:border-btnRingVariant100 active:bg-btnBackgroundVariant700`,
-            secondaryXL: `box-border h-[54px] border-btnRingVariant300 px-[25px] py-4 active:bg-btnBackgroundVariant700`,
+            secondaryXL: `box-border h-[54px] border-borderLine px-[25px] py-4 active:bg-btnBackgroundVariant700`,
             primary: "",
-            secondary: "border-btnRingVariant300 bg-btnBackgroundVariant100",
-            small: "fontGroup-normal h-[29px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-5 pb-[3px] pt-0.5 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
+            secondary: "border-borderLine bg-btnBackgroundVariant100",
+            small: "fontGroup-normal h-[29px] border-borderLine bg-btnBackgroundVariant200 px-5 pb-[3px] pt-0.5 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
             extraSmall:
-                "fontGroup-normal h-[26px] border-btnRingVariant300 bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
+                "fontGroup-normal h-[26px] border-borderLine bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
         },
         error: { true: "bg-dangerFiltered" },
         uppercase: {

@@ -84,7 +84,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
             )}
             <ScrollBar
                 onScroll={handleScroll}
-                className="divide-y divide-solid divide-btnRingVariant500"
+                className="divide-y divide-solid divide-borderLine"
                 containerRef={setScrollRef}
                 style={{
                     height: widgetHeight - HEADER_HEIGHT,

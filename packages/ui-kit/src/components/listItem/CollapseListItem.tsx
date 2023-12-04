@@ -20,7 +20,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.collapseItem,
-            "info ml-5 min-h-[45px] w-full [align-self:normal] border-b border-solid border-b-btnRingVariant500 px-0 pb-[5px] pt-[3px]"
+            "info ml-5 min-h-[45px] w-full [align-self:normal] border-b border-solid border-b-borderLine px-0 pb-[5px] pt-[3px]"
         ),
         title: "flex justify-between",
         collapseButton: "ml-[5px]",

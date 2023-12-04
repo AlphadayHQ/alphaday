@@ -19,7 +19,7 @@ const QnAGroup: FC<IConversation> = ({ qna }) => {
                 {question}
             </div>
 
-            <div className="w-[calc(95%_-_35px)] bg-btnRingVariant500 rounded-[10px_10px_0_10px] px-2.5 py-4">
+            <div className="w-[calc(95%_-_35px)] bg-borderLine rounded-[10px_10px_0_10px] px-2.5 py-4">
                 {answer === undefined ? (
                     <ModuleLoader $height="70px" />
                 ) : (

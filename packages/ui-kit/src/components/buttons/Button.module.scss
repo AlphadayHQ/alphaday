@@ -117,7 +117,7 @@
     }
     &.closeWithBg {
         background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 8px;
         svg {
@@ -130,12 +130,12 @@
         }
         &:active {
             background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            border: 1px solid var(--borderLine);
         }
     }
     &.notification {
         background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 8px;
         svg {
@@ -148,12 +148,12 @@
         }
         &:active {
             background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            border: 1px solid var(--borderLine);
         }
     }
     &.profile {
         background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 7.5px;
         svg {
@@ -166,13 +166,13 @@
         }
         &:active {
             background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            border: 1px solid var(--borderLine);
         }
     }
     &.trash {
         position: relative;
         background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 20.59px;
         transition: all 0.2s ease-in-out;
@@ -217,7 +217,7 @@
     &.leftArrow,
     &.rightArrow {
         background: var(--background);
-        border: 1px solid var(--btnRingVariant300);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 6.5px;
         svg {
@@ -230,7 +230,7 @@
         }
         &:active {
             background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            border: 1px solid var(--borderLine);
         }
     }
     &.disabled {

@@ -67,7 +67,7 @@ const CustomMenuList = (showTrending: boolean) => {
         return (
             <>
                 {showTrending && (
-                    <div className="border-b-btnRingVariant300 text-primaryVariant100 fontGroup-mini flex w-full items-center border-b border-solid px-3 pb-2.5 pt-3">
+                    <div className="border-b-borderLine text-primaryVariant100 fontGroup-mini flex w-full items-center border-b border-solid px-3 pb-2.5 pt-3">
                         Trending Keywords
                         <HotSVG className="text-primaryVariant100 mb-0 ml-0.5 mr-0 mt-px h-3 w-2.5 pb-0.5" />
                     </div>

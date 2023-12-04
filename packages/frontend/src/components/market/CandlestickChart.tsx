@@ -71,7 +71,7 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
             tickPlacement: "on",
             labels: {
                 style: {
-                    colors: themeColors.btnRingVariant500,
+                    colors: themeColors.borderLine,
                     fontSize: "10px",
                     fontFamily: "Open sans, sans-serif",
                     fontWeight: 700,
@@ -104,7 +104,7 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
             },
         },
         grid: {
-            borderColor: themeColors.btnRingVariant500,
+            borderColor: themeColors.borderLine,
             strokeDashArray: 0,
             xaxis: {
                 lines: {
@@ -117,7 +117,7 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
                 },
             },
             column: {
-                colors: themeColors.btnRingVariant500,
+                colors: themeColors.borderLine,
                 opacity: 1,
             },
         },

@@ -57,7 +57,7 @@ const MarketsList: FC<IMarketsList> = ({
                     </span>
                 ))}
                 {pinnedCoins.length > 0 && (
-                    <div className="w-[2.5px] ml-1.5 mr-3 bg-btnRingVariant500 rounded-sm shrink-0" />
+                    <div className="w-[2.5px] ml-1.5 mr-3 bg-borderLine rounded-sm shrink-0" />
                 )}
                 {markets
                     ?.filter(

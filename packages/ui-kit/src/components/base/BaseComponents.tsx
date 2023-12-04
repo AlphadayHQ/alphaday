@@ -63,7 +63,7 @@ export const BaseModuleOptionsFooter = forwardRef<
 >(({ removeWidget }, ref) => {
     return (
         <div ref={ref}>
-            <div className="py-2 text-primaryVariant100 border-t-btnRingVariant500 flex w-full justify-center self-end border-t-[0.8px] border-solid">
+            <div className="py-2 text-primaryVariant100 border-t-borderLine flex w-full justify-center self-end border-t-[0.8px] border-solid">
                 <Button
                     variant="small"
                     onClick={removeWidget}

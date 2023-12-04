@@ -73,7 +73,7 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
                 marginTop: "7px",
                 background: themeColors.background,
                 color: themeColors.primary,
-                border: `1px solid ${themeColors.btnRingVariant500}`,
+                border: `1px solid ${themeColors.borderLine}`,
                 boxShadow: `0px 0px 35px 9px ${themeColors.backgroundVariant1700}`,
                 borderRadius: `5px`,
                 zIndex: 9, // TODO (xavier-charles): use ZIndex Registry

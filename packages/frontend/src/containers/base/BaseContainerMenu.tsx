@@ -92,7 +92,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                 width: "200px",
                 background: themeColors.background,
                 color: themeColors.primary,
-                border: `1px solid ${themeColors.btnRingVariant500}`,
+                border: `1px solid ${themeColors.borderLine}`,
                 boxShadow: `0px 0px 35px 9px rgba(19, 21, 27, 0.7)`,
                 borderRadius: `5px`,
                 zIndex: Z_INDEX_REGISTRY.HEADER_MENU,

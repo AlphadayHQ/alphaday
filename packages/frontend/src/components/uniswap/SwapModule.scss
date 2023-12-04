@@ -54,7 +54,7 @@
         background-color: theme("colors.background");
     }
     [class*="TokenOptions__TokenButton"]:hover {
-        background-color: theme("colors.btnRingVariant500") !important;
+        background-color: theme("colors.borderLine") !important;
     }
     [class*="TokenInput"] {
         color: theme("colors.primaryVariant100");

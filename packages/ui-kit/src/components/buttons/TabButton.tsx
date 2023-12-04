@@ -9,7 +9,7 @@ import styles from "./Button.module.scss";
 const buttonVariants = tv({
     base: twMerge(
         styles.tabsButtonBase,
-        "inline-flex items-center justify-center text-center align-middle cursor-pointer leading-normal select-none border-0 w-max h-[34px] border border-btnRingVariant300 text-primary bg-btnBackgroundVariant100 pt-1.5 pb-[7px] px-[15px] rounded-lg border-solid hover:bg-btnBackgroundVariant1000 active:bg-btnBackgroundVariant300"
+        "inline-flex items-center justify-center text-center align-middle cursor-pointer leading-normal select-none border-0 w-max h-[34px] border border-borderLine text-primary bg-btnBackgroundVariant100 pt-1.5 pb-[7px] px-[15px] rounded-lg border-solid hover:bg-btnBackgroundVariant1000 active:bg-btnBackgroundVariant300"
     ),
     variants: {
         variant: {

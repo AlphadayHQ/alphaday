@@ -204,7 +204,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                 </div>
                 <div
                     title="Close Boards Library"
-                    className="cursor-pointer bg-btnBackgroundVariant100 rounded-full border border-solid border-btnRingVariant300 flex p-1.5 hover:bg-background"
+                    className="cursor-pointer bg-btnBackgroundVariant100 rounded-full border border-solid border-borderLine flex p-1.5 hover:bg-background"
                     tabIndex={0}
                     onClick={onToggleBoardsLib}
                     role="button"

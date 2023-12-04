@@ -81,10 +81,10 @@ const RoadmapItem: FC<IList> = ({
             </div>
             <div className="relative">
                 <span
-                    className={`line absolute -top-5 w-[3px] bg-btnRingVariant500 h-[calc(100%_+_21px)] ${getStatusClass()}`}
+                    className={`line absolute -top-5 w-[3px] bg-borderLine h-[calc(100%_+_21px)] ${getStatusClass()}`}
                 />
                 <span
-                    className={`absolute top-1.5 -left-[4.5px] w-3 h-3 rounded-full bg-btnRingVariant500 ${getStatusClass()}`}
+                    className={`absolute top-1.5 -left-[4.5px] w-3 h-3 rounded-full bg-borderLine ${getStatusClass()}`}
                 />
             </div>
             <CollapseListItem
