@@ -6,8 +6,8 @@ export const fontUtilities = {
         letterSpacing: "0px",
     },
     ".fontGroup-highlight": {
-        fontSize: "0.75rem",
-        fontWeight: "700",
+        fontSize: "0.875rem",
+        fontWeight: "400",
         lineHeight: "1.5",
         letterSpacing: "0.5px",
     },
@@ -28,13 +28,13 @@ export const fontUtilities = {
         fontWeight: "400",
         lineHeight: "1.5",
         letterSpacing: "0.2px",
-        textTransform: "uppercase",
     },
     ".fontGroup-supportBold": {
         fontSize: "10px",
         fontWeight: "600",
         lineHeight: "1.5",
         letterSpacing: "0.2px",
+        textTransform: "uppercase",
     },
     ".fontGroup-mini": {
         fontSize: "10px",
