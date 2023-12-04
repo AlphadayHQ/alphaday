@@ -112,7 +112,9 @@ const REFRESH_KEY = "retry-lazy-refresh-key";
  *
  * @param componentImport an import function that returns a promise
  */
-export const lazyRetry = <T extends React.FC>(
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const lazyRetry = <T extends React.FC<any>>(
     componentImport: () => Promise<{ default: T }>
 ): React.LazyExoticComponent<T> => {
     return lazy<T>(
