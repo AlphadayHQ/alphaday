@@ -13,8 +13,8 @@ export const darkColors = {
     primaryVariant1000: "var(--alpha-dark-grey-300)", // color: #656A7B -- close button disabled
     borderLine: "var(--alpha-border)", // color: #4c4c4c00 -- border
     background: "var(--alpha-dark-base)", // color: #111213 -- background
-    // backgroundVariant100: "var(--alpha-dark-100)", // color: #191C1F -- background variant 100
-    // backgroundVariant200: "var(--alpha-dark-200)", // color: #212328 -- background variant 200
+    backgroundVariant100: "var(--alpha-base-100)", // color: #191919 -- background variant 100
+    backgroundVariant200: "var(--alpha-base-200)", // color: #212328 -- background variant 200
     // backgroundVariant300: "var(--alpha-filtered-white)", // color: #27292E -- module header
     // backgroundVariant400: "var(--alpha-dark-800)", // color: #0A0A0B -- search bg focus
     // backgroundVariant500: "var(--alpha-dark-blue-200)", // color: #2C2E35 -- module preview bg
@@ -41,7 +41,7 @@ export const darkColors = {
     btnBackgroundVariant800: "var(--alpha-dark-1700)", // color: #121416 -- button focus small
     btnBackgroundVariant900: "var(--alpha-dark-1800)", // color: #151719 -- button focus extra small
     btnBackgroundVariant1000: "var(--alpha-dark-1900)", // color: #2E3238 -- tab button small
-    btnBackgroundVariant1100: "var(--alpha-dark-700)", // color: #15161A -- tab button small
+    // backgroundVariant1100: "var(--alpha-dark-700)", // color: #15161A -- tab button small
     btnBackgroundVariant1200: "var(--alpha-dark-2000)", // color: #202127 -- tab button small hover
     btnBackgroundVariant1300: "var(--alpha-dark-2100)", // color: #0E0E11 -- tab button small focus
     btnBackgroundVariant1400: "var(--alpha-dark-blue)", // color: #263964 -- open module tab

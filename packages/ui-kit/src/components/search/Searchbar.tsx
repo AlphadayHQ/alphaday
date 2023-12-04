@@ -212,7 +212,7 @@ export const SearchBar = <T,>({
     const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
         ...componentClassNames,
         control: (props) =>
-            `flex justify-between items-center cursor-text bg-background hover:bg-background border-0 shadow-none rounded-[10px] h-[41px] min-h-[41px] pl-1 ${componentClassNames?.control?.(
+            `flex justify-between items-center cursor-text bg-backgroundVariant100 hover:bg-backgroundVariant200 border-0 shadow-none rounded-[10px] h-[41px] min-h-[41px] pl-1 ${componentClassNames?.control?.(
                 props
             )}`,
         placeholder: (props) =>

@@ -39,7 +39,7 @@ export const Switch: FC<SwitchProps> = ({
                 className="opacity-0 z-[1] w-full h-full absolute cursor-pointer"
                 onChange={onChange}
             />
-            <span className="flex justify-between items-center cursor-pointer bg-btnBackgroundVariant1100 rounded-[10px] transition duration-[ms] ease-in-out">
+            <span className="flex justify-between items-center cursor-pointer bg-backgroundVariant100 hover:bg-backgroundVariant200 rounded-[10px] transition duration-[ms] ease-in-out">
                 <span
                     className={twMerge(
                         "m-[3px] text-center capitalize fontGroup-highlightSemi duration-[400ms] rounded-lg py-[3px] px-2 min-w-min two-col:min-w-[62px] hover:bg-btnBackgroundVariant1200 active:bg-btnBackgroundVariant1600 option1",

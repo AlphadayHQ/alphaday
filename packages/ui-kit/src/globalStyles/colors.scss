@@ -53,7 +53,8 @@ http://ionicframework.com/docs/theming/ */
 
     /** //? new  background shades **/
     --alpha-base: #121212;
-    --alpha-brown-base: #111213;
+    --alpha-base-100: #191919;
+    --alpha-base-200: #202020; //hover
     --alpha-primary: #f2f2f2;
     --alpha-primary-100: #849399;
     --alpha-border: #3b3a3a;
@@ -151,8 +152,8 @@ http://ionicframework.com/docs/theming/ */
 
     // TODO remove unused colors
     --background: var(--alpha-base);
-    // --backgroundVariant100: var(--alpha-dark-100);
-    // --backgroundVariant200: var(--alpha-dark-200);
+    --backgroundVariant100: var(--alpha-base-100);
+    --backgroundVariant200: var(--alpha-base-200);
     // --backgroundVariant300: var(--alpha-filtered-white);
     // --backgroundVariant400: var(--alpha-dark-800);
     // --backgroundVariant500: var(--alpha-dark-blue-200);
@@ -184,7 +185,7 @@ http://ionicframework.com/docs/theming/ */
     --btnBackgroundVariant800: var(--alpha-dark-1700);
     --btnBackgroundVariant900: var(--alpha-dark-1800);
     --btnBackgroundVariant1000: var(--alpha-dark-1900);
-    --btnBackgroundVariant1100: var(--alpha-dark-700);
+    --backgroundVariant100: var(--alpha-dark-700);
     --btnBackgroundVariant1200: var(--alpha-dark-2000);
     --btnBackgroundVariant1300: var(--alpha-dark-2100);
     --btnBackgroundVariant1400: var(--alpha-dark-blue);
