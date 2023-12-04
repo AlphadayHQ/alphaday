@@ -160,7 +160,7 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                         renderLayer(
                             <div {...newLayerProps}>
                                 <div
-                                    className="fontGroup-highlightSemi ring-1 ring-backgroundVariant100 text-backgroundVariant100 p-[10px] rounded"
+                                    className="fontGroup-highlightSemi ring-1 ring-background text-background p-[10px] rounded"
                                     style={{ background: tooltipProp.bg }}
                                 >
                                     {tooltipProp.text}

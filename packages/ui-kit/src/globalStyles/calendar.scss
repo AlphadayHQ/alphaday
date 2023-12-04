@@ -12,7 +12,7 @@
     tbody {
         justify-content: flex-end;
         margin-left: -12%;
-        background-color: theme("colors.backgroundVariant200");
+        background-color: theme("colors.background");
 
         .full-size {
             background-color: theme("colors.backgroundVariant1500");
@@ -84,7 +84,7 @@
                     }
 
                     position: fixed;
-                    background-color: theme("colors.backgroundVariant200");
+                    background-color: theme("colors.background");
                     z-index: 1;
                     width: calc(100% - 4px);
 
@@ -165,8 +165,7 @@
                         );
                         background-clip: padding-box;
                         .fc-daygrid-day-frame {
-                            border: 1px solid
-                                theme("colors.backgroundVariant100");
+                            border: 1px solid theme("colors.background");
                         }
 
                         /* identical to box height, or 183% */
@@ -397,13 +396,13 @@
 }
 
 .calendar-month {
-    background: theme("colors.backgroundVariant200");
+    background: theme("colors.background");
     position: relative;
     display: block;
     transition: all 0.3s;
 
     .full-size {
-        background-color: theme("colors.backgroundVariant800");
+        background-color: theme("colors.background");
     }
 
     .fc-daygrid-day-events {
@@ -659,8 +658,7 @@
                             background-clip: padding-box;
                             border-color: theme("colors.primaryVariant600");
                             .fc-daygrid-day-frame {
-                                border: 1px solid
-                                    theme("colors.backgroundVariant100");
+                                border: 1px solid theme("colors.background");
                             }
                         }
                         &-other {

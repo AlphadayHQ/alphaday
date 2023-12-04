@@ -48,7 +48,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
 
     if (video === null) {
         return (
-            <div className="w-full flex justify-center items-center bg-backgroundVariant200">
+            <div className="w-full flex justify-center items-center bg-background">
                 No Video Selected
             </div>
         );
@@ -56,14 +56,14 @@ const VideoPlayer: FC<IVideoPlayer> = ({
 
     if (!video) {
         return (
-            <div className="w-full flex justify-center items-center bg-backgroundVariant200">
+            <div className="w-full flex justify-center items-center bg-background">
                 Something went wrong.
             </div>
         );
     }
 
     return (
-        <div className="w-full h-full p-[15px] bg-backgroundVariant200">
+        <div className="w-full h-full p-[15px] bg-background">
             <div
                 className="w-full h-full flex flex-col items-start"
                 ref={setVideoPlayerWrapRef}

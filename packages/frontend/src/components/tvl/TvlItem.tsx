@@ -152,7 +152,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                 <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px]">
                     <div className="flex flex-row flex-1 items-center">
                         <div className="flex flex-row mr-1 flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-start">
-                            <div className="absolute inset-0 bg-backgroundVariant200" />
+                            <div className="absolute inset-0 bg-background" />
                             <img
                                 src={
                                     projectData.project.icon ??
@@ -165,7 +165,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                                 }
                                 onError={imgOnError}
                                 alt=""
-                                className="absolute inset-0 bg-backgroundVariant400 rounded-full"
+                                className="absolute inset-0 bg-background rounded-full"
                                 style={{
                                     backgroundImage: `url(${logoDay})`,
                                 }}
@@ -282,7 +282,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                 }}
             >
                 <div className="flex flex-row flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-center">
-                    <div className="absolute inset-0 bg-backgroundVariant200" />
+                    <div className="absolute inset-0 bg-background" />
                     <img
                         src={
                             projectData.project.icon ??
@@ -294,7 +294,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                         }
                         onError={imgOnError}
                         alt=""
-                        className="absolute inset-0 bg-backgroundVariant400 rounded-full"
+                        className="absolute inset-0 bg-background rounded-full"
                         style={{
                             backgroundImage: `url(${logoDay})`,
                         }}
@@ -410,7 +410,7 @@ export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
                 }}
             >
                 <div className="flex flex-row flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-start">
-                    <div className="absolute inset-0 bg-backgroundVariant200" />
+                    <div className="absolute inset-0 bg-background" />
                     <img
                         src={
                             projectData.project.icon ??
@@ -422,7 +422,7 @@ export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
                         }
                         onError={imgOnError}
                         alt=""
-                        className="absolute inset-0 bg-backgroundVariant400 rounded-full"
+                        className="absolute inset-0 bg-background rounded-full"
                         style={{
                             backgroundImage: `url(${logoDay})`,
                         }}

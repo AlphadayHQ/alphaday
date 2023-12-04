@@ -71,7 +71,7 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
                 ...layerProps.style,
                 width: "200px",
                 marginTop: "7px",
-                background: themeColors.backgroundVariant1100,
+                background: themeColors.background,
                 color: themeColors.primary,
                 border: `1px solid ${themeColors.btnRingVariant500}`,
                 boxShadow: `0px 0px 35px 9px ${themeColors.backgroundVariant1700}`,
@@ -128,7 +128,7 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
                             role="button"
                             key={option.key}
                             className={twMerge(
-                                "p-[10px] flex items-center cursor-pointer hover:bg-backgroundVariant800 [&:nth-child(1)]:rounded-[5px_5px_0_0] [&:nth-last-child(1)]:rounded-[0_0)5px_5px] [&:nth-last-child(1)]:flex [&:nth-last-child(1)]:items-start [&:nth-last-child(1)]:cursor-default [&>svg]:text-primaryVariant100 [&>svg]:w-[17px] [&>svg]:h-[17px] [&>svg]:p-0.5",
+                                "p-[10px] flex items-center cursor-pointer hover:bg-background [&:nth-child(1)]:rounded-[5px_5px_0_0] [&:nth-last-child(1)]:rounded-[0_0)5px_5px] [&:nth-last-child(1)]:flex [&:nth-last-child(1)]:items-start [&:nth-last-child(1)]:cursor-default [&>svg]:text-primaryVariant100 [&>svg]:w-[17px] [&>svg]:h-[17px] [&>svg]:p-0.5",
                                 option.handler === undefined &&
                                     "opacity-50 hover:bg-transparent cursor-not-allowed"
                             )}

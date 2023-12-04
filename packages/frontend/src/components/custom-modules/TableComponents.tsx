@@ -128,7 +128,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-row py-2 px-5 hover:bg-backgroundVariant900",
+                "flex flex-row py-2 px-5 hover:bg-background",
                 rowLink && "cursor-pointer"
             )}
             {...(rowLink && { onClick: handleOnClick })}
@@ -224,7 +224,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-row py-2 px-5 hover:bg-backgroundVariant900",
+                "flex flex-row py-2 px-5 hover:bg-background",
                 rowLink && "cursor-pointer"
             )}
             {...(rowLink && { onClick: handleOnClick })}

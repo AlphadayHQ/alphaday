@@ -19,7 +19,7 @@ export const BaseModuleWrapper = forwardRef<
             className={twMerge("origin-center w-full", className)}
             style={style}
         >
-            <div className="w-full h-full border-background bg-backgroundVariant200 text-primary flex flex-col overflow-hidden rounded-[5px] border-2 border-solid shadow-[0px_0px_0px_1px_rgba(121,131,162,0.2)]">
+            <div className="w-full h-full border-background bg-background text-primary flex flex-col overflow-hidden rounded-[5px] border-2 border-solid shadow-[0px_0px_0px_1px_rgba(121,131,162,0.2)]">
                 {children}
             </div>
         </div>
@@ -48,7 +48,7 @@ export const BaseModuleHeader = forwardRef<
         <div
             ref={ref}
             className={twMerge(
-                "border-b-background bg-backgroundVariant300 text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] pl-[15px] pr-[9px] bg-blend-soft-light",
+                "border-b-background bg-background text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] pl-[15px] pr-[9px] bg-blend-soft-light",
                 className
             )}
         >

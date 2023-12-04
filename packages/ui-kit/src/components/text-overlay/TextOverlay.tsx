@@ -12,7 +12,7 @@ export const TextOverlay: FC<IProps> = ({ hide, children, ...props }) => {
 
     return (
         <div
-            className="absolute h-[calc(100%-45px)] left-0 transform w-full bg-backgroundVariant1200"
+            className="absolute h-[calc(100%-45px)] left-0 transform w-full bg-background"
             {...props}
         >
             <div className="flex overflow-auto h-full flex-col flex-wrap">

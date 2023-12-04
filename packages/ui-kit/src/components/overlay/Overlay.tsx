@@ -18,7 +18,7 @@ const OverlayWrapper: FC<IOverlayWrapperProps> = ({
     return (
         <div
             className={twMerge(
-                "block fixed overflow-hidden bg-backgroundVariant900 rounded-[5px]",
+                "block fixed overflow-hidden bg-background rounded-[5px]",
                 className
             )}
             style={{

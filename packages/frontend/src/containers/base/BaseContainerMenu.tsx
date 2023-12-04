@@ -49,7 +49,7 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
                     otherClasses,
                     "opacity-0",
                     showMenu &&
-                        "bg-backgroundVariant400 h-[10px] w-0.5 top-[5px] left-[9px] -rotate-45 opacity-100"
+                        "bg-background h-[10px] w-0.5 top-[5px] left-[9px] -rotate-45 opacity-100"
                 )}
             />
             <span
@@ -58,7 +58,7 @@ const KebabMenu: FC<{ showMenu: boolean }> = ({ showMenu }) => {
                     otherClasses,
                     "opacity-0",
                     showMenu &&
-                        "bg-backgroundVariant400 h-[10px] w-0.5 top-[5px] left-[9px] rotate-45 opacity-100"
+                        "bg-background h-[10px] w-0.5 top-[5px] left-[9px] rotate-45 opacity-100"
                 )}
             />
         </div>
@@ -90,7 +90,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
             style: {
                 ...layerProps.style,
                 width: "200px",
-                background: themeColors.backgroundVariant1100,
+                background: themeColors.background,
                 color: themeColors.primary,
                 border: `1px solid ${themeColors.btnRingVariant500}`,
                 boxShadow: `0px 0px 35px 9px rgba(19, 21, 27, 0.7)`,

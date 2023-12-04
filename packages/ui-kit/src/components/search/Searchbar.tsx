@@ -212,7 +212,7 @@ export const SearchBar = <T,>({
     const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
         ...componentClassNames,
         control: (props) =>
-            `flex justify-between items-center cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none rounded-[10px] h-[41px] min-h-[41px] pl-1 ${componentClassNames?.control?.(
+            `flex justify-between items-center cursor-text bg-background hover:bg-background border-0 shadow-none rounded-[10px] h-[41px] min-h-[41px] pl-1 ${componentClassNames?.control?.(
                 props
             )}`,
         placeholder: (props) =>
@@ -246,15 +246,15 @@ export const SearchBar = <T,>({
                 props
             )}`,
         menu: (props) =>
-            `bg-backgroundVariant200 mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden ${componentClassNames?.menu?.(
+            `bg-background mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden ${componentClassNames?.menu?.(
                 props
             )}`,
         menuList: (props) =>
-            `p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-backgroundVariant800 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryVariant900 ${componentClassNames?.menuList?.(
+            `p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryVariant900 ${componentClassNames?.menuList?.(
                 props
             )}`,
         option: (props) =>
-            `text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer capitalize fontGroup-highlight ${componentClassNames?.option?.(
+            `text-primary bg-transparent px-3 py-2 hover:bg-background active:bg-transparent cursor-pointer capitalize fontGroup-highlight ${componentClassNames?.option?.(
                 props
             )}`,
     };

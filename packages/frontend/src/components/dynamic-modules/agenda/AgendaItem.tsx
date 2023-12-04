@@ -52,7 +52,7 @@ const AgendaItem: FC<Item> = ({ item, catColor, setItemsHeight }) => {
 
     return (
         <div
-            className="list-group-item flex flex-row items-start p-[14px] w-full bg-backgroundVariant800 border-none pb-0 pt-5 cursor-pointer flex-grow hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 hover:[&_.info]:border-none"
+            className="list-group-item flex flex-row items-start p-[14px] w-full bg-background border-none pb-0 pt-5 cursor-pointer flex-grow hover:bg-background active:bg-background hover:[&_.info]:border-none"
             onClick={toggleAccordion}
             tabIndex={-1}
             role="button"

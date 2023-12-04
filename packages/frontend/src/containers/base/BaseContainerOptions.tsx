@@ -147,10 +147,8 @@ const TagsOptions: FC<ITagsOptions> = ({
                 componentClassNames={{
                     container: () => "max-w-[300px] z-10",
                     control: () =>
-                        `p-0 h-[41px] cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none min-h-[41px] ${
-                            disabled
-                                ? "bg-backgroundVariant800"
-                                : "bg-backgroundVariant400"
+                        `p-0 h-[41px] cursor-text bg-background hover:bg-background border-0 shadow-none min-h-[41px] ${
+                            disabled ? "bg-background" : "bg-background"
                         }`,
                     menuList: () => "max-h-[100px]",
                     input: () => "m-0 ml-[10px] p-0 text-primary border-0",

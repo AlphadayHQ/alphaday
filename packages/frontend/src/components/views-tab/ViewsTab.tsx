@@ -128,7 +128,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
             id="views-tab"
             data-testid="views-tab"
             className={twMerge(
-                "h-auto w-screen bg-backgroundVariant100 border-t border-solid border-background two-col:max-h-[41px]",
+                "h-auto w-screen bg-background border-t border-solid border-background two-col:max-h-[41px]",
                 mobileOpen && "border-b"
             )}
         >

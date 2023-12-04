@@ -87,7 +87,7 @@ export const BoardPreview: FC<IPreview> = ({
                     active
                         ? "border-btnRingVariant100"
                         : "border-primaryVariant200",
-                    "bg-backgroundVariant500 group-hover:border-btnRingVariant100 flex max-h-[167px] max-w-[250px] items-center justify-center rounded-lg border-[1px] "
+                    "bg-background group-hover:border-btnRingVariant100 flex max-h-[167px] max-w-[250px] items-center justify-center rounded-lg border-[1px] "
                 )}
             >
                 <div

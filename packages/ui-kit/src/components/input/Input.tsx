@@ -53,7 +53,7 @@ export const Input: FC<IInputProps> = ({
                 readOnly={readonly}
                 className={twMerge(
                     `${state === "error" && "border-danger"}`,
-                    "bg-backgroundVariant400 text-primary flex flex-row  items-start rounded-lg p-3",
+                    "bg-background text-primary flex flex-row  items-start rounded-lg p-3",
                     className
                 )}
                 style={{

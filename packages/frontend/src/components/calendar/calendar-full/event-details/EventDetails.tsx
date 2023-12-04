@@ -32,7 +32,7 @@ const EventDetails: FC<IDetails> = ({
     if (noMatch || noEvent) {
         return (
             <div className="h-full bg-btnBackgroundVariant400">
-                <div className="w-full h-full flex items-center justify-center bg-backgroundVariant200 text-primary fontGroup-highlight">
+                <div className="w-full h-full flex items-center justify-center bg-background text-primary fontGroup-highlight">
                     {noMatch
                         ? globalMessages.queries.noMatchFound("events")
                         : globalMessages.queries.noResults}

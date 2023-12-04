@@ -110,7 +110,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
     return (
         <Modal onClose={onCloseWidgetLib} showModal={showWidgetLib}>
             <div className="flex flex-col w-full h-full">
-                <div className="bg-backgroundVariant300 text-primaryVariant100 bg-blend-soft-light p-[4.5px_15px_4.5px_15px] border-b-[1.2px] border-solid border-b-background rounded-[3px]">
+                <div className="bg-background text-primaryVariant100 bg-blend-soft-light p-[4.5px_15px_4.5px_15px] border-b-[1.2px] border-solid border-b-background rounded-[3px]">
                     <div className="w-full flex items-center justify-between">
                         <div>
                             <h6 className="m-0 inline-flex self-end fontGroup-highlight uppercase text-primaryVariant100">
@@ -140,7 +140,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                 </div>
                 {categories.length > 0 ? (
                     <div className="flex bg-backgroundVariant1500 h-full">
-                        <ScrollBar className="min-w-[250px] bg-backgroundVariant800 fontGroup-highlight">
+                        <ScrollBar className="min-w-[250px] bg-background fontGroup-highlight">
                             <div
                                 role="button"
                                 tabIndex={0}

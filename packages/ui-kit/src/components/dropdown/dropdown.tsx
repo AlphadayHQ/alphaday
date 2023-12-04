@@ -180,7 +180,7 @@ export const DropdownMenu: FC<IDropMenu> = ({
             ref={menuRef}
             style={directionSyles}
             className={twMerge(
-                "text-primary bg-backgroundVariant100 absolute z-[1000] float-left hidden min-w-[10rem] rounded bg-clip-padding text-left text-sm shadow-[0_0_8px_2px_rgb(28_39_60_/_4%)] will-change-transform",
+                "text-primary bg-background absolute z-[1000] float-left hidden min-w-[10rem] rounded bg-clip-padding text-left text-sm shadow-[0_0_8px_2px_rgb(28_39_60_/_4%)] will-change-transform",
                 show && "block",
                 className,
                 dropdownDirection[direction || "down"]
@@ -204,7 +204,7 @@ export const DropdownItem: FC<IDropItem> = ({ children, onClick }) => (
         onClick={onClick}
         role="button"
         tabIndex={0}
-        className="hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 fontGroup-normal clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-[18px] py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] [&>svg]:mr-[15px] [&>svg]:h-4 [&>svg]:w-4"
+        className="hover:bg-background active:bg-background fontGroup-normal clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-[18px] py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] [&>svg]:mr-[15px] [&>svg]:h-4 [&>svg]:w-4"
     >
         {children}
     </div>

@@ -29,7 +29,7 @@ export const HeaderNavbar: FC<{
     return (
         <div
             className={twMerge(
-                "bg-backgroundVariant100 two-col:h-[60px] two-col:top-0 two-col:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0",
+                "bg-background two-col:h-[60px] two-col:top-0 two-col:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0",
                 mobileOpen ? "h-auto" : "h-16",
                 className
             )}

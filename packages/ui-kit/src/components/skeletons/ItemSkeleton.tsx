@@ -2,7 +2,7 @@ import { Skeleton } from "./Skeleton";
 
 export const ItemSkeleton = () => {
     return (
-        <div className="py-2 pr-1.5 pl-[10px] flex flex-row bg-backgroundVariant200 hover:bg-backgroundVariant200">
+        <div className="py-2 pr-1.5 pl-[10px] flex flex-row bg-background hover:bg-background">
             <div className="w-[50px] h-auto [&>a]:block [&:img]:w-[50px] [&:img]:h-[50px] [&:img]:rounded-[4px] [&:img]:object-cover">
                 <Skeleton className="rounded-[4px] w-[50px] h-[50px]" />
             </div>

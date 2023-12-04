@@ -64,7 +64,7 @@ export const ChatForm: FC<IForm> = ({ handleSend, isAuthenticated }) => {
     );
 
     return (
-        <div className="h-[50px] w-full flex justify-between bg-backgroundVariant200 border-t border-background">
+        <div className="h-[50px] w-full flex justify-between bg-background border-t border-background">
             <textarea
                 ref={textAreaRef}
                 className="font-normal border-0 bg-transparent self-center text-primary w-full resize-none overflow-hidden min-h-auto px-4 transition-none"
@@ -90,7 +90,7 @@ export const ChatForm: FC<IForm> = ({ handleSend, isAuthenticated }) => {
                         : "Verify your wallet to chat"
                 }
                 onClick={handleSubmit}
-                className={`w-12 p-3 flex items-center justify-center bg-backgroundVariant500 border-none border-l border-background ${
+                className={`w-12 p-3 flex items-center justify-center bg-background border-none border-l border-background ${
                     isAuthenticated && !isMessageInvalid
                         ? "cursor-pointer"
                         : "opacity-40 cursor-auto !important"

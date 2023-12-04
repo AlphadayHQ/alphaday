@@ -31,7 +31,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.listItem,
-            "flex relative flex-row items-start w-full p-3.5 bg-backgroundVariant800  hover:bg-backgroundVariant900 active:bg-backgroundVariant1000"
+            "flex relative flex-row items-start w-full p-3.5 bg-background  hover:bg-background active:bg-background"
         ),
         info: "grow-[1]",
         date: "fontGroup-mini min-w-[45px] text-primaryVariant100 mr-[5px]",
@@ -56,10 +56,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
         },
         discord: {
             ...defaults,
-            base: twMerge(
-                defaults.base,
-                "cursor-pointer bg-backgroundVariant200"
-            ),
+            base: twMerge(defaults.base, "cursor-pointer bg-background"),
             img: twMerge(
                 defaults.img,
                 "w-[38px] h-[38px] mr-3.5 rounded-[100px]"
@@ -69,7 +66,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "podcast flex-col bg-[color:var(--backgroundVariant200)] cursor-pointer p-[15px] rounded-none"
+                "podcast flex-col bg-[color:var(--background)] cursor-pointer p-[15px] rounded-none"
             ),
             img: twMerge(
                 defaults.img,
@@ -81,7 +78,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "video bg-backgroundVariant200 cursor-pointer p-[15px] rounded-none"
+                "video bg-background cursor-pointer p-[15px] rounded-none"
             ),
             date: twMerge(
                 defaults.date,

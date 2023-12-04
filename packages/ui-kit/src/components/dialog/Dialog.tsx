@@ -61,7 +61,7 @@ export const Dialog: FC<IDialog> = ({
                     <button
                         // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         onClick={handleCloseDialog}
-                        className="border-primaryVariant200 bg-backgroundVariant200 flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
+                        className="border-primaryVariant200 bg-background flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
                         title="close"
                         type="button"
                         data-testid="alpha-dialog-close-button"

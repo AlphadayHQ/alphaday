@@ -90,7 +90,7 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
                             ))}
                         </ScrollBar>
                     ) : (
-                        <div className="flex w-full h-full justify-center items-center bg-backgroundVariant200">
+                        <div className="flex w-full h-full justify-center items-center bg-background">
                             <p className="text-primary fontGroup-highlight">
                                 {globalMessages.queries.noMatchFound("TVL")}
                             </p>

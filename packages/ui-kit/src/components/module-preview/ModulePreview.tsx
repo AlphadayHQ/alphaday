@@ -32,7 +32,7 @@ export const ModulePreview: FC<IPreview> = ({
         >
             <div
                 className={twMerge(
-                    "flex justify-center items-center max-w-[250px] max-h-[167px] bg-backgroundVariant500 border-[2px_solid] rounded-[10px]",
+                    "flex justify-center items-center max-w-[250px] max-h-[167px] bg-background border-[2px_solid] rounded-[10px]",
                     isMaxed
                         ? "border-btnRingVariant1400"
                         : "border-btnRingVariant300",
@@ -51,7 +51,7 @@ export const ModulePreview: FC<IPreview> = ({
                     />
                     <div className="absolute bottom-[10%] right-[5%] flex justify-center items-center">
                         {count !== undefined && count > 0 && (
-                            <div className="flex justify-center items-center w-5 h-5 bg-btnRingVariant100 rounded-[10px] text-backgroundVariant900 text-center fontGroup-highlightSemi">
+                            <div className="flex justify-center items-center w-5 h-5 bg-btnRingVariant100 rounded-[10px] text-background text-center fontGroup-highlightSemi">
                                 {count}
                             </div>
                         )}
@@ -62,7 +62,7 @@ export const ModulePreview: FC<IPreview> = ({
                                     ? "border-primaryVariant200"
                                     : "border-btnRingVariant100",
                                 isMaxed &&
-                                    "bg-btnRingVariant100 text-backgroundVariant900"
+                                    "bg-btnRingVariant100 text-background"
                             )}
                         >
                             <PlusSVG width="13px" />

@@ -188,7 +188,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         <div
             data-testid="boards-library"
             className={twMerge(
-                "bg-backgroundVariant900 transition-all max-h-0 ease-in-out duration-300 [&>*]:invisible",
+                "bg-background transition-all max-h-0 ease-in-out duration-300 [&>*]:invisible",
                 isBoardsLibOpen && "max-h-[500px] [&>*]:visible [&>*]:delay-300"
             )}
         >
@@ -204,7 +204,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                 </div>
                 <div
                     title="Close Boards Library"
-                    className="cursor-pointer bg-btnBackgroundVariant100 rounded-full border border-solid border-btnRingVariant300 flex p-1.5 hover:bg-backgroundVariant500"
+                    className="cursor-pointer bg-btnBackgroundVariant100 rounded-full border border-solid border-btnRingVariant300 flex p-1.5 hover:bg-background"
                     tabIndex={0}
                     onClick={onToggleBoardsLib}
                     role="button"

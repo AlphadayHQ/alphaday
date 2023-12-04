@@ -28,7 +28,7 @@ const TutorialItem: FC<ITutorialItem> = ({
             onClick={closeTutorial}
             style={{ zIndex: Z_INDEX_REGISTRY.TUTORIAL_MODAL }}
         >
-            <div className="fixed top-0 w-full h-full bg-backgroundVariant400 opacity-70" />
+            <div className="fixed top-0 w-full h-full bg-background opacity-70" />
             {tip && pos && (
                 <FadeIn
                     // Key to rerender between tips instead of using state.

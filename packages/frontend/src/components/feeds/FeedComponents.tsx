@@ -130,7 +130,7 @@ export const TweetWrapper: FC<HTMLProps<HTMLDivElement>> = ({
     return (
         <div
             className={twMerge(
-                "flex items-start py-2 cursor-pointer border-b border-btnRingVariant500 bg-backgroundVariant800 hover:bg-backgroundVariant900",
+                "flex items-start py-2 cursor-pointer border-b border-btnRingVariant500 bg-background hover:bg-background",
                 className
             )}
             {...props}

@@ -214,8 +214,9 @@
             }
         }
     }
-    &.leftArrow, &.rightArrow {
-        background: var(--backgroundVariant1200);
+    &.leftArrow,
+    &.rightArrow {
+        background: var(--background);
         border: 1px solid var(--btnRingVariant300);
         border-radius: 100px;
         padding: 6.5px;
