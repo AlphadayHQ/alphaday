@@ -176,10 +176,5 @@ export const customDatumAsItem: (datum: TRemoteCustomDatum) => TItem = (d) => {
 };
 
 export const customDataAsItems: (data: TRemoteCustomData) => TItem[] = (d) => {
-    try {
-        return d.map(customDatumAsItem);
-    } catch (error) {
-        Logger.error("customDataAsItems: unexpected error", error);
-        return [];
-    }
+    return d.map(customDatumAsItem);
 };
