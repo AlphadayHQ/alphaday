@@ -1,6 +1,5 @@
 import { TItem } from "src/types";
 import { TRemoteCustomData, TRemoteCustomDatum } from "../services";
-import { Logger } from "./logging";
 
 /**
  * This type is used to define the root type of items which include news, daos, tweets etc
