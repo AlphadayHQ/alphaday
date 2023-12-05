@@ -40,7 +40,7 @@ const MainLayout: React.FC<IProps> = ({
                     !isBoardsLibOpen && "max-h-screen"
                 )}
             >
-                <div className="m-0 mt-[60px] p-0 pb-10 pt-[25px] bg-background min-h-[calc(100vh_-_31px)] w-screen two-col:mt-[110px] four-col:max-w-[2725px]">
+                <div className="m-0 mt-[60px] p-0 pb-10 pt-3 bg-background min-h-[calc(100vh_-_31px)] w-screen two-col:mt-[110px] four-col:max-w-[2725px]">
                     {children}
                 </div>
             </div>

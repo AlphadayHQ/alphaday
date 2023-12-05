@@ -16,6 +16,7 @@ export const darkColors = {
     backgroundVariant100: "var(--alpha-base-100)", // color: #191919 -- background variant 100
     backgroundVariant200: "var(--alpha-base-200)", // color: #202020 -- background variant 200
     backgoundBlue: "var(--alpha-dark-blue)", // color: #263964 -- background blue
+    backgoundBlue100: "var(--alpha-dark-blue-100)", // color: #263964 -- background blue
     // backgroundVariant300: "var(--alpha-filtered-white)", // color: #27292E -- module header
     // backgroundVariant400: "var(--alpha-dark-800)", // color: #0A0A0B -- search bg focus
     // backgroundVariant500: "var(--alpha-dark-blue-200)", // color: #2C2E35 -- module preview bg

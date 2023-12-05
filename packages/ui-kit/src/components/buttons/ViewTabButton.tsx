@@ -49,10 +49,10 @@ export const ViewTabButton: FC<ButtonProps> = ({
             disabled={selected ? false : disabled}
             aria-label={label}
             className={twMerge(
-                "relative outline-none inline-flex items-center justify-center text-center align-middle cursor-pointer select-none hover:outline-none active:outline-none focus:outline-none bg-backgroundVariant100 hover:bg-btnBackgroundVariant1000 active:bg-btnBackgroundVariant800 fontGroup-supportBold text-primaryVariant100 uppercase w-max two-col:w-full h-full py-[13px] px-5 border-l border-solid border-background ease-out duration-100 [&>svg]:cursor-pointer [&>span]:text-clip [&>span]:overflow-hidden [&>span]:whitespace-nowrap",
+                "relative outline-none inline-flex items-center justify-center text-center align-middle cursor-pointer rounded-md select-none hover:outline-none active:outline-none focus:outline-none bg-backgroundVariant100 hover:bg-backgroundVariant200 active:bg-backgroundVariant100 fontGroup-supportBold text-primaryVariant100 uppercase w-max two-col:w-full h-full py-[13px] px-5 ease-out duration-100 [&>svg]:cursor-pointer [&>span]:text-clip [&>span]:overflow-hidden [&>span]:whitespace-nowrap",
                 disabled && "text-primary pointer-events-none",
                 selected &&
-                    "bg-backgoundBlue text-primary cursor-default hover:bg-background active:bg-background",
+                    "bg-backgoundBlue hover:bg-backgoundBlue text-primary cursor-default hover:bg-ba active:bg-backgoundBlue",
                 className
             )}
             onMouseEnter={handleMouseEnter}

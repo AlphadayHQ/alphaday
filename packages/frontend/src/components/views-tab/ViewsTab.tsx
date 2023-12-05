@@ -132,7 +132,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                 mobileOpen && "border-b"
             )}
         >
-            <div className="flex h-full py-0 px-3 overflow-auto [&>.tabButton]:max-h-10 two-col:py-0 two-col:px-4 two-col:w-full two-col:flex two-col:justify-start">
+            <div className="flex gap-1.5 h-full py-0 px-3 two-col:px-4 overflow-auto [&>.tabButton]:max-h-10 two-col:w-full two-col:flex two-col:justify-start">
                 {subscribedViews.length !== 0 && isWalletBoardAllowed && (
                     <span
                         style={

@@ -70,11 +70,12 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
             style: {
                 ...layerProps.style,
                 width: "200px",
-                marginTop: "7px",
+                marginTop: "12px",
+                marginLeft: "5px",
                 background: themeColors.background,
                 color: themeColors.primary,
                 border: `1px solid ${themeColors.borderLine}`,
-                boxShadow: `0px 0px 35px 9px ${themeColors.backgroundVariant1700}`,
+                // boxShadow: `0px 0px 35px 9px ${themeColors.backgroundVariant1700}`,
                 borderRadius: `5px`,
                 zIndex: 9, // TODO (xavier-charles): use ZIndex Registry
                 opacity: showMenu ? 1 : 0,
@@ -97,7 +98,7 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
     };
 
     return (
-        <div className="absolute right-1.5">
+        <div className="absolute right-0.5">
             <div
                 className="fill-primaryVariant100 cursor-pointer flex items-center self-center"
                 onClick={(e) => {
@@ -110,54 +111,61 @@ export const ViewTabMenu: FC<IViewTabMenu> = ({
                 tabIndex={0}
                 {...triggerProps}
             >
-                <div className="flex  items-center relative">
+                <div className="flex items-center relative">
                     <MoreSVG className="w-full h-full max-w-[20px] max-h-5 ml-[15%]" />
                 </div>
             </div>
-            {renderLayer(
-                <div {...styledLayerProps}>
-                    {options.map((option) => (
-                        <span
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                if (option.handler) {
-                                    closeMenuAndCall(option.handler);
-                                }
-                            }}
-                            tabIndex={0}
-                            role="button"
-                            key={option.key}
-                            className={twMerge(
-                                "p-[10px] flex items-center cursor-pointer hover:bg-background [&:nth-child(1)]:rounded-[5px_5px_0_0] [&:nth-last-child(1)]:rounded-[0_0)5px_5px] [&:nth-last-child(1)]:flex [&:nth-last-child(1)]:items-start [&:nth-last-child(1)]:cursor-default [&>svg]:text-primaryVariant100 [&>svg]:w-[17px] [&>svg]:h-[17px] [&>svg]:p-0.5",
-                                option.handler === undefined &&
-                                    "opacity-50 hover:bg-transparent cursor-not-allowed"
-                            )}
-                        >
-                            {renderIcon(option.icon)}
-                            <div className="py-0 px-3 break-word w-full">
-                                {option.title}
-                            </div>
-                        </span>
-                    ))}
-                    {menuDescription && (
-                        <>
-                            <div className="h-0 hidden border-t border-borderLine m-0 w-[200px]" />
-                            <span className="description +++++++++">
-                                <InfoSVG
-                                    style={{
-                                        minWidth: "15px",
-                                        marginTop: "2.5px",
+            <div className="relative">
+                {renderLayer(
+                    <div {...styledLayerProps}>
+                        {options.map((option, index) => (
+                            <>
+                                <span
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (option.handler) {
+                                            closeMenuAndCall(option.handler);
+                                        }
                                     }}
-                                    className="icon"
-                                />
-                                <div className="py-0 px-3 break-word w-full">
-                                    {menuDescription}
-                                </div>
-                            </span>
-                        </>
-                    )}
-                </div>
-            )}
+                                    tabIndex={0}
+                                    role="button"
+                                    key={option.key}
+                                    className={twMerge(
+                                        "p-[10px] flex items-center cursor-pointer hover:bg-background [&:nth-child(1)]:rounded-[5px_5px_0_0] [&:nth-last-child(1)]:rounded-[0_0)5px_5px] [&:nth-last-child(1)]:flex [&:nth-last-child(1)]:items-start [&:nth-last-child(1)]:cursor-default [&>svg]:text-primaryVariant100 [&>svg]:w-[17px] [&>svg]:h-[17px] [&>svg]:p-0.5",
+                                        option.handler === undefined &&
+                                            "opacity-50 hover:bg-transparent cursor-not-allowed"
+                                    )}
+                                >
+                                    {renderIcon(option.icon)}
+                                    <div className="py-0 px-3 break-word w-full">
+                                        {option.title}
+                                    </div>
+                                </span>
+                                {!(options.length === index + 1) && (
+                                    <div className="border-borderLine m-0 h-0 border-t border-solid mx-2" />
+                                )}
+                            </>
+                        ))}
+                        {menuDescription && (
+                            <>
+                                <div className="h-0 hidden border-t border-borderLine m-0 w-[200px]" />
+                                <span className="description">
+                                    <InfoSVG
+                                        style={{
+                                            minWidth: "15px",
+                                            marginTop: "2.5px",
+                                        }}
+                                        className="icon"
+                                    />
+                                    <div className="py-0 px-3 break-word w-full">
+                                        {menuDescription}
+                                    </div>
+                                </span>
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
