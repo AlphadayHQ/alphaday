@@ -63,7 +63,7 @@ const WalletViewButton: FC<IWalletViewButton> = ({
                 className={twMerge(
                     isFetchingWalletView &&
                         "bg-[transparent] pr-0 [&>.button-text]:text-white",
-                    "bg-secondaryOrangeFiltered text-primary border-none"
+                    "border-secondaryOrangeFiltered bg-transparent hover:border-secondaryOrange100 [&>.button-text]:text-secondaryOrange [&>.button-text]:fontGroup-mini [&>.button-text]:!tracking-wider border-solid border"
                 )}
                 onClick={noTags ? onClickNoTags : onClick}
                 disabled={isFetchingWalletView}

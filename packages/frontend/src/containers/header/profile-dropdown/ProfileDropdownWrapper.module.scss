@@ -39,8 +39,9 @@
     position: relative;
     margin: 0;
     border: 0;
-    background: var(--white);
     transition: all 0.2s ease;
+    @apply bg-primary;
+
     &:after {
         content: "";
         position: absolute;

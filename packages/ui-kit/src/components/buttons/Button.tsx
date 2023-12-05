@@ -16,7 +16,7 @@ const buttonVariants = tv({
             secondary: "border-borderLine bg-btnBackgroundVariant100",
             small: "fontGroup-normal h-[29px] border-borderLine bg-btnBackgroundVariant200 px-5 pb-[3px] pt-0.5 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
             extraSmall:
-                "fontGroup-normal h-[26px] border-borderLine bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-btnBackgroundVariant500 active:bg-btnBackgroundVariant800",
+                "fontGroup-normal h-[26px] border-borderLine bg-btnBackgroundVariant200 px-3 pb-[5px] pt-1 hover:bg-backgroundVariant100 active:bg-btnBackgroundVariant800",
         },
         error: { true: "bg-dangerFiltered" },
         uppercase: {

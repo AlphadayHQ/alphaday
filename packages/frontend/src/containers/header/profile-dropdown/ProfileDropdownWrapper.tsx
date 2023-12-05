@@ -144,86 +144,95 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         setTutFocusElemRef && ref && setTutFocusElemRef(ref)
                     }
                 >
-                    <span className="items-[initial] flex h-[34px] w-[34px]">
-                        <IconButton title="Open User Menu" variant="profile" />
+                    <span className="items-[initial] flex h-[34px] hover:bg-backgroundVariant200 rounded-lg pl-1">
+                        <IconButton
+                            title="Open User Menu"
+                            variant="profile"
+                            className="!border-none !bg-transparent [&_svg]:!w-3.5 [&_svg]:!h-3.5"
+                        />
                     </span>
                 </span>
             </DropdownToggle>
             {isVerifyPrompted && !showTutorial && (
                 <DropdownMenu
                     className={twMerge(
-                        "two-col:mt-[14.5px] two-col:p-[18px_0px] left-auto right-0 -mr-2.5 mt-[11.5px] w-[275px] rounded-t-none rounded-bl rounded-br border-t-0 shadow-none",
+                        "mt-1 two-col:p-[18px_0px] left-auto right-0 w-[275px] rounded-t-none rounded-bl rounded-br border border-solid border-borderLine rounded-lg shadow-none",
                         styles["dropdown-menu"]
                     )}
                 >
-                    <div className="flex justify-between px-[18px] pb-2.5 pt-0">
-                        <DropdownAvatar />
-                        {isAuthenticated && authWallet.account?.address && (
-                            <div className="flex flex-col items-end">
-                                <div
-                                    role="button"
-                                    tabIndex={0}
-                                    className="mb-[5px] cursor-pointer"
-                                    title="Copy wallet address"
-                                    aria-label="Copy wallet address"
-                                    onClick={handleWalletCopy}
-                                    data-testid="profile-dropdown-wallet-address"
-                                    data-address={authWallet.account.address}
-                                >
-                                    {truncateWithEllipsis(
-                                        authWallet.account.address
+                    <div className="mx-2">
+                        <div className="flex justify-between px-2 pb-5 pt-0">
+                            <DropdownAvatar />
+                            {isAuthenticated && authWallet.account?.address && (
+                                <div className="flex flex-col items-end">
+                                    <div
+                                        role="button"
+                                        tabIndex={0}
+                                        className="mb-[5px] cursor-pointer fontGroup-normal text-primary self-center"
+                                        title="Copy wallet address"
+                                        aria-label="Copy wallet address"
+                                        onClick={handleWalletCopy}
+                                        data-testid="profile-dropdown-wallet-address"
+                                        data-address={
+                                            authWallet.account.address
+                                        }
+                                    >
+                                        {truncateWithEllipsis(
+                                            authWallet.account.address
+                                        )}
+                                    </div>
+                                    {isWalletBoardAllowed && (
+                                        <WalletViewButton
+                                            walletViewState={walletViewState}
+                                            onClick={onClickWalletViewButton}
+                                        />
                                     )}
                                 </div>
-                                {isWalletBoardAllowed && (
-                                    <WalletViewButton
-                                        walletViewState={walletViewState}
-                                        onClick={onClickWalletViewButton}
-                                    />
-                                )}
-                            </div>
+                            )}
+                        </div>
+                        <Divider />
+                        {walletMenuOptions.map((option) => {
+                            return (
+                                <DropdownItem
+                                    key={option.dataTestId}
+                                    data-testid={option.dataTestId}
+                                    onClick={() => {
+                                        option.handler()?.catch((err) => {
+                                            Logger.error(
+                                                "profile-dropdown:ProfileDropdownWrapper",
+                                                err
+                                            );
+                                        });
+                                    }}
+                                >
+                                    <span title={option.title}>
+                                        {option.menuTitle}
+                                    </span>
+                                </DropdownItem>
+                            );
+                        })}
+                        <Divider />
+                        <DropdownItem onClick={handleToggle}>
+                            Tutorial{" "}
+                            <input
+                                title="Toggle Tutorial"
+                                type="checkbox"
+                                className={styles.toggle}
+                                onChange={handleToggle}
+                                checked={toggleState}
+                            />
+                        </DropdownItem>
+                        <Divider />
+                        {CONFIG.APP.VERSION && CONFIG.APP.COMMIT && (
+                            <DropdownItem className="hover:bg-background pt-5 pb-0">
+                                <div className="fontGroup-mini w-full">
+                                    Version: {CONFIG.APP.VERSION}
+                                    <br />
+                                    Commit: {CONFIG.APP.COMMIT}
+                                </div>
+                            </DropdownItem>
                         )}
                     </div>
-                    <Divider />
-                    {walletMenuOptions.map((option) => {
-                        return (
-                            <DropdownItem
-                                key={option.dataTestId}
-                                data-testid={option.dataTestId}
-                                onClick={() => {
-                                    option.handler()?.catch((err) => {
-                                        Logger.error(
-                                            "profile-dropdown:ProfileDropdownWrapper",
-                                            err
-                                        );
-                                    });
-                                }}
-                            >
-                                <span title={option.title}>
-                                    {option.menuTitle}
-                                </span>
-                            </DropdownItem>
-                        );
-                    })}
-                    <Divider />
-                    <DropdownItem onClick={handleToggle}>
-                        Tutorial{" "}
-                        <input
-                            title="Toggle Tutorial"
-                            type="checkbox"
-                            className={styles.toggle}
-                            onChange={handleToggle}
-                            checked={toggleState}
-                        />
-                    </DropdownItem>
-                    <Divider />
-                    {CONFIG.APP.VERSION && CONFIG.APP.COMMIT && (
-                        <DropdownItem>
-                            <div className="fontGroup-mini text-primaryVariant100">
-                                Version: {CONFIG.APP.VERSION} <br />
-                                Commit: {CONFIG.APP.COMMIT}
-                            </div>
-                        </DropdownItem>
-                    )}
                 </DropdownMenu>
             )}
         </Dropdown>

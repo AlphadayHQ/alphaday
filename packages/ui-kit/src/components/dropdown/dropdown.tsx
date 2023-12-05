@@ -77,8 +77,8 @@ export const Dropdown: FC<DropdownProps> = ({
 
 export const DropdownAvatar: FC = () => {
     return (
-        <div className="bg-btnBackgroundVariant1800 relative h-16 w-16 rounded-full">
-            <div className="absolute inset-0 flex h-full w-full items-center justify-center rounded-full text-[15px] font-bold uppercase leading-[100%] text-white">
+        <div className="bg-backgroundVariant200 relative h-16 w-16 rounded-full">
+            <div className="absolute inset-0 flex h-full w-full items-center justify-center rounded-full text-[15px] font-bold uppercase leading-[100%] text-primary">
                 <div>
                     <UserSVG className="fill-primary w-5" />
                 </div>
@@ -197,14 +197,22 @@ DropdownMenu.displayName = "DropdownMenu";
 interface IDropItem {
     children?: React.ReactNode;
     onClick?: () => void;
+    className?: string;
 }
 
-export const DropdownItem: FC<IDropItem> = ({ children, onClick }) => (
+export const DropdownItem: FC<IDropItem> = ({
+    children,
+    onClick,
+    className,
+}) => (
     <div
         onClick={onClick}
         role="button"
         tabIndex={0}
-        className="hover:bg-background active:bg-background fontGroup-normal clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-[18px] py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] [&>svg]:mr-[15px] [&>svg]:h-4 [&>svg]:w-4"
+        className={twMerge(
+            "hover:bg-backgroundVariant100 active:bg-background fontGroup-normal clear-both flex w-full items-center justify-between whitespace-nowrap rounded border-0 bg-transparent px-2 py-2.5 transition-all duration-[0.2s] ease-[ease-in-out] [&>svg]:mr-[15px] [&>svg]:h-4 [&>svg]:w-4",
+            className
+        )}
     >
         {children}
     </div>

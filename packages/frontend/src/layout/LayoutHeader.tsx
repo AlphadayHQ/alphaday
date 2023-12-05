@@ -69,10 +69,10 @@ const LayoutHeader: FC<IProps> = ({
                                     <HeaderSearchContainer />
                                 </div>
                                 <HeaderNavRight className="p-0">
-                                    <HeaderNavElement className="mr-[15px]">
+                                    <HeaderNavElement className="mr-3">
                                         <SyncIndicatorContainer />
                                     </HeaderNavElement>
-                                    <HeaderNavElement className="mr-[15px]">
+                                    <HeaderNavElement className="mr-1">
                                         <NavTabButton
                                             variant="views"
                                             open={false}
@@ -112,7 +112,7 @@ const LayoutHeader: FC<IProps> = ({
                                             "30px",
                                         ]}
                                     /> */}
-                                    <HeaderNavElement className="single-col:ml-[15px] ml-[8px] mr-[15px]">
+                                    <HeaderNavElement className="single-col:ml-1 ml-[8px] mr-[15px]">
                                         <ProfileDropdownContainer />
                                     </HeaderNavElement>
                                 </HeaderNavRight>
@@ -152,24 +152,23 @@ const LayoutHeader: FC<IProps> = ({
                             )}
                         </div>
                         {mobileOpen && (
-                            <div className="mx-2.5 my-auto flex w-full flex-row items-center justify-center">
-                                <HeaderSearchContainer />
-                            </div>
-                        )}
-                        {mobileOpen && (
-                            <h3 className="two-col:pl-[15px] two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
-                                Boards
-                            </h3>
-                        )}
+                            <>
+                                <div className="mx-2.5 my-auto flex w-full flex-row items-center justify-center">
+                                    <HeaderSearchContainer />
+                                </div>
 
-                        {mobileOpen && (
-                            <ViewsTabContainer
-                                mobileOpen
-                                isBoardsLibOpen={isBoardsLibOpen}
-                                onToggleBoardsLib={toggleBoardsLib}
-                                headerRef={headerRef}
-                                handleMobileOpen={handleMobileOpen}
-                            />
+                                <h3 className="two-col:pl-[15px] two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
+                                    Boards
+                                </h3>
+
+                                <ViewsTabContainer
+                                    mobileOpen
+                                    isBoardsLibOpen={isBoardsLibOpen}
+                                    onToggleBoardsLib={toggleBoardsLib}
+                                    headerRef={headerRef}
+                                    handleMobileOpen={handleMobileOpen}
+                                />
+                            </>
                         )}
 
                         <HeaderNavRight
