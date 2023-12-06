@@ -29,7 +29,7 @@ export const HeaderNavbar: FC<{
     return (
         <div
             className={twMerge(
-                "bg-background two-col:h-[60px] two-col:top-0 two-col:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0 mb-1",
+                "bg-background two-col:h-[60px] two-col:top-0 two-col:inset-x-0 relative flex flex-row flex-wrap items-stretch justify-between p-0 mb-[2.5px]", // mb-[2.5px] is to make sure the distance between the viewstab and the searchbar is 12px
                 mobileOpen ? "h-auto" : "h-16",
                 className
             )}
