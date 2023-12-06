@@ -42,7 +42,9 @@ const BoardsLibraryContainer: FC<IProps> = ({
 }) => {
     const history = useHistory();
 
-    const [category, setCategory] = useState<string | undefined>();
+    const [selectedCategory, setSelectedCategory] = useState<
+        string | undefined
+    >();
     const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
     const [sortBy, setSortBy] = useState(EItemsSortBy.Name);
 
@@ -66,7 +68,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
         limit: CONFIG.UI.BOARD_LIBRARY.LIMIT,
         page: currentPage,
         sortBy,
-        category,
+        category: selectedCategory,
     });
 
     const [allViews, setAllViews] = useState<TRemoteUserViewPreview[]>([]);
@@ -231,10 +233,10 @@ const BoardsLibraryContainer: FC<IProps> = ({
     };
 
     const handleCategorySelect = (newCategory: string | undefined): void => {
-        if (isFetching || newCategory === category) return;
+        if (isFetching || newCategory === selectedCategory) return;
         if (allViews.length > 0) setAllViews([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
-        setCategory(newCategory);
+        setSelectedCategory(newCategory);
     };
 
     const { nextPage, handleNextPage } = usePagination(
@@ -263,7 +265,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
 
     return (
         <BoardsLibrary
-            category={category}
+            selectedCategory={selectedCategory}
             boards={allViews}
             subscribedViews={remoteSubscribedViews}
             categories={categories}

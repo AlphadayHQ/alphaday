@@ -77,6 +77,7 @@ import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
 import { KeyValueTable } from "./src/components/table/KeyValueTable";
+import { TabsBar } from "./src/components/tabs/TabsBar";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import { Timer } from "./src/components/timer/Timer";
 import { CalendarTooltip } from "./src/components/tooltip/CalendarTooltip";
@@ -159,4 +160,5 @@ export {
     Overlay,
     ChatForm,
     FadeIn,
+    TabsBar,
 };

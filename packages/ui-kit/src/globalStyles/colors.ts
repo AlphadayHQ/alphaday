@@ -1,7 +1,8 @@
 export const darkColors = {
     white: "var(--alpha-white)", // color: #FFFFFF -- white
-    primary: "var(--alpha-light)", // color: #C2C5D6 -- primary light
-    primaryVariant100: "var(--alpha-primary-100)", // color: #767C8F -- primary dark grey
+    primary: "var(--alpha-light)", // color: #f2f2f2 -- primary light
+    primaryFiltered: "var(--alpha-primary-filtered)", // color: rgba(242, 242, 242, 0.7) -- primary light opacity 0.9
+    primaryVariant100: "var(--alpha-primary-100)", // color: #849399 -- primary dark grey
     primaryVariant200: "var(--alpha-darker-grey)", // color: #505562 -- primary darker grey
     primaryVariant300: "var(--alpha-dark-grey-filtered)", // color: rgba(118, 124, 143, 0.2) -- primary dark grey opacity 0.2
     primaryVariant400: "var(--alpha-light-100)", // color: #D1D4E0 -- hover checkbox

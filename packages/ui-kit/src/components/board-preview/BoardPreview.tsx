@@ -156,15 +156,26 @@ export const BoardPreview: FC<IPreview> = ({
                 </div>
             </div>
             <div
-                className="text-primary group-hover:text-primaryVariant800 mt-3.5 text-[12px]
-                 font-semibold uppercase leading-[14px] tracking-[1.2px]"
+                className={twMerge(
+                    active
+                        ? "text-primary"
+                        : "text-primaryVariant100 group-hover:text-primaryFiltered",
+                    "mt-3.5 text-[12px] font-semibold uppercase leading-[14px] tracking-[1.2px]"
+                )}
                 onClick={onClick}
                 role="link"
                 tabIndex={0}
             >
                 {title}
             </div>
-            <p className="text-primary mt-1.75 group-hover:text-primaryVariant800 text-[11px] leading-[14px] tracking-[0.2px]">
+            <p
+                className={twMerge(
+                    active
+                        ? "text-primary"
+                        : "text-primaryVariant100 group-hover:text-primaryFiltered",
+                    "mt-1.75 text-[11px] leading-[14px] tracking-[0.2px] three-liner"
+                )}
+            >
                 {description}
             </p>
         </div>

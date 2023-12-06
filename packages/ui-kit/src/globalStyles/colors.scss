@@ -51,12 +51,17 @@ http://ionicframework.com/docs/theming/ */
     --ion-color-danger-shade: #d74b2c;
     --ion-color-danger-tint: #f56647;
 
-    /** //? new  background shades **/
+    //** new  background shades **/
     --alpha-base: #121212;
     --alpha-base-100: #191919;
     --alpha-base-200: #202020; //hover
+
+    //** primary shades **/
     --alpha-primary: #f2f2f2;
     --alpha-primary-100: #849399;
+    --alpha-primary-filtered: rgba(242, 242, 242, 0.50);
+
+;
     --alpha-border: #3b3a3a;
 
     // overrides

@@ -3,7 +3,7 @@ import {
     BoardPreview,
     ModuleLoader,
     ScrollBar,
-    TabButton,
+    TabsBar,
     twMerge,
 } from "@alphaday/ui-kit";
 import {
@@ -16,7 +16,9 @@ import { validateEthAddr } from "src/api/utils/accountUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
+import { ReactComponent as ArrowDownSVG } from "src/assets/icons/chevron-down.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
+import { ReactComponent as EmptySVG } from "src/assets/icons/empty.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 
 const SORT_BUTTONS: { label: string; value: EItemsSortBy }[] = [
@@ -33,6 +35,23 @@ const SORT_BUTTONS: { label: string; value: EItemsSortBy }[] = [
         value: EItemsSortBy.New,
     },
 ];
+
+const DEFAULT_TAB_OPTION = {
+    label: "All",
+    value: "all",
+};
+
+const NoBoards = ({ msg }: { msg: string }) => (
+    <div className="w-full h-full flex flex-col items-center pt-14">
+        <div>
+            <EmptySVG className="w-10 h-10 text-primaryVariant100" />
+        </div>
+
+        <p className="mt-4 font-normal text-primaryVariant100 text-center">
+            {msg}
+        </p>
+    </div>
+);
 
 const BoardPreviewWrap: FC<{
     view: TRemoteUserViewPreview;
@@ -96,7 +115,7 @@ const BoardPreviewWrap: FC<{
 );
 
 interface IBoardsLibrary {
-    category: string | undefined;
+    selectedCategory: string | undefined;
     boards: ReadonlyArray<TRemoteUserViewPreview> | undefined;
     subscribedViews: ReadonlyArray<TRemoteUserViewPreview> | undefined;
     categories: ReadonlyArray<TRemoteWidgetCategory> | undefined;
@@ -126,7 +145,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
     sortBy,
     boards,
     categories,
-    category,
+    selectedCategory,
     selectedViewId,
     onToggleBoardsLib,
     onSortBy,
@@ -152,6 +171,15 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
             is_subscribed: !!subscribedViews?.some((sv) => sv.id === v.id),
         }));
 
+    const tabOptions =
+        categories?.map((cat) =>
+            cat.slug === "default"
+                ? DEFAULT_TAB_OPTION
+                : {
+                      label: cat.name,
+                      value: cat.slug,
+                  }
+        ) || [];
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
             if (shouldFetchMoreItems(currentTarget)) {
@@ -188,16 +216,15 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         <div
             data-testid="boards-library"
             className={twMerge(
-                "bg-background transition-all max-h-0 ease-in-out duration-300 [&>*]:invisible",
-                isBoardsLibOpen && "max-h-[500px] [&>*]:visible [&>*]:delay-300"
+                "bg-backgroundVariant100 rounded-xl transition-all max-h-0 ease-in-out duration-300 [&>*]:invisible mx-5",
+                isBoardsLibOpen &&
+                    "max-h-[500px] [&>*]:visible [&>*]:delay-300  mb-3"
             )}
         >
-            <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-borderLine text-primaryVariant100 font-normal">
+            <div className="flex justify-between items-center p-4 pb-0">
                 <div className="meta">
-                    <div className="fontGroup-highlightSemi uppercase">
-                        Boards Library
-                    </div>
-                    <div className="fontGroup-normal">
+                    <div className="uppercase">Boards Library</div>
+                    <div className="text-primaryVariant100">
                         Switch between boards to optimize your workflow, and pin
                         the ones you use most often.
                     </div>
@@ -212,14 +239,14 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     <CloseSVG className="w-3 h-3" />
                 </div>
             </div>
-            <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-borderLine text-primaryVariant100 font-normal">
+            {/* <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-borderLine text-primaryVariant100 font-normal">
                 <div className="flex justify-around items-center [&>span]:mr-[7px]">
                     <span className="text-primary mr-3">Categories</span>
                     <span className="wrap">
                         <TabButton
                             variant="small"
                             uppercase={false}
-                            open={category === undefined}
+                            open={selectedCategory === undefined}
                             onClick={() => {
                                 onCategorySelect(undefined);
                             }}
@@ -232,7 +259,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                             <TabButton
                                 variant="small"
                                 uppercase={false}
-                                open={cat.slug === category}
+                                open={cat.slug === selectedCategory}
                                 onClick={() => {
                                     onCategorySelect(cat.slug);
                                 }}
@@ -261,26 +288,36 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                         </>
                     )}
                 </div>
-            </div>
-            <div className="h-72">
+            </div> */}
+            <div className="">
                 {customBoards === undefined || allBoards === undefined ? (
                     <ModuleLoader $height="100%" />
                 ) : (
-                    <div className="flex flex-row justify-between">
-                        <div className="w-full p-[25px] pr-[15px] max-w-[395px] border-r border-solid border-borderLine">
-                            <div className="flex fontGroup-highlightSemi py-[5px] text-primary">
-                                Custom Boards
+                    <div className="flex flex-row justify-between mt-8">
+                        <div className="w-full pl-4 pr-6 pb-0 max-w-[395px] border-r border-solid border-borderLine">
+                            <div className="flex justify-between text-primary">
+                                <span className="flex flex-col">
+                                    <span className="fontGroup-highlightSemi">
+                                        Custom Boards
+                                    </span>
+                                    <span className="text-primaryVariant100">
+                                        {isAuthenticated
+                                            ? "Create an empty board and add widgets"
+                                            : "Connect and verify your wallet to create new boards and see your custom boards"}
+                                    </span>
+                                </span>
                                 <span
                                     role="button"
                                     tabIndex={0}
                                     onClick={handleCreateEmptyBoard}
                                     className={twMerge(
-                                        "flex justify-center items-center ml-[10px] w-[18px] h-[18px] rounded-full border border-solid border-primary cursor-pointer hover:border-btnRingVariant100 hover:text-primary",
-                                        !isAuthenticated && "cursor-not-allowed"
+                                        "flex justify-center items-center ml-[10px] w-5 h-5 self-center rounded-full border border-solid border-primary cursor-pointer hover:border-btnRingVariant100 hover:text-primary",
+                                        !isAuthenticated &&
+                                            "cursor-not-allowed hidden"
                                     )}
                                     title={
                                         isAuthenticated
-                                            ? "Create an empty board to be populated"
+                                            ? "Create an empty board and add widgets"
                                             : "Connect and verify your wallet to create new boards"
                                     }
                                     data-testid="create-empty-board"
@@ -288,15 +325,12 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                     <PlusSVG />
                                 </span>
                             </div>
-                            <div className="h-[234px]">
+                            <div className="h-[248px] mt-3">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full gap-5 mt-[10px]">
-                                        {customBoards.length === 0 ? (
-                                            <p className="ml-[15px] pr-3 font-normal text-primary">
-                                                {isAuthenticated
-                                                    ? "You have not created any custom boards."
-                                                    : "Connect and verify your wallet to see your custom boards"}
-                                            </p>
+                                    <div className="flex box-border flex-row flex-wrap w-full gap-5">
+                                        {customBoards.length === 0 &&
+                                        isAuthenticated ? (
+                                            <NoBoards msg="You have not created any custom boards" />
                                         ) : (
                                             customBoards.map((view) => (
                                                 <BoardPreviewWrap
@@ -315,23 +349,43 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                                 />
                                             ))
                                         )}
-                                        <div className="spacer py-2 w-full" />
+                                        {/* Add extra space after the list boards preview list */}
+                                        {customBoards.length > 2 && (
+                                            <div className="spacer py-2 w-full" />
+                                        )}
                                     </div>
                                 </ScrollBar>
                             </div>
                         </div>
-                        <div className="w-full p-[25px]">
-                            <div className="flex fontGroup-highlightSemi p-[5px_15px] text-primary">
-                                All Boards
+                        <div className="w-full pr-4 pl-6 pb-0">
+                            {/* pb-2 is used here to align the boards list to the custom boards list */}
+                            <div className="flex pb-2">
+                                <TabsBar
+                                    options={tabOptions}
+                                    onChange={(name) => {
+                                        onCategorySelect(name);
+                                    }}
+                                    selectedOption={
+                                        selectedCategory
+                                            ? {
+                                                  label: selectedCategory,
+                                                  value: selectedCategory,
+                                              }
+                                            : DEFAULT_TAB_OPTION
+                                    }
+                                />
+                                <span className="flex items-center cursor-pointer ml-2">
+                                    <span className="fontGroup-highlightSemi">
+                                        Sort
+                                    </span>
+                                    <ArrowDownSVG className="text-primary w-3.5" />
+                                </span>
                             </div>
-                            <div className="h-[234px]">
+                            <div className="h-[248px] mt-3">
                                 <ScrollBar onScroll={handleScrollEvent}>
-                                    <div className="flex box-border flex-row flex-wrap h-[234px] w-full gap-5 mt-[10px]">
+                                    <div className="flex box-border flex-row flex-wrap h-[248px] w-full gap-5">
                                         {allBoards.length === 0 ? (
-                                            <p className="ml-[15px] font-normal text-primary">
-                                                No boards found in this
-                                                category.
-                                            </p>
+                                            <NoBoards msg="No boards found in this category" />
                                         ) : (
                                             allBoards.map((view) => (
                                                 <BoardPreviewWrap
