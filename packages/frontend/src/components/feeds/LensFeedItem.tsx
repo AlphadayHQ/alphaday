@@ -34,39 +34,9 @@ const PLUGINS = [
     remarkRegex(URL_REGEX, (url: string) => [`https://${url}`, url]),
 ];
 
-const ALLOWED_IMAGE_TYPES = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/gif",
-];
-
-const ALLOWED_AUDIO_TYPES = [
-    "audio/mpeg",
-    "audio/wav",
-    "audio/mp4",
-    "audio/aac",
-    "audio/ogg",
-    "audio/webm",
-    "audio/flac",
-];
-
-const ALLOWED_VIDEO_TYPES = [
-    "video/mp4",
-    "video/mpeg",
-    "video/ogg",
-    "video/webm",
-    "video/quicktime",
-];
-
-const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
-    // eslint-disable-next-line no-underscore-dangle
-    const postType = tweet.__typename;
-    const profile =
-        postType === "Mirror"
-            ? tweet.mirrorOf?.profile || tweet.profile
-            : tweet.profile;
-    const profileUrl = `https://lenster.xyz/u/${tweet.profile.handle}`;
+const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
+    const profile = tweet.by.metadata;
+    const profileUrl = `https://hey.xyz/u/${social_account.username}`;
 
     return (
         <TweetWrapper
@@ -83,15 +53,15 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                 <a href={profileUrl} target="_blank" rel="noopener noreferrer">
                     <AuthorImage
                         src={
-                            profile.picture?.original?.url ??
-                            profile.picture?.uri
+                            profile.picture?.optimized?.uri ??
+                            profile.picture?.raw.uri
                         }
                     />
                 </a>
             </TweetColumn>
             <TweetColumn className="w-[80%]">
                 <div className="text-primaryVariant100 hover:text-primary">
-                    {postType === "Mirror" && (
+                    {/* {postType === "Mirror" && (
                         <div className="fontGroup-supportBold">
                             <AuthorName
                                 href={profileUrl}
@@ -99,27 +69,23 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                                 rel="noopener noreferrer"
                                 className="fontGroup-supportBold"
                             >
-                                {tweet.profile.name}
+                                {social_account.name}
                             </AuthorName>{" "}
                             mirrored
                         </div>
-                    )}
+                    )} */}
 
                     <AuthorName
-                        href={`https://lenster.xyz/u/${profile.handle}`}
+                        href={profileUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block"
                     >
-                        {profile.name} &#64;
-                        {profile.handle} • {moment(tweet.createdAt).fromNow()}
+                        {profile.displayName} &#64;
+                        {social_account.username} •{" "}
+                        {moment(tweet.createdAt).fromNow()}
                     </AuthorName>
-                    {postType === "Comment" && (
-                        <div>
-                            Replying to &#64;
-                            {tweet.mainPost?.profile.handle}
-                        </div>
-                    )}
+                    {/* {postType === "Comment" && <div>Replying to &#64;</div>} */}
                 </div>
                 <TweetContent>
                     <ReactMarkdown
@@ -130,49 +96,48 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url }) => {
                         {tweet.metadata.content}
                     </ReactMarkdown>
 
-                    {tweet.metadata.media?.length > 0 && (
+                    {tweet.metadata.attachments?.length && (
                         <TweetAttachment>
-                            {tweet.metadata.media.map((media, mediaIndex) => {
-                                if (media.original.mimeType === null) {
+                            {tweet.metadata.attachments?.map(
+                                (media, mediaIndex) => {
+                                    if (
+                                        media.video &&
+                                        !media.video.uri.includes("m3u8")
+                                    ) {
+                                        return (
+                                            <TweetMedia
+                                                // eslint-disable-next-line react/no-array-index-key
+                                                key={`${media.video.uri}${mediaIndex}`}
+                                                mediaType="video"
+                                                src={media.video.uri}
+                                            />
+                                        );
+                                    }
+
+                                    if (media.audio) {
+                                        return (
+                                            <TweetMedia
+                                                // eslint-disable-next-line react/no-array-index-key
+                                                key={`${media.audio.uri}${mediaIndex}`}
+                                                mediaType="audio"
+                                                src={media.audio.uri}
+                                            />
+                                        );
+                                    }
+
+                                    if (media.image) {
+                                        return (
+                                            <TweetMedia
+                                                // eslint-disable-next-line react/no-array-index-key
+                                                key={`${media.image.uri}${mediaIndex}`}
+                                                mediaType="img"
+                                                src={media.image.uri}
+                                            />
+                                        );
+                                    }
                                     return null;
                                 }
-                                const isImage = ALLOWED_IMAGE_TYPES.includes(
-                                    media.original.mimeType
-                                );
-                                const isVideo =
-                                    ALLOWED_VIDEO_TYPES.includes(
-                                        media.original.mimeType
-                                    ) &&
-                                    !media.original.url.includes("livepeer") && // TODO(elcharitas): Add support for livepeer videos
-                                    !media.original.url.includes("m3u8") && // TODO(elcharitas): Add support for m3u8 videos
-                                    !media.original.url.includes("ipfs"); // TODO(elcharitas): Add support for m3u8 videos
-                                const isAudio = ALLOWED_AUDIO_TYPES.includes(
-                                    media.original.mimeType
-                                );
-                                const audioVideoType = isAudio
-                                    ? "audio"
-                                    : "video";
-                                const mediaType = isImage
-                                    ? "img"
-                                    : audioVideoType;
-                                return (
-                                    (isImage || isAudio || isVideo) && (
-                                        <TweetMedia
-                                            /**
-                                             * In some cases, the media array contains the same image more than once.
-                                             * It becomes difficult to uniquely identify the image in the array.
-                                             *
-                                             * As a result, although it is not recommended,
-                                             * we are using the index of the image in the array build the key.
-                                             */
-                                            // eslint-disable-next-line react/no-array-index-key
-                                            key={`${media.original.url}${mediaIndex}`}
-                                            src={media.original.url}
-                                            mediaType={mediaType}
-                                        />
-                                    )
-                                );
-                            })}
+                            )}
                         </TweetAttachment>
                     )}
                 </TweetContent>
