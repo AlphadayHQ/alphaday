@@ -41,7 +41,7 @@ const UI_CONFIG = {
     WIDGET_SIZE_TRACKING_ID: "widget-size-tracking-id", // ID to get size of one widget
     SMALL_NUM_DECIMAL_PLACES: 4, // typically for n < 1
     BASE_DECIMAL_PLACES: 2,
-    PERCENTAGE_DECIMAL_PLACES: 1,
+    PERCENTAGE_DECIMAL_PLACES: 2,
     ETH_DECIMAL_PLACES: 6,
     USD_DECIMAL_PLACES: 2,
     SKELETON_VIEW: [
