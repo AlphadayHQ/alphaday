@@ -32,6 +32,7 @@ export interface IRemoteLensProfileMetadata {
 }
 
 export interface IRemoteLensPost {
+    __typename: "Post" | "Quote" | "Mirror";
     id: string;
     by: {
         id: string;
@@ -39,19 +40,26 @@ export interface IRemoteLensPost {
     };
     metadata: {
         id: string;
+        title?: string;
         content: string;
         embed?: string;
         attachments?: IRemoteLensAttachment[];
-        profilesMentioned: {
-            profile: {
-                handle: {
-                    localName: string;
-                };
-            };
-        }[];
-        commentOn: IRemoteLensPost;
-        root: IRemoteLensPost;
     };
+    stats: {
+        quotes: number;
+        mirrors: number;
+        comments: number;
+        bookmarks: number;
+    };
+    profilesMentioned: {
+        profile: {
+            handle: {
+                localName: string;
+            };
+        };
+    }[];
+    commentOn: IRemoteLensPost;
+    root: IRemoteLensPost;
     createdAt: string;
 }
 
