@@ -47,7 +47,7 @@ export const ModulePreview: FC<IPreview> = ({
                 >
                     <div
                         className=" w-full h-full bg-cover bg-left-top bg-no-repeat rounded-[6px]"
-                        style={{ backgroundImage: previewImg }}
+                        style={{ backgroundImage: `url(${previewImg})` }}
                     />
                     <div className="absolute bottom-[10%] right-[5%] flex justify-center items-center">
                         {count !== undefined && count > 0 && (
