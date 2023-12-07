@@ -1,5 +1,10 @@
 import { FormEvent, FC } from "react";
-import { HRElement, ListItem, NoItems, ScrollBar } from "@alphaday/ui-kit";
+import {
+    HRElement,
+    ListItem,
+    CenteredBlock,
+    ScrollBar,
+} from "@alphaday/ui-kit";
 import { TDaoItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
@@ -17,9 +22,9 @@ const DaoItemList: FC<IDaoItemList> = ({ items, handlePaginate }) => {
     if (items) {
         if (items.length === 0) {
             return (
-                <NoItems>
+                <CenteredBlock>
                     <p>{globalMessages.queries.noMatchFound("items")}</p>
-                </NoItems>
+                </CenteredBlock>
             );
         }
         return (

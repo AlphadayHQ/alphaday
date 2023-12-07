@@ -1,5 +1,10 @@
 import { FC, FormEvent } from "react";
-import { ModuleLoader, ScrollBar, ListItem, NoItems } from "@alphaday/ui-kit";
+import {
+    ModuleLoader,
+    ScrollBar,
+    ListItem,
+    CenteredBlock,
+} from "@alphaday/ui-kit";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 import { IReports } from "./types";
@@ -20,9 +25,9 @@ const ReportsModule: FC<IReports> = ({
     }
     if (items.length === 0) {
         return (
-            <NoItems>
+            <CenteredBlock>
                 <p>{globalMessages.queries.noMatchFound("reports")}</p>
-            </NoItems>
+            </CenteredBlock>
         );
     }
     return (

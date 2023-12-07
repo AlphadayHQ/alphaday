@@ -1,5 +1,5 @@
 import { FC, FormEvent } from "react";
-import { ModuleLoader, NoItems, ScrollBar } from "@alphaday/ui-kit";
+import { ModuleLoader, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import { TDiscordItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
@@ -34,11 +34,11 @@ const DiscordModule: FC<IDiscord> = ({
                 return <DiscordFeedItem key={item.id} item={item} />;
             })}
             {!isLoadingItems && items.length === 0 && (
-                <NoItems>
+                <CenteredBlock>
                     <p>
                         {globalMessages.queries.noMatchFound("Discord Items")}
                     </p>
-                </NoItems>
+                </CenteredBlock>
             )}
         </ScrollBar>
     );

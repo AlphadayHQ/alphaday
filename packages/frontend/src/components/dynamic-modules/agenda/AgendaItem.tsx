@@ -97,7 +97,7 @@ const AgendaItem: FC<Item> = ({ item, catColor, setItemsHeight }) => {
                 openAccordion={openAccordion}
                 author={author}
                 descHeightRef={descHeightRef}
-                description={description}
+                description={description ?? ""}
                 variant="agenda"
                 fullHeight={paddedDescHeight}
                 remarkPlugins={PLUGINS}
