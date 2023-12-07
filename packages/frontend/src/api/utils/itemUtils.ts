@@ -174,5 +174,6 @@ export const customDatumAsItem: (datum: TRemoteCustomDatum) => TItem = (d) => {
     }, {} as TItem);
 };
 
-export const customDataAsItems: (data: TRemoteCustomData) => TItem[] = (d) =>
-    d.map(customDatumAsItem);
+export const customDataAsItems: (data: TRemoteCustomData) => TItem[] = (d) => {
+    return d.map(customDatumAsItem);
+};

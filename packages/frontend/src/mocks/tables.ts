@@ -39,9 +39,9 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
             custom_meta: undefined,
             format_structure: {
                 data: [
-                    { name: "John Doe", age: "30" },
-                    { name: "Jane Doe", age: "40" },
-                    { name: "Jack Doe", age: "50" },
+                    { id: "1", name: "John Doe", age: "30" },
+                    { id: "2", name: "Jane Doe", age: "40" },
+                    { id: "3", name: "Jack Doe", age: "50" },
                 ],
                 columns: [
                     {
@@ -118,8 +118,8 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
             custom_meta: undefined,
             format_structure: {
                 data: [
-                    { job: "Developer", pay: "50.670090" },
-                    { job: "Designer", pay: "60.4500978" },
+                    { id: "1", job: "Developer", pay: "50.670090" },
+                    { id: "2", job: "Designer", pay: "60.4500978" },
                 ],
                 columns: [
                     {

@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ModuleLoader, NoItems, ScrollBar } from "@alphaday/ui-kit";
+import { ModuleLoader, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import { TLensPost } from "src/api/types";
 import globalMessages from "src/globalMessages";
 import LensFeedItem from "./LensFeedItem";
@@ -22,9 +22,9 @@ const LensFeedModule: FC<IPosts> = ({
 
     if (posts.length === 0) {
         return (
-            <NoItems>
+            <CenteredBlock>
                 <p>{globalMessages.queries.noMatchFound("lens posts")}</p>
-            </NoItems>
+            </CenteredBlock>
         );
     }
     return (
