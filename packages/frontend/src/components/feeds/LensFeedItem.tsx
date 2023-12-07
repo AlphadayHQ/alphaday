@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { FC } from "react";
 import moment from "moment";
 import ReactMarkdown from "react-markdown";
@@ -35,7 +36,8 @@ const PLUGINS = [
 ];
 
 const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
-    const profile = tweet.by.metadata;
+    const profile = (tweet.__typename === "Mirror" ? tweet.mirrorOn : tweet).by
+        .metadata;
     const profileUrl = `https://hey.xyz/u/${social_account.username}`;
 
     return (
@@ -61,7 +63,7 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
             </TweetColumn>
             <TweetColumn className="w-[80%]">
                 <div className="text-primaryVariant100 hover:text-primary">
-                    {/* {postType === "Mirror" && (
+                    {tweet.__typename === "Mirror" && (
                         <div className="fontGroup-supportBold">
                             <AuthorName
                                 href={profileUrl}
@@ -73,7 +75,7 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
                             </AuthorName>{" "}
                             mirrored
                         </div>
-                    )} */}
+                    )}
 
                     <AuthorName
                         href={profileUrl}
@@ -85,7 +87,6 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
                         {social_account.username} •{" "}
                         {moment(tweet.createdAt).fromNow()}
                     </AuthorName>
-                    {/* {postType === "Comment" && <div>Replying to &#64;</div>} */}
                 </div>
                 <TweetContent>
                     <ReactMarkdown
@@ -96,20 +97,22 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
                         {tweet.metadata.content}
                     </ReactMarkdown>
 
-                    {tweet.metadata.attachments?.length && (
+                    {Number(tweet.metadata.attachments?.length) > 0 && (
                         <TweetAttachment>
                             {tweet.metadata.attachments?.map(
                                 (media, mediaIndex) => {
                                     if (
                                         media.video &&
-                                        !media.video.uri.includes("m3u8")
+                                        !media.video.optimized.uri.includes(
+                                            "m3u8"
+                                        )
                                     ) {
                                         return (
                                             <TweetMedia
                                                 // eslint-disable-next-line react/no-array-index-key
-                                                key={`${media.video.uri}${mediaIndex}`}
+                                                key={`${media.video.optimized.uri}${mediaIndex}`}
                                                 mediaType="video"
-                                                src={media.video.uri}
+                                                src={media.video.optimized.uri}
                                             />
                                         );
                                     }
@@ -118,9 +121,9 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
                                         return (
                                             <TweetMedia
                                                 // eslint-disable-next-line react/no-array-index-key
-                                                key={`${media.audio.uri}${mediaIndex}`}
+                                                key={`${media.audio.optimized.uri}${mediaIndex}`}
                                                 mediaType="audio"
-                                                src={media.audio.uri}
+                                                src={media.audio.optimized.uri}
                                             />
                                         );
                                     }
@@ -129,9 +132,10 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
                                         return (
                                             <TweetMedia
                                                 // eslint-disable-next-line react/no-array-index-key
-                                                key={`${media.image.uri}${mediaIndex}`}
+                                                key={`${media.image.optimized.uri}${mediaIndex}`}
                                                 mediaType="img"
-                                                src={media.image.uri}
+                                                src={media.image.optimized.uri}
+                                                alt={media.altTag}
                                             />
                                         );
                                     }

@@ -1,23 +1,23 @@
 import { TPagination, TSocialItem } from "../baseTypes";
 
-export interface IRemoteLensPicture {
-    raw: IRemoteLensPictureMeta;
-    optimized: IRemoteLensPictureMeta;
+export interface IRemoteLensMedia {
+    raw: IRemoteLensMediaMeta;
+    optimized: IRemoteLensMediaMeta;
 }
 
 export interface IRemoteLensAttachment {
-    video?: IRemoteLensPictureMeta;
-    cover?: IRemoteLensPictureMeta;
+    video?: IRemoteLensMedia;
+    cover?: IRemoteLensMedia;
 
-    image?: IRemoteLensPictureMeta;
+    image?: IRemoteLensMedia;
 
-    audio?: IRemoteLensPictureMeta;
+    audio?: IRemoteLensMedia;
     credits?: string;
 
     altTag?: string;
 }
 
-export interface IRemoteLensPictureMeta {
+export interface IRemoteLensMediaMeta {
     uri: string;
     width?: string;
     height?: string;
@@ -27,7 +27,7 @@ export interface IRemoteLensPictureMeta {
 export interface IRemoteLensProfileMetadata {
     bio: string;
     rawURI: string;
-    picture: IRemoteLensPicture;
+    picture: IRemoteLensMedia;
     displayName: string;
 }
 
@@ -58,8 +58,7 @@ export interface IRemoteLensPost {
             };
         };
     }[];
-    commentOn: IRemoteLensPost;
-    root: IRemoteLensPost;
+    mirrorOn: IRemoteLensPost;
     createdAt: string;
 }
 
