@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React from "react";
 import {
     TUserViewWidget,
     TDynamicItem,
@@ -6,6 +6,7 @@ import {
     TCounterData,
 } from "src/api/types";
 import { TAgendaItem } from "src/api/types/agenda";
+import { lazyRetry } from "./api/utils/helpers";
 import { ETemplateNameRegistry } from "./constants";
 
 /**
@@ -56,60 +57,78 @@ export type TTemplatesDict = {
 };
 
 export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
-    alphagpt_template: lazy(() => import("./containers/qna/QnAContainer")),
-    blog_template: lazy(() => import("./containers/items/ItemsContainer")),
-    custom_table_template: lazy(
+    alphagpt_template: lazyRetry(() => import("./containers/qna/QnAContainer")),
+    blog_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    custom_table_template: lazyRetry(
         () => import("./containers/custom-modules/CustomTableContainer")
     ),
-    dao_template: lazy(() => import("./containers/items/ItemsContainer")),
-    discord_template: lazy(() => import("./containers/items/ItemsContainer")),
-    faq_template: lazy(() => import("./containers/dynamic/FaqContainer")),
-    forum_template: lazy(() => import("./containers/items/ItemsContainer")),
-    gas_template: lazy(() => import("./containers/gas/GasContainer")),
-    latest_video_template: lazy(
+    dao_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    discord_template: lazyRetry(
+        () => import("./containers/items/ItemsContainer")
+    ),
+    faq_template: lazyRetry(() => import("./containers/dynamic/FaqContainer")),
+    forum_template: lazyRetry(
+        () => import("./containers/items/ItemsContainer")
+    ),
+    gas_template: lazyRetry(() => import("./containers/gas/GasContainer")),
+    latest_video_template: lazyRetry(
         () => import("./containers/media/MediaContainer")
     ),
-    lens_template: lazy(
+    lens_template: lazyRetry(
         () => import("./containers/lens-feed/LensFeedContainer")
     ),
-    map_template: lazy(() => import("./containers/maps/MapContainer")),
-    market_template: lazy(() => import("./containers/market/MarketContainer")),
-    media_template: lazy(() => import("./containers/media/MediaContainer")),
-    news_template: lazy(() => import("./containers/items/ItemsContainer")),
-    podcast_template: lazy(
+    map_template: lazyRetry(() => import("./containers/maps/MapContainer")),
+    market_template: lazyRetry(
+        () => import("./containers/market/MarketContainer")
+    ),
+    media_template: lazyRetry(
+        () => import("./containers/media/MediaContainer")
+    ),
+    news_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    podcast_template: lazyRetry(
         () => import("./containers/podcast/PodcastContainer")
     ),
-    portfolio_template: lazy(
+    portfolio_template: lazyRetry(
         () => import("./containers/portfolio/PortfolioContainer")
     ),
-    reddit_template: lazy(() => import("./containers/items/ItemsContainer")),
-    reports_template: lazy(
+    reddit_template: lazyRetry(
+        () => import("./containers/items/ItemsContainer")
+    ),
+    reports_template: lazyRetry(
         () => import("./containers/dynamic/ReportsContainer")
     ),
-    roadmap_template: lazy(
+    roadmap_template: lazyRetry(
         () => import("./containers/dynamic/RoadmapContainer")
     ),
-    summary_template: lazy(
+    summary_template: lazyRetry(
         () => import("./containers/summary/SummaryContainer")
     ),
-    talks_template: lazy(() => import("./containers/dynamic/AgendaContainer")),
-    tvl_template: lazy(() => import("./containers/tvl/TvlContainer")),
-    uniswap_template: lazy(() => import("./containers/uniswap/SwapContainer")),
-    venue_template: lazy(() => import("./containers/maps/VenueMapContainer")),
-    video_template: lazy(() => import("./containers/video/VideoContainer")),
-    calendar_template: lazy(
+    talks_template: lazyRetry(
+        () => import("./containers/dynamic/AgendaContainer")
+    ),
+    tvl_template: lazyRetry(() => import("./containers/tvl/TvlContainer")),
+    uniswap_template: lazyRetry(
+        () => import("./containers/uniswap/SwapContainer")
+    ),
+    venue_template: lazyRetry(
+        () => import("./containers/maps/VenueMapContainer")
+    ),
+    video_template: lazyRetry(
+        () => import("./containers/video/VideoContainer")
+    ),
+    calendar_template: lazyRetry(
         () => import("./containers/calendar/CalendarContainer")
     ),
-    countdown_template: lazy(
+    countdown_template: lazyRetry(
         () => import("./containers/countdown/CountdownContainer")
     ),
-    verasity_tokenomics_template: lazy(
+    verasity_tokenomics_template: lazyRetry(
         () => import("./containers/client/VerasityTokenomicsContainer")
     ),
-    custom_chart_template: lazy(
+    custom_chart_template: lazyRetry(
         () => import("./containers/custom-modules/CustomChartContainer")
     ),
-    custom_card_template: lazy(
+    custom_card_template: lazyRetry(
         () => import("./containers/custom-modules/CustomCardContainer")
     ),
 };
