@@ -225,11 +225,12 @@ const BoardsLibraryContainer: FC<IProps> = ({
         ]
     );
 
-    const handleSortBy = (sort: EItemsSortBy): void => {
+    const handleSortBy = (sort: string): void => {
+        if (sort in EItemsSortBy === false) return;
         if (isFetching || sortBy === sort) return;
         if (allViews.length > 0) setAllViews([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
-        setSortBy(sort);
+        setSortBy(EItemsSortBy[sort as keyof typeof EItemsSortBy]);
     };
 
     const handleCategorySelect = (newCategory: string | undefined): void => {

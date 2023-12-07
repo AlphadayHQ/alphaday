@@ -3,6 +3,7 @@ import {
     BoardPreview,
     ModuleLoader,
     ScrollBar,
+    SortBy,
     TabsBar,
     twMerge,
 } from "@alphaday/ui-kit";
@@ -20,21 +21,6 @@ import { ReactComponent as ArrowDownSVG } from "src/assets/icons/chevron-down.sv
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 import { ReactComponent as EmptySVG } from "src/assets/icons/empty.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
-
-const SORT_BUTTONS: { label: string; value: EItemsSortBy }[] = [
-    {
-        label: "(A-Z)",
-        value: EItemsSortBy.Name,
-    },
-    {
-        label: "Popular",
-        value: EItemsSortBy.Popular,
-    },
-    {
-        label: "New",
-        value: EItemsSortBy.New,
-    },
-];
 
 const DEFAULT_TAB_OPTION = {
     label: "All",
@@ -123,7 +109,7 @@ interface IBoardsLibrary {
     isBoardsLibOpen: boolean;
     isAuthenticated: boolean;
     sortBy: EItemsSortBy;
-    onSortBy(sort: EItemsSortBy): void;
+    onSortBy(sort: string): void;
     onToggleBoardsLib: () => void;
     onSelectView: (viewId: number) => void;
     onSubscribeView: (viewId: number) => void;
@@ -189,6 +175,8 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         [handlePaginate]
     );
 
+    const sortOptions = Object.keys(EItemsSortBy);
+
     const onBoardPin = useCallback(
         (view: Omit<TUserViewPreview, "id">, id: number) => {
             if (isAuthenticated) {
@@ -211,6 +199,9 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
             onCreateEmptyBoard();
         }
     }, [isAuthenticated, onCreateEmptyBoard]);
+
+    const sortByKey =
+        Object.keys(EItemsSortBy)[Object.values(EItemsSortBy).indexOf(sortBy)];
 
     return (
         <div
@@ -239,57 +230,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                     <CloseSVG className="w-3 h-3" />
                 </div>
             </div>
-            {/* <div className="flex justify-between items-center p-[17px_25px] border-solid border-b border-borderLine text-primaryVariant100 font-normal">
-                <div className="flex justify-around items-center [&>span]:mr-[7px]">
-                    <span className="text-primary mr-3">Categories</span>
-                    <span className="wrap">
-                        <TabButton
-                            variant="small"
-                            uppercase={false}
-                            open={selectedCategory === undefined}
-                            onClick={() => {
-                                onCategorySelect(undefined);
-                            }}
-                        >
-                            All
-                        </TabButton>
-                    </span>
-                    {categories?.map((cat) => (
-                        <span key={String(cat.slug)} className="wrap">
-                            <TabButton
-                                variant="small"
-                                uppercase={false}
-                                open={cat.slug === selectedCategory}
-                                onClick={() => {
-                                    onCategorySelect(cat.slug);
-                                }}
-                            >
-                                {cat.name}
-                            </TabButton>
-                        </span>
-                    ))}
-                </div>
-                <div className="flex justify-around items-center [&>span]:mr-[7px]">
-                    {SORT_BUTTONS.length > 0 && (
-                        <>
-                            <span className="text-primary mr-3">Sort by</span>
-                            {SORT_BUTTONS.map((nav) => (
-                                <span key={String(nav.value)} className="wrap">
-                                    <TabButton
-                                        variant="small"
-                                        uppercase={false}
-                                        open={nav.value === sortBy}
-                                        onClick={() => onSortBy(nav.value)}
-                                    >
-                                        {nav.label}
-                                    </TabButton>
-                                </span>
-                            ))}
-                        </>
-                    )}
-                </div>
-            </div> */}
-            <div className="">
+            <div>
                 {customBoards === undefined || allBoards === undefined ? (
                     <ModuleLoader $height="100%" />
                 ) : (
@@ -358,8 +299,8 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                             </div>
                         </div>
                         <div className="w-full pr-4 pl-6 pb-0">
-                            {/* pb-2 is used here to align the boards list to the custom boards list */}
-                            <div className="flex pb-2">
+                            {/* pb-1 is used here to align the boards list to the custom boards list */}
+                            <div className="flex pb-1">
                                 <TabsBar
                                     options={tabOptions}
                                     onChange={(name) => {
@@ -374,12 +315,11 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                             : DEFAULT_TAB_OPTION
                                     }
                                 />
-                                <span className="flex items-center cursor-pointer ml-2">
-                                    <span className="fontGroup-highlightSemi">
-                                        Sort
-                                    </span>
-                                    <ArrowDownSVG className="text-primary w-3.5" />
-                                </span>
+                                <SortBy
+                                    selected={sortByKey}
+                                    onSortBy={onSortBy}
+                                    options={sortOptions}
+                                />
                             </div>
                             <div className="h-[248px] mt-3">
                                 <ScrollBar onScroll={handleScrollEvent}>

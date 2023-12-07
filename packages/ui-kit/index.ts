@@ -44,6 +44,7 @@ import {
     DropdownItem,
     DropdownMenu,
 } from "./src/components/dropdown/dropdown";
+import { SortBy } from "./src/components/dropdown/SortBy";
 import { FadeIn } from "./src/components/fade-in-out/FadeIn";
 import { Input } from "./src/components/input/Input";
 import Footer from "./src/components/layout/Footer";
@@ -161,4 +162,5 @@ export {
     ChatForm,
     FadeIn,
     TabsBar,
+    SortBy,
 };
