@@ -13,9 +13,9 @@ const { ETH_TRANSFER_COST, GWEI_PER_ETH } = CONFIG.NUMBERS;
 const GasHeadingInfo: FC<IProps> = ({ data, ethPrice }) => {
     return (
         <div className="flex flex-col flex-wrap">
-            <div className="w-full uppercase text-primary my-1.5">
+            <div className="w-full capitalize text-primary my-1.5 fontGroup-highlight">
                 Latest Gas price{" "}
-                <span className="fontGroup-highlightSemi text-primaryVariant100 lowercase">
+                <span className="fontGroup-normal text-primaryVariant100 lowercase">
                     (Gwei)
                 </span>
             </div>
