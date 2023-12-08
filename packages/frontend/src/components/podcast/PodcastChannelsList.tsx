@@ -110,7 +110,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                     }}
                     className="min-w-max flex"
                 >
-                    <span className="fontGroup-highlight uppercase text-primary m-0 transition-all duration-[400]">
+                    <span className="fontGroup-highlightSemi uppercase text-primary m-0 transition-all duration-[400]">
                         {showAllChannels ? "Selected Channels" : "Channels"}
                     </span>
                     <div className="flex items-center h-[17.5px]">
@@ -132,7 +132,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 >
                     <span
                         className={twMerge(
-                            "fontGroup-highlight  m-0 transition-all duration-[400]",
+                            "fontGroup-highlightSemi  m-0 transition-all duration-[400]",
                             showAllChannels
                                 ? "text-btnRingVariant100"
                                 : "text-primary"
@@ -208,7 +208,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
             </div>
             {!isLoadingChannels && (
                 <div className="h-[436px] p-[15px] m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-borderLine">
-                    <p className="fontGroup-highlight uppercase text-primary m-0 mb-[10px]">
+                    <p className="fontGroup-highlightSemi uppercase text-primary m-0 mb-[10px]">
                         All Channels
                     </p>
                     <div className="mb-5 w-full">

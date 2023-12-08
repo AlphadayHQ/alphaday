@@ -31,7 +31,7 @@ const VideoItemList: FC<IVideoItemList> = ({
         if (videos.length === 0) {
             return (
                 <div className="flex w-full h-full justify-center items-center bg-background">
-                    <p className="text-primary fontGroup-highlight">
+                    <p className="text-primary fontGroup-highlightSemi">
                         {globalMessages.queries.noMatchFound("videos")}
                     </p>
                 </div>

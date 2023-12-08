@@ -15,7 +15,7 @@ const GasHeadingInfo: FC<IProps> = ({ data, ethPrice }) => {
         <div className="flex flex-col flex-wrap">
             <div className="w-full uppercase text-primary my-1.5">
                 Latest Gas price{" "}
-                <span className="fontGroup-highlight text-primaryVariant100 lowercase">
+                <span className="fontGroup-highlightSemi text-primaryVariant100 lowercase">
                     (Gwei)
                 </span>
             </div>

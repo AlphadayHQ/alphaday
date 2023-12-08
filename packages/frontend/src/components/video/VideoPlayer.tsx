@@ -95,7 +95,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
                         ref={setVideoInfoRef}
                         className="pr-0 pb-0 pt-[14.5px] pl-[10px] flex flex-col justify-between h-[initial]"
                     >
-                        <p className="fontGroup-highlight text-primary m-0">
+                        <p className="fontGroup-highlightSemi text-primary m-0">
                             {video.title}
                         </p>
 

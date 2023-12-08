@@ -171,7 +171,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                                 }}
                             />
                         </div>
-                        <div className="text-primary fontGroup-highlight">
+                        <div className="text-primary fontGroup-highlightSemi">
                             {projectData.project.name}
                         </div>
                     </div>
@@ -300,7 +300,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                         }}
                     />
                 </div>
-                <div className="text-primary fontGroup-highlight ml-1.5">
+                <div className="text-primary fontGroup-highlightSemi ml-1.5">
                     {projectData.project.name}
                 </div>
             </div>
@@ -428,7 +428,7 @@ export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
                         }}
                     />
                 </div>
-                <div className="text-primary fontGroup-highlight ml-1.5">
+                <div className="text-primary fontGroup-highlightSemi ml-1.5">
                     <a
                         href={projectData.project.url}
                         target="_blank"

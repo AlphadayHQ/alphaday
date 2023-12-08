@@ -132,7 +132,7 @@
                     @apply fontGroup-normal text-primaryVariant1000;
                 }
                 div:nth-child(2) {
-                    @apply fontGroup-highlight text-primary;
+                    @apply fontGroup-highlightSemi text-primary;
                 }
             }
         }
@@ -186,7 +186,7 @@
                 }
 
                 div:nth-child(2) {
-                    @apply fontGroup-highlight text-primary;
+                    @apply fontGroup-highlightSemi text-primary;
                 }
             }
         }

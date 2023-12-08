@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
-import { ModuleLoader, SwitchWrap, TabButton } from "@alphaday/ui-kit";
+import { ModuleLoader, SwitchWrap, TabsBar } from "@alphaday/ui-kit";
 import { TNewsItem, EItemFeedPreference } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
 import NewsItemList from "./NewsItemList";
 
 interface INews {
@@ -20,7 +21,7 @@ const SWITCH_HEIGHT = 50;
  * This should ease adding new preference based buttons
  * auth can be set to true for buttons which require the user to be auth
  */
-const NEWS_NAV_BUTTONS = [
+const NEWS_NAV_ITEMS = [
     {
         label: "Feed",
         value: EItemFeedPreference.Last,
@@ -47,31 +48,28 @@ const NewsModule: FC<INews> = memo(function NewsModule({
     onBookmark,
     isAuthenticated,
 }) {
+    const NavItemPreference =
+        NEWS_NAV_ITEMS.find((item) => item.value === feedPreference) ||
+        NEWS_NAV_ITEMS[0];
+
+    const onTabOptionChange = (value: string) => {
+        const optionItem = NEWS_NAV_ITEMS.find((item) => item.value === value);
+        if (optionItem === undefined) {
+            Logger.debug("Nav option item not found");
+            return;
+        }
+        onSetFeedPreference(optionItem?.value);
+    };
+
     return (
         <>
-            <SwitchWrap
-                $height={SWITCH_HEIGHT}
-                $isLoading={isLoadingItems || !items}
-            >
-                {NEWS_NAV_BUTTONS.map(
-                    (nav) =>
-                        ((nav.auth === true && isAuthenticated) ||
-                            !nav.auth) && (
-                            <span key={String(nav.value)} className="mr-3">
-                                <TabButton
-                                    variant="small"
-                                    uppercase={false}
-                                    open={feedPreference === nav.value}
-                                    onClick={() =>
-                                        onSetFeedPreference(nav.value)
-                                    }
-                                >
-                                    {nav.label}
-                                </TabButton>
-                            </span>
-                        )
-                )}
-            </SwitchWrap>
+            <div className="mx-2">
+                <TabsBar
+                    options={NEWS_NAV_ITEMS}
+                    onChange={onTabOptionChange}
+                    selectedOption={NavItemPreference}
+                />
+            </div>
             {isLoadingItems || !items ? (
                 <ModuleLoader $height={`${widgetHeight}px`} />
             ) : (

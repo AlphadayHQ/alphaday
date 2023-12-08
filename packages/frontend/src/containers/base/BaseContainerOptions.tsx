@@ -240,7 +240,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                             }}
                             className="flex h-[inherit] w-full pb-0.5"
                         >
-                            <h6 className="text-primaryVariant100 fontGroup-highlight m-0 inline-flex uppercase">
+                            <h6 className="text-primaryVariant100 fontGroup-highlightSemi m-0 inline-flex uppercase">
                                 {widgetTitle} OPTIONS
                             </h6>
                         </div>

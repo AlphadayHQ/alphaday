@@ -9,7 +9,7 @@
         [role="button"] {
             cursor: pointer;
             color: var(--primaryVariant100);
-            @apply fontGroup-highlight;
+            @apply fontGroup-highlightSemi;
         }
     }
 

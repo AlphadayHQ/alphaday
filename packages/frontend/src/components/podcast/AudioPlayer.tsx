@@ -171,7 +171,7 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                         alt={podcast?.sourceName}
                     />
                     <div className="self-start pt-1 flex flex-col pl-[9px] cursor-default">
-                        <span className="fontGroup-highlight one-liner">
+                        <span className="fontGroup-highlightSemi one-liner">
                             {podcast?.title}
                         </span>
                         <span className="fontGroup-mini">
@@ -185,7 +185,7 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                 </div>
                 <div className="flex items-center py-2 px-[9px] z-[1]">
                     <span
-                        className="fontGroup-highlight text-right pr-4 cursor-pointer"
+                        className="fontGroup-highlightSemi text-right pr-4 cursor-pointer"
                         onClick={togglePlaybackSpeed}
                         role="button"
                         tabIndex={-1}

@@ -22,7 +22,7 @@ export type EventMeta = {
 
 const NoEvents: FC<{ msg: string }> = ({ msg }) => {
     return (
-        <div className="w-full h-full flex items-center justify-center text-primary fontGroup-highlight">
+        <div className="w-full h-full flex items-center justify-center text-primary fontGroup-highlightSemi">
             {msg}
         </div>
     );

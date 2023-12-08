@@ -7,7 +7,7 @@ import { twMerge } from "tailwind-merge";
 import ItemBookmark from "./ItemBookmark";
 import styles from "./ListItem.module.scss";
 
-export const HRElement = () => <hr className="border-borderLine m-0" />;
+export const HRElement = () => <hr className="border-borderLine m-0 mx-2" />;
 
 interface IList {
     variant: "news" | "dao" | "podcast" | "video" | "reports" | "discord";
@@ -31,14 +31,15 @@ export const listItemVariants = (variant: IList["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.listItem,
-            "flex relative flex-row items-start w-full p-3.5 bg-background  hover:bg-background active:bg-background"
+            "flex relative flex-row items-start py-3 px-1 mx-2 bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200"
         ),
         info: "grow-[1]",
         date: "fontGroup-mini min-w-[45px] text-primaryVariant100 mr-[5px]",
-        title: "fontGroup-highlightSemi text-primary self-stretch grow-0 flex items-center mb-0",
+        title: "fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0",
         content:
-            "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlight prose-h3:fontGroup-highlight prose-h5:fontGroup-highlight prose-a:secondaryOrange break-word m-0 text-primary [&>p>a]:text-secondaryOrange",
-        readMore: "fontGroup-highlight flex justify-end text-primaryVariant100",
+            "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlightSemi prose-h3:fontGroup-highlightSemi prose-h5:fontGroup-highlightSemi prose-a:secondaryOrange break-word m-0 text-primary [&>p>a]:text-secondaryOrange",
+        readMore:
+            "fontGroup-highlightSemi flex justify-end text-primaryVariant100",
         lastLine: "lastLine fontGroup-mini flex text-primaryVariant100 mt-2",
         spacer: "mx-[7px] my-0 self-center",
         bookmark: "block cursor-pointer mt-px",

@@ -61,7 +61,7 @@ const NftCard: FC<INft> = ({ img, name, value }) => {
                                 <span className="leading-none fontGroup-mini whitespace-nowrap two-col:inline-block">
                                     Est. value
                                 </span>
-                                <p className="whitespace-nowrap fontGroup-highlight two-col:whitespace-normal">
+                                <p className="whitespace-nowrap fontGroup-highlightSemi two-col:whitespace-normal">
                                     Ξ {formatNumber({ value }).value}
                                 </p>
                             </div>

@@ -167,7 +167,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                 <div className="bg-background text-primaryVariant100 bg-blend-soft-light py-2 px-4 border-b border-solid border-b-background rounded-[3px]">
                     <div className="w-full flex items-center justify-between">
                         <div>
-                            <h6 className="m-0 inline-flex self-end fontGroup-highlight uppercase text-primaryVariant100">
+                            <h6 className="m-0 inline-flex self-end fontGroup-highlightSemi uppercase text-primaryVariant100">
                                 Widgets Library
                             </h6>
                         </div>
@@ -194,7 +194,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                 </div>
                 {categories.length > 0 ? (
                     <div className="flex bg-background h-full">
-                        <ScrollBar className="min-w-[250px] bg-background fontGroup-highlight pt-1.5">
+                        <ScrollBar className="min-w-[250px] bg-background fontGroup-highlightSemi pt-1.5">
                             <div
                                 role="button"
                                 tabIndex={0}

@@ -6,7 +6,7 @@ export const fontUtilities = {
         letterSpacing: "0px",
     },
     ".fontGroup-highlight": {
-        fontSize: "0.75rem",
+        fontSize: "0.875rem",
         fontWeight: "400",
         lineHeight: "1.5",
         letterSpacing: "0.5px",

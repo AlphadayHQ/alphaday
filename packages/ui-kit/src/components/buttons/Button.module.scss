@@ -27,7 +27,7 @@
         border-color: var(--btnRingVariant200);
         pointer-events: none;
     }
-    @apply fontGroup-highlight;
+    @apply fontGroup-highlightSemi;
 }
 
 .collapseButton {
