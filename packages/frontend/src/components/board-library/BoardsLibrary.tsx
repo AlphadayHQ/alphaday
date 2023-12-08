@@ -15,9 +15,9 @@ import {
 import { TUserViewPreview, TViewMeta } from "src/api/types";
 import { validateEthAddr } from "src/api/utils/accountUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import { getSortOptionsArray } from "src/api/utils/sortOptions";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
-import { ReactComponent as ArrowDownSVG } from "src/assets/icons/chevron-down.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 import { ReactComponent as EmptySVG } from "src/assets/icons/empty.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
@@ -175,8 +175,6 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         [handlePaginate]
     );
 
-    const sortOptions = Object.keys(EItemsSortBy);
-
     const onBoardPin = useCallback(
         (view: Omit<TUserViewPreview, "id">, id: number) => {
             if (isAuthenticated) {
@@ -318,7 +316,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                 <SortBy
                                     selected={sortByKey}
                                     onSortBy={onSortBy}
-                                    options={sortOptions}
+                                    options={getSortOptionsArray()}
                                 />
                             </div>
                             <div className="h-[248px] mt-3">

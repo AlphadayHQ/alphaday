@@ -32,19 +32,19 @@ export const ModulePreview: FC<IPreview> = ({
         >
             <div
                 className={twMerge(
-                    "flex justify-center items-center max-w-[250px] max-h-[167px] bg-background border-[2px_solid] rounded-[10px]",
+                    "flex justify-center items-center max-w-[250px] max-h-[167px] border-[2px_solid] rounded-lg",
                     isMaxed ? "border-btnRingVariant1400" : "border-borderLine",
                     selected && "border-btnRingVariant100"
                 )}
             >
                 <div
                     className={twMerge(
-                        "relative w-60 h-[167px] p-[5px] flex justify-center items-center",
+                        "relative w-40 three-col:w-60 h-32 three-col:h-[167px] p-[5px] flex justify-center items-center",
                         padding && `p-[${padding}]`
                     )}
                 >
                     <div
-                        className=" w-full h-full bg-cover bg-left-top bg-no-repeat rounded-[6px]"
+                        className=" w-full h-full bg-cover bg-left-top bg-no-repeat bg-backgroundVariant200 rounded-md"
                         style={{ backgroundImage: `url(${previewImg})` }}
                     />
                     <div className="absolute bottom-[10%] right-[5%] flex justify-center items-center">
@@ -68,10 +68,10 @@ export const ModulePreview: FC<IPreview> = ({
                     </div>
                 </div>
             </div>
-            <p className="m-[14px_0_0] text-primary uppercase fontGroup-highlightSemi">
+            <p className="m-[14px_0_0] text-primary uppercase fontGroup-highlightSemi pr-1">
                 {title}
             </p>
-            <p className="mt-[7px] fontGroup-normal text-primary">
+            <p className="mt-[7px] fontGroup-normal text-primary pr-1">
                 {description}
             </p>
         </div>

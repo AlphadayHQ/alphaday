@@ -15,7 +15,7 @@ export const SortBy: FC<ISortBy> = ({ selected, onSortBy, options }) => {
             <div className="pl-4">
                 <Menu.Button className="flex items-center cursor-pointer rounded-lg px-2 py-1 hover:bg-backgroundVariant200">
                     <span className="fontGroup-highlightSemi whitespace-nowrap">
-                        <span className="mr-3">Sort:</span>
+                        <span className="mr-3">Sort by:</span>
                         <span className="mr-0.5">{selected}</span>
                     </span>
                     <ChevronDownSVG className="text-primary w-3.5 fill-primary" />

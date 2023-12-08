@@ -20,6 +20,7 @@ import { useWalletViewContext } from "src/api/store/providers/wallet-view-contex
 import * as userStore from "src/api/store/slices/user";
 import { TViewMeta } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { buildViewPath } from "src/api/utils/viewUtils";
 import BoardsLibrary from "src/components/board-library/BoardsLibrary";
@@ -225,12 +226,12 @@ const BoardsLibraryContainer: FC<IProps> = ({
         ]
     );
 
-    const handleSortBy = (sort: string): void => {
-        if (sort in EItemsSortBy === false) return;
-        if (isFetching || sortBy === sort) return;
+    const handleSortBy = (sortLabel: string): void => {
+        const sort = getSortOptionValue(sortLabel);
+        if (isFetching || sort === null || sortBy === sort) return;
         if (allViews.length > 0) setAllViews([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
-        setSortBy(EItemsSortBy[sort as keyof typeof EItemsSortBy]);
+        setSortBy(sort);
     };
 
     const handleCategorySelect = (newCategory: string | undefined): void => {
