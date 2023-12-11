@@ -1,8 +1,8 @@
-import { PersistedState } from "redux-persist";
+import { PersistedState, MigrationManifest } from "redux-persist";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 
-type PersistedRootState = PersistedState & RootState;
+type PersistedRootState = (PersistedState & RootState) | undefined;
 
 /**
  * RootState variants
@@ -26,69 +26,12 @@ type PersistedRootState = PersistedState & RootState;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV100 = PersistedRootState;
+type RootStateV101 = PersistedRootState;
+type RootStateV100 = RootStateV101;
 
-export type TMigrationFunction = (
-    state: Partial<PersistedRootState>
-) => MaybeAsync<PersistedRootState>;
-
-type TMigrations = {
-    // 101: (s: RootStateV100) => PersistedRootState
-    100: (s: PersistedState) => RootStateV100 | undefined;
-};
-
-/**
- * State of widgets is typically kept in the form:
- * someWidgetState = {
- *     [widgetInstanceHash]: {
- *         ...
- *     }
- * }
- * This function adds a new key-value to every instance of a given widget.
- * @param state The current widget state (for all widget instances)
- * @param newKey
- * @param defaultValue
- * @returns a new widget state with the field added to each widget
- */
-export const addFieldToWidgetState = <
-    S extends Record<string, unknown>,
-    K extends keyof S[string],
->(
-    state: S,
-    newKey: K,
-    defaultValue: S[string][typeof newKey]
-): typeof state => {
-    const res: Record<string, unknown> = {};
-
-    Object.keys(state).forEach((widgetHash) => {
-        res[widgetHash] = {
-            ...(state[widgetHash] ?? {}),
-            [newKey]: defaultValue,
-        };
-    });
-    return res as S;
-};
-
-/**
- * We should never have to cleanup state again. But just in case,
- * This handler should remove an unwanted state value from the store.
- *
- * @param state
- * @param fieldKey
- */
-export const removeFieldFromState = <S extends Record<string, unknown>>(
-    state: S,
-    fieldKey: string
-): S => {
-    // remove the key from the object as well as read it's value
-    const { [fieldKey]: value, ...cleanedState } = state;
-    // we should know what has been removed to properly handle edge cases
-    Logger.debug(
-        "migrations::removeFieldFromState, successfully removed field:value",
-        fieldKey,
-        value
-    );
-    return cleanedState as S;
+type TMigrations = MigrationManifest & {
+    100: (s: PersistedState) => RootStateV100;
+    101: (s: RootStateV100) => RootStateV101;
 };
 
 /**
@@ -118,8 +61,9 @@ export const removeFieldFromState = <S extends Record<string, unknown>>(
  * - The expected type of the persisted state should be defined in the
  * TMigrationStateVariant type.
  */
+// @ts-expect-error
 const migrations: TMigrations = {
-    100: (s: PersistedState) => {
+    100: (s): RootStateV100 => {
         // eslint-disable-next-line no-underscore-dangle
         const version = s?._persist?.version;
         // v21 was last storage version in legacy repo
@@ -138,6 +82,24 @@ const migrations: TMigrations = {
             `migrations: unexpected version ${version}, reseting state`
         );
         return undefined;
+    },
+    101: (s: RootStateV100): RootStateV101 => {
+        /**
+         * this migration is needed because widgets using format_structure
+         * were migrated (on the BE DB) to use custom_data.
+         * The FE storage migration is needed to ensure the widgets are correctly updated
+         */
+        if (!s) return undefined;
+        return {
+            ...s,
+            views: {
+                selectedViewId: undefined,
+                prevSelectedViewId: undefined,
+                viewsCache: undefined,
+                sharedViewsCache: undefined,
+                subscribedViewsCache: undefined,
+            },
+        };
     },
 };
 
