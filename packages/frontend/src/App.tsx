@@ -12,6 +12,7 @@ import {
     useGlobalHooks,
     useResolvedView,
     useViewRoute,
+    useGaTracker,
 } from "./api/hooks";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
@@ -30,6 +31,8 @@ const goToLandingPage = () => {
 };
 
 const AppRoutes = () => {
+    useGaTracker();
+
     const dispatch = useAppDispatch();
     const { error } = useGetRemoteStatusQuery(undefined, {
         pollingInterval: 5 * 60 * 1000, // update every 5 min
