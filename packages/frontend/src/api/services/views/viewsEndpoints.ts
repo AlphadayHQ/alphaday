@@ -228,30 +228,35 @@ const viewsApi = alphadayApi.injectEndpoints({
         }),
         getWidgets: builder.query<TWidgetsResponse, TWidgetsRequest>({
             query: (req) => {
-                const params = req
-                    ? queryString.stringify({ sort_by: req.sortBy })
-                    : "";
+                const { sortBy, ...rest } = req ?? {};
+                const params = queryString.stringify({
+                    ...rest,
+                    sort_by: sortBy,
+                });
                 const path = `${VIEWS.BASE}${VIEWS.WIDGETS}?${params}`;
                 Logger.debug("getWidgets: querying", path);
                 return path;
             },
             transformResponse: (r: TWidgetsResponse): TWidgetsResponse => {
-                return r.filter((widget) => {
-                    if (!widget.template) {
-                        Logger.warn(
-                            "viewsEndpoints::getWidgets: widget with no template found:",
-                            widget.slug
-                        );
-                        return false;
-                    }
-                    if (!(widget.template.slug in TEMPLATES_DICT)) {
-                        Logger.warn(
-                            `viewsEndpoints::getWidgets: could not find template ${widget.template.slug} of widget ${widget.name}`
-                        );
-                        return false;
-                    }
-                    return true;
-                });
+                return {
+                    ...r,
+                    results: [...r.results].filter((widget) => {
+                        if (!widget.template) {
+                            Logger.warn(
+                                "viewsEndpoints::getWidgets: widget with no template found:",
+                                widget.slug
+                            );
+                            return false;
+                        }
+                        if (!(widget.template.slug in TEMPLATES_DICT)) {
+                            Logger.warn(
+                                `viewsEndpoints::getWidgets: could not find template ${widget.template.slug} of widget ${widget.name}`
+                            );
+                            return false;
+                        }
+                        return true;
+                    }),
+                };
             },
         }),
         getWidgetsCategory: builder.query<

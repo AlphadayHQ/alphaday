@@ -20,6 +20,7 @@ import { TDatePos } from "./src/components/calendar/event";
 import { Carousel } from "./src/components/carousel/Carousel";
 import { CarouselImage } from "./src/components/carousel/CarouselImage";
 import { Lightbox } from "./src/components/carousel/Lightbox";
+import { CenteredBlock } from "./src/components/CenteredBlock";
 import {
     ApexAreaChart,
     ApexBarChart,
@@ -59,7 +60,6 @@ import {
     HRElement,
     listItemVariants,
 } from "./src/components/listItem/ListItem";
-import { NoItems } from "./src/components/listItem/NoItems";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
@@ -136,7 +136,7 @@ export {
     Input,
     ModuleLoader,
     ListItem,
-    NoItems,
+    CenteredBlock,
     HRElement,
     twMerge,
     useLayer,

@@ -1,8 +1,9 @@
 import { FC, useMemo } from "react";
 import { useWidgetHeight } from "src/api/hooks";
 import { TAgendaItem } from "src/api/types/agenda";
+import { customDataAsItems } from "src/api/utils/itemUtils";
+import { Logger } from "src/api/utils/logging";
 import AgendaModule from "src/components/dynamic-modules/agenda/AgendaModule";
-import { v4 as uuidV4 } from "uuid";
 import { IModuleContainer } from "src/types";
 
 const AgendaContainer: FC<IModuleContainer<TAgendaItem[]>> = ({
@@ -11,20 +12,22 @@ const AgendaContainer: FC<IModuleContainer<TAgendaItem[]>> = ({
     const widgetHeight = useWidgetHeight(moduleData);
 
     const items = useMemo(
-        () => moduleData.widget.format_structure.data || [],
-        [moduleData.widget.format_structure.data]
+        () => customDataAsItems(moduleData.widget.custom_data ?? []),
+        [moduleData.widget.custom_data]
     );
 
-    // Add unique id to each item if id is not present, generate a uuid
-    const uniqueItems = useMemo(
-        () => items.map((item) => ({ ...item, id: item.id || uuidV4() })),
-        [items]
-    );
+    // TODO(v-almonacid): remove this block when format_structure is removed from db model
+    const legacyItems = moduleData.widget.format_structure.data || [];
+    if (Array.isArray(legacyItems) && legacyItems.length > 0) {
+        Logger.warn(
+            `AgendaContainer: widget ${moduleData.widget.name} contains data in format_structure which has been deprecated`
+        );
+    }
 
     return (
         <AgendaModule
             widgetHeight={widgetHeight}
-            items={uniqueItems}
+            items={items as TAgendaItem[]}
             isLoadingItems={false}
             onAdjustWidgetHeight={() => {}}
         />

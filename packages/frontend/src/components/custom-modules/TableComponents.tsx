@@ -185,7 +185,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                     </TableCell>
                 );
             })}
-            {rowLink && (
+            {rowLink !== undefined && (
                 <TableCell
                     width={0.5}
                     format="icon"
@@ -193,7 +193,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                     href={rowLink}
                     hasRowLink={rowLink !== undefined}
                 >
-                    <LinkSVG className="w-3" />
+                    {rowLink && <LinkSVG className="w-3" />}
                 </TableCell>
             )}
         </div>
@@ -203,6 +203,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
 export const CompactTableRow: React.FC<ITableRowProps> = ({
     columnsLayout,
     rowData,
+    rowProps,
 }) => {
     const imageField = columnsLayout.find(
         (column) => column.image_uri_ref !== undefined
@@ -210,8 +211,24 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
     const imageFieldDetails = imageField
         ? getFieldDetails(imageField, rowData)
         : undefined;
+
+    let rowLink: string | undefined;
+    if (rowProps?.uri_ref !== undefined) {
+        const uriRef = rowData[rowProps.uri_ref];
+        rowLink = typeof uriRef === "string" ? uriRef : undefined;
+    }
+
+    const handleOnClick = () => {
+        if (rowLink) window.open(rowLink, "_blank");
+    };
     return (
-        <div className="flex flex-row py-2 px-5 hover:bg-backgroundVariant900">
+        <div
+            className={twMerge(
+                "flex flex-row py-2 px-5 hover:bg-backgroundVariant900",
+                rowLink && "cursor-pointer"
+            )}
+            {...(rowLink && { onClick: handleOnClick })}
+        >
             {imageFieldDetails !== undefined && (
                 <div className="flex flex-col flex-[0.5_0.5_0%]">
                     <TableCell

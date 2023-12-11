@@ -11,9 +11,13 @@ const CoinInfo: FC<{
     isBookmarked: boolean;
 }> = ({ selectedMarket, isAuthenticated, onTogglePin, isBookmarked }) => (
     <div className="data-wrap">
-        <div className="flex fontGroup-normal mb-2 [&>*]:mr-1.5 [&>.bookmark]:flex [&>.bookmark]:items-center [&>.bookmark]:cursor-pointer">
+        <div className="flex fontGroup-normal mb-2 [&>*]:mr-1.5 [&>.bookmark]:flex items-center [&>.bookmark]:cursor-pointer">
             {selectedMarket.icon && (
-                <img src={selectedMarket.icon} alt="" className="w-[18px]" />
+                <img
+                    src={selectedMarket.icon}
+                    alt=""
+                    className="w-[18px] rounded-full"
+                />
             )}
             <span className="text-primary capitalize fontGroup-highlightSemi">
                 {selectedMarket.name}

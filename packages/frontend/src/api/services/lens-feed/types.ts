@@ -1,97 +1,67 @@
 import { TPagination, TSocialItem } from "../baseTypes";
 
-export interface IRemoteLensStats {
-    totalUpvotes: number;
-    totalDownvotes: number;
-    totalAmountOfMirrors: number;
-    totalAmountOfCollects: number;
-    totalAmountOfComments: number;
-}
-
-export interface IRemoteLensProfile {
-    id: string;
-    bio: string;
-    name: string;
-    stats: IRemoteLensProfileStats;
-    handle: string;
-    ownedBy: string;
-    picture: IRemoteLensProfilePicture;
-    metadata: string;
-    isDefault: boolean;
-    attributes?: IRemoteLensAttributesEntity[] | null;
-    dispatcher: {
-        address: string;
-    };
-    isFollowing: boolean;
-    coverPicture: IRemoteLensMedia;
-    followModule?: null;
-    isFollowedByMe: boolean;
-    followNftAddress: string;
-}
-
-export interface IRemoteLensProfileStats {
-    totalPosts: number;
-    totalMirrors: number;
-    totalCollects: number;
-    totalComments: number;
-    totalFollowers: number;
-    totalFollowing: number;
-    totalPublications: number;
-}
-
 export interface IRemoteLensMedia {
-    original: {
-        url: string;
-        mimeType: string | null;
-    };
+    raw: IRemoteLensMediaMeta;
+    optimized: IRemoteLensMediaMeta;
 }
 
-export interface IRemoteLensProfilePicture extends IRemoteLensMedia {
+export interface IRemoteLensAttachment {
+    video?: IRemoteLensMedia;
+    cover?: IRemoteLensMedia;
+
+    image?: IRemoteLensMedia;
+
+    audio?: IRemoteLensMedia;
+    credits?: string;
+
+    altTag?: string;
+}
+
+export interface IRemoteLensMediaMeta {
     uri: string;
-    tokenId: string;
-    verified: boolean;
-    contractAddress: string;
+    width?: string;
+    height?: string;
+    mimeType?: string;
 }
 
-export interface IRemoteLensAttributesEntity {
-    key: string;
-    value: string;
-    traitType: string;
-    displayType?: null;
-}
-
-export interface IRemoteLensMetadata {
-    name: string;
-    media: IRemoteLensMedia[];
-    content: string;
-    attributes?: IRemoteLensAttributesEntity[] | null;
-    description?: string | null;
-}
-
-export interface IRemoteLensCollectModule {
-    type: string;
-    contractAddress: string;
-    followerOnly: boolean;
-    __typename: string;
+export interface IRemoteLensProfileMetadata {
+    bio: string;
+    rawURI: string;
+    picture: IRemoteLensMedia;
+    displayName: string;
 }
 
 export interface IRemoteLensPost {
+    __typename: "Post" | "Quote" | "Mirror";
     id: string;
-    appId: string;
-    stats: IRemoteLensStats;
-    hidden: boolean;
-    mirrors?: string[] | null;
-    profile: IRemoteLensProfile;
-    metadata: IRemoteLensMetadata;
-    reaction: string | null;
+    by: {
+        id: string;
+        metadata: IRemoteLensProfileMetadata;
+    };
+    metadata: {
+        id: string;
+        title?: string;
+        content: string;
+        embed?: string;
+        attachments?: IRemoteLensAttachment[];
+    };
+    stats: {
+        quotes: number;
+        mirrors: number;
+        comments: number;
+        bookmarks: number;
+    };
+    profilesMentioned: {
+        profile: {
+            handle: {
+                localName: string;
+            };
+        };
+    }[];
+    mirrorOn: IRemoteLensPost;
     createdAt: string;
-    mainPost?: IRemoteLensPost;
-    mirrorOf?: IRemoteLensPost;
-    __typename: "Mirror" | "Post" | "Comment";
-    collectModule: IRemoteLensCollectModule;
-    referenceModule: string | null;
-    hasCollectedByMe: boolean;
 }
+
 export type IRemoteLensItem = TSocialItem<IRemoteLensPost>;
 
 export type TGetLensRequest = {

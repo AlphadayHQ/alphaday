@@ -1,8 +1,8 @@
-import { lazy } from "react";
+import { lazyRetry } from "./api/utils/helpers";
+import PreloaderPage from "./pages/preloader";
 
-const PreloaderPage = lazy(() => import("./pages/preloader"));
-const DashboardPage = lazy(() => import("./pages/index"));
-const ErrorPage = lazy(() => import("./pages/error"));
+const DashboardPage = lazyRetry(() => import("./pages/index"));
+const ErrorPage = lazyRetry(() => import("./pages/error"));
 
 /**
  * A basic route.

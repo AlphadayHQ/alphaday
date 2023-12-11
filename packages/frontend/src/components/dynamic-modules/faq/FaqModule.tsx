@@ -1,7 +1,8 @@
 import React, { FC } from "react";
-import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import { CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import { useDynamicWidgetHeight } from "src/components/dynamic-modules/hooks/useDynamicWidgetHeight";
 import CONFIG from "src/config/config";
+import globalMessages from "src/globalMessages";
 import { TItem } from "src/types";
 import FaqItem from "./FaqItem";
 
@@ -25,7 +26,7 @@ const FaqModule: FC<IAgenda> = ({
         });
 
     return (
-        <span
+        <div
             className="border-none block relative min-h-[110px]"
             style={{
                 // height of the table should not be greater than max-content
@@ -33,7 +34,9 @@ const FaqModule: FC<IAgenda> = ({
             }}
         >
             {!items || items?.length < 1 ? (
-                <ModuleLoader $height={`${widgetHeight}px`} />
+                <CenteredBlock>
+                    <p>{globalMessages.queries.noResults}</p>
+                </CenteredBlock>
             ) : (
                 <ScrollBar containerRef={setScrollRef}>
                     <div
@@ -52,7 +55,7 @@ const FaqModule: FC<IAgenda> = ({
                     </div>
                 </ScrollBar>
             )}
-        </span>
+        </div>
     );
 };
 

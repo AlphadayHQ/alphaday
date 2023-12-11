@@ -1,6 +1,11 @@
-import { FC, useCallback, useState, useRef } from "react";
-import { useGlobalSearch, useView, useWidgetLib } from "src/api/hooks";
-import { ETag, EItemsSortBy } from "src/api/services";
+import { FC, useCallback, useState, useRef, useEffect, useMemo } from "react";
+import {
+    useGlobalSearch,
+    usePagination,
+    useView,
+    useWidgetLib,
+} from "src/api/hooks";
+import { ETag, EItemsSortBy, TRemoteWidgetMini } from "src/api/services";
 import {
     useGetWidgetByIdQuery,
     useGetWidgetsCategoryQuery,
@@ -14,6 +19,7 @@ import CONFIG from "src/config/config";
 import { v4 as uuidv4 } from "uuid";
 
 const { VIEWS } = CONFIG;
+const INITIAL_PAGE = 1;
 
 interface IWidgetLibContainerProps {
     layoutState: TUserViewWidget[][] | undefined;
@@ -30,12 +36,24 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     >();
     const [selectedWidget, setSelectedWidget] = useState<TWidgetMini>();
     const [sortBy, setSortBy] = useState(EItemsSortBy.Name);
+    const [widgets, setWidgets] = useState<TRemoteWidgetMini[]>([]);
 
     // used to track when a new widget has been selected from the library
     const previousResolvedWidgetId = useRef<number | undefined>();
 
-    const { currentData: widgets } = useGetWidgetsQuery(
-        { sortBy },
+    const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
+
+    const {
+        currentData: currentWidgetsData,
+        isFetching,
+        isSuccess,
+    } = useGetWidgetsQuery(
+        {
+            sortBy,
+            search: filter,
+            page: currentPage,
+            limit: CONFIG.UI.WIDGETS_LIBRARY.LIMIT,
+        },
         { refetchOnMountOrArgChange: true }
     );
     const { data: widgetsCategory } = useGetWidgetsCategoryQuery();
@@ -46,6 +64,29 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
             skip: selectedWidget === undefined,
         }
     );
+
+    // shallow copy necessary because response is read-only
+    const widgetsDataForCurrentPage: TRemoteWidgetMini[] | undefined = useMemo(
+        () => [...(currentWidgetsData?.results ?? [])],
+        [currentWidgetsData?.results]
+    );
+    const prevWidgetsDataRef = useRef<TRemoteWidgetMini[]>();
+
+    // if the current response changes, it means the user scrolled down
+    // and a request for the next page has completed
+    // In this case, we append the new data.
+    // When user subscribed/unsubscribed from a view, the response may include
+    // items that were already in a previous response, so we need to handle this
+    // as well.
+    if (
+        currentWidgetsData?.results !== undefined &&
+        prevWidgetsDataRef.current !== widgetsDataForCurrentPage
+    ) {
+        setWidgets((prevState) => {
+            return [...prevState, ...widgetsDataForCurrentPage];
+        });
+        prevWidgetsDataRef.current = widgetsDataForCurrentPage;
+    }
 
     const handleSelectWidget = (widget: TWidgetMini) => {
         setSelectedWidget(widget);
@@ -131,7 +172,18 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     }
 
     const handleFilter = (value: string) => {
-        setFilter(value.toLowerCase());
+        const normalizedValue = value.toLowerCase();
+        if (isFetching || filter === normalizedValue) return;
+        if (widgets.length > 0) setWidgets([]);
+        if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
+        setFilter(normalizedValue);
+    };
+
+    const handleSortBy = (sort: EItemsSortBy): void => {
+        if (isFetching || sortBy === sort) return;
+        if (widgets.length > 0) setWidgets([]);
+        if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
+        setSortBy(sort);
     };
 
     const onCloseWidgetLib = useCallback(() => {
@@ -142,25 +194,34 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         }
     }, [showWidgetLib, toggleWidgetLib]);
 
+    const { nextPage, handleNextPage } = usePagination(
+        currentWidgetsData?.links,
+        CONFIG.UI.WIDGETS_LIBRARY.LIMIT,
+        isSuccess
+    );
+
+    useEffect(() => {
+        if (nextPage === undefined) return () => null;
+        const timeout = setTimeout(() => {
+            setCurrentPage(nextPage);
+        }, 350);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [nextPage]);
+
     return (
         <WidgetLibrary
             showWidgetLib={showWidgetLib}
-            widgets={[...(widgets ?? [])]
-                .filter((w) => {
-                    // filter by category. If no category is selected, show all widgets
-                    return (
-                        !selectedCategory ||
-                        w.categories.some((c) => {
-                            return c.slug === selectedCategory;
-                        })
-                    );
-                })
-                .filter((w) =>
-                    filter
-                        ? w.name.toLowerCase().includes(filter) ||
-                          w.description.toLowerCase().includes(filter)
-                        : true
-                )}
+            widgets={[...(widgets ?? [])].filter((w) => {
+                // filter by category. If no category is selected, show all widgets
+                return (
+                    !selectedCategory ||
+                    w.categories.some((c) => {
+                        return c.slug === selectedCategory;
+                    })
+                );
+            })}
             categories={[...(widgetsCategory?.results || [])].sort(
                 (a, d) => a.sort_order - d.sort_order
             )}
@@ -168,7 +229,7 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 (sw) => sw.widget as TWidget
             )}
             sortBy={sortBy}
-            onSortBy={setSortBy}
+            onSortBy={handleSortBy}
             onFilter={handleFilter}
             isLoading={widgets === undefined}
             onCloseWidgetLib={onCloseWidgetLib}
@@ -176,6 +237,7 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
             selectedCategory={selectedCategory}
             handleSelectWidget={handleSelectWidget}
             handleSelectCategory={setSelectedCategory}
+            handlePaginate={handleNextPage}
         />
     );
 };
