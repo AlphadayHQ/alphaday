@@ -1,18 +1,23 @@
 import { FC } from "react";
+import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
 import { twMerge } from "tailwind-merge";
 
-export type TTabsOption = { label: string; value: string };
+export type TTabsOption = { label: string; value: string; removable?: boolean };
 
 export const TabsBar: FC<{
     options: TTabsOption[];
     selectedOption: TTabsOption;
     onChange: (option: string) => void;
-}> = ({ options, selectedOption, onChange }) => {
+    onRemoveTab?: (option: string) => MaybeAsync<void>;
+}> = ({ options, selectedOption, onChange, onRemoveTab }) => {
     return (
         <div className="w-full">
-            <div className="block">
-                <div className="border-b border-borderLine">
-                    <nav className="-mb-px flex space-x-3" aria-label="Tabs">
+            <div className="block over">
+                <div className="border-b border-borderLine overflow-hidden">
+                    <nav
+                        className="-mb-px flex space-x-3 overflow-scroll"
+                        aria-label="Tabs"
+                    >
                         {options.map((tab) => (
                             <span
                                 key={tab.label}
@@ -20,7 +25,7 @@ export const TabsBar: FC<{
                                     tab.value === selectedOption.value
                                         ? "border-primary text-primary"
                                         : "border-transparent hover:border-primaryFiltered text-primaryVariant100 hover:text-primaryFiltered",
-                                    "whitespace-nowrap border-b-2 py-1 px-2 text-sm font-medium box-border cursor-pointer fontGroup-highlightSemi"
+                                    "flex items-center whitespace-nowrap border-b-2 py-1 px-2 text-sm font-medium box-border cursor-pointer fontGroup-highlightSemi"
                                 )}
                                 aria-current={
                                     tab.value === selectedOption.value
@@ -32,6 +37,22 @@ export const TabsBar: FC<{
                                 tabIndex={0}
                             >
                                 {tab.label}
+                                {tab.removable && (
+                                    <CloseSVG
+                                        className="close w-2 h-2 ml-1 !p-0 !pt-0.5"
+                                        onClick={(e) => {
+                                            const handler = async () => {
+                                                e.stopPropagation();
+                                                if (onRemoveTab) {
+                                                    await onRemoveTab(
+                                                        tab.value
+                                                    );
+                                                }
+                                            };
+                                            handler().catch(() => ({}));
+                                        }}
+                                    />
+                                )}
                             </span>
                         ))}
                     </nav>

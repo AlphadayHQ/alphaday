@@ -97,7 +97,7 @@
         }
 
         .apexcharts-canvas {
-            height: 190px !important;
+            height: 200px !important;
             svg {
                 width: 285px;
                 height: 200px !important;
@@ -108,31 +108,39 @@
             }
         }
         .apexcharts-legend {
-            width: 120px !important;
+            width: 122px !important;
             padding: 0px;
-            left: -5px !important;
+            left: -4px !important;
             top: 13px !important;
         }
         .apexcharts-graphical {
-            height: 88px;
+            height: 100px;
             transform: translate(160px, 41px);
         }
 
         .apexcharts-legend-series {
-            margin: 4px 5px !important;
+            margin: 4px 0 4px 4px !important;
 
             .apexcharts-legend-marker {
                 width: 9px !important;
                 height: 9px !important;
+                margin-right: 4px;
+                border-radius: 4px;
             }
 
-            .apexcharts-legend-text span {
-                width: 90px !important;
-                div {
-                    @apply fontGroup-normal text-primaryVariant1000;
-                }
-                div:nth-child(2) {
-                    @apply fontGroup-highlightSemi text-primary;
+            .apexcharts-legend-text {
+                display: contents !important;
+                span {
+                    width: 100px !important;
+                    div {
+                        min-width: 72px;
+                        @apply fontGroup-normal text-primaryVariant1000;
+                    }
+                    div:nth-child(2) {
+                        min-width: 30px;
+                        text-align: right;
+                        @apply fontGroup-highlightSemi text-primary;
+                    }
                 }
             }
         }

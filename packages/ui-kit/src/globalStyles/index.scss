@@ -243,7 +243,7 @@ input,
 select,
 textarea {
     width: 100%;
-    @apply text-primary fontGroup-normal bg-transparent border border-transparent border-solid active:border-none active:border-primaryVariant100 active:outline-none focus:border-primaryVariant100 focus:outline-none;
+    @apply text-primary fontGroup-normal bg-transparent border border-transparent border-solid active:border-none active:border-borderLine active:outline-none focus:border-borderLine focus:outline-none;
 }
 input,
 select {
