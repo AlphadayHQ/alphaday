@@ -61,7 +61,6 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
                 className="flex items-center h-[43px] overflow-y-hidden overflow-x-scroll py-2 px-0"
                 id="portfolioAddrContainer"
                 data-testid="portfolio-address-tab"
-                ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
             >
                 <div className="flex w-full pt-[3px] m-0 px-2">
                     {!hideLeftPan && (
@@ -78,6 +77,7 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
                         onChange={handleTabChange}
                         selectedOption={selectedTab}
                         onRemoveTab={onRemoveAddress}
+                        setHeaderRef={setHeaderRef}
                     />
                     {!hideRightPan && (
                         <span className="block absolute center top-[calc(50%_-_16.5px)] left-auto right-[3px]">

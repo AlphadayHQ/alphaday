@@ -2,14 +2,19 @@ import { FC } from "react";
 import { ReactComponent as CloseSVG } from "src/assets/svg/close3.svg";
 import { twMerge } from "tailwind-merge";
 
-export type TTabsOption = { label: string; value: string; removable?: boolean };
+export type TTabsOption = {
+    label: string;
+    value: string;
+    removable?: boolean;
+};
 
 export const TabsBar: FC<{
     options: TTabsOption[];
     selectedOption: TTabsOption;
     onChange: (option: string) => void;
     onRemoveTab?: (option: string) => MaybeAsync<void>;
-}> = ({ options, selectedOption, onChange, onRemoveTab }) => {
+    setHeaderRef?: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
+}> = ({ options, selectedOption, onChange, onRemoveTab, setHeaderRef }) => {
     return (
         <div className="w-full">
             <div className="block over">
@@ -17,6 +22,9 @@ export const TabsBar: FC<{
                     <nav
                         className="-mb-px flex space-x-3 overflow-scroll"
                         aria-label="Tabs"
+                        ref={(ref: HTMLDivElement | null) =>
+                            ref && setHeaderRef && setHeaderRef(ref)
+                        }
                     >
                         {options.map((tab) => (
                             <span
