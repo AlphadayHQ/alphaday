@@ -27,8 +27,8 @@ env:
     VITE_FIRE_MEASUREMENT_ID: G-D024QSX252
 
     # alphaday.com site id
-    REACT_APP_HOTJAR_SITE_ID: 3070399
-    REACT_APP_HOTJAR_SNIPPET_VERSION: 6
+    VITE_HOTJAR_SITE_ID: 3070399
+    VITE_HOTJAR_SNIPPET_VERSION: 6
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
