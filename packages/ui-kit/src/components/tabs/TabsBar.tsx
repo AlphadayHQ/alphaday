@@ -7,6 +7,7 @@ export type TTabsOption = {
     label: string;
     value: string;
     removable?: boolean;
+    icon?: string;
 };
 
 export const TabsBar: FC<{
@@ -59,7 +60,7 @@ export const TabsBar: FC<{
                                         tab.value === selectedOption.value
                                             ? "border-primary text-primary"
                                             : "border-transparent hover:border-primaryFiltered text-primaryVariant100 hover:text-primaryFiltered",
-                                        "flex items-center whitespace-nowrap border-b-2 py-1 px-2 text-sm font-medium box-border cursor-pointer fontGroup-highlightSemi"
+                                        "flex min-w-max items-center whitespace-nowrap border-b-2 pt-1 pb-1.5 px-2 text-sm font-medium box-border cursor-pointer fontGroup-highlightSemi"
                                     )}
                                     aria-current={
                                         tab.value === selectedOption.value
@@ -70,6 +71,13 @@ export const TabsBar: FC<{
                                     role="button"
                                     tabIndex={0}
                                 >
+                                    {tab.icon && (
+                                        <img
+                                            className="w-[18px] h-[18px] rounded-full mr-1"
+                                            src={tab.icon}
+                                            alt=""
+                                        />
+                                    )}
                                     {tab.label}
                                     {tab.removable && (
                                         <CloseSVG

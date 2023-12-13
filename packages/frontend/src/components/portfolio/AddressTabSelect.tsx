@@ -56,7 +56,7 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
         }
     };
     return (
-        <div className="w-ful relative transition-[height] duration-300 cursor-pointer">
+        <div className="relative transition-[height] duration-300 cursor-pointer">
             <div
                 className="flex items-center h-[43px] overflow-y-hidden overflow-x-scroll py-2 px-0"
                 id="portfolioAddrContainer"

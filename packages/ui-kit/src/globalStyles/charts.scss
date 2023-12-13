@@ -35,7 +35,7 @@
         margin-top: -12px;
         .apexcharts-grid-borders {
             line {
-                @apply stroke-1 stroke-btnBackgroundVariant500;
+                @apply stroke-1 stroke-borderLine;
             }
         }
 
@@ -53,7 +53,7 @@
         margin-top: -15px;
         .apexcharts-grid-borders {
             line {
-                @apply stroke-[1.5px] stroke-btnBackgroundVariant500;
+                @apply stroke-[1.5px] stroke-borderLine;
             }
         }
 

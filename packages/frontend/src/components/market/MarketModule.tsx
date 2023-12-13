@@ -108,7 +108,7 @@ const MarketModule: FC<IMarketModule> = ({
                     selectedMarket={selectedMarket}
                 />
                 {selectedMarket && (
-                    <div className="flex flex-col mt-[11px] pl-[15px] pr-[15px] w-full self-start single-col:mt-5 single-col:pl-[10px]">
+                    <div className="flex flex-col mt-3 pl-[15px] pr-[15px] w-full self-start single-col:mt-4 single-col:pl-[10px]">
                         <div className="flex items-start">
                             <div className="flex justify-between flex-1 ml-[5px]">
                                 <CoinInfo
