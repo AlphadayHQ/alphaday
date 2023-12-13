@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { IconButton, TabsBar } from "@alphaday/ui-kit";
+import { TabsBar } from "@alphaday/ui-kit";
 import { TCryptoAccount } from "src/api/types";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { TPortfolioTabAccount } from "./types";
@@ -63,31 +63,16 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
                 data-testid="portfolio-address-tab"
             >
                 <div className="flex w-full pt-[3px] m-0 px-2">
-                    {!hideLeftPan && (
-                        <span className="block absolute center top-[calc(50%_-_16.5px)] left-[3px]">
-                            <IconButton
-                                title="Pan Coins Left"
-                                variant="leftArrow"
-                                onClick={() => handleClickScroll()}
-                            />
-                        </span>
-                    )}
                     <TabsBar
                         options={accountTabs}
                         onChange={handleTabChange}
                         selectedOption={selectedTab}
                         onRemoveTab={onRemoveAddress}
                         setHeaderRef={setHeaderRef}
+                        handleClickScroll={handleClickScroll}
+                        hideLeftPan={hideLeftPan}
+                        hideRightPan={hideRightPan}
                     />
-                    {!hideRightPan && (
-                        <span className="block absolute center top-[calc(50%_-_16.5px)] left-auto right-[3px]">
-                            <IconButton
-                                title="Pan Coins Right"
-                                variant="rightArrow"
-                                onClick={() => handleClickScroll(true)}
-                            />
-                        </span>
-                    )}
                 </div>
             </div>
         </div>
