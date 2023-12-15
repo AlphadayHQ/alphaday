@@ -12,6 +12,7 @@ import {
     useGetWidgetsQuery,
 } from "src/api/services/views/viewsEndpoints";
 import { TUserViewWidget, TWidget, TWidgetMini } from "src/api/types";
+import { debounce } from "src/api/utils/helpers";
 import { recomputeWidgetsPos } from "src/api/utils/layoutUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import WidgetLibrary from "src/components/widget-library/WidgetLibrary";
@@ -171,13 +172,13 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         previousResolvedWidgetId.current = resolvedWidget.id;
     }
 
-    const handleFilter = (value: string) => {
+    const handleFilter = debounce((value: string) => {
         const normalizedValue = value.toLowerCase();
-        if (isFetching || filter === normalizedValue) return;
+        if (filter === normalizedValue) return;
         if (widgets.length > 0) setWidgets([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
         setFilter(normalizedValue);
-    };
+    }, 300);
 
     const handleSortBy = (sort: EItemsSortBy): void => {
         if (isFetching || sortBy === sort) return;
