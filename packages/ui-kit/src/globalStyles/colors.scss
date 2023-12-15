@@ -56,6 +56,7 @@ http://ionicframework.com/docs/theming/ */
     --alpha-base-100: #191919;
     --alpha-base-200: #242424; //hover
     --alpha-base-300: #292929; //active
+    --alpha-base-400: #393939; //active
 
     //** primary shades **/
     --alpha-primary: #f2f2f2;
@@ -160,6 +161,8 @@ http://ionicframework.com/docs/theming/ */
     --background: var(--alpha-base);
     --backgroundVariant100: var(--alpha-base-100);
     --backgroundVariant200: var(--alpha-base-200);
+    --backgroundVariant300: var(--alpha-base-300);
+    --backgroundVariant400: var(--alpha-base-400);
 
     --backgroundBlue: var(--alpha-dark-blue);
     --backgroundBlue100: var(--alpha-dark-blue-100);

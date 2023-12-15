@@ -69,7 +69,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "podcast flex-col bg-[color:var(--background)] cursor-pointer p-[15px] rounded-none"
+                "podcast flex-col bg-[color:var(--background)] cursor-pointer py-4 px-2 rounded-none"
             ),
             img: twMerge(
                 defaults.img,
@@ -219,7 +219,7 @@ export const ListItem: FC<IList> = ({
                             onError={imgOnError}
                         />
                         <div className="grow-[1]">
-                            <p className="fontGroup-supportBold mb-0">{tag}</p>
+                            <p className="fontGroup-support mb-0">{tag}</p>
                             <p className="fontGroup-mini text-primaryVariant100">
                                 {duration}
                             </p>

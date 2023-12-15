@@ -157,7 +157,7 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                 <div
                     role="button"
                     tabIndex={-1}
-                    className="h-full absolute bg-btnRingVariant200 rounded-tl-[5px] rounded-bl-[5px]"
+                    className="h-full absolute bg-backgroundVariant400 rounded-tl-[5px] rounded-bl-[5px]"
                     onClick={(e: React.MouseEvent) => {
                         e.stopPropagation();
                         setPlaybackPosition(e);

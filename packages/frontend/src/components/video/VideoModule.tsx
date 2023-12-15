@@ -40,7 +40,7 @@ const VIDEO_NAV_ITEMS = [
         value: EItemFeedPreference.Trending,
     },
     {
-        label: "Read Later",
+        label: "Bookmarks",
         value: EItemFeedPreference.Bookmark,
         auth: true,
     },

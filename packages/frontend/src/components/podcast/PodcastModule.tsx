@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from "react";
-import { TabButton, twMerge } from "@alphaday/ui-kit";
+import { TabsBar, twMerge } from "@alphaday/ui-kit";
 import { useAudioPlayer } from "react-use-audio-player";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
@@ -7,6 +7,7 @@ import {
     TPodcastChannel,
     TPodcastItem,
 } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
 import AudioPlayer from "src/components/podcast/AudioPlayer";
 import PodcastChannelsList from "./PodcastChannelsList";
 import PodcastItemList from "./PodcastItemList";
@@ -32,12 +33,12 @@ interface IPodcastModule {
     setPreferredChannelIds: (channels: TPodcastChannel[]) => void;
 }
 
-const SWITCH_HEIGHT = 50;
+const SWITCH_HEIGHT = 30;
 const AUDIO_PLAYER_HEIGHT = 52;
 const CHANNELS_LIST_HEIGHT = 157;
 const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;
 
-const PODCAST_NAV_BUTTONS = [
+const PODCAST_NAV_ITEMS = [
     {
         label: "Feed",
         value: EItemFeedPreference.Last,
@@ -111,34 +112,36 @@ const PodcastModule: FC<IPodcastModule> = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [selectedPodcast === null]
     );
+
+    const NavItemPreference =
+        PODCAST_NAV_ITEMS.find((item) => item.value === feedPreference) ||
+        PODCAST_NAV_ITEMS[0];
+
+    const onTabOptionChange = (value: string) => {
+        const optionItem = PODCAST_NAV_ITEMS.find(
+            (item) => item.value === value
+        );
+        if (optionItem === undefined) {
+            Logger.debug("PodcastModule::Nav option item not found");
+            return;
+        }
+        onSetFeedPreference(optionItem?.value);
+    };
     return (
         <div className="block">
             <div ref={squareRef}>
                 <div
                     className={twMerge(
-                        "m-0 flex p-0 pl-[15px] items-center bg-background border-b border-borderLine [&>.wrap]:mr-[10px] transition-all duration-400",
+                        "flex items-center mx-2",
                         (isLoadingItems || !items) && "bg-transparent"
                     )}
                     style={{ height: SWITCH_HEIGHT }}
                 >
-                    {PODCAST_NAV_BUTTONS.map(
-                        (nav) =>
-                            ((nav.auth === true && isAuthenticated) ||
-                                !nav.auth) && (
-                                <span key={String(nav.value)} className="wrap">
-                                    <TabButton
-                                        variant="small"
-                                        uppercase={false}
-                                        open={feedPreference === nav.value}
-                                        onClick={() =>
-                                            onSetFeedPreference(nav.value)
-                                        }
-                                    >
-                                        {nav.label}
-                                    </TabButton>
-                                </span>
-                            )
-                    )}
+                    <TabsBar
+                        options={PODCAST_NAV_ITEMS}
+                        onChange={onTabOptionChange}
+                        selectedOption={NavItemPreference}
+                    />
                 </div>
 
                 <PodcastChannelsList
@@ -161,7 +164,7 @@ const PodcastModule: FC<IPodcastModule> = ({
                 />
 
                 <div
-                    className="transition-all duration-300 relative z-[1]"
+                    className="transition-all duration-300 relative z-[1] bg-background"
                     style={{
                         height:
                             widgetHeight -
@@ -187,7 +190,7 @@ const PodcastModule: FC<IPodcastModule> = ({
                     }}
                 />
                 <div
-                    className="flrx absolute bottom-0 transition-all duration-300 overflow-hidden w-full rounded-tl-md rounded-bl-md bg-btnBackgroundVariant400"
+                    className="absolute bottom-0 transition-all duration-300 overflow-hidden w-full rounded-tl-md rounded-bl-md bg-backgroundVariant200"
                     style={{
                         height: audioPlayerHeight,
                     }}
