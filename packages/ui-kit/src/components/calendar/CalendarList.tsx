@@ -131,11 +131,10 @@ export const CalendarList: FC<ICalendarList> = ({
             </span>
             <span style="margin: 0 5px;">•</span>
             <span>${time || ""}</span>
-            ${
-                selectedEvent.location &&
-                `<span style="margin: 0 5px;">•</span><span style="white-space: pre-wrap;">${selectedEvent.location}
-                </span>`
-            }
+            ${selectedEvent.location && '<span style="margin: 0 5px;">•</span>'}
+            <span style="white-space: pre-wrap;">${
+                selectedEvent.location
+            }</span>
             </div>
             `;
 

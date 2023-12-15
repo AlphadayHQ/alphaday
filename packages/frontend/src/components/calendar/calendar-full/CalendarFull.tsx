@@ -27,7 +27,10 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
 }) => {
     const fullCalendarWrapRef = useRef<HTMLDivElement>(null);
     return (
-        <div className="w-full flex bg-background" ref={fullCalendarWrapRef}>
+        <div
+            className="w-full flex bg-background pb-2"
+            ref={fullCalendarWrapRef}
+        >
             <div className="column flex-[35.3%] relative bg-background">
                 <CalendarMonth
                     events={events}
@@ -49,7 +52,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                 />
             </div>
             <div
-                className="column flex-[23.1%]"
+                className="column flex-[23.1%] border-l border-borderLine"
                 style={{
                     zIndex: CALENDAR_LIST,
                     boxShadow: "-2px 0px 34px rgba(0, 0, 0, 0.2)",
@@ -77,7 +80,7 @@ const CalendarFull: FC<ICalendarBaseProps> = ({
                 />
             </div>
             <div
-                className="column flex-[41.6%]"
+                className="column flex-[41.6%] border-l border-borderLine"
                 style={{
                     zIndex: CALENDAR_EVENT_DETAILS,
                 }}
