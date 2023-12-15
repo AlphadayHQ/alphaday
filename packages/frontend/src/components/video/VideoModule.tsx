@@ -1,7 +1,8 @@
 import { FC, useMemo, useState, memo, UIEvent } from "react";
-import { TabButton, twMerge } from "@alphaday/ui-kit";
+import { TabsBar, twMerge } from "@alphaday/ui-kit";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { EItemFeedPreference, TVideoChannel, TVideoItem } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
 import VideoPlayer from "src/components/video/VideoPlayer";
 import VideoChannelsList from "./VideoChannelsList";
 import VideoItemList from "./VideoItemList";
@@ -25,11 +26,11 @@ interface IVideoModule {
     setPreferredChannelIds: (channels: TVideoChannel[]) => void;
 }
 
-const SWITCH_HEIGHT = 50;
-const CHANNELS_LIST_HEIGHT = 157;
+const SWITCH_HEIGHT = 30;
+const CHANNELS_LIST_HEIGHT = 149;
 const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;
 
-const VIDEO_NAV_BUTTONS = [
+const VIDEO_NAV_ITEMS = [
     {
         label: "Feed",
         value: EItemFeedPreference.Last,
@@ -39,7 +40,7 @@ const VIDEO_NAV_BUTTONS = [
         value: EItemFeedPreference.Trending,
     },
     {
-        label: "Bookmarks",
+        label: "Read Later",
         value: EItemFeedPreference.Bookmark,
         auth: true,
     },
@@ -100,6 +101,19 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
         setShowVideo(false);
         setSelectedVideo(null);
     };
+
+    const NavItemPreference =
+        VIDEO_NAV_ITEMS.find((item) => item.value === feedPreference) ||
+        VIDEO_NAV_ITEMS[0];
+
+    const onTabOptionChange = (value: string) => {
+        const optionItem = VIDEO_NAV_ITEMS.find((item) => item.value === value);
+        if (optionItem === undefined) {
+            Logger.debug("VideoModule::Nav option item not found");
+            return;
+        }
+        onSetFeedPreference(optionItem?.value);
+    };
     return (
         <div
             onScroll={(e: UIEvent<HTMLElement>) => e.preventDefault()}
@@ -125,32 +139,16 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                 >
                     <div
                         className={twMerge(
-                            "m-0 flex p-0 pl-[15px] items-center bg-background border-b border-borderLine [&>.wrap]:mr-[10px] transition-all duration-400",
+                            "flex items-center mx-2",
                             (isLoadingItems || !items) && "bg-transparent"
                         )}
                         style={{ height: SWITCH_HEIGHT }}
                     >
-                        {VIDEO_NAV_BUTTONS.map(
-                            (nav) =>
-                                ((nav.auth === true && isAuthenticated) ||
-                                    !nav.auth) && (
-                                    <span
-                                        key={String(nav.value)}
-                                        className="wrap"
-                                    >
-                                        <TabButton
-                                            variant="small"
-                                            uppercase={false}
-                                            open={feedPreference === nav.value}
-                                            onClick={() =>
-                                                onSetFeedPreference(nav.value)
-                                            }
-                                        >
-                                            {nav.label}
-                                        </TabButton>
-                                    </span>
-                                )
-                        )}
+                        <TabsBar
+                            options={VIDEO_NAV_ITEMS}
+                            onChange={onTabOptionChange}
+                            selectedOption={NavItemPreference}
+                        />
                     </div>
 
                     <VideoChannelsList
@@ -173,7 +171,7 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                     />
 
                     <div
-                        className="transition-all duration-300 relative z-[1] [&_.title]:three-liner"
+                        className="transition-all duration-300 bg-background relative z-[1] [&_.title]:three-liner"
                         style={{
                             height:
                                 widgetHeight - SWITCH_HEIGHT - channelsHeight,

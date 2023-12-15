@@ -7,7 +7,9 @@ import { twMerge } from "tailwind-merge";
 import ItemBookmark from "./ItemBookmark";
 import styles from "./ListItem.module.scss";
 
-export const HRElement = () => <hr className="border-borderLine m-0 mx-2" />;
+export const HRElement = () => (
+    <hr className="border-borderLine m-0 ml-2 mr-[3px]" />
+);
 
 interface IList {
     variant: "news" | "dao" | "podcast" | "video" | "reports" | "discord";
@@ -31,7 +33,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.listItem,
-            "flex relative flex-row items-start py-3 px-1 mx-2 bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200"
+            "flex relative flex-row items-start py-3 px-1 ml-2 mr-[3px] bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200"
         ),
         info: "grow-[1]",
         date: "fontGroup-mini min-w-[45px] text-primaryVariant100 mr-[5px]",
@@ -79,7 +81,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "video bg-background cursor-pointer p-[15px] rounded-none"
+                "video bg-background cursor-pointer py-4 px-2 rounded-none"
             ),
             date: twMerge(
                 defaults.date,

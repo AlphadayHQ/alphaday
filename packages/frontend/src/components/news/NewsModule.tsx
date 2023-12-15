@@ -55,7 +55,7 @@ const NewsModule: FC<INews> = memo(function NewsModule({
     const onTabOptionChange = (value: string) => {
         const optionItem = NEWS_NAV_ITEMS.find((item) => item.value === value);
         if (optionItem === undefined) {
-            Logger.debug("Nav option item not found");
+            Logger.debug("NewsModule::Nav option item not found");
             return;
         }
         onSetFeedPreference(optionItem?.value);

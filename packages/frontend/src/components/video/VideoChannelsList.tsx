@@ -144,13 +144,13 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
 
             <div
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
-                className="flex overflow-y-hidden overflow-x-scroll py-3"
+                className="flex overflow-y-hidden overflow-x-scroll"
             >
                 <div className="min-w-[15px] h-5 self-center" />
                 {!hideLeftPan && (
                     <span
                         className={twMerge(
-                            "absolute self-center top-[70px] left-[3px] z-[1]",
+                            "absolute self-center top-[58px] left-[3px] z-[1]",
                             showChannels ? "block" : "none"
                         )}
                     >
@@ -176,7 +176,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                                     src={channel.icon}
                                     alt=""
                                 />
-                                <span className="relative overflow-hidden pt-[3px] three-liner fontGroup-supportBold">
+                                <span className="relative overflow-hidden pt-1 three-liner fontGroup-support">
                                     {channel.name}
                                 </span>
                             </div>
@@ -193,7 +193,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                 {!hideRightPan && (
                     <span
                         className={twMerge(
-                            "absolute self-center top-[70px] z-[2] left-auto right-[3px]",
+                            "absolute self-center top-[58px] z-[2] left-auto right-[3px]",
                             showChannels ? "block" : "none"
                         )}
                     >
