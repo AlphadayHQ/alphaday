@@ -19,6 +19,8 @@ export const darkColors = {
     backgroundVariant300: "var(--alpha-base-300)", // color: #222222 -- background variant 300
     backgoundBlue: "var(--alpha-dark-blue)", // color: #263964 -- background blue
     backgoundBlue100: "var(--alpha-dark-blue-100)", // color: #263964 -- background blue
+    accentVariant100: "var(--alpha-light-blue)", // color: #477FF7 -- button Ring Primary
+
     // backgroundVariant300: "var(--alpha-filtered-white)", // color: #27292E -- module header
     // backgroundVariant400: "var(--alpha-dark-800)", // color: #0A0A0B -- search bg focus
     // backgroundVariant500: "var(--alpha-dark-blue-200)", // color: #2C2E35 -- module preview bg

@@ -42,7 +42,7 @@ const CalendarList: FC<ICalendarBaseProps> = ({
         >
             {!showFullSize && (
                 <div
-                    className="flex absolute top-3 left-[10px] single-col:left-4 two-col:left-5"
+                    className="flex absolute top-2 left-[10px] two-col:left-3"
                     style={{
                         zIndex: Z_INDEX_REGISTRY.CALENDAR_LIST_SWITCH,
                     }}
