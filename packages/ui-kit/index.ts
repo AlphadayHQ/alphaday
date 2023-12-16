@@ -73,7 +73,6 @@ import { ItemSkeleton } from "./src/components/skeletons/ItemSkeleton";
 import { Skeleton } from "./src/components/skeletons/Skeleton";
 import { Spinner } from "./src/components/spinner/Spinner";
 import { Switch } from "./src/components/switch/Switch";
-import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
@@ -127,7 +126,6 @@ export {
     BaseModuleOptionsFooter,
     ScrollBar,
     SearchBar,
-    SwitchWrap,
     ViewTabMenu,
     EViewDialogState,
     ShareViewDialog,

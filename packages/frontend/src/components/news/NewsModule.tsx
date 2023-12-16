@@ -15,8 +15,6 @@ interface INews {
     onBookmark?: (id: TNewsItem) => MaybeAsync<void>;
     isAuthenticated: boolean;
 }
-const SWITCH_HEIGHT = 50;
-
 /**
  * This should ease adding new preference based buttons
  * auth can be set to true for buttons which require the user to be auth
