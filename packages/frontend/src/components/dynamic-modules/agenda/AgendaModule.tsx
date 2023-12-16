@@ -43,9 +43,12 @@ const AgendaModule: FC<IAgenda> = ({
             {isLoadingItems ? (
                 <ModuleLoader $height={`${String(widgetHeight)}px`} />
             ) : (
-                <ScrollBar containerRef={setScrollRef}>
+                <ScrollBar
+                    className="ml-2 mr-[3px]"
+                    containerRef={setScrollRef}
+                >
                     <div
-                        className="contents overflow-hidden [&>*:first-child]:pt-7"
+                        className="contents overflow-hidden [&>*:first-child]:pt-3"
                         style={{
                             height: `${String(itemsHeight)}px`,
                         }}

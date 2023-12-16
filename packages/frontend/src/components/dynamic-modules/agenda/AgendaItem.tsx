@@ -52,13 +52,13 @@ const AgendaItem: FC<Item> = ({ item, catColor, setItemsHeight }) => {
 
     return (
         <div
-            className="list-group-item flex flex-row items-start p-[14px] w-full bg-background border-none pb-0 pt-5 cursor-pointer flex-grow hover:bg-background active:bg-background hover:[&_.info]:border-none"
+            className="list-group-item flex flex-row items-start p-3 pl-0 pr-[8px] w-full bg-background border-none pb-0 pt-5 cursor-pointer flex-grow hover:bg-backgroundVariant100 active:bg-background"
             onClick={toggleAccordion}
             tabIndex={-1}
             role="button"
         >
             <div className="h-full min-w-[135px] flex flex-col items-end p-[5px_15px_5px_0]">
-                <div className="flex justify-end min-w-[58px] tracking-tight-[0.5px] text-primaryVariant100 m-[0_0_3px] fontGroup-supportBold">
+                <div className="flex justify-end text-end min-w-[58px] tracking-tight-[0.5px] text-primaryVariant100 m-0 mb-1 fontGroup-supportBold">
                     {dateField}
                     {timeField && (
                         <span className="ml-2 fontGroup-normal text-primary">
