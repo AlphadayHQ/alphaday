@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { ModuleLoader, SwitchWrap, TabsBar } from "@alphaday/ui-kit";
+import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
 import { TNewsItem, EItemFeedPreference } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import NewsItemList from "./NewsItemList";
