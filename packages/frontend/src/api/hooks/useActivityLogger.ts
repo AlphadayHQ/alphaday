@@ -10,7 +10,7 @@ interface IActivityLogger {
     logCookieChoice: (choice: ECookieChoice) => void;
     logViewVisited: (id: number) => void;
     logKeywordSelected: (id: number) => void;
-    logWalletConnect: (method: EWalletConnectionMethod) => void;
+    logWalletConnection: (method: EWalletConnectionMethod) => void;
 }
 
 export const useActivityLogger = (): IActivityLogger => {
@@ -80,7 +80,7 @@ export const useActivityLogger = (): IActivityLogger => {
             );
     };
 
-    const logWalletConnect = (method: EWalletConnectionMethod) => {
+    const logWalletConnection = (method: EWalletConnectionMethod) => {
         sendActivityLog({
             event_type: EActivityLogEventTypes.WalletConnect,
             object_type: EActivityLogObjectTypes.WalletConnect,
@@ -91,13 +91,13 @@ export const useActivityLogger = (): IActivityLogger => {
             .unwrap()
             .then((resp) =>
                 Logger.debug(
-                    "useActivityLogger::logWalletConnect: updated wallet connect activity log",
+                    "useActivityLogger::logWalletConnection: updated wallet connect activity log",
                     resp
                 )
             )
             .catch((err) =>
                 Logger.error(
-                    "useActivityLogger::logWalletConnect: error updating wallet connect activity log",
+                    "useActivityLogger::logWalletConnection: error updating wallet connect activity log",
                     err
                 )
             );
@@ -107,6 +107,6 @@ export const useActivityLogger = (): IActivityLogger => {
         logViewVisited,
         logCookieChoice,
         logKeywordSelected,
-        logWalletConnect,
+        logWalletConnection,
     };
 };

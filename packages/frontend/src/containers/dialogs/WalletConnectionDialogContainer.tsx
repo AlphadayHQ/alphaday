@@ -28,7 +28,7 @@ const WalletConnectionDialogContainer: FC = memo(() => {
     const isWalletConnectFeatureAllowed = useFeatureFlags(
         EFeaturesRegistry.WalletConnect
     );
-    const { logWalletConnect } = useActivityLogger();
+    const { logWalletConnection } = useActivityLogger();
 
     const {
         connectWallet,
@@ -38,7 +38,7 @@ const WalletConnectionDialogContainer: FC = memo(() => {
     } = useWallet();
 
     const onConnect = (method: EWalletConnectionMethod) => () => {
-        logWalletConnect(method);
+        logWalletConnection(method);
         return connectWallet(method);
     };
 
