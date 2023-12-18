@@ -35,6 +35,10 @@ env:
 
     VITE_ALPHADAY_IPFS_GATEWAY: https://alphaday.infura-ipfs.io/ipfs/
 
+    # gammaday.com site id
+    VITE_HOTJAR_SITE_ID: 3476388
+    VITE_HOTJAR_SNIPPET_VERSION: 6
+
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
