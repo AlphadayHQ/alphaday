@@ -63,7 +63,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
                 "flex flex-1 mr-2.5 [&>p]:mb-0",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
-                isHeader && "fontGroup-support",
+                isHeader && "fontGroup-normal text-primaryVariant100",
                 !isCompactMode && "items-center"
             )}
             {...(width && { style: { display: "flex", flex: width } })}
@@ -87,7 +87,7 @@ export const TableHeader: React.FC<{
     addExtraColumn?: boolean;
 }> = ({ layout, addExtraColumn }) => {
     return (
-        <div className="flex flex-row py-2 px-5">
+        <div className="flex flex-row pt-1 px-5">
             {layout.map((columnLayout) => (
                 <TableCell
                     key={columnLayout.id}
