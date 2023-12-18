@@ -22,7 +22,7 @@ const FaqItem: FC<IItem> = ({ item, setItemsHeight }) => {
             title="Open/close details"
             role="button"
             onClick={toggleAccordion}
-            className="list-group-item flex flex-row items-start p-[14px] w-full bg-background pb-0 pt-5 cursor-pointer flex-grow hover:bg-background duration-200 ease-[ease] border-b border-borderLine active:bg-background [&:nth-of-type(1)]:pt-[30px] [&:nth-of-type(1)>.line]:-bottom-3 [&:nth-of-type(1)>.line]:h-full [&:nth-of-type(1)>.line]:top-auto"
+            className="list-group-item flex flex-row items-start p-[14px] w-full bg-background pb-0 pt-5 cursor-pointer flex-grow hover:bg-background duration-200 ease-[ease] border-b border-borderLine active:bg-background [&:nth-of-type(1)]:pt-2 [&:nth-of-type(1)>.line]:-bottom-3 [&:nth-of-type(1)>.line]:h-full [&:nth-of-type(1)>.line]:top-auto"
         >
             <CollapseListItem
                 title={name}

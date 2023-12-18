@@ -67,7 +67,7 @@ const RoadmapItem: FC<IList> = ({
             tabIndex={0}
             role="button"
             onClick={toggleAccordion}
-            className="flex flex-row items-stretch p-[14px] w-full bg-background border-none pb-0 pt-5 cursor-pointer flex-grow relative hover:bg-background active:bg-background [&:nth-of-type(1)]:pt-[30px] [&:nth-of-type(1)_.line]:h-full [&:nth-of-type(1)_.line]:top-2"
+            className="flex flex-row items-stretch p-[14px] w-full bg-background border-none pb-0 pt-5 cursor-pointer flex-grow relative hover:bg-background active:bg-background [&:nth-of-type(1)]:pt-2 [&:nth-of-type(1)_.line]:h-full [&:nth-of-type(1)_.line]:top-2"
         >
             <div className="h-full min-w-[120px] flex flex-col items-end pt-[5px] pr-[15px] pb-[5px] pl-0">
                 <div className="flex justify-end text-end min-w-[58px] mr-[5px] text-primaryVariant100 mb-[3px]">
