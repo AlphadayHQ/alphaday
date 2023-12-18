@@ -222,19 +222,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                     </svg>
                     <div className="fontGroup-normal">
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlightSemi capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Token Name:
                             </span>{" "}
                             {name}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlightSemi capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Token Ticker:
                             </span>{" "}
                             ${ticker}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlightSemi capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Smart contract address:
                             </span>{" "}
                             <span
@@ -258,19 +258,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                             </span>
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlightSemi capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Total supply:
                             </span>{" "}
                             {totalSupply}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlightSemi capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Max. Circulating supply:
                             </span>{" "}
                             {maxSupply}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlightSemi capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Circulating supply:
                             </span>{" "}
                             {supply}
