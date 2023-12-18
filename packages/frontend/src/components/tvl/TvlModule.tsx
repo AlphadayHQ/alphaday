@@ -1,11 +1,16 @@
 import { FC, useMemo, memo, FormEvent } from "react";
-import { ModuleLoader, ScrollBar, Switch } from "@alphaday/ui-kit";
+import { ModuleLoader, ScrollBar, TabsBar } from "@alphaday/ui-kit";
 import useElementSize from "src/api/hooks/useElementSize";
 import { TProjectTvlHistory, TProjectData, TProjectType } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import { Logger } from "src/api/utils/logging";
 import globalMessages from "src/globalMessages";
 import { ProtocolTvlItem, ChainTvlItem, TvlItemsHeader } from "./TvlItem";
 
+export enum ETVLItemPreference {
+    Chain = "chain",
+    Protocol = "protocol",
+}
 interface ITvl {
     isLoading: boolean;
     projectsTvlData: TProjectData[] | undefined;
@@ -13,8 +18,20 @@ interface ITvl {
     widgetHeight: number;
     handlePaginate: (type: "next" | "previous") => void;
     selectedProjectType: TProjectType;
-    onSwitchProjectType: () => void;
+    onChangeProjectType: (type: ETVLItemPreference) => void;
 }
+
+const TVL_NAV_ITEMS = [
+    {
+        label: "Chains",
+        value: ETVLItemPreference.Chain,
+    },
+    {
+        label: "Protocols",
+        value: ETVLItemPreference.Protocol,
+    },
+];
+
 const TvlModule: FC<ITvl> = memo(function TvlModule({
     isLoading,
     projectsTvlData,
@@ -22,12 +39,12 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
     widgetHeight,
     handlePaginate,
     selectedProjectType,
-    onSwitchProjectType,
+    onChangeProjectType,
 }) {
     const [squareRef, { width }] = useElementSize();
 
     const THRESHOLD = 475;
-    const SWITCH_HEIGHT = 51;
+    const SWITCH_HEIGHT = 30;
     const LIST_HEADER_HEIGHT = 28;
     const LIST_HEIGHT = useMemo(
         () =>
@@ -43,6 +60,19 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
         }
     };
 
+    const selectedProjectOption =
+        TVL_NAV_ITEMS.find((item) => item.value === selectedProjectType) ||
+        TVL_NAV_ITEMS[0];
+
+    const onTabOptionChange = (value: string) => {
+        const optionItem = TVL_NAV_ITEMS.find((item) => item.value === value);
+        if (optionItem === undefined) {
+            Logger.debug("TvlModule::Nav option item not found");
+            return;
+        }
+        onChangeProjectType(optionItem.value);
+    };
+
     if (isLoading) {
         return <ModuleLoader $height={`${LIST_HEIGHT}px`} />;
     }
@@ -50,20 +80,23 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
     return (
         <div ref={squareRef}>
             <div className="relative p-0">
-                <Switch
-                    options={["Chains", "Protocols"]}
-                    checked={selectedProjectType === "protocol"}
-                    onChange={onSwitchProjectType}
-                    className="m-[10px_15px]"
-                />
-                <div className="h-0 m-0 overflow-hidden border-t border-solid border-borderLine" />
+                <div className="px-2">
+                    <TabsBar
+                        options={TVL_NAV_ITEMS}
+                        onChange={onTabOptionChange}
+                        selectedOption={selectedProjectOption}
+                    />
+                </div>
                 {projectsTvlData?.length !== 0 && width >= THRESHOLD && (
                     <TvlItemsHeader projectType={selectedProjectType} />
                 )}
                 <ul className="mt-0" style={{ height: `${LIST_HEIGHT}px` }}>
                     {projectsTvlData !== undefined &&
                     projectsTvlData?.length !== 0 ? (
-                        <ScrollBar onScroll={handleListScroll}>
+                        <ScrollBar
+                            className="pr-[3px] px-2"
+                            onScroll={handleListScroll}
+                        >
                             {projectsTvlData?.map((project, i) => (
                                 <li
                                     className="flex items-center border-b border-borderLine cursor-pointer p-0 [&:nth-of-type(1)]:border-top-0"

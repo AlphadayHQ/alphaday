@@ -27,7 +27,7 @@ export const TvlItemsHeader: FC<{ projectType: TProjectType }> = ({
     projectType,
 }) => {
     return (
-        <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px] pb-[3px]">
+        <div className="flex flex-row flex-[1_auto] py-[10px] px-6 pb-[3px]">
             <div
                 className="flex flex-row flex-1 items-center"
                 style={{
