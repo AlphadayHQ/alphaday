@@ -42,7 +42,6 @@ export type TCookieActivityLog = {
 export type TWalletConnectActivityLog = {
     event_type: EActivityLogEventTypes.WalletConnect;
     object_type: EActivityLogObjectTypes.WalletConnect;
-    object_id: number;
     data?: JSONValue;
 };
 

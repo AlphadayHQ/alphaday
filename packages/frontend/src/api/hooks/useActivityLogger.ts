@@ -84,7 +84,6 @@ export const useActivityLogger = (): IActivityLogger => {
         sendActivityLog({
             event_type: EActivityLogEventTypes.WalletConnect,
             object_type: EActivityLogObjectTypes.WalletConnect,
-            object_id: 1,
             data: {
                 method,
             },
