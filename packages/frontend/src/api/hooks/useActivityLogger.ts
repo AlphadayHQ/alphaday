@@ -82,8 +82,8 @@ export const useActivityLogger = (): IActivityLogger => {
 
     const logWalletConnection = (method: EWalletConnectionMethod) => {
         sendActivityLog({
-            event_type: EActivityLogEventTypes.WalletConnect,
-            object_type: EActivityLogObjectTypes.WalletConnect,
+            event_type: EActivityLogEventTypes.WalletConnection,
+            object_type: EActivityLogObjectTypes.WalletConnection,
             data: {
                 method,
             },
@@ -91,13 +91,13 @@ export const useActivityLogger = (): IActivityLogger => {
             .unwrap()
             .then((resp) =>
                 Logger.debug(
-                    "useActivityLogger::logWalletConnection: updated wallet connect activity log",
+                    "useActivityLogger::logWalletConnection: updated wallet connection activity log",
                     resp
                 )
             )
             .catch((err) =>
                 Logger.error(
-                    "useActivityLogger::logWalletConnection: error updating wallet connect activity log",
+                    "useActivityLogger::logWalletConnection: error updating wallet connection activity log",
                     err
                 )
             );
