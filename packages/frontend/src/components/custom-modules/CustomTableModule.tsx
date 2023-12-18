@@ -47,7 +47,12 @@ const CustomTableModule: FC<ICustomTableProps> = ({
                     (partialSum, child) => partialSum + child.clientHeight,
                     0
                 ) + HEADER_HEIGHT;
-            setWidgetHeight(Math.min(height, DEFAULT_WIDGET_HEIGHT));
+            // there seems to be a weird case where the scrollRef is valid,
+            // but the height of the items is 0, so we end up with
+            // height = HEADER_HEIGHT;
+            if (height > HEADER_HEIGHT) {
+                setWidgetHeight(Math.min(height, DEFAULT_WIDGET_HEIGHT));
+            }
         }
         prevScrollRef.current = scrollRef;
     }
