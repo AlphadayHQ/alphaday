@@ -38,8 +38,8 @@ const WalletConnectionDialogContainer: FC = memo(() => {
     } = useWallet();
 
     const onConnect = (method: EWalletConnectionMethod) => () => {
-        connectWallet(method);
         logWalletConnect(method);
+        return connectWallet(method);
     };
 
     const wallets = [
