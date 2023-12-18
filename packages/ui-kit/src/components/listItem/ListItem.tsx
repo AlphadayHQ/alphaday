@@ -36,7 +36,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             "flex relative flex-row items-start py-3 px-1 ml-2 mr-[3px] bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200"
         ),
         info: "grow-[1]",
-        date: "fontGroup-mini min-w-[45px] text-primaryVariant100 mr-[5px]",
+        date: "fontGroup-mini min-w-[50px] text-primaryVariant100 mr-[5px]",
         title: "fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0",
         content:
             "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlightSemi prose-h3:fontGroup-highlightSemi prose-h5:fontGroup-highlightSemi prose-a:secondaryOrange break-word m-0 text-primary [&>p>a]:text-secondaryOrange",
@@ -90,7 +90,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             bookmark: twMerge(defaults.bookmark, "self-center"),
             lastLine: twMerge(defaults.lastLine, "center absolute bottom-4"),
         },
-        reports: { ...defaults },
+        reports: { ...defaults, date: twMerge(defaults.date, "pt-[1.5px]") },
     };
 
     return variants[variant];
@@ -176,15 +176,20 @@ export const ListItem: FC<IList> = ({
                         </div>
                         <p className={variantStyle.lastLine}>
                             {tag && (
-                                <a
-                                    href={tagImg}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    <span>{tag}</span>{" "}
-                                </a>
+                                <>
+                                    <a
+                                        href={tagImg}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <span>{tag}</span>{" "}
+                                    </a>
+                                    <span className={variantStyle.spacer}>
+                                        •
+                                    </span>
+                                </>
                             )}
-                            <span className={variantStyle.spacer}>•</span>
+
                             <img
                                 src={source} // TODO (xavier-charles):: source is image url for tag pill
                                 alt=""
