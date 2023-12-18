@@ -3,13 +3,14 @@ import {
     EActivityLogEventTypes,
     EActivityLogObjectTypes,
 } from "src/api/services/activity-log/types";
-import { ECookieChoice } from "src/api/types";
+import { ECookieChoice, EWalletConnectionMethod } from "src/api/types";
 import { Logger } from "../utils/logging";
 
 interface IActivityLogger {
     logCookieChoice: (choice: ECookieChoice) => void;
     logViewVisited: (id: number) => void;
     logKeywordSelected: (id: number) => void;
+    logWalletConnection: (method: EWalletConnectionMethod) => void;
 }
 
 export const useActivityLogger = (): IActivityLogger => {
@@ -79,9 +80,33 @@ export const useActivityLogger = (): IActivityLogger => {
             );
     };
 
+    const logWalletConnection = (method: EWalletConnectionMethod) => {
+        sendActivityLog({
+            event_type: EActivityLogEventTypes.WalletConnection,
+            object_type: EActivityLogObjectTypes.WalletConnection,
+            data: {
+                method,
+            },
+        })
+            .unwrap()
+            .then((resp) =>
+                Logger.debug(
+                    "useActivityLogger::logWalletConnection: updated wallet connection activity log",
+                    resp
+                )
+            )
+            .catch((err) =>
+                Logger.error(
+                    "useActivityLogger::logWalletConnection: error updating wallet connection activity log",
+                    err
+                )
+            );
+    };
+
     return {
         logViewVisited,
         logCookieChoice,
         logKeywordSelected,
+        logWalletConnection,
     };
 };

@@ -1,6 +1,11 @@
 import { FC, memo } from "react";
 import { Dialog, ErrorModal } from "@alphaday/ui-kit";
-import { useWallet, useAccount, useFeatureFlags } from "src/api/hooks";
+import {
+    useWallet,
+    useAccount,
+    useFeatureFlags,
+    useActivityLogger,
+} from "src/api/hooks";
 import { WalletConnectionState, EWalletConnectionMethod } from "src/api/types";
 import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
 import { ReactComponent as WalletConnectSVG } from "src/assets/icons/wallet-connect.svg";
@@ -23,6 +28,7 @@ const WalletConnectionDialogContainer: FC = memo(() => {
     const isWalletConnectFeatureAllowed = useFeatureFlags(
         EFeaturesRegistry.WalletConnect
     );
+    const { logWalletConnection } = useActivityLogger();
 
     const {
         connectWallet,
@@ -31,8 +37,10 @@ const WalletConnectionDialogContainer: FC = memo(() => {
         resetWalletVerification,
     } = useWallet();
 
-    const onConnect = (method: EWalletConnectionMethod) => () =>
-        connectWallet(method);
+    const onConnect = (method: EWalletConnectionMethod) => () => {
+        logWalletConnection(method);
+        return connectWallet(method);
+    };
 
     const wallets = [
         {
