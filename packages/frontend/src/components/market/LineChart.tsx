@@ -59,11 +59,11 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 autoScaleYaxis: false,
                 zoomedArea: {
                     fill: {
-                        color: themeColors.btnRingVariant400,
+                        color: themeColors.accentVariant200,
                         opacity: 0.4,
                     },
                     stroke: {
-                        color: themeColors.btnRingVariant200,
+                        color: themeColors.backgoundBlue,
                         opacity: 0.4,
                         width: 1,
                     },

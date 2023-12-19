@@ -27,10 +27,10 @@ const PlayPauseButton: FC<{
 }> = ({ isAudioPlaying, togglePlayPause, isAudioReady }) => {
     const buttonClass = isAudioPlaying
         ? "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-secondaryOrange [&>svg]:w-[26.4px]"
-        : "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-transparent border-2 border-solid border-btnRingVariant100 [&>svg]:w-[13.2px] [&>svg]:h-[15.24px] [&>svg]:fill-btnRingVariant100";
+        : "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-transparent border-2 border-solid border-accentVariant100 [&>svg]:w-[13.2px] [&>svg]:h-[15.24px] [&>svg]:fill-accentVariant100";
     const buttonTitle = isAudioPlaying
         ? "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-secondaryOrange [&>svg]:w-[26.4px]"
-        : "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-transparent border-2 border-solid border-btnRingVariant100 [&>svg]:w-[13.2px] [&>svg]:h-[15.24px] [&>svg]:fill-btnRingVariant100";
+        : "flex items-center justify-center cursor-pointer rounded-full h-9 w-9 bg-transparent border-2 border-solid border-accentVariant100 [&>svg]:w-[13.2px] [&>svg]:h-[15.24px] [&>svg]:fill-accentVariant100";
     const buttonIcon = isAudioPlaying ? <PauseSVG /> : <PlaySVG />;
 
     const onPlayPauseClick = (e: React.MouseEvent) => {
@@ -43,7 +43,7 @@ const PlayPauseButton: FC<{
             <div className="flex flex-col justify-center w-9 h-9 p-[3px] text-center">
                 <div className="bg-primary w-full">
                     <div
-                        className="float-left w-[10px] h-0.5 rounded-full bg-btnRingVariant100"
+                        className="float-left w-[10px] h-0.5 rounded-full bg-accentVariant100"
                         style={{
                             animation:
                                 "bounce 2s cubic-bezier(0.17, 0.37, 0.43, 0.67) infinite",

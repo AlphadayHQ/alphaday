@@ -220,7 +220,7 @@ export const SearchBar = <T,>({
                 props
             )}`,
         multiValue: (props) =>
-            `bg-btnBackgroundVariant1400 rounded-[8px] m-[0_0_0_5px] leading-4 p-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary ${componentClassNames?.multiValue?.(
+            `bg-backgoundBlue rounded-[8px] m-[0_0_0_5px] leading-4 p-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary ${componentClassNames?.multiValue?.(
                 props
             )}`,
         multiValueRemove: (props) =>
@@ -250,7 +250,7 @@ export const SearchBar = <T,>({
                 props
             )}`,
         menuList: (props) =>
-            `p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryVariant900 ${componentClassNames?.menuList?.(
+            `p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryFiltered ${componentClassNames?.menuList?.(
                 props
             )}`,
         option: (props) =>

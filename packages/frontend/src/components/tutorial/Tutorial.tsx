@@ -45,7 +45,7 @@ const TutorialItem: FC<ITutorialItem> = ({
                     >
                         <div
                             className={twMerge(
-                                "bg-transparent mb-[20px] animate-pulse border-[3px] border-btnRingVariant400 rounded-full",
+                                "bg-transparent mb-[20px] animate-pulse border-[3px] border-accentVariant200 rounded-full",
                                 tip.id === ETutorialTipId.ComeBack &&
                                     "border-primaryVariant100",
                                 indicator.type ===
@@ -98,7 +98,7 @@ const TutorialItem: FC<ITutorialItem> = ({
                                         <Button
                                             onClick={toggleNextTutorial}
                                             variant="secondary"
-                                            className="bg-primaryVariant900 p-[4px_12px_5px] h-[26px] fontGroup-normal"
+                                            className="bg-primaryFiltered p-[4px_12px_5px] h-[26px] fontGroup-normal"
                                         >
                                             Next
                                         </Button>

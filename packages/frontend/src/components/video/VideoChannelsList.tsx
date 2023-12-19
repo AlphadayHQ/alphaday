@@ -133,7 +133,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                         className={twMerge(
                             "fontGroup-highlightSemi  m-0 transition-all duration-[400]",
                             showAllChannels
-                                ? "text-btnRingVariant100"
+                                ? "text-accentVariant100"
                                 : "text-primary"
                         )}
                     >

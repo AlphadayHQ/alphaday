@@ -14,10 +14,6 @@
         margin-left: -12%;
         background-color: theme("colors.background");
 
-        .full-size {
-            background-color: theme("colors.backgroundVariant1500");
-        }
-
         & .fc-list-day {
             min-width: 60px;
             @apply tiny:min-w-[40px] tiny:-ml-[10%];
@@ -150,9 +146,7 @@
                         display: none;
                         cursor: pointer;
                         text-transform: capitalize;
-                        background-color: theme(
-                            "colors.btnBackgroundVariant300"
-                        );
+                        background-color: theme("colors.backgroundVariant100");
                         background-clip: padding-box;
                         .fc-daygrid-day-frame {
                             border: 1px solid theme("colors.background");
@@ -163,7 +157,7 @@
                         @apply single-col:block fontGroup-normal;
                         &:disabled {
                             background-color: theme(
-                                "colors.btnBackgroundVariant300"
+                                "colors.backgroundVariant100"
                             );
                             opacity: 0.4;
                             cursor: default;
@@ -274,13 +268,9 @@
                                         text-decoration: none;
                                     }
                                     &.now {
-                                        color: theme(
-                                            "colors.primaryVariant700"
-                                        );
+                                        color: theme("colors.primary");
                                         span {
-                                            color: theme(
-                                                "colors.primaryVariant700"
-                                            );
+                                            color: theme("colors.primary");
                                         }
                                     }
                                     span {
@@ -660,7 +650,6 @@
                         &-today {
                             background-color: theme("colors.primaryVariant300");
                             background-clip: padding-box;
-                            border-color: theme("colors.primaryVariant600");
                             .fc-daygrid-day-frame {
                                 border: 1px solid theme("colors.background");
                             }

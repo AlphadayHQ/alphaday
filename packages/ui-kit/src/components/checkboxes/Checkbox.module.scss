@@ -2,30 +2,30 @@
     stroke: var(--primary);
 
     path:nth-child(2) {
-        stroke: var(--btnRingVariant100);
+        stroke: var(--accentVariant100);
     }
 
     &:hover {
-        stroke: var(--primaryVariant400);
+        stroke: var(--primaryVariant200);
 
         path:nth-child(2) {
-            stroke: var(--btnRingVariant400);
+            stroke: var(--accentVariant200);
         }
     }
 
     &:active {
-        stroke: var(--primaryVariant500);
+        stroke: var(--primary);
 
         path:nth-child(2) {
-            stroke: var(--btnRingVariant100);
+            stroke: var(--accentVariant100);
         }
     }
 
     &.disabled {
-        stroke: var(--primaryVariant600);
+        stroke: var(--background);
 
         path:nth-child(2) {
-            stroke: var(--primaryVariant600);
+            stroke: var(--background);
         }
     }
 }

@@ -220,7 +220,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                 </div>
                 <div
                     title="Close Boards Library"
-                    className="cursor-pointer bg-btnBackgroundVariant100 rounded-full border border-solid border-borderLine flex p-1.5 hover:bg-background"
+                    className="cursor-pointer bg-backgroundVariant200 rounded-full border border-solid border-borderLine flex p-1.5 hover:bg-background"
                     tabIndex={0}
                     onClick={onToggleBoardsLib}
                     role="button"
@@ -250,7 +250,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                     tabIndex={0}
                                     onClick={handleCreateEmptyBoard}
                                     className={twMerge(
-                                        "flex justify-center items-center ml-[10px] w-5 h-5 self-center rounded-full border border-solid border-primary cursor-pointer hover:border-btnRingVariant100 hover:text-primary",
+                                        "flex justify-center items-center ml-[10px] w-5 h-5 self-center rounded-full border border-solid border-primary cursor-pointer hover:border-accentVariant100 hover:text-primary",
                                         !isAuthenticated &&
                                             "cursor-not-allowed hidden"
                                     )}

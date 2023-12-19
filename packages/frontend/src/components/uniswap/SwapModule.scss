@@ -19,7 +19,7 @@
         padding-top: 0;
         @apply fontGroup-normal;
         *:not(.subhead):not(input) {
-            &:before  {
+            &:before {
                 border-color: theme("colors.borderLine");
             }
             @apply fontGroup-normal;
@@ -28,7 +28,7 @@
     }
     [class*="Button__BaseButton"] {
         border-radius: theme("borderRadius.lg");
-        background-color: theme("colors.btnRingVariant200");
+        background-color: theme("colors.backgoundBlue");
         font-weight: bold;
         color: theme("colors.primary");
         box-shadow: none;
@@ -207,7 +207,7 @@
         [class*="CommonBases__BaseWrapper"] {
             border-radius: theme("borderRadius.lg");
             background-color: theme("colors.background");
-            border-color: theme("colors.btnRingVariant200");
+            border-color: theme("colors.backgoundBlue");
         }
     }
 

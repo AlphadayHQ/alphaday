@@ -10,7 +10,7 @@
         width: 32px;
         height: 26px;
         cursor: pointer;
-        @apply stroke-primary bg-btnBackgroundVariant1400;
+        @apply stroke-primary bg-backgoundBlue;
     }
     .price-tooltip {
         padding: 0.6em 0.8em;
@@ -134,7 +134,7 @@
                     width: 100px !important;
                     div {
                         min-width: 72px;
-                        @apply fontGroup-normal text-primaryVariant1000;
+                        @apply fontGroup-normal text-primaryVariant100;
                     }
                     div:nth-child(2) {
                         min-width: 30px;

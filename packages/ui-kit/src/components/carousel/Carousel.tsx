@@ -119,9 +119,7 @@ export const Carousel: FC<CarouselProps> = ({
                                 // eslint-disable-next-line react/no-array-index-key
                                 key={String(i)}
                                 className={twMerge(
-                                    index === i
-                                        ? "bg-primary"
-                                        : "bg-primaryVariant700",
+                                    index === i ? "bg-primary" : "bg-primary",
                                     "bg-border hover:bg-primary mx-1 h-2 w-2 cursor-pointer rounded-full transition-colors duration-300"
                                 )}
                                 onClick={() => {

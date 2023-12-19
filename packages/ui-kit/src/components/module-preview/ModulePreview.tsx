@@ -34,7 +34,7 @@ export const ModulePreview: FC<IPreview> = ({
                 className={twMerge(
                     "flex justify-center items-center max-w-[250px] max-h-[167px] border-[2px_solid] rounded-lg",
                     isMaxed ? "border-btnRingVariant1400" : "border-borderLine",
-                    selected && "border-btnRingVariant100"
+                    selected && "border-accentVariant100"
                 )}
             >
                 <div
@@ -49,18 +49,17 @@ export const ModulePreview: FC<IPreview> = ({
                     />
                     <div className="absolute bottom-[10%] right-[5%] flex justify-center items-center">
                         {count !== undefined && count > 0 && (
-                            <div className="flex justify-center items-center w-5 h-5 bg-btnRingVariant100 rounded-[10px] text-background text-center fontGroup-highlightSemi">
+                            <div className="flex justify-center items-center w-5 h-5 bg-accentVariant100 rounded-[10px] text-background text-center fontGroup-highlightSemi">
                                 {count}
                             </div>
                         )}
                         <div
                             className={twMerge(
-                                "flex justify-center items-center ml-[5px] w-[30px] h-[30px] bg-btnBackgroundVariant100 rounded-full border-[2px_solid] text-primary",
+                                "flex justify-center items-center ml-[5px] w-[30px] h-[30px] bg-backgroundVariant200 rounded-full border-[2px_solid] text-primary",
                                 count > 0
                                     ? "border-primaryVariant200"
-                                    : "border-btnRingVariant100",
-                                isMaxed &&
-                                    "bg-btnRingVariant100 text-background"
+                                    : "border-accentVariant100",
+                                isMaxed && "bg-accentVariant100 text-background"
                             )}
                         >
                             <PlusSVG width="13px" />

@@ -61,7 +61,7 @@ export const ViewTabButton: FC<ButtonProps> = ({
         >
             {children}
             {modified && (
-                <div className="bg-btnRingVariant100 h-1 w-1 rounded items-center justify-center ml-[5px]" />
+                <div className="bg-accentVariant100 h-1 w-1 rounded items-center justify-center ml-[5px]" />
             )}
             {(isHovered || isViewTabMenuOpened) && options && (
                 <ViewTabMenu

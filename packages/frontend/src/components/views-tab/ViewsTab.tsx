@@ -259,8 +259,8 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                             <ViewTabButton
                                 className={
                                     isSelectedViewModified
-                                        ? "opacity-80 hover:[&:not(.selected)]:bg-btnBackgroundVariant100"
-                                        : "opacity-40 hover:[&:not(.selected)]:bg-btnBackgroundVariant100"
+                                        ? "opacity-80 hover:[&:not(.selected)]:bg-backgroundVariant200"
+                                        : "opacity-40 hover:[&:not(.selected)]:bg-backgroundVariant200"
                                 }
                                 onClick={option.handler}
                                 selected={false}

@@ -100,7 +100,7 @@ export const CalendarTooltip: FC<ITooltipProps> = ({
                     }}
                 >
                     <div
-                        className="flex w-full text-primary items-center text-left pt-4 pr-0 pb-4 pl-3 absolute -ml-[60px] cursor-auto top-[120%] left -[50%] z-[1] justify-start bg-background border border-borderLine shadow-backgroundVariant1700 shadow-[0px_0px_35px_9px] rounded-[5px]"
+                        className="flex w-full text-primary items-center text-left pt-4 pr-0 pb-4 pl-3 absolute -ml-[60px] cursor-auto top-[120%] left -[50%] z-[1] justify-start bg-background border border-borderLine rounded-[5px]"
                         style={{
                             width,
                         }}

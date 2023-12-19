@@ -10,7 +10,7 @@ export const ItemSkeleton = () => {
                 <p className="uppercase fontGroup-supportBold mb-[5px] block text-primary">
                     <Skeleton className="max-w-[70px]" />
                 </p>
-                <h6 className="[&>a]:text-btnBackgroundVariant1800 mb-0">
+                <h6 className="[&>a]:text-backgroundVariant400 mb-0">
                     <Skeleton />
                 </h6>
             </div>

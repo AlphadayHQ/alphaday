@@ -190,7 +190,7 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                 </div>
                 <div
                     className={twMerge(
-                        "flex overflow-hidden z-[1] bg-btnBackgroundVariant400",
+                        "flex overflow-hidden z-[1]",
                         isFullSize ? `w-[calc(100%_-_500px)]` : "w-full"
                     )}
                 >

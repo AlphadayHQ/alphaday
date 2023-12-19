@@ -21,9 +21,9 @@ export const KeyValueTable: FC<IKeyValueTable> = memo(function KeyValueTable({
                         <div
                             // eslint-disable-next-line react/no-array-index-key
                             key={String(rKey)}
-                            className="[&:not(:first-child)]:text-right [&:not(:first-child)]:ml-1 [&:not(:first-child)]:text-primaryVariant800 [&_.small]:text-xs [&_.small]:text-primaryVariant800"
+                            className="[&:not(:first-child)]:text-right [&:not(:first-child)]:ml-1 [&:not(:first-child)]:text-primaryFiltered [&_.small]:text-xs [&_.small]:text-primaryFiltered"
                         >
-                            <div className="text-xs font-bold uppercase tracking-wide text-primaryVariant700">
+                            <div className="text-xs font-bold uppercase tracking-wide text-primary">
                                 {title}
                             </div>
                             <div>{value}</div>

@@ -10,21 +10,21 @@
     &:focus {
         outline: none;
     }
-    border-color: var(--btnRingVariant100);
+    border-color: var(--accentVariant100);
     color: var(--primary);
-    background-color: var(--btnBackgroundVariant100);
+    background-color: var(--backgroundVariant200);
     &:hover {
-        background-color: var(--btnBackgroundVariant400);
+        background-color: var(--backgroundVariant300);
     }
     &:active {
-        background-color: var(--btnBackgroundVariant300);
+        background-color: var(--backgroundVariant100);
     }
     &.alphaDialog {
         padding: 12px 55px;
     }
     &.disabled {
         color: var(--primaryVariant100);
-        border-color: var(--btnRingVariant200);
+        border-color: var(--backgoundBlue);
         pointer-events: none;
     }
     @apply fontGroup-highlightSemi;
@@ -89,12 +89,12 @@
         }
         &:hover {
             svg {
-                stroke: var(--primaryVariant800);
+                stroke: var(--primaryFiltered);
             }
         }
         &:active {
             svg {
-                stroke: var(--primaryVariant900);
+                stroke: var(--primaryFiltered);
             }
         }
     }
@@ -106,17 +106,17 @@
         }
         &:hover {
             svg {
-                stroke: var(--primaryVariant800);
+                stroke: var(--primaryFiltered);
             }
         }
         &:active {
             svg {
-                stroke: var(--primaryVariant1000);
+                stroke: var(--primaryVariant100);
             }
         }
     }
     &.closeWithBg {
-        background: var(--btnBackgroundVariant100);
+        background: var(--backgroundVariant200);
         border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 8px;
@@ -126,15 +126,15 @@
             stroke: var(--primaryVariant100);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
+            background: var(--backgroundVariant100);
             border: 1px solid var(--borderLine);
         }
     }
     &.notification {
-        background: var(--btnBackgroundVariant100);
+        background: var(--backgroundVariant200);
         border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 8px;
@@ -144,15 +144,15 @@
             fill: var(--white);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
+            background: var(--backgroundVariant100);
             border: 1px solid var(--borderLine);
         }
     }
     &.profile {
-        background: var(--btnBackgroundVariant100);
+        background: var(--backgroundVariant200);
         border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 7.5px;
@@ -162,16 +162,16 @@
             fill: var(--white);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
+            background: var(--backgroundVariant100);
             border: 1px solid var(--borderLine);
         }
     }
     &.trash {
         position: relative;
-        background: var(--btnBackgroundVariant100);
+        background: var(--backgroundVariant200);
         border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 20.59px;
@@ -188,7 +188,7 @@
             stroke: var(--primaryVariant100);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
             .text {
                 opacity: 1;
             }
@@ -205,12 +205,12 @@
         }
         &:hover {
             svg {
-                fill: var(--btnRingVariant100);
+                fill: var(--accentVariant100);
             }
         }
         &:active {
             svg {
-                fill: var(--btnBackgroundVariant1400);
+                fill: var(--backgoundBlue);
             }
         }
     }
@@ -226,10 +226,10 @@
             stroke: var(--primary);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
+            background: var(--backgroundVariant100);
             border: 1px solid var(--borderLine);
         }
     }
@@ -287,12 +287,12 @@
 .tabsButtonOpen {
     &.small {
         color: var(--primary);
-        border-color: var(--btnBackgroundVariant1400);
-        background-color: var(--btnBackgroundVariant1500);
+        border-color: var(--backgoundBlue);
+        background-color: var(--backgroundVariant100);
     }
     &.extraSmall {
-        border-color: var(--btnBackgroundVariant1400);
-        background-color: var(--btnBackgroundVariant1500);
+        border-color: var(--backgoundBlue);
+        background-color: var(--backgroundVariant100);
     }
     .tabButton {
         fill: var(--primary);

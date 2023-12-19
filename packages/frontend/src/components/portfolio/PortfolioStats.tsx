@@ -232,7 +232,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                             {showBalance &&
                                                 totalValue &&
                                                 ethPrice && (
-                                                    <span className="fontGroup-normal mr-[5px] text-primaryVariant500">
+                                                    <span className="fontGroup-normal mr-[5px] text-primary">
                                                         ETH
                                                     </span>
                                                 )}
