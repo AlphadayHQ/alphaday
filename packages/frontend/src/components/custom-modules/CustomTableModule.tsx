@@ -11,7 +11,7 @@ import CONFIG from "src/config";
 import { CompactTableRow, TableHeader, TableRow } from "./TableComponents";
 
 const { WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
-const HEADER_HEIGHT = 31;
+const HEADER_HEIGHT = 22;
 // allow standard layout for tables of up to STD_LAYOUT_MAX_SIZE columns
 const STD_LAYOUT_MAX_SIZE = 4;
 
