@@ -39,7 +39,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
         date: "fontGroup-mini min-w-[50px] text-primaryVariant100 mr-[5px]",
         title: "fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0",
         content:
-            "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlightSemi prose-h3:fontGroup-highlightSemi prose-h5:fontGroup-highlightSemi prose-a:secondaryOrange break-word m-0 text-primary [&>p>a]:text-secondaryOrange",
+            "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlightSemi prose-h3:fontGroup-highlightSemi prose-h5:fontGroup-highlightSemi break-word m-0 text-primary [&>p>a]:text-secondaryOrange50 [&>p>a]:hover:underline",
         readMore:
             "fontGroup-highlightSemi flex justify-end text-primaryVariant100",
         lastLine: "lastLine fontGroup-mini flex text-primaryVariant100 mt-2",
