@@ -8,7 +8,7 @@ import { IModuleContainer } from "src/types";
 
 const DEFAULT_TARGET_DATE = moment().unix();
 
-const CountdownContainer: FC<IModuleContainer<TCounterData[] | null>> = ({
+const CountdownContainer: FC<IModuleContainer<TCounterData[]>> = ({
     moduleData,
 }) => {
     const isBeaconWidget = moduleData.widget.slug === "merge_countdown_widget";
