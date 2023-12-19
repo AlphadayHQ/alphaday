@@ -14,8 +14,8 @@ const FaqContainer: FC<IModuleContainer<TItem[][]>> = ({ moduleData }) => {
     );
 
     // TODO(v-almonacid): remove this block when format_structure is removed from db model
-    const { data } = moduleData.widget.format_structure;
-    if (Array.isArray(data) && data.length > 0) {
+    const legacyData = moduleData.widget.format_structure?.data;
+    if (Array.isArray(legacyData) && legacyData.length > 0) {
         Logger.warn(
             `FaqContainer: widget ${moduleData.widget.name} contains data in format_structure which has been deprecated`
         );

@@ -7,7 +7,7 @@ const MapContainer: FC<IModuleContainer<TItem[]>> = ({ moduleData }) => {
     const [data] = moduleData.widget.custom_data ?? [];
 
     // TODO(v-almonacid): remove this block when format_structure is removed from db model
-    const legacyData = moduleData.widget.format_structure.data;
+    const legacyData = moduleData.widget.format_structure?.data;
     if (Array.isArray(legacyData) && legacyData.length > 0) {
         Logger.warn(
             `MapContainer: widget ${moduleData.widget.name} contains data in format_structure which has been deprecated`

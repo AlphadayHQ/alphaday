@@ -8,7 +8,7 @@ import { IModuleContainer } from "src/types";
 
 const DEFAULT_TARGET_DATE = moment().unix();
 
-const CountdownContainer: FC<IModuleContainer<TCounterData[]>> = ({
+const CountdownContainer: FC<IModuleContainer<TCounterData[] | null>> = ({
     moduleData,
 }) => {
     const isBeaconWidget = moduleData.widget.slug === "merge_countdown_widget";
@@ -36,7 +36,7 @@ const CountdownContainer: FC<IModuleContainer<TCounterData[]>> = ({
     }
 
     // TODO(v-almonacid): remove this block when format_structure is removed from db model
-    const { data: legacyData } = moduleData.widget.format_structure;
+    const legacyData = moduleData.widget.format_structure?.data;
     if (Array.isArray(legacyData) && legacyData.length > 0) {
         Logger.warn(
             `CountdownContainer: widget ${moduleData.widget.name} contains data in format_structure which has been deprecated`

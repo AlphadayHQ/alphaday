@@ -43,7 +43,7 @@ export type TRemoteColumnData = {
 export type TRemoteFormatStructure<T> = {
     data?: T;
     columns?: TRemoteFormatStructureColumns[];
-};
+} | null;
 
 export type TRemoteColumn =
     | "string"
