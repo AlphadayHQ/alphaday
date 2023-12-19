@@ -229,8 +229,8 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                             Remove Widget
                         </div>
                     </div>
-                    <div className="border-borderLine m-0 h-0 w-[200px] overflow-hidden border-t border-solid" />
-                    <div className="flex cursor-pointer items-center p-3 pt-[18px]">
+                    <div className="border-borderLine m-0 h-0 w-[184px] mt-2.5 overflow-hidden border-t border-solid mx-auto" />
+                    <div className="flex cursor-pointer items-center p-3 pt-4">
                         <InfoSVG
                             style={{ minWidth: "15px", marginTop: "2.5px" }}
                             className="self-start"
