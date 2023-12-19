@@ -41,6 +41,7 @@ const handleBalanceFigures = (val: string, show: boolean): string => {
 };
 
 const DEFAULT_ASSET_LIST_HEIGHT = 200;
+const PADDING_OFFSET = 20;
 
 const PortfolioStats: FC<IPortfolioStats> = ({
     showAllAssets,
@@ -180,7 +181,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 
     const assetListHeight =
         (chartRef.current
-            ? widgetHeight - chartRef.current.offsetHeight + 20
+            ? widgetHeight - chartRef.current.offsetHeight + PADDING_OFFSET
             : DEFAULT_ASSET_LIST_HEIGHT) -
         2 * 53;
 

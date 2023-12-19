@@ -67,7 +67,9 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
     const onTabOptionChange = (value: string) => {
         const optionItem = TVL_NAV_ITEMS.find((item) => item.value === value);
         if (optionItem === undefined) {
-            Logger.debug("TvlModule::Nav option item not found");
+            Logger.debug(
+                "TvlModule::onTabOptionsChange: Nav option item not found"
+            );
             return;
         }
         onChangeProjectType(optionItem.value);

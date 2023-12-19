@@ -107,7 +107,7 @@ const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [nextPage]);
 
-    const onChangeProjectType = (projectType: ETVLItemPreference) => {
+    const handleChangeProjectType = (projectType: ETVLItemPreference) => {
         reset();
         dispatch(
             setSelectedTvlProjectType({
@@ -125,7 +125,7 @@ const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
             widgetHeight={widgetHeight}
             handlePaginate={handleNextPage}
             selectedProjectType={selectedProjectType}
-            onChangeProjectType={onChangeProjectType}
+            onChangeProjectType={handleChangeProjectType}
         />
     );
 };

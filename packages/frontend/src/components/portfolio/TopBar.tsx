@@ -3,13 +3,13 @@ import { Switch, TabButton } from "@alphaday/ui-kit";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 import { EPortfolioType } from "./types";
 
-interface IAssetSwitch {
+interface ITopBarProps {
     switchPortfolioType: () => void;
     portfolioType: EPortfolioType;
     handleShowEnterAddress: () => void;
 }
 
-const TopBar: FC<IAssetSwitch> = ({
+const TopBar: FC<ITopBarProps> = ({
     switchPortfolioType,
     portfolioType,
     handleShowEnterAddress,
