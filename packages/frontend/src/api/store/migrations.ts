@@ -1,6 +1,10 @@
 import { PersistedState, MigrationManifest } from "redux-persist";
+import { EWidgetSettingsRegistry } from "src/constants";
+import { TRemoteTagReadOnly, TRemoteUserViewWidget } from "../services";
+import { TCachedView, TUserView } from "../types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
+import { IViewsState } from "./slices/views";
 
 type PersistedRootState = (PersistedState & RootState) | undefined;
 
@@ -26,12 +30,43 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV101 = PersistedRootState;
+type RootStateV102 = PersistedRootState;
+
+type TCachedViewV101 = Omit<TCachedView, "data"> & {
+    data: Omit<TUserView, "widgets"> & {
+        widgets: Omit<TRemoteUserViewWidget, "settings"> &
+            {
+                settings: {
+                    widget_setting: {
+                        setting: {
+                            slug: EWidgetSettingsRegistry;
+                            setting_type: string;
+                        };
+                        sort_order: number;
+                        default_toggle_value: boolean | null;
+                    };
+                    tags: TRemoteTagReadOnly[];
+                    toggle_value: boolean | null;
+                }[];
+            }[];
+    };
+};
+
+type RootStateV101 =
+    | (PersistedState &
+          (Omit<RootState, "views"> & {
+              views: Omit<IViewsState, "viewsCache" | "sharedViewsCache"> & {
+                  viewsCache: Record<number, TCachedViewV101> | undefined;
+                  sharedViewsCache: Record<number, TCachedViewV101> | undefined;
+              };
+          }))
+    | undefined;
 type RootStateV100 = RootStateV101;
 
 type TMigrations = MigrationManifest & {
     100: (s: PersistedState) => RootStateV100;
     101: (s: RootStateV100) => RootStateV101;
+    102: (s: RootStateV101) => RootStateV102 | undefined;
 };
 
 /**
@@ -88,6 +123,22 @@ const migrations: TMigrations = {
          * this migration is needed because widgets using format_structure
          * were migrated (on the BE DB) to use custom_data.
          * The FE storage migration is needed to ensure the widgets are correctly updated
+         */
+        if (!s) return undefined;
+        return {
+            ...s,
+            views: {
+                selectedViewId: undefined,
+                prevSelectedViewId: undefined,
+                viewsCache: undefined,
+                sharedViewsCache: undefined,
+                subscribedViewsCache: undefined,
+            },
+        };
+    },
+    102: (s: RootStateV101): RootStateV102 => {
+        /**
+         * Remove view state because widget settings have been
          */
         if (!s) return undefined;
         return {
