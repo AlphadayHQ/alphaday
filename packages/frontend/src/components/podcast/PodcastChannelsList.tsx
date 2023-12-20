@@ -147,7 +147,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
                 className="flex overflow-y-hidden overflow-x-scroll"
             >
-                <div className="min-w-4 h-5 self-center" />
+                <div className="min-w-[16px] h-5 self-center" />
                 {!hideLeftPan && (
                     <span
                         className={twMerge(
@@ -190,7 +190,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                         ))}
                     </>
                 )}
-                <div className="min-w-4 h-5 self-center" />
+                <div className="min-w-[16px] h-5 self-center" />
                 {!hideRightPan && (
                     <span
                         className={twMerge(

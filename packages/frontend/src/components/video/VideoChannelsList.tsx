@@ -146,7 +146,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
                 className="flex overflow-y-hidden overflow-x-scroll"
             >
-                <div className="min-w-4 h-5 self-center" />
+                <div className="min-w-[16px] h-5 self-center" />
                 {!hideLeftPan && (
                     <span
                         className={twMerge(
@@ -189,7 +189,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                         ))}
                     </>
                 )}
-                <div className="min-w-4 h-5 self-center" />
+                <div className="min-w-16px[] h-5 self-center" />
                 {!hideRightPan && (
                     <span
                         className={twMerge(
@@ -206,7 +206,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                 )}
             </div>
             {!isLoadingChannels && (
-                <div className="h-[436px] p-4 m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-borderLine">
+                <div className="h-[436px] p-4 mt-3.5 m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-borderLine">
                     <p className="fontGroup-highlightSemi uppercase text-primary m-0 mb-[10px]">
                         All Channels
                     </p>{" "}
