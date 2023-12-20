@@ -129,7 +129,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
             data-testid="views-tab"
             className={twMerge(
                 "h-auto w-screen bg-background two-col:max-h-[44px]",
-                mobileOpen && "border-b"
+                mobileOpen && "border-b-2 border-b-background"
             )}
         >
             <div className="flex gap-1.5 h-full py-0 px-3 two-col:px-4 overflow-auto [&>.tabButton]:max-h-10 two-col:w-full two-col:flex two-col:justify-start">
