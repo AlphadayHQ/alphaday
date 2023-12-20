@@ -43,7 +43,7 @@ export const TabsBar: FC<{
                     />
                 </span>
             )}
-            <div className="w-full">
+            <div className="w-full pt-2">
                 <div className="block over">
                     <div className="border-b border-borderLine overflow-hidden">
                         <nav

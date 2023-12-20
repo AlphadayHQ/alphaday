@@ -46,7 +46,7 @@ export const HeaderNavRight: FC<{
     return (
         <div
             className={twMerge(
-                "single-col:py-0 single-col:px-[15px] two-col:p-0 order-2 -mt-0.5 flex items-center justify-end py-0 pl-2.5 pr-5",
+                "single-col:py-0 single-col:px-4 two-col:p-0 order-2 -mt-0.5 flex items-center justify-end py-0 pl-2.5 pr-5",
                 className
             )}
         >

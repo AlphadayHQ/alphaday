@@ -52,7 +52,7 @@ const MarketsList: FC<IMarketsList> = ({
 
     return (
         <div className="w-full transition-[height] duration-[400ms] relative cursor-pointer">
-            <div className="flex mx-2 overflow-x-auto overflow-y-hidden px-0 py-2">
+            <div className="flex mx-2 overflow-x-auto overflow-y-hidden px-0 pb-2">
                 <TabsBar
                     options={coinTabs}
                     onChange={handleTabChange}
@@ -68,7 +68,7 @@ const MarketsList: FC<IMarketsList> = ({
                 {pinnedCoins.length > 0 && (
                     <div className="w-[2.5px] ml-1.5 mr-3 bg-borderLine rounded-sm shrink-0" />
                 )}
-                <div className="min-w-[15px] h-5 self-center" />
+                <div className="min-w-4 h-5 self-center" />
             </div>
         </div>
     );

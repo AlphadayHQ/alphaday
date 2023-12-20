@@ -58,11 +58,11 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
     return (
         <div className="relative transition-[height] duration-300 cursor-pointer">
             <div
-                className="flex items-center h-[43px] overflow-y-hidden overflow-x-scroll py-2 px-0"
+                className="flex items-center h-[43px] overflow-y-hidden overflow-x-scroll pb-2 px-0"
                 id="portfolioAddrContainer"
                 data-testid="portfolio-address-tab"
             >
-                <div className="flex w-full pt-[3px] m-0 px-2">
+                <div className="flex w-full m-0 px-2">
                     <TabsBar
                         options={accountTabs}
                         onChange={handleTabChange}

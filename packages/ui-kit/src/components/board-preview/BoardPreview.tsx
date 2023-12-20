@@ -113,7 +113,7 @@ export const BoardPreview: FC<IPreview> = ({
                                 tabIndex={0}
                                 onClick={handleEditClick}
                             >
-                                <EditSVG className="h-[15px]" />
+                                <EditSVG className="h-4" />
                             </div>
                         )}
                         {onRemove && (
@@ -124,7 +124,7 @@ export const BoardPreview: FC<IPreview> = ({
                                 onClick={handleRemoveClick}
                                 title="Remove board"
                             >
-                                <TrashSVG className="h-[15px] text-inherit" />
+                                <TrashSVG className="h-4 text-inherit" />
                             </div>
                         )}
                         {onPin && (

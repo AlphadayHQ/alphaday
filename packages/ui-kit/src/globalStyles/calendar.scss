@@ -74,7 +74,7 @@
                     z-index: 1;
                     width: calc(100% - 2px);
 
-                    @apply single-col:justify-between two-col:p-[0_15px];
+                    @apply single-col:justify-between two-col:py-0 px-4;
                 }
                 .fc {
                     &:first-child {
@@ -342,7 +342,7 @@
                                 @apply fontGroup-support;
                             }
                             &-title {
-                                padding: 0px 0 15px 0px;
+                                padding: 0px 0 16px 0px;
                                 border-bottom: 1px solid
                                     theme("colors.borderLine");
                                 box-sizing: border-box;
@@ -465,7 +465,7 @@
                     display: flex;
                     justify-content: flex-end;
                     padding: 0 10px;
-                    @apply single-col:justify-between two-col:p-[0_15px];
+                    @apply single-col:justify-between two-col:p-[0_16px];
                 }
                 button {
                     height: 32px;
@@ -474,7 +474,7 @@
                     border: 1px solid theme("colors.borderLine");
                     color: theme("colors.primary") !important;
                     box-shadow: none;
-                    padding: 0 15px;
+                    padding: 0 16px;
                     display: flex;
                     align-items: center;
                     text-transform: capitalize;

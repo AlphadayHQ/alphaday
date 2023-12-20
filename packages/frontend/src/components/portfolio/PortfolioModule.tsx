@@ -104,7 +104,7 @@ const Portfolio: FC<IPortfolio> = ({
                         {selectedAddress ? (
                             <>
                                 {showVerify && (
-                                    <div className="flex my-[15px] mx-auto justify-center">
+                                    <div className="flex my-4 mx-auto justify-center">
                                         <Button
                                             variant="primaryXL"
                                             onClick={onVerifyWallet}
@@ -160,7 +160,7 @@ const Portfolio: FC<IPortfolio> = ({
                                 )}
                             </>
                         ) : (
-                            <div className="flex my-[15px] mx-auto justify-center">
+                            <div className="flex my-4 mx-auto justify-center">
                                 <div className="flex w-[315px] justify-between tiny:scale-95">
                                     <Button
                                         variant="primaryXL"

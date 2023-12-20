@@ -51,7 +51,7 @@ const EventDetails: FC<IDetails> = ({
         return (
             <div className="h-full bg-background">
                 <div
-                    className="relative pt-[10px] pr-[15px] pb-5 pl-5 border-b-0 flex flex-col rounded-tl rounded-tr"
+                    className="relative pt-[10px] pr-4 pb-5 pl-5 border-b-0 flex flex-col rounded-tl rounded-tr"
                     key={event?.id}
                 >
                     <p className="flex mx-0 mb-[10px] text-primaryVariant100 fontGroup-normal">

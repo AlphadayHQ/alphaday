@@ -63,7 +63,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
     }
 
     return (
-        <div className="w-full h-full p-[15px] bg-background">
+        <div className="w-full h-full p-4 bg-background">
             <div
                 className="w-full h-full flex flex-col items-start"
                 ref={setVideoPlayerWrapRef}

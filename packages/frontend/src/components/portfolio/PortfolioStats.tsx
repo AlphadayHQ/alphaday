@@ -220,7 +220,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                     </h3>
                                 )}
                                 {portfolioData && ethPrice && (
-                                    <div className="mb-[15px] flex flex-wrap">
+                                    <div className="mb-4 flex flex-wrap">
                                         <p className="fontGroup-normal mb-0 text-success">
                                             {handleBalanceFigures(
                                                 formatNumber({

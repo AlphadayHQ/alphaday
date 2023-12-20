@@ -6,7 +6,7 @@ import styles from "./Button.module.scss";
 const buttonVariants = tv({
     base: twMerge(
         styles.button,
-        "inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-[15px] pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]"
+        "inline-flex h-[34px] w-max cursor-pointer select-none items-center justify-center rounded-[10px] border border-solid px-4 pb-[7px] pt-1 text-center align-middle leading-normal tracking-[0.2px]"
     ),
     variants: {
         variant: {

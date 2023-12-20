@@ -45,7 +45,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
         lastLine: "lastLine fontGroup-mini flex text-primaryVariant100 mt-2",
         spacer: "mx-[7px] my-0 self-center",
         bookmark: "block cursor-pointer mt-px",
-        img: "w-[15px] h-[15px] mr-[5px] rounded-[100px]",
+        img: "w-4 h-4 mr-[5px] rounded-[100px]",
     };
     const variants = {
         news: { ...defaults, date: twMerge(defaults.date, "pt-[1.5px]") },

@@ -26,7 +26,7 @@ interface IVideoModule {
     setPreferredChannelIds: (channels: TVideoChannel[]) => void;
 }
 
-const SWITCH_HEIGHT = 30;
+const SWITCH_HEIGHT = 38;
 const CHANNELS_LIST_HEIGHT = 149;
 const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;
 

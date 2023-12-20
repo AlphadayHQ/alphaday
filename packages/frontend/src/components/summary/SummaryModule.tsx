@@ -63,13 +63,13 @@ const SummaryModule: FC<ISummaryModule> = ({ isLoadingSummary, summary }) => {
 
     return (
         <div className="h-full">
-            <h6 className="px-5 pt-3 mb-0">
+            <h6 className="px-3 pt-3 mb-0">
                 <p className="fontGroup-highlight">
                     Briefing for{" "}
                     {moment(summary.updated_at).format("Do MMMM, YYYY")}
                 </p>
             </h6>
-            <div className="p-5 pt-0">{getHighLights(summary)}</div>
+            <div className="pb-5 px-3 pt-0">{getHighLights(summary)}</div>
         </div>
     );
 };

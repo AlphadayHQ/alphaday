@@ -268,7 +268,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                 </BaseModuleHeader>
             </div>
             <BaseModuleBody>
-                <ScrollBar className="shrink p-[15px]">
+                <ScrollBar className="shrink p-4">
                     {settings?.map((group) => {
                         // eslint-disable-next-line @typescript-eslint/naming-convention
                         const { widget_setting, tags } = group;

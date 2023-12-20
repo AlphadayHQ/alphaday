@@ -298,26 +298,30 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                         </div>
                         <div className="w-full pr-4 pl-6 pb-0">
                             {/* pb-1 is used here to align the boards list to the custom boards list */}
-                            <div className="flex pb-1">
-                                <TabsBar
-                                    options={tabOptions}
-                                    onChange={(name) => {
-                                        onCategorySelect(name);
-                                    }}
-                                    selectedOption={
-                                        selectedCategory
-                                            ? {
-                                                  label: selectedCategory,
-                                                  value: selectedCategory,
-                                              }
-                                            : DEFAULT_TAB_OPTION
-                                    }
-                                />
-                                <SortBy
-                                    selected={sortByKey}
-                                    onSortBy={onSortBy}
-                                    options={getSortOptionsArray()}
-                                />
+                            <div className="flex  pb-1">
+                                <div className="-mt-1 w-full">
+                                    <TabsBar
+                                        options={tabOptions}
+                                        onChange={(name) => {
+                                            onCategorySelect(name);
+                                        }}
+                                        selectedOption={
+                                            selectedCategory
+                                                ? {
+                                                      label: selectedCategory,
+                                                      value: selectedCategory,
+                                                  }
+                                                : DEFAULT_TAB_OPTION
+                                        }
+                                    />
+                                </div>
+                                <div className="pt-1">
+                                    <SortBy
+                                        selected={sortByKey}
+                                        onSortBy={onSortBy}
+                                        options={getSortOptionsArray()}
+                                    />
+                                </div>
                             </div>
                             <div className="h-[248px] mt-3">
                                 <ScrollBar onScroll={handleScrollEvent}>

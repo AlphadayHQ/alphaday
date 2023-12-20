@@ -53,7 +53,7 @@ export const Dialog: FC<IDialog> = ({
             onClose={onClose}
             {...restProps}
         >
-            <div className="flex justify-between items-center border-0 p-[15px]">
+            <div className="flex justify-between items-center border-0 p-4">
                 <h6 className="text-primary self-center leading-6 fontGroup-highlightSemi !text-sm m-0">
                     {title}
                 </h6>
@@ -70,10 +70,10 @@ export const Dialog: FC<IDialog> = ({
                     </button>
                 )}
             </div>
-            <div className="flex p-[15px]">{children}</div>
+            <div className="flex p-4">{children}</div>
 
             {(showSaveButton || showCloseButton) && (
-                <div className="flex justify-center border-0 pb-[15px]">
+                <div className="flex justify-center border-0 pb-4">
                     {showSaveButton && (
                         <Button
                             data-testid="alpha-dialog-action-button"

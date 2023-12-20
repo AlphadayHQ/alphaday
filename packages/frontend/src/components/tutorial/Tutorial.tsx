@@ -73,7 +73,7 @@ const TutorialItem: FC<ITutorialItem> = ({
                                 tabIndex={0}
                             >
                                 {tip?.title && (
-                                    <div className="flex justify-between mb-[15px] fontGroup-highlightSemi uppercase">
+                                    <div className="flex justify-between mb-4 fontGroup-highlightSemi uppercase">
                                         <span>{tip.title}</span>
                                         <span>{tipCount}</span>
                                     </div>

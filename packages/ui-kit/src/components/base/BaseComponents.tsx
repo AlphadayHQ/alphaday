@@ -48,7 +48,7 @@ export const BaseModuleHeader = forwardRef<
         <div
             ref={ref}
             className={twMerge(
-                "border-b-background bg-background text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] pl-[15px] pr-[9px] bg-blend-soft-light",
+                "border-b-background bg-background text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] pl-3 pr-[3px] bg-blend-soft-light",
                 className
             )}
         >
@@ -70,8 +70,8 @@ export const BaseModuleOptionsFooter = forwardRef<
                     title="Removes this widget from the current board"
                     className="hover:border-borderLine focus:border-borderLine border-borderLine"
                 >
-                    <TrashSVG className="w-[15px] fill-[inherit]" /> &nbsp;
-                    Remove Widget
+                    <TrashSVG className="w-4 fill-[inherit]" /> &nbsp; Remove
+                    Widget
                 </Button>
             </div>
         </div>

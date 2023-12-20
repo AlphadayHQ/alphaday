@@ -154,7 +154,7 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
 
     return (
         <div ref={parentRef}>
-            <div className="pl-[15px] py-3">
+            <div className="pl-4 py-3">
                 <div className="flex justify-between items-center tiny:flex-col mb-[10px]">
                     {isOver &&
                         renderLayer(

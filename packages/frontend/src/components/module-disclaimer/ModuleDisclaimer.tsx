@@ -34,7 +34,7 @@ const ModuleDisclaimer: FC<IProps> = ({
             }}
         >
             <ScrollBar>
-                <div className="relative flex flex-col flex-wrap items-center justify-center m-[15px] mt-3 mr-2.5 text-justify prose-h4:fontGroup-highlight ">
+                <div className="relative flex flex-col flex-wrap items-center justify-center m-4 mt-3 mr-2.5 text-justify prose-h4:fontGroup-highlight ">
                     <ReactMarkdown remarkPlugins={PLUGINS} linkTarget="_blank">
                         {disclaimer}
                     </ReactMarkdown>
@@ -42,7 +42,7 @@ const ModuleDisclaimer: FC<IProps> = ({
                         <Button
                             onClick={onAccept}
                             variant="primaryXL"
-                            className="ml-[15px]"
+                            className="ml-4"
                         >
                             Accept
                         </Button>
@@ -50,7 +50,7 @@ const ModuleDisclaimer: FC<IProps> = ({
                             <Button
                                 onClick={onAccept}
                                 variant="primaryXL"
-                                className="ml-[15px]"
+                                className="ml-4"
                             >
                                 Decline
                             </Button>

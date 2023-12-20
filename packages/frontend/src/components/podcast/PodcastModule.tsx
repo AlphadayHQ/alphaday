@@ -33,7 +33,7 @@ interface IPodcastModule {
     setPreferredChannelIds: (channels: TPodcastChannel[]) => void;
 }
 
-const SWITCH_HEIGHT = 30;
+const SWITCH_HEIGHT = 38;
 const AUDIO_PLAYER_HEIGHT = 52;
 const CHANNELS_LIST_HEIGHT = 157;
 const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;

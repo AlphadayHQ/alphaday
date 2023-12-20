@@ -99,7 +99,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 height: showAllChannels ? "600px" : `${channelsHeight}px`,
             }}
         >
-            <div className="flex w-full justify-between pt-[10px] px-[15px] pb-3 cursor-pointer">
+            <div className="flex w-full justify-between pt-[10px] px-4 pb-3 cursor-pointer">
                 <div
                     role="button"
                     tabIndex={-1}
@@ -147,7 +147,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
                 className="flex overflow-y-hidden overflow-x-scroll"
             >
-                <div className="min-w-[15px] h-5 self-center" />
+                <div className="min-w-4 h-5 self-center" />
                 {!hideLeftPan && (
                     <span
                         className={twMerge(
@@ -190,7 +190,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                         ))}
                     </>
                 )}
-                <div className="min-w-[15px] h-5 self-center" />
+                <div className="min-w-4 h-5 self-center" />
                 {!hideRightPan && (
                     <span
                         className={twMerge(

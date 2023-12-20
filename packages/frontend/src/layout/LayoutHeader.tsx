@@ -106,13 +106,13 @@ const LayoutHeader: FC<IProps> = ({
                                     {/* <NotificationDropdownContainer
                                         ml={[
                                             "8px",
-                                            "15px",
-                                            "15px",
-                                            "15px",
+                                            "16px",
+                                            "16px",
+                                            "16px",
                                             "30px",
                                         ]}
                                     /> */}
-                                    <HeaderNavElement className="single-col:ml-1 ml-[8px] mr-[15px]">
+                                    <HeaderNavElement className="single-col:ml-1 ml-[8px] mr-4">
                                         <ProfileDropdownContainer />
                                     </HeaderNavElement>
                                 </HeaderNavRight>
@@ -157,7 +157,7 @@ const LayoutHeader: FC<IProps> = ({
                                     <HeaderSearchContainer />
                                 </div>
 
-                                <h3 className="two-col:pl-[15px] two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
+                                <h3 className="two-col:pl-4 two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
                                     Boards
                                 </h3>
 
@@ -179,9 +179,9 @@ const LayoutHeader: FC<IProps> = ({
                             {width > breakpoints.TwoColMinWidth && (
                                 <>
                                     {/* <NotificationDropdownContainer
-                                            ml={["8px", "1px", "1px", "15px"]}
+                                            ml={["8px", "1px", "1px", "16px"]}
                                         /> */}
-                                    <HeaderNavElement className="single-col:ml-[15px] ml-[8px]">
+                                    <HeaderNavElement className="single-col:ml-4 ml-[8px]">
                                         <ProfileDropdownContainer />
                                     </HeaderNavElement>
                                 </>

@@ -199,10 +199,10 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 role="button"
                                 tabIndex={0}
                                 className={twMerge(
-                                    "flex flex-row items-center p-[16px_15px_16px_25px] text-primaryVariant100 mx-2 rounded-lg",
+                                    "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg",
                                     !selectedCategory &&
                                         "bg-backgoundBlue text-primary fontGroup-highlightSemi",
-                                    "hover:text-primary cursor-pointer [&>svg]:mr-[15px] [&>svg]:w-[18px] [&>svg]:h-[18px]"
+                                    "hover:text-primary cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]"
                                 )}
                                 onClick={() => handleSelectCategory(undefined)}
                             >
@@ -218,7 +218,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                         role="button"
                                         tabIndex={0}
                                         className={twMerge(
-                                            "flex flex-row items-center p-[16px_15px_16px_25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-[15px] [&>svg]:w-[18px] [&>svg]:h-[18px]",
+                                            "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
                                             selectedCategory === cat.slug &&
                                                 "bg-backgoundBlue text-primary fontGroup-highlightSemi"
                                         )}

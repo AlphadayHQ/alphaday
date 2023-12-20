@@ -149,7 +149,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                 role="button"
                 tabIndex={0}
             >
-                <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px]">
+                <div className="flex flex-row flex-[1_auto] py-[10px] px-4">
                     <div className="flex flex-row flex-1 items-center">
                         <div className="flex flex-row mr-1 flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-start">
                             <div className="absolute inset-0 bg-background" />
@@ -188,7 +188,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                     </div>
                 </div>
                 <div className="flex flex-row flex-[1_auto] p-0">
-                    <div className="flex flex-row flex-1 items-center justify-center px-[15px]">
+                    <div className="flex flex-row flex-1 items-center justify-center px-4">
                         <div className="flex flex-row flex-1 items-center justify-start">
                             <div className="flex flex-col items-start">
                                 <span className="fontGroup-supportBold text-primaryVariant100 uppercase">
@@ -260,7 +260,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
      */
     return (
         <div
-            className="flex flex-row flex-[1_auto] py-[10px] px-[15px]"
+            className="flex flex-row flex-[1_auto] py-[10px] px-4"
             onClick={handleOnClick(projectData)}
             role="button"
             tabIndex={0}
@@ -388,7 +388,7 @@ interface IChainlTvlProps {
 export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
     return (
         <div
-            className="flex flex-row flex-[1_auto] py-[10px] px-[15px]"
+            className="flex flex-row flex-[1_auto] py-[10px] px-4"
             onClick={handleOnClick(projectData)}
             role="button"
             tabIndex={0}

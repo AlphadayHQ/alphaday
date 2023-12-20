@@ -50,7 +50,7 @@
         }
     }
     .line-chart {
-        margin-top: -15px;
+        margin-top: -16px;
         .apexcharts-grid-borders {
             line {
                 @apply stroke-[1.5px] stroke-borderLine;
@@ -58,7 +58,7 @@
         }
 
         .apexcharts-inner {
-            margin-top: -15px;
+            margin-top: -16px;
             & > div {
                 margin-left: -10px;
             }
