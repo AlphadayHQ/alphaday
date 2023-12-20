@@ -264,7 +264,11 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                     <PlusSVG />
                                 </span>
                             </div>
-                            <div className="h-[248px] mt-3">
+                            <div
+                                className={`${
+                                    isAuthenticated ? "h-[252px]" : ""
+                                } mt-3`}
+                            >
                                 <ScrollBar onScroll={handleScrollEvent}>
                                     <div className="flex box-border flex-row flex-wrap w-full gap-5">
                                         {customBoards.length === 0 &&
