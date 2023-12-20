@@ -34,12 +34,12 @@ export const TabsBar: FC<{
     return (
         <>
             {hideLeftPan === false && (
-                <span className="block absolute center top-[calc(50%_-_16.5px)] left-1.5">
+                <span className="block absolute center top-[calc(50%_-_12px)] left-1.5">
                     <IconButton
                         title="Pan Coins Left"
                         variant="leftArrow"
                         onClick={() => handleClickScroll?.()}
-                        className="!p-1"
+                        className="!p-0.5 [&_svg]:!w-4"
                     />
                 </span>
             )}
@@ -102,12 +102,12 @@ export const TabsBar: FC<{
                 </div>
             </div>
             {hideRightPan === false && (
-                <span className="block absolute center top-[calc(50%_-_16.5px)] left-auto right-1.5">
+                <span className="block absolute center top-[calc(50%_-_12px)] left-auto right-1.5">
                     <IconButton
                         title="Pan Coins Right"
                         variant="rightArrow"
                         onClick={() => handleClickScroll?.(true)}
-                        className="!p-1"
+                        className="!p-0.5 [&_svg]:!w-4"
                     />
                 </span>
             )}
