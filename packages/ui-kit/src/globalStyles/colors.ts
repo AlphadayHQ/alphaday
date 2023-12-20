@@ -1,6 +1,6 @@
 export const darkColors = {
     white: "var(--alpha-white)", // #FFFFFF -- white
-    primary: "var(--alpha-light)", // #f2f2f2 -- primary light
+    primary: "var(--alpha-primary)", // #f2f2f2 -- primary light
     primaryFiltered: "var(--alpha-primary-filtered)", // rgba(242, 242, 242, 0.7) -- primary light opacity 0.9
     primaryVariant100: "var(--alpha-primary-100)", // #849399 -- primary dark grey
     primaryVariant200: "var(--alpha-primary-200)", // #84899a -- primary darker grey
