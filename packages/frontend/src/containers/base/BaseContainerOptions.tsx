@@ -89,7 +89,7 @@ const CoinOption: FC<OptionProps<TOptions, true> & { coins?: TCoin[] }> = ({
 };
 
 const TagsOptions: FC<ITagsOptions> = ({
-    setting,
+    widget_setting,
     onIncludeTag,
     onRemoveTag,
     tags,
@@ -117,9 +117,14 @@ const TagsOptions: FC<ITagsOptions> = ({
         );
 
     return (
-        <div key={setting.slug} className="setting" title={title}>
+        <div
+            key={widget_setting.setting.slug}
+            className="setting"
+            title={title}
+        >
             <div className="mb-2.5 fontGroup-highlightSemi">
-                {setting.name}:
+                {/* TODO */}
+                {widget_setting.name}:
             </div>
             <SearchBar
                 initialInputValue={searchState}
@@ -268,14 +273,15 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
             <BaseModuleBody>
                 <ScrollBar className="shrink p-[15px]">
                     {settings?.map((group) => {
-                        const { setting, tags } = group;
+                        // eslint-disable-next-line @typescript-eslint/naming-convention
+                        const { widget_setting, tags } = group;
                         if (
-                            setting.slug ===
+                            widget_setting.setting.slug ===
                             EWidgetSettingsRegistry.IncludedTags
                         ) {
                             return (
                                 <TagsOptions
-                                    key={setting.slug}
+                                    key={widget_setting.setting.slug}
                                     searchResults={keywordResults}
                                     searchState={searchState}
                                     setSearchState={setSearchState}
@@ -301,7 +307,8 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                             );
                         }
                         if (
-                            setting.slug === EWidgetSettingsRegistry.PinnedCoins
+                            widget_setting.setting.slug ===
+                            EWidgetSettingsRegistry.PinnedCoins
                         ) {
                             const coins = (pinnedCoins?.results || []).map(
                                 (coin) => ({
@@ -311,7 +318,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                             );
                             return (
                                 <TagsOptions
-                                    key={setting.slug}
+                                    key={widget_setting.setting.slug}
                                     searchResults={coinsRawResults?.results}
                                     searchState={coinSearch}
                                     setSearchState={setCoinSearch}
@@ -321,8 +328,9 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                             : "Sign up to pin coins and more"
                                     }
                                     title={
+                                        /* TODO */
                                         isAuthenticated
-                                            ? setting.name
+                                            ? widget_setting.setting.name
                                             : "Sign up to pin coins and more"
                                     }
                                     disabled={!isAuthenticated}

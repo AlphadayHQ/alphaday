@@ -571,7 +571,8 @@ export const useView: () => IView = () => {
             const widgetsWithTag = selectedView?.data.widgets.filter((w) => {
                 const widgetTagSettings = w.settings.find(
                     (s) =>
-                        s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+                        s.widget_setting.setting.slug ===
+                        EWidgetSettingsRegistry.IncludedTags
                 );
                 if (!widgetTagSettings) {
                     return false;
@@ -584,7 +585,8 @@ export const useView: () => IView = () => {
                 ?.find((w) => w.hash === widgetHash)
                 ?.settings.find(
                     (s) =>
-                        s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+                        s.widget_setting.setting.slug ===
+                        EWidgetSettingsRegistry.IncludedTags
                 );
 
             /**

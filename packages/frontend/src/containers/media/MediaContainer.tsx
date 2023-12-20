@@ -12,7 +12,9 @@ const MediaContainer: FC<IModuleContainer<TSourceData[]>> = ({
     moduleData,
 }) => {
     const tags = moduleData.settings.find(
-        (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
     )?.tags;
 
     const { currentData: latestVideo } = useGetLatestVideoQuery(
