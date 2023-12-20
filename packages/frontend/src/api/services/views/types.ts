@@ -224,6 +224,7 @@ export type IRemoteWidget<T = undefined> = Omit<
 export type TRemoteUserViewWidgetSetting = {
     widget_setting: {
         setting: {
+            name: string;
             slug: EWidgetSettingsRegistry;
             setting_type: string;
         };

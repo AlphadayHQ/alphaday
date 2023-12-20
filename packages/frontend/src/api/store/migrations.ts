@@ -32,18 +32,17 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
 
 type RootStateV102 = PersistedRootState;
 
-type TCachedViewV101 = Omit<TCachedView, "data"> & {
+type RootStateV101 = RootStateV100;
+
+type TCachedViewV100 = Omit<TCachedView, "data"> & {
     data: Omit<TUserView, "widgets"> & {
         widgets: Omit<TRemoteUserViewWidget, "settings"> &
             {
                 settings: {
-                    widget_setting: {
-                        setting: {
-                            slug: EWidgetSettingsRegistry;
-                            setting_type: string;
-                        };
-                        sort_order: number;
-                        default_toggle_value: boolean | null;
+                    setting: {
+                        name: string;
+                        slug: EWidgetSettingsRegistry;
+                        setting_type: string;
                     };
                     tags: TRemoteTagReadOnly[];
                     toggle_value: boolean | null;
@@ -52,21 +51,20 @@ type TCachedViewV101 = Omit<TCachedView, "data"> & {
     };
 };
 
-type RootStateV101 =
+type RootStateV100 =
     | (PersistedState &
           (Omit<RootState, "views"> & {
               views: Omit<IViewsState, "viewsCache" | "sharedViewsCache"> & {
-                  viewsCache: Record<number, TCachedViewV101> | undefined;
-                  sharedViewsCache: Record<number, TCachedViewV101> | undefined;
+                  viewsCache: Record<number, TCachedViewV100> | undefined;
+                  sharedViewsCache: Record<number, TCachedViewV100> | undefined;
               };
           }))
     | undefined;
-type RootStateV100 = RootStateV101;
 
 type TMigrations = MigrationManifest & {
     100: (s: PersistedState) => RootStateV100;
     101: (s: RootStateV100) => RootStateV101;
-    102: (s: RootStateV101) => RootStateV102 | undefined;
+    102: (s: RootStateV101) => RootStateV102;
 };
 
 /**
@@ -141,16 +139,51 @@ const migrations: TMigrations = {
          * Remove view state because widget settings have been
          */
         if (!s) return undefined;
-        return {
-            ...s,
-            views: {
-                selectedViewId: undefined,
-                prevSelectedViewId: undefined,
-                viewsCache: undefined,
-                sharedViewsCache: undefined,
-                subscribedViewsCache: undefined,
-            },
-        };
+        try {
+            return {
+                ...s,
+                views: {
+                    ...s.views,
+                    viewsCache: s.views?.viewsCache
+                        ? Object.values(s.views?.viewsCache ?? {}).reduce(
+                              (acc, curr) => ({
+                                  ...acc,
+                                  [curr.data.id]: {
+                                      ...curr,
+                                      data: {
+                                          ...curr.data,
+                                          widgets: curr.data.widgets.map(
+                                              (w) => ({
+                                                  ...w,
+                                                  settings: w.settings.map(
+                                                      (widgetSetting) => ({
+                                                          widget_setting: {
+                                                              setting:
+                                                                  widgetSetting.setting,
+                                                              sort_order: 0,
+                                                              default_toggle_value:
+                                                                  null,
+                                                          },
+                                                          tags: widgetSetting.tags,
+                                                          toggle_value:
+                                                              widgetSetting.toggle_value,
+                                                      })
+                                                  ),
+                                              })
+                                          ),
+                                      },
+                                  },
+                              }),
+                              {}
+                          )
+                        : undefined,
+                    sharedViewsCache: undefined,
+                },
+            };
+        } catch (e) {
+            Logger.error("migrations::102: Migration failed", e);
+            return undefined;
+        }
     },
 };
 

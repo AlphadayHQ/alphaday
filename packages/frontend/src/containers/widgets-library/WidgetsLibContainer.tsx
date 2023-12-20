@@ -137,8 +137,7 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                         setting: {
                             id: Number(id) + 1,
                             slug: setting.slug,
-                            // TODO
-                            // name: setting.slug,
+                            name: setting.slug, // shouldn't be needed by BE
                             setting_type: "tags",
                         },
                         default_toggle_value: null,

@@ -123,8 +123,7 @@ const TagsOptions: FC<ITagsOptions> = ({
             title={title}
         >
             <div className="mb-2.5 fontGroup-highlightSemi">
-                {/* TODO */}
-                {widget_setting.name}:
+                {widget_setting.setting.name}:
             </div>
             <SearchBar
                 initialInputValue={searchState}
@@ -328,7 +327,6 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                             : "Sign up to pin coins and more"
                                     }
                                     title={
-                                        /* TODO */
                                         isAuthenticated
                                             ? widget_setting.setting.name
                                             : "Sign up to pin coins and more"
