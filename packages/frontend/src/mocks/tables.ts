@@ -75,7 +75,7 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
             {
                 widget_setting: {
                     setting: {
-                        // name: "Included Tags",
+                        name: "Included Tags",
                         setting_type: "tags",
                         slug: EWidgetSettingsRegistry.IncludedTags,
                     },
@@ -157,7 +157,7 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
             {
                 widget_setting: {
                     setting: {
-                        // name: "Included Tags",
+                        name: "Included Tags",
                         setting_type: "tags",
                         slug: EWidgetSettingsRegistry.IncludedTags,
                     },
@@ -253,7 +253,7 @@ export const customTableModuleDataMock: TUserViewWidget[] = [
             {
                 widget_setting: {
                     setting: {
-                        // name: "Included Tags",
+                        name: "Included Tags",
                         setting_type: "tags",
                         slug: EWidgetSettingsRegistry.IncludedTags,
                     },
@@ -336,7 +336,7 @@ export const customTableModuleDataMock: TUserViewWidget[] = [
             {
                 widget_setting: {
                     setting: {
-                        // name: "Included Tags",
+                        name: "Included Tags",
                         setting_type: "tags",
                         slug: EWidgetSettingsRegistry.IncludedTags,
                     },
