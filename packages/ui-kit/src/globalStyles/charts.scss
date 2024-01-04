@@ -192,3 +192,29 @@
         }
     }
 }
+
+.custom-charts-widget {
+.barchart-styles {
+    position: relative;
+    svg {
+        position: absolute;
+        left: -5px;
+        transform: translate(0px, 0px) scale(1.04);
+    }
+
+    .apexcharts-xcrosshairs.apexcharts-active {
+        opacity: 0;
+    }
+
+    .apexcharts-xaxis-texts-g {
+        transform: translate(0px, -5px) scale(1.0);
+        tspan {
+            fill: theme("colors.primaryVariant200");
+        }
+    }
+
+    .apexcharts-inner.apexcharts-graphical {
+        // transform: translate(0px, 0px) scale(1.05);
+    }
+}
+}
