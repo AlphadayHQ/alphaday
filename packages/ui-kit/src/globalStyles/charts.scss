@@ -214,7 +214,33 @@
     }
 
     .apexcharts-inner.apexcharts-graphical {
-        // transform: translate(0px, 0px) scale(1.05);
+        & > line {
+            stroke: theme("colors.btnRingVariant500");
+        }
+
+        .apexcharts-gridlines-vertical {
+            line {
+                stroke: theme("colors.btnRingVariant500");
+
+                // hide last grid line in chart because the datalabel is hidden by apexcarts
+                &:nth-last-of-type(1){
+                    display: none;
+                }
+            }
+        
+        }
+
+        // .apexcharts-xaxis-texts-g {
+            // incase it's needed in the final chart
+            // shift x-axis labels to the right so that the label is not hidden by the chart
+            // transform: translate(10px, 0px);
+        // }
+    }
+
+    .apexcharts-grid-borders{
+        line {
+            stroke: theme("colors.btnRingVariant500");
+        }
     }
 }
 }

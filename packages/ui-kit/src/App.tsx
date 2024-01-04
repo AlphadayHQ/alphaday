@@ -1,4 +1,7 @@
-import { IonDatetime, setupIonicReact } from "@ionic/react";
+import {
+    // IonDatetime,
+    setupIonicReact,
+} from "@ionic/react";
 import moment from "moment";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
@@ -21,26 +24,20 @@ const renderToString = (node: JSX.Element): string => {
 };
 
 const data = [
-    [(1703739600 + 1 * 86400) * 1000, 2],
-    [(1703739600 + 2 * 86400) * 1000, 16],
-    [(1703739600 + 3 * 86400) * 1000, 5],
-    [(1703739600 + 4 * 86400) * 1000, 18],
-    [(1703739600 + 5 * 86400) * 1000, 14],
-    [(1703739600 + 6 * 86400) * 1000, 14],
-    [(1703739600 + 7 * 86400) * 1000, 20],
-    [(1703739600 + 8 * 86400) * 1000, 16],
-    [(1703739600 + 9 * 86400) * 1000, 9],
-    [(1703739600 + 10 * 86400) * 1000, 11],
-    [(1703739600 + 11 * 86400) * 1000, 19],
-    [(1703739600 + 12 * 86400) * 1000, 14],
-    [(1703739600 + 13 * 86400) * 1000, 8],
-    [(1703739600 + 14 * 86400) * 1000, 12],
-    [(1703739600 + 15 * 86400) * 1000, 20],
-    [(1703739600 + 16 * 86400) * 1000, 14],
-    [(1703739600 + 17 * 86400) * 1000, 7],
-    [(1703739600 + 18 * 86400) * 1000, 6],
-    [(1703739600 + 19 * 86400) * 1000, 21],
-    [(1703739600 + 20 * 86400) * 1000, 5],
+    ["01-Feb-2024 GMT+1", 14],
+    ["02-Feb-2024 GMT+1", 14],
+    ["03-Feb-2024 GMT+1", 20],
+    ["04-Feb-2024 GMT+1", 16],
+    ["05-Feb-2024 GMT+1", 11],
+    ["06-Feb-2024 GMT+1", 19],
+    ["07-Feb-2024 GMT+1", 14],
+    ["08-Feb-2024 GMT+1", 8],
+    ["09-Feb-2024 GMT+1", 12],
+    ["10-Feb-2024 GMT+1", 20],
+    ["11-Feb-2024 GMT+1", 14],
+    ["12-Feb-2024 GMT+1", 7],
+    ["13-Feb-2024 GMT+1", 6],
+    ["14-Feb-2024 GMT+1", 21],
 ];
 
 const options = {
@@ -99,11 +96,11 @@ const options = {
             show: false,
         },
         tickPlacement: "between",
-        tickAmount: 7,
+        tickAmount: Math.min(data.length, 8) - 1,
         labels: {
             datetimeUTC: false,
             formatter(_val: string, timestamp: number) {
-                return moment(timestamp).format("DD/MM/YY");
+                return moment(timestamp).format("DD-MM-YYYY");
             },
             style: {
                 colors: themeColors.btnRingVariant500,
