@@ -16,7 +16,7 @@ const renderToString = (node: JSX.Element): string => {
     return wrapper.innerHTML;
 };
 
-const data = [
+const BarChartData = [
     ["01-Feb-2024 GMT+1", 14],
     ["02-Feb-2024 GMT+1", 14],
     ["03-Feb-2024 GMT+1", 20],
@@ -33,7 +33,7 @@ const data = [
     ["14-Feb-2024 GMT+1", 21],
 ];
 
-const options = {
+const BarChartOptions = {
     chart: {
         type: "area",
         stacked: true,
@@ -89,7 +89,7 @@ const options = {
             show: false,
         },
         tickPlacement: "between",
-        tickAmount: Math.min(data.length, 8) - 1,
+        tickAmount: Math.min(BarChartData.length, 8) - 1,
         labels: {
             datetimeUTC: false,
             formatter(_val: string, timestamp: number) {
@@ -168,7 +168,7 @@ const options = {
                         }).format(series[seriesIndex][dataPointIndex])}
                     </span>
                     <span className="pt-[1px]">
-                        {moment(data[dataPointIndex][0]).format(
+                        {moment(BarChartData[dataPointIndex][0]).format(
                             "YYYY-MM-DD  HH:mm"
                         )}
                     </span>
@@ -194,8 +194,8 @@ const options = {
 export const BarChartSampleSeries = [
     {
         name: "Price",
-        data,
+        data: BarChartData,
     },
 ];
 
-export const BarChartSampleOptions = options;
+export const BarChartSampleOptions = BarChartOptions;
