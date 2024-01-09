@@ -2,7 +2,7 @@ import { IonDatetime, setupIonicReact } from "@ionic/react";
 import { Arrow } from "./components/arrow/Arrow";
 import { Button } from "./components/buttons/Button";
 import { IconButton } from "./components/buttons/IconButton";
-import MobileHeader from "./mobile-components/navigation/header";
+import { MobileHeader } from "./mobile-components/navigation/header";
 
 setupIonicReact();
 
@@ -10,7 +10,7 @@ function App() {
     return (
         <>
             <div className="fixed w-full">
-                <MobileHeader />
+                <MobileHeader avatar={undefined} />
             </div>
             <div className="flex h-screen w-screen flex-col items-center justify-center">
                 <h1 className="text-primary text-lg font-semibold">

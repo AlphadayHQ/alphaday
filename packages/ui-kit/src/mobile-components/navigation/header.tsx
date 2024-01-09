@@ -1,9 +1,11 @@
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 
 import { ReactComponent as BellSVG } from "src/assets/svg/bell.svg";
 import { ReactComponent as CloseSVG } from "src/assets/svg/close4.svg";
+import logoDay from "src/assets/svg/logo-white.svg";
 import { ReactComponent as MenuSVG } from "src/assets/svg/menuMobile.svg";
+
 import { twMerge } from "tailwind-merge";
 
 const navigation = [
@@ -13,7 +15,14 @@ const navigation = [
     { name: "Calendar", href: "#", current: false },
 ];
 
-export default function Example() {
+interface IProps {
+    avatar: string | undefined;
+}
+
+const demoAvatar =
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80";
+
+export const MobileHeader: FC<IProps> = ({ avatar }) => {
     return (
         <Disclosure as="nav" className="bg-gray-800">
             {({ open }) => (
@@ -44,7 +53,7 @@ export default function Example() {
                                 <div className="flex flex-shrink-0 items-center">
                                     <img
                                         className="h-8 w-auto"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                                        src={logoDay}
                                         alt="Your Company"
                                     />
                                 </div>
@@ -97,7 +106,7 @@ export default function Example() {
                                             </span>
                                             <img
                                                 className="h-8 w-8 rounded-full"
-                                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                                src={avatar || demoAvatar}
                                                 alt=""
                                             />
                                         </Menu.Button>
@@ -190,4 +199,4 @@ export default function Example() {
             )}
         </Disclosure>
     );
-}
+};
