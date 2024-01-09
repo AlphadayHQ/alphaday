@@ -144,39 +144,7 @@ const migrations: TMigrations = {
                 ...s,
                 views: {
                     ...s.views,
-                    viewsCache: s.views?.viewsCache
-                        ? Object.values(s.views?.viewsCache ?? {}).reduce(
-                              (acc, curr) => ({
-                                  ...acc,
-                                  [curr.data.id]: {
-                                      ...curr,
-                                      data: {
-                                          ...curr.data,
-                                          widgets: curr.data.widgets.map(
-                                              (w) => ({
-                                                  ...w,
-                                                  settings: w.settings.map(
-                                                      (widgetSetting) => ({
-                                                          widget_setting: {
-                                                              setting:
-                                                                  widgetSetting.setting,
-                                                              sort_order: 0,
-                                                              default_toggle_value:
-                                                                  null,
-                                                          },
-                                                          tags: widgetSetting.tags,
-                                                          toggle_value:
-                                                              widgetSetting.toggle_value,
-                                                      })
-                                                  ),
-                                              })
-                                          ),
-                                      },
-                                  },
-                              }),
-                              {}
-                          )
-                        : undefined,
+                    viewsCache: undefined,
                     sharedViewsCache: undefined,
                 },
             };
