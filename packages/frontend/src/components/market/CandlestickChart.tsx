@@ -138,14 +138,14 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
             },
             custom: ({ dataPointIndex }: TCustomTooltip) => {
                 return renderToString(
-                    <div className="price-tooltip">
-                        <span className="date">
+                    <div className="px-3 py-2 flex flex-col break-word rounded-[5px] bg-background border border-borderLine fontGroup-support text-primary">
+                        <span className="pt-[1px]">
                             {moment(data[dataPointIndex][0]).format(
                                 "YYYY-MM-DD  hh:mm"
                             )}
                         </span>
-                        <span className="price">
-                            <span className="tag">O</span>: {}
+                        <span className="fontGroup-supportBold">
+                            <span className="fontGroup-support">O</span>: {}
                             {
                                 formatNumber({
                                     value: data[dataPointIndex][1],
@@ -154,8 +154,8 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
                                 }).value
                             }
                         </span>
-                        <span className="price">
-                            <span className="tag">H</span>: {}
+                        <span className="fontGroup-supportBold">
+                            <span className="fontGroup-support">H</span>: {}
                             {
                                 formatNumber({
                                     value: data[dataPointIndex][2],
@@ -164,8 +164,8 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
                                 }).value
                             }
                         </span>
-                        <span className="price">
-                            <span className="tag">L</span>: {}
+                        <span className="fontGroup-supportBold">
+                            <span className="fontGroup-support">L</span>: {}
                             {
                                 formatNumber({
                                     value: data[dataPointIndex][3],
@@ -174,8 +174,8 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
                                 }).value
                             }
                         </span>
-                        <span className="price">
-                            <span className="tag">C</span>: {}
+                        <span className="fontGroup-supportBold">
+                            <span className="fontGroup-support">C</span>: {}
                             {
                                 formatNumber({
                                     value: data[dataPointIndex][4],

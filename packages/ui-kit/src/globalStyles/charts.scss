@@ -12,23 +12,11 @@
         cursor: pointer;
         @apply stroke-primary bg-backgoundBlue;
     }
-    .price-tooltip {
-        padding: 0.6em 0.8em;
-        display: flex;
-        flex-direction: column;
-        word-wrap: break-word;
-        @apply bg-primaryVariant200 fontGroup-support text-primary;
+    .apexcharts-tooltip {
+        background-color: transparent !important;
+        border: none !important;
 
-        .price {
-            @apply fontGroup-supportBold;
-
-            span {
-                @apply fontGroup-support;
-            }
-        }
-        .date {
-            padding-top: 1px;
-        }
+        @apply ring-[0.5px] ring-borderLine;
     }
 
     .candlestick-chart {

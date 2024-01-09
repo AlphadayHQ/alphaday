@@ -174,8 +174,8 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 w,
             }: TCustomTooltip) => {
                 return renderToString(
-                    <div className="price-tooltip">
-                        <span className="price">
+                    <div className="px-3 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant30 border border-borderLine fontGroup-support text-primary">
+                        <span className="fontGroup-supportBold [&_span]:fontGroup-support">
                             {w.globals.seriesNames[0]}: {}
                             {
                                 formatNumber({
@@ -185,7 +185,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                                 }).value
                             }
                         </span>
-                        <span className="date">
+                        <span className="pt-[1px]">
                             {moment(data[dataPointIndex][0]).format(
                                 "YYYY-MM-DD  HH:mm"
                             )}
