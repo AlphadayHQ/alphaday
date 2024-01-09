@@ -133,11 +133,15 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 name: widget.name,
                 widget,
                 settings: widget.settings.map(({ setting }, id) => ({
-                    setting: {
-                        id: Number(id) + 1,
-                        slug: setting.slug,
-                        name: setting.slug,
-                        setting_type: "tags",
+                    widget_setting: {
+                        setting: {
+                            id: Number(id) + 1,
+                            slug: setting.slug,
+                            name: setting.slug, // shouldn't be needed by BE
+                            setting_type: "tags",
+                        },
+                        default_toggle_value: null,
+                        sort_order: 0,
                     },
                     tags: keywordSearchList?.map((k) => ({
                         ...k.tag,

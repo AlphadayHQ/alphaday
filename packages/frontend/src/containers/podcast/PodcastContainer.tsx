@@ -93,7 +93,9 @@ const PodcastContainer: FC<IModuleContainer> = ({ moduleData }) => {
             CONFIG.WIDGETS.PODCAST.POLLING_INTERVAL) * 1000;
 
     const tags = moduleData.settings.find(
-        (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
     )?.tags;
 
     const {
