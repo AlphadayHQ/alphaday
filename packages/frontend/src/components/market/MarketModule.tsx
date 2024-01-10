@@ -108,7 +108,7 @@ const MarketModule: FC<IMarketModule> = ({
                     selectedMarket={selectedMarket}
                 />
                 {selectedMarket && (
-                    <div className="flex flex-col mt-[11px] pl-[15px] pr-[15px] w-full self-start single-col:mt-5 single-col:pl-[10px]">
+                    <div className="flex flex-col mt-3 pl-4 pr-4 w-full self-start single-col:mt-4 single-col:pl-[10px]">
                         <div className="flex items-start">
                             <div className="flex justify-between flex-1 ml-[5px]">
                                 <CoinInfo
@@ -161,7 +161,7 @@ const MarketModule: FC<IMarketModule> = ({
                     </div>
                     {chartComponent}
                 </div>
-                <div className="w-full flex py-0 px-[15px] flex-wrap">
+                <div className="w-full flex py-0 px-4 flex-wrap">
                     <div
                         className={twMerge(
                             "flex justify-around",

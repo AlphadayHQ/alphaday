@@ -28,7 +28,7 @@ export const ScrollBar: FC<ScrollBarProps> = ({
         <div
             ref={(ref) => ref && containerRef?.(ref)}
             className={twMerge(
-                "overflow-hidden hover:none:text-blue hover:overflow-y-auto scrollbar-track-backgroundVariant1800 scrollbar-thumb-primaryVariant800 scrollbar scrollbar-w-[5px] overscroll-contain h-full",
+                "overflow-hidden hover:none:text-blue hover:overflow-y-auto scrollbar-track-backgroundVariant1800 scrollbar-thumb-primaryFiltered scrollbar-thumb-rounded-md scrollbar scrollbar-w-[5px] overscroll-contain h-full",
                 isTouchDevice && "overflow-y-auto",
                 className
             )}

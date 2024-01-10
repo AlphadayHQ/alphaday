@@ -43,7 +43,7 @@ const NftCard: FC<INft> = ({ img, name, value }) => {
                 <div className="absolute bottom-0 left-0 w-full h-full flex justify-center transition-all duration-500 box-border overflow-hidden hover:[filter:brightness(1.1)]">
                     {renderImage()}
                 </div>
-                <div className="absolute bottom-0 left-0 w-full flex transition-all duration-500 flex-col items-start justify-start h-10 p-2 rounded-t-[3px] rounded-b-md hover:[filter:brightness(1.1)] hover:h-[50px] bg-backgroundVariant1200">
+                <div className="absolute bottom-0 left-0 w-full flex transition-all duration-500 flex-col items-start justify-start h-10 p-2 rounded-t-[3px] rounded-b-md hover:[filter:brightness(1.1)] hover:h-[50px] bg-background">
                     <div className="flex justify-between w-full">
                         <span
                             className={twMerge(
@@ -61,7 +61,7 @@ const NftCard: FC<INft> = ({ img, name, value }) => {
                                 <span className="leading-none fontGroup-mini whitespace-nowrap two-col:inline-block">
                                     Est. value
                                 </span>
-                                <p className="whitespace-nowrap fontGroup-highlight two-col:whitespace-normal">
+                                <p className="whitespace-nowrap fontGroup-highlightSemi two-col:whitespace-normal">
                                     Ξ {formatNumber({ value }).value}
                                 </p>
                             </div>

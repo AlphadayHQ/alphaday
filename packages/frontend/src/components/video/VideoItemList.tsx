@@ -30,8 +30,8 @@ const VideoItemList: FC<IVideoItemList> = ({
     if (!(videos === undefined)) {
         if (videos.length === 0) {
             return (
-                <div className="flex w-full h-full justify-center items-center bg-backgroundVariant200">
-                    <p className="text-primary fontGroup-highlight">
+                <div className="flex w-full h-full justify-center items-center bg-background">
+                    <p className="text-primary fontGroup-highlightSemi">
                         {globalMessages.queries.noMatchFound("videos")}
                     </p>
                 </div>
@@ -74,7 +74,7 @@ const VideoItemList: FC<IVideoItemList> = ({
                 return (
                     <div className="abs" key={item}>
                         <ItemSkeleton />
-                        <hr className="m-0 border-btnRingVariant500" />
+                        <hr className="m-0 border-borderLine" />
                     </div>
                 );
             })}

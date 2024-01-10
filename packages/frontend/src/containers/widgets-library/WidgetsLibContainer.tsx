@@ -14,6 +14,7 @@ import {
 import { TUserViewWidget, TWidget, TWidgetMini } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
 import { recomputeWidgetsPos } from "src/api/utils/layoutUtils";
+import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import WidgetLibrary from "src/components/widget-library/WidgetLibrary";
 import CONFIG from "src/config/config";
@@ -184,8 +185,9 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         setFilter(normalizedValue);
     }, 300);
 
-    const handleSortBy = (sort: EItemsSortBy): void => {
-        if (isFetching || sortBy === sort) return;
+    const handleSortBy = (sortLabel: string): void => {
+        const sort = getSortOptionValue(sortLabel);
+        if (isFetching || sort === null || sortBy === sort) return;
         if (widgets.length > 0) setWidgets([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
         setSortBy(sort);

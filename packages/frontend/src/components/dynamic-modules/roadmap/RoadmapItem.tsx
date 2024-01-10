@@ -67,10 +67,10 @@ const RoadmapItem: FC<IList> = ({
             tabIndex={0}
             role="button"
             onClick={toggleAccordion}
-            className="flex flex-row items-stretch p-[14px] w-full bg-backgroundVariant800 border-none pb-0 pt-5 cursor-pointer flex-grow relative hover:bg-backgroundVariant900 active:bg-backgroundVariant1000 [&:nth-of-type(1)]:pt-[30px] [&:nth-of-type(1)_.line]:h-full [&:nth-of-type(1)_.line]:top-2"
+            className="flex flex-row items-stretch p-[14px] w-full bg-background border-none pb-0 pt-5 cursor-pointer flex-grow relative hover:bg-background active:bg-background [&:nth-of-type(1)]:pt-2 [&:nth-of-type(1)_.line]:h-full [&:nth-of-type(1)_.line]:top-2"
         >
-            <div className="h-full min-w-[120px] flex flex-col items-end pt-[5px] pr-[15px] pb-[5px] pl-0">
-                <div className="flex justify-end min-w-[58px] mr-[5px] text-primaryVariant100 mb-[3px]">
+            <div className="h-full min-w-[120px] flex flex-col items-end pt-[5px] pr-4 pb-[5px] pl-0">
+                <div className="flex justify-end text-end min-w-[58px] mr-[5px] text-primaryVariant100 mb-[3px]">
                     {dateField}
                 </div>
                 {(blockNo || !isNaN(blockNo)) && (
@@ -81,10 +81,10 @@ const RoadmapItem: FC<IList> = ({
             </div>
             <div className="relative">
                 <span
-                    className={`line absolute -top-5 w-[3px] bg-btnRingVariant500 h-[calc(100%_+_21px)] ${getStatusClass()}`}
+                    className={`line absolute -top-5 w-[3px] bg-borderLine h-[calc(100%_+_21px)] ${getStatusClass()}`}
                 />
                 <span
-                    className={`absolute top-1.5 -left-[4.5px] w-3 h-3 rounded-full bg-btnRingVariant500 ${getStatusClass()}`}
+                    className={`absolute top-1.5 -left-[4.5px] w-3 h-3 rounded-full bg-borderLine ${getStatusClass()}`}
                 />
             </div>
             <CollapseListItem

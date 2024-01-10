@@ -23,7 +23,7 @@ const GasModule: FC<IGasModule> = memo(function GasModule({
     return loading || !gasPrices ? (
         <ModuleLoader $height="400px" />
     ) : (
-        <div className="pt-2.5 px-5 pb-0.5">
+        <div className="pt-3 px-5 pb-0.5">
             <div className="w-full h-auto">
                 <GasHeadingInfo data={gasPrices} ethPrice={ethPrice} />
             </div>

@@ -22,7 +22,7 @@ export type EventMeta = {
 
 const NoEvents: FC<{ msg: string }> = ({ msg }) => {
     return (
-        <div className="w-full h-full flex items-center justify-center text-primary fontGroup-highlight">
+        <div className="w-full h-full flex items-center justify-center text-primary fontGroup-highlightSemi">
             {msg}
         </div>
     );
@@ -127,14 +127,14 @@ export const CalendarList: FC<ICalendarList> = ({
             <div style="width:7px; height:7px; border-radius:4px; margin-right: 5px; display: inline-block; background-color: ${backgroundColor}"></div>
             <span style="color:${String(
                 backgroundColor
-            )}; float: right; font-weight: 600;">${String(category?.label)}
+            )}; float: right;">${String(category?.label)}
             </span>
             <span style="margin: 0 5px;">•</span>
-            <span style="text-transform: uppercase">${time || ""}</span>
-            <span style="margin: 0 5px;">•</span>
-            <span style="white-space: pre-wrap;">${String(
+            <span>${time || ""}</span>
+            ${selectedEvent.location && '<span style="margin: 0 5px;">•</span>'}
+            <span style="white-space: pre-wrap;">${
                 selectedEvent.location
-            )}</span>
+            }</span>
             </div>
             `;
 

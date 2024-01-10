@@ -20,7 +20,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.collapseItem,
-            "info ml-5 min-h-[45px] w-full [align-self:normal] border-b border-solid border-b-btnRingVariant500 px-0 pb-[5px] pt-[3px]"
+            "info ml-5 min-h-[45px] w-full [align-self:normal] border-b border-solid border-b-borderLine px-0 pb-[5px] pt-[3px]"
         ),
         title: "flex justify-between",
         collapseButton: "ml-[5px]",
@@ -34,7 +34,8 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
         agenda: {
             ...defaults,
             wrap: twMerge(defaults.wrap, "[&_a]:text-secondaryOrange"),
-            title: twMerge(defaults.title, "fontGroup-highlightSemi"),
+            title: twMerge(defaults.title, "fontGroup-highlight"),
+            desc: twMerge(defaults.desc, "mt-2"),
         },
         faq: {
             ...defaults,
@@ -44,11 +45,11 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
             ),
             title: twMerge(
                 defaults.title,
-                "fontGroup-highlightSemi text-primary self-stretch items-baseline flex-grow-0 justify-start"
+                "fontGroup-highlight text-primary self-stretch items-baseline flex-grow-0 justify-start"
             ),
             desc: twMerge(
                 defaults.desc,
-                "h-0 pointer-events-none mx-0 my-[5px]"
+                "h-0 pointer-events-none mx-0 mb-1 mt-2"
             ),
             wrap: twMerge(defaults.wrap, "p-0 pt-[5px] pl-7"),
         },
@@ -56,7 +57,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
             ...defaults,
             title: twMerge(
                 defaults.title,
-                "text-primary fontGroup-highlightSemi self-stretch flex-grow-0"
+                "text-primary fontGroup-highlight self-stretch flex-grow-0"
             ),
             wrap: twMerge(defaults.wrap, "pt-[5px]"),
         },
@@ -94,7 +95,9 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                                 )}
                             />
                         </div>
-                        <span className="mr-[5px] ml-[10px]">{title}</span>
+                        <span className="mr-[5px] ml-[10px] fontGroup-highlight">
+                            {title}
+                        </span>
                     </>
                 ) : (
                     <>
@@ -104,7 +107,7 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                 )}
             </div>
             {variant === "agenda" && author && (
-                <div className="speaker fontGroup-supportBold text-primaryVariant100">
+                <div className="speaker  fontGroup-normal text-primaryVariant100">
                     {author}
                 </div>
             )}

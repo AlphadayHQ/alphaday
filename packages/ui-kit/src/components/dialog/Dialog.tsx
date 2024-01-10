@@ -53,7 +53,7 @@ export const Dialog: FC<IDialog> = ({
             onClose={onClose}
             {...restProps}
         >
-            <div className="flex justify-between items-center border-0 p-[15px]">
+            <div className="flex justify-between items-center border-0 p-4">
                 <h6 className="text-primary self-center leading-6 fontGroup-highlightSemi !text-sm m-0">
                     {title}
                 </h6>
@@ -61,7 +61,7 @@ export const Dialog: FC<IDialog> = ({
                     <button
                         // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         onClick={handleCloseDialog}
-                        className="border-primaryVariant200 bg-backgroundVariant200 flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
+                        className="border-primaryVariant200 bg-background flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
                         title="close"
                         type="button"
                         data-testid="alpha-dialog-close-button"
@@ -70,10 +70,10 @@ export const Dialog: FC<IDialog> = ({
                     </button>
                 )}
             </div>
-            <div className="flex p-[15px]">{children}</div>
+            <div className="flex p-4">{children}</div>
 
             {(showSaveButton || showCloseButton) && (
-                <div className="flex justify-center border-0 pb-[15px]">
+                <div className="flex justify-center border-0 pb-4">
                     {showSaveButton && (
                         <Button
                             data-testid="alpha-dialog-action-button"

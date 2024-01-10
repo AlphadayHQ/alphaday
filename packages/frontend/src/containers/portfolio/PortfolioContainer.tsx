@@ -332,11 +332,11 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
         isLoadingEthPrice; // At first, isLoading is true & portfolioDataForAddress is undefined
 
     useEffect(() => {
-        // Reset the widget height to 130px when the selectedAddress is null and isLoading is false
+        // Reset the widget height to 90px when the selectedAddress is null and isLoading is false
         dispatch(
             setWidgetHeight({
                 widgetHash: moduleData.hash,
-                widgetHeight: selectedAddress === null && !isLoading ? 90 : 460,
+                widgetHeight: selectedAddress === null && !isLoading ? 90 : 432,
             })
         );
         // This should only run when the selectedAddress is null and isLoading is false

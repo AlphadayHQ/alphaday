@@ -39,8 +39,9 @@
     position: relative;
     margin: 0;
     border: 0;
-    background: var(--white);
     transition: all 0.2s ease;
+    @apply bg-primary;
+
     &:after {
         content: "";
         position: absolute;
@@ -49,7 +50,7 @@
         width: 13.5px;
         height: 13.5px;
         border-radius: 50%;
-        background-color: var(--backgroundVariant100);
+        background-color: var(--background);
         box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2);
         transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
     }

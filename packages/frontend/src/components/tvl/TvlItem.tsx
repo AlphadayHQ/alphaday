@@ -27,7 +27,7 @@ export const TvlItemsHeader: FC<{ projectType: TProjectType }> = ({
     projectType,
 }) => {
     return (
-        <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px] pb-[3px]">
+        <div className="flex flex-row flex-[1_auto] py-[10px] px-6 pb-[3px]">
             <div
                 className="flex flex-row flex-1 items-center"
                 style={{
@@ -149,10 +149,10 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                 role="button"
                 tabIndex={0}
             >
-                <div className="flex flex-row flex-[1_auto] py-[10px] px-[15px]">
+                <div className="flex flex-row flex-[1_auto] py-[10px] px-4">
                     <div className="flex flex-row flex-1 items-center">
                         <div className="flex flex-row mr-1 flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-start">
-                            <div className="absolute inset-0 bg-backgroundVariant200" />
+                            <div className="absolute inset-0 bg-background" />
                             <img
                                 src={
                                     projectData.project.icon ??
@@ -165,13 +165,13 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                                 }
                                 onError={imgOnError}
                                 alt=""
-                                className="absolute inset-0 bg-backgroundVariant400 rounded-full"
+                                className="absolute inset-0 bg-background rounded-full"
                                 style={{
                                     backgroundImage: `url(${logoDay})`,
                                 }}
                             />
                         </div>
-                        <div className="text-primary fontGroup-highlight">
+                        <div className="text-primary fontGroup-highlightSemi">
                             {projectData.project.name}
                         </div>
                     </div>
@@ -188,7 +188,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                     </div>
                 </div>
                 <div className="flex flex-row flex-[1_auto] p-0">
-                    <div className="flex flex-row flex-1 items-center justify-center px-[15px]">
+                    <div className="flex flex-row flex-1 items-center justify-center px-4">
                         <div className="flex flex-row flex-1 items-center justify-start">
                             <div className="flex flex-col items-start">
                                 <span className="fontGroup-supportBold text-primaryVariant100 uppercase">
@@ -260,7 +260,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
      */
     return (
         <div
-            className="flex flex-row flex-[1_auto] py-[10px] px-[15px]"
+            className="flex flex-row flex-[1_auto] py-[10px] px-4"
             onClick={handleOnClick(projectData)}
             role="button"
             tabIndex={0}
@@ -282,7 +282,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                 }}
             >
                 <div className="flex flex-row flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-center">
-                    <div className="absolute inset-0 bg-backgroundVariant200" />
+                    <div className="absolute inset-0 bg-background" />
                     <img
                         src={
                             projectData.project.icon ??
@@ -294,13 +294,13 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                         }
                         onError={imgOnError}
                         alt=""
-                        className="absolute inset-0 bg-backgroundVariant400 rounded-full"
+                        className="absolute inset-0 bg-background rounded-full"
                         style={{
                             backgroundImage: `url(${logoDay})`,
                         }}
                     />
                 </div>
-                <div className="text-primary fontGroup-highlight ml-1.5">
+                <div className="text-primary fontGroup-highlightSemi ml-1.5">
                     {projectData.project.name}
                 </div>
             </div>
@@ -388,7 +388,7 @@ interface IChainlTvlProps {
 export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
     return (
         <div
-            className="flex flex-row flex-[1_auto] py-[10px] px-[15px]"
+            className="flex flex-row flex-[1_auto] py-[10px] px-4"
             onClick={handleOnClick(projectData)}
             role="button"
             tabIndex={0}
@@ -410,7 +410,7 @@ export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
                 }}
             >
                 <div className="flex flex-row flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-start">
-                    <div className="absolute inset-0 bg-backgroundVariant200" />
+                    <div className="absolute inset-0 bg-background" />
                     <img
                         src={
                             projectData.project.icon ??
@@ -422,13 +422,13 @@ export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
                         }
                         onError={imgOnError}
                         alt=""
-                        className="absolute inset-0 bg-backgroundVariant400 rounded-full"
+                        className="absolute inset-0 bg-background rounded-full"
                         style={{
                             backgroundImage: `url(${logoDay})`,
                         }}
                     />
                 </div>
-                <div className="text-primary fontGroup-highlight ml-1.5">
+                <div className="text-primary fontGroup-highlightSemi ml-1.5">
                     <a
                         href={projectData.project.url}
                         target="_blank"

@@ -54,7 +54,7 @@ const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
             </div>
         ) : (
             <ScrollBar>
-                <div className="p-0 pl-[15px] flex justify-around flex-wrap h-full two-col:px-[15px] two-col:pb-[15px]">
+                <div className="p-0 pl-4 flex justify-around flex-wrap h-full two-col:px-4 two-col:pb-4">
                     {nftCards}
                 </div>
             </ScrollBar>

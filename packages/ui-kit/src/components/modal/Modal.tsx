@@ -88,7 +88,7 @@ export const Modal: FC<IModal> = ({
                                     maxWidth: `min(calc(100% - 20px), ${maxWidth})`,
                                 }}
                                 className={twMerge(
-                                    "flex bg-backgroundVariant200 text-primary border-2 border-solid border-background rounded-[5px] w-full",
+                                    "flex bg-background text-primary border border-borderLine rounded-[5px] w-full",
                                     className
                                 )}
                             >

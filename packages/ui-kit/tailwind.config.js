@@ -2,6 +2,7 @@
 import { themes } from "./src/globalStyles/themes";
 import { tailwindBreakpoints } from "./src/globalStyles/breakpoints";
 import typography from "@tailwindcss/typography";
+
 import plugin from "tailwindcss/plugin";
 import themeSwapper from "tailwindcss-theme-swapper";
 import tailwindScrollbar from "tailwind-scrollbar";

@@ -46,7 +46,7 @@ export const ErrorModal: FC<IModal> = ({
             <ModalBody>
                 {variant !== "warning" && (
                     <div className="flex justify-center items-center mt-4">
-                        <p className="fontGroup-highlight">Oh snaps!</p>
+                        <p className="fontGroup-highlightSemi">Oh snaps!</p>
                     </div>
                 )}
                 <br />

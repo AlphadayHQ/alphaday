@@ -246,7 +246,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     {adjustable && !isCollapsed && (
                         <div
                             onMouseDown={adjustHeight}
-                            className="absolute bottom-[-18px] left-[-3px] h-[15px] w-[calc(100%_+_6px)] cursor-row-resize border-[none]"
+                            className="absolute bottom-[-18px] left-[-3px] h-4 w-[calc(100%_+_6px)] cursor-row-resize border-[none]"
                             role="button"
                             title="Adjust widget height"
                             tabIndex={-1}

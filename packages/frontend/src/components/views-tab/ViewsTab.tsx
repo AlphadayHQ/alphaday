@@ -128,11 +128,11 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
             id="views-tab"
             data-testid="views-tab"
             className={twMerge(
-                "h-auto w-screen bg-backgroundVariant100 border-t border-solid border-background two-col:max-h-[41px]",
-                mobileOpen && "border-b"
+                "h-auto w-screen bg-background two-col:max-h-[44px]",
+                mobileOpen && "border-b-2 border-b-background"
             )}
         >
-            <div className="flex h-full py-0 px-3 overflow-auto [&>.tabButton]:max-h-10 two-col:py-0 two-col:px-4 two-col:w-full two-col:flex two-col:justify-start">
+            <div className="flex gap-1.5 h-full py-0 px-3 two-col:px-4 overflow-auto [&>.tabButton]:max-h-10 two-col:w-full two-col:flex two-col:justify-start">
                 {subscribedViews.length !== 0 && isWalletBoardAllowed && (
                     <span
                         style={
@@ -259,8 +259,8 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                             <ViewTabButton
                                 className={
                                     isSelectedViewModified
-                                        ? "opacity-80 hover:[&:not(.selected)]:bg-btnBackgroundVariant100"
-                                        : "opacity-40 hover:[&:not(.selected)]:bg-btnBackgroundVariant100"
+                                        ? "opacity-80 hover:[&:not(.selected)]:bg-backgroundVariant200"
+                                        : "opacity-40 hover:[&:not(.selected)]:bg-backgroundVariant200"
                                 }
                                 onClick={option.handler}
                                 selected={false}

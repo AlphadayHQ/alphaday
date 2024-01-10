@@ -90,7 +90,7 @@ const TVLChart: FC<IProps> = ({ projectHistory }) => {
                 },
             },
             grid: {
-                borderColor: themeColors.btnRingVariant500,
+                borderColor: themeColors.borderLine,
                 xaxis: {
                     lines: {
                         show: false,
