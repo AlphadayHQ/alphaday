@@ -1,33 +1,34 @@
-import {
-    // IonDatetime,
-    setupIonicReact,
-} from "@ionic/react";
-import { ApexBarChart } from "./components/charts/apexchart";
-import {
-    BarChartSampleOptions,
-    BarChartSampleSeries,
-} from "./components/charts/mockData";
+import { IonDatetime, setupIonicReact } from "@ionic/react";
+import { Arrow } from "./components/arrow/Arrow";
+import { Button } from "./components/buttons/Button";
+import { IconButton } from "./components/buttons/IconButton";
+import MobileBottomNav from "./mobile-components/navigation/MobileBottomNav";
 
 setupIonicReact();
 
 function App() {
     return (
-        <div className="flex h-screen w-screen flex-col items-center justify-center">
-            <h1 className="text-primary text-lg font-semibold">
-                Vite + React + Ionic + Tailwind
-            </h1>
-            {/* <IonDatetime className="mt-10" /> */}
-            <div className="custom-charts-widget">
-                <div className="barchart-styles bg-background w-[600px] h-[500px] flex flex-col gap-3 py-10 border-primary border">
-                    <ApexBarChart
-                        options={BarChartSampleOptions}
-                        series={BarChartSampleSeries}
-                        width="100%"
-                        height="100%"
-                    />
+        <>
+            <div className="flex h-screen w-screen flex-col items-center justify-center">
+                <h1 className="text-primary text-lg font-semibold">
+                    Vite + React + Ionic + Tailwind
+                </h1>
+                <IonDatetime className="mt-10" />
+                <div className="bg-primary m-10 flex flex-col gap-3 p-10">
+                    <Button variant="small">Primary</Button>
+                    <div className="bg-secondaryOrange">
+                        <p className=" fontGroup-highlightSemi m-4">
+                            Tyring out Prose
+                        </p>
+                    </div>
+                    <Arrow direction="up" />
+                    <Arrow direction="down" />
+
+                    <IconButton variant="star" />
                 </div>
             </div>
-        </div>
+            <MobileBottomNav />
+        </>
     );
 }
 
