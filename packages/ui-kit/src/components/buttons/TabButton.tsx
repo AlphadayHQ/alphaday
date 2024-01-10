@@ -32,7 +32,7 @@ const buttonVariants = tv({
         },
         open: {
             true: twMerge(
-                "text-primary bg-backgoundBlue active:bg-backgoundBlue hover:bg-backgoundBlue",
+                "text-primary bg-backgroundBlue active:bg-backgroundBlue hover:bg-backgroundBlue",
                 styles.tabsButtonOpen
             ),
         },

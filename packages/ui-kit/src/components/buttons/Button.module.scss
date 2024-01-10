@@ -24,7 +24,7 @@
     }
     &.disabled {
         color: var(--primaryVariant100);
-        border-color: var(--backgoundBlue);
+        border-color: var(--backgroundBlue);
         pointer-events: none;
     }
     @apply fontGroup-highlightSemi;
@@ -210,7 +210,7 @@
         }
         &:active {
             svg {
-                fill: var(--backgoundBlue);
+                fill: var(--backgroundBlue);
             }
         }
     }
@@ -287,11 +287,11 @@
 .tabsButtonOpen {
     &.small {
         color: var(--primary);
-        border-color: var(--backgoundBlue);
+        border-color: var(--backgroundBlue);
         background-color: var(--backgroundVariant100);
     }
     &.extraSmall {
-        border-color: var(--backgoundBlue);
+        border-color: var(--backgroundBlue);
         background-color: var(--backgroundVariant100);
     }
     .tabButton {

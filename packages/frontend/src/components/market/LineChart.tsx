@@ -63,7 +63,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                         opacity: 0.4,
                     },
                     stroke: {
-                        color: themeColors.backgoundBlue,
+                        color: themeColors.backgroundBlue,
                         opacity: 0.4,
                         width: 1,
                     },

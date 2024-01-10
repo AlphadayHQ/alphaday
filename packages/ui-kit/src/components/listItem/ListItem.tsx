@@ -245,7 +245,7 @@ export const ListItem: FC<IList> = ({
                                 "fontGroup-normal border-primaryVariant200 bg-backgroundVariant100 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
                                 styles.audioIndicator,
                                 isPlaying &&
-                                    "bg-secondaryOrange text-backgoundBlue"
+                                    "bg-secondaryOrange text-backgroundBlue"
                             )}
                         >
                             {isPlaying ? (

@@ -43,7 +43,7 @@ const BarChartOptions = {
             autoScaleYaxis: false,
             zoomedArea: {
                 fill: {
-                    color: themeColors.btnRingVariant400,
+                    color: themeColors.accentVariant200,
                     opacity: 0.4,
                 },
                 stroke: {
@@ -96,7 +96,7 @@ const BarChartOptions = {
                 return moment(timestamp).format("DD-MM-YYYY");
             },
             style: {
-                colors: themeColors.btnRingVariant500,
+                colors: themeColors.borderLine,
                 fontSize: "10px",
                 fontFamily: "Arial, sans-serif",
                 fontWeight: 700,
@@ -114,7 +114,7 @@ const BarChartOptions = {
         decimalsInFloat: false,
     },
     grid: {
-        borderColor: themeColors.btnRingVariant500,
+        borderColor: themeColors.borderLine,
         strokeDashArray: 5,
         xaxis: {
             lines: {
@@ -127,7 +127,7 @@ const BarChartOptions = {
             },
         },
         column: {
-            colors: themeColors.btnRingVariant500,
+            colors: themeColors.borderLine,
             opacity: 1,
         },
     },

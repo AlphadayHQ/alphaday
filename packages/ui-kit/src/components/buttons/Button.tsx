@@ -10,7 +10,7 @@ const buttonVariants = tv({
     ),
     variants: {
         variant: {
-            primaryXL: `box-border h-[54px] border-2 border-solid border-backgoundBlue px-[25px] py-4 hover:border-accentVariant100 active:bg-backgroundVariant100`,
+            primaryXL: `box-border h-[54px] border-2 border-solid border-backgroundBlue px-[25px] py-4 hover:border-accentVariant100 active:bg-backgroundVariant100`,
             secondaryXL: `box-border h-[54px] border-borderLine px-[25px] py-4 active:bg-backgroundVariant100`,
             primary: "",
             secondary: "border-borderLine bg-backgroundVariant200",

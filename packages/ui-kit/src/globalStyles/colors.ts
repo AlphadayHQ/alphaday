@@ -11,8 +11,8 @@ export const darkColors = {
     backgroundVariant200: "var(--alpha-base-200)", // #202020 -- background variant 200
     backgroundVariant300: "var(--alpha-base-300)", // #222222 -- background variant 300
     backgroundVariant400: "var(--alpha-base-400)", // #393939 -- background variant 300
-    backgoundBlue: "var(--alpha-dark-blue)", // #263964 -- background blue
-    backgoundBlue100: "var(--alpha-dark-blue-100)", // #2d4476 -- background blue
+    backgroundBlue: "var(--alpha-dark-blue)", // #263964 -- background blue
+    backgroundBlue100: "var(--alpha-dark-blue-100)", // #2d4476 -- background blue
     accentVariant100: "var(--alpha-light-blue)", // #477FF7 -- button Ring Primary
     accentVariant200: "var(--alpha-light-blue-100)", // #5E8FF8 -- button Ring Primary
     secondaryOrange: "var(--alpha-orange)", // #FAA202 -- calendar event category
