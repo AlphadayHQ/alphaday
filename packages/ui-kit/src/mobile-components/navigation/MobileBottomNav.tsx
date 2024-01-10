@@ -6,46 +6,60 @@ const navigation = [
         name: "Superfeed",
         href: "#",
         current: true,
+        hasNew: true,
         icon: <HomeSVG className="w-4 h-4 my-0.5" />,
     },
     {
         name: "Portfolio",
         href: "#",
         current: false,
+        hasNew: true,
+
         icon: <HomeSVG className="w-4 h-4 my-0.5" />,
     },
     {
         name: "Events",
         href: "#",
         current: false,
+        hasNew: false,
         icon: <HomeSVG className="w-4 h-4 my-0.5" />,
     },
     {
         name: "Settings",
         href: "#",
         current: false,
+        hasNew: true,
         icon: <HomeSVG className="w-4 h-4 my-0.5" />,
     },
     {
         name: "Places",
         href: "#",
         current: false,
+        hasNew: false,
         icon: <HomeSVG className="w-4 h-4 my-0.5" />,
     },
 ];
 
-const NavItem = ({ href, icon, current }: (typeof navigation)[0]) => (
+const NavItem = ({ href, icon, current, hasNew }: (typeof navigation)[0]) => (
     <a
         href={href}
         className="inline-flex flex-col items-center justify-center px-5"
     >
         <span
             className={twMerge(
-                "border border-gray-200 py-2 px-3 rounded-2xl",
+                "border border-gray-200 py-1 px-2 rounded-2xl relative",
                 current && "bg-black border-black"
             )}
         >
             {icon}
+            {hasNew && (
+                <span
+                    className={twMerge(
+                        "w-2 h-2 bg-black border border-gray-200 rounded-full my-1 absolute -top-0.5 -right-0.5",
+                        current && "bg-gray-200 border-black"
+                    )}
+                />
+            )}
         </span>
     </a>
 );
