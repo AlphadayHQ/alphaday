@@ -220,7 +220,7 @@ export const SearchBar = <T,>({
                 props
             )}`,
         multiValue: (props) =>
-            `bg-backgoundBlue rounded-[8px] m-[0_0_0_5px] leading-4 p-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary ${componentClassNames?.multiValue?.(
+            `bg-backgroundBlue rounded-[8px] m-[0_0_0_5px] leading-4 p-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary ${componentClassNames?.multiValue?.(
                 props
             )}`,
         multiValueRemove: (props) =>
