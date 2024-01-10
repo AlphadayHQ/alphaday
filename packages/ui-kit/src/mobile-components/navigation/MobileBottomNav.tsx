@@ -42,7 +42,7 @@ const NavItem = ({ href, icon, current }: (typeof navigation)[0]) => (
         <span
             className={twMerge(
                 "border border-gray-200 py-2 px-3 rounded-2xl",
-                current && "[&_svg]:fill-blue-500 border-blue-500"
+                current && "bg-black border-black"
             )}
         >
             {icon}
