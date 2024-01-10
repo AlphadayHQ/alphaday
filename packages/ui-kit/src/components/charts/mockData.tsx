@@ -47,7 +47,7 @@ const BarChartOptions = {
                     opacity: 0.4,
                 },
                 stroke: {
-                    color: themeColors.btnRingVariant200,
+                    color: themeColors.backgroundBlue,
                     opacity: 0.4,
                     width: 1,
                 },
