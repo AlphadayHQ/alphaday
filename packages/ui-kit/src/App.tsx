@@ -3,6 +3,7 @@ import { Arrow } from "./components/arrow/Arrow";
 import { Button } from "./components/buttons/Button";
 import { IconButton } from "./components/buttons/IconButton";
 import { MobileHeader } from "./mobile-components/navigation/header";
+import { MobileBottomNav } from "./mobile-components/navigation/MobileBottomNav";
 
 setupIonicReact();
 
@@ -30,6 +31,7 @@ function App() {
                     <IconButton variant="star" />
                 </div>
             </div>
+            <MobileBottomNav />
         </>
     );
 }
