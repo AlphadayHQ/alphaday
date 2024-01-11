@@ -4,6 +4,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { WagmiConfig } from "wagmi";
+import { useIsMobile } from "./api/hooks/useIsMobile";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
 import PersistProvider from "./api/store/providers/persist-provider";
 import { wagmiConfig } from "./api/store/providers/wallet-connect-provider";
@@ -14,6 +15,7 @@ import { Logger } from "./api/utils/logging";
 import App from "./App";
 import CONFIG from "./config";
 import SeoContainer from "./containers/seo/SeoContainer";
+import MobileApp from "./MobileApp";
 
 /**
  * at this point, the store is still not loaded and we can't read the state
@@ -54,6 +56,11 @@ try {
     );
 }
 
+const AppSwitcher = () => {
+    const isMobile = useIsMobile();
+    return isMobile ? <MobileApp /> : <App />;
+};
+
 const container = document.getElementById("root");
 if (!container) {
     // TODO: Replace with a proper logger
@@ -67,7 +74,7 @@ root.render(
             <AppContextProvider>
                 {/* <ThemeProvider> */}
                 <WagmiConfig config={wagmiConfig}>
-                    <App />
+                    <AppSwitcher />
                 </WagmiConfig>
                 {/* </ThemeProvider> */}
             </AppContextProvider>
