@@ -2,15 +2,14 @@ import { IonDatetime, setupIonicReact } from "@ionic/react";
 import { Arrow } from "./components/arrow/Arrow";
 import { Button } from "./components/buttons/Button";
 import { IconButton } from "./components/buttons/IconButton";
-import MobileBottomNav from "./mobile-components/navigation/MobileBottomNav";
 import { MobileHeader } from "./mobile-components/navigation/header";
+import { MobileBottomNav } from "./mobile-components/navigation/MobileBottomNav";
 
 setupIonicReact();
 
 function App() {
     return (
         <>
-
             <div className="fixed w-full">
                 <MobileHeader avatar={undefined} />
             </div>
