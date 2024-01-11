@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { optimizeCssModules } from "vite-plugin-optimize-css-modules";
+import { VitePWA } from "vite-plugin-pwa";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -11,6 +12,36 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
     plugins: [
         tsconfigPaths(),
+        VitePWA({
+            registerType: "autoUpdate",
+            workbox: {
+                clientsClaim: true,
+                skipWaiting: true,
+            },
+            includeAssets: [
+                "favicon.ico",
+                "apple-touch-icon.png",
+                "mask-icon.svg",
+            ],
+            manifest: {
+                name: "Alphaday",
+                short_name: "Alphaday",
+                description: "My Awesome App description",
+                theme_color: "#ffffff",
+                icons: [
+                    {
+                        src: "pwa-192x192.png",
+                        sizes: "192x192",
+                        type: "image/png",
+                    },
+                    {
+                        src: "pwa-512x512.png",
+                        sizes: "512x512",
+                        type: "image/png",
+                    },
+                ],
+            },
+        }),
         react(),
         svgr(),
         ViteImageOptimizer(), // optimize images, svgs and gifs

@@ -1,5 +1,16 @@
 # Alphaday Frontend Codebase
 
+## Requirements
+
+* Node ^18.17.0
+* Yarn ^1.22.10
+
+## Node Setup
+
+* First install NVM or Volta
+* Then run `nvm use` or `volta pin node@18.17.0`
+* Then run `npm install -g yarn`
+
 ## Setup
 Set locally up with these steps:
 
