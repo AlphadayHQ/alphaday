@@ -158,7 +158,7 @@ const BarChartOptions = {
             w: TApexChartWindow;
         }) => {
             return renderToString(
-                <div className="px-3 py-2 flex flex-col break-word bg-primaryVariant200 fontGroup-support text-primary">
+                <div className="px-3 py-2 flex flex-col break-word bg-backgroundVariant300 fontGroup-support text-primary">
                     <span className="fontGroup-supportBold [&_span]:fontGroup-support">
                         {w.globals.seriesNames[0]}: {}
                         {new Intl.NumberFormat("en-US", {

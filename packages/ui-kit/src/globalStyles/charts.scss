@@ -232,6 +232,11 @@
             // }
         }
 
+        .apexcharts-tooltip {
+            border: none;
+            box-shadow: none;
+        }
+
         .apexcharts-grid-borders {
             line {
                 stroke: theme("colors.borderLine");
