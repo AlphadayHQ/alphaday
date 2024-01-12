@@ -5,6 +5,7 @@ import { Button } from "./components/buttons/Button";
 import { IconButton } from "./components/buttons/IconButton";
 import {
     FormInput,
+    FormSelect,
     FormTextArea,
 } from "./mobile-components/form-elements/FormElements";
 import { MobileHeader } from "./mobile-components/navigation/header";
@@ -44,6 +45,23 @@ function App() {
                             placeholder="I am a software engineer who loves to code and build things."
                             defaultValue="test"
                             onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                    <div className="m-1 mt-4">
+                        <FormSelect
+                            selected={{
+                                id: name.toString(),
+                                value: name.toString(),
+                            }}
+                            label="A little about yourself"
+                            placeholder="I am a software engineer who loves to code and build things."
+                            onChange={(e) => setName(e.value)}
+                            options={[
+                                { id: "1000", value: "1000" },
+                                { id: "1000", value: "20000" },
+                                { id: "1000", value: "3erty" },
+                            ]}
+                            defaultValue={{ id: "1", value: "1000" }}
                         />
                     </div>
                 </div>
