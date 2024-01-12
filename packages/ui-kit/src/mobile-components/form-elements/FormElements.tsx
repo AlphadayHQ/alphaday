@@ -152,7 +152,7 @@ export const FormSelect: FC<IFormSelect> = ({
             onChange={onChange}
         >
             {({ open }) => (
-                <>
+                <div className={classNames}>
                     <Listbox.Label className="block text-sm font-medium leading-6 text-primary">
                         {label}
                     </Listbox.Label>
@@ -228,7 +228,7 @@ export const FormSelect: FC<IFormSelect> = ({
                             </Listbox.Options>
                         </Transition>
                     </div>
-                </>
+                </div>
             )}
         </Listbox>
     );
