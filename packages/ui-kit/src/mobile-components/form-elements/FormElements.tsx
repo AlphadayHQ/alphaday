@@ -60,7 +60,7 @@ export const FormInput: FC<IFormInput> = ({
                     onChange={onChange}
                     onBlur={() => sethasBluurred(true)}
                     className={twMerge(
-                        "block w-full bg-backgroundVariant100 rounded-md border-0 py-1.5 ring-1 ring-inset disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200  focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6",
+                        "block w-full bg-backgroundVariant100 rounded-md border-0 py-1.5 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 placeholder:text-gray-400",
                         classNames,
                         errorMsg &&
                             hasBlurred &&
@@ -95,7 +95,7 @@ export const FormTextArea: FC<IFormElement<HTMLTextAreaElement>> = ({
         <div>
             <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-primary flex"
+                className="text-sm font-medium leading-6 text-primary flex"
             >
                 {label}
             </label>
@@ -105,7 +105,7 @@ export const FormTextArea: FC<IFormElement<HTMLTextAreaElement>> = ({
                     name={label}
                     id="comment"
                     className={twMerge(
-                        "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
+                        "block w-full bg-backgroundVariant100 rounded-md border-0 py-1.5 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-50 disabled:ring-gray-200 text-gray-900 shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
                         classNames
                     )}
                     defaultValue={defaultValue}
