@@ -1,15 +1,17 @@
 import { ChangeEventHandler, FC, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface IFormInput {
+interface IFormElement<T> {
     label: string;
     placeholder: string;
     defaultValue: string;
-    isOptional: boolean;
     value: string;
-    onChange: ChangeEventHandler<HTMLInputElement>;
+    onChange: ChangeEventHandler<T>;
     disabled?: boolean;
     classNames?: string;
+}
+interface IFormInput extends IFormElement<HTMLInputElement> {
+    isOptional?: boolean;
     errorMsg?: string;
     type: "text" | "email" | "password";
 }
@@ -54,7 +56,6 @@ export const FormInput: FC<IFormInput> = ({
                 <input
                     type={type}
                     name={label}
-                    id="email"
                     value={value}
                     onChange={onChange}
                     onBlur={() => sethasBluurred(true)}
@@ -77,6 +78,43 @@ export const FormInput: FC<IFormInput> = ({
                     {errorMsg}
                 </p>
             )}
+        </div>
+    );
+};
+
+export const FormTextArea: FC<IFormElement<HTMLTextAreaElement>> = ({
+    label,
+    placeholder,
+    defaultValue,
+    classNames,
+    value,
+    onChange,
+    disabled,
+}) => {
+    return (
+        <div>
+            <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-primary flex"
+            >
+                {label}
+            </label>
+            <div className="mt-1">
+                <textarea
+                    rows={4}
+                    name={label}
+                    id="comment"
+                    className={twMerge(
+                        "block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
+                        classNames
+                    )}
+                    defaultValue={defaultValue}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                />
+            </div>
         </div>
     );
 };
