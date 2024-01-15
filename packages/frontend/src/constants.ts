@@ -32,6 +32,7 @@ export enum EFeaturesRegistry {
     TrendingKeywords = "trending_keywords",
     WalletBoard = "wallet_board",
     Notifications = "notification",
+    MobileApp = "mobile_app",
 }
 
 /**

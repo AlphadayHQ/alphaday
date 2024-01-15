@@ -144,3 +144,33 @@ export const lazyRetry = <T extends React.FC<any>>(
             })
     );
 };
+
+/**
+ * @returns true if the app is running as a PWA
+ */
+export const isPWA = () => {
+    const isIosPWA = window.matchMedia("(display-mode: standalone)").matches;
+    return (
+        isIosPWA ||
+        ("standalone" in window.navigator && !!window.navigator.standalone)
+    );
+};
+
+/**
+ * @returns true if the current device is a mobile device
+ */
+export const isMobile = () => {
+    const userAgent = navigator.userAgent || navigator.vendor;
+
+    // User agent checks for various mobile devices
+    if (/android/i.test(userAgent)) {
+        return true;
+    }
+
+    // @ts-ignore - TS doesn't know about MSStream
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return true;
+    }
+
+    return false;
+};
