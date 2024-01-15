@@ -267,7 +267,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                                         ? () => {
                                               if (isSelectedViewModified) {
                                                   toast(
-                                                      "Sign in to edit boards and enjoy more customizations",
+                                                      "Connect and verify your wallet to edit boards and enjoy more customizations",
                                                       {
                                                           type: EToastRole.Error,
                                                       }
