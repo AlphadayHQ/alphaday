@@ -67,7 +67,7 @@ const CustomMenuList = (showTrending: boolean) => {
         return (
             <>
                 {showTrending && (
-                    <div className="text-primaryVariant100 fontGroup-mini flex w-full items-center mx-2 px-3 pb-1 pt-3">
+                    <div className="text-primaryVariant100 fontGroup-mini flex w-full items-center mx-2 px-3 pt-3">
                         <span className="uppercase">Trending Keywords</span>
                         <HotSVG className="text-primaryVariant100 mb-0 ml-[3px] mr-0 mt-px h-3 w-2.5 pb-0.5" />
                     </div>
@@ -250,7 +250,7 @@ export const SearchBar = <T,>({
                 props
             )}`,
         menuList: (props) =>
-            `p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryFiltered ${componentClassNames?.menuList?.(
+            `px-0 py-2 overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryFiltered ${componentClassNames?.menuList?.(
                 props
             )}`,
         option: (props) =>
