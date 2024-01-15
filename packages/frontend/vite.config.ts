@@ -20,15 +20,20 @@ export default defineConfig({
             },
             includeAssets: [
                 "favicon.ico",
-                "apple-touch-icon.png",
-                "mask-icon.svg",
+                "apple-touch-icon-180x180.png",
+                "maskable-icon-512x512.png",
             ],
             manifest: {
                 name: "Alphaday",
                 short_name: "Alphaday",
-                description: "My Awesome App description",
+                description: "",
                 theme_color: "#ffffff",
                 icons: [
+                    {
+                        src: "pwa-64x64.png",
+                        sizes: "64x64",
+                        type: "image/png",
+                    },
                     {
                         src: "pwa-192x192.png",
                         sizes: "192x192",
