@@ -258,14 +258,27 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                         <span key={option.title} style={tabButtonWrapperStyle}>
                             <ViewTabButton
                                 className={
-                                    isSelectedViewModified && !option.disabled
+                                    isSelectedViewModified
                                         ? "opacity-80 hover:[&:not(.selected)]:bg-backgroundVariant200"
                                         : "opacity-40 hover:[&:not(.selected)]:bg-backgroundVariant200"
                                 }
-                                onClick={option.handler}
+                                onClick={
+                                    option.disabled
+                                        ? () => {
+                                              if (isSelectedViewModified) {
+                                                  toast(
+                                                      "Sign in to edit boards and enjoy more customizations",
+                                                      {
+                                                          type: EToastRole.Error,
+                                                      }
+                                                  );
+                                              }
+                                          }
+                                        : option.handler
+                                }
                                 selected={false}
                                 title="Save current board"
-                                disabled={option.disabled}
+                                // disabled={option.disabled}
                             >
                                 <span className="name">{option.title}</span>
                             </ViewTabButton>
