@@ -2,7 +2,7 @@ import { FC, useCallback, useState } from "react";
 import { Input } from "../input/Input";
 import { ErrorModal } from "../modal/ErrorModal";
 import { Spinner } from "../spinner/Spinner";
-import { Dialog } from "./Dialog";
+import { Dialog, IKeyPress } from "./Dialog";
 
 export enum EViewDialogState {
     Closed,
@@ -22,6 +22,7 @@ interface IProps {
     errorMessage: string | undefined;
     viewName: string | undefined;
     viewNameLimit: number;
+    useKeyPress: (args: IKeyPress) => void;
 }
 
 export const ViewDialog: FC<IProps> = ({
@@ -33,6 +34,7 @@ export const ViewDialog: FC<IProps> = ({
     isCreateNewView,
     viewName,
     viewNameLimit,
+    useKeyPress,
 }) => {
     const [value, setValue] = useState(viewName ?? "");
     const [error, setError] = useState<string>();
@@ -65,6 +67,7 @@ export const ViewDialog: FC<IProps> = ({
                         await onSave(value.trim());
                         setValue("");
                     }}
+                    useKeyPress={useKeyPress}
                     size="sm"
                 >
                     <Input
@@ -97,6 +100,7 @@ export const ViewDialog: FC<IProps> = ({
                     onSave={async () => {
                         await onRemove();
                     }}
+                    useKeyPress={useKeyPress}
                     size="sm"
                 >
                     Are you sure you want to remove this board?

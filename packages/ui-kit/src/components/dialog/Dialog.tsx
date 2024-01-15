@@ -3,6 +3,11 @@ import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
 import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
+export interface IKeyPress {
+    targetKey: string;
+    callback: () => void;
+    skip?: boolean;
+}
 export interface IDialog {
     title?: string;
     saveButtonText?: string;
@@ -15,6 +20,7 @@ export interface IDialog {
     children?: React.ReactNode;
     showDialog?: boolean;
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
+    useKeyPress?: (args: IKeyPress) => void;
 }
 
 export const Dialog: FC<IDialog> = ({
@@ -29,6 +35,7 @@ export const Dialog: FC<IDialog> = ({
     buttonProps,
     showDialog,
     size,
+    useKeyPress,
     ...restProps
 }) => {
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -44,6 +51,14 @@ export const Dialog: FC<IDialog> = ({
 
     const showSaveButton = onSave && saveButtonText;
     const showCloseButton = !!closeButtonText;
+
+    useKeyPress?.({
+        targetKey: "Enter",
+        callback: () => {
+            onSave?.()?.catch(() => {});
+        },
+        skip: !showSaveButton || disableSave,
+    });
 
     return (
         <Modal
