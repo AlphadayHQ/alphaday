@@ -258,7 +258,7 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                         <span key={option.title} style={tabButtonWrapperStyle}>
                             <ViewTabButton
                                 className={
-                                    isSelectedViewModified
+                                    isSelectedViewModified && !option.disabled
                                         ? "opacity-80 hover:[&:not(.selected)]:bg-backgroundVariant200"
                                         : "opacity-40 hover:[&:not(.selected)]:bg-backgroundVariant200"
                                 }
