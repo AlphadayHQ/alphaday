@@ -69,8 +69,15 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     };
 
     const walletMenuOptions = useMemo(() => {
+        const signUpOptions = {
+            handler: onConnectWallet,
+            menuTitle: "Sign Up / Sign In",
+            title: globalMessages.portfolio.signUp,
+            dataTestId: "profile-dropdown-sign-up",
+        };
         if (walletState === WalletConnectionState.Disconnected) {
             return [
+                signUpOptions,
                 {
                     handler: onConnectWallet,
                     menuTitle: "Connect Wallet",
@@ -81,6 +88,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
         }
         if (walletState === WalletConnectionState.Connected) {
             return [
+                signUpOptions,
                 {
                     handler: onDisconnectWallet,
                     menuTitle: "Disconnect Wallet",
@@ -100,6 +108,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
             walletState === WalletConnectionState.Prompted
         ) {
             return [
+                signUpOptions,
                 {
                     handler: onDisconnectWallet,
                     menuTitle: "Disconnect Wallet",
@@ -108,7 +117,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                 },
             ];
         }
-        return [];
+        return [signUpOptions];
     }, [onConnectWallet, onDisconnectWallet, onVerifyWallet, walletState]);
 
     const handleWalletCopy = () => {
@@ -193,25 +202,27 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         <Divider />
                         {walletMenuOptions.map((option) => {
                             return (
-                                <DropdownItem
-                                    key={option.dataTestId}
-                                    data-testid={option.dataTestId}
-                                    onClick={() => {
-                                        option.handler()?.catch((err) => {
-                                            Logger.error(
-                                                "profile-dropdown:ProfileDropdownWrapper",
-                                                err
-                                            );
-                                        });
-                                    }}
-                                >
-                                    <span title={option.title}>
-                                        {option.menuTitle}
-                                    </span>
-                                </DropdownItem>
+                                <>
+                                    <DropdownItem
+                                        key={option.dataTestId}
+                                        data-testid={option.dataTestId}
+                                        onClick={() => {
+                                            option.handler()?.catch((err) => {
+                                                Logger.error(
+                                                    "profile-dropdown:ProfileDropdownWrapper",
+                                                    err
+                                                );
+                                            });
+                                        }}
+                                    >
+                                        <span title={option.title}>
+                                            {option.menuTitle}
+                                        </span>
+                                    </DropdownItem>
+                                    <Divider />
+                                </>
                             );
                         })}
-                        <Divider />
                         <DropdownItem onClick={handleToggle}>
                             Tutorial{" "}
                             <input
