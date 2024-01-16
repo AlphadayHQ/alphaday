@@ -61,7 +61,7 @@ jobs:
                       yarn.lock
 
             - name: yarn install
-              run: yarn
+              run: yarn --ignore-engines
 
             - name: build
               run: yarn build:deploy
