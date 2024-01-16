@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "prepare": "export VITE_COMMIT=$(git rev-parse --short HEAD)",
-    "dev": "VITE_COMMIT=$(git rev-parse --short HEAD) vite",
-    "build": "VITE_COMMIT=$(git rev-parse --short HEAD) vite build",
+    "dev": "pwa-assets-generator && VITE_COMMIT=$(git rev-parse --short HEAD) vite",
+    "build": "pwa-assets-generator && VITE_COMMIT=$(git rev-parse --short HEAD) vite build",
     "build:apk": "ionic capacitor build android",
     "platform:add": "ionic capacitor add",
     "generate-pwa-assets": "pwa-assets-generator",
