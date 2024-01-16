@@ -5,6 +5,7 @@ import {
     useAccount,
     useFeatureFlags,
     useActivityLogger,
+    useKeyPress,
 } from "src/api/hooks";
 import { useTutorial } from "src/api/hooks/useTutorial";
 import { useWalletViewContext } from "src/api/store/providers/wallet-view-context";
@@ -157,6 +158,7 @@ const ViewsTabContainer: FC<IViewsTab> = ({
                 dialogState={dialogState}
                 isCreateNewView={allowEmptyView}
                 onClose={() => closeViewDialog()}
+                useKeyPress={useKeyPress}
                 onSave={(viewName) => {
                     if (targetViewMeta !== undefined) {
                         // update the view name
