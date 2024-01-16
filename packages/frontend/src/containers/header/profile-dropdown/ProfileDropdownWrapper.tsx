@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import {
     Dropdown,
     DropdownAvatar,
@@ -23,6 +23,7 @@ import styles from "./ProfileDropdownWrapper.module.scss";
 import WalletViewButton from "./WalletViewButton";
 
 interface IProps {
+    onSignUpSignIn: () => MaybeAsync<void>;
     onConnectWallet: () => MaybeAsync<void>;
     onVerifyWallet: () => MaybeAsync<void>;
     onDisconnectWallet: () => MaybeAsync<void>;
@@ -44,6 +45,7 @@ const Divider = () => (
 );
 
 const ProfileDropdownWrapper: React.FC<IProps> = ({
+    onSignUpSignIn,
     onConnectWallet,
     onVerifyWallet,
     onDisconnectWallet,
@@ -70,7 +72,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
 
     const walletMenuOptions = useMemo(() => {
         const signUpOptions = {
-            handler: onConnectWallet,
+            handler: onSignUpSignIn,
             menuTitle: "Sign Up / Sign In",
             title: globalMessages.portfolio.signUp,
             dataTestId: "profile-dropdown-sign-up",
@@ -118,7 +120,13 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
             ];
         }
         return [signUpOptions];
-    }, [onConnectWallet, onDisconnectWallet, onVerifyWallet, walletState]);
+    }, [
+        onConnectWallet,
+        onSignUpSignIn,
+        onDisconnectWallet,
+        onVerifyWallet,
+        walletState,
+    ]);
 
     const handleWalletCopy = () => {
         const walletAddress = authWallet.account?.address;

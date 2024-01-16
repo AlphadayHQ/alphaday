@@ -8,6 +8,8 @@ import {
     TUserSettings,
     WalletConnectionState,
     EWalletConnectionMethod,
+    ESignInUpState,
+    ESignInUpMethod,
 } from "src/api/types";
 import assert from "src/api/utils/assert";
 import { Logger } from "src/api/utils/logging";
@@ -26,6 +28,11 @@ export interface IUserState {
 const initialState: IUserState = {
     auth: {
         token: undefined,
+        access: {
+            status: ESignInUpState.Guest,
+            method: ESignInUpMethod.Email,
+            error: null,
+        },
         wallet: {
             account: undefined,
             status: WalletConnectionState.Disconnected,
@@ -167,6 +174,26 @@ const userSlice = createSlice({
         },
         setWalletInGenericError(draft) {
             draft.auth.wallet.status = WalletConnectionState.GenericError;
+        },
+        initSignInUpMethodSelection(draft) {
+            draft.auth.access.status = ESignInUpState.SelectingMethod;
+            draft.auth.access.method = undefined;
+            draft.auth.access.error = null;
+        },
+        setSignInUpMethod(
+            draft,
+            action: PayloadAction<ESignInUpMethod | undefined>
+        ) {
+            draft.auth.access.method = action.payload;
+        },
+        initSignInUp(draft) {
+            draft.auth.access.status = ESignInUpState.SigningUp;
+        },
+        setSignInUpError(draft, action: PayloadAction<string>) {
+            draft.auth.access.error = action.payload;
+        },
+        setSignInUpState(draft, action: PayloadAction<ESignInUpState>) {
+            draft.auth.access.status = action.payload;
         },
         resetAuthState(draft) {
             Logger.debug("user::resetAuthState: resetting auth state");
