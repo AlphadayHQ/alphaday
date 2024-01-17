@@ -233,3 +233,48 @@ export const FormSelect: FC<IFormSelect> = ({
         </Listbox>
     );
 };
+
+interface IFormCheckbox {
+    checked: boolean;
+    classNames?: string;
+    label: string;
+    subtext?: string;
+    onChange: ChangeEventHandler<HTMLInputElement>;
+    disabled?: boolean;
+}
+
+export const FormCheckbox: FC<IFormCheckbox> = ({
+    label,
+    classNames,
+    checked,
+    onChange,
+    disabled,
+    subtext,
+}) => {
+    return (
+        <div
+            className={twMerge(
+                "flex items-start group cursor-pointer",
+                classNames
+            )}
+        >
+            <div className="flex items-center h-5">
+                <input
+                    id="comments"
+                    name="comments"
+                    type="checkbox"
+                    className="h-4 w-4 text-primary bg-background !ring-1 !ring-primaryVariant100 checked:!bg-backgroundVariant400 checked:!ring-accentVariant200 rounded disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200"
+                    checked={checked}
+                    onChange={onChange}
+                    disabled={disabled}
+                />
+            </div>
+            <div className="ml-3 text-sm">
+                <label htmlFor="comments" className="font-medium text-primary">
+                    {label}
+                </label>
+                <p className="text-primaryVariant100">{subtext}</p>
+            </div>
+        </div>
+    );
+};

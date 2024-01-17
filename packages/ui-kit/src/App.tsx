@@ -4,6 +4,7 @@ import { Arrow } from "./components/arrow/Arrow";
 import { Button } from "./components/buttons/Button";
 import { IconButton } from "./components/buttons/IconButton";
 import {
+    FormCheckbox,
     FormInput,
     FormSelect,
     FormTextArea,
@@ -15,6 +16,7 @@ setupIonicReact();
 
 function App() {
     const [name, setName] = useState("");
+    const [checked, setChecked] = useState(false);
     return (
         <>
             <div className="fixed w-full">
@@ -62,6 +64,14 @@ function App() {
                                 { id: "1000", value: "3erty" },
                             ]}
                             defaultValue={{ id: "1", value: "1000" }}
+                        />
+                    </div>
+                    <div className="m-1 mt-4">
+                        <FormCheckbox
+                            checked={checked}
+                            onChange={(e) => setChecked((prev) => !prev)}
+                            label="I agree to the terms and conditions"
+                            subtext="By checking this box, you agree to the terms and conditions of this website."
                         />
                     </div>
                 </div>
