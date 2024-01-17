@@ -29,6 +29,7 @@ import { EToastRole, toast } from "src/api/utils/toastUtils";
 import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
+import SignInUpContainer from "src/containers/dialogs/SignInUpContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
@@ -356,7 +357,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             </DragDropContext>
             <CookieDisclaimerContainer />
             <WalletConnectionDialogContainer />
-
+            <SignInUpContainer />
             <TutorialContainer />
         </MainLayout>
     );
