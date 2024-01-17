@@ -28,7 +28,7 @@ export default defineConfig({
                 name: "Alphaday",
                 short_name: "Alphaday",
                 description: "",
-                theme_color: "#ffffff",
+                theme_color: "#FAA202",
                 icons: [
                     {
                         src: "pwa-64x64.png",

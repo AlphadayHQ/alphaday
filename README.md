@@ -15,7 +15,7 @@
 Set locally up with these steps:
 
 1. To easily setup the required node version, [install `nvm`](https://github.com/nvm-sh/nvm) and run `nvm use`
-1. `yarn`
+1. `yarn --ignore-engines` to install dependencies
 1. `yarn dev:frontend` to start the development server
 1. `yarn build:frontend` to create/update the build folder
 
