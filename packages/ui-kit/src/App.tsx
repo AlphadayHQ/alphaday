@@ -69,7 +69,7 @@ function App() {
                     <div className="m-1 mt-4">
                         <FormCheckbox
                             checked={checked}
-                            onChange={(e) => setChecked((prev) => !prev)}
+                            onChange={() => setChecked((prev) => !prev)}
                             label="I agree to the terms and conditions"
                             subtext="By checking this box, you agree to the terms and conditions of this website."
                         />
