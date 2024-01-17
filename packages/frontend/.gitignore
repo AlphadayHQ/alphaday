@@ -4,8 +4,10 @@ dist/
 /coverage
 
 # production
-/build
+/dist
 
 # tsconfig
 *.tsbuildinfo
 .env
+
+/public/*-*x*.png
