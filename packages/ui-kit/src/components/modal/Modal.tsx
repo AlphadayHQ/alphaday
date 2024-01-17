@@ -20,7 +20,7 @@ export interface IModal extends IProps {
     /**
      * Modal Sizes
      */
-    size?: "max" | "xl" | "lg" | "md" | "sm";
+    size?: "max" | "xl" | "lg" | "md" | "sm" | "xs";
     /**
      * Callback function for close modal
      */
@@ -50,6 +50,7 @@ export const Modal: FC<IModal> = ({
         lg: "800px",
         md: "650px",
         sm: "450px",
+        xs: "360px",
     }[size || "xl"];
 
     const handleClose = (val: boolean) => {
