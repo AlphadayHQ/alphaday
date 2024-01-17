@@ -127,6 +127,13 @@ textarea {
     margin: 0;
     max-width: 100%;
     vertical-align: baseline;
+
+    &:focus:not(:focus-visible) {
+        @apply focus:ring-0 focus:ring-offset-0;
+    }
+    &:focus-visible {
+        @apply ring-2 ring-offset-2;
+    }
 }
 
 button,
