@@ -244,6 +244,10 @@ select,
 textarea {
     width: 100%;
     @apply text-primary fontGroup-normal bg-transparent border border-transparent border-solid active:border-none active:border-borderLine active:outline-none focus:border-borderLine focus:outline-none;
+
+    &:focus {
+        box-shadow: none !important;
+    }
 }
 input,
 select {

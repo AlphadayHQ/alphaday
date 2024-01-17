@@ -234,7 +234,7 @@ export const SearchBar = <T,>({
                 props
             )}`,
         input: (props) =>
-            `m-0 ml-[10px] p-0 text-primary border-0 [&_input]:!ring-0 ${
+            `m-0 ml-[10px] p-0 text-primary border-0 ${
                 props.value ? "w-full" : "w-2"
             } ${componentClassNames?.input?.(props)}`,
         indicatorSeparator: (props) =>
