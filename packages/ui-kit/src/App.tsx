@@ -6,6 +6,7 @@ import { IconButton } from "./components/buttons/IconButton";
 import {
     FormCheckbox,
     FormInput,
+    FormRadio,
     FormSelect,
     FormTextArea,
 } from "./mobile-components/form-elements/FormElements";
@@ -68,6 +69,14 @@ function App() {
                     </div>
                     <div className="m-1 mt-4">
                         <FormCheckbox
+                            checked={checked}
+                            onChange={() => setChecked((prev) => !prev)}
+                            label="I agree to the terms and conditions"
+                            subtext="By checking this box, you agree to the terms and conditions of this website."
+                        />
+                    </div>
+                    <div className="m-1 mt-4">
+                        <FormRadio
                             checked={checked}
                             onChange={() => setChecked((prev) => !prev)}
                             label="I agree to the terms and conditions"

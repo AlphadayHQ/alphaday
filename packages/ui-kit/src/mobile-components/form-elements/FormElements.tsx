@@ -278,3 +278,37 @@ export const FormCheckbox: FC<IFormCheckbox> = ({
         </div>
     );
 };
+
+export const FormRadio: FC<IFormCheckbox> = ({
+    label,
+    classNames,
+    checked,
+    onChange,
+    disabled,
+    subtext,
+}: IFormCheckbox) => {
+    return (
+        <div className={twMerge("relative flex items-start", classNames)}>
+            <div className="flex h-6 items-center">
+                <input
+                    id="radio"
+                    aria-describedby="radio-description"
+                    name="plan"
+                    type="radio"
+                    checked={checked}
+                    onChange={onChange}
+                    disabled={disabled}
+                    className="h-4 w-4 border-gray-300 text-accentVariant100 focus:ring-accentVariant100"
+                />
+            </div>
+            <div className="ml-3 text-sm leading-6">
+                <label htmlFor="radio" className="font-medium text-primary">
+                    {label}
+                </label>
+                <p id="radio-description" className="text-primaryVariant100">
+                    {subtext}
+                </p>
+            </div>
+        </div>
+    );
+};
