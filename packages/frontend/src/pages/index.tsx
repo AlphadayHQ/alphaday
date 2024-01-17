@@ -356,6 +356,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             </DragDropContext>
             <CookieDisclaimerContainer />
             <WalletConnectionDialogContainer />
+
             <TutorialContainer />
         </MainLayout>
     );
