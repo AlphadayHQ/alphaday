@@ -19,7 +19,10 @@ interface IFeedItem {
 }
 
 export const FeedItem: FC<{ item: IFeedItem }> = ({ item }) => {
-    const { title, date, source, tags, likes, comments, link, img } = item;
+    const {
+        title,
+        // date, source, tags, likes, comments, link, img
+    } = item;
     return (
         <Disclosure>
             {({ open }) => (
