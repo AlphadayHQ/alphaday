@@ -10,8 +10,8 @@ import {
     FormSelect,
     FormTextArea,
 } from "./mobile-components/form-elements/FormElements";
-import { MobileHeader } from "./mobile-components/navigation/header";
-import { MobileBottomNav } from "./mobile-components/navigation/MobileBottomNav";
+import { NavBottom } from "./mobile-components/navigation/NavBottom";
+import { NavHeader } from "./mobile-components/navigation/NavHeader";
 
 setupIonicReact();
 
@@ -21,7 +21,7 @@ function App() {
     return (
         <>
             <div className="fixed w-full">
-                <MobileHeader avatar={undefined} />
+                <NavHeader avatar={undefined} />
             </div>
             <div className="flex h-screen w-screen flex-col items-center justify-center">
                 <h1 className="text-primary text-lg font-semibold">
@@ -96,7 +96,7 @@ function App() {
                     <IconButton variant="star" />d
                 </div>
             </div>
-            <MobileBottomNav />
+            <NavBottom />
         </>
     );
 }
