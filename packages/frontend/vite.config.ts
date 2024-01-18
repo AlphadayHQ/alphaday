@@ -14,6 +14,9 @@ export default defineConfig({
         tsconfigPaths(),
         VitePWA({
             registerType: "autoUpdate",
+            devOptions: {
+                enabled: true,
+            },
             workbox: {
                 clientsClaim: true,
                 skipWaiting: true,
@@ -25,10 +28,12 @@ export default defineConfig({
                 "maskable-icon-512x512.png",
             ],
             manifest: {
+                id: "com.alphaday.pwa",
                 name: "Alphaday",
                 short_name: "Alphaday",
-                description: "",
+                description: "News, Information & Curated Research - Alphaday",
                 theme_color: "#FAA202",
+                orientation: "portrait",
                 icons: [
                     {
                         src: "pwa-64x64.png",

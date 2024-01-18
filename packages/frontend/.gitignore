@@ -11,3 +11,6 @@ dist/
 .env
 
 /public/*-*x*.png
+/public/favicon.ico
+
+/dev-dist
