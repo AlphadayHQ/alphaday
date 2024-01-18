@@ -1,6 +1,7 @@
 import { memo } from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useAppInit, useGlobalHooks } from "./api/hooks";
+import SuperfeedPage from "./mobile-pages/superfeed";
 
 const App: React.FC = () => {
     useAppInit();
@@ -9,7 +10,7 @@ const App: React.FC = () => {
     return (
         <BrowserRouter>
             <Switch>
-                {/* <Route path="/" exact component={HomePage} /> */}
+                <Route path="/" exact component={SuperfeedPage} />
                 {/* Add more routes as needed */}
             </Switch>
         </BrowserRouter>
