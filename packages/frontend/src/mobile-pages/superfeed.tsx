@@ -1,5 +1,11 @@
+import MobileLayout from "src/layout/MobileLayout";
+
 const SuperfeedPage = () => {
-    return <div>SuperfeedPage</div>;
+    return (
+        <MobileLayout>
+            <div>SuperfeedPage</div>
+        </MobileLayout>
+    );
 };
 
 export default SuperfeedPage;

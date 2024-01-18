@@ -20,9 +20,7 @@ function App() {
     const [checked, setChecked] = useState(false);
     return (
         <>
-            <div className="fixed w-full">
-                <NavHeader avatar={undefined} />
-            </div>
+            <NavHeader avatar={undefined} />
             <div className="flex h-screen w-screen flex-col items-center justify-center">
                 <h1 className="text-primary text-lg font-semibold">
                     Vite + React + Ionic + Tailwind
