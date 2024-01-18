@@ -2,6 +2,8 @@ import { FC, memo, useCallback, useRef, useState } from "react";
 import { Button } from "@alphaday/ui-kit";
 import { ESignInUpMethod, ESignInUpState } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
+import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
+import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
 import OtpModule from "./OtpModule";
 
 interface IEmailInputProps {
@@ -101,21 +103,21 @@ const SignInUpModule: FC<ISignInUpProps> = memo(function SignInUpModule({
                     <div className="w-full flex gap-2.5 py-2 justify-evenly">
                         <button
                             type="button"
-                            className="px-4 py-3 bg-primary rounded-lg flex-col justify-center items-center gap-2 inline-flex text-primaryVariant100 text-base font-bold flex-grow"
+                            className="px-4 py-3 bg-primary rounded-lg justify-center items-center gap-2 inline-flex text-primaryVariant100 text-base font-bold flex-grow"
                             onClick={() =>
                                 handleSSOCallback(ESignInUpMethod.Google)
                             }
                         >
-                            Google
+                            <GoogleIcon /> Google
                         </button>
                         <button
                             type="button"
-                            className="px-4 py-3 bg-primary rounded-lg flex-col justify-center items-center gap-2 inline-flex text-primaryVariant100 text-base font-bold flex-grow"
+                            className="px-4 py-3 bg-primary rounded-lg justify-center items-center gap-2 inline-flex text-primaryVariant100 text-base font-bold flex-grow"
                             onClick={() =>
                                 handleSSOCallback(ESignInUpMethod.Apple)
                             }
                         >
-                            Apple
+                            <AppleIcon className="text-black" /> Apple
                         </button>
                     </div>
                 </div>
