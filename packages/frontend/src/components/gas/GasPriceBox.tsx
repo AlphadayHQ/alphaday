@@ -32,7 +32,7 @@ interface IGasPriceBox {
 
 const GasPriceBox: FC<IGasPriceBox> = ({ type, gweiPrice, usdPrice }) => {
     return (
-        <div className="flex flex-col justify-center items-center border border-btnRingVariant500 box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
+        <div className="flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
             {type === "fast" && (
                 <GasPriceTitle className="text-success">{type}</GasPriceTitle>
             )}

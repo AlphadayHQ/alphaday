@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { IconButton, TabButton } from "@alphaday/ui-kit";
+import { TabsBar } from "@alphaday/ui-kit";
 import { TCoin } from "src/api/types";
 import { TMarketMeta } from "./types";
 
@@ -23,76 +23,52 @@ const MarketsList: FC<IMarketsList> = ({
     selectedMarket,
     pinnedCoins,
 }) => {
+    const pinnedCoinTabs = [
+        ...pinnedCoins.map((coin) => ({
+            label: coin.ticker,
+            value: coin.id.toString(),
+            icon: coin.icon,
+        })),
+    ];
+    const unpinnedCoinTabs = markets
+        ?.filter(
+            (market) =>
+                pinnedCoins.findIndex((coin) => coin.id === market.id) === -1
+        )
+        .map((market) => ({
+            label: market.ticker,
+            value: market.id.toString(),
+            icon: market.icon,
+        }));
+    const coinTabs = [...pinnedCoinTabs, ...(unpinnedCoinTabs || [])];
+    const selectedTab =
+        pinnedCoins.find((coin) => coin.id === selectedMarket?.id) ||
+        pinnedCoins[0];
+
+    const handleTabChange = (value: string) => {
+        const coin = markets?.find((market) => market.id.toString() === value);
+        if (coin) onSelectMarket(coin);
+    };
+
     return (
-        <div className="w-full border-b border-solid border-btnRingVariant500 transition-[height] duration-[400ms] relative cursor-pointer">
-            <div
-                className="flex overflow-x-auto overflow-y-hidden px-0 py-[13px]"
-                ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
-            >
-                <div className="min-w-[15px] h-5 self-center" />
-                {!hideLeftPan && (
-                    <span className="block absolute self-center left-[3px] top-[calc(50%_-_16.5px)]">
-                        <IconButton
-                            title="Pan Coins Left"
-                            variant="leftArrow"
-                            onClick={() => handleClickScroll()}
-                        />
-                    </span>
-                )}
-                {pinnedCoins.map((coin) => (
-                    <span key={coin.slug} className="mr-1.5">
-                        <TabButton
-                            variant="small"
-                            open={selectedMarket?.slug === coin.slug}
-                            uppercase
-                            onClick={() => onSelectMarket(coin)}
-                        >
-                            <img
-                                className="w-[18px] h-[18px] mr-[5px] rounded-full"
-                                src={coin.icon}
-                                alt=""
-                            />
-                            {coin.ticker}
-                        </TabButton>
-                    </span>
-                ))}
+        <div className="w-full transition-[height] duration-[400ms] relative cursor-pointer">
+            <div className="flex mx-2 overflow-x-auto overflow-y-hidden px-0 pb-2">
+                <TabsBar
+                    options={coinTabs}
+                    onChange={handleTabChange}
+                    selectedOption={{
+                        label: selectedTab?.ticker,
+                        value: selectedTab?.id.toString(),
+                    }}
+                    setHeaderRef={setHeaderRef}
+                    handleClickScroll={handleClickScroll}
+                    hideLeftPan={hideLeftPan}
+                    hideRightPan={hideRightPan}
+                />
                 {pinnedCoins.length > 0 && (
-                    <div className="w-[2.5px] ml-1.5 mr-3 bg-btnRingVariant500 rounded-sm shrink-0" />
+                    <div className="w-[2.5px] ml-1.5 mr-3 bg-borderLine rounded-sm shrink-0" />
                 )}
-                {markets
-                    ?.filter(
-                        (market) =>
-                            pinnedCoins.findIndex(
-                                (coin) => coin.id === market.id
-                            ) === -1
-                    )
-                    .map((market) => (
-                        <span key={market.slug} className="mr-1.5">
-                            <TabButton
-                                variant="small"
-                                open={selectedMarket?.slug === market.slug}
-                                uppercase
-                                onClick={() => onSelectMarket(market)}
-                            >
-                                <img
-                                    className="w-[18px] h-[18px] mr-[5px] rounded-full"
-                                    src={market.icon}
-                                    alt=""
-                                />
-                                {market.ticker}
-                            </TabButton>
-                        </span>
-                    ))}
-                <div className="min-w-[15px] h-5 self-center" />
-                {!hideRightPan && (
-                    <span className="block absolute self-center left-auto top-[calc(50%_-_16.5px)] right-[3px]">
-                        <IconButton
-                            title="Pan Coins Right"
-                            variant="rightArrow"
-                            onClick={() => handleClickScroll(true)}
-                        />
-                    </span>
-                )}
+                <div className="min-w-4 h-5 self-center" />
             </div>
         </div>
     );

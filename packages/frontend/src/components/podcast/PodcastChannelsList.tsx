@@ -94,12 +94,12 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
 
     return (
         <div
-            className="w-full border-b border-solid border-btnRingVariant500 transition-all duration-[400] relative cursor-pointer"
+            className="w-full border-b border-solid border-borderLine transition-all duration-[400] relative cursor-pointer"
             style={{
                 height: showAllChannels ? "600px" : `${channelsHeight}px`,
             }}
         >
-            <div className="flex w-full justify-between pt-[10px] px-[15px] pb-3 cursor-pointer">
+            <div className="flex w-full justify-between pt-[10px] px-4 pb-3 cursor-pointer">
                 <div
                     role="button"
                     tabIndex={-1}
@@ -110,7 +110,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                     }}
                     className="min-w-max flex"
                 >
-                    <span className="fontGroup-highlight uppercase text-primary m-0 transition-all duration-[400]">
+                    <span className="fontGroup-highlightSemi uppercase text-primary m-0 transition-all duration-[400]">
                         {showAllChannels ? "Selected Channels" : "Channels"}
                     </span>
                     <div className="flex items-center h-[17.5px]">
@@ -132,9 +132,9 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 >
                     <span
                         className={twMerge(
-                            "fontGroup-highlight  m-0 transition-all duration-[400]",
+                            "fontGroup-highlightSemi  m-0 transition-all duration-[400]",
                             showAllChannels
-                                ? "text-btnRingVariant100"
+                                ? "text-accentVariant100"
                                 : "text-primary"
                         )}
                     >
@@ -145,13 +145,13 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
 
             <div
                 ref={(ref: HTMLDivElement | null) => ref && setHeaderRef(ref)}
-                className="flex overflow-y-hidden overflow-x-scroll pb-3"
+                className="flex overflow-y-hidden overflow-x-scroll"
             >
-                <div className="min-w-[15px] h-5 self-center" />
+                <div className="min-w-[16px] h-5 self-center" />
                 {!hideLeftPan && (
                     <span
                         className={twMerge(
-                            "absolute self-center top-[70px] left-[3px] z-[1]",
+                            "absolute self-center top-[58px] left-[3px] z-[1]",
                             showChannels ? "block" : "none"
                         )}
                     >
@@ -177,7 +177,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                                     src={channel.icon}
                                     alt=""
                                 />
-                                <span className="relative text-ellipsis overflow-hidden fontGroup-supportBold [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
+                                <span className="relative pt-1 text-ellipsis overflow-hidden fontGroup-support [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
                                     {channel.name}
                                 </span>
                             </div>
@@ -190,11 +190,11 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                         ))}
                     </>
                 )}
-                <div className="min-w-[15px] h-5 self-center" />
+                <div className="min-w-[16px] h-5 self-center" />
                 {!hideRightPan && (
                     <span
                         className={twMerge(
-                            "absolute self-center top-[70px] z-[2] left-auto right-[3px]",
+                            "absolute self-center top-[58px] z-[2] left-auto right-[3px]",
                             showChannels ? "block" : "none"
                         )}
                     >
@@ -207,8 +207,8 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                 )}
             </div>
             {!isLoadingChannels && (
-                <div className="h-[436px] p-[15px] m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-btnRingVariant500">
-                    <p className="fontGroup-highlight uppercase text-primary m-0 mb-[10px]">
+                <div className="h-[436px] p-4 mt-2 m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-borderLine">
+                    <p className="fontGroup-highlightSemi uppercase text-primary m-0 mb-[10px]">
                         All Channels
                     </p>
                     <div className="mb-5 w-full">
@@ -271,7 +271,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                                                 src={channel.icon}
                                                 alt=""
                                             />
-                                            <span className="relative text-ellipsis overflow-hidden fontGroup-supportBold [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
+                                            <span className="relative text-ellipsis overflow-hidden fontGroup-support [display:_-webkit-box] [-webkit-line-clamp:_3] [-webkit-box-orient:_vertical]">
                                                 {channel.name}
                                             </span>
                                         </div>

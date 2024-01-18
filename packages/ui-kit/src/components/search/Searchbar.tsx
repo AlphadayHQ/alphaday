@@ -67,9 +67,9 @@ const CustomMenuList = (showTrending: boolean) => {
         return (
             <>
                 {showTrending && (
-                    <div className="border-b-btnRingVariant300 text-primaryVariant100 fontGroup-mini flex w-full items-center border-b border-solid px-3 pb-2.5 pt-3">
-                        Trending Keywords
-                        <HotSVG className="text-primaryVariant100 mb-0 ml-0.5 mr-0 mt-px h-3 w-2.5 pb-0.5" />
+                    <div className="text-primaryVariant100 fontGroup-mini flex w-full items-center mx-2 px-3 pt-3">
+                        <span className="uppercase">Trending Keywords</span>
+                        <HotSVG className="text-primaryVariant100 mb-0 ml-[3px] mr-0 mt-px h-3 w-2.5 pb-0.5" />
                     </div>
                 )}
                 <div data-testid="searchbar-menu">
@@ -211,8 +211,10 @@ export const SearchBar = <T,>({
 
     const selectClasses: ClassNamesConfig<T, true, GroupBase<T>> & IProps = {
         ...componentClassNames,
+        container: (props) =>
+            `overflow-hidden ${componentClassNames?.container?.(props)}`,
         control: (props) =>
-            `flex justify-between items-center cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none rounded-[10px] h-[41px] min-h-[41px] pl-1 ${componentClassNames?.control?.(
+            `overflow-x-scroll flex justify-between items-center cursor-text bg-backgroundVariant200 hover:bg-backgroundVariant100 border-0 focus-within:border focus-within:bg-backgroundVariant100 border-borderLine shadow-none rounded-[10px] h-[41px] min-h-[41px] pl-1 ${componentClassNames?.control?.(
                 props
             )}`,
         placeholder: (props) =>
@@ -220,7 +222,7 @@ export const SearchBar = <T,>({
                 props
             )}`,
         multiValue: (props) =>
-            `bg-btnBackgroundVariant1400 rounded-[8px] m-[0_0_0_5px] leading-4 p-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary ${componentClassNames?.multiValue?.(
+            `bg-backgroundBlue rounded-[8px] m-[0_0_0_5px] leading-4 p-[6px] flex items-center cursor-pointer [&>div]:text-[12px] [&>div]:text-primary [&>div]:p-0 [&>div:first-child]:m-[0_0_0_5px] [&>div:hover]:bg-transparent [&>div:hover]:text-primary ${componentClassNames?.multiValue?.(
                 props
             )}`,
         multiValueRemove: (props) =>
@@ -246,15 +248,15 @@ export const SearchBar = <T,>({
                 props
             )}`,
         menu: (props) =>
-            `bg-backgroundVariant200 mt-2 rounded-md font-weight-bold text-sm leading-4 shadow-[0_0_35px_14px_rgba(19,21,27,0.8)] overflow-hidden ${componentClassNames?.menu?.(
+            `bg-background mt-2 rounded-md font-weight-bold text-sm leading-4 border-borderLine border-solid border overflow-hidden ${componentClassNames?.menu?.(
                 props
             )}`,
         menuList: (props) =>
-            `p-0 pb-[5px] overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-backgroundVariant800 [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryVariant900 ${componentClassNames?.menuList?.(
+            `px-0 py-2 overflow-auto [&::-webkit-scrollbar]:w-[4px] [&::-webkit-scrollbar]:h-0 [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar-thumb]:bg-primary [&::-webkit-scrollbar-thumb:hover]:bg-primaryFiltered ${componentClassNames?.menuList?.(
                 props
             )}`,
         option: (props) =>
-            `text-primary bg-transparent px-3 py-2 hover:bg-backgroundVariant600 active:bg-transparent cursor-pointer capitalize fontGroup-highlight ${componentClassNames?.option?.(
+            `text-primary bg-transparent mx-2 px-3 py-2 rounded hover:bg-backgroundVariant200 active:bg-transparent cursor-pointer capitalize fontGroup-normal ${componentClassNames?.option?.(
                 props
             )}`,
     };

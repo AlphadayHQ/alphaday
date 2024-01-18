@@ -12,19 +12,15 @@
     tbody {
         justify-content: flex-end;
         margin-left: -12%;
-        background-color: theme("colors.backgroundVariant200");
-
-        .full-size {
-            background-color: theme("colors.backgroundVariant1500");
-        }
+        background-color: theme("colors.background");
 
         & .fc-list-day {
-            min-width: 80px;
+            min-width: 60px;
             @apply tiny:min-w-[40px] tiny:-ml-[10%];
         }
         .event-highlight,
         .event-hover-highlight {
-            background-color: theme("colors.btnBackgroundVariant400");
+            background-color: theme("colors.backgroundVariant200");
             a {
                 text-decoration: none !important;
             }
@@ -57,24 +53,14 @@
         margin: 0;
     }
 
-    // ${({ $noEvents, $height, $isFullSize: isFullSize }) => css`
-    //     .fc-view-harness {
-    //         height: ${$noEvents
-    //             ? `${isFullSize ? FULLSIZE_CAL_HEIGHT : $height}px !important`
-    //             : "100%"};
-    //     }
-    // `}
-
     .fc {
         height: 100%;
         .fc {
             &-toolbar {
                 &.fc-header-toolbar {
-                    // display: ${({ $isFullSize: isFullSize }) =>
-                    //     isFullSize ? "none" : "flex"};
                     display: flex;
-                    height: 50px;
-                    border-bottom: 1px solid theme("colors.btnRingVariant500");
+                    height: 42px;
+                    border-bottom: none;
                     margin-bottom: 0 !important;
                     justify-content: flex-end;
                     padding: 10px;
@@ -84,11 +70,11 @@
                     }
 
                     position: fixed;
-                    background-color: theme("colors.backgroundVariant200");
+                    background-color: theme("colors.background");
                     z-index: 1;
-                    width: calc(100% - 4px);
+                    width: calc(100% - 2px);
 
-                    @apply single-col:justify-between two-col:p-[0_15px];
+                    @apply single-col:justify-between two-col:py-0 px-4;
                 }
                 .fc {
                     &:first-child {
@@ -154,19 +140,16 @@
                         width: auto !important;
                         height: auto !important;
                         border-radius: 10px;
-                        padding: 2px 10px !important;
-                        border: 1px solid theme("colors.btnRingVariant300");
+                        padding: 4px 10px !important;
+                        border: none;
                         color: theme("colors.primary") !important;
                         display: none;
                         cursor: pointer;
                         text-transform: capitalize;
-                        background-color: theme(
-                            "colors.btnBackgroundVariant300"
-                        );
+                        background-color: theme("colors.backgroundVariant100");
                         background-clip: padding-box;
                         .fc-daygrid-day-frame {
-                            border: 1px solid
-                                theme("colors.backgroundVariant100");
+                            border: 1px solid theme("colors.background");
                         }
 
                         /* identical to box height, or 183% */
@@ -174,7 +157,7 @@
                         @apply single-col:block fontGroup-normal;
                         &:disabled {
                             background-color: theme(
-                                "colors.btnBackgroundVariant300"
+                                "colors.backgroundVariant100"
                             );
                             opacity: 0.4;
                             cursor: default;
@@ -185,7 +168,7 @@
             &-view {
                 th,
                 td {
-                    border-color: theme("colors.btnRingVariant300");
+                    border-color: theme("colors.borderLine");
                 }
             }
             &-scrollgrid {
@@ -231,6 +214,7 @@
                             //         ? ""
                             //         : "50px"}; // for absolutely positioned header
                             margin-top: 50px;
+                            padding: 0px 3px 0 13px;
                             display: block;
                             & > tbody {
                                 display: flex;
@@ -242,9 +226,10 @@
                             max-width: 20%;
                             padding-top: -0.75px;
                             border-top: 1.5px solid
-                                theme("colors.btnBackgroundVariant400");
+                                theme("colors.backgroundVariant200");
                             display: flex;
-                            justify-content: center;
+                            justify-content: flex-start;
+                            padding-left: 6px;
 
                             @apply flex-[0_0_15%] tiny:max-w-[40px] max-w-[15%] two-col:flex-[0_0_12%] two-col:max-w-[12%] three-col:flex-[0_0_10%] three-col:max-w-[10%];
                             &:first-of-type {
@@ -256,6 +241,9 @@
                             & > th {
                                 border: none;
                                 background-color: transparent;
+                                display: flex;
+                                width: 40px;
+                                justify-content: center;
                             }
                             .fc-list-day {
                                 &-cushion {
@@ -280,13 +268,9 @@
                                         text-decoration: none;
                                     }
                                     &.now {
-                                        color: theme(
-                                            "colors.primaryVariant700"
-                                        );
+                                        color: theme("colors.primary");
                                         span {
-                                            color: theme(
-                                                "colors.primaryVariant700"
-                                            );
+                                            color: theme("colors.primary");
                                         }
                                     }
                                     span {
@@ -302,18 +286,18 @@
                         &-event {
                             display: flex;
                             flex-direction: column;
-                            flex: 0 0 calc(90% - 80px);
-                            max-width: calc(90% - 80px);
+                            flex: 0 0 calc(90% - 60px);
+                            max-width: calc(90% - 60px);
                             cursor: pointer;
                             @apply tiny:flex-[0_0_calc(100%_-_50px)] tiny:max-w-[calc(100%_-_79px)];
 
                             &:hover {
                                 background-color: theme(
-                                    "colors.btnBackgroundVariant400"
+                                    "colors.backgroundVariant200"
                                 );
                                 td {
                                     background-color: theme(
-                                        "colors.btnBackgroundVariant400"
+                                        "colors.backgroundVariant200"
                                     );
                                 }
                                 a {
@@ -321,12 +305,12 @@
                                 }
                             }
 
-                            @apply flex-[0_0_calc(85%_-_80px)] max-w-[calc(85%_-_80px)] two-col:flex-[0_0_calc(88%_-_80px)] two-col:max-w-[calc(88%_-_80px)] three-col:flex-[0_0_calc(90%_-_80px)] three-col:max-w-[calc(90%_-_80px)];
+                            @apply flex-[0_0_calc(85%_-_60px)] max-w-[calc(85%_-_60px)] two-col:flex-[0_0_calc(88%_-_60px)] two-col:max-w-[calc(88%_-_60px)] three-col:flex-[0_0_calc(90%_-_60px)] three-col:max-w-[calc(90%_-_60px)];
                             & + .fc-list-event {
                                 margin-left: 10%;
                                 flex: 0 0 100%;
                                 max-width: 90%;
-                                padding-left: 80px;
+                                padding-left: 60px;
                                 @apply tiny:ml-[15%] ml-[12%] two-col:ml-[20%];
                             }
                             // &:first-child {
@@ -350,7 +334,7 @@
                                     width: 100%;
                                     color: theme("colors.primaryVariant100");
                                     border-top: 1.5px solid
-                                        theme("colors.btnBackgroundVariant400");
+                                        theme("colors.backgroundVariant200");
                                 }
                                 box-sizing: border-box;
                                 border-bottom: none;
@@ -358,16 +342,16 @@
                                 @apply fontGroup-support;
                             }
                             &-title {
-                                padding: 0px 15px 20px;
+                                padding: 0px 0 16px 0px;
                                 border-bottom: 1px solid
-                                    theme("colors.btnRingVariant300");
+                                    theme("colors.borderLine");
                                 box-sizing: border-box;
                                 border: none;
                                 a {
                                     display: block;
                                     margin-bottom: 2px;
                                     color: theme("colors.primary");
-                                    @apply fontGroup-highlightSemi;
+                                    @apply fontGroup-highlight;
                                 }
                             }
                         }
@@ -376,7 +360,7 @@
                 &-empty {
                     height: auto;
                     background-color: transparent;
-                    justify-content: start;
+                    justify-content: flex-start;
                     width: 100%;
                     height: 604px;
                     margin: 0;
@@ -397,13 +381,13 @@
 }
 
 .calendar-month {
-    background: theme("colors.backgroundVariant200");
+    background: theme("colors.background");
     position: relative;
     display: block;
     transition: all 0.3s;
 
     .full-size {
-        background-color: theme("colors.backgroundVariant800");
+        background-color: theme("colors.background");
     }
 
     .fc-daygrid-day-events {
@@ -465,26 +449,32 @@
         height: 18px !important;
         color: theme("colors.primary");
     }
+    .fc-scrollgrid-section.fc-scrollgrid-section-body > td {
+        border-bottom: none !important;
+    }
+    .fc-scrollgrid-section.fc-scrollgrid-section-header > th {
+        border: none !important;
+    }
     .fc {
         height: 100%;
         .fc {
             &-toolbar {
                 &.fc-header-toolbar {
-                    height: 50px;
+                    height: 42px;
                     margin-bottom: 0 !important;
                     display: flex;
                     justify-content: flex-end;
                     padding: 0 10px;
-                    @apply single-col:justify-between two-col:p-[0_15px];
+                    @apply single-col:justify-between two-col:p-[0_16px];
                 }
                 button {
                     height: 32px;
-                    background-color: theme("colors.btnBackgroundVariant300");
+                    background-color: theme("colors.backgroundVariant100");
                     background-image: none;
-                    border: 1px solid theme("colors.btnRingVariant300");
+                    border: 1px solid theme("colors.borderLine");
                     color: theme("colors.primary") !important;
                     box-shadow: none;
-                    padding: 0 15px;
+                    padding: 0 16px;
                     display: flex;
                     align-items: center;
                     text-transform: capitalize;
@@ -494,12 +484,13 @@
                     transition: all 0.2s ease-in-out;
                     &:hover,
                     &:focus {
+                        background-color: theme("colors.backgroundVariant200");
                         position: relative;
                         z-index: 5;
                     }
                     &:not(:disabled) {
                         &.fc-button-active {
-                            border: 1px solid theme("colors.btnRingVariant300");
+                            border: 1px solid theme("colors.borderLine");
                         }
                     }
                 }
@@ -572,8 +563,8 @@
                         width: auto !important;
                         height: auto !important;
                         border-radius: 10px;
-                        padding: 2px 10px !important;
-                        border: 1px solid theme("colors.btnRingVariant300");
+                        padding: 4px 10px !important;
+                        border: none !important;
                         color: theme("colors.primary") !important;
                         display: none;
                         cursor: pointer;
@@ -581,7 +572,7 @@
 
                         &:disabled {
                             background-color: theme(
-                                "colors.btnBackgroundVariant100"
+                                "colors.backgroundVariant100"
                             );
                             opacity: 0.4;
                             cursor: default;
@@ -602,7 +593,7 @@
             &-view {
                 th,
                 td {
-                    border: 1px solid theme("colors.btnRingVariant500");
+                    border: 1px solid theme("colors.borderLine");
                 }
             }
             &-view:first-child {
@@ -634,8 +625,8 @@
             }
             &-col {
                 &-header-cell {
-                    padding: 5px 0;
-                    border-color: theme("colors.btnRingVariant500");
+                    padding: 9px 0 5px;
+                    border-color: theme("colors.borderLine");
                     border: 0px !important;
                     color: theme("colors.primaryVariant100");
                     @apply fontGroup-support;
@@ -647,6 +638,8 @@
                 }
             }
             &-daygrid {
+                margin: 0 8px;
+
                 &-body {
                     border-left-width: 0;
                     width: 100% !important;
@@ -657,10 +650,8 @@
                         &-today {
                             background-color: theme("colors.primaryVariant300");
                             background-clip: padding-box;
-                            border-color: theme("colors.primaryVariant600");
                             .fc-daygrid-day-frame {
-                                border: 1px solid
-                                    theme("colors.backgroundVariant100");
+                                border: 1px solid theme("colors.background");
                             }
                         }
                         &-other {

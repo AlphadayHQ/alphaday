@@ -2,7 +2,9 @@
 import { themes } from "./src/globalStyles/themes";
 import { tailwindBreakpoints } from "./src/globalStyles/breakpoints";
 import typography from "@tailwindcss/typography";
+
 import plugin from "tailwindcss/plugin";
+import forms from "@tailwindcss/forms";
 import themeSwapper from "tailwindcss-theme-swapper";
 import tailwindScrollbar from "tailwind-scrollbar";
 import { fontUtilities } from "./src/globalStyles/fontGroups";
@@ -26,6 +28,7 @@ export default {
     },
     plugins: [
         typography,
+        forms,
         themeSwapper({ themes }),
         plugin(function ({ addUtilities }) {
             addUtilities({

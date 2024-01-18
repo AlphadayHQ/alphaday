@@ -43,7 +43,7 @@ export type TRemoteColumnData = {
 export type TRemoteFormatStructure<T> = {
     data?: T;
     columns?: TRemoteFormatStructureColumns[];
-};
+} | null;
 
 export type TRemoteColumn =
     | "string"
@@ -222,13 +222,17 @@ export type IRemoteWidget<T = undefined> = Omit<
 };
 
 export type TRemoteUserViewWidgetSetting = {
-    setting: {
-        name: string;
-        slug: EWidgetSettingsRegistry;
-        setting_type: string;
+    widget_setting: {
+        setting: {
+            name: string;
+            slug: EWidgetSettingsRegistry;
+            setting_type: string;
+        };
+        sort_order: number;
+        default_toggle_value: boolean | null;
     };
     tags: TRemoteTagReadOnly[];
-    toggle_value: boolean;
+    toggle_value: boolean | null;
 };
 
 export type TRemoteBaseUserViewWidget = {
@@ -339,16 +343,7 @@ export type TRemoteWidgetMinValidate = {
     settings: TRemoteWidgetSettingDraft[];
 };
 
-export type TRemoteUserViewWidgetSettingDraft = {
-    setting: {
-        slug: string;
-    };
-    tags: {
-        name: string;
-        slug: string;
-    }[];
-    toggle_value: boolean;
-};
+export type TRemoteUserViewWidgetSettingDraft = TRemoteUserViewWidgetSetting;
 
 export type TRemoteUserViewWidgetDraft = TRemoteBaseUserViewWidget & {
     hash?: string;

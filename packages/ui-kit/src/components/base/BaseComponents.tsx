@@ -19,7 +19,7 @@ export const BaseModuleWrapper = forwardRef<
             className={twMerge("origin-center w-full", className)}
             style={style}
         >
-            <div className="w-full h-full border-background bg-backgroundVariant200 text-primary flex flex-col overflow-hidden rounded-[5px] border-2 border-solid shadow-[0px_0px_0px_1px_rgba(121,131,162,0.2)]">
+            <div className="w-full h-full border-borderLine bg-background text-primary flex flex-col overflow-hidden rounded-[5px] border border-solid">
                 {children}
             </div>
         </div>
@@ -48,7 +48,7 @@ export const BaseModuleHeader = forwardRef<
         <div
             ref={ref}
             className={twMerge(
-                "border-b-background bg-backgroundVariant300 text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] pl-[15px] pr-[9px] bg-blend-soft-light",
+                "border-b-background bg-background text-primaryVariant100 rounded-[3px] border-b-[1.2px] border-solid py-[4.5px] pl-3 pr-[3px] bg-blend-soft-light",
                 className
             )}
         >
@@ -63,15 +63,15 @@ export const BaseModuleOptionsFooter = forwardRef<
 >(({ removeWidget }, ref) => {
     return (
         <div ref={ref}>
-            <div className="py-2 text-primaryVariant100 border-t-btnRingVariant500 flex w-full justify-center self-end border-t-[0.8px] border-solid">
+            <div className="py-2 text-primaryVariant100 border-t-borderLine flex w-full justify-center self-end border-t-[0.8px] border-solid">
                 <Button
                     variant="small"
                     onClick={removeWidget}
                     title="Removes this widget from the current board"
-                    className="hover:border-btnRingVariant500 focus:border-btnRingVariant500 border-btnRingVariant500"
+                    className="hover:border-borderLine focus:border-borderLine border-borderLine"
                 >
-                    <TrashSVG className="w-[15px] fill-[inherit]" /> &nbsp;
-                    Remove Widget
+                    <TrashSVG className="w-4 fill-[inherit]" /> &nbsp; Remove
+                    Widget
                 </Button>
             </div>
         </div>

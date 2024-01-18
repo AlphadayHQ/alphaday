@@ -24,7 +24,7 @@ const Item: FC<IProps> = ({
     if (ethPrice && gasPrices) {
         if (type === "title") {
             return (
-                <div className="uppercase fontGroup-support text-primaryVariant100 mb-2">
+                <div className="capitalize fontGroup-support text-primaryVariant100 mb-2">
                     <div className="grid grid-cols-4 md-gap-10 gap-5">
                         <span className="ml-0">{title}</span>
                         <span className="ml-auto text-right">Fast (est.)</span>
@@ -47,7 +47,9 @@ const Item: FC<IProps> = ({
                             src={img}
                             alt="Item"
                         />
-                        <span className="ml-3 font-bold">{title}</span>
+                        <span className="ml-3 fontGroup-highlightSemi">
+                            {title}
+                        </span>
                     </div>
                     {gasPrices &&
                         Object.entries(gasPrices).map(([key, value]) => (

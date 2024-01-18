@@ -129,17 +129,6 @@ export const buildViewDraft = (
                     slug: widget.widget.slug,
                     settings: widget.widget.settings,
                 },
-                settings: widget.settings.map((s) => ({
-                    setting: {
-                        slug: s.setting.slug,
-                    },
-                    tags: s.tags.map((t) => ({
-                        slug: t.slug,
-                        name: t.name,
-                        tag_type: t.tag_type,
-                    })),
-                    toggle_value: s.toggle_value,
-                })),
             };
         }),
         keywords: keywords.map((keyword) => ({

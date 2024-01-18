@@ -164,7 +164,9 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
     );
 
     const tagsSettings = moduleData.settings.filter(
-        (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
     );
     const tags =
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;

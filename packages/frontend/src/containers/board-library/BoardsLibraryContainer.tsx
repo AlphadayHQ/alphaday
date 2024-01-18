@@ -20,6 +20,7 @@ import { useWalletViewContext } from "src/api/store/providers/wallet-view-contex
 import * as userStore from "src/api/store/slices/user";
 import { TViewMeta } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { buildViewPath } from "src/api/utils/viewUtils";
 import BoardsLibrary from "src/components/board-library/BoardsLibrary";
@@ -42,7 +43,9 @@ const BoardsLibraryContainer: FC<IProps> = ({
 }) => {
     const history = useHistory();
 
-    const [category, setCategory] = useState<string | undefined>();
+    const [selectedCategory, setSelectedCategory] = useState<
+        string | undefined
+    >();
     const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
     const [sortBy, setSortBy] = useState(EItemsSortBy.Name);
 
@@ -66,7 +69,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
         limit: CONFIG.UI.BOARD_LIBRARY.LIMIT,
         page: currentPage,
         sortBy,
-        category,
+        category: selectedCategory,
     });
 
     const [allViews, setAllViews] = useState<TRemoteUserViewPreview[]>([]);
@@ -223,18 +226,19 @@ const BoardsLibraryContainer: FC<IProps> = ({
         ]
     );
 
-    const handleSortBy = (sort: EItemsSortBy): void => {
-        if (isFetching || sortBy === sort) return;
+    const handleSortBy = (sortLabel: string): void => {
+        const sort = getSortOptionValue(sortLabel);
+        if (isFetching || sort === null || sortBy === sort) return;
         if (allViews.length > 0) setAllViews([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
         setSortBy(sort);
     };
 
     const handleCategorySelect = (newCategory: string | undefined): void => {
-        if (isFetching || newCategory === category) return;
+        if (isFetching || newCategory === selectedCategory) return;
         if (allViews.length > 0) setAllViews([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
-        setCategory(newCategory);
+        setSelectedCategory(newCategory);
     };
 
     const { nextPage, handleNextPage } = usePagination(
@@ -263,7 +267,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
 
     return (
         <BoardsLibrary
-            category={category}
+            selectedCategory={selectedCategory}
             boards={allViews}
             subscribedViews={remoteSubscribedViews}
             categories={categories}

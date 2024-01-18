@@ -22,7 +22,7 @@ const CoinInfo: FC<{
             <span className="text-primary capitalize fontGroup-highlightSemi">
                 {selectedMarket.name}
             </span>
-            <span className="text-primaryVariant100 fontGroup-highlight">
+            <span className="text-primaryVariant100 fontGroup-highlightSemi">
                 {selectedMarket.ticker.toUpperCase()}
             </span>
             <ItemBookmark

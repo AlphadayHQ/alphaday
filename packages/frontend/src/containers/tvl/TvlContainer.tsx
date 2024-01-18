@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TProjectData, TProjectTvlHistory } from "src/api/types";
 import { filteringListToStr } from "src/api/utils/filterUtils";
 import { itemListsAreEqual } from "src/api/utils/itemUtils";
-import TvlModule from "src/components/tvl/TvlModule";
+import TvlModule, { ETVLItemPreference } from "src/components/tvl/TvlModule";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
@@ -19,7 +19,9 @@ const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const widgetHeight = useWidgetHeight(moduleData);
 
     const tagsSettings = moduleData.settings.filter(
-        (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
     );
     const tags =
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
@@ -105,13 +107,12 @@ const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [nextPage]);
 
-    const handleSwitchProjectType = () => {
+    const handleChangeProjectType = (projectType: ETVLItemPreference) => {
         reset();
         dispatch(
             setSelectedTvlProjectType({
                 widgetHash: moduleData.hash,
-                projectType:
-                    selectedProjectType === "protocol" ? "chain" : "protocol",
+                projectType,
             })
         );
     };
@@ -124,7 +125,7 @@ const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
             widgetHeight={widgetHeight}
             handlePaginate={handleNextPage}
             selectedProjectType={selectedProjectType}
-            onSwitchProjectType={handleSwitchProjectType}
+            onChangeProjectType={handleChangeProjectType}
         />
     );
 };

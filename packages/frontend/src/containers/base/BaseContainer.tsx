@@ -76,7 +76,9 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     const title = (moduleData.name || moduleData.widget.name).toUpperCase();
     const widgetDescription = moduleData.widget.description;
     const tagsSettings = moduleData.settings.filter(
-        (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
     );
     const tags =
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
@@ -244,7 +246,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                     {adjustable && !isCollapsed && (
                         <div
                             onMouseDown={adjustHeight}
-                            className="absolute bottom-[-18px] left-[-3px] h-[15px] w-[calc(100%_+_6px)] cursor-row-resize border-[none]"
+                            className="absolute bottom-[-18px] left-[-3px] h-4 w-[calc(100%_+_6px)] cursor-row-resize border-[none]"
                             role="button"
                             title="Adjust widget height"
                             tabIndex={-1}

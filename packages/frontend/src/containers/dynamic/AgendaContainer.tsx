@@ -17,7 +17,7 @@ const AgendaContainer: FC<IModuleContainer<TAgendaItem[]>> = ({
     );
 
     // TODO(v-almonacid): remove this block when format_structure is removed from db model
-    const legacyItems = moduleData.widget.format_structure.data || [];
+    const legacyItems = moduleData.widget.format_structure?.data || [];
     if (Array.isArray(legacyItems) && legacyItems.length > 0) {
         Logger.warn(
             `AgendaContainer: widget ${moduleData.widget.name} contains data in format_structure which has been deprecated`

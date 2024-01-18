@@ -33,7 +33,7 @@ const GeneralError: FC<{ children?: React.ReactNode }> = ({ children }) => {
             <footer>
                 <div
                     id="footer"
-                    className="text-primaryVariant800 text-xs font-body text-center"
+                    className="text-primaryFiltered text-xs font-body text-center"
                 >
                     &copy;Alphaday
                     {new Date().getFullYear()} - v{CONFIG.APP.VERSION}

@@ -1,4 +1,5 @@
 .uniswap-widget {
+    position: relative;
     & > div {
         margin: auto;
         box-shadow: none;
@@ -11,17 +12,23 @@
     }
     [class*="WidgetWrapper__StyledWidgetWrapper"],
     [class*="TokenSelect__SearchInputContainer"] {
-        background-color: theme("colors.backgroundVariant200");
+        background-color: theme("colors.background");
+        border-color: transparent;
         border-radius: theme("borderRadius.lg");
         box-shadow: none;
+        padding-top: 0;
         @apply fontGroup-normal;
         *:not(.subhead):not(input) {
+            &:before {
+                border-color: theme("colors.borderLine");
+            }
             @apply fontGroup-normal;
+            border-color: theme("colors.borderLine");
         }
     }
     [class*="Button__BaseButton"] {
         border-radius: theme("borderRadius.lg");
-        background-color: theme("colors.btnRingVariant200");
+        background-color: theme("colors.backgroundBlue");
         font-weight: bold;
         color: theme("colors.primary");
         box-shadow: none;
@@ -30,8 +37,10 @@
             background-color: inherit !important;
         }
     }
-    [class*="Button__BaseButton"]:hover:not([disabled]):not([class*="transparentButton"]):not([class*="Custom"]):not([class*="TokenOptions__TokenButton"]) {
-        background-color: theme("colors.btnBackgroundVariant1500");
+    [class*="Button__BaseButton"]:hover:not([disabled]):not(
+            [class*="transparentButton"]
+        ):not([class*="Custom"]):not([class*="TokenOptions__TokenButton"]) {
+        background-color: theme("colors.backgroundVariant300");
     }
     [class*="transparentButton"],
     [class*="transparentButton"]:hover {
@@ -43,16 +52,16 @@
     }
     [class*="Input__InputColumn"] {
         border-radius: theme("borderRadius.lg");
-        background-color: theme("colors.backgroundVariant500");
+        background-color: theme("colors.background");
     }
 
     /** Styles for the token input */
     [class*="TokenOptions__TokenButton"] {
         border-radius: theme("borderRadius.sm");
-        background-color: theme("colors.backgroundVariant300");
+        background-color: theme("colors.background");
     }
     [class*="TokenOptions__TokenButton"]:hover {
-        background-color: theme("colors.btnRingVariant500") !important;
+        background-color: theme("colors.borderLine") !important;
     }
     [class*="TokenInput"] {
         color: theme("colors.primaryVariant100");
@@ -66,15 +75,15 @@
     [class*="TokenSelect__SearchInputContainer"] {
         border-radius: theme("borderRadius.lg");
         * {
-            background-color: theme("colors.backgroundVariant200");
+            background-color: theme("colors.background");
             border-color: transparent;
         }
     }
     [class*="ReverseButton__Underlayer"] {
-        background-color: theme("colors.backgroundVariant200");
+        background-color: theme("colors.background");
         [class*="ReverseButton"] {
-            border-color: theme("colors.backgroundVariant200");
-            background-color: theme("colors.backgroundVariant500");
+            border-color: theme("colors.background");
+            background-color: theme("colors.backgroundVariant200");
         }
     }
     [class*="Input__Balance"] {
@@ -111,7 +120,10 @@
 
     /** Styles for the settings */
     [class*="Popover__PopoverContainer"] {
-        background-color: theme("colors.backgroundVariant300");
+        background-color: theme("colors.background");
+        border-color: theme("colors.borderLine");
+        border-width: 0;
+        border-top-width: 1px;
         width: 100%;
         height: 100%;
         max-height: 88%;
@@ -154,7 +166,7 @@
             font-weight: normal;
             padding: 0;
             border-radius: theme("borderRadius.lg");
-            background-color: theme("colors.backgroundVariant200");
+            background-color: theme("colors.background");
             margin-right: theme("spacing.1");
             & + div {
                 padding-right: theme("spacing.4");
@@ -164,7 +176,7 @@
 
         [class*="MaxSlippageSelect__Custom"] {
             border-radius: theme("borderRadius.lg");
-            background-color: theme("colors.backgroundVariant200");
+            background-color: theme("colors.background");
             padding-right: theme("spacing.2");
         }
 
@@ -194,8 +206,8 @@
         font-weight: normal;
         [class*="CommonBases__BaseWrapper"] {
             border-radius: theme("borderRadius.lg");
-            background-color: theme("colors.backgroundVariant300");
-            border-color: theme("colors.btnRingVariant200");
+            background-color: theme("colors.background");
+            border-color: theme("colors.backgroundBlue");
         }
     }
 
@@ -217,7 +229,7 @@
 
     /** Swap success & error */
     [class*="Dialog__Modal"] {
-        background-color: theme("colors.backgroundVariant300");
+        background-color: theme("colors.background");
     }
 
     /** Swap warning */
@@ -228,10 +240,10 @@
     /** Connect Wallet Dialog buttons */
     [class*="ConnectWalletDialog"] {
         [class*="Button__BaseButton"] {
-            background-color: theme("colors.backgroundVariant200");
+            background-color: theme("colors.background");
         }
         [class*="Button__BaseButton"]:hover {
-            background-color: theme("colors.backgroundVariant500") !important;
+            background-color: theme("colors.background") !important;
         }
     }
 

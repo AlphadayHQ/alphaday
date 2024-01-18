@@ -11,11 +11,11 @@ const getErrorMessage = ({
     if (status === "offline") {
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
+                <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
                     You&apos;re{" "}
                     <span className="text-secondaryOrange pr-1">offline</span>
                 </h1>
-                <p className="font-montserrat text-primaryVariant1000 text-xl mt-9 max-w-screen-sm">
+                <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
                     Looks like you lost your connection. Please check it and try
                     again.
                 </p>
@@ -26,13 +26,13 @@ const getErrorMessage = ({
     if (status === 503) {
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
+                <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
                     System{" "}
                     <span className="text-secondaryOrange pr-1">
                         maintenance
                     </span>
                 </h1>
-                <p className="font-montserrat text-primaryVariant1000 text-xl mt-9 max-w-screen-sm">
+                <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
                     We are performing some scheduled maintenance at the moment.
                     We&apos;ll be back up shortly! Meanwhile, you can check our{" "}
                     <a
@@ -44,7 +44,7 @@ const getErrorMessage = ({
                     </a>
                     .
                 </p>
-                <p className="font-montserrat text-primaryVariant1000 text-xl mt-9 max-w-screen-sm">
+                <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
                     And make sure to check back again later.
                 </p>
             </>
@@ -54,11 +54,11 @@ const getErrorMessage = ({
     if (status === 403) {
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
+                <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
                     unauthorised{" "}
                     <span className="text-secondaryOrange pr-1">403</span>
                 </h1>
-                <p className="font-montserrat text-primaryVariant1000 text-xl mt-9 max-w-screen-sm">
+                <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
                     You don&apos;t have permissions to access this page.
                 </p>
             </>
@@ -68,10 +68,10 @@ const getErrorMessage = ({
     if (status === 404) {
         return (
             <>
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
+                <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
                     <span className="text-secondaryOrange pr-1">404</span>
                 </h1>
-                <p className="font-montserrat text-primaryVariant1000 text-xl mt-9 max-w-screen-sm">
+                <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
                     Sorry, the page you are looking for could not be found.
                 </p>
             </>
@@ -81,11 +81,11 @@ const getErrorMessage = ({
     return (
         <>
             {status && typeof status === "number" && (
-                <h1 className="font-montserrat text-primaryVariant800 m-0 text-[120px] leading-none">
+                <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
                     <span className="text-secondaryOrange pr-1">{status}</span>
                 </h1>
             )}
-            <p className="font-montserrat text-primaryVariant1000 text-xl mt-9 max-w-screen-sm">
+            <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
                 Something went wrong, we&apos;ll be back up shortly! Meanwhile,
                 you can check our{" "}
                 <a

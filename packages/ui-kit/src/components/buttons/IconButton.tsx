@@ -74,7 +74,12 @@ const iconSelector = (
         case "notification":
             return <BellSVG />;
         case "profile":
-            return <UserSVG />;
+            return (
+                <>
+                    <UserSVG />
+                    <ArrowDown />
+                </>
+            );
         case "trash":
             return <TrashSVG />;
         case "leftArrow":

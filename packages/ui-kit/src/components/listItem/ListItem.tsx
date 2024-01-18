@@ -7,7 +7,9 @@ import { twMerge } from "tailwind-merge";
 import ItemBookmark from "./ItemBookmark";
 import styles from "./ListItem.module.scss";
 
-export const HRElement = () => <hr className="border-btnRingVariant500 m-0" />;
+export const HRElement = () => (
+    <hr className="border-borderLine m-0 ml-2 mr-[3px]" />
+);
 
 interface IList {
     variant: "news" | "dao" | "podcast" | "video" | "reports" | "discord";
@@ -31,18 +33,19 @@ export const listItemVariants = (variant: IList["variant"]) => {
     const defaults = {
         base: twMerge(
             styles.listItem,
-            "flex relative flex-row items-start w-full p-3.5 bg-backgroundVariant800  hover:bg-backgroundVariant900 active:bg-backgroundVariant1000"
+            "flex relative flex-row items-start py-3 px-1 ml-2 mr-[3px] bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200"
         ),
         info: "grow-[1]",
-        date: "fontGroup-mini min-w-[45px] text-primaryVariant100 mr-[5px]",
-        title: "fontGroup-highlightSemi text-primary self-stretch grow-0 flex items-center mb-0",
+        date: "fontGroup-mini min-w-[50px] text-primaryVariant100 mr-[5px]",
+        title: "fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0",
         content:
-            "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlight prose-h3:fontGroup-highlight prose-h5:fontGroup-highlight prose-a:secondaryOrange break-word m-0 text-primary [&>p>a]:text-secondaryOrange",
-        readMore: "fontGroup-highlight flex justify-end text-primaryVariant100",
+            "content prose-h2:fontGroup-highlightSemi prose-h4:fontGroup-highlightSemi prose-h6:fontGroup-highlightSemi prose-h1:fontGroup-highlightSemi prose-h3:fontGroup-highlightSemi prose-h5:fontGroup-highlightSemi break-word m-0 text-primary [&>p>a]:text-secondaryOrange50 [&>p>a]:hover:underline",
+        readMore:
+            "fontGroup-highlightSemi flex justify-end text-primaryVariant100",
         lastLine: "lastLine fontGroup-mini flex text-primaryVariant100 mt-2",
         spacer: "mx-[7px] my-0 self-center",
         bookmark: "block cursor-pointer mt-px",
-        img: "w-[15px] h-[15px] mr-[5px] rounded-[100px]",
+        img: "w-4 h-4 mr-[5px] rounded-[100px]",
     };
     const variants = {
         news: { ...defaults, date: twMerge(defaults.date, "pt-[1.5px]") },
@@ -56,10 +59,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
         },
         discord: {
             ...defaults,
-            base: twMerge(
-                defaults.base,
-                "cursor-pointer bg-backgroundVariant200"
-            ),
+            base: twMerge(defaults.base, "cursor-pointer bg-background"),
             img: twMerge(
                 defaults.img,
                 "w-[38px] h-[38px] mr-3.5 rounded-[100px]"
@@ -69,7 +69,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "podcast flex-col bg-[color:var(--backgroundVariant200)] cursor-pointer p-[15px] rounded-none"
+                "podcast flex-col bg-[color:var(--background)] cursor-pointer py-4 px-2 rounded-none"
             ),
             img: twMerge(
                 defaults.img,
@@ -81,7 +81,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             ...defaults,
             base: twMerge(
                 defaults.base,
-                "video bg-backgroundVariant200 cursor-pointer p-[15px] rounded-none"
+                "video bg-background cursor-pointer py-4 px-2 rounded-none"
             ),
             date: twMerge(
                 defaults.date,
@@ -90,7 +90,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
             bookmark: twMerge(defaults.bookmark, "self-center"),
             lastLine: twMerge(defaults.lastLine, "center absolute bottom-4"),
         },
-        reports: { ...defaults },
+        reports: { ...defaults, date: twMerge(defaults.date, "pt-[1.5px]") },
     };
 
     return variants[variant];
@@ -176,15 +176,20 @@ export const ListItem: FC<IList> = ({
                         </div>
                         <p className={variantStyle.lastLine}>
                             {tag && (
-                                <a
-                                    href={tagImg}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                >
-                                    <span>{tag}</span>{" "}
-                                </a>
+                                <>
+                                    <a
+                                        href={tagImg}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                    >
+                                        <span>{tag}</span>{" "}
+                                    </a>
+                                    <span className={variantStyle.spacer}>
+                                        •
+                                    </span>
+                                </>
                             )}
-                            <span className={variantStyle.spacer}>•</span>
+
                             <img
                                 src={source} // TODO (xavier-charles):: source is image url for tag pill
                                 alt=""
@@ -219,7 +224,7 @@ export const ListItem: FC<IList> = ({
                             onError={imgOnError}
                         />
                         <div className="grow-[1]">
-                            <p className="fontGroup-supportBold mb-0">{tag}</p>
+                            <p className="fontGroup-support mb-0">{tag}</p>
                             <p className="fontGroup-mini text-primaryVariant100">
                                 {duration}
                             </p>
@@ -237,10 +242,10 @@ export const ListItem: FC<IList> = ({
                     >
                         <span
                             className={twMerge(
-                                "fontGroup-normal border-primaryVariant200 bg-btnBackgroundVariant300 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
+                                "fontGroup-normal border-primaryVariant200 bg-backgroundVariant100 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
                                 styles.audioIndicator,
                                 isPlaying &&
-                                    "bg-secondaryOrange text-btnRingVariant200"
+                                    "bg-secondaryOrange text-backgroundBlue"
                             )}
                         >
                             {isPlaying ? (

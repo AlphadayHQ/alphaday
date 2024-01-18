@@ -73,10 +73,14 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
         },
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    setting_type: "tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        setting_type: "tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    default_toggle_value: null,
+                    sort_order: 0,
                 },
                 tags: [],
                 toggle_value: false,
@@ -151,10 +155,14 @@ export const tableModuleDataMock: TUserViewWidget<TItem[]>[] = [
         },
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    setting_type: "tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        setting_type: "tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    default_toggle_value: null,
+                    sort_order: 0,
                 },
                 tags: [],
                 toggle_value: false,
@@ -243,10 +251,14 @@ export const customTableModuleDataMock: TUserViewWidget[] = [
         },
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    setting_type: "tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        setting_type: "tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    default_toggle_value: null,
+                    sort_order: 0,
                 },
                 tags: [],
                 toggle_value: false,
@@ -322,10 +334,14 @@ export const customTableModuleDataMock: TUserViewWidget[] = [
         },
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    setting_type: "tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        setting_type: "tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                    },
+                    default_toggle_value: null,
+                    sort_order: 0,
                 },
                 tags: [],
                 toggle_value: false,

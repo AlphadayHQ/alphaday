@@ -1,6 +1,10 @@
 import { PersistedState, MigrationManifest } from "redux-persist";
+import { EWidgetSettingsRegistry } from "src/constants";
+import { TRemoteTagReadOnly, TRemoteUserViewWidget } from "../services";
+import { TCachedView, TUserView } from "../types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
+import { IViewsState } from "./slices/views";
 
 type PersistedRootState = (PersistedState & RootState) | undefined;
 
@@ -26,12 +30,41 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV101 = PersistedRootState;
-type RootStateV100 = RootStateV101;
+type RootStateV102 = PersistedRootState;
+
+type RootStateV101 = RootStateV100;
+
+type TCachedViewV100 = Omit<TCachedView, "data"> & {
+    data: Omit<TUserView, "widgets"> & {
+        widgets: Omit<TRemoteUserViewWidget, "settings"> &
+            {
+                settings: {
+                    setting: {
+                        name: string;
+                        slug: EWidgetSettingsRegistry;
+                        setting_type: string;
+                    };
+                    tags: TRemoteTagReadOnly[];
+                    toggle_value: boolean | null;
+                }[];
+            }[];
+    };
+};
+
+type RootStateV100 =
+    | (PersistedState &
+          (Omit<RootState, "views"> & {
+              views: Omit<IViewsState, "viewsCache" | "sharedViewsCache"> & {
+                  viewsCache: Record<number, TCachedViewV100> | undefined;
+                  sharedViewsCache: Record<number, TCachedViewV100> | undefined;
+              };
+          }))
+    | undefined;
 
 type TMigrations = MigrationManifest & {
     100: (s: PersistedState) => RootStateV100;
     101: (s: RootStateV100) => RootStateV101;
+    102: (s: RootStateV101) => RootStateV102;
 };
 
 /**
@@ -100,6 +133,25 @@ const migrations: TMigrations = {
                 subscribedViewsCache: undefined,
             },
         };
+    },
+    102: (s: RootStateV101): RootStateV102 => {
+        /**
+         * Remove view state because widget settings have been
+         */
+        if (!s) return undefined;
+        try {
+            return {
+                ...s,
+                views: {
+                    ...s.views,
+                    viewsCache: undefined,
+                    sharedViewsCache: undefined,
+                },
+            };
+        } catch (e) {
+            Logger.error("migrations::102: Migration failed", e);
+            return undefined;
+        }
     },
 };
 

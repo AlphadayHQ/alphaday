@@ -12,7 +12,9 @@ import {
     useGetWidgetsQuery,
 } from "src/api/services/views/viewsEndpoints";
 import { TUserViewWidget, TWidget, TWidgetMini } from "src/api/types";
+import { debounce } from "src/api/utils/helpers";
 import { recomputeWidgetsPos } from "src/api/utils/layoutUtils";
+import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import WidgetLibrary from "src/components/widget-library/WidgetLibrary";
 import CONFIG from "src/config/config";
@@ -132,11 +134,15 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 name: widget.name,
                 widget,
                 settings: widget.settings.map(({ setting }, id) => ({
-                    setting: {
-                        id: Number(id) + 1,
-                        slug: setting.slug,
-                        name: setting.slug,
-                        setting_type: "tags",
+                    widget_setting: {
+                        setting: {
+                            id: Number(id) + 1,
+                            slug: setting.slug,
+                            name: setting.slug, // shouldn't be needed by BE
+                            setting_type: "tags",
+                        },
+                        default_toggle_value: null,
+                        sort_order: 0,
                     },
                     tags: keywordSearchList?.map((k) => ({
                         ...k.tag,
@@ -171,16 +177,17 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         previousResolvedWidgetId.current = resolvedWidget.id;
     }
 
-    const handleFilter = (value: string) => {
+    const handleFilter = debounce((value: string) => {
         const normalizedValue = value.toLowerCase();
-        if (isFetching || filter === normalizedValue) return;
+        if (filter === normalizedValue) return;
         if (widgets.length > 0) setWidgets([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
         setFilter(normalizedValue);
-    };
+    }, 300);
 
-    const handleSortBy = (sort: EItemsSortBy): void => {
-        if (isFetching || sortBy === sort) return;
+    const handleSortBy = (sortLabel: string): void => {
+        const sort = getSortOptionValue(sortLabel);
+        if (isFetching || sort === null || sortBy === sort) return;
         if (widgets.length > 0) setWidgets([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
         setSortBy(sort);

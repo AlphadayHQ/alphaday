@@ -8,7 +8,9 @@ import { IModuleContainer } from "src/types";
 
 const SummaryContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const tagsSettings = moduleData.settings.filter(
-        (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
     );
 
     const tagsRef = useRef<TBaseTag[]>();

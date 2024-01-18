@@ -3,12 +3,14 @@ export enum EActivityLogEventTypes {
     WidgetInteraction = "WIDGET_INTERACTION", // Placeholder, TBD
     KeywordSelected = "KEYWORD_SELECTED",
     CookieChoiceSet = "COOKIE_CHOICE_SET",
+    WalletConnection = "WALLET_CONNECT",
 }
 
 export enum EActivityLogObjectTypes {
     Keyword = 1,
     Widget,
     View,
+    WalletConnection,
 }
 
 export type TKeywordActivityLog = {
@@ -37,11 +39,18 @@ export type TCookieActivityLog = {
     data: JSONValue;
 };
 
+export type TWalletConnectionActivityLog = {
+    event_type: EActivityLogEventTypes.WalletConnection;
+    object_type: EActivityLogObjectTypes.WalletConnection;
+    data?: JSONValue;
+};
+
 export type TRemoteActivityLog =
     | TKeywordActivityLog
     | TWidgetActivityLog
     | TViewActivityLog
-    | TCookieActivityLog;
+    | TCookieActivityLog
+    | TWalletConnectionActivityLog;
 
 export type TActivityLogRequest = TRemoteActivityLog;
 export type TActivityLogResponse = TRemoteActivityLog;

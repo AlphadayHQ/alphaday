@@ -6,9 +6,9 @@ import { validateHexOrEnsAddr } from "src/api/utils/accountUtils";
 import globalMessages from "src/globalMessages";
 import AddressInput from "./AddressInput";
 import AddressTabSelect from "./AddressTabSelect";
-import AssetSwitch from "./AssetSwitch";
 import NftList from "./nfts/NftList";
 import PortfolioStats from "./PortfolioStats";
+import TopBar from "./TopBar";
 import {
     TPortfolioDataForAddress,
     TPortfolioNFTDataForAddress,
@@ -94,8 +94,8 @@ const Portfolio: FC<IPortfolio> = ({
         setDisableAddAddressInput(!validateHexOrEnsAddr(addr.toLowerCase()));
 
     return (
-        <div ref={squareRef}>
-            <div data-testid="portfolio-widget" className="!p-[0_0_3px]">
+        <div className="h-full" ref={squareRef}>
+            <div className="h-full" data-testid="portfolio-widget">
                 {isLoading ? (
                     <ModuleLoader $height={`${String(widgetHeight)}px`} />
                 ) : (
@@ -104,7 +104,7 @@ const Portfolio: FC<IPortfolio> = ({
                         {selectedAddress ? (
                             <>
                                 {showVerify && (
-                                    <div className="flex my-[15px] mx-auto justify-center">
+                                    <div className="flex my-4 mx-auto justify-center">
                                         <Button
                                             variant="primaryXL"
                                             onClick={onVerifyWallet}
@@ -128,15 +128,14 @@ const Portfolio: FC<IPortfolio> = ({
                                     toggleShowAllAssets={toggleShowAllAssets}
                                     selectedAddress={selectedAddress}
                                     onSelectAddress={onSelectAddress}
+                                    onRemoveAddress={onRemoveAddress}
+                                />
+                                <TopBar
+                                    portfolioType={portfolioType}
+                                    switchPortfolioType={switchPortfolioType}
                                     handleShowEnterAddress={
                                         handleShowEnterAddress
                                     }
-                                    onRemoveAddress={onRemoveAddress}
-                                    disableAccountSelection={false}
-                                />
-                                <AssetSwitch
-                                    portfolioType={portfolioType}
-                                    switchPortfolioType={switchPortfolioType}
                                 />
                                 {portfolioType === EPortfolioType.Ft ? (
                                     <PortfolioStats
@@ -161,7 +160,7 @@ const Portfolio: FC<IPortfolio> = ({
                                 )}
                             </>
                         ) : (
-                            <div className="flex my-[15px] mx-auto justify-center">
+                            <div className="flex my-4 mx-auto justify-center">
                                 <div className="flex w-[315px] justify-between tiny:scale-95">
                                     <Button
                                         variant="primaryXL"
