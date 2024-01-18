@@ -10,6 +10,7 @@ import {
     EWalletConnectionMethod,
     ESignInUpState,
     ESignInUpMethod,
+    TUserAccess,
 } from "src/api/types";
 import assert from "src/api/utils/assert";
 import { Logger } from "src/api/utils/logging";
@@ -244,6 +245,9 @@ export const selectAuthWallet = (state: RootState): TAuthWallet =>
 
 export const selectAuthToken = (state: RootState): TAuthToken | undefined =>
     state.user.auth.token;
+
+export const selectUserAccess = (state: RootState): TUserAccess =>
+    state.user.auth.access;
 
 export const selectPortfolioAccounts = (
     state: RootState
