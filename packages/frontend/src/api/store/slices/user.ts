@@ -231,6 +231,7 @@ export const {
     setWalletAuthError,
     initSignInUpMethodSelection,
     initSignInUp,
+    setSignInUpState,
     resetAuthState,
     reset,
 } = userSlice.actions;

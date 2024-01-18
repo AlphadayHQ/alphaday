@@ -1,31 +1,69 @@
 import { useCallback, useState } from "react";
+import { useKeyPress } from "src/api/hooks";
 
 interface IOtpModuleProps {
-    onOtpSubmit: (otp: string) => void;
+    handleOtpSubmit: (otp: string) => void;
 }
 
-const OtpModule: React.FC<IOtpModuleProps> = ({ onOtpSubmit }) => {
+const OTP_LENGTH = 6;
+
+const OtpModule: React.FC<IOtpModuleProps> = ({
+    handleOtpSubmit: onOtpSubmit,
+}) => {
     const [otp, setOtp] = useState<string[]>([]);
 
     const handleSubmit = useCallback(() => {
+        if (otp.length !== OTP_LENGTH) return;
         onOtpSubmit(otp.join(""));
     }, [onOtpSubmit, otp]);
 
     const handleOtpChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
-            otp.push(e.target.value);
-            if (otp.length === 6) {
-                handleSubmit();
+            const { value } = e.target;
+            if (value.length > 1) {
+                otp.push(...value.split("").splice(0, 6 - otp.length));
+                document.getElementById(`otp-${otp.length - 1}`)?.focus();
                 return;
             }
-            setOtp([...otp]);
+            if (value) {
+                otp.push(value);
+                if (otp.length === OTP_LENGTH) {
+                    handleSubmit();
+                    return;
+                }
+                document.getElementById(`otp-${otp.length}`)?.focus();
+                setOtp([...otp]);
+            } else {
+                document.getElementById(`otp-${otp.length - 1}`)?.focus();
+            }
         },
         [otp, handleSubmit]
     );
 
-    return Array.from({ length: 6 }).map((_, i) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <input key={i} type="text" onChange={handleOtpChange} />
+    useKeyPress({
+        targetKey: "Enter",
+        callback: handleSubmit,
+    });
+
+    // handle backspace
+    useKeyPress({
+        targetKey: "Backspace",
+        callback: () => {
+            if (otp.length === 0) return;
+            otp.pop();
+            setOtp([...otp]);
+        },
+    });
+
+    return Array.from({ length: OTP_LENGTH }).map((_, i) => (
+        <input
+            // eslint-disable-next-line react/no-array-index-key
+            key={i}
+            id={`otp-${i}`}
+            type="text"
+            className="rounded text-black text-center w-10 h-10 border-2 border-primary font-semibold"
+            onChange={handleOtpChange}
+        />
     ));
 };
 

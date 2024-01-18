@@ -26,7 +26,7 @@ export enum ESignInUpState {
     SelectingMethod,
     SigningUp,
     SigningIn,
-    Verifying,
+    VerifyingEmail,
     Verified,
     GenericError,
 }
