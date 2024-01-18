@@ -37,7 +37,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
 }) => {
     return (
         <BaseModuleHeader ref={headerRef}>
-            <div className="flex w-full items-center justify-between">
+            <div className="flex w-full items-start justify-between">
                 <div
                     role="button"
                     tabIndex={0}

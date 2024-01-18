@@ -174,7 +174,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 w,
             }: TCustomTooltip) => {
                 return renderToString(
-                    <div className="px-3 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant30 border border-borderLine fontGroup-support text-primary">
+                    <div className="px-3 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant300 border border-borderLine fontGroup-support text-primary">
                         <span className="fontGroup-supportBold [&_span]:fontGroup-support">
                             {w.globals.seriesNames[0]}: {}
                             {
