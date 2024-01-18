@@ -5,71 +5,65 @@ import { debounce } from "src/api/utils/helpers";
 import OtpModule from "./OtpModule";
 
 interface IEmailInputProps {
+    isValidEmail: boolean;
     onEmailSubmit: () => void;
-    onSSOCallback: (provider: ESignInUpMethod) => void;
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const EmailInput: FC<IEmailInputProps> = ({
+    isValidEmail,
     onEmailSubmit,
-    onSSOCallback,
     handleEmailChange,
 }) => {
     return (
-        <>
-            <p>
-                <span className="text-muted">
+        <div className="p-5">
+            <p className="flex flex-col mb-5">
+                <span className="text-muted py-3">
                     Enter your email address to get started
                 </span>
                 <input
                     type="email"
-                    className="self-stretch h-12 px-4 py-3 bg-neutral-800 rounded-lg justify-start items-center inline-flex grow shrink basis-0 text-zinc-100 text-base font-normal font-['Open Sans'] leading-tight tracking-tight"
+                    className="self-stretch px-4 py-6 border-0 bg-neutral-800 rounded-lg justify-start items-center inline-flex grow shrink basis-0 text-primary text-base leading-tight tracking-tight "
+                    placeholder="Email"
                     onChange={handleEmailChange}
                 />
             </p>
 
             <Button
-                className="justify-center items-center gap-1 inline-flex text-gray-400 text-base font-bold px-4 py-3 bg-zinc-800 rounded-lg leading-normal tracking-tight"
+                className={`w-full border-0 justify-center items-center gap-1 inline-flex text-base font-bold px-4 py-6 ${
+                    isValidEmail
+                        ? "bg-accentVariant100 text-primary"
+                        : "bg-zinc-800 text-primaryVariant100"
+                } rounded-lg tracking-tight`}
                 onClick={onEmailSubmit}
             >
                 Continue
             </Button>
-
-            <div className="opacity-60 text-center text-zinc-100 text-xs font-normal font-['Open Sans'] leading-none tracking-wide">
-                Or continue with
-            </div>
-            <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => onSSOCallback(ESignInUpMethod.Google)}
-            >
-                Google
-            </button>
-        </>
+        </div>
     );
 };
 
 interface ISignInUpProps {
     isSignIn: boolean;
     status: ESignInUpState;
-    onSignInUp: (email: string, otp: string) => void;
-    onSSOCallback: (provider: ESignInUpMethod) => void;
+    handleSignInUp: (email: string, otp: string) => void;
+    handleSSOCallback: (provider: ESignInUpMethod) => void;
 }
 
 const SignInUpModule: FC<ISignInUpProps> = memo(function SignInUpModule({
     status,
     isSignIn,
-    onSignInUp,
-    onSSOCallback,
+    handleSignInUp,
+    handleSSOCallback,
 }: ISignInUpProps) {
     const emailRef = useRef<string>();
     const [email, setEmail] = useState("");
 
     const handleOtpSubmit = useCallback(
         (otp: string) => {
-            onSignInUp(email, otp);
+            handleSignInUp(email, otp);
         },
-        [onSignInUp, email]
+        [handleSignInUp, email]
     );
 
     const handleEmailChange = debounce(
@@ -84,8 +78,10 @@ const SignInUpModule: FC<ISignInUpProps> = memo(function SignInUpModule({
     }, []);
 
     return (
-        <>
-            <h2>{isSignIn ? "Sign in to" : "Sign up for"} Alphaday</h2>
+        <div className="w-full">
+            <h2 className="text-primary text-2xl font-semibold leading-loose text-center">
+                {isSignIn ? "Sign in to" : "Sign up for"} Alphaday
+            </h2>
 
             {status === ESignInUpState.Verifying ? (
                 <div>
@@ -94,13 +90,37 @@ const SignInUpModule: FC<ISignInUpProps> = memo(function SignInUpModule({
             ) : (
                 <div>
                     <EmailInput
+                        isValidEmail={!!emailRef?.current?.match(/@/g)?.length}
                         onEmailSubmit={onEmailSubmit}
-                        onSSOCallback={onSSOCallback}
                         handleEmailChange={handleEmailChange}
                     />
+
+                    <div className="opacity-60 text-primary text-xs tracking-wide">
+                        Or continue with
+                    </div>
+                    <div className="w-full flex gap-2.5 py-2 justify-evenly">
+                        <button
+                            type="button"
+                            className="px-4 py-3 bg-primary rounded-lg flex-col justify-center items-center gap-2 inline-flex text-primaryVariant100 text-base font-bold flex-grow"
+                            onClick={() =>
+                                handleSSOCallback(ESignInUpMethod.Google)
+                            }
+                        >
+                            Google
+                        </button>
+                        <button
+                            type="button"
+                            className="px-4 py-3 bg-primary rounded-lg flex-col justify-center items-center gap-2 inline-flex text-primaryVariant100 text-base font-bold flex-grow"
+                            onClick={() =>
+                                handleSSOCallback(ESignInUpMethod.Apple)
+                            }
+                        >
+                            Apple
+                        </button>
+                    </div>
                 </div>
             )}
-        </>
+        </div>
     );
 });
 
