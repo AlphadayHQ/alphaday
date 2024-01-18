@@ -125,3 +125,12 @@ export const mapAccountToTabAccount = (
         ),
     ];
 };
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // example: email@domain
+
+/**
+ * Check if the email is valid
+ * @param email
+ */
+export const validateEmail = (email: string): boolean =>
+    EMAIL_REGEX.test(email.toLowerCase());

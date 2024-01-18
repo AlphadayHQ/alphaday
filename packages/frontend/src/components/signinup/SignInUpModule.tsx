@@ -1,6 +1,7 @@
-import { FC, memo, useCallback, useRef, useState } from "react";
+import { FC, memo, useCallback, useMemo, useState } from "react";
 import { Button } from "@alphaday/ui-kit";
 import { ESignInUpMethod, ESignInUpState } from "src/api/types";
+import { validateEmail } from "src/api/utils/accountUtils";
 import { debounce } from "src/api/utils/helpers";
 import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
 import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
@@ -8,13 +9,13 @@ import OtpModule from "./OtpModule";
 
 interface IEmailInputProps {
     isValidEmail: boolean;
-    onEmailSubmit: () => void;
+    handleEmailSubmit: () => void;
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const EmailInput: FC<IEmailInputProps> = ({
     isValidEmail,
-    onEmailSubmit,
+    handleEmailSubmit,
     handleEmailChange,
 }) => {
     return (
@@ -37,7 +38,7 @@ const EmailInput: FC<IEmailInputProps> = ({
                         ? "bg-accentVariant100 text-primary"
                         : "bg-zinc-800 text-primaryVariant100"
                 } rounded-lg tracking-tight`}
-                onClick={onEmailSubmit}
+                onClick={handleEmailSubmit}
             >
                 Continue
             </Button>
@@ -58,8 +59,8 @@ const SignInUpModule: FC<ISignInUpProps> = memo(function SignInUpModule({
     handleSignInUp,
     handleSSOCallback,
 }: ISignInUpProps) {
-    const emailRef = useRef<string>();
     const [email, setEmail] = useState("");
+    const isValidEmail = useMemo(() => validateEmail(email), [email]);
 
     const handleOtpSubmit = useCallback(
         (otp: string) => {
@@ -70,14 +71,9 @@ const SignInUpModule: FC<ISignInUpProps> = memo(function SignInUpModule({
 
     const handleEmailChange = debounce(
         (e: React.ChangeEvent<HTMLInputElement>) => {
-            emailRef.current = e.target.value;
+            setEmail(e.target.value);
         }
     );
-
-    const onEmailSubmit = useCallback(() => {
-        if (!emailRef.current) return;
-        setEmail(emailRef.current);
-    }, []);
 
     return (
         <div className="w-full">
@@ -92,8 +88,8 @@ const SignInUpModule: FC<ISignInUpProps> = memo(function SignInUpModule({
             ) : (
                 <div>
                     <EmailInput
-                        isValidEmail={!!emailRef?.current?.match(/@/g)?.length}
-                        onEmailSubmit={onEmailSubmit}
+                        isValidEmail={isValidEmail}
+                        handleEmailSubmit={() => handleSignInUp(email, "")}
                         handleEmailChange={handleEmailChange}
                     />
 
