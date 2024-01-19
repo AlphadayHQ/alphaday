@@ -89,6 +89,7 @@ import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
 import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
 import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
+import { Pager } from "./src/mobile-components/pager/Pager";
 import { FeedItem } from "./src/mobile-components/superfeed/FeedItem";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
@@ -170,4 +171,5 @@ export {
     NavBottom,
     NavHeader,
     FeedItem,
+    Pager,
 };
