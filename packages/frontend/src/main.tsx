@@ -2,6 +2,7 @@ import "./polyfills";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
+import { clarity } from "react-microsoft-clarity";
 import { Provider } from "react-redux";
 import { WagmiConfig } from "wagmi";
 import { useIsMobile } from "./api/hooks/useIsMobile";
@@ -54,6 +55,13 @@ try {
         "index.tsx: could not retrieve cookie choice. Sentry won't be enabled",
         e
     );
+}
+
+if (CONFIG.CLARITY.ENABLE) {
+    Logger.debug("initializing clarity...");
+    clarity.init(CONFIG.CLARITY.PROJECT_ID);
+    clarity.consent();
+    Logger.debug("clarity initialized");
 }
 
 const AppSwitcher = () => {
