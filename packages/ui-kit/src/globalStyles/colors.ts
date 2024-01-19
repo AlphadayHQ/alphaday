@@ -11,7 +11,7 @@ export const darkColors = {
     backgroundVariant200: "var(--alpha-base-200)", // #202020 -- background variant 200
     backgroundVariant300: "var(--alpha-base-300)", // #222222 -- background variant 300
     backgroundVariant400: "var(--alpha-base-400)", // #393939 -- background variant 300
-    backdrop: "var(--alpha-backdrop)", // rgba(18, 18, 18, 0.6) -- backdrop
+    backgroundFiltered: "var(--alpha-base-filtered)", // rgba(0, 0, 0, 0.4) -- background opacity 0.9
     backgroundBlue: "var(--alpha-dark-blue)", // #263964 -- background blue
     backgroundBlue100: "var(--alpha-dark-blue-100)", // #2d4476 -- background blue
     accentVariant100: "var(--alpha-light-blue)", // #477FF7 -- button Ring Primary

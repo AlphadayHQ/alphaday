@@ -17,7 +17,7 @@ export interface IModal extends IProps {
      * @default false
      */
     showModal?: boolean;
-    /**
+    /**.
      * Modal Sizes
      */
     size?: "max" | "xl" | "lg" | "md" | "sm" | "xs";
@@ -68,7 +68,7 @@ export const Modal: FC<IModal> = ({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="fixed inset-0 transition-opacity bg-backdrop" />
+                    <div className="fixed inset-0 bg-opacity-75 transition-opacity bg-backgroundFiltered" />
                 </Transition.Child>
 
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto">

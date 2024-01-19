@@ -48,6 +48,11 @@ const SENTRY = {
     ENABLE: true,
 };
 
+const CLARITY = {
+    ENABLE: !!import.meta.env.VITE_CLARITY_PROJECT_ID,
+    PROJECT_ID: import.meta.env.VITE_CLARITY_PROJECT_ID,
+};
+
 const COOKIES = {
     // in these, a "reject all" option will be included
     STRICT_COUNTRY_LIST: ["DE", "FR", "UK", "IE"],
@@ -73,6 +78,7 @@ const CONFIG = {
     SEO: SEO_CONFIG,
     FIREBASE: FIREBASE_CONFIG,
     SENTRY,
+    CLARITY,
     COOKIES,
     API_PROVIDERS,
     NUMBERS,

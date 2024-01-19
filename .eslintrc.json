@@ -99,7 +99,10 @@
                 }
             }
         ],
-        "curly": ["error", "multi-line"]
+        "curly": [
+            "error",
+            "multi-line"
+        ]
     },
     "overrides": [
         {
@@ -139,6 +142,7 @@
                 "setupTests.ts",
                 "vite.config.ts",
                 "capacitor.config.ts",
+                "pwa-assets.config.ts",
                 "*.test.ts",
                 "*.test.tsx"
             ],
