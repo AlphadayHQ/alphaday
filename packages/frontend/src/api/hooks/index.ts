@@ -23,3 +23,4 @@ export * from "./useKeyPress";
 export * from "./useFeatureFlags";
 export * from "./useWalletViewStateUpdater";
 export * from "./useWidgetHeight";
+export * from "./useSignInUp";

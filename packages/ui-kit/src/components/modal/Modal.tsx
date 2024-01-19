@@ -17,7 +17,7 @@ export interface IModal extends IProps {
      * @default false
      */
     showModal?: boolean;
-    /**.
+    /**
      * Modal Sizes
      */
     size?: "max" | "xl" | "lg" | "md" | "sm" | "xs";
