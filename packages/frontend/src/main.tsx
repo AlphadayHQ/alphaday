@@ -14,10 +14,8 @@ import { store } from "./api/store/store";
 import { ECookieChoice } from "./api/types";
 import { lazyRetry } from "./api/utils/helpers";
 import { Logger } from "./api/utils/logging";
-// import App from "./App";
 import CONFIG from "./config";
 import SeoContainer from "./containers/seo/SeoContainer";
-// import MobileApp from "./MobileApp";
 import PreloaderPage from "./pages/preloader";
 
 const MobileApp = lazyRetry(() => import("./MobileApp"));
