@@ -5,6 +5,7 @@ import { lazyRetry } from "./api/utils/helpers";
 import PreloaderPage from "./pages/preloader";
 
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
+const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
 
 const App: React.FC = () => {
     useAppInit();
@@ -15,6 +16,7 @@ const App: React.FC = () => {
             <Switch>
                 <Suspense fallback={<PreloaderPage />}>
                     <Route path="/" exact component={SuperfeedPage} />
+                    <Route path="/auth" exact component={AuthPage} />
                     {/* Add more routes as needed */}
                 </Suspense>
             </Switch>
