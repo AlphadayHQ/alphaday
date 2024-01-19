@@ -1,7 +1,9 @@
 import { memo } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useAppInit, useGlobalHooks } from "./api/hooks";
-import SuperfeedPage from "./mobile-pages/superfeed";
+import { lazyRetry } from "./api/utils/helpers";
+
+const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 
 const App: React.FC = () => {
     useAppInit();
