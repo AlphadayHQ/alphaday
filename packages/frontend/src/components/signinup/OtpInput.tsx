@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { useKeyPress } from "src/api/hooks";
 
-interface IOtpModuleProps {
+interface OtpInputProps {
     handleOtpSubmit: (otp: string) => void;
 }
 
 const OTP_LENGTH = 6;
 
-const OtpModule: React.FC<IOtpModuleProps> = ({
+const OtpInput: React.FC<OtpInputProps> = ({
     handleOtpSubmit: onOtpSubmit,
 }) => {
     const [otp, setOtp] = useState<string[]>([]);
@@ -67,4 +67,4 @@ const OtpModule: React.FC<IOtpModuleProps> = ({
     ));
 };
 
-export default OtpModule;
+export default OtpInput;

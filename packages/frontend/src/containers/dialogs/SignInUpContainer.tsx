@@ -3,7 +3,7 @@ import { Dialog } from "@alphaday/ui-kit";
 import { useKeyPress, useSignInUp } from "src/api/hooks";
 import { useAppDispatch } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
-import { ESignInUpState } from "src/api/types";
+import { ESignInUpMethod, ESignInUpState } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
 import SignInUpModule from "src/components/signinup/SignInUpModule";
 
@@ -17,6 +17,23 @@ const SignInUpContainer = () => {
     }, [dispatch]);
 
     const handleOtpSubmit = useCallback(() => {}, []);
+
+    const handleSSOCallback = useCallback(
+        (method: ESignInUpMethod) => {
+            if (authState.status === ESignInUpState.SelectingMethod) {
+                if (method === ESignInUpMethod.Email) {
+                    dispatch(
+                        userStore.setSignInUpState(
+                            ESignInUpState.VerifyingEmail
+                        )
+                    );
+                } else {
+                    // TODO: Implement SSO
+                }
+            }
+        },
+        [dispatch, authState]
+    );
 
     const handleEmailChange = debounce(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,9 +55,9 @@ const SignInUpContainer = () => {
         >
             <SignInUpModule
                 email={email}
-                status={authState.status}
+                authState={authState}
                 handleOtpSubmit={handleOtpSubmit}
-                handleSSOCallback={() => {}}
+                handleSSOCallback={handleSSOCallback}
                 handleEmailSubmit={handleEmailSubmit}
                 handleEmailChange={handleEmailChange}
             />

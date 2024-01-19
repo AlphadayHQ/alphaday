@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import { ESignInUpState } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
-import SignInUpModule from "src/components/signinup/SignInUpModule";
+import { SignInUp } from "src/components/signinup/SignInUp";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
 
 const AuthPage: React.FC = () => {
@@ -32,9 +32,9 @@ const AuthPage: React.FC = () => {
             title="Continue with Email"
             handleClose={handleClose}
         >
-            <SignInUpModule
+            <SignInUp
                 email={email}
-                status={authState.status}
+                authState={authState}
                 handleOtpSubmit={handleOtpSubmit}
                 handleSSOCallback={() => {}}
                 handleEmailSubmit={handleEmailSubmit}
