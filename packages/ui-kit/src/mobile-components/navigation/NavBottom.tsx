@@ -64,7 +64,7 @@ const NavItem = ({ href, icon, current, hasNew }: (typeof navigation)[0]) => (
     </a>
 );
 
-export const MobileBottomNav = () => {
+export const NavBottom = () => {
     return (
         <div className="fixed bottom-0 left-0 z-50 w-full h-16 border-t bg-gray-700 border-gray-600">
             <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
