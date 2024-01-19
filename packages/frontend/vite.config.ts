@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { optimizeCssModules } from "vite-plugin-optimize-css-modules";
+import { VitePWA } from "vite-plugin-pwa";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -11,6 +12,47 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
     plugins: [
         tsconfigPaths(),
+        VitePWA({
+            registerType: "autoUpdate",
+            devOptions: {
+                enabled: true,
+            },
+            workbox: {
+                clientsClaim: true,
+                skipWaiting: true,
+                globPatterns: ["**/*.{css,ico,png,svg}"],
+            },
+            includeAssets: [
+                "favicon.ico",
+                "apple-touch-icon-180x180.png",
+                "maskable-icon-512x512.png",
+            ],
+            manifest: {
+                id: "com.alphaday.pwa",
+                name: "Alphaday",
+                short_name: "Alphaday",
+                description: "News, Information & Curated Research - Alphaday",
+                theme_color: "#FAA202",
+                orientation: "portrait",
+                icons: [
+                    {
+                        src: "pwa-64x64.png",
+                        sizes: "64x64",
+                        type: "image/png",
+                    },
+                    {
+                        src: "pwa-192x192.png",
+                        sizes: "192x192",
+                        type: "image/png",
+                    },
+                    {
+                        src: "pwa-512x512.png",
+                        sizes: "512x512",
+                        type: "image/png",
+                    },
+                ],
+            },
+        }),
         react(),
         svgr(),
         ViteImageOptimizer(), // optimize images, svgs and gifs

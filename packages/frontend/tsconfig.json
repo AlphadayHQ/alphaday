@@ -15,6 +15,7 @@
     "src/**/*",
     "vite.config.ts",
     "capacitor.config.ts",
+    "pwa-assets.config.ts",
     "../ui-kit/src/@types/global.d.ts"
   ],
 }
