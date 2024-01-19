@@ -1,4 +1,5 @@
 import "./polyfills";
+import { Suspense } from "react";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
@@ -11,11 +12,16 @@ import { wagmiConfig } from "./api/store/providers/wallet-connect-provider";
 // TODO (xavier-charles): add themes support import ThemeProvider from "./api/store/providers/theme-provider";
 import { store } from "./api/store/store";
 import { ECookieChoice } from "./api/types";
+import { lazyRetry } from "./api/utils/helpers";
 import { Logger } from "./api/utils/logging";
-import App from "./App";
+// import App from "./App";
 import CONFIG from "./config";
 import SeoContainer from "./containers/seo/SeoContainer";
-import MobileApp from "./MobileApp";
+// import MobileApp from "./MobileApp";
+import PreloaderPage from "./pages/preloader";
+
+const MobileApp = lazyRetry(() => import("./MobileApp"));
+const App = lazyRetry(() => import("./App"));
 
 /**
  * at this point, the store is still not loaded and we can't read the state
@@ -58,7 +64,11 @@ try {
 
 const AppSwitcher = () => {
     const isMobile = useIsMobile();
-    return isMobile ? <MobileApp /> : <App />;
+    return (
+        <Suspense fallback={<PreloaderPage />}>
+            {isMobile ? <MobileApp /> : <App />}
+        </Suspense>
+    );
 };
 
 const container = document.getElementById("root");
@@ -72,11 +82,9 @@ root.render(
         <PersistProvider>
             <SeoContainer />
             <AppContextProvider>
-                {/* <ThemeProvider> */}
                 <WagmiConfig config={wagmiConfig}>
                     <AppSwitcher />
                 </WagmiConfig>
-                {/* </ThemeProvider> */}
             </AppContextProvider>
         </PersistProvider>
     </Provider>
