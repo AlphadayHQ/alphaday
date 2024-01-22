@@ -29,9 +29,17 @@ const feedItems: IFeedItem[] = [
             name: "CoinTelegraph",
             img: "https://s3.eu-west-1.amazonaws.com/production-alphaday.com/media/icons/sources/cointelegraph_news.jpg",
         },
-        tags: ["Bitcoin", "ETF"],
+        tags: [
+            "Bitcoin",
+            "ETF",
+            "NFT",
+            "Crypto",
+            "Blockchain",
+            "Ethereum",
+            "DeFi",
+        ],
         likes: 123,
-        comments: 12,
+        comments: 123,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
         description:
@@ -48,7 +56,7 @@ const feedItems: IFeedItem[] = [
         },
         tags: ["Bitcoin", "ETF"],
         likes: 123,
-        comments: 12,
+        comments: 123,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
         description:
@@ -65,7 +73,7 @@ const feedItems: IFeedItem[] = [
         },
         tags: ["Bitcoin", "ETF"],
         likes: 123,
-        comments: 12,
+        comments: 123,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
         description:
@@ -82,7 +90,7 @@ const feedItems: IFeedItem[] = [
         },
         tags: ["Bitcoin", "ETF"],
         likes: 123,
-        comments: 12,
+        comments: 123,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
         description:
@@ -99,7 +107,7 @@ const feedItems: IFeedItem[] = [
         },
         tags: ["Bitcoin", "ETF"],
         likes: 123,
-        comments: 12,
+        comments: 123,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
         description:
@@ -116,7 +124,7 @@ const feedItems: IFeedItem[] = [
         },
         tags: ["Bitcoin", "ETF"],
         likes: 123,
-        comments: 12,
+        comments: 123,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
         description:
