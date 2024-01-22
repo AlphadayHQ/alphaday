@@ -5,7 +5,7 @@ const now = new Date();
 
 interface IFeedItem {
     id: number;
-    type: "news" | "event" | "video" | "podcast";
+    type: "news";
     title: string;
     date: Date;
     source: {
@@ -17,6 +17,7 @@ interface IFeedItem {
     comments: number;
     link: string;
     img: string;
+    description: string;
 }
 const feedItems: IFeedItem[] = [
     {
@@ -33,6 +34,8 @@ const feedItems: IFeedItem[] = [
         comments: 12,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
+        description:
+            "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
     },
     {
         id: 2,
@@ -48,6 +51,8 @@ const feedItems: IFeedItem[] = [
         comments: 12,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
+        description:
+            "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
     },
     {
         id: 3,
@@ -63,6 +68,8 @@ const feedItems: IFeedItem[] = [
         comments: 12,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
+        description:
+            "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
     },
     {
         id: 4,
@@ -78,6 +85,8 @@ const feedItems: IFeedItem[] = [
         comments: 12,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
+        description:
+            "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
     },
     {
         id: 5,
@@ -93,6 +102,8 @@ const feedItems: IFeedItem[] = [
         comments: 12,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
+        description:
+            "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
     },
     {
         id: 6,
@@ -108,13 +119,15 @@ const feedItems: IFeedItem[] = [
         comments: 12,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
         img: "https://i2.ytimg.com/vi/u5PLbdkuUo4/hqdefault.jpg",
+        description:
+            "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
     },
 ];
 
 const SuperfeedPage = () => {
     return (
         <MobileLayout>
-            <div className="w-full px-4 pt-24">
+            <div className="w-full px-5 pt-4">
                 {feedItems.map((item) => (
                     <FeedItem item={item} />
                 ))}
