@@ -13,7 +13,7 @@ export const EmailInput: FC<IEmailInputProps> = ({
     handleEmailChange,
 }) => {
     return (
-        <div className="p-5">
+        <div className="mb-5">
             <p className="flex flex-col mb-5">
                 <span className="text-muted py-3">
                     Enter your email address to get started

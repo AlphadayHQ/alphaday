@@ -44,7 +44,7 @@ export const SignInUp: FC<SignInUpProps> = ({
             </p>
         </div>
     ) : (
-        <div className="w-full">
+        <div className="w-full p-5">
             <EmailInput
                 isValidEmail={isValidEmail}
                 handleEmailSubmit={handleEmailSubmit}
