@@ -33,6 +33,16 @@
         -webkit-box-orient: vertical;
     }
 
+    .four-liner {
+        position: relative;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        text-overflow: elipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* trim after 4 lines*/
+        -webkit-box-orient: vertical;
+    }
+
     .nine-liner {
         position: relative;
         text-overflow: ellipsis;
