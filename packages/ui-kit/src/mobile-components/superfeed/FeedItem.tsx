@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { Disclosure, Transition } from "@headlessui/react";
 import newsIcon from "src/assets/feedIcons/news.png";
 import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
@@ -8,6 +8,7 @@ import { ReactComponent as ShareSVG } from "src/assets/svg/share.svg";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
+import { ActionButton, TagButton } from "../button/buttons";
 
 const feedIcons = {
     news: newsIcon,
@@ -29,43 +30,6 @@ interface IFeedItem {
     img: string;
     description: string;
 }
-
-const ActionButton: FC<{ children: ReactNode; onClick: () => void }> = ({
-    onClick,
-    children,
-}) => {
-    const handleClick = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onClick();
-    };
-    return (
-        <button
-            type="button"
-            onClick={handleClick}
-            className="flex items-center justify-center max-w-[48px] h-4 px-2 py-0.5 rounded-lg bg-backgroundVariant300 text-primary fontGroup-mini mx-0.5"
-        >
-            {children}
-        </button>
-    );
-};
-
-const TagButton: FC<{ name: string; onClick: () => void }> = ({
-    name,
-    onClick,
-}) => {
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            className="flex items-center px-2 py-0.5 h-4 rounded-lg bg-backgroundBlue100 text-primary fontGroup-mini m-0.5"
-        >
-            {name}
-        </button>
-    );
-};
 
 const ActionButtons: FC<{
     onLike: () => void;
