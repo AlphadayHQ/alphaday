@@ -1,4 +1,7 @@
-import { ReactComponent as HomeSVG } from "src/assets/svg/home.svg";
+import { ReactComponent as ExploreSVG } from "src/assets/svg/explore.svg";
+import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
+import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
+import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
 import { twMerge } from "tailwind-merge";
 
 const navigation = [
@@ -7,7 +10,14 @@ const navigation = [
         href: "#",
         current: true,
         hasNew: true,
-        icon: <HomeSVG className="w-4 h-4 my-0.5" />,
+        icon: <SuperfeedSVG className="w-6 h-6 my-0.5" />,
+    },
+    {
+        name: "Markets",
+        href: "#",
+        current: false,
+        hasNew: false,
+        icon: <MarketsSVG className="w-6 h-6 my-0.5" />,
     },
     {
         name: "Portfolio",
@@ -15,59 +25,46 @@ const navigation = [
         current: false,
         hasNew: true,
 
-        icon: <HomeSVG className="w-4 h-4 my-0.5" />,
+        icon: <PortfolioSVG className="w-6 h-6 my-0.5" />,
     },
     {
-        name: "Events",
+        name: "Explore",
         href: "#",
         current: false,
         hasNew: false,
-        icon: <HomeSVG className="w-4 h-4 my-0.5" />,
-    },
-    {
-        name: "Settings",
-        href: "#",
-        current: false,
-        hasNew: true,
-        icon: <HomeSVG className="w-4 h-4 my-0.5" />,
-    },
-    {
-        name: "Places",
-        href: "#",
-        current: false,
-        hasNew: false,
-        icon: <HomeSVG className="w-4 h-4 my-0.5" />,
+        icon: <ExploreSVG className="w-6 h-6 my-0.5" />,
     },
 ];
 
-const NavItem = ({ href, icon, current, hasNew }: (typeof navigation)[0]) => (
+const NavItem = ({ href, icon, current, name }: (typeof navigation)[0]) => (
     <a
         href={href}
-        className="inline-flex flex-col items-center justify-center px-5"
+        className="inline-flex flex-col items-center justify-center py-3 px-2"
     >
         <span
             className={twMerge(
-                "border border-gray-200 py-1 px-2 rounded-2xl relative",
-                current && "bg-black border-black"
+                "rounded-2xl relative text-primaryVariant100",
+                current &&
+                    "bg-background border-background fill-secondaryOrange text-secondaryOrange"
             )}
         >
             {icon}
-            {hasNew && (
-                <span
-                    className={twMerge(
-                        "w-2 h-2 bg-black border border-gray-200 rounded-full my-1 absolute -top-0.5 -right-0.5",
-                        current && "bg-gray-200 border-black"
-                    )}
-                />
+        </span>
+        <span
+            className={twMerge(
+                "capitalize text-primaryVariant100 mt-1 fontGroup-highlightSemi",
+                current && "text-primary"
             )}
+        >
+            {name}
         </span>
     </a>
 );
 
 export const NavBottom = () => {
     return (
-        <div className="fixed bottom-0 left-0 z-50 w-full h-16 border-t bg-gray-700 border-gray-600">
-            <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
+        <div className="fixed bottom-0 left-0 z-50 w-full border-t bg-background border-borderLine">
+            <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
                 {navigation.map((item) => (
                     <NavItem key={item.name} {...item} />
                 ))}
