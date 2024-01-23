@@ -14,18 +14,18 @@ export const useIsMobile = () => {
     const isMobileAgent = isMobile();
 
     /**
+     * If we are in dev or local, we want to show the mobile view
+     */
+    if (CONFIG.IS_DEV || CONFIG.IS_LOCAL) {
+        return width < breakpoints.TwoColMinWidth;
+    }
+
+    /**
      * If the mobile app feature flag is disabled, we don't want to
      * show the mobile view/pwa on prod
      */
     if (!isMobileEnabled) {
         return false;
-    }
-
-    /**
-     * If we are in dev or local, we want to show the mobile view
-     */
-    if (CONFIG.IS_DEV || CONFIG.IS_LOCAL) {
-        return width < breakpoints.TwoColMinWidth;
     }
 
     /**
