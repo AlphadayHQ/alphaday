@@ -20,7 +20,7 @@ export default defineConfig({
             workbox: {
                 clientsClaim: true,
                 skipWaiting: true,
-                globPatterns: ["**/*.{css,ico,png,svg}"],
+                navigateFallbackAllowlist: [/^\//],
             },
             includeAssets: [
                 "favicon.ico",
