@@ -1,5 +1,5 @@
 import MobileLayout from "src/layout/MobileLayout";
-import { FeedWidget } from "src/mobile-components/superfeed/FeedWidget";
+import { FeedCard } from "src/mobile-components/superfeed/FeedCard";
 import { EFeedItemType } from "src/mobile-components/superfeed/types";
 
 const now = new Date();
@@ -138,7 +138,7 @@ const SuperfeedPage = () => {
         <MobileLayout>
             <div className="w-full px-5 pt-4">
                 {feedItems.map((item) => (
-                    <FeedWidget key={item.id} item={item} />
+                    <FeedCard key={item.id} item={item} />
                 ))}
             </div>
         </MobileLayout>
