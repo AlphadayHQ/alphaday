@@ -137,7 +137,7 @@ const SuperfeedPage = () => {
         <MobileLayout>
             <div className="w-full px-5 pt-4">
                 {feedItems.map((item) => (
-                    <FeedItem item={item} />
+                    <FeedItem key={item.id} item={item} />
                 ))}
             </div>
         </MobileLayout>
