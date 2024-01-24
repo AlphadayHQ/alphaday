@@ -137,7 +137,7 @@ const TagButtons: FC<{ tags: string[]; onClick: () => void }> = ({
 //                                         )}
 //                                     </p>
 //                                 </div>
-//                                 <p className="mt-2 mb-0 three-liner">{title}</p>
+//                                 <p className="mt-2 mb-0 line-clamp-3">{title}</p>
 //                                 {!open && (
 //                                     <TagButtons
 //                                         tags={tags}
@@ -178,7 +178,7 @@ const TagButtons: FC<{ tags: string[]; onClick: () => void }> = ({
 //                             leaveFrom="transform scale-100 opacity-100"
 //                             leaveTo="transform scale-95 opacity-0"
 //                         >
-//                             <Disclosure.Panel className="pt-2 text-primaryVariant100 four-liner fontGroup-normal">
+//                             <Disclosure.Panel className="pt-2 text-primaryVariant100 line-clamp-4 fontGroup-normal">
 //                                 <p className="m-0 text-primaryVariant100">
 //                                     {description}
 //                                 </p>
@@ -269,7 +269,7 @@ const TagButtons: FC<{ tags: string[]; onClick: () => void }> = ({
 //                                         )}
 //                                     </p>
 //                                 </div>
-//                                 <p className="mt-2 mb-0 three-liner">{title}</p>
+//                                 <p className="mt-2 mb-0 line-clamp-3">{title}</p>
 //                                 {!open && (
 //                                     <TagButtons
 //                                         tags={tags}
@@ -310,7 +310,7 @@ const TagButtons: FC<{ tags: string[]; onClick: () => void }> = ({
 //                             leaveFrom="transform scale-100 opacity-100"
 //                             leaveTo="transform scale-95 opacity-0"
 //                         >
-//                             <Disclosure.Panel className="pt-2 text-primaryVariant100 four-liner fontGroup-normal">
+//                             <Disclosure.Panel className="pt-2 text-primaryVariant100 line-clamp-4 fontGroup-normal">
 //                                 triggerChild(onLike, onShare, onCommentClick)
 //                                 <p className="m-0 text-primaryVariant100">
 //                                     {description}
@@ -413,7 +413,7 @@ const FeedItemDisclosureButton: FC<{
                         {feedIconElement}
                     </p>
                 </div>
-                <p className="mt-2 mb-0 three-liner">{title}</p>
+                <p className="mt-2 mb-0 line-clamp-3">{title}</p>
                 {!open && <TagButtons tags={tags} onClick={() => {}} />}
             </div>
             <div className="flex-col min-w-max ml-2">
@@ -463,7 +463,7 @@ const FeedItemDisclosurePanel: FC<{
         >
             <Disclosure.Panel className="pt-2 text-primaryVariant100  fontGroup-normal">
                 {descriptionHeaderArea}
-                <p className="m-0 text-primaryVariant100 four-liner">
+                <p className="m-0 text-primaryVariant100 line-clamp-4">
                     {description}
                 </p>
                 <a
@@ -645,7 +645,7 @@ const VideoFeedItem: FC<{ item: IVideoFeedItem }> = ({ item }) => {
         //                                 </span>
         //                             </p>
         //                         </div>
-        //                         <p className="mt-2 mb-0 three-liner">{title}</p>
+        //                         <p className="mt-2 mb-0 line-clamp-3">{title}</p>
         //                         {!open && (
         //                             <TagButtons
         //                                 tags={tags}
@@ -680,7 +680,7 @@ const VideoFeedItem: FC<{ item: IVideoFeedItem }> = ({ item }) => {
         //                     leaveFrom="transform scale-100 opacity-100"
         //                     leaveTo="transform scale-95 opacity-0"
         //                 >
-        //                     <Disclosure.Panel className="pt-2 text-primaryVariant100 four-liner fontGroup-normal">
+        //                     <Disclosure.Panel className="pt-2 text-primaryVariant100 line-clamp-4 fontGroup-normal">
         //                         <p className="m-0 text-primaryVariant100">
         //                             {description}
         //                         </p>
