@@ -35,4 +35,4 @@ We may now follow these steps:
 
 1. If the staging version has bugs, we'll add bug fixes in the `dev` branch, and version `vX.Y.Z` will be skipped in production. We'll instead move back to step `2.` and try a new hot-fix release `vX.Y.Z+1` including the bug fixes found in staging.
 
-1. If the production version has bugs and a hotfix is needed, we add the bug fixes to a hot-fix branch that stems from the `main` branch. The version of this branch is bumped to `vX.Y.Z-hotfix` and then released to production. Once the hotfix is released, The bug fixes should also be added to the `main` branch
+1. If the production version has bugs and a hotfix is needed, we add the bug fixes to a hot-fix branch that stems from the `main` branch. The version of this branch is bumped to `vX.Y.Z-hotfix` and then released to production. Once the hotfix is released, The bug fixes should also be added to the `dev` branch
