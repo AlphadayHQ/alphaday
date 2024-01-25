@@ -2,6 +2,7 @@ dist/
 
 # testing
 /coverage
+*.keystore
 
 # production
 /dist

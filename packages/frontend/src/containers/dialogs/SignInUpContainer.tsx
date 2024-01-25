@@ -10,11 +10,11 @@ import SignInUpModule from "src/components/signinup/SignInUpModule";
 const SignInUpContainer = () => {
     const [email, setEmail] = useState("");
     const dispatch = useAppDispatch();
-    const { authState, resetAuthState } = useSignInUp();
+    const { authState, resetAuthState, requestCode } = useSignInUp();
 
     const handleEmailSubmit = useCallback(() => {
-        dispatch(userStore.setSignInUpState(ESignInUpState.VerifyingEmail));
-    }, [dispatch]);
+        requestCode(email);
+    }, [requestCode, email]);
 
     const handleOtpSubmit = useCallback(() => {}, []);
 
@@ -23,9 +23,7 @@ const SignInUpContainer = () => {
             if (authState.status === ESignInUpState.SelectingMethod) {
                 if (method === ESignInUpMethod.Email) {
                     dispatch(
-                        userStore.setSignInUpState(
-                            ESignInUpState.VerifyingEmail
-                        )
+                        userStore.setSignInUpState(ESignInUpState.SigningIn)
                     );
                 } else {
                     // TODO: Implement SSO
@@ -47,6 +45,8 @@ const SignInUpContainer = () => {
             showXButton
             showDialog={
                 authState.status === ESignInUpState.VerifyingEmail ||
+                authState.status === ESignInUpState.SigningIn ||
+                authState.status === ESignInUpState.SigningUp ||
                 authState.status === ESignInUpState.SelectingMethod
             }
             useKeyPress={useKeyPress}

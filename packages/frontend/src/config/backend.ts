@@ -78,6 +78,9 @@ const API_V0 = {
         USER: {
             BASE: "user",
             LOGIN: "/auth/login/",
+            REQUEST_TOKEN: "/auth/token/",
+            VERIFY_TOKEN: "/auth/verify/",
+            VERIFY_EMAIL: "/auth/verify/email/",
             LOGOUT: "/logout/",
             ACCOUNTS: "/accounts/",
             MULTI_ACCOUNTS: "/accounts/bulk_create/",

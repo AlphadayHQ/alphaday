@@ -180,6 +180,14 @@ const migrations: TMigrations = {
                         },
                     },
                 },
+                // reset views state since users will need to auth again
+                views: {
+                    ...s.views,
+                    prevSelectedViewId: undefined,
+                    viewsCache: undefined,
+                    sharedViewsCache: undefined,
+                    subscribedViewsCache: undefined,
+                },
             };
         } catch (e) {
             Logger.error("migrations::103: Migration failed", e);

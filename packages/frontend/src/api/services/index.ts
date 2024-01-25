@@ -75,6 +75,9 @@ export * from "./lens-feed/types";
 export * from "./features/featuresEndpoints";
 export * from "./features/types";
 
+export * from "./auth/authEndpoints";
+export * from "./auth/types";
+
 /**
  * alphadayApi export should be last
  */

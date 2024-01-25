@@ -1,25 +1,24 @@
 import { useState, useCallback } from "react";
-import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import * as userStore from "src/api/store/slices/user";
-import { ESignInUpState } from "src/api/types";
+import { useSignInUp } from "src/api/hooks";
 import { debounce } from "src/api/utils/helpers";
 import { SignInUp } from "src/components/signinup/SignInUp";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
 
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
-    const dispatch = useAppDispatch();
-    const authState = useAppSelector(userStore.selectUserAccess);
+    const { authState, requestCode, verifyToken, resetAuthState } =
+        useSignInUp();
 
     const handleEmailSubmit = useCallback(() => {
-        dispatch(userStore.setSignInUpState(ESignInUpState.VerifyingEmail));
-    }, [dispatch]);
+        requestCode(email);
+    }, [email, requestCode]);
 
-    const handleOtpSubmit = useCallback(() => {}, []);
-
-    const handleClose = useCallback(() => {
-        dispatch(userStore.resetAuthState());
-    }, [dispatch]);
+    const handleOtpSubmit = useCallback(
+        (otp: string) => {
+            verifyToken(email, otp);
+        },
+        [email, verifyToken]
+    );
 
     const handleEmailChange = debounce(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +29,7 @@ const AuthPage: React.FC = () => {
     return (
         <PagedMobileLayout
             title="Continue with Email"
-            handleClose={handleClose}
+            handleClose={resetAuthState}
         >
             <SignInUp
                 email={email}
