@@ -65,7 +65,7 @@ const feedItems: IFeedItem[] = [
     },
     {
         id: 3,
-        type: EFeedItemType.NEWS,
+        type: EFeedItemType.PODCAST,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
         date: new Date(now.setHours(now.getHours() - 1)),
         source: {

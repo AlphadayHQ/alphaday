@@ -3,8 +3,12 @@ import { Disclosure, Transition } from "@headlessui/react";
 import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
 import { ReactComponent as LikeSVG } from "src/assets/svg/like.svg";
 import { ReactComponent as LikedSVG } from "src/assets/svg/liked.svg";
+import { ReactComponent as PauseSVG } from "src/assets/svg/pause2.svg";
+import { ReactComponent as PlayAudioSVG } from "src/assets/svg/play-audio.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play-video.svg";
 import { ReactComponent as ShareSVG } from "src/assets/svg/share.svg";
+import { ReactComponent as SkipBackwardSVG } from "src/assets/svg/skip-backward.svg";
+import { ReactComponent as SkipForwardSVG } from "src/assets/svg/skip-forward.svg";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
@@ -13,6 +17,7 @@ import {
     EFeedItemType,
     IFeedItem,
     INewsFeedItem,
+    IPodcastFeedItem,
     IVideoFeedItem,
     feedIcons,
 } from "./types";
@@ -115,6 +120,7 @@ const FeedItemDisclosureButton: FC<{
     title: string;
     feedIconElement: JSX.Element;
     bannerImgArea: JSX.Element | null;
+    belowTitleArea?: JSX.Element;
     tags: string[];
     onLike: () => void;
     likes: number;
@@ -132,6 +138,7 @@ const FeedItemDisclosureButton: FC<{
     likes,
     comments,
     isLiked,
+    belowTitleArea,
 }) => {
     return (
         <Disclosure.Button
@@ -150,6 +157,7 @@ const FeedItemDisclosureButton: FC<{
                     </p>
                 </div>
                 <p className="mt-2 mb-0 line-clamp-3">{title}</p>
+                {belowTitleArea && belowTitleArea}
                 {!open && <TagButtons tags={tags} onClick={() => {}} />}
             </div>
             <div className="flex-col min-w-max ml-2">
@@ -349,12 +357,99 @@ const VideoFeedItem: FC<{ item: IVideoFeedItem }> = ({ item }) => {
     );
 };
 
+const PodcastFeedItem: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
+    const {
+        title,
+        date,
+        tags,
+        likes,
+        comments,
+        link,
+        img,
+        type,
+        description,
+        source,
+    } = item;
+    return (
+        <FeedItemDisclosure>
+            {({ open }) => (
+                <>
+                    <FeedItemDisclosureButton
+                        open={open}
+                        icon={feedIcons[type]}
+                        date={computeDuration(date)}
+                        title={title}
+                        feedIconElement={
+                            <FeedSourceInfo
+                                name={source.name}
+                                img={source.img}
+                            />
+                        }
+                        belowTitleArea={
+                            open ? undefined : (
+                                <div className="flex items-center mt-1">
+                                    <PlayAudioSVG className="w-6 h-6 mr-1.5 text-primary" />
+                                </div>
+                            )
+                        }
+                        bannerImgArea={
+                            <div
+                                className={twMerge(
+                                    "w-full flex justify-end items-start",
+                                    open ? "" : "h-24"
+                                )}
+                            >
+                                <img
+                                    src={img}
+                                    alt=""
+                                    className="w-14 h-14 rounded-lg object-cover"
+                                    onError={imgOnError}
+                                />
+                            </div>
+                        }
+                        tags={tags}
+                        onLike={() => {}}
+                        likes={likes}
+                        comments={comments}
+                        isLiked={false}
+                    />
+                    <FeedItemDisclosurePanel
+                        tags={tags}
+                        onLike={() => {}}
+                        likes={likes}
+                        comments={comments}
+                        description={description}
+                        link={link}
+                        isLiked={false}
+                        descriptionHeaderArea={
+                            <div className="flex justify-center">
+                                <SkipForwardSVG className="w-6 h-6 text-primaryVariant100" />
+                                <div className="relative w-full min-w-[100px] px-2 flex  items-center justify-start">
+                                    <div className="bg-backgroundVariant200 w-full h-1 rounded" />
+                                    <div className="absolute bg-primaryVariant200 w-12 h-1 rounded" />
+                                </div>
+                                <SkipBackwardSVG className="w-6 h-6 mr-1.5 text-primaryVariant100" />
+                                <span className="fontGroup-mini self-center text-primary mr-1.5">
+                                    3:37
+                                </span>
+                                <PauseSVG className="w-6 h-6 mr-1.5 text-primary" />
+                            </div>
+                        }
+                    />
+                </>
+            )}
+        </FeedItemDisclosure>
+    );
+};
+
 export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
     switch (item.type) {
         case EFeedItemType.NEWS:
             return <NewsFeedItem item={item} />;
         case EFeedItemType.VIDEO:
             return <VideoFeedItem item={item} />;
+        case EFeedItemType.PODCAST:
+            return <PodcastFeedItem item={item} />;
         case EFeedItemType.EVENTS:
             return <NewsFeedItem item={item as unknown as INewsFeedItem} />;
         default:
