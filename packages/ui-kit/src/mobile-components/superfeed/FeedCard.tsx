@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { BlogCard } from "./BlogCard";
 import { EventCard } from "./EventCard";
 import { ImageCard } from "./ImageCard";
 import { NewsCard } from "./NewsCard";
@@ -10,6 +11,8 @@ export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
     switch (item.type) {
         case EFeedItemType.NEWS:
             return <NewsCard item={item} />;
+        case EFeedItemType.BLOG:
+            return <BlogCard item={item} />;
         case EFeedItemType.VIDEO:
             return <VideoCard item={item} />;
         case EFeedItemType.PODCAST:

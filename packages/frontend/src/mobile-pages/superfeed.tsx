@@ -9,6 +9,30 @@ const now = new Date();
 
 const feedItems: IFeedItem[] = [
     {
+        id: 6,
+        type: EFeedItemType.BLOG,
+        title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
+        date: new Date(now.setHours(now.getHours() - 1)),
+        source: {
+            name: "CoinTelegraph",
+            img: "https://s3.eu-west-1.amazonaws.com/production-alphaday.com/media/icons/sources/cointelegraph_news.jpg",
+        },
+        tags: [
+            "Bitcoin",
+            "ETF",
+            "NFT",
+            "Crypto",
+            "Blockchain",
+            "Ethereum",
+            "DeFi",
+        ],
+        likes: 123,
+        comments: 123,
+        link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
+        description:
+            "If you're unhappy with your purchase for any reason, email us within 90 days and we'll refund you in full, no questions asked.",
+    },
+    {
         id: 5,
         type: EFeedItemType.IMAGE,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
