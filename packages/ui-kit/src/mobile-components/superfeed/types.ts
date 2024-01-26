@@ -1,3 +1,4 @@
+import blogIcon from "src/assets/feedIcons/blog.png";
 import eventIcon from "src/assets/feedIcons/event.png";
 import imageIcon from "src/assets/feedIcons/image.png";
 import newsIcon from "src/assets/feedIcons/news.png";
@@ -10,6 +11,7 @@ export const feedIcons = {
     video: videoIcon,
     podcast: podcastIcon,
     image: imageIcon,
+    blog: blogIcon,
 };
 export enum EFeedItemType {
     NEWS = "news",
@@ -17,6 +19,7 @@ export enum EFeedItemType {
     VIDEO = "video",
     PODCAST = "podcast",
     IMAGE = "image",
+    BLOG = "blog",
 }
 
 export interface INewsFeedItem {
@@ -36,6 +39,9 @@ export interface INewsFeedItem {
     img: string;
 }
 
+export interface IBlogFeedItem extends Omit<INewsFeedItem, "type" | "img"> {
+    type: EFeedItemType.BLOG;
+}
 export interface IVideoFeedItem extends Omit<INewsFeedItem, "type"> {
     type: EFeedItemType.VIDEO;
 }
@@ -62,6 +68,7 @@ export interface IEventFeedItem
 
 export type IFeedItem =
     | INewsFeedItem
+    | IBlogFeedItem
     | IEventFeedItem
     | IVideoFeedItem
     | IPodcastFeedItem
