@@ -23,7 +23,7 @@ const InstallPWAContainer: FC = () => {
             <div className="flex justify-end">
                 <button
                     onClick={handleCloseDialog}
-                    className="flex h-[34px] w-[34px] items-center justify-center -m-4"
+                    className="flex items-center justify-center -m-3.5 -mt-7"
                     title="close"
                     type="button"
                     data-testid="alpha-dialog-close-button"
