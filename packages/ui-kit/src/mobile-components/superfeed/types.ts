@@ -1,5 +1,6 @@
 import blogIcon from "src/assets/feedIcons/blog.png";
 import eventIcon from "src/assets/feedIcons/event.png";
+import forumIcon from "src/assets/feedIcons/forum.png";
 import imageIcon from "src/assets/feedIcons/image.png";
 import newsIcon from "src/assets/feedIcons/news.png";
 import podcastIcon from "src/assets/feedIcons/podcast.png";
@@ -12,6 +13,7 @@ export const feedIcons = {
     podcast: podcastIcon,
     image: imageIcon,
     blog: blogIcon,
+    forum: forumIcon,
 };
 export enum EFeedItemType {
     NEWS = "news",
@@ -20,6 +22,7 @@ export enum EFeedItemType {
     PODCAST = "podcast",
     IMAGE = "image",
     BLOG = "blog",
+    FORUM = "forum",
 }
 
 export interface INewsFeedItem {
@@ -39,6 +42,9 @@ export interface INewsFeedItem {
     img: string;
 }
 
+export interface IForumFeedItem extends Omit<INewsFeedItem, "type" | "img"> {
+    type: EFeedItemType.FORUM;
+}
 export interface IBlogFeedItem extends Omit<INewsFeedItem, "type" | "img"> {
     type: EFeedItemType.BLOG;
 }
@@ -69,6 +75,7 @@ export interface IEventFeedItem
 export type IFeedItem =
     | INewsFeedItem
     | IBlogFeedItem
+    | IForumFeedItem
     | IEventFeedItem
     | IVideoFeedItem
     | IPodcastFeedItem
