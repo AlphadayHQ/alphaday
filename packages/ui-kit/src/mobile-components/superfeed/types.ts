@@ -3,6 +3,7 @@ import eventIcon from "src/assets/feedIcons/event.png";
 import forumIcon from "src/assets/feedIcons/forum.png";
 import imageIcon from "src/assets/feedIcons/image.png";
 import newsIcon from "src/assets/feedIcons/news.png";
+import personIcon from "src/assets/feedIcons/person.png";
 import podcastIcon from "src/assets/feedIcons/podcast.png";
 import videoIcon from "src/assets/feedIcons/video.png";
 
@@ -14,6 +15,7 @@ export const feedIcons = {
     image: imageIcon,
     blog: blogIcon,
     forum: forumIcon,
+    person: personIcon,
 };
 export enum EFeedItemType {
     NEWS = "news",
@@ -23,6 +25,7 @@ export enum EFeedItemType {
     IMAGE = "image",
     BLOG = "blog",
     FORUM = "forum",
+    PERSON = "person",
 }
 
 export interface INewsFeedItem {
@@ -40,6 +43,10 @@ export interface INewsFeedItem {
     comments: number;
     link: string;
     img: string;
+}
+
+export interface IPersonFeedItem extends Omit<INewsFeedItem, "type" | "img"> {
+    type: EFeedItemType.PERSON;
 }
 
 export interface IForumFeedItem extends Omit<INewsFeedItem, "type" | "img"> {
@@ -79,4 +86,5 @@ export type IFeedItem =
     | IEventFeedItem
     | IVideoFeedItem
     | IPodcastFeedItem
+    | IPersonFeedItem
     | IImageFeedItem;
