@@ -37,7 +37,7 @@ export const SignInUp: FC<SignInUpProps> = ({
                 <div>Didn&apos;t get a verification code?</div>
                 <button
                     type="button"
-                    className="text-primary text-sm font-bold"
+                    className="text-primary text-sm font-bold underline underline-offset-4"
                 >
                     Resend now
                 </button>

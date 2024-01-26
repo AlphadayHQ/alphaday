@@ -9,8 +9,8 @@ interface IUseSignInUp {
     authState: TUserAccess;
     openSignInUpModal: () => void;
     resetAuthState: () => void;
-    requestCode: (email: string) => MaybeAsync<void>;
-    verifyToken: (email: string, code: string) => MaybeAsync<void>;
+    requestCode: (email: string) => Promise<void>;
+    verifyToken: (email: string, code: string) => Promise<void>;
 }
 
 /**

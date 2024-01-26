@@ -5,6 +5,8 @@ import { useAppDispatch } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import { ESignInUpMethod, ESignInUpState } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
+import { Logger } from "src/api/utils/logging";
+import { toast } from "src/api/utils/toastUtils";
 import SignInUpModule from "src/components/signinup/SignInUpModule";
 
 const SignInUpContainer = () => {
@@ -13,7 +15,11 @@ const SignInUpContainer = () => {
     const { authState, resetAuthState, requestCode } = useSignInUp();
 
     const handleEmailSubmit = useCallback(() => {
-        requestCode(email);
+        requestCode(email)
+            .then(() => toast("OTP sent to your email"))
+            .catch(() => {
+                Logger.error("Failed to send OTP to email", email);
+            });
     }, [requestCode, email]);
 
     const handleOtpSubmit = useCallback(() => {}, []);
