@@ -15,6 +15,8 @@ export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
             return <BlogCard item={item} />;
         case EFeedItemType.FORUM:
             return <BlogCard item={item} />;
+        case EFeedItemType.PERSON:
+            return <BlogCard item={item} />;
         case EFeedItemType.VIDEO:
             return <VideoCard item={item} />;
         case EFeedItemType.PODCAST:
