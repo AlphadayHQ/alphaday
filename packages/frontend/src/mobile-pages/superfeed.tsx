@@ -1,25 +1,12 @@
 import MobileLayout from "src/layout/MobileLayout";
 import { FeedCard } from "src/mobile-components/superfeed/FeedCard";
-import { EFeedItemType } from "src/mobile-components/superfeed/types";
+import {
+    EFeedItemType,
+    IFeedItem,
+} from "src/mobile-components/superfeed/types";
 
 const now = new Date();
 
-interface IFeedItem {
-    id: number;
-    type: EFeedItemType;
-    title: string;
-    date: Date;
-    source: {
-        name: string;
-        img: string;
-    };
-    tags: string[];
-    likes: number;
-    comments: number;
-    link: string;
-    img: string;
-    description: string;
-}
 const feedItems: IFeedItem[] = [
     {
         id: 1,
@@ -82,13 +69,12 @@ const feedItems: IFeedItem[] = [
     },
     {
         id: 4,
-        type: EFeedItemType.NEWS,
+        type: EFeedItemType.EVENT,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
         date: new Date(now.setHours(now.getHours() - 1)),
-        source: {
-            name: "CoinTelegraph",
-            img: "https://s3.eu-west-1.amazonaws.com/production-alphaday.com/media/icons/sources/cointelegraph_news.jpg",
-        },
+        startDate: new Date(now.setHours(now.getHours() + 10)),
+        endDate: new Date(now.setHours(now.getHours() - 12)),
+        category: "Conferences",
         tags: ["Bitcoin", "ETF"],
         likes: 123,
         comments: 123,

@@ -11,7 +11,7 @@ export const feedIcons = {
 };
 export enum EFeedItemType {
     NEWS = "news",
-    EVENTS = "events",
+    EVENT = "events",
     VIDEO = "video",
     PODCAST = "podcast",
 }
@@ -41,21 +41,15 @@ export interface IPodcastFeedItem extends Omit<INewsFeedItem, "type"> {
     type: EFeedItemType.PODCAST;
 }
 
-interface IEventsFeedItem {
-    id: number;
-    type: EFeedItemType.EVENTS;
-    title: string;
-    date: Date;
-    description: string;
-    tags: string[];
-    likes: number;
-    comments: number;
-    link: string;
-    img: string;
+export interface IEventFeedItem extends Omit<INewsFeedItem, "type" | "source"> {
+    type: EFeedItemType.EVENT;
+    startDate: Date;
+    endDate: Date;
+    category: string;
 }
 
 export type IFeedItem =
     | INewsFeedItem
-    | IEventsFeedItem
+    | IEventFeedItem
     | IVideoFeedItem
     | IPodcastFeedItem;
