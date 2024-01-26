@@ -6,7 +6,7 @@ const MobileLayout: FC<{
     onScroll?: () => void;
 }> = ({ children, onScroll }) => {
     return (
-        <ScrollBar onScroll={onScroll}>
+        <ScrollBar className="h-screen" onScroll={onScroll}>
             <NavHeader avatar={undefined} />
             {children}
             <NavBottom />

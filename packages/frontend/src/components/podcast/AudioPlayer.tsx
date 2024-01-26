@@ -171,7 +171,7 @@ const AudioPlayer: FC<IAudioPlayer> = ({
                         alt={podcast?.sourceName}
                     />
                     <div className="self-start pt-1 flex flex-col pl-[9px] cursor-default">
-                        <span className="fontGroup-highlightSemi one-liner">
+                        <span className="fontGroup-highlightSemi line-clamp-1">
                             {podcast?.title}
                         </span>
                         <span className="fontGroup-mini">

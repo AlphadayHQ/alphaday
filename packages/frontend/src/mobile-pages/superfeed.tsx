@@ -1,28 +1,16 @@
-import { FeedItem } from "@alphaday/ui-kit";
 import MobileLayout from "src/layout/MobileLayout";
+import { FeedCard } from "src/mobile-components/superfeed/FeedCard";
+import {
+    EFeedItemType,
+    IFeedItem,
+} from "src/mobile-components/superfeed/types";
 
 const now = new Date();
 
-interface IFeedItem {
-    id: number;
-    type: "news";
-    title: string;
-    date: Date;
-    source: {
-        name: string;
-        img: string;
-    };
-    tags: string[];
-    likes: number;
-    comments: number;
-    link: string;
-    img: string;
-    description: string;
-}
 const feedItems: IFeedItem[] = [
     {
         id: 1,
-        type: "news",
+        type: EFeedItemType.NEWS,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
         date: new Date(now.setHours(now.getHours() - 1)),
         source: {
@@ -47,14 +35,14 @@ const feedItems: IFeedItem[] = [
     },
     {
         id: 2,
-        type: "news",
-        title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
+        type: EFeedItemType.VIDEO,
+        title: "Trump Dumps Millions in Ethereum After Disastrous NFT Redux",
         date: new Date(now.setHours(now.getHours() - 1)),
         source: {
-            name: "CoinTelegraph",
+            name: "DeFiChain",
             img: "https://s3.eu-west-1.amazonaws.com/production-alphaday.com/media/icons/sources/cointelegraph_news.jpg",
         },
-        tags: ["Bitcoin", "ETF"],
+        tags: ["Ethereum", "Bitcoin", "Cardano"],
         likes: 123,
         comments: 123,
         link: "https://cointelegraph.com/magazine/painful-nft-creator-nate-alex-70-cryptopunks/",
@@ -64,7 +52,7 @@ const feedItems: IFeedItem[] = [
     },
     {
         id: 3,
-        type: "news",
+        type: EFeedItemType.PODCAST,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
         date: new Date(now.setHours(now.getHours() - 1)),
         source: {
@@ -81,13 +69,12 @@ const feedItems: IFeedItem[] = [
     },
     {
         id: 4,
-        type: "news",
+        type: EFeedItemType.EVENT,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
-        date: new Date(now.setHours(now.getHours() - 1)),
-        source: {
-            name: "CoinTelegraph",
-            img: "https://s3.eu-west-1.amazonaws.com/production-alphaday.com/media/icons/sources/cointelegraph_news.jpg",
-        },
+        startDate: new Date(now.setHours(now.getHours() + 10)),
+        endDate: new Date(now.setHours(now.getHours() - 12)),
+        category: "Conference/Summit",
+        location: "BTC Space Phuket I Thailand",
         tags: ["Bitcoin", "ETF"],
         likes: 123,
         comments: 123,
@@ -98,7 +85,7 @@ const feedItems: IFeedItem[] = [
     },
     {
         id: 5,
-        type: "news",
+        type: EFeedItemType.NEWS,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
         date: new Date(now.setHours(now.getHours() - 1)),
         source: {
@@ -115,7 +102,7 @@ const feedItems: IFeedItem[] = [
     },
     {
         id: 6,
-        type: "news",
+        type: EFeedItemType.NEWS,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
         date: new Date(now.setHours(now.getHours() - 1)),
         source: {
@@ -137,7 +124,7 @@ const SuperfeedPage = () => {
         <MobileLayout>
             <div className="w-full px-5 pt-4">
                 {feedItems.map((item) => (
-                    <FeedItem key={item.id} item={item} />
+                    <FeedCard key={item.id} item={item} />
                 ))}
             </div>
         </MobileLayout>
