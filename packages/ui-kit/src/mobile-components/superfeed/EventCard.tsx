@@ -1,11 +1,8 @@
 import { FC } from "react";
 import moment from "moment";
-import { ReactComponent as PauseSVG } from "src/assets/svg/pause2.svg";
-import { ReactComponent as PlayAudioSVG } from "src/assets/svg/play-audio.svg";
-import { ReactComponent as SkipBackwardSVG } from "src/assets/svg/skip-backward.svg";
-import { ReactComponent as SkipForwardSVG } from "src/assets/svg/skip-forward.svg";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
+import { TagButton } from "../button/buttons";
 import {
     ActionButtons,
     FeedItemDisclosure,
@@ -23,7 +20,7 @@ const eventDateFormatter = (date: Date) => {
         .split(" ")
         .pop();
     return (
-        <span className="flex flex-col text-primary fontGroup-normal">
+        <span className="flex flex-col text-primary fontGroup-mini">
             <span>
                 {`${String(moment(date).format("MMM DD, YYYY"))}`}
                 <span className="mx-1.5 my-0 self-center">•</span>
@@ -48,6 +45,7 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
         type,
         description,
         category,
+        location,
         startDate,
         endDate,
     } = item;
@@ -66,33 +64,37 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                                     icon={feedIcons[type]}
                                 />
                                 <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                    <div className="flex flex-col text-primary fontGroup-normal">
+                                    <div className="flex flex-col text-primary fontGroup-mini">
                                         {eventDateFormatter(startDate)}
                                         {eventDateFormatter(endDate)}
                                     </div>
                                 </div>
                             </div>
-                            <p className="mt-2 mb-0 line-clamp-3">{title}</p>
-                            {open ? undefined : (
-                                <div className="flex items-center mt-1">
-                                    <PlayAudioSVG className="w-6 h-6 mr-1.5 text-primary" />
-                                </div>
-                            )}
+                            <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
+                                {title}
+                            </p>
+                            <p className="mt-0.5 mb-0 line-clamp-2">
+                                {location}
+                            </p>
                             {!open && (
-                                <TagButtons tags={tags} onClick={() => {}} />
+                                <TagButton
+                                    className="bg-[#C1DF91] text-background mt-3"
+                                    name={category}
+                                    onClick={() => {}}
+                                />
                             )}
                         </div>
                         <div className="flex-col min-w-max ml-2">
                             <div
                                 className={twMerge(
                                     "w-full flex justify-end items-start",
-                                    open ? "" : "h-24"
+                                    open && "hidden"
                                 )}
                             >
                                 <img
                                     src={img}
                                     alt=""
-                                    className="w-14 h-14 rounded-lg object-cover"
+                                    className="h-24 rounded-lg object-cover"
                                     onError={imgOnError}
                                 />
                             </div>
@@ -109,18 +111,16 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <div className="flex justify-center">
-                            <SkipForwardSVG className="w-6 h-6 text-primaryVariant100" />
-                            <div className="relative w-full min-w-[100px] px-2 flex  items-center justify-start">
-                                <div className="bg-backgroundVariant200 w-full h-1 rounded" />
-                                <div className="absolute bg-primaryVariant200 w-12 h-1 rounded" />
-                            </div>
-                            <SkipBackwardSVG className="w-6 h-6 mr-1.5 text-primaryVariant100" />
-                            <span className="fontGroup-mini self-center text-primary mr-1.5">
-                                3:37
-                            </span>
-                            <PauseSVG className="w-6 h-6 mr-1.5 text-primary" />
-                        </div>{" "}
+                        <img
+                            src={img}
+                            alt=""
+                            className="w-full rounded-lg object-cover"
+                            onError={imgOnError}
+                        />
+                        <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
+                            {title}
+                        </p>
+                        <p className="mt-0.5 mb-0 line-clamp-2">{location}</p>
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {description}
                         </p>
@@ -133,7 +133,14 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                             Read more
                         </a>
                         <div className="my-2 flex justify-between">
-                            <TagButtons tags={tags} onClick={() => {}} />
+                            <div className="flex flex-col">
+                                <TagButton
+                                    className="bg-[#C1DF91] text-background mt-3"
+                                    name={category}
+                                    onClick={() => {}}
+                                />
+                                <TagButtons tags={tags} onClick={() => {}} />
+                            </div>
                             <div className="min-w-max ml-2 mt-0.5">
                                 <ActionButtons
                                     onLike={onLike}

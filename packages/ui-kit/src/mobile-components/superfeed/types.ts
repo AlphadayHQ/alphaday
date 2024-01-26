@@ -47,6 +47,7 @@ export interface IEventFeedItem
     startDate: Date;
     endDate: Date;
     category: string;
+    location: string;
 }
 
 export type IFeedItem =
