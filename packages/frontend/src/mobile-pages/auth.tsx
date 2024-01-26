@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useHistory } from "react-router-dom";
 import { useSignInUp } from "src/api/hooks";
 import { debounce } from "src/api/utils/helpers";
 import { SignInUp } from "src/components/signinup/SignInUp";
@@ -6,6 +7,7 @@ import PagedMobileLayout from "src/layout/PagedMobileLayout";
 
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
+    const history = useHistory();
     const { authState, requestCode, verifyToken, resetAuthState } =
         useSignInUp();
 
@@ -30,6 +32,9 @@ const AuthPage: React.FC = () => {
         <PagedMobileLayout
             title="Continue with Email"
             handleClose={resetAuthState}
+            handleBack={() =>
+                history.length > 1 ? history.goBack() : history.push("/")
+            }
         >
             <SignInUp
                 email={email}

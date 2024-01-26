@@ -30,18 +30,18 @@ export const SignInUp: FC<SignInUpProps> = ({
                 Enter the 6 digit verification code we sent to
                 <span className="font-bold"> {email}</span>
             </p>
-            <div className="flex justify-between gap-2.5 py-4">
+            <div className="flex justify-between gap-2.5 py-4 max-w-screen-single-col">
                 <OtpInput handleOtpSubmit={handleOtpSubmit} />
             </div>
-            <p className="text-primary text-sm flex flex-col">
-                Didn&apos;t get a verification code?{" "}
+            <div className="text-primary text-sm">
+                <div>Didn&apos;t get a verification code?</div>
                 <button
                     type="button"
                     className="text-primary text-sm font-bold"
                 >
                     Resend now
                 </button>
-            </p>
+            </div>
         </div>
     ) : (
         <div className="w-full p-5">

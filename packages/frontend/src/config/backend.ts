@@ -80,7 +80,7 @@ const API_V0 = {
             LOGIN: "/auth/login/",
             REQUEST_TOKEN: "/auth/token/",
             VERIFY_TOKEN: "/auth/verify/",
-            VERIFY_EMAIL: "/auth/verify/email/",
+            VERIFY_EMAIL: "/auth/email/",
             LOGOUT: "/logout/",
             ACCOUNTS: "/accounts/",
             MULTI_ACCOUNTS: "/accounts/bulk_create/",

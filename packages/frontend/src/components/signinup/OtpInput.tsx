@@ -61,8 +61,9 @@ const OtpInput: React.FC<OtpInputProps> = ({
             key={i}
             id={`otp-${i}`}
             type="text"
-            className="rounded text-black text-center w-10 h-10 border-2 border-primary font-semibold"
+            className="rounded text-black text-center w-10 h-10 border-2 border-primary font-semibold placeholder:bg-primaryVariant200 placeholder-shown:bg-primaryVariant200 placeholder-shown:border-primaryVariant200 focus:outline-none focus:border-primaryVariant200"
             onChange={handleOtpChange}
+            placeholder=" "
         />
     ));
 };
