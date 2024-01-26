@@ -9,9 +9,11 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IBlogFeedItem, feedIcons } from "./types";
+import { IBlogFeedItem, IForumFeedItem, feedIcons } from "./types";
 
-export const BlogCard: FC<{ item: IBlogFeedItem }> = ({ item }) => {
+export const BlogCard: FC<{ item: IBlogFeedItem | IForumFeedItem }> = ({
+    item,
+}) => {
     const {
         title,
         date,
