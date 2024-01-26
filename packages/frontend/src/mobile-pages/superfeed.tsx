@@ -71,7 +71,6 @@ const feedItems: IFeedItem[] = [
         id: 4,
         type: EFeedItemType.EVENT,
         title: "MicroStrategy’s stock surges 350% in 2023 on back of Bitcoin ETF hype",
-        date: new Date(now.setHours(now.getHours() - 1)),
         startDate: new Date(now.setHours(now.getHours() + 10)),
         endDate: new Date(now.setHours(now.getHours() - 12)),
         category: "Conferences",

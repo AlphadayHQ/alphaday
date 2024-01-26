@@ -41,7 +41,8 @@ export interface IPodcastFeedItem extends Omit<INewsFeedItem, "type"> {
     type: EFeedItemType.PODCAST;
 }
 
-export interface IEventFeedItem extends Omit<INewsFeedItem, "type" | "source"> {
+export interface IEventFeedItem
+    extends Omit<INewsFeedItem, "type" | "source" | "date"> {
     type: EFeedItemType.EVENT;
     startDate: Date;
     endDate: Date;
