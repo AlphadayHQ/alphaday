@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { EventCard } from "./EventCard";
+import { ImageCard } from "./ImageCard";
 import { NewsCard } from "./NewsCard";
 import { PodcastCard } from "./PodcastCard";
 import { EFeedItemType, IFeedItem } from "./types";
@@ -15,6 +16,8 @@ export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
             return <PodcastCard item={item} />;
         case EFeedItemType.EVENT:
             return <EventCard item={item} />;
+        case EFeedItemType.IMAGE:
+            return <ImageCard item={item} />;
         default:
             return null;
     }
