@@ -63,17 +63,15 @@ export const BlogCard: FC<{
                                 </p>
                             </div>
 
-                            <div className="flex">
-                                <div className="flex-col">
-                                    {!open && (
+                            {!open && (
+                                <div className="flex">
+                                    <div className="flex-col">
                                         <TagButtons
                                             tags={tags}
                                             onClick={() => {}}
                                         />
-                                    )}
-                                </div>
-                                <div className="flex-col min-w-max ml-2">
-                                    {!open && (
+                                    </div>
+                                    <div className="flex-col min-w-max ml-2">
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
@@ -82,9 +80,9 @@ export const BlogCard: FC<{
                                             comments={comments}
                                             isLiked={isLiked}
                                         />
-                                    )}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>

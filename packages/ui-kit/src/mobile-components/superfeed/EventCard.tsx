@@ -58,55 +58,69 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton open={open}>
-                        <div className="flex-col">
-                            <div className="flex items-center">
-                                <FeedItemDisclosureButtonImage
-                                    icon={feedIcons[type]}
-                                />
-                                <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                    <div className="flex flex-col text-primary fontGroup-mini">
-                                        {eventDateFormatter(startDate)}
-                                        {eventDateFormatter(endDate)}
+                        <div className="flex flex-col">
+                            <div className="flex">
+                                <div className="flex-col">
+                                    <div className="flex items-center">
+                                        <FeedItemDisclosureButtonImage
+                                            icon={feedIcons[type]}
+                                        />
+                                        <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                            <div className="flex flex-col text-primary fontGroup-mini">
+                                                {eventDateFormatter(startDate)}
+                                                {eventDateFormatter(endDate)}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
+                                        {title}
+                                    </p>
+                                    <p className="mt-0.5 mb-0 line-clamp-2">
+                                        {location}
+                                    </p>
+                                    {!open && (
+                                        <TagButton
+                                            className="bg-[#C1DF91] text-background mt-3"
+                                            name={category}
+                                            onClick={() => {}}
+                                        />
+                                    )}
+                                </div>
+                                <div className="flex-col min-w-max ml-2">
+                                    <div
+                                        className={twMerge(
+                                            "w-full flex justify-end items-start",
+                                            open && "hidden"
+                                        )}
+                                    >
+                                        <img
+                                            src={img}
+                                            alt=""
+                                            className="h-24 rounded-lg object-cover"
+                                            onError={imgOnError}
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
-                                {title}
-                            </p>
-                            <p className="mt-0.5 mb-0 line-clamp-2">
-                                {location}
-                            </p>
                             {!open && (
-                                <TagButton
-                                    className="bg-[#C1DF91] text-background mt-3"
-                                    name={category}
-                                    onClick={() => {}}
-                                />
-                            )}
-                        </div>
-                        <div className="flex-col min-w-max ml-2">
-                            <div
-                                className={twMerge(
-                                    "w-full flex justify-end items-start",
-                                    open && "hidden"
-                                )}
-                            >
-                                <img
-                                    src={img}
-                                    alt=""
-                                    className="h-24 rounded-lg object-cover"
-                                    onError={imgOnError}
-                                />
-                            </div>
-                            {!open && (
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onLike}
-                                    likes={likes}
-                                    comments={comments}
-                                    isLiked={isLiked}
-                                />
+                                <div className="flex">
+                                    <div className="flex-col">
+                                        <TagButtons
+                                            tags={tags}
+                                            onClick={() => {}}
+                                        />
+                                    </div>
+                                    <div className="flex-col min-w-max ml-2">
+                                        <ActionButtons
+                                            onLike={onLike}
+                                            onCommentClick={onLike}
+                                            onShare={onLike}
+                                            likes={likes}
+                                            comments={comments}
+                                            isLiked={isLiked}
+                                        />
+                                    </div>
+                                </div>
                             )}
                         </div>
                     </FeedItemDisclosureButton>

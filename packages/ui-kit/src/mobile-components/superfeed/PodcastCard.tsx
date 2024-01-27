@@ -39,57 +39,71 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton open={open}>
-                        <div className="flex-col">
-                            <div className="flex items-center">
-                                <FeedItemDisclosureButtonImage
-                                    icon={feedIcons[type]}
-                                />
-                                <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                    <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                        {computeDuration(date)}
-                                        <span className="mx-1.5 my-0 self-center">
-                                            •
-                                        </span>{" "}
-                                        <FeedSourceInfo
-                                            name={source.name}
-                                            img={source.img}
-                                        />{" "}
+                        <div className="flex flex-col">
+                            <div className="flex">
+                                <div className="flex flex-col">
+                                    <div className="flex items-center">
+                                        <FeedItemDisclosureButtonImage
+                                            icon={feedIcons[type]}
+                                        />
+                                        <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                            <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                                {computeDuration(date)}
+                                                <span className="mx-1.5 my-0 self-center">
+                                                    •
+                                                </span>{" "}
+                                                <FeedSourceInfo
+                                                    name={source.name}
+                                                    img={source.img}
+                                                />{" "}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
+                                        {title}
                                     </p>
+                                    {open ? undefined : (
+                                        <div className="flex items-center mt-1">
+                                            <PlayAudioSVG className="w-6 h-6 mr-1.5 text-primary" />
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="flex-col min-w-max ml-2">
+                                    <div
+                                        className={twMerge(
+                                            "w-full flex justify-end items-start",
+                                            open ? "" : "h-24"
+                                        )}
+                                    >
+                                        <img
+                                            src={img}
+                                            alt=""
+                                            className="w-14 h-14 rounded-lg object-cover"
+                                            onError={imgOnError}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                            <p className="mt-2 mb-0 line-clamp-3">{title}</p>
-                            {open ? undefined : (
-                                <div className="flex items-center mt-1">
-                                    <PlayAudioSVG className="w-6 h-6 mr-1.5 text-primary" />
+                            {!open && (
+                                <div className="flex">
+                                    <div className="flex-col">
+                                        <TagButtons
+                                            tags={tags}
+                                            onClick={() => {}}
+                                        />
+                                    </div>
+                                    <div className="flex-col min-w-max ml-2">
+                                        <ActionButtons
+                                            onLike={onLike}
+                                            onCommentClick={onLike}
+                                            onShare={onLike}
+                                            likes={likes}
+                                            comments={comments}
+                                            isLiked={isLiked}
+                                        />
+                                    </div>
                                 </div>
-                            )}
-                            {!open && (
-                                <TagButtons tags={tags} onClick={() => {}} />
-                            )}
-                        </div>
-                        <div className="flex-col min-w-max ml-2">
-                            <div
-                                className={twMerge(
-                                    "w-full flex justify-end items-start",
-                                    open ? "" : "h-24"
-                                )}
-                            >
-                                <img
-                                    src={img}
-                                    alt=""
-                                    className="w-14 h-14 rounded-lg object-cover"
-                                    onError={imgOnError}
-                                />
-                            </div>
-                            {!open && (
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onLike}
-                                    likes={likes}
-                                    comments={comments}
-                                    isLiked={isLiked}
-                                />
                             )}
                         </div>
                     </FeedItemDisclosureButton>

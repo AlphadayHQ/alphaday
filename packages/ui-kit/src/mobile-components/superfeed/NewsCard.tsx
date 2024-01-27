@@ -34,41 +34,56 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton open={open}>
-                        <div className="flex-col">
-                            <div className="flex items-center">
-                                <FeedItemDisclosureButtonImage
-                                    icon={feedIcons[type]}
-                                />
-                                <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                    <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                        {computeDuration(date)}
-                                        <span className="mx-1.5 my-0 self-center">
-                                            •
-                                        </span>{" "}
-                                        <FeedSourceInfo
-                                            name={source.name}
-                                            img={source.img}
-                                        />{" "}
+                        <div className="flex flex-col">
+                            <div className="flex">
+                                <div className="flex flex-col">
+                                    <div className="flex items-center">
+                                        <FeedItemDisclosureButtonImage
+                                            icon={feedIcons[type]}
+                                        />
+                                        <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                            <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                                {computeDuration(date)}
+                                                <span className="mx-1.5 my-0 self-center">
+                                                    •
+                                                </span>{" "}
+                                                <FeedSourceInfo
+                                                    name={source.name}
+                                                    img={source.img}
+                                                />
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p className="mt-2 mb-0 line-clamp-3">
+                                        {title}
                                     </p>
                                 </div>
+                                <div className="flex-col min-w-max ml-2">
+                                    <DisclosureButtonMedia img={img} />
+                                </div>
                             </div>
-                            <p className="mt-2 mb-0 line-clamp-3">{title}</p>
-                            {!open && (
-                                <TagButtons tags={tags} onClick={() => {}} />
-                            )}
-                        </div>
-                        <div className="flex-col min-w-max ml-2">
-                            <DisclosureButtonMedia img={img} />
-                            {!open && (
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onLike}
-                                    likes={likes}
-                                    comments={comments}
-                                    isLiked={isLiked}
-                                />
-                            )}
+                            <div className="flex">
+                                <div className="flex-col">
+                                    {!open && (
+                                        <TagButtons
+                                            tags={tags}
+                                            onClick={() => {}}
+                                        />
+                                    )}
+                                </div>
+                                <div className="flex-col min-w-max ml-2">
+                                    {!open && (
+                                        <ActionButtons
+                                            onLike={onLike}
+                                            onCommentClick={onLike}
+                                            onShare={onLike}
+                                            likes={likes}
+                                            comments={comments}
+                                            isLiked={isLiked}
+                                        />
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>

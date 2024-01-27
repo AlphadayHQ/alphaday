@@ -32,46 +32,61 @@ export const ImageCard: FC<{ item: IImageFeedItem }> = ({ item }) => {
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton open={open}>
-                        <div className="flex-col">
-                            <div className="flex items-center">
-                                <FeedItemDisclosureButtonImage
-                                    icon={feedIcons[type]}
-                                />
-                                <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                    <p className="text-primaryVariant100 capitalize fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                        {source.name}
+                        <div className="flex flex-col">
+                            <div className="flex">
+                                <div className="flex flex-col">
+                                    <div className="flex items-center">
+                                        <FeedItemDisclosureButtonImage
+                                            icon={feedIcons[type]}
+                                        />
+                                        <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                            <p className="text-primaryVariant100 capitalize fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                                {source.name}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <p className="mt-2 mb-0 line-clamp-3">
+                                        {title}
                                     </p>
                                 </div>
+                                <div className="flex-col min-w-max ml-2">
+                                    <div
+                                        className={twMerge(
+                                            "w-full flex justify-end items-start",
+                                            open && "hidden"
+                                        )}
+                                    >
+                                        <img
+                                            src={img}
+                                            alt=""
+                                            className="h-24 rounded-lg object-cover"
+                                            onError={imgOnError}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <p className="mt-2 mb-0 line-clamp-3">{title}</p>
-                            {!open && (
-                                <TagButtons tags={tags} onClick={() => {}} />
-                            )}
-                        </div>
-                        <div className="flex-col min-w-max ml-2">
-                            <div
-                                className={twMerge(
-                                    "w-full flex justify-end items-start",
-                                    open && "hidden"
-                                )}
-                            >
-                                <img
-                                    src={img}
-                                    alt=""
-                                    className="h-24 rounded-lg object-cover"
-                                    onError={imgOnError}
-                                />
+                            <div className="flex">
+                                <div className="flex-col">
+                                    {!open && (
+                                        <TagButtons
+                                            tags={tags}
+                                            onClick={() => {}}
+                                        />
+                                    )}
+                                </div>
+                                <div className="flex-col min-w-max ml-2">
+                                    {!open && (
+                                        <ActionButtons
+                                            onLike={onLike}
+                                            onCommentClick={onLike}
+                                            onShare={onLike}
+                                            likes={likes}
+                                            comments={comments}
+                                            isLiked={isLiked}
+                                        />
+                                    )}
+                                </div>
                             </div>
-                            {!open && (
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onLike}
-                                    likes={likes}
-                                    comments={comments}
-                                    isLiked={isLiked}
-                                />
-                            )}
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
