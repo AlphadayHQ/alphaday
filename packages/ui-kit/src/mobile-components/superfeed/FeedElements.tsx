@@ -109,6 +109,10 @@ export const FeedItemDisclosureButtonImage: FC<{
     return <img src={icon} alt="feed icon" className="w-8 h-8 mr-2" />;
 };
 
+export const CardTitle: FC<{ title: string }> = ({ title }) => (
+    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">{title}</p>
+);
+
 export const FeedItemDisclosurePanel: FC<{
     children: ReactNode;
 }> = ({ children }) => {
