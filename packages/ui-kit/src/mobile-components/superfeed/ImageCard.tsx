@@ -3,6 +3,7 @@ import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
 import {
     ActionButtons,
+    CardTitle,
     FeedItemDisclosure,
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
@@ -45,9 +46,7 @@ export const ImageCard: FC<{ item: IImageFeedItem }> = ({ item }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <p className="mt-2 mb-0 line-clamp-3">
-                                        {title}
-                                    </p>
+                                    <CardTitle title={title} />
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
                                     <div

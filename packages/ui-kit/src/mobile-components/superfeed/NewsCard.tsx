@@ -2,6 +2,7 @@ import { FC } from "react";
 import { computeDuration } from "src/utils/dateUtils";
 import {
     ActionButtons,
+    CardTitle,
     DisclosureButtonMedia,
     FeedItemDisclosure,
     FeedItemDisclosureButton,
@@ -54,9 +55,7 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <p className="mt-2 mb-0 line-clamp-3">
-                                        {title}
-                                    </p>
+                                    <CardTitle title={title} />
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
                                     <DisclosureButtonMedia img={img} />

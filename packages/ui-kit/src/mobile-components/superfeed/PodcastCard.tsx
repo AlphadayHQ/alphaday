@@ -8,6 +8,7 @@ import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
 import {
     ActionButtons,
+    CardTitle,
     FeedItemDisclosure,
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
@@ -59,9 +60,7 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
-                                        {title}
-                                    </p>
+                                    <CardTitle title={title} />
                                     {open ? undefined : (
                                         <div className="flex items-center mt-1">
                                             <PlayAudioSVG className="w-6 h-6 mr-1.5 text-primary" />

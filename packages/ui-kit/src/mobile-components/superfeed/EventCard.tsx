@@ -5,6 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { TagButton } from "../button/buttons";
 import {
     ActionButtons,
+    CardTitle,
     FeedItemDisclosure,
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
@@ -72,9 +73,7 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
-                                        {title}
-                                    </p>
+                                    <CardTitle title={title} />
                                     <p className="mt-0.5 mb-0 line-clamp-2">
                                         {location}
                                     </p>

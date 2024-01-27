@@ -4,6 +4,7 @@ import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,
+    CardTitle,
     FeedItemDisclosure,
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
@@ -73,9 +74,7 @@ export const VideoCard: FC<{ item: IVideoFeedItem }> = ({ item }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
-                                        {title}
-                                    </p>
+                                    <CardTitle title={title} />
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
                                     {open ? null : (
