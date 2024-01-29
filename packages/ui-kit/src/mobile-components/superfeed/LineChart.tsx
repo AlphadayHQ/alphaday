@@ -1,16 +1,16 @@
-import { FC, memo, useState } from "react";
-import { ApexAreaChart, Spinner, themeColors } from "@alphaday/ui-kit";
+import { FC, memo } from "react";
 import moment from "moment";
-import { TChartRange } from "src/api/types";
-import { ENumberStyle, formatNumber } from "src/api/utils/format";
-import { minVal } from "src/api/utils/helpers";
-import { renderToString } from "src/api/utils/textUtils";
-import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
+import { ApexAreaChart } from "src/components/charts/apexchart";
+import { Spinner } from "src/components/spinner/Spinner";
+import { darkColors } from "src/globalStyles/colors";
+import { renderToString } from "src/utils/textUtils";
+import { twMerge } from "tailwind-merge";
 
 type IProps = {
     data: number[][];
-    selectedChartRange: TChartRange;
     isLoading?: boolean;
+    className?: string;
+    isPreview?: boolean;
 };
 
 type TApexChartWindow = {
@@ -27,45 +27,47 @@ type TCustomTooltip = {
     w: TApexChartWindow;
 };
 
+function minVal(items: number[][]): number[] {
+    return items.reduce(
+        (acc, val) => {
+            // eslint-disable-next-line no-param-reassign
+            acc[0] = val[1] < acc[0] ? val[1] : acc[0];
+            return acc;
+        },
+        [1e10]
+    );
+}
+
 const LineChart: FC<IProps> = memo(function LineChart({
     data,
-    selectedChartRange,
     isLoading,
+    className,
+    isPreview,
 }) {
-    console.log("LineChart", data);
-
-    const [zoomKey, setZoomKey] = useState(0);
-    const [showResetZoom, setShowResetZoom] = useState(false);
-
     const minValue = minVal(data || [[0], [0]])[0];
     const startPrice = data[0][1];
     const lastPrice = data[data.length - 1][1];
 
     const chartColor =
         lastPrice > startPrice || lastPrice === startPrice
-            ? themeColors.success
-            : themeColors.secondaryOrangeSoda;
+            ? darkColors.success
+            : darkColors.secondaryOrangeSoda;
 
     const options = {
         chart: {
             type: "area",
             stacked: true,
-            events: {
-                zoomed: () => {
-                    setShowResetZoom(true);
-                },
-            },
             zoom: {
                 enabled: true,
                 type: "x",
                 autoScaleYaxis: false,
                 zoomedArea: {
                     fill: {
-                        color: themeColors.accentVariant200,
+                        color: darkColors.accentVariant200,
                         opacity: 0.4,
                     },
                     stroke: {
-                        color: themeColors.backgroundBlue,
+                        color: darkColors.backgroundBlue,
                         opacity: 0.4,
                         width: 1,
                     },
@@ -89,8 +91,8 @@ const LineChart: FC<IProps> = memo(function LineChart({
             gradient: {
                 type: "vertical",
                 gradientToColors: [
-                    themeColors.background,
-                    themeColors.background,
+                    darkColors.background,
+                    darkColors.background,
                 ],
                 shadeIntensity: 0.01,
                 opacityFrom: 0.5,
@@ -114,12 +116,10 @@ const LineChart: FC<IProps> = memo(function LineChart({
             labels: {
                 datetimeUTC: false,
                 formatter(_val: string, timestamp: number) {
-                    return moment(timestamp).format(
-                        selectedChartRange === "1D" ? "HH:mm" : "DD MMM"
-                    );
+                    return isPreview ? "" : moment(timestamp).format("DD MMM");
                 },
                 style: {
-                    colors: themeColors.borderLine,
+                    colors: darkColors.borderLine,
                     fontSize: "10px",
                     fontFamily: "Arial, sans-serif",
                     fontWeight: 700,
@@ -137,7 +137,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             decimalsInFloat: false,
         },
         grid: {
-            borderColor: themeColors.borderLine,
+            borderColor: darkColors.borderLine,
             strokeDashArray: 5,
             xaxis: {
                 lines: {
@@ -150,12 +150,13 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 },
             },
             column: {
-                colors: themeColors.borderLine,
+                colors: darkColors.borderLine,
                 opacity: 1,
             },
         },
         tooltip: {
-            fillSeriesColor: themeColors.white,
+            enabled: !isPreview,
+            fillSeriesColor: darkColors.white,
             title: {
                 formatter: (seriesName: string) => `$${seriesName}`,
             },
@@ -179,13 +180,11 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     <div className="px-3 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant300 border border-borderLine fontGroup-support text-primary">
                         <span className="fontGroup-supportBold [&_span]:fontGroup-support">
                             {w.globals.seriesNames[0]}: {}
-                            {
-                                formatNumber({
-                                    value: series[seriesIndex][dataPointIndex],
-                                    style: ENumberStyle.Currency,
-                                    currency: "USD",
-                                }).value
-                            }
+                            {new Intl.NumberFormat("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 2,
+                            }).format(series[seriesIndex][dataPointIndex])}
                         </span>
                         <span className="pt-[1px]">
                             {moment(data[dataPointIndex][0]).format(
@@ -201,7 +200,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 breakpoint: 575,
                 options: {
                     chart: {
-                        height: 200,
+                        height: isPreview ? 110 : 200,
                     },
                     xaxis: {
                         show: false,
@@ -218,11 +217,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
         },
     ];
 
-    const resetZoom = () => {
-        setZoomKey((prev) => prev + 1);
-        setShowResetZoom(false);
-    };
-
     if (isLoading) {
         return (
             <div className="flex w-full h-[200px] items-center justify-center">
@@ -232,17 +226,19 @@ const LineChart: FC<IProps> = memo(function LineChart({
     }
 
     return (
-        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">
+        <div
+            className={twMerge(
+                "w-full h-[200px] [&>div]:-mx-[10px] line-chart [&_.apexcharts-xaxis-texts-g]:[transform:translate(12px,_-4px)] [&_.apexcharts-grid-borders_line]:stroke-borderLine",
+                isPreview && "[&>div]:mx-[4px]",
+                className
+            )}
+        >
             <ApexAreaChart
-                key={zoomKey}
                 options={options}
                 series={chartSeries}
-                width="100%"
-                height="100%"
+                width={isPreview ? "150px" : "100%"}
+                height={isPreview ? "90px" : "100%"}
             />
-            {showResetZoom && (
-                <ZoomResetSVG onClick={resetZoom} className="zoom-reset" />
-            )}
         </div>
     );
 });

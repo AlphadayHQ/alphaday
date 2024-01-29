@@ -4,6 +4,7 @@ import { EventCard } from "./EventCard";
 import { ImageCard } from "./ImageCard";
 import { NewsCard } from "./NewsCard";
 import { PodcastCard } from "./PodcastCard";
+import { PriceCard } from "./PriceCard";
 import { SocialCard } from "./SocialCard";
 import { EFeedItemType, IFeedItem } from "./types";
 import { VideoCard } from "./VideoCard";
@@ -28,6 +29,10 @@ export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
             return <ImageCard item={item} />;
         case EFeedItemType.SOCIAL:
             return <SocialCard item={item} />;
+        case EFeedItemType.PRICE:
+            return <PriceCard item={item} />;
+        case EFeedItemType.TVL:
+            return <PriceCard item={item} />;
         default:
             return null;
     }
