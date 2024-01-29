@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import MobileLayout from "src/layout/MobileLayout";
 import { FeedCard } from "src/mobile-components/superfeed/FeedCard";
 import {
@@ -362,9 +364,22 @@ const feedItems: IFeedItem[] = [
     },
 ];
 
+const FiltersButton = () => (
+    <Link
+        className="flex justify-between mt-2 mb-3 mx-5 px-4 py-2 border border-accentVariant100 rounded-lg"
+        to="/filters"
+    >
+        <p className="m-0 pr-2 fontGroup-highlight self-center">
+            Craft your superfeed with personalized filters
+        </p>
+        <SettingsSVG className="w-6 text-accentVariant100 mt-[3px]" />
+    </Link>
+);
+
 const SuperfeedPage = () => {
     return (
         <MobileLayout>
+            <FiltersButton />
             <div className="w-full px-5 pt-4">
                 {feedItems.map((item) => (
                     <FeedCard key={item.id} item={item} />
