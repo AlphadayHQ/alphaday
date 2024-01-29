@@ -74,10 +74,11 @@ export const SocialCard: FC<{ item: ISocialFeedItem }> = ({ item }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex">
+                            <div className="flex justify-between">
                                 <div className="flex-col">
                                     {!open && (
                                         <TagButtons
+                                            truncated
                                             tags={tags}
                                             onClick={() => {}}
                                         />

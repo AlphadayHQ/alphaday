@@ -85,9 +85,10 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
                                 </div>
                             </div>
                             {!open && (
-                                <div className="flex">
+                                <div className="flex justify-between">
                                     <div className="flex-col">
                                         <TagButtons
+                                            truncated
                                             tags={tags}
                                             onClick={() => {}}
                                         />

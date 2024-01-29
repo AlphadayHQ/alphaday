@@ -64,10 +64,11 @@ export const ImageCard: FC<{ item: IImageFeedItem }> = ({ item }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex">
+                            <div className="flex justify-between">
                                 <div className="flex-col">
                                     {!open && (
                                         <TagButtons
+                                            truncated
                                             tags={tags}
                                             onClick={() => {}}
                                         />

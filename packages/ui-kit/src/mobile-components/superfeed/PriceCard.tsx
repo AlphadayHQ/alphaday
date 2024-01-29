@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { computeDuration } from "src/utils/dateUtils";
 import { twMerge } from "tailwind-merge";
 import {
     ActionButtons,
@@ -24,7 +23,7 @@ export const PriceCard: FC<{ item: IPriceFeedItem | ITVLFeedItem }> = ({
 }) => {
     const isTVL = item.type === EFeedItemType.TVL;
     const price = isTVL ? item.tvl : item.price;
-    const { change, tags, likes, comments, link, history, coin, date } = item;
+    const { change, tags, likes, comments, link, history, coin } = item;
 
     const onLike = () => {};
     const isLiked = false;
@@ -88,10 +87,11 @@ export const PriceCard: FC<{ item: IPriceFeedItem | ITVLFeedItem }> = ({
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex">
+                            <div className="flex justify-between">
                                 <div className="flex-col">
                                     {!open && (
                                         <TagButtons
+                                            truncated
                                             tags={tags}
                                             onClick={() => {}}
                                         />

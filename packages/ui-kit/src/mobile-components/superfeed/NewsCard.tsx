@@ -61,10 +61,11 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                                     <DisclosureButtonMedia img={img} />
                                 </div>
                             </div>
-                            <div className="flex">
+                            <div className="flex justify-between">
                                 <div className="flex-col">
                                     {!open && (
                                         <TagButtons
+                                            truncated
                                             tags={tags}
                                             onClick={() => {}}
                                         />

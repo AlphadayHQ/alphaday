@@ -46,12 +46,13 @@ export const DisclosureButtonMedia: FC<{
     />
 );
 
-export const TagButtons: FC<{ tags: string[]; onClick: () => void }> = ({
-    tags,
-    onClick,
-}) => (
+export const TagButtons: FC<{
+    tags: string[];
+    onClick: () => void;
+    truncated?: boolean;
+}> = ({ tags, onClick, truncated = false }) => (
     <div className="mt-2.5 flex flex-wrap">
-        {tags.map((tag) => (
+        {tags.slice(0, truncated ? 3 : undefined).map((tag) => (
             <TagButton key={tag} name={tag} onClick={onClick} />
         ))}
     </div>
