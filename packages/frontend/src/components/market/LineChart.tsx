@@ -32,8 +32,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
     selectedChartRange,
     isLoading,
 }) {
-    console.log("LineChart", data);
-
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
