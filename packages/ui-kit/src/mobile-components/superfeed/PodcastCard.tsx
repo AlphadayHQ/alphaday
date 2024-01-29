@@ -40,8 +40,8 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton open={open}>
-                        <div className="flex flex-col">
-                            <div className="flex">
+                        <div className="flex flex-col w-full">
+                            <div className="flex justify-between">
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage

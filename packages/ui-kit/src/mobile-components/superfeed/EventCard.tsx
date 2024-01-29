@@ -59,8 +59,8 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton open={open}>
-                        <div className="flex flex-col">
-                            <div className="flex">
+                        <div className="flex flex-col w-full">
+                            <div className="flex justify-between">
                                 <div className="flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
