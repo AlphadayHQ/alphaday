@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { ChatProvider } from "./chat-context";
 import { DimensionsProvider } from "./dimensions-context";
+import { OauthProvider } from "./oauth-provider";
 import { TutorialProvider } from "./tutorial-context";
 import { WalletViewProvider } from "./wallet-view-context";
 
@@ -28,6 +29,7 @@ export const AppContextProvider: FC<{ children?: React.ReactNode }> = ({
             DimensionsProvider,
             ChatProvider,
             WalletViewProvider,
+            OauthProvider,
         ]}
     >
         {children}

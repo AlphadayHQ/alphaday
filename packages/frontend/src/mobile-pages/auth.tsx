@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useSignInUp } from "src/api/hooks";
+import { ESignInUpMethod } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
 import { Logger } from "src/api/utils/logging";
 import { toast } from "src/api/utils/toastUtils";
@@ -10,7 +11,7 @@ import PagedMobileLayout from "src/layout/PagedMobileLayout";
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
     const history = useHistory();
-    const { authState, requestCode, verifyToken, resetAuthState } =
+    const { authState, requestCode, verifyToken, resetAuthState, ssoLogin } =
         useSignInUp();
 
     const handleEmailSubmit = useCallback(() => {
@@ -41,6 +42,13 @@ const AuthPage: React.FC = () => {
         }
     );
 
+    const handleSSOCallback = useCallback(
+        (method: ESignInUpMethod) => {
+            ssoLogin(method);
+        },
+        [ssoLogin]
+    );
+
     return (
         <PagedMobileLayout
             title="Continue with Email"
@@ -53,7 +61,7 @@ const AuthPage: React.FC = () => {
                 email={email}
                 authState={authState}
                 handleOtpSubmit={handleOtpSubmit}
-                handleSSOCallback={() => {}}
+                handleSSOCallback={handleSSOCallback}
                 handleEmailSubmit={handleEmailSubmit}
                 handleEmailChange={handleEmailChange}
             />

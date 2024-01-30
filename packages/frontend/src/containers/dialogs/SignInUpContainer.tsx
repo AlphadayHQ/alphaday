@@ -12,7 +12,7 @@ import SignInUpModule from "src/components/signinup/SignInUpModule";
 const SignInUpContainer = () => {
     const [email, setEmail] = useState("");
     const dispatch = useAppDispatch();
-    const { authState, resetAuthState, requestCode } = useSignInUp();
+    const { authState, resetAuthState, requestCode, ssoLogin } = useSignInUp();
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
@@ -31,12 +31,12 @@ const SignInUpContainer = () => {
                     dispatch(
                         userStore.setSignInUpState(ESignInUpState.SigningIn)
                     );
-                } else {
-                    // TODO: Implement SSO
                 }
+            } else {
+                ssoLogin(method);
             }
         },
-        [dispatch, authState]
+        [dispatch, authState, ssoLogin]
     );
 
     const handleEmailChange = debounce(

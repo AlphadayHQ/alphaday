@@ -1,8 +1,9 @@
 import { useCallback } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useRequestCodeMutation, useVerifyTokenMutation } from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
-import { ESignInUpState, TUserAccess } from "../types";
+import { ESignInUpMethod, ESignInUpState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
 
 interface IUseSignInUp {
@@ -11,6 +12,7 @@ interface IUseSignInUp {
     resetAuthState: () => void;
     requestCode: (email: string) => Promise<void>;
     verifyToken: (email: string, code: string) => Promise<void>;
+    ssoLogin: (provider: ESignInUpMethod) => void;
 }
 
 /**
@@ -67,6 +69,18 @@ export const useSignInUp = (): IUseSignInUp => {
         [dispatch, verifyTokenMut]
     );
 
+    const googleSSOLogin = useGoogleLogin({
+        redirect_uri: "http://localhost:3001/auth/google_callback/",
+    });
+    const ssoLogin = useCallback(
+        (provider: ESignInUpMethod) => {
+            if (provider === ESignInUpMethod.Google) {
+                googleSSOLogin();
+            }
+        },
+        [googleSSOLogin]
+    );
+
     const resetAuthState = useCallback(() => {
         dispatch(userStore.resetAuthState());
     }, [dispatch]);
@@ -77,5 +91,6 @@ export const useSignInUp = (): IUseSignInUp => {
         resetAuthState,
         requestCode,
         verifyToken,
+        ssoLogin,
     };
 };
