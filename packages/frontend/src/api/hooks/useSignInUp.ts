@@ -75,6 +75,20 @@ export const useSignInUp = (): IUseSignInUp => {
     );
 
     const googleSSOLogin = useGoogleLogin({
+        onSuccess: (res) => {
+            ssoLoginMut({
+                accessToken: res.code,
+                provider: ESignInUpMethod.Google,
+                idToken: res.state,
+            })
+                .unwrap()
+                .then((r) =>
+                    Logger.debug("useSignInUp::googleSSOLogin: success", r)
+                )
+                .catch((e) =>
+                    Logger.error("useSignInUp::googleSSOLogin: error", e)
+                );
+        },
         redirect_uri: "http://localhost:3001/auth/google_callback/",
         flow: "auth-code",
     });
