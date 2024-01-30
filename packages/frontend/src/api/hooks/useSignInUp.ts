@@ -1,6 +1,10 @@
 import { useCallback } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useRequestCodeMutation, useVerifyTokenMutation } from "../services";
+import {
+    useRequestCodeMutation,
+    useVerifyTokenMutation,
+    useSsoLoginMutation,
+} from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
 import { ESignInUpMethod, ESignInUpState, TUserAccess } from "../types";
@@ -26,6 +30,7 @@ export const useSignInUp = (): IUseSignInUp => {
 
     const [requestCodeMut] = useRequestCodeMutation();
     const [verifyTokenMut] = useVerifyTokenMutation();
+    const [ssoLoginMut] = useSsoLoginMutation();
 
     const openSignInUpModal = useCallback(() => {
         dispatch(userStore.initSignInUpMethodSelection());
@@ -71,6 +76,7 @@ export const useSignInUp = (): IUseSignInUp => {
 
     const googleSSOLogin = useGoogleLogin({
         redirect_uri: "http://localhost:3001/auth/google_callback/",
+        flow: "auth-code",
     });
     const ssoLogin = useCallback(
         (provider: ESignInUpMethod) => {

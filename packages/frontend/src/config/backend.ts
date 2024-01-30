@@ -81,6 +81,8 @@ const API_V0 = {
             REQUEST_TOKEN: "/auth/token/",
             VERIFY_TOKEN: "/auth/verify/",
             VERIFY_EMAIL: "/auth/email/",
+            GOOGLE_LOGIN: "/auth/google/",
+            APPLE_LOGIN: "/auth/apple/",
             LOGOUT: "/logout/",
             ACCOUNTS: "/accounts/",
             MULTI_ACCOUNTS: "/accounts/bulk_create/",
