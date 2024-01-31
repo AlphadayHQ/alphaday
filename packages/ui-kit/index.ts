@@ -90,7 +90,7 @@ import { themeColors } from "./src/globalStyles/themes";
 import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
 import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
 import { Pager } from "./src/mobile-components/pager/Pager";
-import { FeedItem } from "./src/mobile-components/superfeed/FeedItem";
+import { FeedCard } from "./src/mobile-components/superfeed/FeedCard";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
@@ -170,6 +170,6 @@ export {
      */
     NavBottom,
     NavHeader,
-    FeedItem,
     Pager,
+    FeedCard,
 };

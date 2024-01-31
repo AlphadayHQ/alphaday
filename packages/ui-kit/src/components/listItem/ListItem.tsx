@@ -287,14 +287,14 @@ export const ListItem: FC<IList> = ({
                         <p
                             className={twMerge(
                                 variantStyle.title,
-                                "three-liner"
+                                "line-clamp-3"
                             )}
                         >
                             {title}
                         </p>
 
                         <p className={variantStyle.lastLine}>
-                            <span className="one-liner max-w-[90px] sm:max-w-max">
+                            <span className="line-clamp-1 max-w-[90px] sm:max-w-max">
                                 {tag}
                             </span>
                             <span className={variantStyle.spacer}>•</span>

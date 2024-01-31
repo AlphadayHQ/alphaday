@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 export const ActionButton: FC<{ children: ReactNode; onClick: () => void }> = ({
     onClick,
@@ -22,10 +23,11 @@ export const ActionButton: FC<{ children: ReactNode; onClick: () => void }> = ({
     );
 };
 
-export const TagButton: FC<{ name: string; onClick: () => void }> = ({
-    name,
-    onClick,
-}) => {
+export const TagButton: FC<{
+    name: string;
+    onClick: () => void;
+    className?: string;
+}> = ({ name, onClick, className }) => {
     const handleClick = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
@@ -37,7 +39,10 @@ export const TagButton: FC<{ name: string; onClick: () => void }> = ({
         <button
             type="button"
             onClick={handleClick}
-            className="flex items-center px-2 py-0.5 h-4 rounded-lg bg-backgroundBlue100 text-primary fontGroup-mini m-0.5"
+            className={twMerge(
+                "flex items-center px-2 py-0.5 h-4 rounded-lg bg-backgroundBlue100 text-primary fontGroup-mini m-0.5",
+                className
+            )}
         >
             {name}
         </button>
