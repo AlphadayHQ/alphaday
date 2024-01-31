@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import { twMerge } from "@alphaday/ui-kit";
 import { Link } from "react-router-dom";
+import { useOnScreen } from "src/api/hooks";
 import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import { ReactComponent as Settings2SVG } from "src/assets/icons/settings3.svg";
 import MobileLayout from "src/layout/MobileLayout";
@@ -367,34 +369,10 @@ const feedItems: IFeedItem[] = [
 ];
 
 const FiltersButton = () => {
-    const showPosition = 492;
     const element1: React.Ref<HTMLAnchorElement> = useRef(null);
     const element2: React.Ref<HTMLAnchorElement> = useRef(null);
-    useEffect(() => {
-        window.addEventListener("scroll", () => {
-            if (
-                window.pageYOffset > showPosition &&
-                !element1?.current?.classList.contains("scroll-show") &&
-                element1?.current
-            ) {
-                element1?.current?.classList.remove("scroll-hide");
-                element1?.current?.classList.add("scroll-show");
-                element2?.current?.classList.add("scroll-hide");
-                element2?.current?.classList.remove("scroll-show");
-            }
+    const element1Visible = useOnScreen(element1);
 
-            if (
-                window.pageYOffset < showPosition &&
-                element1?.current?.classList.contains("scroll-show") &&
-                element1?.current
-            ) {
-                element1?.current?.classList.remove("scroll-show");
-                element1?.current?.classList.add("scroll-hide");
-                element2?.current?.classList.add("scroll-show");
-                element2?.current?.classList.remove("scroll-hide");
-            }
-        });
-    }, []);
     return (
         <>
             <Link
@@ -410,7 +388,10 @@ const FiltersButton = () => {
             <Link
                 ref={element2}
                 to="/filters"
-                className="absolute bg-accentVariant100 rounded-lg p-4 bottom-24 right-5"
+                className={twMerge(
+                    "absolute bg-accentVariant100 rounded-lg p-4 bottom-24 right-5 z-10 delay-300",
+                    element1Visible && "hidden delay-0"
+                )}
             >
                 <Settings2SVG className="w-6 text-primary" />
             </Link>
