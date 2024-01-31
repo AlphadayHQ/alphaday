@@ -113,15 +113,32 @@ export interface ITVLFeedItem extends Omit<IPriceFeedItem, "type" | "price"> {
     tvl: number;
 }
 
-export type IFeedItem =
-    | INewsFeedItem
-    | IBlogFeedItem
-    | IForumFeedItem
-    | IEventFeedItem
-    | IVideoFeedItem
-    | IPodcastFeedItem
-    | IPersonFeedItem
-    | IImageFeedItem
-    | ISocialFeedItem
-    | IPriceFeedItem
-    | ITVLFeedItem;
+export type IFeedItem = {
+    id: number;
+    title: string;
+    url: string;
+    sourceIcon: string;
+    sourceSlug: string;
+    sourceName: string;
+    type: EFeedItemType;
+    startsAt: string | null;
+    endsAt: string | null;
+    image: string | null;
+    shortDescription?: string;
+    tags: { name: string; slug: string }[];
+    likes: number;
+    comments: number;
+};
+
+// export type IFeedItem =
+//     | INewsFeedItem
+//     | IBlogFeedItem
+//     | IForumFeedItem
+//     | IEventFeedItem
+//     | IVideoFeedItem
+//     | IPodcastFeedItem
+//     | IPersonFeedItem
+//     | IImageFeedItem
+//     | ISocialFeedItem
+//     | IPriceFeedItem
+//     | ITVLFeedItem;
