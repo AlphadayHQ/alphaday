@@ -100,6 +100,9 @@ const API_V0 = {
             HISTORY: "/history/",
             BY_ID: (id: number): string => `/${id}/`,
         },
+        SUPERFEED: {
+            BASE: "superfeed",
+        },
         STATUS: {
             BASE: "status",
             DEFAULT: "/",
