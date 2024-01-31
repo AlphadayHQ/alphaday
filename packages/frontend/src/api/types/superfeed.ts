@@ -1,4 +1,4 @@
-import { TBaseItem, TTag } from "./primitives";
+import { TBaseItem } from "./primitives";
 
 export enum EFeedItemType {
     NEWS = "newsitem",
