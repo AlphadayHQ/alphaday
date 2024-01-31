@@ -12,19 +12,20 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { ISocialFeedItem, feedIcons } from "./types";
+import { IFeedItem, feedItemIconMap } from "./types";
 
-export const SocialCard: FC<{ item: ISocialFeedItem }> = ({ item }) => {
+export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
         tags,
         likes,
         comments,
-        link,
-        img,
+        sourceIcon,
+        sourceName,
+        url,
+        image,
         type,
-        description,
-        source,
+        shortDescription,
         date,
     } = item;
 
@@ -41,7 +42,7 @@ export const SocialCard: FC<{ item: ISocialFeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedIcons[type]}
+                                            icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
@@ -50,8 +51,8 @@ export const SocialCard: FC<{ item: ISocialFeedItem }> = ({ item }) => {
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
-                                                    name={source.name}
-                                                    img={source.img}
+                                                    name={sourceName}
+                                                    img={sourceIcon}
                                                 />
                                             </p>
                                         </div>
@@ -66,7 +67,7 @@ export const SocialCard: FC<{ item: ISocialFeedItem }> = ({ item }) => {
                                         )}
                                     >
                                         <img
-                                            src={img}
+                                            src={image || undefined}
                                             alt=""
                                             className="h-24 rounded-lg object-cover"
                                             onError={imgOnError}
@@ -101,16 +102,16 @@ export const SocialCard: FC<{ item: ISocialFeedItem }> = ({ item }) => {
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
                         <img
-                            src={img}
+                            src={image || undefined}
                             alt=""
                             className="w-full rounded-lg object-cover"
                             onError={imgOnError}
                         />
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {description}
+                            {shortDescription}
                         </p>
                         <a
-                            href={link}
+                            href={url}
                             target="_blank"
                             rel="noreferrer"
                             className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"

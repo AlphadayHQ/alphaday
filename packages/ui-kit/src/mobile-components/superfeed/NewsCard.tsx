@@ -11,20 +11,21 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { INewsFeedItem, feedIcons } from "./types";
+import { IFeedItem, feedItemIconMap } from "./types";
 
-export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
+export const NewsCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
-        date,
         tags,
         likes,
         comments,
-        link,
-        img,
+        sourceIcon,
+        sourceName,
+        url,
+        image,
         type,
-        description,
-        source,
+        shortDescription,
+        date,
     } = item;
 
     const onLike = () => {};
@@ -40,7 +41,7 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedIcons[type]}
+                                            icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
@@ -49,8 +50,8 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
-                                                    name={source.name}
-                                                    img={source.img}
+                                                    name={sourceName}
+                                                    img={sourceIcon}
                                                 />
                                             </p>
                                         </div>
@@ -58,7 +59,9 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                                     <CardTitle title={title} />
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
-                                    <DisclosureButtonMedia img={img} />
+                                    <DisclosureButtonMedia
+                                        img={image || undefined}
+                                    />
                                 </div>
                             </div>
                             <div className="flex justify-between">
@@ -88,10 +91,10 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {description}
+                            {shortDescription}
                         </p>
                         <a
-                            href={link}
+                            href={url}
                             target="_blank"
                             rel="noreferrer"
                             className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"

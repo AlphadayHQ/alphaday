@@ -10,19 +10,19 @@ import {
     FeedItemDisclosurePanel,
     TagButtons,
 } from "./FeedElements";
-import { IImageFeedItem, feedIcons } from "./types";
+import { IFeedItem, feedItemIconMap } from "./types";
 
-export const ImageCard: FC<{ item: IImageFeedItem }> = ({ item }) => {
+export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
         tags,
         likes,
         comments,
-        link,
-        img,
+        sourceName,
+        url,
+        image,
         type,
-        description,
-        source,
+        shortDescription,
     } = item;
 
     const onLike = () => {};
@@ -38,11 +38,11 @@ export const ImageCard: FC<{ item: IImageFeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedIcons[type]}
+                                            icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 capitalize fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                                {source.name}
+                                                {sourceName}
                                             </p>
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@ export const ImageCard: FC<{ item: IImageFeedItem }> = ({ item }) => {
                                         )}
                                     >
                                         <img
-                                            src={img}
+                                            src={image || undefined}
                                             alt=""
                                             className="h-24 rounded-lg object-cover"
                                             onError={imgOnError}
@@ -91,16 +91,16 @@ export const ImageCard: FC<{ item: IImageFeedItem }> = ({ item }) => {
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
                         <img
-                            src={img}
+                            src={image || undefined}
                             alt=""
                             className="w-full rounded-lg object-cover"
                             onError={imgOnError}
                         />
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {description}
+                            {shortDescription}
                         </p>
                         <a
-                            href={link}
+                            href={url}
                             target="_blank"
                             rel="noreferrer"
                             className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"

@@ -12,15 +12,15 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IVideoFeedItem, feedIcons } from "./types";
+import { IFeedItem, feedItemIconMap } from "./types";
 
 const VideoPlaceholder: FC<{
-    img: string;
+    url: string | undefined;
     onPlayVideo: MouseEventHandler<SVGSVGElement>;
-}> = ({ img, onPlayVideo }) => (
+}> = ({ url, onPlayVideo }) => (
     <div className="relative">
         <img
-            src={img}
+            src={url}
             alt=""
             className="w-full h-24 rounded-lg object-cover"
             onError={imgOnError}
@@ -32,18 +32,19 @@ const VideoPlaceholder: FC<{
     </div>
 );
 
-export const VideoCard: FC<{ item: IVideoFeedItem }> = ({ item }) => {
+export const VideoCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
-        date,
         tags,
         likes,
         comments,
-        link,
-        img,
+        sourceName,
+        sourceIcon,
+        date,
+        url,
+        image,
         type,
-        description,
-        source,
+        shortDescription,
     } = item;
 
     const onLike = () => {};
@@ -59,7 +60,7 @@ export const VideoCard: FC<{ item: IVideoFeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedIcons[type]}
+                                            icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
@@ -68,8 +69,8 @@ export const VideoCard: FC<{ item: IVideoFeedItem }> = ({ item }) => {
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
-                                                    name={source.name}
-                                                    img={source.img}
+                                                    name={sourceName}
+                                                    img={sourceIcon}
                                                 />
                                             </p>
                                         </div>
@@ -79,7 +80,7 @@ export const VideoCard: FC<{ item: IVideoFeedItem }> = ({ item }) => {
                                 <div className="flex-col min-w-max ml-2">
                                     {open ? null : (
                                         <VideoPlaceholder
-                                            img={img}
+                                            url={image || undefined}
                                             onPlayVideo={onLike}
                                         />
                                     )}
@@ -113,14 +114,14 @@ export const VideoCard: FC<{ item: IVideoFeedItem }> = ({ item }) => {
                             className="mb-2 rounded bg-backgroundVariant200"
                             onError={() => {}}
                         >
-                            <source src={link} />
+                            <source src={url} />
                             <track kind="captions" label="English" />
                         </video>
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {description}
+                            {shortDescription}
                         </p>
                         <a
-                            href={link}
+                            href={url}
                             target="_blank"
                             rel="noreferrer"
                             className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"

@@ -9,6 +9,7 @@ export enum EFeedItemType {
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
     type: EFeedItemType;
+    date: string;
     startsAt: string | null;
     endsAt: string | null;
     image: string | null;

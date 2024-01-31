@@ -65,6 +65,11 @@ const SuperfeedContainer = () => {
         };
     }, [nextPage]);
 
+    console.log(
+        "feedData",
+        feedData.map((item) => ({ title: item.title, type: item.type }))
+    );
+
     return (
         <SuperfeedModule
             isLoading={isLoading}
