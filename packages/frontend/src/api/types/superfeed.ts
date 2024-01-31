@@ -5,6 +5,14 @@ export enum EFeedItemType {
     EVENT = "eventitem",
     VIDEO = "videoitem",
     PODCAST = "podcastitem",
+    IMAGE = "imageitem",
+    BLOG = "blogitem",
+    FORUM = "forumitem",
+    PERSON = "personitem",
+    REDDIT = "reddititem",
+    DISCORD = "discorditem",
+    PRICE = "priceitem",
+    TVL = "tvlitem",
 }
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
