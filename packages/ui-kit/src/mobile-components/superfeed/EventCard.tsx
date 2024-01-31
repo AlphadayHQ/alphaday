@@ -85,13 +85,6 @@ export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
                                     <p className="mt-0.5 mb-0 line-clamp-2">
                                         {location}
                                     </p>
-                                    {!open && (
-                                        <TagButton
-                                            className="bg-[#C1DF91] text-background mt-3"
-                                            name={category}
-                                            onClick={() => {}}
-                                        />
-                                    )}
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
                                     <div
@@ -112,9 +105,9 @@ export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
                             {!open && (
                                 <div className="flex justify-between">
                                     <div className="flex-col">
-                                        <TagButtons
-                                            truncated
-                                            tags={tags}
+                                        <TagButton
+                                            className="bg-[#C1DF91] text-background mt-3"
+                                            name={category}
                                             onClick={() => {}}
                                         />
                                     </div>
