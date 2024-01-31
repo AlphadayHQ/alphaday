@@ -1,19 +1,11 @@
 import moment from "moment";
-import { flushSync } from "react-dom";
-import { createRoot } from "react-dom/client";
 import { themeColors } from "src/globalStyles/themes";
+import { renderToString } from "src/utils/textUtils";
 
 type TApexChartWindow = {
     globals: {
         seriesNames: string[];
     };
-};
-
-const renderToString = (node: JSX.Element): string => {
-    const wrapper = document.createElement("div");
-    const root = createRoot(wrapper);
-    flushSync(() => root.render(node));
-    return wrapper.innerHTML;
 };
 
 const BarChartData = [

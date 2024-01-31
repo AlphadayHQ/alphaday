@@ -2,8 +2,6 @@ import { FC } from "react";
 import { computeDuration } from "src/utils/dateUtils";
 import {
     ActionButtons,
-    CardTitle,
-    DisclosureButtonMedia,
     FeedItemDisclosure,
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
@@ -11,9 +9,16 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { INewsFeedItem, feedIcons } from "./types";
+import {
+    IBlogFeedItem,
+    IForumFeedItem,
+    IPersonFeedItem,
+    feedIcons,
+} from "./types";
 
-export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
+export const BlogCard: FC<{
+    item: IBlogFeedItem | IForumFeedItem | IPersonFeedItem;
+}> = ({ item }) => {
     const {
         title,
         date,
@@ -21,7 +26,6 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
         likes,
         comments,
         link,
-        img,
         type,
         description,
         source,
@@ -36,43 +40,39 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                 <>
                     <FeedItemDisclosureButton open={open}>
                         <div className="flex flex-col w-full">
-                            <div className="flex justify-between">
-                                <div className="flex flex-col">
-                                    <div className="flex items-center">
-                                        <FeedItemDisclosureButtonImage
-                                            icon={feedIcons[type]}
-                                        />
-                                        <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                            <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                                {computeDuration(date)}
-                                                <span className="mx-1.5 my-0 self-center">
-                                                    •
-                                                </span>{" "}
-                                                <FeedSourceInfo
-                                                    name={source.name}
-                                                    img={source.img}
-                                                />
-                                            </p>
-                                        </div>
+                            <div className="flex flex-col">
+                                <div className="flex items-center">
+                                    <FeedItemDisclosureButtonImage
+                                        icon={feedIcons[type]}
+                                    />
+                                    <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                        <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                            {computeDuration(date)}
+                                            <span className="mx-1.5 my-0 self-center">
+                                                •
+                                            </span>{" "}
+                                            <FeedSourceInfo
+                                                name={source.name}
+                                                img={source.img}
+                                            />{" "}
+                                        </p>
                                     </div>
-                                    <CardTitle title={title} />
                                 </div>
-                                <div className="flex-col min-w-max ml-2">
-                                    <DisclosureButtonMedia img={img} />
-                                </div>
+                                <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
+                                    {title}
+                                </p>
                             </div>
-                            <div className="flex justify-between">
-                                <div className="flex-col">
-                                    {!open && (
+
+                            {!open && (
+                                <div className="flex justify-between">
+                                    <div className="flex-col">
                                         <TagButtons
                                             truncated
                                             tags={tags}
                                             onClick={() => {}}
                                         />
-                                    )}
-                                </div>
-                                <div className="flex-col min-w-max ml-2">
-                                    {!open && (
+                                    </div>
+                                    <div className="flex-col min-w-max ml-2">
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
@@ -81,9 +81,9 @@ export const NewsCard: FC<{ item: INewsFeedItem }> = ({ item }) => {
                                             comments={comments}
                                             isLiked={isLiked}
                                         />
-                                    )}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
