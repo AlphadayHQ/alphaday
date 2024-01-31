@@ -13,7 +13,7 @@ import videoIcon from "src/assets/feedIcons/video.png";
 
 export enum EFeedItemType {
     NEWS = "newsitem",
-    EVENT = "eventsitem",
+    EVENT = "eventitem",
     VIDEO = "videoitem",
     PODCAST = "podcastitem",
     IMAGE = "imageitem",
