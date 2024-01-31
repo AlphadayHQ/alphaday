@@ -40,7 +40,7 @@ export const TagButton: FC<{
             type="button"
             onClick={handleClick}
             className={twMerge(
-                "flex items-center px-2 py-0.5 h-4 rounded-lg bg-backgroundBlue100 text-primary fontGroup-mini m-0.5",
+                "flex max-w-min whitespace-nowrap items-center px-2 py-0.5 h-4 rounded-lg bg-backgroundBlue100 text-primary fontGroup-mini leading-[18px] !capitalize m-0.5",
                 className
             )}
         >
