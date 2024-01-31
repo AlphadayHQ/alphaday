@@ -18,26 +18,3 @@ export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
     likes: number;
     comments: number;
 };
-
-export interface IVideoFeedItem extends Omit<TSuperfeedItem, "type"> {
-    type: EFeedItemType.VIDEO;
-}
-
-export interface IPodcastFeedItem extends Omit<TSuperfeedItem, "type"> {
-    type: EFeedItemType.PODCAST;
-}
-
-export interface IEventFeedItem
-    extends Omit<TSuperfeedItem, "type" | "source" | "date"> {
-    type: EFeedItemType.EVENT;
-    startDate: Date;
-    endDate: Date;
-    category: string;
-    location: string;
-}
-
-export type IFeedItem =
-    | TSuperfeedItem
-    | IEventFeedItem
-    | IVideoFeedItem
-    | IPodcastFeedItem;
