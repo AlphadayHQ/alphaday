@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
+import { useHistory } from "react-router";
 import {
     useRequestCodeMutation,
     useVerifyTokenMutation,
@@ -11,6 +12,7 @@ import { ESignInUpMethod, ESignInUpState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
 
 interface IUseSignInUp {
+    isAuthenticated: boolean;
     authState: TUserAccess;
     openSignInUpModal: () => void;
     resetAuthState: () => void;
@@ -26,7 +28,9 @@ interface IUseSignInUp {
  */
 export const useSignInUp = (): IUseSignInUp => {
     const dispatch = useAppDispatch();
-    const authState = useAppSelector((state) => state.user.auth.access);
+    const authState = useAppSelector(userStore.selectAuthState);
+    const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
+    const navigate = useHistory();
 
     const [requestCodeMut] = useRequestCodeMutation();
     const [verifyTokenMut] = useVerifyTokenMutation();
@@ -74,23 +78,32 @@ export const useSignInUp = (): IUseSignInUp => {
         [dispatch, verifyTokenMut]
     );
 
-    const googleSSOLogin = useGoogleLogin({
-        onSuccess: (res) => {
+    const googleSSOCallback = useCallback(
+        ({ access_token }: Record<string, string>) => {
             ssoLoginMut({
-                accessToken: res.code,
+                accessToken: access_token,
                 provider: ESignInUpMethod.Google,
-                idToken: res.state,
             })
                 .unwrap()
-                .then((r) =>
-                    Logger.debug("useSignInUp::googleSSOLogin: success", r)
-                )
+                .then((r) => {
+                    Logger.debug("useSignInUp::googleSSOLogin: success", r);
+                    dispatch(userStore.setAuthToken({ value: r.accessToken }));
+                    dispatch(
+                        userStore.setSignInUpState(ESignInUpState.Verified)
+                    );
+                    Logger.debug("useSignInUp::googleSSOLogin: redirecting");
+                    navigate.push("/");
+                })
                 .catch((e) =>
                     Logger.error("useSignInUp::googleSSOLogin: error", e)
                 );
         },
-        redirect_uri: "http://localhost:3001/auth/google_callback/",
-        flow: "auth-code",
+        [ssoLoginMut, dispatch, navigate]
+    );
+
+    const googleSSOLogin = useGoogleLogin({
+        onSuccess: googleSSOCallback,
+        redirect_uri: `${window.location.origin}/auth/google_callback/`,
     });
     const ssoLogin = useCallback(
         (provider: ESignInUpMethod) => {
@@ -106,6 +119,7 @@ export const useSignInUp = (): IUseSignInUp => {
     }, [dispatch]);
 
     return {
+        isAuthenticated,
         authState,
         openSignInUpModal,
         resetAuthState,

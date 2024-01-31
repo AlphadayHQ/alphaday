@@ -11,8 +11,14 @@ import PagedMobileLayout from "src/layout/PagedMobileLayout";
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
     const history = useHistory();
-    const { authState, requestCode, verifyToken, resetAuthState, ssoLogin } =
-        useSignInUp();
+    const {
+        authState,
+        isAuthenticated,
+        requestCode,
+        verifyToken,
+        resetAuthState,
+        ssoLogin,
+    } = useSignInUp();
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
@@ -48,6 +54,14 @@ const AuthPage: React.FC = () => {
         },
         [ssoLogin]
     );
+
+    /**
+     * If user is already authenticated, redirect to home page
+     */
+    if (isAuthenticated) {
+        history.push("/");
+        return null;
+    }
 
     return (
         <PagedMobileLayout

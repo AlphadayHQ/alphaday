@@ -13,8 +13,7 @@ import {
     TSSOLoginResponse,
 } from "./types";
 
-const { VERIFY_EMAIL, VERIFY_TOKEN, GOOGLE_LOGIN, APPLE_LOGIN } =
-    CONFIG.API.DEFAULT.ROUTES.USER;
+const { USER } = CONFIG.API.DEFAULT.ROUTES;
 
 export const authApi = alphadayApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -24,9 +23,9 @@ export const authApi = alphadayApi.injectEndpoints({
         >({
             query: (req) => {
                 Logger.debug("requestCode: body", JSON.stringify(req));
-                Logger.debug("requestCode: querying", VERIFY_EMAIL);
+                Logger.debug("requestCode: querying", USER.VERIFY_EMAIL);
                 return {
-                    url: VERIFY_EMAIL,
+                    url: USER.VERIFY_EMAIL,
                     body: req,
                     method: "POST",
                 };
@@ -38,9 +37,9 @@ export const authApi = alphadayApi.injectEndpoints({
         >({
             query: (req) => {
                 Logger.debug("verifyToken: body", JSON.stringify(req));
-                Logger.debug("verifyToken: querying", VERIFY_TOKEN);
+                Logger.debug("verifyToken: querying", USER.VERIFY_TOKEN);
                 return {
-                    url: VERIFY_TOKEN,
+                    url: USER.VERIFY_TOKEN,
                     body: req,
                     method: "POST",
                 };
@@ -54,15 +53,20 @@ export const authApi = alphadayApi.injectEndpoints({
         }),
         ssoLogin: builder.mutation<TSSOLoginResponse, TSSOLoginRequest>({
             query: (req) => {
-                const path =
-                    ESignInUpMethod.Google === req.provider
-                        ? GOOGLE_LOGIN
-                        : APPLE_LOGIN;
                 Logger.debug("ssoLogin: body", JSON.stringify(req));
-                Logger.debug("ssoLogin: querying", path);
+                Logger.debug("ssoLogin: querying", USER.CONVERT_TOKEN);
                 return {
-                    url: path,
-                    body: req,
+                    url: USER.CONVERT_TOKEN,
+                    body: {
+                        grant_type: "convert_token",
+                        backend:
+                            req.provider === ESignInUpMethod.Google
+                                ? "google-oauth2"
+                                : "apple",
+                        token: req.accessToken,
+                        client_id: CONFIG.APP.X_APP_ID,
+                        client_secret: CONFIG.APP.X_APP_SECRET,
+                    },
                     method: "POST",
                 };
             },

@@ -239,7 +239,7 @@ export default userSlice.reducer;
 
 export const selectIsAuthenticated = (state: RootState): boolean =>
     state.user.auth.token?.value != null &&
-    state.user.auth.wallet.status === WalletConnectionState.Verified;
+    state.user.auth.access.status === ESignInUpState.Verified;
 
 export const selectAuthWallet = (state: RootState): TAuthWallet =>
     state.user.auth.wallet;
@@ -247,7 +247,7 @@ export const selectAuthWallet = (state: RootState): TAuthWallet =>
 export const selectAuthToken = (state: RootState): TAuthToken | undefined =>
     state.user.auth.token;
 
-export const selectUserAccess = (state: RootState): TUserAccess =>
+export const selectAuthState = (state: RootState): TUserAccess =>
     state.user.auth.access;
 
 export const selectPortfolioAccounts = (
