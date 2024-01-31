@@ -27,10 +27,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     }
 
     return (
-        <ScrollBar
-            onScroll={handleScrollEvent}
-            className="w-full px-5 pt-4 h-[800px]"
-        >
+        <ScrollBar onScroll={handleScrollEvent} className="w-full px-5 pt-4">
             {feed.map((item) => (
                 <FeedCard key={item.id} item={item} />
             ))}
