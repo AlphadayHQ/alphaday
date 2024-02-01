@@ -28,7 +28,7 @@ const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
         wrap: "wrap flex flex-wrap whitespace-pre-wrap prose-p:primary prose-a:secondaryOrange",
         noDesc: "mx-0 my-2.5",
         fullHeight:
-            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-[ease] transition-all duration-300 ",
+            "fullHeight pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-[ease] transition-all duration-300",
     };
     const variants = {
         agenda: {

@@ -176,7 +176,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                                     src={channel.icon}
                                     alt=""
                                 />
-                                <span className="relative overflow-hidden pt-1 three-liner fontGroup-support">
+                                <span className="relative overflow-hidden pt-1 line-clamp-3 fontGroup-support">
                                     {channel.name}
                                 </span>
                             </div>
@@ -271,7 +271,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                                                 src={channel.icon}
                                                 alt=""
                                             />
-                                            <span className="relative overflow-hidden fontGroup-supportBold three-liner">
+                                            <span className="relative overflow-hidden fontGroup-supportBold line-clamp-3">
                                                 {channel.name}
                                             </span>
                                         </div>

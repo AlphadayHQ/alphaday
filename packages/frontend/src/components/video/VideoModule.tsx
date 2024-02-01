@@ -171,7 +171,7 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                     />
 
                     <div
-                        className="transition-all duration-300 bg-background relative z-[1] [&_.title]:three-liner"
+                        className="transition-all duration-300 bg-background relative z-[1] [&_.title]:line-clamp-3"
                         style={{
                             height:
                                 widgetHeight - SWITCH_HEIGHT - channelsHeight,

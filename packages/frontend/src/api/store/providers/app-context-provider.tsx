@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { ChatProvider } from "./chat-context";
 import { DimensionsProvider } from "./dimensions-context";
+import { PWAInstallProvider } from "./pwa-install-provider";
 import { TutorialProvider } from "./tutorial-context";
 import { WalletViewProvider } from "./wallet-view-context";
 
@@ -24,6 +25,7 @@ export const AppContextProvider: FC<{ children?: React.ReactNode }> = ({
 }) => (
     <Compose
         providers={[
+            PWAInstallProvider,
             TutorialProvider,
             DimensionsProvider,
             ChatProvider,

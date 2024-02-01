@@ -64,7 +64,7 @@ http://ionicframework.com/docs/theming/ */
     --alpha-dark-base: #121212;
     --alpha-base-100: #191919;
     --alpha-base-200: #242424; //hover
-    --alpha-base-300: #292929; //active
+    --alpha-base-300: #2A2C33; //active
     --alpha-base-400: #393939; //active
     --alpha-base-filtered: rgba(0, 0, 0, 0.4); // backdrop
 
@@ -83,6 +83,7 @@ http://ionicframework.com/docs/theming/ */
     --alpha-orange-100: #ba7a02;
     --alpha-rose-brown: #c59592;
     --alpha-yellow-green: #b9e187;
+    --alpha-steel-pink: #CE4BD9;
 
     /* overrides */
     --fc-border-color: var(--alpha-border);

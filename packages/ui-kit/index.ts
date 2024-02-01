@@ -87,6 +87,9 @@ import {
 } from "./src/components/view-tab-menu/ViewTabMenu";
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
+import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
+import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
+import { FeedCard } from "./src/mobile-components/superfeed/FeedCard";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
@@ -161,4 +164,10 @@ export {
     FadeIn,
     TabsBar,
     SortBy,
+    /**
+     * Mobile-only components
+     */
+    NavBottom,
+    NavHeader,
+    FeedCard,
 };

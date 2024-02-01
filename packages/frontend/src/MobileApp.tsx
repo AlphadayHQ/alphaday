@@ -1,6 +1,11 @@
-import { memo } from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { Suspense, memo } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useAppInit, useGlobalHooks } from "./api/hooks";
+import { lazyRetry } from "./api/utils/helpers";
+import PreloaderPage from "./pages/preloader";
+import "@alphaday/ui-kit/global.scss";
+
+const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 
 const App: React.FC = () => {
     useAppInit();
@@ -9,8 +14,10 @@ const App: React.FC = () => {
     return (
         <BrowserRouter>
             <Switch>
-                {/* <Route path="/" exact component={HomePage} /> */}
-                {/* Add more routes as needed */}
+                <Suspense fallback={<PreloaderPage />}>
+                    <Route path="/" exact component={SuperfeedPage} />
+                    {/* Add more routes as needed */}
+                </Suspense>
             </Switch>
         </BrowserRouter>
     );

@@ -21,6 +21,7 @@ export const darkColors = {
     secondaryOrange100: "var(--alpha-orange-100)", // #BA7A02
     secondaryOrangeFiltered: "var(--alpha-orange-filtered)", // rgba(250, 162, 2, 0.9)
     secondaryRoseBrown: "var(--alpha-rose-brown)", // #C59592 -- calendar event weekend
+    secondarySteelPink: "var(--alpha-steel-pink)", // #CE4BD9 -- TVL card
     secondaryOrangeSoda: "var(--alpha-red)", // #F45532 -- downward market
     secondaryYellowGreen: "var(--alpha-yellow-green)", // #B9E187 -- upward market
     success: "var(--alpha-green)", // #6DD230
