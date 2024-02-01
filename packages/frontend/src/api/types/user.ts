@@ -21,7 +21,7 @@ export enum EWalletConnectionMethod {
     Unknown = "unknown",
 }
 
-export enum ESignInUpState {
+export enum EAuthState {
     Guest,
     SelectingMethod,
     SigningUp,
@@ -31,7 +31,7 @@ export enum ESignInUpState {
     GenericError,
 }
 
-export enum ESignInUpMethod {
+export enum EAuthMethod {
     Email = "email",
     Google = "google",
     Apple = "apple",
@@ -52,8 +52,8 @@ export type TAuthWallet = {
 };
 
 export type TUserAccess = {
-    status: ESignInUpState;
-    method: ESignInUpMethod | undefined;
+    status: EAuthState;
+    method: EAuthMethod | undefined;
     error: string | null;
 };
 

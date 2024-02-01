@@ -1,4 +1,4 @@
-import { ESignInUpMethod } from "src/api/types";
+import { EAuthMethod } from "src/api/types";
 
 export type TVerificationCodeRequest = {
     email: string;
@@ -23,7 +23,7 @@ export type TVerifyEmailRawResponse = {
 
 export type TSSOLoginRequest = {
     accessToken: string;
-    provider: ESignInUpMethod;
+    provider: EAuthMethod;
     idToken?: string;
     code?: string;
 };

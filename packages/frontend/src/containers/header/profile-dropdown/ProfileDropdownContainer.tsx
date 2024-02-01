@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { useAccount, useFeatureFlags, useView, useWallet } from "src/api/hooks";
-import { useSignInUp } from "src/api/hooks/useSignInUp";
+import { useAuth } from "src/api/hooks/useAuth";
 import { useTutorial } from "src/api/hooks/useTutorial";
 import { useWalletViewContext } from "src/api/store/providers/wallet-view-context";
 import { ETutorialTipId, WalletConnectionState } from "src/api/types";
@@ -8,7 +8,7 @@ import { EFeaturesRegistry } from "src/constants";
 import ProfileDropdownWrapper from "./ProfileDropdownWrapper";
 
 const ProfileDropdownContainer: FC = () => {
-    const { openSignInUpModal } = useSignInUp();
+    const { openAuthModal } = useAuth();
     const { openWalletConnectionDialog, verifyWallet, signout } = useWallet();
     const { authWallet, isAuthenticated, resetAuthState } = useAccount();
     const { setAllowFetchWalletView, walletViewState } = useWalletViewContext();
@@ -60,7 +60,7 @@ const ProfileDropdownContainer: FC = () => {
 
     return (
         <ProfileDropdownWrapper
-            onSignUpSignIn={openSignInUpModal}
+            onSignUpSignIn={openAuthModal}
             onConnectWallet={openWalletConnectionDialog}
             onVerifyWallet={verifyWallet}
             onDisconnectWallet={() => signout(false)}

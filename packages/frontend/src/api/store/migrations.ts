@@ -1,7 +1,7 @@
 import { PersistedState, MigrationManifest } from "redux-persist";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { TRemoteTagReadOnly, TRemoteUserViewWidget } from "../services";
-import { ESignInUpState, TCachedView, TUserView } from "../types";
+import { EAuthState, TCachedView, TUserView } from "../types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 import { IViewsState } from "./slices/views";
@@ -174,7 +174,7 @@ const migrations: TMigrations = {
                     auth: {
                         ...s.user.auth,
                         access: {
-                            status: ESignInUpState.Guest,
+                            status: EAuthState.Guest,
                             method: undefined,
                             error: null,
                         },

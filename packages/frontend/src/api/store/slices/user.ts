@@ -8,8 +8,8 @@ import {
     TUserSettings,
     WalletConnectionState,
     EWalletConnectionMethod,
-    ESignInUpState,
-    ESignInUpMethod,
+    EAuthState,
+    EAuthMethod,
     TUserAccess,
 } from "src/api/types";
 import assert from "src/api/utils/assert";
@@ -30,8 +30,8 @@ const initialState: IUserState = {
     auth: {
         token: undefined,
         access: {
-            status: ESignInUpState.Guest,
-            method: ESignInUpMethod.Email,
+            status: EAuthState.Guest,
+            method: EAuthMethod.Email,
             error: null,
         },
         wallet: {
@@ -176,24 +176,21 @@ const userSlice = createSlice({
         setWalletInGenericError(draft) {
             draft.auth.wallet.status = WalletConnectionState.GenericError;
         },
-        initSignInUpMethodSelection(draft) {
-            draft.auth.access.status = ESignInUpState.SelectingMethod;
+        initAuthMethodSelection(draft) {
+            draft.auth.access.status = EAuthState.SelectingMethod;
             draft.auth.access.method = undefined;
             draft.auth.access.error = null;
         },
-        setSignInUpMethod(
-            draft,
-            action: PayloadAction<ESignInUpMethod | undefined>
-        ) {
+        setAuthMethod(draft, action: PayloadAction<EAuthMethod | undefined>) {
             draft.auth.access.method = action.payload;
         },
-        initSignInUp(draft) {
-            draft.auth.access.status = ESignInUpState.SigningUp;
+        initAuth(draft) {
+            draft.auth.access.status = EAuthState.SigningUp;
         },
-        setSignInUpError(draft, action: PayloadAction<string>) {
+        setAuthError(draft, action: PayloadAction<string>) {
             draft.auth.access.error = action.payload;
         },
-        setSignInUpState(draft, action: PayloadAction<ESignInUpState>) {
+        setAuthState(draft, action: PayloadAction<EAuthState>) {
             draft.auth.access.status = action.payload;
         },
         resetAuthState(draft) {
@@ -229,9 +226,9 @@ export const {
     setWalletDisconnected,
     setWalletInGenericError,
     setWalletAuthError,
-    initSignInUpMethodSelection,
-    initSignInUp,
-    setSignInUpState,
+    initAuthMethodSelection,
+    initAuth,
+    setAuthState,
     resetAuthState,
     reset,
 } = userSlice.actions;
@@ -239,7 +236,7 @@ export default userSlice.reducer;
 
 export const selectIsAuthenticated = (state: RootState): boolean =>
     state.user.auth.token?.value != null &&
-    state.user.auth.access.status === ESignInUpState.Verified;
+    state.user.auth.access.status === EAuthState.Verified;
 
 export const selectAuthWallet = (state: RootState): TAuthWallet =>
     state.user.auth.wallet;

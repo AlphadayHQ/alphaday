@@ -8,25 +8,25 @@ import {
 } from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
-import { ESignInUpMethod, ESignInUpState, TUserAccess } from "../types";
+import { EAuthMethod, EAuthState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
 
-interface IUseSignInUp {
+interface IUseAuth {
     isAuthenticated: boolean;
     authState: TUserAccess;
-    openSignInUpModal: () => void;
+    openAuthModal: () => void;
     resetAuthState: () => void;
     requestCode: (email: string) => Promise<void>;
     verifyToken: (email: string, code: string) => Promise<void>;
-    ssoLogin: (provider: ESignInUpMethod) => void;
+    ssoLogin: (provider: EAuthMethod) => void;
 }
 
 /**
- * useSignInUp
+ * useAuth
  *
  * @returns
  */
-export const useSignInUp = (): IUseSignInUp => {
+export const useAuth = (): IUseAuth => {
     const dispatch = useAppDispatch();
     const authState = useAppSelector(userStore.selectAuthState);
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
@@ -36,20 +36,18 @@ export const useSignInUp = (): IUseSignInUp => {
     const [verifyTokenMut] = useVerifyTokenMutation();
     const [ssoLoginMut] = useSsoLoginMutation();
 
-    const openSignInUpModal = useCallback(() => {
-        dispatch(userStore.initSignInUpMethodSelection());
+    const openAuthModal = useCallback(() => {
+        dispatch(userStore.initAuthMethodSelection());
     }, [dispatch]);
 
     const requestCode = useCallback(
         async (email: string) => {
             try {
                 await requestCodeMut({ email }).unwrap();
-                dispatch(
-                    userStore.setSignInUpState(ESignInUpState.VerifyingEmail)
-                );
+                dispatch(userStore.setAuthState(EAuthState.VerifyingEmail));
             } catch (e) {
                 Logger.error(
-                    "useSignInUp::requestCode: error sending OTP to email",
+                    "useAuth::requestCode: error sending OTP to email",
                     e
                 );
             }
@@ -69,10 +67,7 @@ export const useSignInUp = (): IUseSignInUp => {
                     userStore.setAuthToken({ value: verifyResp.accessToken })
                 );
             } catch (e) {
-                Logger.error(
-                    "useSignInUp::verifyToken: error verifying OTP",
-                    e
-                );
+                Logger.error("useAuth::verifyToken: error verifying OTP", e);
             }
         },
         [dispatch, verifyTokenMut]
@@ -82,20 +77,18 @@ export const useSignInUp = (): IUseSignInUp => {
         ({ access_token }: Record<string, string>) => {
             ssoLoginMut({
                 accessToken: access_token,
-                provider: ESignInUpMethod.Google,
+                provider: EAuthMethod.Google,
             })
                 .unwrap()
                 .then((r) => {
-                    Logger.debug("useSignInUp::googleSSOLogin: success", r);
+                    Logger.debug("useAuth::googleSSOLogin: success", r);
                     dispatch(userStore.setAuthToken({ value: r.accessToken }));
-                    dispatch(
-                        userStore.setSignInUpState(ESignInUpState.Verified)
-                    );
-                    Logger.debug("useSignInUp::googleSSOLogin: redirecting");
+                    dispatch(userStore.setAuthState(EAuthState.Verified));
+                    Logger.debug("useAuth::googleSSOLogin: redirecting");
                     navigate.push("/");
                 })
                 .catch((e) =>
-                    Logger.error("useSignInUp::googleSSOLogin: error", e)
+                    Logger.error("useAuth::googleSSOLogin: error", e)
                 );
         },
         [ssoLoginMut, dispatch, navigate]
@@ -106,8 +99,8 @@ export const useSignInUp = (): IUseSignInUp => {
         redirect_uri: `${window.location.origin}/auth/google_callback/`,
     });
     const ssoLogin = useCallback(
-        (provider: ESignInUpMethod) => {
-            if (provider === ESignInUpMethod.Google) {
+        (provider: EAuthMethod) => {
+            if (provider === EAuthMethod.Google) {
                 googleSSOLogin();
             }
         },
@@ -121,7 +114,7 @@ export const useSignInUp = (): IUseSignInUp => {
     return {
         isAuthenticated,
         authState,
-        openSignInUpModal,
+        openAuthModal,
         resetAuthState,
         requestCode,
         verifyToken,

@@ -1,4 +1,4 @@
-import { ESignInUpMethod } from "src/api/types";
+import { EAuthMethod } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
 import { alphadayApi } from "../alphadayApi";
@@ -13,7 +13,7 @@ import {
     TSSOLoginResponse,
 } from "./types";
 
-const { USER } = CONFIG.API.DEFAULT.ROUTES;
+const { AUTH } = CONFIG.API.DEFAULT.ROUTES;
 
 export const authApi = alphadayApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -22,10 +22,11 @@ export const authApi = alphadayApi.injectEndpoints({
             TVerificationCodeRequest
         >({
             query: (req) => {
+                const path = `${AUTH.BASE}${AUTH.VERIFY_EMAIL}`;
                 Logger.debug("requestCode: body", JSON.stringify(req));
-                Logger.debug("requestCode: querying", USER.VERIFY_EMAIL);
+                Logger.debug("requestCode: querying", path);
                 return {
-                    url: USER.VERIFY_EMAIL,
+                    url: path,
                     body: req,
                     method: "POST",
                 };
@@ -36,10 +37,11 @@ export const authApi = alphadayApi.injectEndpoints({
             TVerifyEmailRequest
         >({
             query: (req) => {
+                const path = `${AUTH.BASE}${AUTH.VERIFY_TOKEN}`;
                 Logger.debug("verifyToken: body", JSON.stringify(req));
-                Logger.debug("verifyToken: querying", USER.VERIFY_TOKEN);
+                Logger.debug("verifyToken: querying", path);
                 return {
-                    url: USER.VERIFY_TOKEN,
+                    url: path,
                     body: req,
                     method: "POST",
                 };
@@ -53,14 +55,15 @@ export const authApi = alphadayApi.injectEndpoints({
         }),
         ssoLogin: builder.mutation<TSSOLoginResponse, TSSOLoginRequest>({
             query: (req) => {
+                const path = `${AUTH.BASE}${AUTH.CONVERT_TOKEN}`;
                 Logger.debug("ssoLogin: body", JSON.stringify(req));
-                Logger.debug("ssoLogin: querying", USER.CONVERT_TOKEN);
+                Logger.debug("ssoLogin: querying", path);
                 return {
-                    url: USER.CONVERT_TOKEN,
+                    url: path,
                     body: {
                         grant_type: "convert_token",
                         backend:
-                            req.provider === ESignInUpMethod.Google
+                            req.provider === EAuthMethod.Google
                                 ? "google-oauth2"
                                 : "apple",
                         token: req.accessToken,

@@ -1,11 +1,11 @@
 import { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { useSignInUp } from "src/api/hooks";
-import { ESignInUpMethod } from "src/api/types";
+import { useAuth } from "src/api/hooks";
+import { EAuthMethod } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
 import { Logger } from "src/api/utils/logging";
 import { toast } from "src/api/utils/toastUtils";
-import { SignInUp } from "src/components/signinup/SignInUp";
+import { Auth } from "src/components/auth/Auth";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
 
 const AuthPage: React.FC = () => {
@@ -18,7 +18,7 @@ const AuthPage: React.FC = () => {
         verifyToken,
         resetAuthState,
         ssoLogin,
-    } = useSignInUp();
+    } = useAuth();
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
@@ -49,7 +49,7 @@ const AuthPage: React.FC = () => {
     );
 
     const handleSSOCallback = useCallback(
-        (method: ESignInUpMethod) => {
+        (method: EAuthMethod) => {
             ssoLogin(method);
         },
         [ssoLogin]
@@ -71,7 +71,7 @@ const AuthPage: React.FC = () => {
                 history.length > 1 ? history.goBack() : history.push("/")
             }
         >
-            <SignInUp
+            <Auth
                 email={email}
                 authState={authState}
                 handleOtpSubmit={handleOtpSubmit}

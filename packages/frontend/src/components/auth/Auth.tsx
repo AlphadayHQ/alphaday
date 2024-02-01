@@ -1,21 +1,21 @@
 import { FC, useMemo } from "react";
 import { EmailInput } from "@alphaday/ui-kit/src/mobile-components/auth/EmailInput";
-import { ESignInUpMethod, ESignInUpState, TUserAccess } from "src/api/types";
+import { EAuthMethod, EAuthState, TUserAccess } from "src/api/types";
 import { validateEmail } from "src/api/utils/accountUtils";
 import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
 import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
 import OtpInput from "./OtpInput";
 
-export interface SignInUpProps {
+export interface AuthProps {
     email: string;
     authState: TUserAccess;
     handleOtpSubmit: (otp: string) => void;
-    handleSSOCallback: (provider: ESignInUpMethod) => void;
+    handleSSOCallback: (provider: EAuthMethod) => void;
     handleEmailSubmit: () => void;
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const SignInUp: FC<SignInUpProps> = ({
+export const Auth: FC<AuthProps> = ({
     email,
     authState,
     handleOtpSubmit,
@@ -24,7 +24,7 @@ export const SignInUp: FC<SignInUpProps> = ({
     handleEmailChange,
 }) => {
     const isValidEmail = useMemo(() => validateEmail(email), [email]);
-    return authState.status === ESignInUpState.VerifyingEmail ? (
+    return authState.status === EAuthState.VerifyingEmail ? (
         <div className="flex flex-col justify-center w-full h-full p-5">
             <p className="text-primary text-sm">
                 Enter the 6 digit verification code we sent to
@@ -58,14 +58,14 @@ export const SignInUp: FC<SignInUpProps> = ({
                 <button
                     type="button"
                     className="px-4 py-3 bg-primary rounded-lg justify-center items-center gap-2 inline-flex text-primaryVariant100 hover:text-black text-base font-bold flex-grow"
-                    onClick={() => handleSSOCallback(ESignInUpMethod.Google)}
+                    onClick={() => handleSSOCallback(EAuthMethod.Google)}
                 >
                     <GoogleIcon /> Google
                 </button>
                 <button
                     type="button"
                     className="px-4 py-3 bg-primary rounded-lg justify-center items-center gap-2 inline-flex text-primaryVariant100 hover:text-black text-base font-bold flex-grow"
-                    onClick={() => handleSSOCallback(ESignInUpMethod.Apple)}
+                    onClick={() => handleSSOCallback(EAuthMethod.Apple)}
                 >
                     <AppleIcon className="text-black" /> Apple
                 </button>
