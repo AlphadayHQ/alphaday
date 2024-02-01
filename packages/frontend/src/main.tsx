@@ -1,19 +1,27 @@
 import "./polyfills";
+import { Suspense } from "react";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
+import { clarity } from "react-microsoft-clarity";
 import { Provider } from "react-redux";
 import { WagmiConfig } from "wagmi";
+import { useIsMobile } from "./api/hooks/useIsMobile";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
 import PersistProvider from "./api/store/providers/persist-provider";
 import { wagmiConfig } from "./api/store/providers/wallet-connect-provider";
 // TODO (xavier-charles): add themes support import ThemeProvider from "./api/store/providers/theme-provider";
 import { store } from "./api/store/store";
 import { ECookieChoice } from "./api/types";
+import { lazyRetry } from "./api/utils/helpers";
 import { Logger } from "./api/utils/logging";
-import App from "./App";
 import CONFIG from "./config";
+import InstallPWAContainer from "./containers/dialogs/InstallPWAContainer";
 import SeoContainer from "./containers/seo/SeoContainer";
+import PreloaderPage from "./pages/preloader";
+
+const MobileApp = lazyRetry(() => import("./MobileApp"));
+const App = lazyRetry(() => import("./App"));
 
 /**
  * at this point, the store is still not loaded and we can't read the state
@@ -54,6 +62,22 @@ try {
     );
 }
 
+if (CONFIG.CLARITY.ENABLE) {
+    Logger.debug("initializing clarity...");
+    clarity.init(CONFIG.CLARITY.PROJECT_ID);
+    clarity.consent();
+    Logger.debug("clarity initialized");
+}
+
+const AppSwitcher = () => {
+    const isMobile = useIsMobile();
+    return (
+        <Suspense fallback={<PreloaderPage />}>
+            {isMobile ? <MobileApp /> : <App />}
+        </Suspense>
+    );
+};
+
 const container = document.getElementById("root");
 if (!container) {
     // TODO: Replace with a proper logger
@@ -65,12 +89,11 @@ root.render(
         <PersistProvider>
             <SeoContainer />
             <AppContextProvider>
-                {/* <ThemeProvider> */}
                 <WagmiConfig config={wagmiConfig}>
-                    <App />
+                    <AppSwitcher />
                 </WagmiConfig>
-                {/* </ThemeProvider> */}
             </AppContextProvider>
         </PersistProvider>
+        <InstallPWAContainer />
     </Provider>
 );

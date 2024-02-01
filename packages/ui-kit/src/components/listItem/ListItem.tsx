@@ -245,7 +245,7 @@ export const ListItem: FC<IList> = ({
                                 "fontGroup-normal border-primaryVariant200 bg-backgroundVariant100 text-primary flex h-[23px] w-[77px] flex-row items-center justify-center rounded-lg border border-solid pb-[3px] pl-1.5 pr-2.5 pt-0.5",
                                 styles.audioIndicator,
                                 isPlaying &&
-                                    "bg-secondaryOrange text-backgoundBlue"
+                                    "bg-secondaryOrange text-backgroundBlue"
                             )}
                         >
                             {isPlaying ? (
@@ -287,14 +287,14 @@ export const ListItem: FC<IList> = ({
                         <p
                             className={twMerge(
                                 variantStyle.title,
-                                "three-liner"
+                                "line-clamp-3"
                             )}
                         >
                             {title}
                         </p>
 
                         <p className={variantStyle.lastLine}>
-                            <span className="one-liner max-w-[90px] sm:max-w-max">
+                            <span className="line-clamp-1 max-w-[90px] sm:max-w-max">
                                 {tag}
                             </span>
                             <span className={variantStyle.spacer}>•</span>

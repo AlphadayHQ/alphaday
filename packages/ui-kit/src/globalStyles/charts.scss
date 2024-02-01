@@ -10,7 +10,7 @@
         width: 32px;
         height: 26px;
         cursor: pointer;
-        @apply stroke-primary bg-backgoundBlue;
+        @apply stroke-primary bg-backgroundBlue;
     }
     .apexcharts-tooltip {
         background-color: transparent !important;
@@ -190,53 +190,57 @@
 }
 
 .custom-charts-widget {
-.barchart-styles {
-    position: relative;
-    svg {
-        position: absolute;
-        left: -5px;
-        transform: translate(0px, 0px) scale(1.04);
-    }
-
-    .apexcharts-xcrosshairs.apexcharts-active {
-        opacity: 0;
-    }
-
-    .apexcharts-xaxis-texts-g {
-        transform: translate(0px, -5px) scale(1.0);
-        tspan {
-            fill: theme("colors.primaryVariant200");
-        }
-    }
-
-    .apexcharts-inner.apexcharts-graphical {
-        & > line {
-            stroke: theme("colors.btnRingVariant500");
+    .barchart-styles {
+        position: relative;
+        svg {
+            position: absolute;
+            left: -5px;
+            transform: translate(0px, 0px) scale(1.04);
         }
 
-        .apexcharts-gridlines-vertical {
-            line {
-                stroke: theme("colors.btnRingVariant500");
+        .apexcharts-xcrosshairs.apexcharts-active {
+            opacity: 0;
+        }
 
-                // hide last grid line in chart because the datalabel is hidden by apexcarts
-                &:nth-last-of-type(1){
-                    display: none;
+        .apexcharts-xaxis-texts-g {
+            transform: translate(0px, -5px) scale(1);
+            tspan {
+                fill: theme("colors.primaryVariant200");
+            }
+        }
+
+        .apexcharts-inner.apexcharts-graphical {
+            & > line {
+                stroke: theme("colors.borderLine");
+            }
+
+            .apexcharts-gridlines-vertical {
+                line {
+                    stroke: theme("colors.borderLine");
+
+                    // hide last grid line in chart because the datalabel is hidden by apexcarts
+                    &:nth-last-of-type(1) {
+                        display: none;
+                    }
                 }
             }
-        
-        }
 
-        // .apexcharts-xaxis-texts-g {
+            // .apexcharts-xaxis-texts-g {
             // incase it's needed in the final chart
             // shift x-axis labels to the right so that the label is not hidden by the chart
             // transform: translate(10px, 0px);
-        // }
-    }
+            // }
+        }
 
-    .apexcharts-grid-borders{
-        line {
-            stroke: theme("colors.btnRingVariant500");
+        .apexcharts-tooltip {
+            border: none;
+            box-shadow: none;
+        }
+
+        .apexcharts-grid-borders {
+            line {
+                stroke: theme("colors.borderLine");
+            }
         }
     }
-}
 }

@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { Dialog, Input } from "@alphaday/ui-kit";
+import { useKeyPress } from "src/api/hooks";
 
 interface IAddressInput {
     onChange: (addr: string) => void;
@@ -32,6 +33,7 @@ const AddressInput: FC<IAddressInput> = ({
             }}
             disableSave={disabled}
             size="sm"
+            useKeyPress={useKeyPress}
         >
             <div className="flex justify-center w-full tiny:[&>input]:min-w-[200px] tiny:[&>input]:w-[calc(100vw_-_45px)]">
                 <Input

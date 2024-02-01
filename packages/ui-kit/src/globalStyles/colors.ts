@@ -11,8 +11,9 @@ export const darkColors = {
     backgroundVariant200: "var(--alpha-base-200)", // #202020 -- background variant 200
     backgroundVariant300: "var(--alpha-base-300)", // #222222 -- background variant 300
     backgroundVariant400: "var(--alpha-base-400)", // #393939 -- background variant 300
-    backgoundBlue: "var(--alpha-dark-blue)", // #263964 -- background blue
-    backgoundBlue100: "var(--alpha-dark-blue-100)", // #2d4476 -- background blue
+    backgroundFiltered: "var(--alpha-base-filtered)", // rgba(0, 0, 0, 0.4) -- background opacity 0.9
+    backgroundBlue: "var(--alpha-dark-blue)", // #263964 -- background blue
+    backgroundBlue100: "var(--alpha-dark-blue-100)", // #2d4476 -- background blue
     accentVariant100: "var(--alpha-light-blue)", // #477FF7 -- button Ring Primary
     accentVariant200: "var(--alpha-light-blue-100)", // #5E8FF8 -- button Ring Primary
     secondaryOrange: "var(--alpha-orange)", // #FAA202 -- calendar event category
@@ -20,6 +21,7 @@ export const darkColors = {
     secondaryOrange100: "var(--alpha-orange-100)", // #BA7A02
     secondaryOrangeFiltered: "var(--alpha-orange-filtered)", // rgba(250, 162, 2, 0.9)
     secondaryRoseBrown: "var(--alpha-rose-brown)", // #C59592 -- calendar event weekend
+    secondarySteelPink: "var(--alpha-steel-pink)", // #CE4BD9 -- TVL card
     secondaryOrangeSoda: "var(--alpha-red)", // #F45532 -- downward market
     secondaryYellowGreen: "var(--alpha-yellow-green)", // #B9E187 -- upward market
     success: "var(--alpha-green)", // #6DD230

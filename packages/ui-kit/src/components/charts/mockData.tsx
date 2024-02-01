@@ -1,19 +1,11 @@
 import moment from "moment";
-import { flushSync } from "react-dom";
-import { createRoot } from "react-dom/client";
 import { themeColors } from "src/globalStyles/themes";
+import { renderToString } from "src/utils/textUtils";
 
 type TApexChartWindow = {
     globals: {
         seriesNames: string[];
     };
-};
-
-const renderToString = (node: JSX.Element): string => {
-    const wrapper = document.createElement("div");
-    const root = createRoot(wrapper);
-    flushSync(() => root.render(node));
-    return wrapper.innerHTML;
 };
 
 const BarChartData = [
@@ -43,11 +35,11 @@ const BarChartOptions = {
             autoScaleYaxis: false,
             zoomedArea: {
                 fill: {
-                    color: themeColors.btnRingVariant400,
+                    color: themeColors.accentVariant200,
                     opacity: 0.4,
                 },
                 stroke: {
-                    color: themeColors.btnRingVariant200,
+                    color: themeColors.backgroundBlue,
                     opacity: 0.4,
                     width: 1,
                 },
@@ -96,7 +88,7 @@ const BarChartOptions = {
                 return moment(timestamp).format("DD-MM-YYYY");
             },
             style: {
-                colors: themeColors.btnRingVariant500,
+                colors: themeColors.borderLine,
                 fontSize: "10px",
                 fontFamily: "Arial, sans-serif",
                 fontWeight: 700,
@@ -114,7 +106,7 @@ const BarChartOptions = {
         decimalsInFloat: false,
     },
     grid: {
-        borderColor: themeColors.btnRingVariant500,
+        borderColor: themeColors.borderLine,
         strokeDashArray: 5,
         xaxis: {
             lines: {
@@ -127,7 +119,7 @@ const BarChartOptions = {
             },
         },
         column: {
-            colors: themeColors.btnRingVariant500,
+            colors: themeColors.borderLine,
             opacity: 1,
         },
     },
@@ -158,7 +150,7 @@ const BarChartOptions = {
             w: TApexChartWindow;
         }) => {
             return renderToString(
-                <div className="px-3 py-2 flex flex-col break-word bg-primaryVariant200 fontGroup-support text-primary">
+                <div className="px-3 py-2 flex flex-col break-word bg-backgroundVariant300 fontGroup-support text-primary">
                     <span className="fontGroup-supportBold [&_span]:fontGroup-support">
                         {w.globals.seriesNames[0]}: {}
                         {new Intl.NumberFormat("en-US", {

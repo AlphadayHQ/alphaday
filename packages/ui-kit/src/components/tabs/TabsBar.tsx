@@ -55,7 +55,6 @@ export const TabsBar: FC<{
                         >
                             {options.map((tab) => (
                                 <span
-                                    key={tab.label}
                                     className={twMerge(
                                         tab.value === selectedOption.value
                                             ? "border-primary text-primary"

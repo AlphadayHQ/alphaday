@@ -5,6 +5,7 @@ import {
     useAccount,
     useFeatureFlags,
     useActivityLogger,
+    useKeyPress,
 } from "src/api/hooks";
 import { WalletConnectionState, EWalletConnectionMethod } from "src/api/types";
 import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
@@ -108,6 +109,9 @@ const WalletConnectionDialogContainer: FC = memo(() => {
                 size="sm"
                 showXButton
                 showDialog={authWallet.status in dialogPropsDict}
+                useKeyPress={
+                    WalletConnectionState.Prompted ? useKeyPress : undefined
+                }
                 {...props}
             >
                 {content}

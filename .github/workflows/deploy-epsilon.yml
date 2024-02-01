@@ -56,7 +56,7 @@ jobs:
                   cache-dependency-path: |
                       yarn.lock
             - name: yarn install
-              run: yarn
+              run: yarn --ignore-engines
 
             - name: build
               run: yarn build:deploy
@@ -76,6 +76,7 @@ jobs:
                   VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.DEV__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
                   VITE_FIRE_APP_ID: ${{ secrets.DEV__REACT_APP_FIRE_APP_ID }}
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
+                  VITE_CLARITY_PROJECT_ID: ${{ secrets.DEV__REACT_APP_CLARITY_PROJECT_ID }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
 

@@ -173,7 +173,7 @@ export const BoardPreview: FC<IPreview> = ({
                     active
                         ? "text-primary"
                         : "text-primaryVariant100 group-hover:text-primaryFiltered",
-                    "mt-1.75 text-[11px] leading-[14px] tracking-[0.2px] three-liner"
+                    "mt-1.75 text-[11px] leading-[14px] tracking-[0.2px] line-clamp-3"
                 )}
             >
                 {description}

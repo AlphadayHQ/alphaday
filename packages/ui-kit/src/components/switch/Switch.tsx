@@ -43,7 +43,7 @@ export const Switch: FC<SwitchProps> = ({
                 <span
                     className={twMerge(
                         "m-[3px] text-center capitalize fontGroup-highlightSemi duration-[400ms] rounded-lg py-[3px] px-2 min-w-min two-col:min-w-[62px] active:bg-backgroundVariant100 option1",
-                        !checked && "bg-backgoundBlue",
+                        !checked && "bg-backgroundBlue",
                         !checked && disabled && "bg-primaryVariant300"
                     )}
                 >
@@ -52,7 +52,7 @@ export const Switch: FC<SwitchProps> = ({
                 <span
                     className={twMerge(
                         "m-[3px] text-center capitalize fontGroup-highlightSemi duration-[400ms] rounded-lg py-[3px] px-2 min-w-min two-col:min-w-[62px] active:bg-backgroundVariant100 option2",
-                        checked && "bg-backgoundBlue",
+                        checked && "bg-backgroundBlue",
                         checked && disabled && "bg-primaryVariant300"
                     )}
                 >

@@ -75,7 +75,7 @@ export const EventDesc: FC<{ event: TEventDetails; className?: string }> = ({
                 dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(event.description || ""),
                 }}
-                className="nine-liner"
+                className="line-clamp-[9]"
             />
         </div>
     );

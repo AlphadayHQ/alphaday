@@ -201,7 +201,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 className={twMerge(
                                     "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg",
                                     !selectedCategory &&
-                                        "bg-backgoundBlue text-primary fontGroup-highlightSemi",
+                                        "bg-backgroundBlue text-primary fontGroup-highlightSemi",
                                     "hover:text-primary cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]"
                                 )}
                                 onClick={() => handleSelectCategory(undefined)}
@@ -220,7 +220,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                         className={twMerge(
                                             "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
                                             selectedCategory === cat.slug &&
-                                                "bg-backgoundBlue text-primary fontGroup-highlightSemi"
+                                                "bg-backgroundBlue text-primary fontGroup-highlightSemi"
                                         )}
                                         key={cat.slug}
                                         onClick={() =>
