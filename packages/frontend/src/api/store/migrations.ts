@@ -1,7 +1,12 @@
 import { PersistedState, MigrationManifest } from "redux-persist";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { TRemoteTagReadOnly, TRemoteUserViewWidget } from "../services";
-import { EAuthState, TCachedView, TUserView } from "../types";
+import {
+    EAuthState,
+    TCachedView,
+    TUserView,
+    WalletConnectionState,
+} from "../types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 import { IViewsState } from "./slices/views";
@@ -172,11 +177,17 @@ const migrations: TMigrations = {
                 user: {
                     ...s.user,
                     auth: {
-                        ...s.user.auth,
+                        token: undefined,
                         access: {
                             status: EAuthState.Guest,
                             method: undefined,
                             error: null,
+                        },
+                        wallet: {
+                            account: undefined,
+                            status: WalletConnectionState.Disconnected,
+                            error: null,
+                            method: undefined,
                         },
                     },
                 },
