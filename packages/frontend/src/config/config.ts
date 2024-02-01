@@ -48,6 +48,11 @@ const SENTRY = {
     ENABLE: true,
 };
 
+const CLARITY = {
+    ENABLE: !!import.meta.env.VITE_CLARITY_PROJECT_ID,
+    PROJECT_ID: import.meta.env.VITE_CLARITY_PROJECT_ID,
+};
+
 const COOKIES = {
     // in these, a "reject all" option will be included
     STRICT_COUNTRY_LIST: ["DE", "FR", "UK", "IE"],
@@ -73,6 +78,7 @@ const CONFIG = {
     SEO: SEO_CONFIG,
     FIREBASE: FIREBASE_CONFIG,
     SENTRY,
+    CLARITY,
     COOKIES,
     API_PROVIDERS,
     NUMBERS,
@@ -84,7 +90,7 @@ const CONFIG = {
     APP: {
         VERSION: import.meta.env.VITE_VERSION || "",
         STORAGE_KEY: "alphaday",
-        STORAGE_VERSION: 101,
+        STORAGE_VERSION: 102,
         COMMIT: import.meta.env.VITE_COMMIT,
         X_APP_ID: import.meta.env.VITE_X_APP_ID || "",
         X_APP_SECRET: import.meta.env.VITE_X_APP_SECRET || "",

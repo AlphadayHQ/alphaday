@@ -49,10 +49,10 @@ export const ViewTabButton: FC<ButtonProps> = ({
             disabled={selected ? false : disabled}
             aria-label={label}
             className={twMerge(
-                "relative outline-none inline-flex items-center justify-center text-center align-middle cursor-pointer select-none hover:outline-none active:outline-none focus:outline-none hover:bg-btnBackgroundVariant1000 active:bg-btnBackgroundVariant800 fontGroup-supportBold text-primaryVariant100 uppercase w-max two-col:w-full h-full py-[13px] px-5 bg-transparent border-l border-solid border-background ease-out duration-100 [&>svg]:cursor-pointer [&>span]:text-clip [&>span]:overflow-hidden [&>span]:whitespace-nowrap",
-                disabled && "text-primaryVariant300 pointer-events-none",
+                "relative outline-none inline-flex items-center justify-center text-center align-middle cursor-pointer rounded-md select-none hover:outline-none active:outline-none focus:outline-none bg-backgroundVariant100 hover:bg-backgroundVariant200 active:bg-backgroundVariant100 fontGroup-supportBold text-primaryVariant100 uppercase w-max two-col:w-full h-full py-[13px] px-5 ease-out duration-100 [&>svg]:cursor-pointer [&>span]:text-clip [&>span]:overflow-hidden [&>span]:whitespace-nowrap",
+                disabled && "text-primary pointer-events-none",
                 selected &&
-                    "bg-background text-primary cursor-default hover:bg-background active:bg-background",
+                    "bg-backgroundBlue hover:bg-backgroundBlue text-primary cursor-default hover:bg-ba active:bg-backgroundBlue",
                 className
             )}
             onMouseEnter={handleMouseEnter}
@@ -61,7 +61,7 @@ export const ViewTabButton: FC<ButtonProps> = ({
         >
             {children}
             {modified && (
-                <div className="bg-btnRingVariant100 h-1 w-1 rounded items-center justify-center ml-[5px]" />
+                <div className="bg-accentVariant100 h-1 w-1 rounded items-center justify-center ml-[5px]" />
             )}
             {(isHovered || isViewTabMenuOpened) && options && (
                 <ViewTabMenu

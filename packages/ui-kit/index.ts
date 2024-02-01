@@ -44,6 +44,7 @@ import {
     DropdownItem,
     DropdownMenu,
 } from "./src/components/dropdown/dropdown";
+import { SortBy } from "./src/components/dropdown/SortBy";
 import { FadeIn } from "./src/components/fade-in-out/FadeIn";
 import { Input } from "./src/components/input/Input";
 import Footer from "./src/components/layout/Footer";
@@ -72,11 +73,11 @@ import { ItemSkeleton } from "./src/components/skeletons/ItemSkeleton";
 import { Skeleton } from "./src/components/skeletons/Skeleton";
 import { Spinner } from "./src/components/spinner/Spinner";
 import { Switch } from "./src/components/switch/Switch";
-import { SwitchWrap } from "./src/components/switchWrap/SwitchWrap";
 import SyncIndicator, {
     EIndicatorState,
 } from "./src/components/syncIndicator/SyncIndicator";
 import { KeyValueTable } from "./src/components/table/KeyValueTable";
+import { TabsBar } from "./src/components/tabs/TabsBar";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import { Timer } from "./src/components/timer/Timer";
 import { CalendarTooltip } from "./src/components/tooltip/CalendarTooltip";
@@ -86,6 +87,9 @@ import {
 } from "./src/components/view-tab-menu/ViewTabMenu";
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
+import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
+import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
+import { FeedCard } from "./src/mobile-components/superfeed/FeedCard";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
@@ -125,7 +129,6 @@ export {
     BaseModuleOptionsFooter,
     ScrollBar,
     SearchBar,
-    SwitchWrap,
     ViewTabMenu,
     EViewDialogState,
     ShareViewDialog,
@@ -159,4 +162,12 @@ export {
     Overlay,
     ChatForm,
     FadeIn,
+    TabsBar,
+    SortBy,
+    /**
+     * Mobile-only components
+     */
+    NavBottom,
+    NavHeader,
+    FeedCard,
 };

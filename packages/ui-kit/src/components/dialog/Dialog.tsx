@@ -3,6 +3,11 @@ import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
 import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
+export interface IKeyPress {
+    targetKey: string;
+    callback: () => void;
+    skip?: boolean;
+}
 export interface IDialog {
     title?: string;
     saveButtonText?: string;
@@ -15,6 +20,7 @@ export interface IDialog {
     children?: React.ReactNode;
     showDialog?: boolean;
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
+    useKeyPress?: (args: IKeyPress) => void;
 }
 
 export const Dialog: FC<IDialog> = ({
@@ -29,6 +35,7 @@ export const Dialog: FC<IDialog> = ({
     buttonProps,
     showDialog,
     size,
+    useKeyPress,
     ...restProps
 }) => {
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -45,6 +52,14 @@ export const Dialog: FC<IDialog> = ({
     const showSaveButton = onSave && saveButtonText;
     const showCloseButton = !!closeButtonText;
 
+    useKeyPress?.({
+        targetKey: "Enter",
+        callback: () => {
+            onSave?.()?.catch(() => {});
+        },
+        skip: !showSaveButton || disableSave,
+    });
+
     return (
         <Modal
             showModal={showDialog}
@@ -53,7 +68,7 @@ export const Dialog: FC<IDialog> = ({
             onClose={onClose}
             {...restProps}
         >
-            <div className="flex justify-between items-center border-0 p-[15px]">
+            <div className="flex justify-between items-center border-0 p-4">
                 <h6 className="text-primary self-center leading-6 fontGroup-highlightSemi !text-sm m-0">
                     {title}
                 </h6>
@@ -61,19 +76,19 @@ export const Dialog: FC<IDialog> = ({
                     <button
                         // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         onClick={handleCloseDialog}
-                        className="border-primaryVariant200 bg-backgroundVariant200 flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-[1.5px] border-solid"
+                        className="border-borderLine bg-background flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-2 border-solid"
                         title="close"
                         type="button"
                         data-testid="alpha-dialog-close-button"
                     >
-                        <CloseSVG className="h-[8.4px] w-[8.4px] text-primary" />
+                        <CloseSVG className="h-[8.4px] w-[8.4px] text-borderLine outline-none" />
                     </button>
                 )}
             </div>
-            <div className="flex p-[15px]">{children}</div>
+            <div className="flex p-4">{children}</div>
 
             {(showSaveButton || showCloseButton) && (
-                <div className="flex justify-center border-0 pb-[15px]">
+                <div className="flex justify-center border-0 pb-4">
                     {showSaveButton && (
                         <Button
                             data-testid="alpha-dialog-action-button"

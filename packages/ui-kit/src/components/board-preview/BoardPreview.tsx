@@ -85,9 +85,9 @@ export const BoardPreview: FC<IPreview> = ({
                 tabIndex={0}
                 className={twMerge(
                     active
-                        ? "border-btnRingVariant100"
+                        ? "border-accentVariant100"
                         : "border-primaryVariant200",
-                    "bg-backgroundVariant500 group-hover:border-btnRingVariant100 flex max-h-[167px] max-w-[250px] items-center justify-center rounded-lg border-[1px] "
+                    "bg-background group-hover:border-accentVariant100 flex max-h-[167px] max-w-[250px] items-center justify-center rounded-lg border-[1px] "
                 )}
             >
                 <div
@@ -108,30 +108,30 @@ export const BoardPreview: FC<IPreview> = ({
                         {onEdit && (
                             <div
                                 title="Edit board"
-                                className="bg-btnBackgroundVariant100 border-primaryVariant200 text-primary hover:text-btnRingVariant100 hover:border-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border"
+                                className="bg-backgroundVariant200 border-primaryVariant200 text-primary hover:text-accentVariant100 hover:border-accentVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border"
                                 role="button"
                                 tabIndex={0}
                                 onClick={handleEditClick}
                             >
-                                <EditSVG className="h-[15px]" />
+                                <EditSVG className="h-4" />
                             </div>
                         )}
                         {onRemove && (
                             <div
-                                className="bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border hover:border-secondaryOrangeSoda hover:text-secondaryOrangeSoda hover:stroke-secondaryOrangeSoda"
+                                className="bg-backgroundVariant200 border-primaryVariant200 text-accentVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border hover:border-secondaryOrangeSoda hover:text-secondaryOrangeSoda hover:stroke-secondaryOrangeSoda"
                                 role="button"
                                 tabIndex={0}
                                 onClick={handleRemoveClick}
                                 title="Remove board"
                             >
-                                <TrashSVG className="h-[15px] text-inherit" />
+                                <TrashSVG className="h-4 text-inherit" />
                             </div>
                         )}
                         {onPin && (
                             <div
                                 className={twMerge(
-                                    "bg-btnBackgroundVariant100 border-primaryVariant200 text-btnRingVariant100 hover:text-btnRingVariant100 hover:border-btnRingVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border",
-                                    pinned && "border-btnRingVariant100",
+                                    "bg-backgroundVariant200 border-primaryVariant200 text-accentVariant100 hover:text-accentVariant100 hover:border-accentVariant100 ml-[5px] flex h-[30px] w-[30px] items-center justify-center rounded-full border",
+                                    pinned && "border-accentVariant100",
                                     !isAuthenticated && "cursor-not-allowed"
                                 )}
                                 role="button"
@@ -156,15 +156,26 @@ export const BoardPreview: FC<IPreview> = ({
                 </div>
             </div>
             <div
-                className="text-primary group-hover:text-primaryVariant800 mt-3.5 text-[12px]
-                 font-semibold uppercase leading-[14px] tracking-[1.2px]"
+                className={twMerge(
+                    active
+                        ? "text-primary"
+                        : "text-primaryVariant100 group-hover:text-primaryFiltered",
+                    "mt-3.5 text-[12px] font-semibold uppercase leading-[14px] tracking-[1.2px]"
+                )}
                 onClick={onClick}
                 role="link"
                 tabIndex={0}
             >
                 {title}
             </div>
-            <p className="text-primary mt-1.75 group-hover:text-primaryVariant800 text-[11px] leading-[14px] tracking-[0.2px]">
+            <p
+                className={twMerge(
+                    active
+                        ? "text-primary"
+                        : "text-primaryVariant100 group-hover:text-primaryFiltered",
+                    "mt-1.75 text-[11px] leading-[14px] tracking-[0.2px] line-clamp-3"
+                )}
+            >
                 {description}
             </p>
         </div>

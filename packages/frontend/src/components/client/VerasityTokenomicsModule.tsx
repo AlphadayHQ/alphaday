@@ -154,13 +154,13 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
 
     return (
         <div ref={parentRef}>
-            <div className="p-[15px]">
+            <div className="pl-4 py-3">
                 <div className="flex justify-between items-center tiny:flex-col mb-[10px]">
                     {isOver &&
                         renderLayer(
                             <div {...newLayerProps}>
                                 <div
-                                    className="fontGroup-highlightSemi ring-1 ring-backgroundVariant100 text-backgroundVariant100 p-[10px] rounded"
+                                    className="fontGroup-highlightSemi ring-1 ring-background text-background p-[10px] rounded"
                                     style={{ background: tooltipProp.bg }}
                                 >
                                     {tooltipProp.text}
@@ -222,19 +222,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                     </svg>
                     <div className="fontGroup-normal">
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlight capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Token Name:
                             </span>{" "}
                             {name}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlight capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Token Ticker:
                             </span>{" "}
                             ${ticker}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlight capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Smart contract address:
                             </span>{" "}
                             <span
@@ -258,19 +258,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                             </span>
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlight capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Total supply:
                             </span>{" "}
                             {totalSupply}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlight capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Max. Circulating supply:
                             </span>{" "}
                             {maxSupply}
                         </div>
                         <div className="mx-4 my-1">
-                            <span className="fontGroup-highlight capitalize">
+                            <span className="text-primaryVariant100 capitalize">
                                 Circulating supply:
                             </span>{" "}
                             {supply}

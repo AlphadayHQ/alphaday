@@ -89,7 +89,7 @@ const CoinOption: FC<OptionProps<TOptions, true> & { coins?: TCoin[] }> = ({
 };
 
 const TagsOptions: FC<ITagsOptions> = ({
-    setting,
+    widget_setting,
     onIncludeTag,
     onRemoveTag,
     tags,
@@ -117,9 +117,13 @@ const TagsOptions: FC<ITagsOptions> = ({
         );
 
     return (
-        <div key={setting.slug} className="setting" title={title}>
+        <div
+            key={widget_setting.setting.slug}
+            className="setting"
+            title={title}
+        >
             <div className="mb-2.5 fontGroup-highlightSemi">
-                {setting.name}:
+                {widget_setting.setting.name}:
             </div>
             <SearchBar
                 initialInputValue={searchState}
@@ -143,10 +147,8 @@ const TagsOptions: FC<ITagsOptions> = ({
                 componentClassNames={{
                     container: () => "max-w-[300px] z-10",
                     control: () =>
-                        `p-0 h-[41px] cursor-text bg-backgroundVariant400 hover:bg-backgroundVariant200 border-0 shadow-none min-h-[41px] ${
-                            disabled
-                                ? "bg-backgroundVariant800"
-                                : "bg-backgroundVariant400"
+                        `p-0 h-[41px] cursor-text bg-background hover:bg-background border-0 shadow-none min-h-[41px] ${
+                            disabled ? "bg-background" : "bg-background"
                         }`,
                     menuList: () => "max-h-[100px]",
                     input: () => "m-0 ml-[10px] p-0 text-primary border-0",
@@ -238,7 +240,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                             }}
                             className="flex h-[inherit] w-full pb-0.5"
                         >
-                            <h6 className="text-primaryVariant100 fontGroup-highlight m-0 inline-flex uppercase">
+                            <h6 className="text-primaryVariant100 fontGroup-highlightSemi m-0 inline-flex uppercase">
                                 {widgetTitle} OPTIONS
                             </h6>
                         </div>
@@ -266,16 +268,17 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                 </BaseModuleHeader>
             </div>
             <BaseModuleBody>
-                <ScrollBar className="shrink p-[15px]">
+                <ScrollBar className="shrink p-4">
                     {settings?.map((group) => {
-                        const { setting, tags } = group;
+                        // eslint-disable-next-line @typescript-eslint/naming-convention
+                        const { widget_setting, tags } = group;
                         if (
-                            setting.slug ===
+                            widget_setting.setting.slug ===
                             EWidgetSettingsRegistry.IncludedTags
                         ) {
                             return (
                                 <TagsOptions
-                                    key={setting.slug}
+                                    key={widget_setting.setting.slug}
                                     searchResults={keywordResults}
                                     searchState={searchState}
                                     setSearchState={setSearchState}
@@ -301,7 +304,8 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                             );
                         }
                         if (
-                            setting.slug === EWidgetSettingsRegistry.PinnedCoins
+                            widget_setting.setting.slug ===
+                            EWidgetSettingsRegistry.PinnedCoins
                         ) {
                             const coins = (pinnedCoins?.results || []).map(
                                 (coin) => ({
@@ -311,7 +315,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                             );
                             return (
                                 <TagsOptions
-                                    key={setting.slug}
+                                    key={widget_setting.setting.slug}
                                     searchResults={coinsRawResults?.results}
                                     searchState={coinSearch}
                                     setSearchState={setCoinSearch}
@@ -322,7 +326,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                     }
                                     title={
                                         isAuthenticated
-                                            ? setting.name
+                                            ? widget_setting.setting.name
                                             : "Sign up to pin coins and more"
                                     }
                                     disabled={!isAuthenticated}

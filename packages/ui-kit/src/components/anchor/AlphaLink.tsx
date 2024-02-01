@@ -27,7 +27,7 @@ export const AnchorElement: FC<IAnchor> = ({
         rel={rel}
         className={twMerge(
             className,
-            "text-primaryVariant100 fontGroup-highlight hover:text-btnRingVariant100 active:text-btnBackgroundVariant1400 cursor-pointer hover:underline active:underline"
+            "text-primaryVariant100 fontGroup-highlightSemi hover:text-accentVariant100 active:text-backgroundBlue cursor-pointer hover:underline active:underline"
         )}
         href={path}
         target={target}
@@ -53,7 +53,7 @@ export const AlphaLink: FC<IAnchor> = ({ target, path, ...otherProps }) => {
             rel="preload"
             className={twMerge(
                 otherProps.className,
-                "text-primaryVariant100 fontGroup-highlight hover:text-btnRingVariant100 active:text-btnBackgroundVariant1400 cursor-pointer hover:underline active:underline"
+                "text-primaryVariant100 fontGroup-highlightSemi hover:text-accentVariant100 active:text-backgroundBlue cursor-pointer hover:underline active:underline"
             )}
             to={path}
             onClick={otherProps.onClick}

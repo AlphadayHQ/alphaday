@@ -78,7 +78,7 @@ const CalendarMonth: FC<
                 )}
             >
                 {!showFullSize && (
-                    <div className="flex absolute top-3 left-[10px] two-col:left-[14px] three-col:left-5">
+                    <div className="flex absolute top-2 left-[10px] two-col:left-3">
                         <Switch
                             title="Switch Calendar Type"
                             options={["Calendar", "List"]}
@@ -122,15 +122,13 @@ const CalendarMonth: FC<
                                         className="w-2 h-2 rounded-full mr-[2.5px]"
                                         style={{ backgroundColor: cat.color }}
                                     />
-                                    <span className="fontGroup-support label">
-                                        {cat.label}
-                                    </span>
+                                    <span className="label">{cat.label}</span>
                                 </span>
                             ))}
                         <span
                             role="button"
                             tabIndex={0}
-                            className="flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer rounded-sm hover:text-white text-btnRingVariant100 fontGroup-support"
+                            className="flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer rounded-sm hover:text-primary text-accentVariant100"
                             onClick={() => setShowAllLegends((show) => !show)}
                         >
                             {showAllLegends ? "less" : "more"}{" "}
@@ -145,7 +143,7 @@ const CalendarMonth: FC<
                             htmlFor="checkbox"
                             className={twMerge(
                                 "flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer text-primary rounded-sm hover:text-white switch",
-                                "relative w-10 h-[22px] ml-[7px] pl-2 whitespace-nowrap rounded-[5px] my-0 mx-[10px] hover:bg-backgroundVariant200 group",
+                                "relative w-10 h-[22px] ml-[7px] pl-2 whitespace-nowrap rounded-[5px] my-0 mx-[10px] hover:bg-background group",
                                 showAllFilters &&
                                     "[&_.switch-knob]:translate-x-5"
                             )}

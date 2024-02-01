@@ -59,11 +59,11 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 autoScaleYaxis: false,
                 zoomedArea: {
                     fill: {
-                        color: themeColors.btnRingVariant400,
+                        color: themeColors.accentVariant200,
                         opacity: 0.4,
                     },
                     stroke: {
-                        color: themeColors.btnRingVariant200,
+                        color: themeColors.backgroundBlue,
                         opacity: 0.4,
                         width: 1,
                     },
@@ -117,7 +117,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     );
                 },
                 style: {
-                    colors: themeColors.btnRingVariant500,
+                    colors: themeColors.borderLine,
                     fontSize: "10px",
                     fontFamily: "Arial, sans-serif",
                     fontWeight: 700,
@@ -135,7 +135,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             decimalsInFloat: false,
         },
         grid: {
-            borderColor: themeColors.btnRingVariant500,
+            borderColor: themeColors.borderLine,
             strokeDashArray: 5,
             xaxis: {
                 lines: {
@@ -148,7 +148,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 },
             },
             column: {
-                colors: themeColors.btnRingVariant500,
+                colors: themeColors.borderLine,
                 opacity: 1,
             },
         },
@@ -174,8 +174,8 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 w,
             }: TCustomTooltip) => {
                 return renderToString(
-                    <div className="price-tooltip">
-                        <span className="price">
+                    <div className="px-3 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant300 border border-borderLine fontGroup-support text-primary">
+                        <span className="fontGroup-supportBold [&_span]:fontGroup-support">
                             {w.globals.seriesNames[0]}: {}
                             {
                                 formatNumber({
@@ -185,7 +185,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                                 }).value
                             }
                         </span>
-                        <span className="date">
+                        <span className="pt-[1px]">
                             {moment(data[dataPointIndex][0]).format(
                                 "YYYY-MM-DD  HH:mm"
                             )}

@@ -28,7 +28,7 @@ const TutorialItem: FC<ITutorialItem> = ({
             onClick={closeTutorial}
             style={{ zIndex: Z_INDEX_REGISTRY.TUTORIAL_MODAL }}
         >
-            <div className="fixed top-0 w-full h-full bg-backgroundVariant400 opacity-70" />
+            <div className="fixed top-0 w-full h-full bg-background opacity-70" />
             {tip && pos && (
                 <FadeIn
                     // Key to rerender between tips instead of using state.
@@ -45,7 +45,7 @@ const TutorialItem: FC<ITutorialItem> = ({
                     >
                         <div
                             className={twMerge(
-                                "bg-transparent mb-[20px] animate-pulse border-[3px] border-btnRingVariant400 rounded-full",
+                                "bg-transparent mb-[20px] animate-pulse border-[3px] border-accentVariant200 rounded-full",
                                 tip.id === ETutorialTipId.ComeBack &&
                                     "border-primaryVariant100",
                                 indicator.type ===
@@ -73,7 +73,7 @@ const TutorialItem: FC<ITutorialItem> = ({
                                 tabIndex={0}
                             >
                                 {tip?.title && (
-                                    <div className="flex justify-between mb-[15px] fontGroup-highlightSemi uppercase">
+                                    <div className="flex justify-between mb-4 fontGroup-highlightSemi uppercase">
                                         <span>{tip.title}</span>
                                         <span>{tipCount}</span>
                                     </div>
@@ -98,7 +98,7 @@ const TutorialItem: FC<ITutorialItem> = ({
                                         <Button
                                             onClick={toggleNextTutorial}
                                             variant="secondary"
-                                            className="bg-primaryVariant900 p-[4px_12px_5px] h-[26px] fontGroup-normal"
+                                            className="bg-primaryFiltered p-[4px_12px_5px] h-[26px] fontGroup-normal"
                                         >
                                             Next
                                         </Button>

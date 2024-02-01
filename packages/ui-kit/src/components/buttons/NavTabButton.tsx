@@ -30,20 +30,20 @@ export const NavTabButton: FC<ButtonProps> = ({
             disabled={disabled}
             uppercase={uppercase}
             aria-label={label}
-            className="fontGroup-supportBold"
+            className="fontGroup-supportBold bg-transparent border-none hover:bg-backgroundVariant200 px-4"
             {...restProps}
         >
             {variant === "modules" &&
                 (open ? (
-                    <CloseSVG className="fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
+                    <CloseSVG className="fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
                 ) : (
-                    <WidgetsSVG className="widgets fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
+                    <WidgetsSVG className="widgets fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
                 ))}
             {variant === "views" &&
                 (open ? (
-                    <CloseSVG className="fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
+                    <CloseSVG className="fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
                 ) : (
-                    <ViewsSVG className="fill-primary mr-1.5 h-2.5 w-2.5 self-center" />
+                    <ViewsSVG className="fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
                 ))}
             {children}
         </TabButton>

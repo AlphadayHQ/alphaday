@@ -46,7 +46,7 @@ export const EventSpeakers: FC<{
 export const EventLink: FC<{ event: TEventDetails }> = ({ event }) => {
     return (
         <a href={event.eventRegLink} target="_blank" rel="noreferrer">
-            <Button className="min-w-max" variant="secondary">
+            <Button className="min-w-max border-none" variant="secondary">
                 <span className="text-primary">
                     <ExternalLinkSVG className="w-3.5 h-3.5 pt-[1px] text-primaryVariant100 stroke-3" />
                 </span>
@@ -65,7 +65,7 @@ export const EventDesc: FC<{ event: TEventDetails; className?: string }> = ({
     return (
         <div
             className={twMerge(
-                "mt-[5px] text-primary break-word mb-4 fontGroup-normal [&_*]:text-primary",
+                "text-primary break-word mb-4 fontGroup-normal [&_*]:text-primary",
                 className
             )}
         >
@@ -75,7 +75,7 @@ export const EventDesc: FC<{ event: TEventDetails; className?: string }> = ({
                 dangerouslySetInnerHTML={{
                     __html: DOMPurify.sanitize(event.description || ""),
                 }}
-                className="nine-liner"
+                className="line-clamp-[9]"
             />
         </div>
     );

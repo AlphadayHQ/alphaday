@@ -41,6 +41,7 @@ const handleBalanceFigures = (val: string, show: boolean): string => {
 };
 
 const DEFAULT_ASSET_LIST_HEIGHT = 200;
+const PADDING_OFFSET = 20;
 
 const PortfolioStats: FC<IPortfolioStats> = ({
     showAllAssets,
@@ -180,12 +181,12 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 
     const assetListHeight =
         (chartRef.current
-            ? widgetHeight - chartRef.current.offsetHeight
+            ? widgetHeight - chartRef.current.offsetHeight + PADDING_OFFSET
             : DEFAULT_ASSET_LIST_HEIGHT) -
         2 * 53;
 
     return (
-        <div className="p-[15px] pt-[5px] portfolio-widget">
+        <div className="px-4 portfolio-widget">
             {balancesQueryFailed ? (
                 <div className="flex justify-center items-center top-[220px] z-[2] !h-[200px] text-primaryVariant100">
                     {globalMessages.error.requestFailed("your balances")}
@@ -193,9 +194,9 @@ const PortfolioStats: FC<IPortfolioStats> = ({
             ) : (
                 <>
                     <div ref={chartRef}>
-                        <div className="flex flex-wrap justify-between pb-[17px] pr-[11px]">
+                        <div className="flex flex-wrap justify-between pb-1 pr-3">
                             <div className="pt-6 mr-[45px] self-start max-w-[130px]">
-                                <p className="mb-[3px] capitalize tracking-[0.5px] fontGroup-mini text-primaryVariant100 flex items-center">
+                                <p className="mb-0.5 capitalize tracking-[0.5px] fontGroup-mini text-primaryVariant100 flex items-center">
                                     Total Balance{" "}
                                     <ShowSVG
                                         onClick={toggleBalance}
@@ -219,7 +220,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                     </h3>
                                 )}
                                 {portfolioData && ethPrice && (
-                                    <div className="mb-[15px] flex flex-wrap">
+                                    <div className="mb-4 flex flex-wrap">
                                         <p className="fontGroup-normal mb-0 text-success">
                                             {handleBalanceFigures(
                                                 formatNumber({
@@ -232,7 +233,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                             {showBalance &&
                                                 totalValue &&
                                                 ethPrice && (
-                                                    <span className="fontGroup-normal mr-[5px] text-primaryVariant500">
+                                                    <span className="fontGroup-normal mr-[5px] text-primary">
                                                         ETH
                                                     </span>
                                                 )}
@@ -266,7 +267,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                         </div>
 
                         {donutData.series?.length ? (
-                            <div className="mb-[10px] items-center justify-between flex flex-1">
+                            <div className="items-center justify-between flex flex-1">
                                 <div className="flex flex-[2_1_0%] justify-start">
                                     <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
                                         Asset
@@ -292,7 +293,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                     </div>
                     {assets.length > 0 && (
                         <div
-                            className="m-[0_-15px_-15px_-15px]"
+                            className="-mx-4"
                             style={{
                                 height: assetListHeight,
                             }}
@@ -307,7 +308,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 
                                     return (
                                         <div
-                                            className="flex py-[10px] px-[15px] border-t justify-between fontGroup-normal border-btnRingVariant500 [&:last-child]:border-b-0 rounded-sm"
+                                            className="flex mx-2 py-3 px-2 justify-between fontGroup-normal border-t border-borderLine first-of-type:border-t-0 rounded-sm"
                                             key={assetKey}
                                         >
                                             <div className="flex flex-[2_1_0%] justify-start">

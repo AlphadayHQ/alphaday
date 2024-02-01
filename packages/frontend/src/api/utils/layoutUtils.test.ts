@@ -58,10 +58,14 @@ export const widgetsList: TUserViewWidget<unknown>[] = [
 
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
-                    setting_type: "tags",
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                        setting_type: "tags",
+                    },
+                    sort_order: 0,
+                    default_toggle_value: null,
                 },
                 tags: [
                     {
@@ -129,10 +133,14 @@ export const widgetsList: TUserViewWidget<unknown>[] = [
 
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
-                    setting_type: "tags",
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                        setting_type: "tags",
+                    },
+                    sort_order: 0,
+                    default_toggle_value: null,
                 },
                 tags: [
                     {
@@ -200,10 +208,14 @@ export const widgetsList: TUserViewWidget<unknown>[] = [
 
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
-                    setting_type: "tags",
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                        setting_type: "tags",
+                    },
+                    default_toggle_value: null,
+                    sort_order: 0,
                 },
                 tags: [
                     {
@@ -271,10 +283,14 @@ export const widgetsList: TUserViewWidget<unknown>[] = [
 
         settings: [
             {
-                setting: {
-                    name: "Included Tags",
-                    slug: EWidgetSettingsRegistry.IncludedTags,
-                    setting_type: "tags",
+                widget_setting: {
+                    setting: {
+                        name: "Included Tags",
+                        slug: EWidgetSettingsRegistry.IncludedTags,
+                        setting_type: "tags",
+                    },
+                    default_toggle_value: null,
+                    sort_order: 0,
                 },
                 tags: [
                     {

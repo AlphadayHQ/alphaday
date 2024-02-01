@@ -277,7 +277,8 @@ const viewsSlice = createSlice({
             for (let i = 0; i < viewWidgets.length; i += 1) {
                 const tagsSettings = viewWidgets[i].settings.filter(
                     (s) =>
-                        s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+                        s.widget_setting.setting.slug ===
+                        EWidgetSettingsRegistry.IncludedTags
                 );
                 if (tagsSettings[0]) {
                     const widgetTags = tagsSettings[0].tags;
@@ -337,7 +338,8 @@ const viewsSlice = createSlice({
             for (let i = 0; i < viewWidgets.length; i += 1) {
                 const tagsSettings = viewWidgets[i].settings.find(
                     (s) =>
-                        s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+                        s.widget_setting.setting.slug ===
+                        EWidgetSettingsRegistry.IncludedTags
                 );
                 if (tagsSettings === undefined) {
                     // eslint-disable-next-line no-continue
@@ -388,7 +390,9 @@ const viewsSlice = createSlice({
                 return;
             }
             const widgetTagSettings = widget.settings.find(
-                (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+                (s) =>
+                    s.widget_setting.setting.slug ===
+                    EWidgetSettingsRegistry.IncludedTags
             );
             if (widgetTagSettings === undefined) {
                 Logger.error(
@@ -437,7 +441,9 @@ const viewsSlice = createSlice({
                 return;
             }
             const widgetTagSettings = widget.settings.find(
-                (s) => s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+                (s) =>
+                    s.widget_setting.setting.slug ===
+                    EWidgetSettingsRegistry.IncludedTags
             );
             if (widgetTagSettings === undefined) {
                 Logger.error(
@@ -493,7 +499,8 @@ const viewsSlice = createSlice({
                     i
                 ].settings.find(
                     (s) =>
-                        s.setting.slug === EWidgetSettingsRegistry.IncludedTags
+                        s.widget_setting.setting.slug ===
+                        EWidgetSettingsRegistry.IncludedTags
                 );
                 if (widgetTagSettings !== undefined) {
                     widgetTagSettings.tags = widgetTagSettings.tags.filter(

@@ -10,24 +10,24 @@
     &:focus {
         outline: none;
     }
-    border-color: var(--btnRingVariant100);
+    border-color: var(--accentVariant100);
     color: var(--primary);
-    background-color: var(--btnBackgroundVariant100);
+    background-color: var(--backgroundVariant200);
     &:hover {
-        background-color: var(--btnBackgroundVariant400);
+        background-color: var(--backgroundVariant300);
     }
     &:active {
-        background-color: var(--btnBackgroundVariant300);
+        background-color: var(--backgroundVariant100);
     }
     &.alphaDialog {
         padding: 12px 55px;
     }
     &.disabled {
         color: var(--primaryVariant100);
-        border-color: var(--btnRingVariant200);
+        border-color: var(--backgroundBlue);
         pointer-events: none;
     }
-    @apply fontGroup-highlight;
+    @apply fontGroup-highlightSemi;
 }
 
 .collapseButton {
@@ -89,12 +89,12 @@
         }
         &:hover {
             svg {
-                stroke: var(--primaryVariant800);
+                stroke: var(--primaryFiltered);
             }
         }
         &:active {
             svg {
-                stroke: var(--primaryVariant900);
+                stroke: var(--primaryFiltered);
             }
         }
     }
@@ -106,18 +106,18 @@
         }
         &:hover {
             svg {
-                stroke: var(--primaryVariant800);
+                stroke: var(--primaryFiltered);
             }
         }
         &:active {
             svg {
-                stroke: var(--primaryVariant1000);
+                stroke: var(--primaryVariant100);
             }
         }
     }
     &.closeWithBg {
-        background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        background: var(--backgroundVariant200);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 8px;
         svg {
@@ -126,16 +126,16 @@
             stroke: var(--primaryVariant100);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            background: var(--backgroundVariant100);
+            border: 1px solid var(--borderLine);
         }
     }
     &.notification {
-        background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        background: var(--backgroundVariant200);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 8px;
         svg {
@@ -144,16 +144,16 @@
             fill: var(--white);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            background: var(--backgroundVariant100);
+            border: 1px solid var(--borderLine);
         }
     }
     &.profile {
-        background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        background: var(--backgroundVariant200);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 7.5px;
         svg {
@@ -162,17 +162,17 @@
             fill: var(--white);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            background: var(--backgroundVariant100);
+            border: 1px solid var(--borderLine);
         }
     }
     &.trash {
         position: relative;
-        background: var(--btnBackgroundVariant100);
-        border: 1px solid var(--btnRingVariant300);
+        background: var(--backgroundVariant200);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 20.59px;
         transition: all 0.2s ease-in-out;
@@ -188,7 +188,7 @@
             stroke: var(--primaryVariant100);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
             .text {
                 opacity: 1;
             }
@@ -205,31 +205,32 @@
         }
         &:hover {
             svg {
-                fill: var(--btnRingVariant100);
+                fill: var(--accentVariant100);
             }
         }
         &:active {
             svg {
-                fill: var(--btnBackgroundVariant1400);
+                fill: var(--backgroundBlue);
             }
         }
     }
-    &.leftArrow, &.rightArrow {
-        background: var(--backgroundVariant1200);
-        border: 1px solid var(--btnRingVariant300);
+    &.leftArrow,
+    &.rightArrow {
+        background: var(--background);
+        border: 1px solid var(--borderLine);
         border-radius: 100px;
         padding: 6.5px;
         svg {
             width: 18px;
             height: 18px;
-            stroke: var(--primary);
+            stroke: var(--alpha-primary);
         }
         &:hover {
-            background: var(--btnBackgroundVariant1000);
+            background: var(--backgroundVariant300);
         }
         &:active {
-            background: var(--btnBackgroundVariant700);
-            border: 1px solid var(--btnRingVariant500);
+            background: var(--backgroundVariant100);
+            border: 1px solid var(--borderLine);
         }
     }
     &.disabled {
@@ -286,12 +287,12 @@
 .tabsButtonOpen {
     &.small {
         color: var(--primary);
-        border-color: var(--btnBackgroundVariant1400);
-        background-color: var(--btnBackgroundVariant1500);
+        border-color: var(--backgroundBlue);
+        background-color: var(--backgroundVariant100);
     }
     &.extraSmall {
-        border-color: var(--btnBackgroundVariant1400);
-        background-color: var(--btnBackgroundVariant1500);
+        border-color: var(--backgroundBlue);
+        background-color: var(--backgroundVariant100);
     }
     .tabButton {
         fill: var(--primary);
