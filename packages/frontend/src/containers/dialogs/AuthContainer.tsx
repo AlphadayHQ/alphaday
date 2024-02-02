@@ -26,10 +26,11 @@ const AuthContainer = () => {
 
     const handleSSOCallback = useCallback(
         (method: EAuthMethod) => {
-            if (authState.status === EAuthState.SelectingMethod) {
-                if (method === EAuthMethod.Email) {
-                    dispatch(userStore.setAuthState(EAuthState.SigningIn));
-                }
+            if (
+                authState.status === EAuthState.SelectingMethod &&
+                method === EAuthMethod.Email
+            ) {
+                dispatch(userStore.setAuthState(EAuthState.SigningIn));
             } else {
                 ssoLogin(method);
             }

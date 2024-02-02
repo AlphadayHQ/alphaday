@@ -38,7 +38,7 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
 type RootStateV103 = PersistedRootState;
 
 type RootStateV102 =
-    | (PersistedRootState &
+    | (PersistedState &
           Omit<RootState, "user"> & {
               user: Omit<RootState["user"], "auth"> & {
                   auth: Omit<RootState["user"]["auth"], "access">;

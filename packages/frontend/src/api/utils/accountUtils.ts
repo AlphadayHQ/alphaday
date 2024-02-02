@@ -126,7 +126,7 @@ export const mapAccountToTabAccount = (
     ];
 };
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // example: email@domain
+const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // example: email@domain
 
 /**
  * Check if the email is valid

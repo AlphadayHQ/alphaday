@@ -38,7 +38,7 @@ const MethodSelection: FC<{
                 </span>
                 <button
                     type="button"
-                    className="text-primary text-sm font-semibold underline"
+                    className="text-primary text-sm font-semibold underline hover:opacity-80 transition-opacity"
                     onClick={handleLogin}
                 >
                     Log in
