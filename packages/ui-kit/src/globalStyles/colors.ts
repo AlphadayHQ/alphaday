@@ -25,4 +25,17 @@ export const darkColors = {
     secondaryOrangeSoda: "var(--alpha-red)", // #F45532 -- downward market
     secondaryYellowGreen: "var(--alpha-yellow-green)", // #B9E187 -- upward market
     success: "var(--alpha-green)", // #6DD230
+    // category colors
+    categoryOne: "var(--alpha-category-1)",
+    categoryTwo: "var(--alpha-category-2)",
+    categoryThree: "var(--alpha-category-3)",
+    categoryFour: "var(--alpha-category-4)",
+    categoryFive: "var(--alpha-category-5)",
+    categorySix: "var(--alpha-category-6)",
+    categorySeven: "var(--alpha-category-7)",
+    categoryEight: "var(--alpha-category-8)",
+    categoryNine: "var(--alpha-category-9)",
+    categoryTen: "var(--alpha-category-10)",
+    categoryEleven: "var(--alpha-category-11)",
+    categoryTwelve: "var(--alpha-category-12)",
 };

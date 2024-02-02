@@ -3,6 +3,7 @@ import { Disclosure } from "@headlessui/react";
 import { ReactComponent as CheckedSVG } from "src/assets/svg/checkmark.svg";
 import { ReactComponent as ChevronDownSVG } from "src/assets/svg/chevron-down.svg";
 import { themeColors } from "src/globalStyles/themes";
+import { twMerge } from "tailwind-merge";
 
 const TagButton: FC<{
     name: string;
@@ -47,7 +48,13 @@ export const OptionsDisclosure: FC<{
     }[];
     onSelect: (id: number) => void;
 }> = ({ title, options, onSelect }) => {
-    const selectedOptions = options.filter((option) => option.selected);
+    const selectedOptions = options
+        .filter((option) => option.selected)
+        .sort((a, b) => (a.name > b.name ? 1 : -1));
+    const nonSelectedOptions = options
+        .filter((option) => !option.selected)
+        .sort((a, b) => (a.name > b.name ? 1 : -1));
+    const sortedOptions = [...selectedOptions, ...nonSelectedOptions];
     return (
         <Disclosure>
             {({ open }) => (
@@ -57,11 +64,16 @@ export const OptionsDisclosure: FC<{
                             <p className="fontGroup-highlight uppercase mb-0 self-center">
                                 {title}
                             </p>
-                            <ChevronDownSVG className="w-6 h-6 mr-2 rotate-0 self-center -ml-1.5 text-primary" />
+                            <ChevronDownSVG
+                                className={twMerge(
+                                    "w-6 h-6 mr-2 self-center -ml-1.5 text-primary",
+                                    open && "rotate-180"
+                                )}
+                            />
                         </div>
                         {!open && (
                             <div className="w-full flex flex-wrap pt-4 pb-2">
-                                {selectedOptions.map((option) => (
+                                {sortedOptions.slice(0, 6).map((option) => (
                                     <TagButton
                                         key={option.name}
                                         name={option.name}
@@ -75,7 +87,7 @@ export const OptionsDisclosure: FC<{
                     </Disclosure.Button>
                     <Disclosure.Panel className=" pb-2 pt-4">
                         <div className="w-full flex flex-wrap">
-                            {options.map((option) => (
+                            {sortedOptions.map((option) => (
                                 <TagButton
                                     key={option.name}
                                     name={option.name}
