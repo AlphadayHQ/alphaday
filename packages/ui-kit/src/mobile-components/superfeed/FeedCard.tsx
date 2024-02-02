@@ -9,6 +9,8 @@ import { SocialCard } from "./SocialCard";
 import { EFeedItemType, IFeedItem } from "./types";
 import { VideoCard } from "./VideoCard";
 
+// TODO move to frontend package
+
 export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
     switch (item.type) {
         case EFeedItemType.NEWS:
