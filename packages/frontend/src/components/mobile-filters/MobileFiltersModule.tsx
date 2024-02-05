@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useMemo, useState } from "react";
 import {
     Disclosure,
     FullPageModal,
@@ -13,6 +13,7 @@ import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg
 enum EOptionCategory {
     MEDIA = "mediaOptions",
     COINS = "coinsOptions",
+    DATE = "dateOptions",
 }
 
 type TOption = {
@@ -20,6 +21,13 @@ type TOption = {
     name: string;
     selected: boolean;
     color: string;
+};
+
+type TDateOption = {
+    id: number;
+    name: string;
+    selected: boolean;
+    value: number | undefined;
 };
 
 const sortOptions = (mediaOptions: TOption[]): TOption[] => {
@@ -37,7 +45,7 @@ const sortOptions = (mediaOptions: TOption[]): TOption[] => {
     });
 };
 
-const ALL_OPTIONS: Record<EOptionCategory, TOption[]> = {
+const ALL_OPTIONS = {
     mediaOptions: [
         { id: 1, name: "News", selected: true, color: themeColors.categoryOne },
         {
@@ -163,6 +171,14 @@ const ALL_OPTIONS: Record<EOptionCategory, TOption[]> = {
             color: themeColors.accentVariant100,
         },
     ],
+    dateOptions: [
+        { id: 1, name: "Anytime", value: undefined, selected: false },
+        { id: 2, name: "Last 24 hours", value: 24, selected: true },
+        { id: 3, name: "Last 7 days", value: 168, selected: false },
+        { id: 4, name: "Last 30 days", value: 720, selected: false },
+        { id: 5, name: "last 90 days", value: 2160, selected: false },
+        { id: 6, name: "last 6 months", value: 4320, selected: false },
+    ],
 };
 
 const TagButton: FC<{
@@ -200,11 +216,15 @@ const TagButton: FC<{
 
 export const OptionsDisclosure: FC<{
     title: string;
-    options: TOption[];
+    options: TOption[] | TDateOption[];
     onSelect: (id: number) => void;
     children: ReactNode;
-    tagType: boolean;
-}> = ({ options, onSelect, children, title, tagType }) => {
+    pillType?: boolean;
+    subtext?: string;
+}> = ({ options, onSelect, children, title, pillType, subtext }) => {
+    const pillsToShow = pillType
+        ? options.slice(0, 6)
+        : [options.find((option) => option.selected) || options[0]];
     return (
         <Disclosure>
             {({ open }) => (
@@ -214,6 +234,7 @@ export const OptionsDisclosure: FC<{
                             <p className="fontGroup-highlight uppercase mb-0 self-center">
                                 {title}
                             </p>
+
                             <ChevronSVG
                                 className={twMerge(
                                     "w-6 h-6 mr-2 self-center -ml-1.5 text-primary rotate-90",
@@ -221,13 +242,21 @@ export const OptionsDisclosure: FC<{
                                 )}
                             />
                         </div>
-                        {tagType && !open && (
-                            <div className="w-full flex flex-wrap pt-4 pb-2">
-                                {options.slice(0, 6).map((option) => (
+                        <p className="fontGroup-normal text-primaryVariant100 my-2">
+                            {subtext}
+                        </p>
+
+                        {!open && (
+                            <div className="w-full flex flex-wrap pb-2 -ml-1">
+                                {pillsToShow.map((option) => (
                                     <TagButton
                                         key={option.name}
                                         name={option.name}
-                                        bgColor={option.color}
+                                        bgColor={
+                                            "color" in option
+                                                ? option.color
+                                                : themeColors.accentVariant100
+                                        }
                                         selected={option.selected}
                                         onClick={() => onSelect(option.id)}
                                     />
@@ -235,7 +264,7 @@ export const OptionsDisclosure: FC<{
                             </div>
                         )}
                     </Disclosure.Button>
-                    <Disclosure.Panel className=" pb-2 pt-4">
+                    <Disclosure.Panel className="pb-2 pt-2">
                         {children}
                     </Disclosure.Panel>
                 </>
@@ -254,7 +283,7 @@ const MobileFiltersModule = () => {
         mediaOptions: sortOptions(ALL_OPTIONS.mediaOptions),
     });
 
-    const handleSelect = (id: number, optionCategory: EOptionCategory) => {
+    const handlePillSelect = (id: number, optionCategory: EOptionCategory) => {
         setAllOptions((prev) => {
             if (
                 optionCategory === EOptionCategory.MEDIA ||
@@ -292,6 +321,32 @@ const MobileFiltersModule = () => {
         });
     };
 
+    const handleDateSelect = (id: number) => {
+        setAllOptions((prev) => {
+            const updatedDateOptions = prev.dateOptions.map((option) => {
+                if (option.id === id) {
+                    return {
+                        ...option,
+                        selected: true,
+                    };
+                }
+                return {
+                    ...option,
+                    selected: false,
+                };
+            });
+            return {
+                ...prev,
+                dateOptions: updatedDateOptions,
+            };
+        });
+    };
+
+    const selectedDateOption = useMemo(
+        () => allOptions.dateOptions.find((option) => option.selected),
+        [allOptions]
+    );
+
     return (
         <FullPageModal isOpen={isOpen} closeModal={() => setIsOpen(false)}>
             <div className="flex flex-start w-full items-center mb-4">
@@ -304,6 +359,7 @@ const MobileFiltersModule = () => {
                 <p className="fontGroup-highlight">
                     Craft your ideal superfeed by customizing the filters below.
                 </p>
+                {/* //TODO use search when backend is ready */}
                 <div className="flex justify-center [&>div]:w-full">
                     <Input
                         id="filters-input"
@@ -327,11 +383,11 @@ const MobileFiltersModule = () => {
                     title="media"
                     options={allOptions.mediaOptions}
                     onSelect={(id: number) =>
-                        handleSelect(id, EOptionCategory.MEDIA)
+                        handlePillSelect(id, EOptionCategory.MEDIA)
                     }
-                    tagType
+                    pillType
                 >
-                    <div className="w-full flex flex-wrap">
+                    <div className="w-full flex flex-wrap -ml-1">
                         {allOptions.mediaOptions.map((option) => (
                             <TagButton
                                 key={option.name}
@@ -339,7 +395,7 @@ const MobileFiltersModule = () => {
                                 bgColor={option.color}
                                 selected={option.selected}
                                 onClick={() =>
-                                    handleSelect(
+                                    handlePillSelect(
                                         option.id,
                                         EOptionCategory.MEDIA
                                     )
@@ -354,11 +410,11 @@ const MobileFiltersModule = () => {
                     title="coins"
                     options={allOptions.coinsOptions}
                     onSelect={(id: number) =>
-                        handleSelect(id, EOptionCategory.COINS)
+                        handlePillSelect(id, EOptionCategory.COINS)
                     }
-                    tagType
+                    pillType
                 >
-                    <div className="w-full flex flex-wrap">
+                    <div className="w-full flex flex-wrap -ml-1">
                         {allOptions.coinsOptions.map((option) => (
                             <TagButton
                                 key={option.name}
@@ -366,7 +422,7 @@ const MobileFiltersModule = () => {
                                 bgColor={option.color}
                                 selected={option.selected}
                                 onClick={() =>
-                                    handleSelect(
+                                    handlePillSelect(
                                         option.id,
                                         EOptionCategory.COINS
                                     )
@@ -376,7 +432,57 @@ const MobileFiltersModule = () => {
                     </div>
                 </OptionsDisclosure>
             </div>
+            <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
+                <OptionsDisclosure
+                    title="Date range"
+                    subtext="Filter based on publication date."
+                    options={allOptions.dateOptions}
+                    onSelect={(id: number) => handleDateSelect(id)}
+                >
+                    <fieldset>
+                        <div className="w-full flex flex-wrap pb-2 -ml-1">
+                            {selectedDateOption && (
+                                <TagButton
+                                    key={selectedDateOption.name}
+                                    name={selectedDateOption.name}
+                                    bgColor={themeColors.accentVariant100}
+                                    selected={selectedDateOption.selected}
+                                    onClick={() => {}}
+                                />
+                            )}
+                        </div>
+                        <legend className="sr-only">Notification method</legend>
+                        <div className="space-y-4">
+                            {allOptions.dateOptions.map((option) => (
+                                <div
+                                    key={option.id}
+                                    className="flex items-center cursor-pointer"
+                                    role="radio"
+                                    tabIndex={0}
+                                    aria-checked={option.selected}
+                                    onClick={() => handleDateSelect(option.id)}
+                                >
+                                    <input
+                                        id={option.id.toString()}
+                                        name="notification-method"
+                                        type="radio"
+                                        defaultChecked={option.id === 2}
+                                        className="h-4 w-4 border-borderLine text-accentBlue100 focus:ring-accentBlue100 cursor-pointer"
+                                    />
+                                    <label
+                                        htmlFor={option.id.toString()}
+                                        className="ml-3 block text-sm font-medium leading-6 text-primary cursor-pointer"
+                                    >
+                                        {option.name}
+                                    </label>
+                                </div>
+                            ))}
+                        </div>
+                    </fieldset>
+                </OptionsDisclosure>
+            </div>
         </FullPageModal>
     );
 };
+
 export default MobileFiltersModule;
