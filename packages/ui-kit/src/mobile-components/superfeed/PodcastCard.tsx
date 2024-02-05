@@ -16,20 +16,21 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IPodcastFeedItem, feedIcons } from "./types";
+import { IFeedItem, feedItemIconMap } from "./types";
 
-export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
+export const PodcastCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
-        date,
         tags,
         likes,
         comments,
-        link,
-        img,
+        sourceName,
+        sourceIcon,
+        date,
+        url,
+        image,
         type,
-        description,
-        source,
+        shortDescription,
     } = item;
 
     const onLike = () => {};
@@ -45,7 +46,7 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedIcons[type]}
+                                            icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
@@ -54,8 +55,8 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
-                                                    name={source.name}
-                                                    img={source.img}
+                                                    name={sourceName}
+                                                    img={sourceIcon}
                                                 />{" "}
                                             </p>
                                         </div>
@@ -76,7 +77,7 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
                                         )}
                                     >
                                         <img
-                                            src={img}
+                                            src={image || undefined}
                                             alt=""
                                             className="w-14 h-14 rounded-lg object-cover"
                                             onError={imgOnError}
@@ -121,10 +122,10 @@ export const PodcastCard: FC<{ item: IPodcastFeedItem }> = ({ item }) => {
                             <PauseSVG className="w-6 h-6 mr-1.5 text-primary" />
                         </div>{" "}
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {description}
+                            {shortDescription}
                         </p>
                         <a
-                            href={link}
+                            href={url}
                             target="_blank"
                             rel="noreferrer"
                             className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"

@@ -6,37 +6,60 @@ import newsIcon from "src/assets/feedIcons/news.png";
 import personIcon from "src/assets/feedIcons/person.png";
 import podcastIcon from "src/assets/feedIcons/podcast.png";
 import socialIcon from "src/assets/feedIcons/social.png";
-import trendDownIcon from "src/assets/feedIcons/trend-down.png";
+// import trendDownIcon from "src/assets/feedIcons/trend-down.png";
 import trendUpIcon from "src/assets/feedIcons/trend-up.png";
 import tvlIcon from "src/assets/feedIcons/TVL.png";
 import videoIcon from "src/assets/feedIcons/video.png";
 
-export const feedIcons = {
-    news: newsIcon,
-    events: eventIcon,
-    video: videoIcon,
-    podcast: podcastIcon,
-    image: imageIcon,
-    blog: blogIcon,
-    forum: forumIcon,
-    person: personIcon,
-    social: socialIcon,
-    price: (down: boolean) => (down ? trendDownIcon : trendUpIcon),
-    tvl: tvlIcon,
-};
 export enum EFeedItemType {
-    NEWS = "news",
-    EVENT = "events",
-    VIDEO = "video",
-    PODCAST = "podcast",
-    IMAGE = "image",
-    BLOG = "blog",
-    FORUM = "forum",
-    PERSON = "person",
-    SOCIAL = "social",
-    PRICE = "price",
-    TVL = "tvl",
+    NEWS = "newsitem",
+    EVENT = "eventitem",
+    VIDEO = "videoitem",
+    PODCAST = "podcastitem",
+    IMAGE = "imageitem",
+    BLOG = "blogitem",
+    FORUM = "forumitem",
+    PERSON = "personitem",
+    REDDIT = "reddititem",
+    DISCORD = "discorditem",
+    PRICE = "priceitem",
+    TVL = "tvlitem",
 }
+export const feedItemIconMap = {
+    [EFeedItemType.NEWS]: newsIcon,
+    [EFeedItemType.EVENT]: eventIcon,
+    [EFeedItemType.VIDEO]: videoIcon,
+    [EFeedItemType.PODCAST]: podcastIcon,
+    [EFeedItemType.BLOG]: blogIcon,
+    [EFeedItemType.FORUM]: forumIcon,
+    [EFeedItemType.PERSON]: personIcon,
+    [EFeedItemType.IMAGE]: imageIcon,
+    [EFeedItemType.REDDIT]: socialIcon,
+    [EFeedItemType.DISCORD]: socialIcon,
+    [EFeedItemType.PRICE]: trendUpIcon,
+    // TODO(xavier-charles) handle trend down icon
+    // [EFeedItemType.PRICE]: (down: boolean) =>
+    //     down ? trendDownIcon : trendUpIcon,
+    [EFeedItemType.TVL]: tvlIcon,
+};
+
+export type IFeedItem = {
+    id: number;
+    title: string;
+    url: string;
+    date: string;
+    sourceIcon: string;
+    sourceSlug: string;
+    sourceName: string;
+    type: EFeedItemType;
+    startsAt: string | null;
+    endsAt: string | null;
+    image: string | null;
+    shortDescription?: string;
+    tags: { name: string; slug: string }[];
+    likes: number;
+    comments: number;
+};
 
 export interface INewsFeedItem {
     id: number;
@@ -71,10 +94,6 @@ export interface IVideoFeedItem extends Omit<INewsFeedItem, "type"> {
 
 export interface IPodcastFeedItem extends Omit<INewsFeedItem, "type"> {
     type: EFeedItemType.PODCAST;
-}
-
-export interface ISocialFeedItem extends Omit<INewsFeedItem, "type"> {
-    type: EFeedItemType.SOCIAL;
 }
 
 export interface IImageFeedItem extends Omit<INewsFeedItem, "type" | "source"> {
@@ -112,16 +131,3 @@ export interface ITVLFeedItem extends Omit<IPriceFeedItem, "type" | "price"> {
     type: EFeedItemType.TVL;
     tvl: number;
 }
-
-export type IFeedItem =
-    | INewsFeedItem
-    | IBlogFeedItem
-    | IForumFeedItem
-    | IEventFeedItem
-    | IVideoFeedItem
-    | IPodcastFeedItem
-    | IPersonFeedItem
-    | IImageFeedItem
-    | ISocialFeedItem
-    | IPriceFeedItem
-    | ITVLFeedItem;

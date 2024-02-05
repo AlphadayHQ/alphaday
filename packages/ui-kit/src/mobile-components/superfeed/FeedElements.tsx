@@ -36,7 +36,7 @@ export const ActionButtons: FC<{
 );
 
 export const DisclosureButtonMedia: FC<{
-    img: string;
+    img: string | undefined;
 }> = ({ img }) => (
     <img
         src={img}
@@ -47,13 +47,17 @@ export const DisclosureButtonMedia: FC<{
 );
 
 export const TagButtons: FC<{
-    tags: string[];
-    onClick: () => void;
+    tags: { name: string; slug: string }[];
+    onClick: (tag: { name: string; slug: string }) => void;
     truncated?: boolean;
 }> = ({ tags, onClick, truncated = false }) => (
     <div className="mt-2.5 flex flex-wrap">
         {tags.slice(0, truncated ? 3 : undefined).map((tag) => (
-            <TagButton key={tag} name={tag} onClick={onClick} />
+            <TagButton
+                key={tag.slug}
+                name={tag.name}
+                onClick={() => onClick(tag)}
+            />
         ))}
     </div>
 );

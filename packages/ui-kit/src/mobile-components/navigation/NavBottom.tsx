@@ -63,16 +63,12 @@ const NavItem = ({ href, icon, current, name }: (typeof navigation)[0]) => (
 
 export const NavBottom = () => {
     return (
-        <>
-            {/* spacer for the fixed navigation below. Should be the same height as the navigation */}
-            <div className="w-full h-[74px]" />
-            <div className="fixed bottom-0 left-0 z-50 w-full border-t bg-background border-borderLine">
-                <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
-                    {navigation.map((item) => (
-                        <NavItem key={item.name} {...item} />
-                    ))}
-                </div>
+        <div className="fixed bottom-0 left-0 z-50 w-full border-t bg-background border-borderLine">
+            <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
+                {navigation.map((item) => (
+                    <NavItem key={item.name} {...item} />
+                ))}
             </div>
-        </>
+        </div>
     );
 };

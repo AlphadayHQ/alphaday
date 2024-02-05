@@ -10,28 +10,29 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import LineChart from "./LineChart";
-import {
-    EFeedItemType,
-    IPriceFeedItem,
-    ITVLFeedItem,
-    feedIcons,
-} from "./types";
+// import LineChart from "./LineChart";
+import { EFeedItemType, IFeedItem, feedItemIconMap } from "./types";
 
-export const PriceCard: FC<{ item: IPriceFeedItem | ITVLFeedItem }> = ({
-    item,
-}) => {
+export const PriceCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const isTVL = item.type === EFeedItemType.TVL;
-    const price = isTVL ? item.tvl : item.price;
-    const { change, tags, likes, comments, link, history, coin } = item;
 
+    // const price = isTVL ? item.tvl : item.price;
+    // TODO (xavier-charles) get data from API
+    const price = 3000;
+
+    const { tags, likes, comments, sourceName, sourceIcon, url } = item;
     const onLike = () => {};
     const isLiked = false;
 
+    // TODO (xavier-charles)  get change from API
+    const change = 0.1;
     const isDown = change < 0;
-    const icon = isTVL ? feedIcons.tvl : feedIcons.price(isDown);
 
-    const title = `${coin.name} price is ${isDown ? "down" : "up"} ${change}%`;
+    const icon = isTVL
+        ? feedItemIconMap[EFeedItemType.TVL]
+        : feedItemIconMap[EFeedItemType.PRICE];
+
+    const title = `${sourceName} price is ${isDown ? "down" : "up"} ${change}%`;
 
     return (
         <FeedItemDisclosure>
@@ -60,8 +61,8 @@ export const PriceCard: FC<{ item: IPriceFeedItem | ITVLFeedItem }> = ({
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
-                                                    name={coin.name}
-                                                    img={coin.img}
+                                                    name={sourceName}
+                                                    img={sourceIcon}
                                                 />
                                             </p>
                                         </div>
@@ -78,12 +79,13 @@ export const PriceCard: FC<{ item: IPriceFeedItem | ITVLFeedItem }> = ({
                                             open && "hidden"
                                         )}
                                     >
-                                        <LineChart
+                                        {/* // TODO (xavier-charles) get data from API */}
+                                        {/* <LineChart
                                             data={history}
                                             isLoading={false}
                                             className="!h-20 !w-28"
                                             isPreview
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                             </div>
@@ -113,9 +115,10 @@ export const PriceCard: FC<{ item: IPriceFeedItem | ITVLFeedItem }> = ({
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <LineChart data={history} isLoading={false} />
+                        {/* // TODO (xavier-charles) get data from API */}
+                        {/* <LineChart data={history} isLoading={false} /> */}
                         <a
-                            href={link}
+                            href={url}
                             target="_blank"
                             rel="noreferrer"
                             className="underline hover:underline fontGroup-supportBold mb-0 pt-2 leading-5 [text-underline-offset:_6px]"

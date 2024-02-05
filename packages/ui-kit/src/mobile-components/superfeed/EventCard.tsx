@@ -12,9 +12,9 @@ import {
     FeedItemDisclosurePanel,
     TagButtons,
 } from "./FeedElements";
-import { IEventFeedItem, feedIcons } from "./types";
+import { IFeedItem, feedItemIconMap } from "./types";
 
-const eventDateFormatter = (date: Date) => {
+const eventDateFormatter = (date: string) => {
     const d = new Date(); // or whatever date you have
     const tzName = d
         .toLocaleString("en", { timeZoneName: "short" })
@@ -35,21 +35,25 @@ const eventDateFormatter = (date: Date) => {
     );
 };
 
-export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
+export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
         tags,
         likes,
         comments,
-        link,
-        img,
+        url,
+        image,
         type,
-        description,
-        category,
-        location,
-        startDate,
-        endDate,
+        shortDescription,
+        // category,
+        // location,
+        startsAt,
+        endsAt,
     } = item;
+
+    // TODO: remove this when we have real data
+    const location = "location";
+    const category = "category";
 
     const onLike = () => {};
     const isLiked = false;
@@ -64,12 +68,16 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                                 <div className="flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedIcons[type]}
+                                            icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <div className="flex flex-col text-primary fontGroup-mini">
-                                                {eventDateFormatter(startDate)}
-                                                {eventDateFormatter(endDate)}
+                                                {startsAt &&
+                                                    eventDateFormatter(
+                                                        startsAt
+                                                    )}
+                                                {endsAt &&
+                                                    eventDateFormatter(endsAt)}
                                             </div>
                                         </div>
                                     </div>
@@ -77,13 +85,6 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                                     <p className="mt-0.5 mb-0 line-clamp-2">
                                         {location}
                                     </p>
-                                    {!open && (
-                                        <TagButton
-                                            className="bg-[#C1DF91] text-background mt-3"
-                                            name={category}
-                                            onClick={() => {}}
-                                        />
-                                    )}
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
                                     <div
@@ -93,7 +94,7 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                                         )}
                                     >
                                         <img
-                                            src={img}
+                                            src={image || undefined}
                                             alt=""
                                             className="h-24 rounded-lg object-cover"
                                             onError={imgOnError}
@@ -104,9 +105,9 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                             {!open && (
                                 <div className="flex justify-between">
                                     <div className="flex-col">
-                                        <TagButtons
-                                            truncated
-                                            tags={tags}
+                                        <TagButton
+                                            className="bg-[#C1DF91] text-background mt-3"
+                                            name={category}
                                             onClick={() => {}}
                                         />
                                     </div>
@@ -126,7 +127,7 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
                         <img
-                            src={img}
+                            src={image || undefined}
                             alt=""
                             className="w-full rounded-lg object-cover"
                             onError={imgOnError}
@@ -136,10 +137,10 @@ export const EventCard: FC<{ item: IEventFeedItem }> = ({ item }) => {
                         </p>
                         <p className="mt-0.5 mb-0 line-clamp-2">{location}</p>
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {description}
+                            {shortDescription}
                         </p>
                         <a
-                            href={link}
+                            href={url}
                             target="_blank"
                             rel="noreferrer"
                             className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
