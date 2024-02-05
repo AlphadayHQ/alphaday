@@ -8,6 +8,9 @@ import {
     TUserSettings,
     WalletConnectionState,
     EWalletConnectionMethod,
+    EAuthState,
+    EAuthMethod,
+    TUserAccess,
 } from "src/api/types";
 import assert from "src/api/utils/assert";
 import { Logger } from "src/api/utils/logging";
@@ -26,6 +29,11 @@ export interface IUserState {
 const initialState: IUserState = {
     auth: {
         token: undefined,
+        access: {
+            status: EAuthState.Guest,
+            method: EAuthMethod.Email,
+            error: null,
+        },
         wallet: {
             account: undefined,
             status: WalletConnectionState.Disconnected,
@@ -168,6 +176,23 @@ const userSlice = createSlice({
         setWalletInGenericError(draft) {
             draft.auth.wallet.status = WalletConnectionState.GenericError;
         },
+        initAuthMethodSelection(draft) {
+            draft.auth.access.status = EAuthState.SelectingMethod;
+            draft.auth.access.method = undefined;
+            draft.auth.access.error = null;
+        },
+        setAuthMethod(draft, action: PayloadAction<EAuthMethod | undefined>) {
+            draft.auth.access.method = action.payload;
+        },
+        initAuth(draft) {
+            draft.auth.access.status = EAuthState.SigningUp;
+        },
+        setAuthError(draft, action: PayloadAction<string>) {
+            draft.auth.access.error = action.payload;
+        },
+        setAuthState(draft, action: PayloadAction<EAuthState>) {
+            draft.auth.access.status = action.payload;
+        },
         resetAuthState(draft) {
             Logger.debug("user::resetAuthState: resetting auth state");
             draft.auth = initialState.auth;
@@ -201,6 +226,9 @@ export const {
     setWalletDisconnected,
     setWalletInGenericError,
     setWalletAuthError,
+    initAuthMethodSelection,
+    initAuth,
+    setAuthState,
     resetAuthState,
     reset,
 } = userSlice.actions;
@@ -208,13 +236,16 @@ export default userSlice.reducer;
 
 export const selectIsAuthenticated = (state: RootState): boolean =>
     state.user.auth.token?.value != null &&
-    state.user.auth.wallet.status === WalletConnectionState.Verified;
+    state.user.auth.access.status === EAuthState.Verified;
 
 export const selectAuthWallet = (state: RootState): TAuthWallet =>
     state.user.auth.wallet;
 
 export const selectAuthToken = (state: RootState): TAuthToken | undefined =>
     state.user.auth.token;
+
+export const selectAuthState = (state: RootState): TUserAccess =>
+    state.user.auth.access;
 
 export const selectPortfolioAccounts = (
     state: RootState

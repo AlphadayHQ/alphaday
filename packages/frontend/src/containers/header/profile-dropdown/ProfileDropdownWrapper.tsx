@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import {
     Dropdown,
     DropdownAvatar,
@@ -23,6 +23,7 @@ import styles from "./ProfileDropdownWrapper.module.scss";
 import WalletViewButton from "./WalletViewButton";
 
 interface IProps {
+    onSignUpSignIn: () => MaybeAsync<void>;
     onConnectWallet: () => MaybeAsync<void>;
     onVerifyWallet: () => MaybeAsync<void>;
     onDisconnectWallet: () => MaybeAsync<void>;
@@ -44,6 +45,7 @@ const Divider = () => (
 );
 
 const ProfileDropdownWrapper: React.FC<IProps> = ({
+    onSignUpSignIn,
     onConnectWallet,
     onVerifyWallet,
     onDisconnectWallet,
@@ -69,8 +71,15 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     };
 
     const walletMenuOptions = useMemo(() => {
+        const signUpOptions = {
+            handler: onSignUpSignIn,
+            menuTitle: "Sign Up / Sign In",
+            title: globalMessages.portfolio.signUp,
+            dataTestId: "profile-dropdown-sign-up",
+        };
         if (walletState === WalletConnectionState.Disconnected) {
             return [
+                signUpOptions,
                 {
                     handler: onConnectWallet,
                     menuTitle: "Connect Wallet",
@@ -81,6 +90,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
         }
         if (walletState === WalletConnectionState.Connected) {
             return [
+                signUpOptions,
                 {
                     handler: onDisconnectWallet,
                     menuTitle: "Disconnect Wallet",
@@ -100,6 +110,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
             walletState === WalletConnectionState.Prompted
         ) {
             return [
+                signUpOptions,
                 {
                     handler: onDisconnectWallet,
                     menuTitle: "Disconnect Wallet",
@@ -108,8 +119,14 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                 },
             ];
         }
-        return [];
-    }, [onConnectWallet, onDisconnectWallet, onVerifyWallet, walletState]);
+        return [signUpOptions];
+    }, [
+        onConnectWallet,
+        onSignUpSignIn,
+        onDisconnectWallet,
+        onVerifyWallet,
+        walletState,
+    ]);
 
     const handleWalletCopy = () => {
         const walletAddress = authWallet.account?.address;
@@ -193,25 +210,27 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         <Divider />
                         {walletMenuOptions.map((option) => {
                             return (
-                                <DropdownItem
-                                    key={option.dataTestId}
-                                    data-testid={option.dataTestId}
-                                    onClick={() => {
-                                        option.handler()?.catch((err) => {
-                                            Logger.error(
-                                                "profile-dropdown:ProfileDropdownWrapper",
-                                                err
-                                            );
-                                        });
-                                    }}
-                                >
-                                    <span title={option.title}>
-                                        {option.menuTitle}
-                                    </span>
-                                </DropdownItem>
+                                <>
+                                    <DropdownItem
+                                        key={option.dataTestId}
+                                        data-testid={option.dataTestId}
+                                        onClick={() => {
+                                            option.handler()?.catch((err) => {
+                                                Logger.error(
+                                                    "profile-dropdown:ProfileDropdownWrapper",
+                                                    err
+                                                );
+                                            });
+                                        }}
+                                    >
+                                        <span title={option.title}>
+                                            {option.menuTitle}
+                                        </span>
+                                    </DropdownItem>
+                                    <Divider />
+                                </>
                             );
                         })}
-                        <Divider />
                         <DropdownItem onClick={handleToggle}>
                             Tutorial{" "}
                             <input

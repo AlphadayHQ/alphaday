@@ -16,9 +16,10 @@ export interface IDialog {
     closeButtonText?: string;
     onClose?: () => void;
     showXButton: boolean;
-    size?: "xl" | "lg" | "md" | "sm";
+    size?: "xl" | "lg" | "md" | "sm" | "xs";
     children?: React.ReactNode;
     showDialog?: boolean;
+    closeButtonProps?: Omit<ButtonProps, "onClick" | "disabled">;
     buttonProps?: Omit<ButtonProps, "onClick" | "disabled">;
     useKeyPress?: (args: IKeyPress) => void;
 }
@@ -36,6 +37,7 @@ export const Dialog: FC<IDialog> = ({
     showDialog,
     size,
     useKeyPress,
+    closeButtonProps,
     ...restProps
 }) => {
     const modalRef = useRef<HTMLIonModalElement>(null);
@@ -76,10 +78,11 @@ export const Dialog: FC<IDialog> = ({
                     <button
                         // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         onClick={handleCloseDialog}
-                        className="border-borderLine bg-background flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-2 border-solid"
                         title="close"
                         type="button"
                         data-testid="alpha-dialog-close-button"
+                        className="border-borderLine bg-background flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-2 border-solid"
+                        {...closeButtonProps}
                     >
                         <CloseSVG className="h-[8.4px] w-[8.4px] text-borderLine outline-none" />
                     </button>

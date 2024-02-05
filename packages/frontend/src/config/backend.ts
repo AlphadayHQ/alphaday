@@ -75,6 +75,16 @@ const API_V0 = {
             BASE: "items/events",
             LIST: "/",
         },
+        AUTH: {
+            BASE: "auth",
+            REQUEST_TOKEN: "/token/",
+            VERIFY_TOKEN: "/verify/",
+            VERIFY_EMAIL: "/email/",
+            CONVERT_TOKEN: "/convert-token/",
+            REVOKE_TOKEN: "/revoke-token/",
+            // we may not need these
+            LOGOUT_SSO: "/disconnect-backend/",
+        },
         USER: {
             BASE: "user",
             LOGIN: "/auth/login/",
