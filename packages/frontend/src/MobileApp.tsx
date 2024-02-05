@@ -7,6 +7,7 @@ import "@alphaday/ui-kit/global.scss";
 
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
+const FiltersPage = lazyRetry(() => import("./mobile-pages/filters"));
 
 const App: React.FC = () => {
     useAppInit();
@@ -18,6 +19,7 @@ const App: React.FC = () => {
                 <Suspense fallback={<PreloaderPage />}>
                     <Route path="/" exact component={SuperfeedPage} />
                     <Route path="/auth*" exact component={AuthPage} />
+                    <Route path="/filters" exact component={FiltersPage} />
                     {/* Add more routes as needed */}
                 </Suspense>
             </Switch>

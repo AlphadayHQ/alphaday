@@ -24,3 +24,4 @@ export * from "./useFeatureFlags";
 export * from "./useWalletViewStateUpdater";
 export * from "./useWidgetHeight";
 export * from "./useAuth";
+export * from "./useOnScreen";
