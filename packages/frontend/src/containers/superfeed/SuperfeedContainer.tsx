@@ -31,12 +31,14 @@ const SuperfeedContainer = () => {
 
     const [feedData, setfeedData] = useState<TSuperfeedItem[]>([]);
 
+    // Todo(xavier-charles) Will use this later
     // const reset = () => {
     //     if (feedData.length !== 0) setfeedData([]);
     //     if (currentPage !== undefined) setCurrentPage(undefined);
     //     resetPagination();
     // };
 
+    // Todo(xavier-charles) Will use this later
     // If the current response changes, it means the request parameters changed
     // This happens 1. when user scrolled to the bottom or 2. tags changed.
     // Case 2 is handled separately.
@@ -48,6 +50,7 @@ const SuperfeedContainer = () => {
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
 
+    // Todo(xavier-charles) Will use this lateradd
     // if (tags && !itemListsAreEqual(currentTags || [], tags)) {
     //     reset();
     //     setCurrentTags(tags);
