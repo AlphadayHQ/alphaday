@@ -37,7 +37,7 @@ export const feedItemIconMap = {
     [EFeedItemType.REDDIT]: socialIcon,
     [EFeedItemType.DISCORD]: socialIcon,
     [EFeedItemType.PRICE]: trendUpIcon,
-    // TODO handle trend down icon
+    // TODO(xavier-charles) handle trend down icon
     // [EFeedItemType.PRICE]: (down: boolean) =>
     //     down ? trendDownIcon : trendUpIcon,
     [EFeedItemType.TVL]: tvlIcon,
@@ -131,16 +131,3 @@ export interface ITVLFeedItem extends Omit<IPriceFeedItem, "type" | "price"> {
     type: EFeedItemType.TVL;
     tvl: number;
 }
-
-// export type IFeedItem =
-//     | INewsFeedItem
-//     | IBlogFeedItem
-//     | IForumFeedItem
-//     | IEventFeedItem
-//     | IVideoFeedItem
-//     | IPodcastFeedItem
-//     | IPersonFeedItem
-//     | IImageFeedItem
-//     | ISocialFeedItem
-//     | IPriceFeedItem
-//     | ITVLFeedItem;
