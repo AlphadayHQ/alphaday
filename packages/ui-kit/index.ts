@@ -1,4 +1,5 @@
 import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
+import { Disclosure } from "@headlessui/react";
 import { useLayer } from "react-laag";
 import { twMerge } from "tailwind-merge";
 import { Arrow } from "./src/components/arrow/Arrow";
@@ -37,7 +38,6 @@ import {
     ViewDialog,
     EViewDialogState,
 } from "./src/components/dialog/ViewDialog";
-import { OptionsDisclosure } from "./src/components/disclosure/OptionsDisclosure";
 import {
     Dropdown,
     DropdownAvatar,
@@ -141,7 +141,6 @@ export {
     ViewDialog,
     Dialog,
     TextOverlay,
-    OptionsDisclosure,
     Modal,
     Input,
     ModuleLoader,
@@ -178,4 +177,5 @@ export {
     NavHeader,
     Pager,
     FeedCard,
+    Disclosure,
 };
