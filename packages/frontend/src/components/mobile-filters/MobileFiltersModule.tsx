@@ -224,7 +224,12 @@ export const OptionsDisclosure: FC<{
 }> = ({ options, onSelect, children, title, pillType, subtext }) => {
     const pillsToShow = pillType
         ? options.slice(0, 6)
-        : [options.find((option) => option.selected) || options[0]];
+        : [
+              // @ts-ignore - typescript doesn't like the fact that we're using a union type here
+              options.find(
+                  (option: TOption | TDateOption) => option.selected
+              ) || options[0],
+          ];
     return (
         <Disclosure>
             {({ open }) => (
@@ -273,7 +278,10 @@ export const OptionsDisclosure: FC<{
     );
 };
 
-const MobileFiltersModule = () => {
+const MobileFiltersModule: FC<{
+    toggleFeedFilters: () => void;
+    show: boolean;
+}> = ({ toggleFeedFilters, show }) => {
     const [isOpen, setIsOpen] = useState(true);
     const [enabled, setEnabled] = useState(true);
 
@@ -347,142 +355,155 @@ const MobileFiltersModule = () => {
         [allOptions]
     );
 
-    return (
-        <FullPageModal isOpen={isOpen} closeModal={() => setIsOpen(false)}>
-            <div className="flex flex-start w-full items-center mb-4">
-                <ChevronSVG className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5" />
-                <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0">
-                    Superfeed filters
-                </h1>
-            </div>
-            <div className="w-full">
-                <p className="fontGroup-highlight">
-                    Craft your ideal superfeed by customizing the filters below.
-                </p>
-                {/* //TODO use search when backend is ready */}
-                <div className="flex justify-center [&>div]:w-full">
-                    <Input
-                        id="filters-input"
-                        name="filters-input"
-                        className="w-full"
-                        width="100%"
+    if (show) {
+        return (
+            <FullPageModal isOpen={isOpen} closeModal={() => setIsOpen(false)}>
+                <div className="flex flex-start w-full items-center mb-4">
+                    <ChevronSVG
+                        onClick={toggleFeedFilters}
+                        tabIndex={0}
+                        role="button"
+                        className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5"
+                    />
+                    <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0">
+                        Superfeed filters
+                    </h1>
+                </div>
+                <div className="w-full">
+                    <p className="fontGroup-highlight">
+                        Craft your ideal superfeed by customizing the filters
+                        below.
+                    </p>
+                    {/* //TODO use search when backend is ready */}
+                    <div className="flex justify-center [&>div]:w-full">
+                        <Input
+                            id="filters-input"
+                            name="filters-input"
+                            className="w-full"
+                            width="100%"
+                        />
+                    </div>
+                </div>
+                <div className="w-full flex justify-between py-6 border-b border-borderLine">
+                    <p className="fontGroup-highlight uppercase mb-0 self-center">
+                        trending
+                    </p>
+                    <Toggle
+                        enabled={enabled}
+                        onChange={() => setEnabled((prev) => !prev)}
                     />
                 </div>
-            </div>
-            <div className="w-full flex justify-between py-6 border-b border-borderLine">
-                <p className="fontGroup-highlight uppercase mb-0 self-center">
-                    trending
-                </p>
-                <Toggle
-                    enabled={enabled}
-                    onChange={() => setEnabled((prev) => !prev)}
-                />
-            </div>
-            <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
-                <OptionsDisclosure
-                    title="media"
-                    options={allOptions.mediaOptions}
-                    onSelect={(id: number) =>
-                        handlePillSelect(id, EOptionCategory.MEDIA)
-                    }
-                    pillType
-                >
-                    <div className="w-full flex flex-wrap -ml-1">
-                        {allOptions.mediaOptions.map((option) => (
-                            <TagButton
-                                key={option.name}
-                                name={option.name}
-                                bgColor={option.color}
-                                selected={option.selected}
-                                onClick={() =>
-                                    handlePillSelect(
-                                        option.id,
-                                        EOptionCategory.MEDIA
-                                    )
-                                }
-                            />
-                        ))}
-                    </div>
-                </OptionsDisclosure>
-            </div>
-            <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
-                <OptionsDisclosure
-                    title="coins"
-                    options={allOptions.coinsOptions}
-                    onSelect={(id: number) =>
-                        handlePillSelect(id, EOptionCategory.COINS)
-                    }
-                    pillType
-                >
-                    <div className="w-full flex flex-wrap -ml-1">
-                        {allOptions.coinsOptions.map((option) => (
-                            <TagButton
-                                key={option.name}
-                                name={option.name}
-                                bgColor={option.color}
-                                selected={option.selected}
-                                onClick={() =>
-                                    handlePillSelect(
-                                        option.id,
-                                        EOptionCategory.COINS
-                                    )
-                                }
-                            />
-                        ))}
-                    </div>
-                </OptionsDisclosure>
-            </div>
-            <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
-                <OptionsDisclosure
-                    title="Date range"
-                    subtext="Filter based on publication date."
-                    options={allOptions.dateOptions}
-                    onSelect={(id: number) => handleDateSelect(id)}
-                >
-                    <fieldset>
-                        <div className="w-full flex flex-wrap pb-2 -ml-1">
-                            {selectedDateOption && (
+                <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
+                    <OptionsDisclosure
+                        title="media"
+                        options={allOptions.mediaOptions}
+                        onSelect={(id: number) =>
+                            handlePillSelect(id, EOptionCategory.MEDIA)
+                        }
+                        pillType
+                    >
+                        <div className="w-full flex flex-wrap -ml-1">
+                            {allOptions.mediaOptions.map((option) => (
                                 <TagButton
-                                    key={selectedDateOption.name}
-                                    name={selectedDateOption.name}
-                                    bgColor={themeColors.accentVariant100}
-                                    selected={selectedDateOption.selected}
-                                    onClick={() => {}}
+                                    key={option.name}
+                                    name={option.name}
+                                    bgColor={option.color}
+                                    selected={option.selected}
+                                    onClick={() =>
+                                        handlePillSelect(
+                                            option.id,
+                                            EOptionCategory.MEDIA
+                                        )
+                                    }
                                 />
-                            )}
-                        </div>
-                        <legend className="sr-only">Notification method</legend>
-                        <div className="space-y-4">
-                            {allOptions.dateOptions.map((option) => (
-                                <div
-                                    key={option.id}
-                                    className="flex items-center cursor-pointer"
-                                    role="radio"
-                                    tabIndex={0}
-                                    aria-checked={option.selected}
-                                    onClick={() => handleDateSelect(option.id)}
-                                >
-                                    <input
-                                        id={option.id.toString()}
-                                        name="notification-method"
-                                        type="radio"
-                                        defaultChecked={option.id === 2}
-                                        className="h-4 w-4 border-borderLine text-accentBlue100 focus:ring-accentBlue100 cursor-pointer"
-                                    />
-                                    <label
-                                        htmlFor={option.id.toString()}
-                                        className="ml-3 block text-sm font-medium leading-6 text-primary cursor-pointer"
-                                    >
-                                        {option.name}
-                                    </label>
-                                </div>
                             ))}
                         </div>
-                    </fieldset>
-                </OptionsDisclosure>
-            </div>
-        </FullPageModal>
-    );
+                    </OptionsDisclosure>
+                </div>
+                <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
+                    <OptionsDisclosure
+                        title="coins"
+                        options={allOptions.coinsOptions}
+                        onSelect={(id: number) =>
+                            handlePillSelect(id, EOptionCategory.COINS)
+                        }
+                        pillType
+                    >
+                        <div className="w-full flex flex-wrap -ml-1">
+                            {allOptions.coinsOptions.map((option) => (
+                                <TagButton
+                                    key={option.name}
+                                    name={option.name}
+                                    bgColor={option.color}
+                                    selected={option.selected}
+                                    onClick={() =>
+                                        handlePillSelect(
+                                            option.id,
+                                            EOptionCategory.COINS
+                                        )
+                                    }
+                                />
+                            ))}
+                        </div>
+                    </OptionsDisclosure>
+                </div>
+                <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
+                    <OptionsDisclosure
+                        title="Date range"
+                        subtext="Filter based on publication date."
+                        options={allOptions.dateOptions}
+                        onSelect={(id: number) => handleDateSelect(id)}
+                    >
+                        <fieldset>
+                            <div className="w-full flex flex-wrap pb-2 -ml-1">
+                                {selectedDateOption && (
+                                    <TagButton
+                                        key={selectedDateOption.name}
+                                        name={selectedDateOption.name}
+                                        bgColor={themeColors.accentVariant100}
+                                        selected={selectedDateOption.selected}
+                                        onClick={() => {}}
+                                    />
+                                )}
+                            </div>
+                            <legend className="sr-only">
+                                Notification method
+                            </legend>
+                            <div className="space-y-4">
+                                {allOptions.dateOptions.map((option) => (
+                                    <div
+                                        key={option.id}
+                                        className="flex items-center cursor-pointer"
+                                        role="radio"
+                                        tabIndex={0}
+                                        aria-checked={option.selected}
+                                        onClick={() =>
+                                            handleDateSelect(option.id)
+                                        }
+                                    >
+                                        <input
+                                            id={option.id.toString()}
+                                            name="notification-method"
+                                            type="radio"
+                                            defaultChecked={option.id === 2}
+                                            className="h-4 w-4 border-borderLine text-accentBlue100 focus:ring-accentBlue100 cursor-pointer"
+                                        />
+                                        <label
+                                            htmlFor={option.id.toString()}
+                                            className="ml-3 block text-sm font-medium leading-6 text-primary cursor-pointer"
+                                        >
+                                            {option.name}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                        </fieldset>
+                    </OptionsDisclosure>
+                </div>
+            </FullPageModal>
+        );
+    }
+    return null;
 };
 
 export default MobileFiltersModule;
