@@ -1,4 +1,4 @@
-import { useState, FC, memo } from "react";
+import { useState, FC, memo, useRef } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { ReactComponent as PlaySVG } from "src/assets/icons/play.svg";
 
@@ -16,6 +16,7 @@ const MediaModule: FC<IMedia> = memo(function MediaModule({
     isLoading,
 }) {
     const [isPlaying, setPlaying] = useState(!thumbnail); // if there is a thumbnail, we don't want to play/show the video, we'll just show the thumbnail
+    const frameRef = useRef<HTMLIFrameElement>(null);
     return isLoading ? (
         <ModuleLoader $height="300px" />
     ) : (
@@ -25,8 +26,17 @@ const MediaModule: FC<IMedia> = memo(function MediaModule({
                 title={title}
                 allow="autoplay; encrypted-media"
                 className="w-full border-none"
-                style={{ height: isPlaying ? "410px" : 0 }}
+                style={{
+                    height: "410px",
+                    visibility: "hidden",
+                }}
                 allowFullScreen
+                ref={frameRef}
+                onLoad={() => {
+                    if (frameRef.current) {
+                        frameRef.current.style.visibility = "visible";
+                    }
+                }}
             />
             {!isPlaying && thumbnail && (
                 <div
