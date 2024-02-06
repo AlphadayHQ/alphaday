@@ -7,16 +7,19 @@ export enum ETag {
     Local = "local",
 }
 
+export type TProtoItem = {
+    name: string;
+    slug: string;
+};
+
 export enum EItemsSortBy {
     Popular = "-popular",
     New = "-created",
     Name = "name",
 }
 
-export type TBaseTag = {
+export type TBaseTag = TProtoItem & {
     id: number;
-    name: string;
-    slug: string;
     tag_type: ETag;
 };
 
@@ -93,11 +96,8 @@ export type TRemoteBaseProject = {
     url?: string;
 };
 
-export type TBaseCoin = {
-    id: number;
-    name: string;
+export type TBaseCoin = TProtoItem & {
     ticker: string;
-    slug: string;
     icon?: string;
     description?: string;
     price?: number;
@@ -181,3 +181,5 @@ export type TSocialItem<T extends TSocialItemPost> = {
     social_network: TSocialItemNetwork;
     published_at: string;
 };
+
+export type TBaseFilterItem = TProtoItem;

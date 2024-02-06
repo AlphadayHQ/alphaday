@@ -6,6 +6,9 @@ import {
     TGetSuperfeedItemsRawResponse,
     TGetSuperfeedItemsResponse,
     TGetSuperfeedItemsRequest,
+    TGetSuperfeedFilterDataRawResponse,
+    TGetSuperfeedFilterDataResponse,
+    TGetSuperfeedFilterDataRequest,
 } from "./types";
 
 const { SUPERFEED } = CONFIG.API.DEFAULT.ROUTES;
@@ -19,7 +22,9 @@ export const superfeedApi = alphadayApi.injectEndpoints({
             query: (req) => {
                 const { ...reqParams } = req;
                 const params: string = queryString.stringify(reqParams);
-                const path = `${String(SUPERFEED.BASE)}?${params}`;
+                const path = `${String(SUPERFEED.BASE)}${String(
+                    SUPERFEED.DEFAULT
+                )}?${params}`;
                 Logger.debug("getSuperfeedList: querying", path);
                 return path;
             },
@@ -51,8 +56,42 @@ export const superfeedApi = alphadayApi.injectEndpoints({
             }),
             keepUnusedDataFor: 0,
         }),
+        getFilterData: builder.query<
+            TGetSuperfeedFilterDataResponse,
+            TGetSuperfeedFilterDataRequest
+        >({
+            query: () => {
+                const path = `${String(SUPERFEED.BASE)}${String(
+                    SUPERFEED.FILTER_DATA
+                )}`;
+                Logger.debug("getSuperfeedFilterData: querying", path);
+                return path;
+            },
+            transformResponse: (
+                r: TGetSuperfeedFilterDataRawResponse
+            ): TGetSuperfeedFilterDataResponse => ({
+                coins: r.coins.filter(
+                    (item, index, self) =>
+                        self.findIndex(
+                            (innerItem) => innerItem.slug === item.slug
+                        ) === index
+                ),
+                conceptTags: r.concept_tags.filter(
+                    (item, index, self) =>
+                        self.findIndex(
+                            (innerItem) => innerItem.slug === item.slug
+                        ) === index
+                ),
+                chains: r.projects.filter(
+                    (item, index, self) =>
+                        self.findIndex(
+                            (innerItem) => innerItem.slug === item.slug
+                        ) === index
+                ),
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetSuperfeedListQuery } = superfeedApi;
+export const { useGetSuperfeedListQuery, useGetFilterDataQuery } = superfeedApi;

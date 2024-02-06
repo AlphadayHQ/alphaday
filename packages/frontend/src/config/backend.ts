@@ -107,13 +107,6 @@ const API_V0 = {
             HISTORY: "/history/",
             BY_ID: (id: number): string => `/${id}/`,
         },
-        SUPERFEED: {
-            BASE: "superfeed",
-        },
-        STATUS: {
-            BASE: "status",
-            DEFAULT: "/",
-        },
         SOCIALS: {
             BASE: "items/socials",
             DISCORD: "discord",
@@ -121,6 +114,15 @@ const API_V0 = {
             REDDIT: "reddit",
             TWITTER: "twitter",
             TWITTER_V1: "/tweets/",
+        },
+        STATUS: {
+            BASE: "status",
+            DEFAULT: "/",
+        },
+        SUPERFEED: {
+            BASE: "superfeed",
+            DEFAULT: "/",
+            FILTER_DATA: "/filter_data/",
         },
         TVL: {
             BASE: "tvl",
