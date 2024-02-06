@@ -1,4 +1,5 @@
 import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
+import { Disclosure } from "@headlessui/react";
 import { useLayer } from "react-laag";
 import { twMerge } from "tailwind-merge";
 import { Arrow } from "./src/components/arrow/Arrow";
@@ -62,6 +63,7 @@ import {
     listItemVariants,
 } from "./src/components/listItem/ListItem";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
+import { FullPageModal } from "./src/components/modal/FullPageModal";
 import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
@@ -80,6 +82,7 @@ import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { TabsBar } from "./src/components/tabs/TabsBar";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import { Timer } from "./src/components/timer/Timer";
+import { Toggle } from "./src/components/toggle/Toggle";
 import { CalendarTooltip } from "./src/components/tooltip/CalendarTooltip";
 import {
     ViewTabMenu,
@@ -117,7 +120,9 @@ export {
     CarouselImage,
     Lightbox,
     Timer,
+    Toggle,
     ErrorModal,
+    FullPageModal,
     Footer,
     Logo,
     HeaderWrapper,
@@ -172,4 +177,5 @@ export {
     NavHeader,
     Pager,
     FeedCard,
+    Disclosure,
 };

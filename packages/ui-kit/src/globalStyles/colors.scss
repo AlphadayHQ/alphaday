@@ -86,6 +86,21 @@ http://ionicframework.com/docs/theming/ */
     --alpha-yellow-green: #b9e187;
     --alpha-steel-pink: #CE4BD9;
 
+    /** category colors **/
+    --alpha-category-1: #1D7CBF;
+    --alpha-category-2: #CC4747;
+    --alpha-category-3: #FF59C8;
+    --alpha-category-4: #3EB265;
+    --alpha-category-5: #3EB2B2;
+    --alpha-category-6: #9B50E5;
+    --alpha-category-7: #CE4BD9;
+    --alpha-category-8: #E57339;
+    --alpha-category-9: #4747CC;
+    --alpha-category-10: #CC841F;
+    --alpha-category-11: #D1A234;
+    --alpha-category-12: #6950E5;
+
+
     /* overrides */
     --fc-border-color: var(--alpha-border);
 
@@ -117,6 +132,19 @@ http://ionicframework.com/docs/theming/ */
     --secondaryOrangeSoda: var(--alpha-red);
     --secondaryYellowGreen: var(--alpha-yellow-green);
     --success: var(--alpha-green);
+    /** category colors **/
+    --category1: var(--alpha-category-1);
+    --category2: var(--alpha-category-2);
+    --category3: var(--alpha-category-3);
+    --category4: var(--alpha-category-4);
+    --category5: var(--alpha-category-5);
+    --category6: var(--alpha-category-6);
+    --category7: var(--alpha-category-7);
+    --category8: var(--alpha-category-8);
+    --category9: var(--alpha-category-9);
+    --category10: var(--alpha-category-10);
+    --category11: var(--alpha-category-11);
+    --category12: var(--alpha-category-12);
 }
 
 /*
