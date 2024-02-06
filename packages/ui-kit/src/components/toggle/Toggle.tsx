@@ -8,7 +8,7 @@ export const Toggle: FC<{ enabled: boolean; onChange: () => void }> = ({
     onChange,
 }) => {
     return (
-        <div className="">
+        <div>
             <Switch
                 checked={enabled}
                 onChange={onChange}
