@@ -21,6 +21,7 @@ export default defineConfig({
                 clientsClaim: true,
                 skipWaiting: true,
                 navigateFallbackAllowlist: [/^\//],
+                maximumFileSizeToCacheInBytes: 1024 * 1024 * 4,
             },
             includeAssets: [
                 "favicon.ico",
