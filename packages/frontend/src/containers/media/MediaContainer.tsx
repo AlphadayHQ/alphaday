@@ -66,7 +66,6 @@ const MediaContainer: FC<IModuleContainer<TSourceData[]>> = ({
         <MediaModule
             isLoading={!moduleData}
             entryUrl={entryUrl || ""}
-            thumbnail=""
             title={moduleData.widget.name}
         />
     );

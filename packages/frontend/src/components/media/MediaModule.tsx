@@ -1,56 +1,53 @@
-import { useState, FC, memo, useRef } from "react";
+import { FC, memo, useEffect, useRef } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { ReactComponent as PlaySVG } from "src/assets/icons/play.svg";
 
 interface IMedia {
     title: string;
     entryUrl: string;
     isLoading: boolean;
-    thumbnail: string;
 }
 
 const MediaModule: FC<IMedia> = memo(function MediaModule({
     title,
     entryUrl,
-    thumbnail,
     isLoading,
 }) {
-    const [isPlaying, setPlaying] = useState(!thumbnail); // if there is a thumbnail, we don't want to play/show the video, we'll just show the thumbnail
+    /**
+     * Before the iframe loads the browser displays a white page.
+     * For that reason we set its visibility to hidden until it loads
+     */
     const frameRef = useRef<HTMLIFrameElement>(null);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            // in case onLoad didn't fire, check visibility after some time
+            if (frameRef.current?.style?.visibility === "hidden") {
+                frameRef.current.style.visibility = "visible";
+            }
+        }, 60 * 1000);
+        return () => clearTimeout(timeout);
+    }, []);
+
     return isLoading ? (
         <ModuleLoader $height="300px" />
     ) : (
-        <div>
-            <iframe
-                src={entryUrl}
-                title={title}
-                allow="autoplay; encrypted-media"
-                className="w-full border-none"
-                style={{
-                    height: "410px",
-                    visibility: "hidden",
-                }}
-                allowFullScreen
-                ref={frameRef}
-                onLoad={() => {
-                    if (frameRef.current) {
-                        frameRef.current.style.visibility = "visible";
-                    }
-                }}
-            />
-            {!isPlaying && thumbnail && (
-                <div
-                    className="w-full h-410 border-none opacity-90 relative bg-cover bg-center"
-                    style={{
-                        backgroundImage: `url(${thumbnail})`,
-                    }}
-                >
-                    <div className="absolute top-15% right-30% w-250 h-80% cursor-pointer opacity-85 hover:opacity-60">
-                        <PlaySVG onClick={() => setPlaying(true)} />
-                    </div>
-                </div>
-            )}
-        </div>
+        <iframe
+            src={entryUrl}
+            title={title}
+            allow="autoplay; encrypted-media"
+            className="w-full border-none"
+            style={{
+                height: "410px",
+                visibility: "hidden",
+            }}
+            allowFullScreen
+            ref={frameRef}
+            onLoad={() => {
+                if (frameRef.current) {
+                    frameRef.current.style.visibility = "visible";
+                }
+            }}
+        />
     );
 });
 
