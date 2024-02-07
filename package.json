@@ -19,8 +19,7 @@
     "lint:ui": "yarn --cwd packages/ui-kit lint",
     "lint:fix": "yarn --cwd packages/frontend lint --fix && yarn --cwd packages/ui-kit lint --fix",
     "prepare": "husky install",
-    "typecheck": "yarn --cwd packages/frontend typecheck && yarn --cwd packages/ui-kit typecheck",
-    "node-version": "node --version"
+    "typecheck": "yarn --cwd packages/frontend typecheck && yarn --cwd packages/ui-kit typecheck"
   },
   "devDependencies": {
     "@testing-library/cypress": "9.0.0",
