@@ -1,11 +1,15 @@
-name: Set Cache Control
+# This workflow is used to set the cache-control header of the app's index.html file
+# (which should in general be set to `no-cache`).
+
+name: Set Index Cache Control
 
 on:
     workflow_dispatch:
         inputs:
-            MAX_AGE:
+            VALUE:
                 required: true
-                type: number
+                # eg. "max-age=86400" or "no-cache"
+                type: string
             ENVIRONMENT:
                 description: "Environment to set the cache control header of index.html"
                 required: true
@@ -18,16 +22,16 @@ on:
 
     workflow_call:
         inputs:
-            MAX_AGE:
+            VALUE:
                 required: true
-                type: number
+                type: string
             ENVIRONMENT:
                 required: true
                 default: "zetta"
                 type: string
 
 jobs:
-    set-cache-control:
+    set-index-cache-control:
         runs-on: ubuntu-latest
         steps:
             - name: Sets env vars for production
@@ -50,7 +54,7 @@ jobs:
                   command: cp
                   source: ${{ env.AWS_S3_PATH }}
                   destination: ${{ env.AWS_S3_PATH }}
-                  flags: "--cache-control max-age=${{ inputs.MAX_AGE }}"
+                  flags: "--cache-control ${{ inputs.VALUE }}"
                   aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
                   aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
                   aws_region: us-west-1
