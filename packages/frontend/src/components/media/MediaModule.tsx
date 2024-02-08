@@ -1,5 +1,6 @@
 import { FC, memo, useEffect, useRef } from "react";
-import { ModuleLoader } from "@alphaday/ui-kit";
+import { CenteredBlock, ModuleLoader } from "@alphaday/ui-kit";
+import globalMessages from "src/globalMessages";
 
 interface IMedia {
     title: string;
@@ -28,26 +29,39 @@ const MediaModule: FC<IMedia> = memo(function MediaModule({
         return () => clearTimeout(timeout);
     }, []);
 
-    return isLoading ? (
-        <ModuleLoader $height="300px" />
-    ) : (
-        <iframe
-            src={entryUrl}
-            title={title}
-            allow="autoplay; encrypted-media"
-            className="w-full border-none"
-            style={{
-                height: "410px",
-                visibility: "hidden",
-            }}
-            allowFullScreen
-            ref={frameRef}
-            onLoad={() => {
-                if (frameRef.current) {
-                    frameRef.current.style.visibility = "visible";
-                }
-            }}
-        />
+    if (isLoading) {
+        return <ModuleLoader $height="410px" />;
+    }
+
+    if (entryUrl) {
+        return (
+            <iframe
+                src={entryUrl}
+                title={title}
+                allow="autoplay; encrypted-media"
+                className="w-full border-none"
+                style={{
+                    height: "410px",
+                    visibility: "hidden",
+                }}
+                allowFullScreen
+                ref={frameRef}
+                onLoad={() => {
+                    if (frameRef.current) {
+                        frameRef.current.style.visibility = "visible";
+                    }
+                }}
+            />
+        );
+    }
+    return (
+        <div style={{ height: "410px" }}>
+            <CenteredBlock>
+                <p className="text-primary fontGroup-highlightSemi">
+                    {globalMessages.queries.noMatchFound("video")}
+                </p>
+            </CenteredBlock>
+        </div>
     );
 });
 
