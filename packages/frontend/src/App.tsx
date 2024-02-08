@@ -9,7 +9,6 @@ import * as userStore from "src/api/store/slices/user";
 import ToastContainer from "src/containers/toasts/ToastContainer";
 import {
     useAppInit,
-    useGlobalHooks,
     useResolvedView,
     useViewRoute,
     useGaTracker,
@@ -19,7 +18,6 @@ import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
 import { isCookieEnabled } from "./api/utils/cookie";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
-import { Logger } from "./api/utils/logging";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
 import { appRoutes, errorRoutes } from "./routes";
@@ -67,9 +65,6 @@ const AppRoutes = () => {
      * we need to reset the auth state and reload the app
      */
     if ((error as FetchBaseQueryError)?.status === 401) {
-        Logger.error(
-            "Unauthorized error, resetting auth state and reloading app"
-        );
         dispatch(userStore.resetAuthState());
         location.reload();
     }
@@ -95,7 +90,6 @@ const AppRoutes = () => {
 
 const App: React.FC = () => {
     useAppInit();
-    useGlobalHooks();
 
     if (!isCookieEnabled()) {
         return (

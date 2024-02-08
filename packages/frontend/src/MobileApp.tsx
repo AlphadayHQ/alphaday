@@ -1,6 +1,6 @@
 import { Suspense, memo } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useAppInit, useGlobalHooks } from "./api/hooks";
+import { useAppInit } from "./api/hooks";
 import { lazyRetry } from "./api/utils/helpers";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
@@ -11,7 +11,6 @@ const FiltersPage = lazyRetry(() => import("./mobile-pages/filters"));
 
 const App: React.FC = () => {
     useAppInit();
-    useGlobalHooks();
 
     return (
         <BrowserRouter>
