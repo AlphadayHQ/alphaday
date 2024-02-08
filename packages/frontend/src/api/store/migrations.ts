@@ -222,7 +222,19 @@ const migrations: TMigrations = {
     },
     104: (s: RootStateV103): RootStateV104 => {
         if (!s) return undefined;
-        return s;
+        return {
+            ...s,
+            user: {
+                ...s.user,
+                auth: {
+                    ...s.user.auth,
+                    access: {
+                        ...s.user.auth.access,
+                        email: undefined,
+                    },
+                },
+            },
+        };
     },
 };
 
