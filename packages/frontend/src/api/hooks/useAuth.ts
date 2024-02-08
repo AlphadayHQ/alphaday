@@ -113,6 +113,7 @@ export const useAuth = (): IUseAuth => {
     );
 
     const resetAuthState = useCallback(() => {
+        Logger.debug("useAuth::resetAuthState: resetting auth state");
         dispatch(userStore.resetAuthState());
     }, [dispatch]);
 
