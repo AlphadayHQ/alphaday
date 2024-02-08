@@ -28,12 +28,9 @@ export type TSSOLoginRequest = {
     code?: string;
 };
 
-export type TSSOLoginRawResponse = {
-    access_token: string;
-    refresh_token: string;
-};
-
 export type TSSOLoginResponse = {
-    accessToken: string;
-    refreshToken: string;
+    token: string;
+    user: {
+        email: string;
+    };
 };

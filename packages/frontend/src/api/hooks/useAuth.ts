@@ -82,14 +82,15 @@ export const useAuth = (): IUseAuth => {
                 .unwrap()
                 .then((r) => {
                     Logger.debug("useAuth::googleSSOLogin: success", r);
-                    dispatch(userStore.setAuthToken({ value: r.accessToken }));
+                    dispatch(userStore.setAuthToken({ value: r.token }));
+                    dispatch(userStore.setAuthEmail(r.user.email));
                     dispatch(userStore.setAuthState(EAuthState.Verified));
                     Logger.debug("useAuth::googleSSOLogin: redirecting");
                     navigate.push("/");
                 })
-                .catch((e) =>
-                    Logger.error("useAuth::googleSSOLogin: error", e)
-                );
+                .catch((e) => {
+                    Logger.error("useAuth::googleSSOLogin: error", e);
+                });
         },
         [ssoLoginMut, dispatch, navigate]
     );
@@ -100,11 +101,15 @@ export const useAuth = (): IUseAuth => {
     });
     const ssoLogin = useCallback(
         (provider: EAuthMethod) => {
+            dispatch(userStore.setAuthMethod(provider));
+
             if (provider === EAuthMethod.Google) {
                 googleSSOLogin();
             }
+
+            // TODO: Add other providers here
         },
-        [googleSSOLogin]
+        [googleSSOLogin, dispatch]
     );
 
     const resetAuthState = useCallback(() => {

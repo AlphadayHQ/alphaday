@@ -55,6 +55,7 @@ export type TUserAccess = {
     status: EAuthState;
     method: EAuthMethod | undefined;
     error: string | null;
+    email: string | undefined;
 };
 
 export type TUserAuth = {

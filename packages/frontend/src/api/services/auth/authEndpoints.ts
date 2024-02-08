@@ -9,7 +9,6 @@ import {
     TVerifyEmailRawResponse,
     TVerifyEmailResponse,
     TSSOLoginRequest,
-    TSSOLoginRawResponse,
     TSSOLoginResponse,
 } from "./types";
 
@@ -22,7 +21,7 @@ export const authApi = alphadayApi.injectEndpoints({
             TVerificationCodeRequest
         >({
             query: (req) => {
-                const path = `${AUTH.BASE}${AUTH.VERIFY_EMAIL}`;
+                const path = `${AUTH.BASE}${AUTH.REQUEST_TOKEN}`;
                 Logger.debug("requestCode: body", JSON.stringify(req));
                 Logger.debug("requestCode: querying", path);
                 return {
@@ -55,28 +54,21 @@ export const authApi = alphadayApi.injectEndpoints({
         }),
         ssoLogin: builder.mutation<TSSOLoginResponse, TSSOLoginRequest>({
             query: (req) => {
-                const path = `${AUTH.BASE}${AUTH.CONVERT_TOKEN}`;
+                let path = "";
+                if (req.provider === EAuthMethod.Google) {
+                    path = `${AUTH.BASE}${AUTH.GOOGLE_LOGIN}`;
+                }
+
                 Logger.debug("ssoLogin: body", JSON.stringify(req));
                 Logger.debug("ssoLogin: querying", path);
                 return {
                     url: path,
                     body: {
-                        grant_type: "convert_token",
-                        backend:
-                            req.provider === EAuthMethod.Google
-                                ? "google-oauth2"
-                                : "apple",
-                        token: req.accessToken,
-                        client_id: CONFIG.APP.X_APP_ID,
-                        client_secret: CONFIG.APP.X_APP_SECRET,
+                        code: req.code,
+                        id_token: req.idToken,
+                        access_token: req.accessToken,
                     },
                     method: "POST",
-                };
-            },
-            transformResponse: (rawResult: TSSOLoginRawResponse) => {
-                return {
-                    accessToken: rawResult.access_token,
-                    refreshToken: rawResult.refresh_token,
                 };
             },
         }),

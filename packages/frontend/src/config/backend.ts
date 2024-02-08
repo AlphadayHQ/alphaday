@@ -77,11 +77,9 @@ const API_V0 = {
         },
         AUTH: {
             BASE: "auth",
-            REQUEST_TOKEN: "/token/",
-            VERIFY_TOKEN: "/verify/",
-            VERIFY_EMAIL: "/email/",
-            CONVERT_TOKEN: "/convert-token/",
-            REVOKE_TOKEN: "/revoke-token/",
+            REQUEST_TOKEN: "/email/get-otp/",
+            VERIFY_TOKEN: "/email/verify-otp/",
+            GOOGLE_LOGIN: "/sso/google/",
             // we may not need these
             LOGOUT_SSO: "/disconnect-backend/",
         },
