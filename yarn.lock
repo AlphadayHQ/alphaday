@@ -14676,10 +14676,10 @@ react-popper@^2.2.3:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
 
-react-quick-pinch-zoom@4.9.0:
-  version "4.9.0"
-  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-4.9.0.tgz#13d91adb7ea2e75c5a2ff43d71d2a0e04a56cf62"
-  integrity sha512-gCPnZu5+rkYDNvewi/d7A2wgLs7izQNMuC6kjt+KLC1qqHnRU27Ed8AgcEcnWAZKdMr3ZKoKhSvjlZSVZI0fuw==
+react-quick-pinch-zoom@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-5.1.0.tgz#942a1e9cc9178a526b8ffba16148c111a876b8bb"
+  integrity sha512-c8iOBrhbWwuJkUgbM0itkxhYHN3Zc15fvwYclo52scuicPidOuXJxwoVboNtccgtG24w33EhpuKVA7aLt93oSA==
   dependencies:
     tslib ">=2.0.0"
 
