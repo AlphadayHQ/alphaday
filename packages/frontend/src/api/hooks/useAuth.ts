@@ -4,6 +4,7 @@ import {
     useRequestCodeMutation,
     useVerifyTokenMutation,
     useSsoLoginMutation,
+    useLogoutMutation,
 } from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
@@ -18,6 +19,7 @@ interface IUseAuth {
     requestCode: (email: string) => Promise<void>;
     verifyToken: (email: string, code: string) => Promise<void>;
     ssoLogin: (provider: EAuthMethod) => void;
+    logout: () => Promise<void>;
 }
 
 /**
@@ -33,6 +35,7 @@ export const useAuth = (): IUseAuth => {
     const [requestCodeMut] = useRequestCodeMutation();
     const [verifyTokenMut] = useVerifyTokenMutation();
     const [ssoLoginMut] = useSsoLoginMutation();
+    const [logoutMut] = useLogoutMutation();
 
     const openAuthModal = useCallback(() => {
         dispatch(userStore.initAuthMethodSelection());
@@ -40,39 +43,28 @@ export const useAuth = (): IUseAuth => {
 
     const requestCode = useCallback(
         async (email: string) => {
-            try {
-                await requestCodeMut({ email }).unwrap();
-                Logger.debug("useAuth::requestCode: sent OTP to email");
-                dispatch(userStore.setAuthState(EAuthState.VerifyingEmail));
-            } catch (e) {
-                Logger.error(
-                    "useAuth::requestCode: error sending OTP to email",
-                    e
-                );
-            }
+            await requestCodeMut({ email }).unwrap();
+            Logger.debug("useAuth::requestCode: sent OTP to email");
+            dispatch(userStore.setAuthState(EAuthState.VerifyingEmail));
         },
         [dispatch, requestCodeMut]
     );
 
     const verifyToken = useCallback(
         async (email: string, code: string) => {
-            try {
-                Logger.debug("useAuth::verifyToken: verifying OTP", {
-                    email,
-                    code,
-                });
-                const verifyResp = await verifyTokenMut({
-                    email,
-                    code,
-                }).unwrap();
+            Logger.debug("useAuth::verifyToken: verifying OTP", {
+                email,
+                code,
+            });
+            const verifyResp = await verifyTokenMut({
+                email,
+                code,
+            }).unwrap();
 
-                Logger.debug("useAuth::verifyToken: verified OTP", verifyResp);
-                dispatch(userStore.setAuthToken({ value: verifyResp.token }));
-                dispatch(userStore.setAuthEmail(verifyResp.user.email));
-                dispatch(userStore.setAuthState(EAuthState.Verified));
-            } catch (e) {
-                Logger.error("useAuth::verifyToken: error verifying OTP", e);
-            }
+            Logger.debug("useAuth::verifyToken: verified OTP", verifyResp);
+            dispatch(userStore.setAuthToken({ value: verifyResp.token }));
+            dispatch(userStore.setAuthEmail(verifyResp.user.email));
+            dispatch(userStore.setAuthState(EAuthState.Verified));
         },
         [dispatch, verifyTokenMut]
     );
@@ -122,6 +114,12 @@ export const useAuth = (): IUseAuth => {
         dispatch(userStore.resetAuthState());
     }, [dispatch]);
 
+    const logout = useCallback(async () => {
+        Logger.debug("useAuth::logout: logging out");
+        await logoutMut().unwrap();
+        dispatch(userStore.resetAuthState());
+    }, [logoutMut, resetAuthState]);
+
     return {
         isAuthenticated,
         authState,
@@ -130,5 +128,6 @@ export const useAuth = (): IUseAuth => {
         requestCode,
         verifyToken,
         ssoLogin,
+        logout,
     };
 };

@@ -15,6 +15,7 @@ import styles from "./ProfileDropdownWrapper.module.scss";
 // TODO (xavier-charles): wallet view button
 
 interface IProps {
+    onSignOut: () => MaybeAsync<void>;
     onSignUpSignIn: () => MaybeAsync<void>;
     isAuthenticated: boolean;
     onShowTutorial: (s: boolean) => void;
@@ -29,6 +30,7 @@ const Divider = () => (
 );
 
 const ProfileDropdownWrapper: React.FC<IProps> = ({
+    onSignOut,
     onSignUpSignIn,
     onShowTutorial,
     showTutorial,
@@ -46,9 +48,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
 
     const walletMenuOption = isAuthenticated
         ? {
-              handler: async () => {
-                  // TODO: implement sign out
-              },
+              handler: onSignOut,
               menuTitle: "Sign Out",
               title: "Sign Out",
               dataTestId: "profile-dropdown-sign-out",

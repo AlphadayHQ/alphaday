@@ -5,8 +5,13 @@ import { EAuthState, ETutorialTipId } from "src/api/types";
 import ProfileDropdownWrapper from "./ProfileDropdownWrapper";
 
 const ProfileDropdownContainer: FC = () => {
-    const { openAuthModal, authState, isAuthenticated, resetAuthState } =
-        useAuth();
+    const {
+        openAuthModal,
+        authState,
+        isAuthenticated,
+        resetAuthState,
+        logout,
+    } = useAuth();
     const {
         showTutorial,
         currentTutorial,
@@ -33,6 +38,7 @@ const ProfileDropdownContainer: FC = () => {
 
     return (
         <ProfileDropdownWrapper
+            onSignOut={logout}
             onSignUpSignIn={openAuthModal}
             isAuthenticated={isAuthenticated}
             onShowTutorial={toggleShowTutorial}
