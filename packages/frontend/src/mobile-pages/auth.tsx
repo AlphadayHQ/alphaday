@@ -30,7 +30,7 @@ const AuthPage: React.FC = () => {
                 toast("Failed to send OTP to email");
                 Logger.error("Failed to send OTP to email", email);
             });
-    }, [email, requestCode]);
+    }, [email, requestCode, history]);
 
     const handleOtpSubmit = useCallback(
         (otp: string) => {

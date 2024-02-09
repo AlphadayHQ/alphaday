@@ -18,7 +18,7 @@ export type TSSOLoginRequest = {
     code?: string;
 };
 
-export type TLoginResponse = {
+export type TAuthLoginResponse = {
     token: string;
     user: {
         email: string;
