@@ -16,7 +16,7 @@ export const ActionButton: FC<{ children: ReactNode; onClick: () => void }> = ({
         <button
             type="button"
             onClick={handleClick}
-            className="flex items-center justify-center max-w-[48px] h-4 px-2 py-0.5 rounded-lg bg-backgroundVariant300 text-primary fontGroup-mini mx-0.5"
+            className="bg-backgroundVariant300 text-primary fontGroup-mini mx-0.5 flex h-4 max-w-[48px] items-center justify-center rounded-lg px-2 py-0.5"
         >
             {children}
         </button>
@@ -40,7 +40,7 @@ export const TagButton: FC<{
             type="button"
             onClick={handleClick}
             className={twMerge(
-                "flex max-w-min whitespace-nowrap items-center px-2 py-0.5 h-4 rounded-lg bg-backgroundBlue100 text-primary fontGroup-mini leading-[18px] !capitalize m-0.5",
+                "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-4 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
                 className
             )}
         >
