@@ -64,7 +64,7 @@ export const authApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
-        logout: builder.mutation<void, void>({
+        signout: builder.mutation<void, void>({
             query: () => {
                 const path = `${AUTH.BASE}${AUTH.LOGOUT}`;
                 Logger.debug("logout: querying", path);
@@ -82,5 +82,5 @@ export const {
     useRequestCodeMutation,
     useVerifyTokenMutation,
     useSsoLoginMutation,
-    useLogoutMutation,
+    useSignoutMutation,
 } = authApi;

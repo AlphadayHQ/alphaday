@@ -4,7 +4,7 @@ import {
     useRequestCodeMutation,
     useVerifyTokenMutation,
     useSsoLoginMutation,
-    useLogoutMutation,
+    useSignoutMutation,
 } from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
@@ -35,7 +35,7 @@ export const useAuth = (): IUseAuth => {
     const [requestCodeMut] = useRequestCodeMutation();
     const [verifyTokenMut] = useVerifyTokenMutation();
     const [ssoLoginMut] = useSsoLoginMutation();
-    const [logoutMut] = useLogoutMutation();
+    const [logoutMut] = useSignoutMutation();
 
     const openAuthModal = useCallback(() => {
         dispatch(userStore.initAuthMethodSelection());
