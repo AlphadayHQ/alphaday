@@ -4,10 +4,14 @@ import { NavBottom, NavHeader } from "@alphaday/ui-kit";
 const MobileLayout: FC<{
     children: ReactNode;
     onScroll?: () => void;
-}> = ({ children, onScroll }) => {
+    toggleShowUserMenu: () => void;
+}> = ({ children, onScroll, toggleShowUserMenu }) => {
     return (
         <div className="h-screen" onScroll={onScroll}>
-            <NavHeader avatar={undefined} />
+            <NavHeader
+                avatar={undefined}
+                toggleShowUserMenu={toggleShowUserMenu}
+            />
             {children}
             <NavBottom />
         </div>
