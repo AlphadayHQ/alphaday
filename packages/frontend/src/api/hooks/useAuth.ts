@@ -118,7 +118,7 @@ export const useAuth = (): IUseAuth => {
         Logger.debug("useAuth::logout: logging out");
         await logoutMut().unwrap();
         dispatch(userStore.resetAuthState());
-    }, [logoutMut, resetAuthState]);
+    }, [dispatch, logoutMut, resetAuthState]);
 
     return {
         isAuthenticated,
