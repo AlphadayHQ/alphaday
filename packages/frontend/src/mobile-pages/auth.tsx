@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { MiniDialog } from "@alphaday/ui-kit";
+import { useState, useRef, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { EAuthMethod } from "src/api/types";
@@ -7,6 +8,7 @@ import { Logger } from "src/api/utils/logging";
 import { toast } from "src/api/utils/toastUtils";
 import { Auth } from "src/components/auth/Auth";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
+import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -19,12 +21,12 @@ const AuthPage: React.FC = () => {
         resetAuthState,
         ssoLogin,
     } = useAuth();
+    const { current: isInitiallyAuthenticated } = useRef(isAuthenticated);
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
             .then(() => {
                 toast("OTP has been sent to your email");
-                history.push("/");
             })
             .catch(() => {
                 toast("Failed to send OTP to email");
@@ -37,7 +39,6 @@ const AuthPage: React.FC = () => {
             verifyToken(email, otp)
                 .then(() => {
                     toast("Successfully verified email");
-                    history.push("/");
                 })
                 .catch(() => {
                     Logger.error("Failed to verify OTP", otp);
@@ -62,7 +63,7 @@ const AuthPage: React.FC = () => {
     /**
      * If user is already authenticated, redirect to home page
      */
-    if (isAuthenticated) {
+    if (isInitiallyAuthenticated) {
         history.push("/");
         return null;
     }
@@ -83,6 +84,18 @@ const AuthPage: React.FC = () => {
                 handleEmailSubmit={handleEmailSubmit}
                 handleEmailChange={handleEmailChange}
             />
+            <MiniDialog
+                show={isAuthenticated}
+                icon={<GreenCheckSVG />}
+                title="CONGRATS"
+                onActionClick={() => {
+                    history.push("/");
+                }}
+            >
+                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                    Your account has been created!
+                </div>
+            </MiniDialog>
         </PagedMobileLayout>
     );
 };
