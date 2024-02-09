@@ -1,14 +1,14 @@
-import { MiniDialog } from "@alphaday/ui-kit";
 import { useState, useRef, useCallback } from "react";
+import { MiniDialog } from "@alphaday/ui-kit";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { EAuthMethod } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
 import { Logger } from "src/api/utils/logging";
 import { toast } from "src/api/utils/toastUtils";
+import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 import { Auth } from "src/components/auth/Auth";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
-import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -32,7 +32,7 @@ const AuthPage: React.FC = () => {
                 toast("Failed to send OTP to email");
                 Logger.error("Failed to send OTP to email", email);
             });
-    }, [email, requestCode, history]);
+    }, [email, requestCode]);
 
     const handleOtpSubmit = useCallback(
         (otp: string) => {
@@ -44,7 +44,7 @@ const AuthPage: React.FC = () => {
                     Logger.error("Failed to verify OTP", otp);
                 });
         },
-        [email, history, verifyToken]
+        [email, verifyToken]
     );
 
     const handleEmailChange = debounce(
