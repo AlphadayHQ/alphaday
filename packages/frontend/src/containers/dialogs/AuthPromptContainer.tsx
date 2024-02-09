@@ -1,8 +1,8 @@
-import { useRef, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { Modal } from "@alphaday/ui-kit";
 import { useAuth } from "src/api/hooks";
-import { AuthMethodSelection } from "src/components/auth/AuthModule";
 import { EAuthMethod } from "src/api/types";
+import { AuthMethodSelection } from "src/components/auth/AuthModule";
 
 const AuthPromptContainer = () => {
     // TODO:add logic to store and check if the auth prompt should be visible within 7days/14days
