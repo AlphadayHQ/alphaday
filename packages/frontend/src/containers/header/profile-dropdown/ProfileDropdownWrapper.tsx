@@ -16,17 +16,9 @@ import styles from "./ProfileDropdownWrapper.module.scss";
 
 interface IProps {
     onSignUpSignIn: () => MaybeAsync<void>;
-    // onConnectWallet: () => MaybeAsync<void>;
-    // onVerifyWallet: () => MaybeAsync<void>;
-    // onDisconnectWallet: () => MaybeAsync<void>;
     isAuthenticated: boolean;
     onShowTutorial: (s: boolean) => void;
     showTutorial: boolean | undefined;
-    // authWallet: TAuthWallet;
-    // walletViewState: EWalletViewState;
-    // navigateToWalletView: () => void;
-    // onAllowFetchWalletView: () => void;
-    // isWalletBoardAllowed: boolean;
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>
         | undefined;
@@ -38,21 +30,11 @@ const Divider = () => (
 
 const ProfileDropdownWrapper: React.FC<IProps> = ({
     onSignUpSignIn,
-    // onConnectWallet,
-    // onVerifyWallet,
-    // onDisconnectWallet,
     onShowTutorial,
     showTutorial,
     isAuthenticated,
-    // authWallet,
     setTutFocusElemRef,
-    // walletViewState,
-    // navigateToWalletView,
-    // onAllowFetchWalletView,
-    // isWalletBoardAllowed,
 }) => {
-    // const walletState = authWallet.status;
-    // const isVerifyPrompted = walletState !== WalletConnectionState.Prompted;
     const [toggleState, setToggleState] = useState(false);
 
     const handleToggle = () => {
@@ -65,10 +47,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     const walletMenuOption = isAuthenticated
         ? {
               handler: async () => {
-                  // if (isVerifyPrompted) {
-                  //     return onVerifyWallet();
-                  // }
-                  // return onDisconnectWallet();
+                  // TODO: implement sign out
               },
               menuTitle: "Sign Out",
               title: "Sign Out",
@@ -81,30 +60,9 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
               dataTestId: "profile-dropdown-sign-up",
           };
 
-    // const handleWalletCopy = () => {
-    //     const walletAddress = authWallet.account?.address;
-    //     if (walletAddress) {
-    //         navigator.clipboard
-    //             .writeText(walletAddress)
-    //             .then(() => toast("Copied Wallet address!"))
-    //             .catch(() =>
-    //                 toast("Failed to copy address!", { type: EToastRole.Error })
-    //             );
-    //     }
-    // };
-
     useEffect(() => {
         if (!showTutorial) setToggleState(false);
     }, [showTutorial]);
-
-    // const onClickWalletViewButton = useCallback(() => {
-    //     if (walletViewState === EWalletViewState.Ready) {
-    //         navigateToWalletView();
-    //     }
-    //     if (walletViewState === EWalletViewState.Authenticated) {
-    //         onAllowFetchWalletView();
-    //     }
-    // }, [walletViewState, onAllowFetchWalletView, navigateToWalletView]);
 
     return (
         <Dropdown direction="down" data-testid="profile-dropdown">
@@ -133,32 +91,6 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                     <div className="mx-2">
                         <div className="flex justify-between px-2 pb-5 pt-0">
                             <DropdownAvatar />
-                            {/* {isAuthenticated && authWallet.account?.address && (
-                                <div className="flex flex-col items-end">
-                                    <div
-                                        role="button"
-                                        tabIndex={0}
-                                        className="fontGroup-normal text-primary mb-[5px] cursor-pointer self-center"
-                                        title="Copy wallet address"
-                                        aria-label="Copy wallet address"
-                                        onClick={handleWalletCopy}
-                                        data-testid="profile-dropdown-wallet-address"
-                                        data-address={
-                                            authWallet.account.address
-                                        }
-                                    >
-                                        {truncateWithEllipsis(
-                                            authWallet.account.address
-                                        )}
-                                    </div>
-                                    {isWalletBoardAllowed && (
-                                        <WalletViewButton
-                                            walletViewState={walletViewState}
-                                            onClick={onClickWalletViewButton}
-                                        />
-                                    )}
-                                </div>
-                            )} */}
                         </div>
                         <Divider />
                         <DropdownItem
