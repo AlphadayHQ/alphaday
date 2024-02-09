@@ -38,8 +38,68 @@ const menu = [
     },
 ];
 
+const UnAuthenticatedSection = () => {
+    return (
+        <div className="flex flex-col flex-start w-full items-start mb-4">
+            <p className="mb-0 fontGroup-highlight">
+                Sign up to unlock the complete experience{" "}
+            </p>
+            <button
+                type="button"
+                className="flex fontGroup-highlight !font-semibold py-3 px-4 bg-accentVariant100 hover:bg-accentVariant200 w-full mt-5 justify-center rounded-lg"
+            >
+                Sign up
+            </button>
+            <p className="mt-6">
+                <span className="mt-6">Already have an account?</span>
+                <Link
+                    to="/#"
+                    className="ml-2 font-semibold border-b border-accentVariant100"
+                >
+                    Log in here
+                </Link>
+            </p>
+        </div>
+    );
+};
+
+const AuthenticatedSection = () => {
+    return (
+        <div className="flex flex-col flex-start w-full items-start mb-4">
+            <div className="flex">
+                <img
+                    src="	https://tailwindui.com/img/avatar-3.jpg"
+                    alt="username"
+                    className="mr-3 w-[60px] h-[60px] rounded-full border border-solid border-green-400"
+                />
+                <p className="m-0 fontGroup-major self-center">Hi Username!</p>
+            </div>
+            <div className="relative flex flex-col items-center fontGroup-highlight !font-semibold py-4 px-4 bg-backgroundVariant300 w-full mt-5 justify-center rounded-lg">
+                <span className="w-1.5 h-1.5 rounded-full bg-secondaryOrangeSoda absolute top-4 right-4" />
+                <p className="block ">Some major notification here...</p>
+                <Link
+                    to="/notifications"
+                    className="fontGroup-highlight border-b border-accentVariant100 m-0"
+                >
+                    See all notifications
+                </Link>
+            </div>
+            <p className="mt-6">
+                <span className="mt-6">Already have an account?</span>
+                <Link
+                    to="/#"
+                    className="ml-2 font-semibold border-b border-accentVariant100"
+                >
+                    Log in here
+                </Link>
+            </p>
+        </div>
+    );
+};
+
 interface IUserMenu {
     // avatar: string;
+    // username: string;
     isOpen: boolean;
     onClose: () => void;
     isAuthenticated: boolean;
@@ -60,26 +120,11 @@ const UserMenu: FC<IUserMenu> = ({ isOpen, onClose, isAuthenticated }) => {
                     className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5"
                 />
             </div>
-            <div className="flex flex-col flex-start w-full items-start mb-4">
-                <p className="mb-0 fontGroup-highlight">
-                    Sign up to unlock the complete experience{" "}
-                </p>
-                <button
-                    type="button"
-                    className="flex fontGroup-highlight !font-semibold py-3 px-4 bg-accentVariant100 hover:bg-accentVariant200 w-full mt-5 justify-center rounded-lg"
-                >
-                    Sign up
-                </button>
-                <p className="mt-6">
-                    <span className="mt-6">Already have an account?</span>
-                    <Link
-                        to="/#"
-                        className="ml-2 font-semibold border-b border-accentVariant100"
-                    >
-                        Log in here
-                    </Link>
-                </p>
-            </div>
+            {isAuthenticated ? (
+                <AuthenticatedSection />
+            ) : (
+                <UnAuthenticatedSection />
+            )}{" "}
             <div className="mt-10 w-full">
                 {menu.map((item) => (
                     <div

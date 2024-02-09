@@ -18,7 +18,7 @@ const SuperfeedPage = () => {
             <UserMenu
                 isOpen={showUserMenu}
                 onClose={() => setshowUserMenu(false)}
-                isAuthenticated={false}
+                isAuthenticated
             />
             <SuperfeedContainer onToggleFeedFilters={toggleFeedFilters} />
             <AuthPromptContainer />
