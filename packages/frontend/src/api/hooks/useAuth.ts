@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useHistory } from "react-router";
 import {
     useRequestCodeMutation,
     useVerifyTokenMutation,
@@ -30,7 +29,6 @@ export const useAuth = (): IUseAuth => {
     const dispatch = useAppDispatch();
     const authState = useAppSelector(userStore.selectAuthState);
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const navigate = useHistory();
 
     const [requestCodeMut] = useRequestCodeMutation();
     const [verifyTokenMut] = useVerifyTokenMutation();
@@ -44,6 +42,7 @@ export const useAuth = (): IUseAuth => {
         async (email: string) => {
             try {
                 await requestCodeMut({ email }).unwrap();
+                Logger.debug("useAuth::requestCode: sent OTP to email");
                 dispatch(userStore.setAuthState(EAuthState.VerifyingEmail));
             } catch (e) {
                 Logger.error(
@@ -58,14 +57,19 @@ export const useAuth = (): IUseAuth => {
     const verifyToken = useCallback(
         async (email: string, code: string) => {
             try {
+                Logger.debug("useAuth::verifyToken: verifying OTP", {
+                    email,
+                    code,
+                });
                 const verifyResp = await verifyTokenMut({
                     email,
                     code,
                 }).unwrap();
 
-                dispatch(
-                    userStore.setAuthToken({ value: verifyResp.accessToken })
-                );
+                Logger.debug("useAuth::verifyToken: verified OTP", verifyResp);
+                dispatch(userStore.setAuthToken({ value: verifyResp.token }));
+                dispatch(userStore.setAuthEmail(verifyResp.user.email));
+                dispatch(userStore.setAuthState(EAuthState.Verified));
             } catch (e) {
                 Logger.error("useAuth::verifyToken: error verifying OTP", e);
             }
@@ -75,6 +79,9 @@ export const useAuth = (): IUseAuth => {
 
     const googleSSOCallback = useCallback(
         ({ access_token }: Record<string, string>) => {
+            Logger.debug("useAuth::googleSSOCallback: received token", {
+                access_token,
+            });
             ssoLoginMut({
                 accessToken: access_token,
                 provider: EAuthMethod.Google,
@@ -85,14 +92,12 @@ export const useAuth = (): IUseAuth => {
                     dispatch(userStore.setAuthToken({ value: r.token }));
                     dispatch(userStore.setAuthEmail(r.user.email));
                     dispatch(userStore.setAuthState(EAuthState.Verified));
-                    Logger.debug("useAuth::googleSSOLogin: redirecting");
-                    navigate.push("/");
                 })
                 .catch((e) => {
                     Logger.error("useAuth::googleSSOLogin: error", e);
                 });
         },
-        [ssoLoginMut, dispatch, navigate]
+        [ssoLoginMut, dispatch]
     );
 
     const googleSSOLogin = useGoogleLogin({

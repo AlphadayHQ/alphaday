@@ -6,10 +6,8 @@ import {
     TVerificationCodeRequest,
     TVerificationCodeResponse,
     TVerifyEmailRequest,
-    TVerifyEmailRawResponse,
-    TVerifyEmailResponse,
     TSSOLoginRequest,
-    TSSOLoginResponse,
+    TLoginResponse,
 } from "./types";
 
 const { AUTH } = CONFIG.API.DEFAULT.ROUTES;
@@ -31,28 +29,22 @@ export const authApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
-        verifyToken: builder.mutation<
-            TVerifyEmailResponse,
-            TVerifyEmailRequest
-        >({
+        verifyToken: builder.mutation<TLoginResponse, TVerifyEmailRequest>({
             query: (req) => {
                 const path = `${AUTH.BASE}${AUTH.VERIFY_TOKEN}`;
                 Logger.debug("verifyToken: body", JSON.stringify(req));
                 Logger.debug("verifyToken: querying", path);
                 return {
                     url: path,
-                    body: req,
+                    body: {
+                        email: req.email,
+                        token: req.code,
+                    },
                     method: "POST",
                 };
             },
-            transformResponse: (rawResult: TVerifyEmailRawResponse) => {
-                return {
-                    accessToken: rawResult.access_token,
-                    refreshToken: rawResult.refresh_token,
-                };
-            },
         }),
-        ssoLogin: builder.mutation<TSSOLoginResponse, TSSOLoginRequest>({
+        ssoLogin: builder.mutation<TLoginResponse, TSSOLoginRequest>({
             query: (req) => {
                 let path = "";
                 if (req.provider === EAuthMethod.Google) {

@@ -22,8 +22,12 @@ const AuthPage: React.FC = () => {
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
-            .then(() => toast("OTP sent to your email"))
+            .then(() => {
+                toast("OTP has been sent to your email");
+                history.push("/");
+            })
             .catch(() => {
+                toast("Failed to send OTP to email");
                 Logger.error("Failed to send OTP to email", email);
             });
     }, [email, requestCode]);
