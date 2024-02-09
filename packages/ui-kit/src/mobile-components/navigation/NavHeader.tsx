@@ -15,9 +15,6 @@ export const NavHeader: FC<IProps> = ({ avatar, onAvatarClick }) => {
                 <span className="sr-only">Open user menu</span>
                 {avatar ? (
                     <img
-                        tabIndex={0}
-                        role="button"
-                        onClick={onAvatarClick}
                         className="h-12 w-12 rounded-full"
                         src={avatar}
                         alt=""
