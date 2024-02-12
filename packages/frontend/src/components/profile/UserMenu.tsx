@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { FullPageModal, twMerge } from "@alphaday/ui-kit";
+import { twMerge } from "@alphaday/ui-kit";
 import { Link, useHistory } from "react-router-dom";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
