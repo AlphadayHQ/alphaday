@@ -30,6 +30,7 @@ const initialState: IUserState = {
     auth: {
         token: undefined,
         access: {
+            email: undefined,
             status: EAuthState.Guest,
             method: EAuthMethod.Email,
             error: null,
@@ -193,6 +194,9 @@ const userSlice = createSlice({
         setAuthState(draft, action: PayloadAction<EAuthState>) {
             draft.auth.access.status = action.payload;
         },
+        setAuthEmail(draft, action: PayloadAction<string>) {
+            draft.auth.access.email = action.payload;
+        },
         resetAuthState(draft) {
             Logger.debug("user::resetAuthState: resetting auth state");
             draft.auth = initialState.auth;
@@ -228,6 +232,8 @@ export const {
     setWalletAuthError,
     initAuthMethodSelection,
     initAuth,
+    setAuthMethod,
+    setAuthEmail,
     setAuthState,
     resetAuthState,
     reset,

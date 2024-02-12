@@ -17,6 +17,7 @@ export interface IUIState {
         selectedMobileSortOrder: number;
     };
     acceptedSwapToS: boolean | undefined;
+    lastAuthPrompted: number | undefined;
 }
 
 const initialState: IUIState = {
@@ -30,6 +31,7 @@ const initialState: IUIState = {
         selectedMobileSortOrder: 0,
     },
     acceptedSwapToS: undefined,
+    lastAuthPrompted: undefined,
 };
 
 const uiSlice = createSlice({
@@ -82,6 +84,9 @@ const uiSlice = createSlice({
         setAcceptedSwapToS(draft, action: PayloadAction<boolean | undefined>) {
             draft.acceptedSwapToS = action.payload;
         },
+        setLastAuthPrompted(draft, action: PayloadAction<number>) {
+            draft.lastAuthPrompted = action.payload;
+        },
     },
 });
 
@@ -95,5 +100,6 @@ export const {
     setCookieChoice,
     setSelectedMobileSortOrder,
     setAcceptedSwapToS,
+    setLastAuthPrompted,
 } = uiSlice.actions;
 export default uiSlice.reducer;
