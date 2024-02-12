@@ -4,10 +4,9 @@ import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 
 interface IProps {
     avatar: string | undefined;
-    onAvatarClick?: () => void;
 }
 
-export const NavHeader: FC<IProps> = ({ avatar, onAvatarClick }) => {
+export const NavHeader: FC<IProps> = ({ avatar }) => {
     return (
         <div className="flex w-full justify-between px-5 py-2">
             <div className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -20,12 +19,7 @@ export const NavHeader: FC<IProps> = ({ avatar, onAvatarClick }) => {
                         alt=""
                     />
                 ) : (
-                    <div
-                        role="button"
-                        tabIndex={0}
-                        className="bg-backgroundVariant300 border-borderLine flex h-12 w-12 items-center justify-center rounded-full border-2"
-                        onClick={onAvatarClick}
-                    >
+                    <div className="bg-backgroundVariant300 border-borderLine flex h-12 w-12 items-center justify-center rounded-full border-2">
                         <UserSVG className="fill-primary h-7 w-7" />
                     </div>
                 )}
