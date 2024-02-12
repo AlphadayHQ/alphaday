@@ -1,17 +1,17 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { ReactComponent as SearchSVG } from "src/assets/svg/search.svg";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 
 interface IProps {
     avatar: string | undefined;
-    toggleShowUserMenu: () => void;
 }
 
-export const NavHeader: FC<IProps> = ({ avatar, toggleShowUserMenu }) => {
+export const NavHeader: FC<IProps> = ({ avatar }) => {
     return (
-        <div className="flex w-full justify-between px-5 py-2">
-            <div
-                onClick={toggleShowUserMenu}
+        <div className="w-full flex justify-between py-2 px-5">
+            <Link
+                to="/user-settings"
                 role="button"
                 tabIndex={0}
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -29,7 +29,7 @@ export const NavHeader: FC<IProps> = ({ avatar, toggleShowUserMenu }) => {
                         <UserSVG className="fill-primary h-7 w-7" />
                     </div>
                 )}
-            </div>
+            </Link>
             <div className="bg-backgroundVariant300 self-center rounded-lg p-2">
                 <SearchSVG className="h-4 w-4" aria-hidden="true" />
             </div>

@@ -6,22 +6,17 @@ import SuperfeedContainer from "src/mobile-containers/SuperfeedContainer";
 import UserFiltersContainer from "src/mobile-containers/UserFiltersContainer";
 
 const SuperfeedPage = () => {
-    const [showUserMenu, setshowUserMenu] = useState(false);
     const [showFeedFilters, setshowFeedFilters] = useState(false);
     const toggleFeedFilters = () => setshowFeedFilters(!showFeedFilters);
     return (
-        <MobileLayout toggleShowUserMenu={() => setshowUserMenu(true)}>
+        <MobileLayout>
             <UserFiltersContainer
                 onToggleFeedFilters={toggleFeedFilters}
                 show={showFeedFilters}
             />
-            <UserMenu
-                isOpen={showUserMenu}
-                onClose={() => setshowUserMenu(false)}
-                isAuthenticated
-            />
-            <SuperfeedContainer onToggleFeedFilters={toggleFeedFilters} />
+            <UserMenu isAuthenticated />
             <AuthPromptContainer />
+            <SuperfeedContainer onToggleFeedFilters={toggleFeedFilters} />
         </MobileLayout>
     );
 };

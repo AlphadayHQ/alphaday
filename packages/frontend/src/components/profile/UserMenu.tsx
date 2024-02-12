@@ -44,16 +44,16 @@ const UnAuthenticatedSection = () => {
             <p className="mb-0 fontGroup-highlight">
                 Sign up to unlock the complete experience{" "}
             </p>
-            <button
-                type="button"
+            <Link
+                to="/auth"
                 className="flex fontGroup-highlight !font-semibold py-3 px-4 bg-accentVariant100 hover:bg-accentVariant200 w-full mt-5 justify-center rounded-lg"
             >
                 Sign up
-            </button>
+            </Link>
             <p className="mt-6">
                 <span className="mt-6">Already have an account?</span>
                 <Link
-                    to="/#"
+                    to="/auth"
                     className="ml-2 font-semibold border-b border-accentVariant100"
                 >
                     Log in here
@@ -100,31 +100,31 @@ const AuthenticatedSection = () => {
 interface IUserMenu {
     // avatar: string;
     // username: string;
-    isOpen: boolean;
-    onClose: () => void;
+    // isOpen: boolean;
+    // onClose: () => void;
     isAuthenticated: boolean;
 }
-const UserMenu: FC<IUserMenu> = ({ isOpen, onClose, isAuthenticated }) => {
+const UserMenu: FC<IUserMenu> = ({ isAuthenticated }) => {
     const history = useHistory();
 
     const navigate = (link: string) => {
         history.push(link);
     };
     return (
-        <FullPageModal isOpen={isOpen} closeModal={onClose}>
-            <div className="flex flex-start w-full items-center mb-4">
+        <div className="mx-5">
+            {/* <div className="flex flex-start w-full items-center mb-4">
                 <ChevronSVG
                     onClick={onClose}
                     tabIndex={0}
                     role="button"
                     className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5"
                 />
-            </div>
+            </div> */}
             {isAuthenticated ? (
                 <AuthenticatedSection />
             ) : (
                 <UnAuthenticatedSection />
-            )}{" "}
+            )}
             <div className="mt-10 w-full">
                 {menu.map((item) => (
                     <div
@@ -156,7 +156,7 @@ const UserMenu: FC<IUserMenu> = ({ isOpen, onClose, isAuthenticated }) => {
                     </div>
                 ))}
             </div>
-        </FullPageModal>
+        </div>
     );
 };
 
