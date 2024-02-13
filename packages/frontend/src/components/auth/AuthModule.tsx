@@ -5,6 +5,8 @@ import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon
 import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
 import { Auth, AuthProps } from "./Auth";
 
+const ENABLE_APPLE_AUTH = false;
+
 export const AuthMethodSelection: FC<{
     handleLogin: () => void;
     handleSSOCallback: (provider: EAuthMethod) => void;
@@ -25,12 +27,14 @@ export const AuthMethodSelection: FC<{
                     <GoogleIcon /> &nbsp; Continue with Google
                 </Button>
 
-                <Button
-                    className="border-backgroundBlue text-primary inline-flex w-full items-center justify-center gap-1 rounded-lg px-4 py-6 text-base font-bold tracking-tight"
-                    onClick={() => handleSSOCallback(EAuthMethod.Apple)}
-                >
-                    <AppleIcon /> &nbsp; Continue with Apple
-                </Button>
+                {ENABLE_APPLE_AUTH && (
+                    <Button
+                        className="border-backgroundBlue text-primary inline-flex w-full items-center justify-center gap-1 rounded-lg px-4 py-6 text-base font-bold tracking-tight"
+                        onClick={() => handleSSOCallback(EAuthMethod.Apple)}
+                    >
+                        <AppleIcon /> &nbsp; Continue with Apple
+                    </Button>
+                )}
             </div>
             <div className="mt-4 flex items-center gap-1">
                 <span className="text-primary text-sm">
