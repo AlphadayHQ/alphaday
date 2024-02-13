@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { ReactComponent as SearchSVG } from "src/assets/svg/search.svg";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 
@@ -8,8 +9,13 @@ interface IProps {
 
 export const NavHeader: FC<IProps> = ({ avatar }) => {
     return (
-        <div className="flex w-full justify-between px-5 py-2">
-            <div className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+        <div className="w-full flex justify-between py-2 px-5">
+            <Link
+                to="/user-settings"
+                role="button"
+                tabIndex={0}
+                className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+            >
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">Open user menu</span>
                 {avatar ? (
@@ -23,7 +29,7 @@ export const NavHeader: FC<IProps> = ({ avatar }) => {
                         <UserSVG className="fill-primary h-7 w-7" />
                     </div>
                 )}
-            </div>
+            </Link>
             <div className="bg-backgroundVariant300 self-center rounded-lg p-2">
                 <SearchSVG className="h-4 w-4" aria-hidden="true" />
             </div>

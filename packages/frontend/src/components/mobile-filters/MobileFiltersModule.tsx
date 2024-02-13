@@ -8,7 +8,7 @@ import {
     twMerge,
 } from "@alphaday/ui-kit";
 import { ReactComponent as CheckedSVG } from "src/assets/icons/checkmark.svg";
-import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
+import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-right.svg";
 
 enum EOptionCategory {
     MEDIA = "mediaOptions",

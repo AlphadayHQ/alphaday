@@ -13,8 +13,8 @@ const SuperfeedPage = () => {
                 onToggleFeedFilters={toggleFeedFilters}
                 show={showFeedFilters}
             />
-            <SuperfeedContainer onToggleFeedFilters={toggleFeedFilters} />
             <AuthPromptContainer />
+            <SuperfeedContainer onToggleFeedFilters={toggleFeedFilters} />
         </MobileLayout>
     );
 };
