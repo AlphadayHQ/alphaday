@@ -18,12 +18,7 @@ const renderIcon = (icon: TMenuIcon) => {
         case "trash":
             return <TrashSVG className="icon" />;
         case "share":
-            return (
-                <ShareSVG
-                    style={{ fill: themeColors.primaryVariant100 }}
-                    className="icon"
-                />
-            );
+            return <ShareSVG className="icon" />;
         case "pin":
             return <PinSVG className="icon" />;
         case "pinned":

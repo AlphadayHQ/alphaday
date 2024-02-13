@@ -45,6 +45,7 @@ const globalMessages = {
         noMatchFound: (item: string): string => `No matching ${item} found.`,
     },
     portfolio: {
+        signUp: "Sign up to save your portfolio",
         connectWallet: "To signup, first connect your wallet.",
         verifyWallet:
             "Sign a fee-less message to confirm ownership and log in to Alphaday to save your configuration.",

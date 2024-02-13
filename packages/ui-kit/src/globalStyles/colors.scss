@@ -59,6 +59,7 @@ http://ionicframework.com/docs/theming/ */
     --alpha-primary-300: rgba(118, 124, 143, 0.2);
 
     --alpha-border: #3b3a3a;
+    --alpha-backdrop: rgba(18, 18, 18, 0.6);
 
     /** alphaday background shades **/
     --alpha-dark-base: #121212;
@@ -74,6 +75,7 @@ http://ionicframework.com/docs/theming/ */
     --alpha-light-blue-100: #5e8ff8;
     --alpha-dark-blue: #263964;
     --alpha-dark-blue-100: #2d4476;
+    --alpha-blue-100: #165DF5;
 
     --alpha-red: #f45532;
     --alpha-green: #6dd230;
@@ -83,12 +85,28 @@ http://ionicframework.com/docs/theming/ */
     --alpha-orange-100: #ba7a02;
     --alpha-rose-brown: #c59592;
     --alpha-yellow-green: #b9e187;
+    --alpha-steel-pink: #CE4BD9;
+
+    /** category colors **/
+    --alpha-category-1: #1D7CBF;
+    --alpha-category-2: #CC4747;
+    --alpha-category-3: #FF59C8;
+    --alpha-category-4: #3EB265;
+    --alpha-category-5: #3EB2B2;
+    --alpha-category-6: #9B50E5;
+    --alpha-category-7: #CE4BD9;
+    --alpha-category-8: #E57339;
+    --alpha-category-9: #4747CC;
+    --alpha-category-10: #CC841F;
+    --alpha-category-11: #D1A234;
+    --alpha-category-12: #6950E5;
+
 
     /* overrides */
     --fc-border-color: var(--alpha-border);
 
-    /** when we style with css modules we want to use the same names 
-      as when we use tailwind 
+    /** when we style with css modules we want to use the same names
+      as when we use tailwind
   **/
     --white: var(--alpha-white);
     --primary: var(--alpha-primary);
@@ -105,6 +123,7 @@ http://ionicframework.com/docs/theming/ */
     --backgroundFiltered: var(--alpha-base-filtered);
     --backgroundBlue: var(--alpha-dark-blue);
     --backgroundBlue100: var(--alpha-dark-blue-100);
+    --backgroundBlue200: var(--alpha-blue-100);
     --accentVariant100: var(--alpha-light-blue);
     --accentVariant200: var(--alpha-light-blue-100);
     --secondaryOrange: var(--alpha-orange);
@@ -115,6 +134,19 @@ http://ionicframework.com/docs/theming/ */
     --secondaryOrangeSoda: var(--alpha-red);
     --secondaryYellowGreen: var(--alpha-yellow-green);
     --success: var(--alpha-green);
+    /** category colors **/
+    --category1: var(--alpha-category-1);
+    --category2: var(--alpha-category-2);
+    --category3: var(--alpha-category-3);
+    --category4: var(--alpha-category-4);
+    --category5: var(--alpha-category-5);
+    --category6: var(--alpha-category-6);
+    --category7: var(--alpha-category-7);
+    --category8: var(--alpha-category-8);
+    --category9: var(--alpha-category-9);
+    --category10: var(--alpha-category-10);
+    --category11: var(--alpha-category-11);
+    --category12: var(--alpha-category-12);
 }
 
 /*

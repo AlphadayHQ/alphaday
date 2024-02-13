@@ -20,7 +20,8 @@ export default defineConfig({
             workbox: {
                 clientsClaim: true,
                 skipWaiting: true,
-                globPatterns: ["**/*.{css,ico,png,svg}"],
+                navigateFallbackAllowlist: [/^\//],
+                maximumFileSizeToCacheInBytes: 1024 * 1024 * 4,
             },
             includeAssets: [
                 "favicon.ico",

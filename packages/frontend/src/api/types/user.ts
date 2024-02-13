@@ -21,6 +21,22 @@ export enum EWalletConnectionMethod {
     Unknown = "unknown",
 }
 
+export enum EAuthState {
+    Guest,
+    SelectingMethod,
+    SigningUp,
+    SigningIn,
+    VerifyingEmail,
+    Verified,
+    GenericError,
+}
+
+export enum EAuthMethod {
+    Email = "email",
+    Google = "google",
+    Apple = "apple",
+}
+
 export type TPortfolioAccount = TCryptoAccount;
 
 export type TAuthToken = {
@@ -35,8 +51,16 @@ export type TAuthWallet = {
     method: EWalletConnectionMethod | undefined;
 };
 
+export type TUserAccess = {
+    status: EAuthState;
+    method: EAuthMethod | undefined;
+    error: string | null;
+    email: string | undefined;
+};
+
 export type TUserAuth = {
     token: TAuthToken | undefined;
+    access: TUserAccess;
     wallet: TAuthWallet;
 };
 

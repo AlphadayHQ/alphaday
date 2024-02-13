@@ -17,7 +17,7 @@ const MediaContainer: FC<IModuleContainer<TSourceData[]>> = ({
             EWidgetSettingsRegistry.IncludedTags
     )?.tags;
 
-    const { currentData: latestVideo } = useGetLatestVideoQuery(
+    const { currentData: latestVideo, isFetching } = useGetLatestVideoQuery(
         {
             tags: tags ? filteringListToStr(tags) : undefined,
         },
@@ -64,9 +64,8 @@ const MediaContainer: FC<IModuleContainer<TSourceData[]>> = ({
 
     return (
         <MediaModule
-            isLoading={!moduleData}
+            isLoading={!moduleData || isFetching}
             entryUrl={entryUrl || ""}
-            thumbnail=""
             title={moduleData.widget.name}
         />
     );

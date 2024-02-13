@@ -1,4 +1,5 @@
 import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
+import { Disclosure } from "@headlessui/react";
 import { useLayer } from "react-laag";
 import { twMerge } from "tailwind-merge";
 import { Arrow } from "./src/components/arrow/Arrow";
@@ -62,6 +63,7 @@ import {
     listItemVariants,
 } from "./src/components/listItem/ListItem";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
+import { FullPageModal } from "./src/components/modal/FullPageModal";
 import { Modal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
@@ -80,6 +82,7 @@ import { KeyValueTable } from "./src/components/table/KeyValueTable";
 import { TabsBar } from "./src/components/tabs/TabsBar";
 import { TextOverlay } from "./src/components/text-overlay/TextOverlay";
 import { Timer } from "./src/components/timer/Timer";
+import { Toggle } from "./src/components/toggle/Toggle";
 import { CalendarTooltip } from "./src/components/tooltip/CalendarTooltip";
 import {
     ViewTabMenu,
@@ -89,7 +92,9 @@ import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
 import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
 import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
-import { FeedItem } from "./src/mobile-components/superfeed/FeedItem";
+import { Pager } from "./src/mobile-components/pager/Pager";
+import { FeedCard } from "./src/mobile-components/superfeed/FeedCard";
+import { MiniDialog } from "./src/components/dialog/MiniDialog";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
@@ -116,7 +121,9 @@ export {
     CarouselImage,
     Lightbox,
     Timer,
+    Toggle,
     ErrorModal,
+    FullPageModal,
     Footer,
     Logo,
     HeaderWrapper,
@@ -169,5 +176,8 @@ export {
      */
     NavBottom,
     NavHeader,
-    FeedItem,
+    Pager,
+    FeedCard,
+    Disclosure,
+    MiniDialog,
 };

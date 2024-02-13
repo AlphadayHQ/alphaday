@@ -14,7 +14,7 @@ interface IModal {
     variant?: "warning" | "error";
     errorMessage?: string | null;
     onClose?: () => void;
-    size?: "xl" | "lg" | "md" | "sm";
+    size?: "xl" | "lg" | "md" | "sm" | "xs";
     children?: React.ReactNode;
     isHidden?: boolean;
 }

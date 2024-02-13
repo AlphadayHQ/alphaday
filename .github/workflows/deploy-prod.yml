@@ -40,6 +40,15 @@ jobs:
         steps:
             - uses: actions/checkout@v2
 
+            - name: Check if necessary ENV variables are set
+              run: |
+                  if [ -z "$VITE_OAUTH_ID_GOOGLE" ]; then
+                    echo "ERROR: missing google oauth client id"
+                    exit 1
+                  fi
+              env:
+                  VITE_OAUTH_ID_GOOGLE: ${{ secrets.PROD__REACT_APP_OAUTH_ID_GOOGLE }}
+
             - name: Set tag ENV
               run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
@@ -71,7 +80,8 @@ jobs:
                   VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.PROD__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
                   VITE_FIRE_APP_ID: ${{ secrets.PROD__REACT_APP_FIRE_APP_ID }}
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
-                  VITE_CLARITY_PROJECT_ID: ${{ secrets.PROD__VITE_CLARITY_PROJECT_ID }}
+                  VITE_OAUTH_ID_GOOGLE: ${{ secrets.PROD__REACT_APP_OAUTH_ID_GOOGLE }}
+                  VITE_CLARITY_PROJECT_ID: ${{ secrets.PROD__FRONTEND__CLARITY_PROJECT_ID }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
 
@@ -89,13 +99,13 @@ jobs:
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
 
-    set-cache-control:
-        uses: ./.github/workflows/set-cache-control.yml
+    set-index-cache-control:
+        uses: ./.github/workflows/set-index-cache-control.yml
         needs: deploy
         if: needs.deploy.result == 'success'
         with:
             ENVIRONMENT: alpha
-            MAX_AGE: 86400
+            VALUE: "no-cache"
         secrets: inherit
 
     # Get message VARs and Notify team through discord of deployment

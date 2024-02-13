@@ -1,37 +1,17 @@
 import { FC, useEffect } from "react";
-import { useAccount, useFeatureFlags, useView, useWallet } from "src/api/hooks";
+import { useAuth } from "src/api/hooks/useAuth";
 import { useTutorial } from "src/api/hooks/useTutorial";
-import { useWalletViewContext } from "src/api/store/providers/wallet-view-context";
-import { ETutorialTipId, WalletConnectionState } from "src/api/types";
-import { EFeaturesRegistry } from "src/constants";
+import { EAuthState, ETutorialTipId } from "src/api/types";
 import ProfileDropdownWrapper from "./ProfileDropdownWrapper";
 
 const ProfileDropdownContainer: FC = () => {
-    const { openWalletConnectionDialog, verifyWallet, signout } = useWallet();
-    const { authWallet, isAuthenticated, resetAuthState } = useAccount();
-    const { setAllowFetchWalletView, walletViewState } = useWalletViewContext();
-    const { subscribedViews, selectedView, navigateToView } = useView();
-    const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
-
-    const navigateToWalletView = () => {
-        if (subscribedViews !== undefined) {
-            const walletView = subscribedViews?.find(
-                (view) => view.data.is_smart
-            );
-            if (
-                walletView?.data !== undefined &&
-                selectedView?.data.hash !== walletView?.data.hash
-            ) {
-                // prevent unnecessary state change/navigation
-                navigateToView(walletView?.data);
-            }
-        }
-    };
-
-    const onAllowFetchWalletView = () => {
-        setAllowFetchWalletView(true);
-    };
-
+    const {
+        openAuthModal,
+        authState,
+        isAuthenticated,
+        resetAuthState,
+        logout,
+    } = useAuth();
     const {
         showTutorial,
         currentTutorial,
@@ -46,9 +26,9 @@ const ProfileDropdownContainer: FC = () => {
          */
         if (
             !(
-                authWallet.status === WalletConnectionState.Connected ||
-                authWallet.status === WalletConnectionState.Verified ||
-                authWallet.status === WalletConnectionState.Disconnected
+                authState.status === EAuthState.SigningIn ||
+                authState.status === EAuthState.SelectingMethod ||
+                authState.status === EAuthState.GenericError
             )
         ) {
             resetAuthState();
@@ -58,17 +38,11 @@ const ProfileDropdownContainer: FC = () => {
 
     return (
         <ProfileDropdownWrapper
-            onConnectWallet={openWalletConnectionDialog}
-            onVerifyWallet={verifyWallet}
-            onDisconnectWallet={() => signout(false)}
+            onSignOut={logout}
+            onSignUpSignIn={openAuthModal}
             isAuthenticated={isAuthenticated}
             onShowTutorial={toggleShowTutorial}
             showTutorial={showTutorial}
-            authWallet={authWallet}
-            walletViewState={walletViewState}
-            navigateToWalletView={navigateToWalletView}
-            onAllowFetchWalletView={onAllowFetchWalletView}
-            isWalletBoardAllowed={isWalletBoardAllowed}
             setTutFocusElemRef={
                 currentTutorial.tip?.id === ETutorialTipId.ComeBack
                     ? setTutFocusElemRef

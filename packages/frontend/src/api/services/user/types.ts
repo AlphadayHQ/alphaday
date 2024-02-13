@@ -20,16 +20,34 @@ export type TRemoteLogin = {
 
 export type TRemoteCustomRegister = TRemoteUserRegister;
 
+export type TRemoteBaseProfileFilter = {
+    name: string;
+    slug: string;
+    // parents: string; // TODO: check if or when needed
+};
+
+export type TRemoteProfileFilterTag = TRemoteBaseProfileFilter;
+export type TRemoteProfileFilterConceptTag = TRemoteBaseProfileFilter;
+export type TRemoteProfileFilterCoin = TRemoteBaseProfileFilter & {
+    ticker: string;
+}; // TODO: tags?
+export type TRemoteProfileFilterChain = TRemoteBaseProfileFilter; // TODO: tags?
+
 export type TRemoteProfile = {
     id: number;
     user: TRemoteCustomRegister;
+    handle?: string;
     location?: string;
-    smart_tags?: Omit<TBaseTag, "tag_type">[];
-    smart_tags_last_updated: string | null;
     currency?: string;
     identicon?: string;
     twitter_username?: string;
     github_username?: string;
+    smart_tags?: Omit<TBaseTag, "tag_type">[];
+    smart_tags_last_updated: string | null;
+    filter_tags: TRemoteProfileFilterTag[];
+    filter_concept_tags: TRemoteProfileFilterConceptTag[];
+    filter_coins: TRemoteProfileFilterCoin[];
+    filter_chains: TRemoteProfileFilterChain[];
 };
 
 export type TRemoteAccount = {
@@ -89,3 +107,11 @@ export type TGetUserAccountByIdResponse = TRemoteAccount;
 
 export type TGetUserProfileRequest = void;
 export type TGetUserProfileResponse = TRemoteProfile;
+
+export type TUpdateUserProfileFiltersRequest = {
+    filter_tags: string[];
+    filter_concept_tags: string[];
+    filter_coins: string[];
+    filter_chains: string[];
+};
+export type TUpdateUserProfileFiltersResponse = TRemoteProfile;

@@ -1,7 +1,14 @@
 import { PersistedState, MigrationManifest } from "redux-persist";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { TRemoteTagReadOnly, TRemoteUserViewWidget } from "../services";
-import { TCachedView, TUserView } from "../types";
+import {
+    EAuthState,
+    ESortFeedBy,
+    ETimeRange,
+    TCachedView,
+    TUserView,
+    WalletConnectionState,
+} from "../types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 import { IViewsState } from "./slices/views";
@@ -30,7 +37,34 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV102 = PersistedRootState;
+type RootStateV105 = PersistedRootState;
+
+type RootStateV104 =
+    | (PersistedState & Omit<RootState, "userFilters">)
+    | undefined;
+
+type RootStateV103 =
+    | (PersistedState &
+          Omit<RootState, "user"> & {
+              user: Omit<RootState["user"], "auth"> & {
+                  auth: Omit<RootState["user"]["auth"], "access"> & {
+                      access: Omit<
+                          RootState["user"]["auth"]["access"],
+                          "email"
+                      >;
+                  };
+              };
+          })
+    | undefined;
+
+type RootStateV102 =
+    | (PersistedState &
+          Omit<RootState, "user"> & {
+              user: Omit<RootState["user"], "auth"> & {
+                  auth: Omit<RootState["user"]["auth"], "access">;
+              };
+          })
+    | undefined;
 
 type RootStateV101 = RootStateV100;
 
@@ -65,6 +99,9 @@ type TMigrations = MigrationManifest & {
     100: (s: PersistedState) => RootStateV100;
     101: (s: RootStateV100) => RootStateV101;
     102: (s: RootStateV101) => RootStateV102;
+    103: (s: RootStateV102) => RootStateV103;
+    104: (s: RootStateV103) => RootStateV104;
+    105: (s: RootStateV104) => RootStateV105;
 };
 
 /**
@@ -152,6 +189,77 @@ const migrations: TMigrations = {
             Logger.error("migrations::102: Migration failed", e);
             return undefined;
         }
+    },
+    103: (s: RootStateV102): RootStateV103 => {
+        // add new access state
+        if (!s) return undefined;
+        try {
+            return {
+                ...s,
+                user: {
+                    ...s.user,
+                    auth: {
+                        token: undefined,
+                        access: {
+                            status: EAuthState.Guest,
+                            method: undefined,
+                            error: null,
+                        },
+                        wallet: {
+                            account: undefined,
+                            status: WalletConnectionState.Disconnected,
+                            error: null,
+                            method: undefined,
+                        },
+                    },
+                },
+                // reset views state since users will need to auth again
+                views: {
+                    ...s.views,
+                    prevSelectedViewId: undefined,
+                    viewsCache: undefined,
+                    sharedViewsCache: undefined,
+                    subscribedViewsCache: undefined,
+                },
+            };
+        } catch (e) {
+            Logger.error("migrations::103: Migration failed", e);
+            return undefined;
+        }
+    },
+    104: (s: RootStateV103): RootStateV104 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            user: {
+                ...s.user,
+                auth: {
+                    ...s.user.auth,
+                    access: {
+                        ...s.user.auth.access,
+                        email: undefined,
+                    },
+                },
+            },
+        };
+    },
+    105: (s: RootStateV104): RootStateV105 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            userFilters: {
+                selectedFiltersLocal: {
+                    sortBy: ESortFeedBy.Trendiness,
+                    timeRange: ETimeRange.Anytime,
+                    mediaTypes: [],
+                },
+                selectedFiltersSynced: {
+                    coins: [],
+                    chains: [],
+                    conceptTags: [],
+                },
+            },
+        };
     },
 };
 

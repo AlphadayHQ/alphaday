@@ -81,7 +81,8 @@ jobs:
                   VITE_FIRE_MESSAGE_SENDER_ID: ${{ secrets.DEV__REACT_APP_FIRE_MESSAGE_SENDER_ID }}
                   VITE_FIRE_APP_ID: ${{ secrets.DEV__REACT_APP_FIRE_APP_ID }}
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
-                  VITE_CLARITY_PROJECT_ID: ${{ secrets.DEV__REACT_APP_CLARITY_PROJECT_ID }}
+                  VITE_OAUTH_ID_GOOGLE: ${{ secrets.DEV__REACT_APP_OAUTH_ID_GOOGLE }}
+                  VITE_CLARITY_PROJECT_ID: ${{ secrets.DEV__FRONTEND__CLARITY_PROJECT_ID }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
 
@@ -98,6 +99,15 @@ jobs:
                   DISTRIBUTION_ID: ${{ secrets.DEV__FRONTEND__DISTRIBUTION_ID }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
+
+    set-index-cache-control:
+        uses: ./.github/workflows/set-index-cache-control.yml
+        needs: deploy
+        if: needs.deploy.result == 'success'
+        with:
+            ENVIRONMENT: zetta
+            VALUE: "no-cache"
+        secrets: inherit
 
     # Get message VARs and Notify team through discord of deployment
     notify:
