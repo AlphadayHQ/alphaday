@@ -27,6 +27,8 @@ export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
             return <PodcastCard item={item} />;
         case EFeedItemType.EVENT:
             return <EventCard item={item} />;
+        case EFeedItemType.MEME:
+            return <ImageCard item={item} />;
         case EFeedItemType.IMAGE:
             return <ImageCard item={item} />;
         case EFeedItemType.REDDIT:

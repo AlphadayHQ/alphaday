@@ -3,6 +3,8 @@ import { EWidgetSettingsRegistry } from "src/constants";
 import { TRemoteTagReadOnly, TRemoteUserViewWidget } from "../services";
 import {
     EAuthState,
+    ESortFeedBy,
+    ETimeRange,
     TCachedView,
     TUserView,
     WalletConnectionState,
@@ -35,7 +37,25 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV103 = PersistedRootState;
+type RootStateV105 = PersistedRootState;
+
+type RootStateV104 =
+    | (PersistedState & Omit<RootState, "userFilters">)
+    | undefined;
+
+type RootStateV103 =
+    | (PersistedState &
+          Omit<RootState, "user"> & {
+              user: Omit<RootState["user"], "auth"> & {
+                  auth: Omit<RootState["user"]["auth"], "access"> & {
+                      access: Omit<
+                          RootState["user"]["auth"]["access"],
+                          "email"
+                      >;
+                  };
+              };
+          })
+    | undefined;
 
 type RootStateV102 =
     | (PersistedState &
@@ -80,6 +100,8 @@ type TMigrations = MigrationManifest & {
     101: (s: RootStateV100) => RootStateV101;
     102: (s: RootStateV101) => RootStateV102;
     103: (s: RootStateV102) => RootStateV103;
+    104: (s: RootStateV103) => RootStateV104;
+    105: (s: RootStateV104) => RootStateV105;
 };
 
 /**
@@ -204,6 +226,40 @@ const migrations: TMigrations = {
             Logger.error("migrations::103: Migration failed", e);
             return undefined;
         }
+    },
+    104: (s: RootStateV103): RootStateV104 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            user: {
+                ...s.user,
+                auth: {
+                    ...s.user.auth,
+                    access: {
+                        ...s.user.auth.access,
+                        email: undefined,
+                    },
+                },
+            },
+        };
+    },
+    105: (s: RootStateV104): RootStateV105 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            userFilters: {
+                selectedFiltersLocal: {
+                    sortBy: ESortFeedBy.Trendiness,
+                    timeRange: ETimeRange.Anytime,
+                    mediaTypes: [],
+                },
+                selectedFiltersSynced: {
+                    coins: [],
+                    chains: [],
+                    conceptTags: [],
+                },
+            },
+        };
     },
 };
 

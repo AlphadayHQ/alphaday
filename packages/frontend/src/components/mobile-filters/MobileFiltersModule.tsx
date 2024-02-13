@@ -198,7 +198,7 @@ const TagButton: FC<{
         <button
             type="button"
             onClick={handleClick}
-            className="flex items-center px-3 py-0.5 bg-backgroundBlue100 text-primary fontGroup-mini h-7 !text-sm rounded-full whitespace-nowrap m-1"
+            className="bg- text-primary fontGroup-mini m-1 flex h-7 items-center whitespace-nowrap rounded-full px-3 py-0.5 !text-sm"
             style={{
                 backgroundColor: selected
                     ? bgColor
@@ -207,7 +207,7 @@ const TagButton: FC<{
         >
             {name}
             <CheckedSVG
-                className="w-3 h-3 ml-1 text-primary [&_path]:!stroke-primary"
+                className="text-primary [&_path]:!stroke-primary ml-1 h-3 w-3"
                 style={{ display: selected ? "block" : "none" }}
             />
         </button>
@@ -236,13 +236,13 @@ export const OptionsDisclosure: FC<{
                 <>
                     <Disclosure.Button className="flex flex-col">
                         <div className="flex w-full justify-between">
-                            <p className="fontGroup-highlight uppercase mb-0 self-center">
+                            <p className="fontGroup-highlight mb-0 self-center uppercase">
                                 {title}
                             </p>
 
                             <ChevronSVG
                                 className={twMerge(
-                                    "w-6 h-6 mr-2 self-center -ml-1.5 text-primary rotate-90",
+                                    "text-primary -ml-1.5 mr-2 h-6 w-6 rotate-90 self-center",
                                     open && "-rotate-90"
                                 )}
                             />
@@ -252,7 +252,7 @@ export const OptionsDisclosure: FC<{
                         </p>
 
                         {!open && (
-                            <div className="w-full flex flex-wrap pb-2 -ml-1">
+                            <div className="-ml-1 flex w-full flex-wrap pb-2">
                                 {pillsToShow.map((option) => (
                                     <TagButton
                                         key={option.name}
@@ -358,14 +358,14 @@ const MobileFiltersModule: FC<{
     if (show) {
         return (
             <FullPageModal isOpen={isOpen} closeModal={() => setIsOpen(false)}>
-                <div className="flex flex-start w-full items-center mb-4">
+                <div className="flex-start mb-4 flex w-full items-center">
                     <ChevronSVG
                         onClick={toggleFeedFilters}
                         tabIndex={0}
                         role="button"
-                        className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5"
+                        className="-ml-1.5 mr-2 h-6 w-6 rotate-180 self-center"
                     />
-                    <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0">
+                    <h1 className="fontGroup-major mb-0 flex-grow text-center !text-lg uppercase">
                         Superfeed filters
                     </h1>
                 </div>
@@ -384,8 +384,8 @@ const MobileFiltersModule: FC<{
                         />
                     </div>
                 </div>
-                <div className="w-full flex justify-between py-6 border-b border-borderLine">
-                    <p className="fontGroup-highlight uppercase mb-0 self-center">
+                <div className="border-borderLine flex w-full justify-between border-b py-6">
+                    <p className="fontGroup-highlight mb-0 self-center uppercase">
                         trending
                     </p>
                     <Toggle
@@ -393,7 +393,7 @@ const MobileFiltersModule: FC<{
                         onChange={() => setEnabled((prev) => !prev)}
                     />
                 </div>
-                <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
+                <div className="border-borderLine flex w-full flex-col justify-between border-b py-6">
                     <OptionsDisclosure
                         title="media"
                         options={allOptions.mediaOptions}
@@ -402,7 +402,7 @@ const MobileFiltersModule: FC<{
                         }
                         pillType
                     >
-                        <div className="w-full flex flex-wrap -ml-1">
+                        <div className="-ml-1 flex w-full flex-wrap">
                             {allOptions.mediaOptions.map((option) => (
                                 <TagButton
                                     key={option.name}
@@ -420,7 +420,7 @@ const MobileFiltersModule: FC<{
                         </div>
                     </OptionsDisclosure>
                 </div>
-                <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
+                <div className="border-borderLine flex w-full flex-col justify-between border-b py-6">
                     <OptionsDisclosure
                         title="coins"
                         options={allOptions.coinsOptions}
@@ -429,7 +429,7 @@ const MobileFiltersModule: FC<{
                         }
                         pillType
                     >
-                        <div className="w-full flex flex-wrap -ml-1">
+                        <div className="-ml-1 flex w-full flex-wrap">
                             {allOptions.coinsOptions.map((option) => (
                                 <TagButton
                                     key={option.name}
@@ -447,7 +447,7 @@ const MobileFiltersModule: FC<{
                         </div>
                     </OptionsDisclosure>
                 </div>
-                <div className="w-full flex flex-col justify-between py-6 border-b border-borderLine">
+                <div className="border-borderLine flex w-full flex-col justify-between border-b py-6">
                     <OptionsDisclosure
                         title="Date range"
                         subtext="Filter based on publication date."
@@ -455,7 +455,7 @@ const MobileFiltersModule: FC<{
                         onSelect={(id: number) => handleDateSelect(id)}
                     >
                         <fieldset>
-                            <div className="w-full flex flex-wrap pb-2 -ml-1">
+                            <div className="-ml-1 flex w-full flex-wrap pb-2">
                                 {selectedDateOption && (
                                     <TagButton
                                         key={selectedDateOption.name}
@@ -473,7 +473,7 @@ const MobileFiltersModule: FC<{
                                 {allOptions.dateOptions.map((option) => (
                                     <div
                                         key={option.id}
-                                        className="flex items-center cursor-pointer"
+                                        className="flex cursor-pointer items-center"
                                         role="radio"
                                         tabIndex={0}
                                         aria-checked={option.selected}
@@ -486,11 +486,11 @@ const MobileFiltersModule: FC<{
                                             name="notification-method"
                                             type="radio"
                                             defaultChecked={option.id === 2}
-                                            className="h-4 w-4 border-borderLine text-accentBlue100 focus:ring-accentBlue100 cursor-pointer"
+                                            className="border-borderLine text-accentBlue100 focus:ring-accentBlue100 h-4 w-4 cursor-pointer"
                                         />
                                         <label
                                             htmlFor={option.id.toString()}
-                                            className="ml-3 block text-sm font-medium leading-6 text-primary cursor-pointer"
+                                            className="text-primary ml-3 block cursor-pointer text-sm font-medium leading-6"
                                         >
                                             {option.name}
                                         </label>

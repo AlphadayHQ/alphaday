@@ -14,6 +14,7 @@ export const darkColors = {
     backgroundFiltered: "var(--alpha-base-filtered)", // rgba(0, 0, 0, 0.4) -- background opacity 0.9
     backgroundBlue: "var(--alpha-dark-blue)", // #263964 -- background blue
     backgroundBlue100: "var(--alpha-dark-blue-100)", // #2d4476 -- background blue
+    backgroundBlue200: "var(--alpha-blue-100)", // #165DF5 -- bckground blue
     accentVariant100: "var(--alpha-light-blue)", // #477FF7 -- button Ring Primary
     accentVariant200: "var(--alpha-light-blue-100)", // #5E8FF8 -- button Ring Primary
     secondaryOrange: "var(--alpha-orange)", // #FAA202 -- calendar event category

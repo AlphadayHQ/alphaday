@@ -8,7 +8,7 @@ interface IProps {
 
 export const NavHeader: FC<IProps> = ({ avatar }) => {
     return (
-        <div className="w-full flex justify-between py-2 px-5">
+        <div className="flex w-full justify-between px-5 py-2">
             <div className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">Open user menu</span>
@@ -19,12 +19,12 @@ export const NavHeader: FC<IProps> = ({ avatar }) => {
                         alt=""
                     />
                 ) : (
-                    <div className="rounded-full h-12 w-12 bg-backgroundVariant300 flex items-center justify-center border-2 border-borderLine">
-                        <UserSVG className="w-7 h-7 fill-primary" />
+                    <div className="bg-backgroundVariant300 border-borderLine flex h-12 w-12 items-center justify-center rounded-full border-2">
+                        <UserSVG className="fill-primary h-7 w-7" />
                     </div>
                 )}
             </div>
-            <div className="p-2 self-center bg-backgroundVariant300 rounded-lg">
+            <div className="bg-backgroundVariant300 self-center rounded-lg p-2">
                 <SearchSVG className="h-4 w-4" aria-hidden="true" />
             </div>
         </div>

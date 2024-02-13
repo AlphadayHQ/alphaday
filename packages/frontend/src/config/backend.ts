@@ -77,13 +77,10 @@ const API_V0 = {
         },
         AUTH: {
             BASE: "auth",
-            REQUEST_TOKEN: "/token/",
-            VERIFY_TOKEN: "/verify/",
-            VERIFY_EMAIL: "/email/",
-            CONVERT_TOKEN: "/convert-token/",
-            REVOKE_TOKEN: "/revoke-token/",
-            // we may not need these
-            LOGOUT_SSO: "/disconnect-backend/",
+            REQUEST_TOKEN: "/email/get-otp/",
+            VERIFY_TOKEN: "/email/verify-otp/",
+            GOOGLE_LOGIN: "/sso/google/",
+            LOGOUT: "/logout/",
         },
         USER: {
             BASE: "user",
@@ -110,13 +107,6 @@ const API_V0 = {
             HISTORY: "/history/",
             BY_ID: (id: number): string => `/${id}/`,
         },
-        SUPERFEED: {
-            BASE: "superfeed",
-        },
-        STATUS: {
-            BASE: "status",
-            DEFAULT: "/",
-        },
         SOCIALS: {
             BASE: "items/socials",
             DISCORD: "discord",
@@ -124,6 +114,15 @@ const API_V0 = {
             REDDIT: "reddit",
             TWITTER: "twitter",
             TWITTER_V1: "/tweets/",
+        },
+        STATUS: {
+            BASE: "status",
+            DEFAULT: "/",
+        },
+        SUPERFEED: {
+            BASE: "superfeed",
+            DEFAULT: "/",
+            FILTER_DATA: "/filter_data/",
         },
         TVL: {
             BASE: "tvl",

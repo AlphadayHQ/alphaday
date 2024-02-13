@@ -3,6 +3,7 @@ import FIREBASE_CONFIG from "./firebase";
 import NUMBERS from "./numbers";
 import ROUTING_CONFIG from "./routing";
 import SEO_CONFIG from "./seo";
+import { SUPERFEED_CONFIG } from "./superfeed";
 import {
     API_PROVIDERS,
     EXPLORERS,
@@ -75,6 +76,7 @@ const CONFIG = {
     ROUTING: ROUTING_CONFIG,
     UI: UI_CONFIG,
     WIDGETS: WIDGETS_CONFIG,
+    SUPERFEED: SUPERFEED_CONFIG,
     SEO: SEO_CONFIG,
     FIREBASE: FIREBASE_CONFIG,
     SENTRY,
@@ -90,7 +92,7 @@ const CONFIG = {
     APP: {
         VERSION: import.meta.env.VITE_VERSION || "",
         STORAGE_KEY: "alphaday",
-        STORAGE_VERSION: 103,
+        STORAGE_VERSION: 105,
         COMMIT: import.meta.env.VITE_COMMIT,
         X_APP_ID: import.meta.env.VITE_X_APP_ID || "",
         X_APP_SECRET: import.meta.env.VITE_X_APP_SECRET || "",
