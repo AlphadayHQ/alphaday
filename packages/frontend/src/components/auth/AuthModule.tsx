@@ -2,6 +2,7 @@ import { FC, memo, useState } from "react";
 import { Button } from "@alphaday/ui-kit";
 import { EAuthMethod, EAuthState } from "src/api/types";
 import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
+import { ReactComponent as EnvelopeIcon } from "src/assets/icons/socials/envelope_icon.svg";
 import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
 import { Auth, AuthProps } from "./Auth";
 
@@ -16,7 +17,7 @@ export const AuthMethodSelection: FC<{
                     className="bg-backgroundBlue100 border-backgroundBlue100 hover:bg-backgroundBlue text-primary inline-flex w-full items-center justify-center gap-1 rounded-lg px-4 py-6 text-base font-bold tracking-tight"
                     onClick={() => handleSSOCallback(EAuthMethod.Email)}
                 >
-                    <GoogleIcon /> &nbsp; Continue with Email
+                    <EnvelopeIcon /> &nbsp; Continue with Email
                 </Button>
                 <Button
                     className="border-backgroundBlue text-primary inline-flex w-full items-center justify-center gap-1 rounded-lg px-4 py-6 text-base font-bold tracking-tight"
