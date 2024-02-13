@@ -10,7 +10,6 @@ const UserSettings: React.FC = () => {
     return (
         <PagedMobileLayout
             title=""
-            handleClose={() => {}}
             handleBack={() =>
                 history.length > 1 ? history.goBack() : history.push("/")
             }

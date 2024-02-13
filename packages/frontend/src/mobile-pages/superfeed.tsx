@@ -1,5 +1,4 @@
 import { useState } from "react";
-import UserMenu from "src/components/profile/UserMenu";
 import AuthPromptContainer from "src/containers/dialogs/AuthPromptContainer";
 import MobileLayout from "src/layout/MobileLayout";
 import SuperfeedContainer from "src/mobile-containers/SuperfeedContainer";
@@ -14,7 +13,6 @@ const SuperfeedPage = () => {
                 onToggleFeedFilters={toggleFeedFilters}
                 show={showFeedFilters}
             />
-            <UserMenu isAuthenticated />
             <AuthPromptContainer />
             <SuperfeedContainer onToggleFeedFilters={toggleFeedFilters} />
         </MobileLayout>
