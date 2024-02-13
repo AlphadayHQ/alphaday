@@ -3,6 +3,8 @@ import { EWidgetSettingsRegistry } from "src/constants";
 import { TRemoteTagReadOnly, TRemoteUserViewWidget } from "../services";
 import {
     EAuthState,
+    ESortFeedBy,
+    ETimeRange,
     TCachedView,
     TUserView,
     WalletConnectionState,
@@ -35,7 +37,11 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV104 = PersistedRootState;
+type RootStateV105 = PersistedRootState;
+
+type RootStateV104 =
+    | (PersistedState & Omit<RootState, "userFilters">)
+    | undefined;
 
 type RootStateV103 =
     | (PersistedState &
@@ -95,6 +101,7 @@ type TMigrations = MigrationManifest & {
     102: (s: RootStateV101) => RootStateV102;
     103: (s: RootStateV102) => RootStateV103;
     104: (s: RootStateV103) => RootStateV104;
+    105: (s: RootStateV104) => RootStateV105;
 };
 
 /**
@@ -232,6 +239,24 @@ const migrations: TMigrations = {
                         ...s.user.auth.access,
                         email: undefined,
                     },
+                },
+            },
+        };
+    },
+    105: (s: RootStateV104): RootStateV105 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            userFilters: {
+                selectedFiltersLocal: {
+                    sortBy: ESortFeedBy.Trendiness,
+                    timeRange: ETimeRange.Anytime,
+                    mediaTypes: [],
+                },
+                selectedFiltersSynced: {
+                    coins: [],
+                    chains: [],
+                    conceptTags: [],
                 },
             },
         };

@@ -6,6 +6,7 @@ export enum EFeedItemType {
     VIDEO = "videoitem",
     PODCAST = "podcastitem",
     IMAGE = "imageitem",
+    MEME = "memeitem",
     BLOG = "blogitem",
     FORUM = "forumitem",
     PERSON = "personitem",
@@ -13,6 +14,32 @@ export enum EFeedItemType {
     DISCORD = "discorditem",
     PRICE = "priceitem",
     TVL = "tvlitem",
+}
+
+/**
+ * note: values here match keys in userFilter slice
+ */
+export enum ESupportedFilters {
+    Coins = "coins",
+    ConceptTags = "conceptTags",
+    Chains = "chains",
+    MediaTypes = "mediaTypes",
+    TimeRange = "timeRange",
+    SortBy = "sortBy",
+}
+
+export enum ESortFeedBy {
+    Trendiness = "trendiness",
+    Date = "date",
+}
+
+export enum ETimeRange {
+    Anytime = "anytime",
+    Last24 = "last-24",
+    Last7Days = "last-7-days",
+    Last30Days = "last-30-days",
+    Last90Days = "last-90-days",
+    Last6Months = "last-6-months",
 }
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
