@@ -9,7 +9,6 @@ import * as userStore from "src/api/store/slices/user";
 import ToastContainer from "src/containers/toasts/ToastContainer";
 import {
     useAppInit,
-    useGlobalHooks,
     useResolvedView,
     useViewRoute,
     useGaTracker,
@@ -91,7 +90,6 @@ const AppRoutes = () => {
 
 const App: React.FC = () => {
     useAppInit();
-    useGlobalHooks();
 
     if (!isCookieEnabled()) {
         return (

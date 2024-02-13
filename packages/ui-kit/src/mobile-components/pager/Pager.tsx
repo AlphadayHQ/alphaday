@@ -24,13 +24,15 @@ export const Pager: React.FC<PagerProps> = ({
             <div className="flex flex-grow justify-center uppercase font-bold text-base">
                 {title}
             </div>
-            <button
-                type="button"
-                className="flex flex-grow justify-end"
-                onClick={handleClose}
-            >
-                <Close3Icon />
-            </button>
+            {handleClose && (
+                <button
+                    type="button"
+                    className="flex flex-grow justify-end"
+                    onClick={handleClose}
+                >
+                    <Close3Icon />
+                </button>
+            )}
         </div>
     );
 };

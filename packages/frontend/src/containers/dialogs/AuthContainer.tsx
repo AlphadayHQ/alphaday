@@ -12,7 +12,8 @@ import AuthModule from "src/components/auth/AuthModule";
 const AuthContainer = () => {
     const [email, setEmail] = useState("");
     const dispatch = useAppDispatch();
-    const { authState, resetAuthState, requestCode, ssoLogin } = useAuth();
+    const { authState, resetAuthState, requestCode, ssoLogin, verifyToken } =
+        useAuth();
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
@@ -22,7 +23,18 @@ const AuthContainer = () => {
             });
     }, [requestCode, email]);
 
-    const handleOtpSubmit = useCallback(() => {}, []);
+    const handleOtpSubmit = useCallback(
+        (otp: string) => {
+            verifyToken(email, otp)
+                .then(() => {
+                    toast("Successfully verified email");
+                })
+                .catch(() => {
+                    Logger.error("Failed to verify OTP", otp);
+                });
+        },
+        [email, verifyToken]
+    );
 
     const handleSSOCallback = useCallback(
         (method: EAuthMethod) => {

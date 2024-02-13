@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
-import { useHistory } from "react-router";
 import {
     useRequestCodeMutation,
     useVerifyTokenMutation,
     useSsoLoginMutation,
+    useSignoutMutation,
 } from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
@@ -19,6 +19,7 @@ interface IUseAuth {
     requestCode: (email: string) => Promise<void>;
     verifyToken: (email: string, code: string) => Promise<void>;
     ssoLogin: (provider: EAuthMethod) => void;
+    logout: () => Promise<void>;
 }
 
 /**
@@ -30,11 +31,11 @@ export const useAuth = (): IUseAuth => {
     const dispatch = useAppDispatch();
     const authState = useAppSelector(userStore.selectAuthState);
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const navigate = useHistory();
 
     const [requestCodeMut] = useRequestCodeMutation();
     const [verifyTokenMut] = useVerifyTokenMutation();
     const [ssoLoginMut] = useSsoLoginMutation();
+    const [logoutMut] = useSignoutMutation();
 
     const openAuthModal = useCallback(() => {
         dispatch(userStore.initAuthMethodSelection());
@@ -42,39 +43,37 @@ export const useAuth = (): IUseAuth => {
 
     const requestCode = useCallback(
         async (email: string) => {
-            try {
-                await requestCodeMut({ email }).unwrap();
-                dispatch(userStore.setAuthState(EAuthState.VerifyingEmail));
-            } catch (e) {
-                Logger.error(
-                    "useAuth::requestCode: error sending OTP to email",
-                    e
-                );
-            }
+            await requestCodeMut({ email }).unwrap();
+            Logger.debug("useAuth::requestCode: sent OTP to email");
+            dispatch(userStore.setAuthState(EAuthState.VerifyingEmail));
         },
         [dispatch, requestCodeMut]
     );
 
     const verifyToken = useCallback(
         async (email: string, code: string) => {
-            try {
-                const verifyResp = await verifyTokenMut({
-                    email,
-                    code,
-                }).unwrap();
+            Logger.debug("useAuth::verifyToken: verifying OTP", {
+                email,
+                code,
+            });
+            const verifyResp = await verifyTokenMut({
+                email,
+                code,
+            }).unwrap();
 
-                dispatch(
-                    userStore.setAuthToken({ value: verifyResp.accessToken })
-                );
-            } catch (e) {
-                Logger.error("useAuth::verifyToken: error verifying OTP", e);
-            }
+            Logger.debug("useAuth::verifyToken: verified OTP", verifyResp);
+            dispatch(userStore.setAuthToken({ value: verifyResp.token }));
+            dispatch(userStore.setAuthEmail(verifyResp.user.email));
+            dispatch(userStore.setAuthState(EAuthState.Verified));
         },
         [dispatch, verifyTokenMut]
     );
 
     const googleSSOCallback = useCallback(
         ({ access_token }: Record<string, string>) => {
+            Logger.debug("useAuth::googleSSOCallback: received token", {
+                access_token,
+            });
             ssoLoginMut({
                 accessToken: access_token,
                 provider: EAuthMethod.Google,
@@ -82,16 +81,15 @@ export const useAuth = (): IUseAuth => {
                 .unwrap()
                 .then((r) => {
                     Logger.debug("useAuth::googleSSOLogin: success", r);
-                    dispatch(userStore.setAuthToken({ value: r.accessToken }));
+                    dispatch(userStore.setAuthToken({ value: r.token }));
+                    dispatch(userStore.setAuthEmail(r.user.email));
                     dispatch(userStore.setAuthState(EAuthState.Verified));
-                    Logger.debug("useAuth::googleSSOLogin: redirecting");
-                    navigate.push("/");
                 })
-                .catch((e) =>
-                    Logger.error("useAuth::googleSSOLogin: error", e)
-                );
+                .catch((e) => {
+                    Logger.error("useAuth::googleSSOLogin: error", e);
+                });
         },
-        [ssoLoginMut, dispatch, navigate]
+        [ssoLoginMut, dispatch]
     );
 
     const googleSSOLogin = useGoogleLogin({
@@ -100,16 +98,27 @@ export const useAuth = (): IUseAuth => {
     });
     const ssoLogin = useCallback(
         (provider: EAuthMethod) => {
+            dispatch(userStore.setAuthMethod(provider));
+
             if (provider === EAuthMethod.Google) {
                 googleSSOLogin();
             }
+
+            // TODO: Add other providers here
         },
-        [googleSSOLogin]
+        [googleSSOLogin, dispatch]
     );
 
     const resetAuthState = useCallback(() => {
+        Logger.debug("useAuth::resetAuthState: resetting auth state");
         dispatch(userStore.resetAuthState());
     }, [dispatch]);
+
+    const logout = useCallback(async () => {
+        Logger.debug("useAuth::logout: logging out");
+        await logoutMut().unwrap();
+        resetAuthState();
+    }, [logoutMut, resetAuthState]);
 
     return {
         isAuthenticated,
@@ -119,5 +128,6 @@ export const useAuth = (): IUseAuth => {
         requestCode,
         verifyToken,
         ssoLogin,
+        logout,
     };
 };

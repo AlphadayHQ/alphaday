@@ -11,16 +11,6 @@ export type TVerifyEmailRequest = {
     code: string;
 };
 
-export type TVerifyEmailResponse = {
-    accessToken: string;
-    refreshToken: string;
-};
-
-export type TVerifyEmailRawResponse = {
-    access_token: string;
-    refresh_token: string;
-};
-
 export type TSSOLoginRequest = {
     accessToken: string;
     provider: EAuthMethod;
@@ -28,12 +18,9 @@ export type TSSOLoginRequest = {
     code?: string;
 };
 
-export type TSSOLoginRawResponse = {
-    access_token: string;
-    refresh_token: string;
-};
-
-export type TSSOLoginResponse = {
-    accessToken: string;
-    refreshToken: string;
+export type TAuthLoginResponse = {
+    token: string;
+    user: {
+        email: string;
+    };
 };

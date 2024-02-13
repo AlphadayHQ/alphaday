@@ -11,7 +11,6 @@ import {
     FormTextArea,
 } from "./mobile-components/form-elements/FormElements";
 import { NavBottom } from "./mobile-components/navigation/NavBottom";
-import { NavHeader } from "./mobile-components/navigation/NavHeader";
 
 setupIonicReact();
 
@@ -20,7 +19,6 @@ function App() {
     const [checked, setChecked] = useState(false);
     return (
         <>
-            <NavHeader avatar={undefined} />
             <div className="flex h-screen w-screen flex-col items-center justify-center">
                 <h1 className="text-primary text-lg font-semibold">
                     Vite + React + Ionic + Tailwind
