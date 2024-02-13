@@ -38,7 +38,7 @@ const menu = [
     },
 ];
 
-const UnAuthenticatedSection = () => {
+const NonAuthenticatedSection = () => {
     return (
         <div className="flex flex-col flex-start w-full items-start mb-4">
             <p className="mb-0 fontGroup-highlight">
@@ -123,7 +123,7 @@ const UserMenu: FC<IUserMenu> = ({ isAuthenticated }) => {
             {isAuthenticated ? (
                 <AuthenticatedSection />
             ) : (
-                <UnAuthenticatedSection />
+                <NonAuthenticatedSection />
             )}
             <div className="mt-10 w-full">
                 {menu.map((item) => (
