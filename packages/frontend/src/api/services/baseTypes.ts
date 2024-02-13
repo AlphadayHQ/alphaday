@@ -97,6 +97,7 @@ export type TRemoteBaseProject = {
 };
 
 export type TBaseCoin = TProtoItem & {
+    id: number;
     ticker: string;
     icon?: string;
     description?: string;

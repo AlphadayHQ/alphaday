@@ -42,7 +42,7 @@ const SuperfeedContainer: FC<{ onToggleFeedFilters: () => void }> = ({
     const {
         nextPage,
         handleNextPage,
-        reset: resetPagination,
+        // reset: resetPagination,
     } = usePagination(feedDataResponse?.links, MAX_PAGE_NUMBER, isSuccess);
 
     const feedDataForCurrentPage = [...(feedDataResponse?.results ?? [])];
