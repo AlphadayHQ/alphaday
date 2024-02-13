@@ -1,4 +1,3 @@
-// @ts-nocheck we'll fix this later: // TODO
 import { useCallback } from "react";
 import { setCurrentTutorialTip, setStoreShowTutorial } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
@@ -51,7 +50,9 @@ export const useTutorial: () => ITutorial = () => {
                 .map((object) => object.id)
                 .indexOf(currentTutorialTip.id);
             const next =
-                index !== undefined ? (index + 1) % allowedTutorials.length : 0;
+                typeof index === "number"
+                    ? (index + 1) % allowedTutorials.length
+                    : 0;
 
             dispatch(
                 setCurrentTutorialTip({ tutorialTip: allowedTutorials[next] })
@@ -116,7 +117,8 @@ export const useTutorial: () => ITutorial = () => {
             // The last tip doesn't include a count
             tipCount: `${
                 currentTutorialTip
-                    ? allowedTutorials.indexOf(currentTutorialTip) + 1
+                    ? (allowedTutorials.indexOf(currentTutorialTip) as number) +
+                      1
                     : 1
             }/${tutorials.length - 1}`,
         },
