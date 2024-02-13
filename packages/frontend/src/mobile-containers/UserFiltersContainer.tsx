@@ -1,17 +1,13 @@
 import { FC } from "react";
-import { useDispatch } from "react-redux";
+import { useFilters } from "src/api/hooks";
 import { useGetFilterDataQuery, TBaseFilterItem } from "src/api/services";
 import {
     selectedLocalFiltersSelector,
     selectedSyncedFiltersSelector,
-    setSortBy,
-    setTimeRange,
-    selectMediaType,
-    selectSyncedFilter,
     TSelectedFiltersLocal,
 } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
-import { ESortFeedBy, ESupportedFilters } from "src/api/types";
+import { ESupportedFilters } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import {
     TLocalFilterOptions,
@@ -74,12 +70,12 @@ const UserFiltersContainer: FC<{
     onToggleFeedFilters: () => void;
     show: boolean;
 }> = ({ onToggleFeedFilters, show }) => {
-    const dispatch = useDispatch();
-
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
 
     const { data: filtersData, isLoading } = useGetFilterDataQuery();
+
+    const { toggleFilter } = useFilters();
 
     const filterOptions: TFilterOptions = {
         localFilterOptions: updateLocalFilterOptionsState(selectedLocalFilters),
@@ -108,29 +104,7 @@ const UserFiltersContainer: FC<{
         filterType: ESupportedFilters
     ) => {
         Logger.debug("handleSlectedFilter:", slug, filterType);
-        switch (filterType) {
-            case ESupportedFilters.SortBy:
-                if (Object.values(ESortFeedBy).includes(slug as ESortFeedBy)) {
-                    dispatch(setSortBy(slug as ESortFeedBy));
-                } else {
-                    Logger.warn("UserFiltersContainer: unknown sortBy filter");
-                    dispatch(setSortBy(ESortFeedBy.Trendiness));
-                }
-                break;
-            case ESupportedFilters.TimeRange:
-                dispatch(setTimeRange({ slug }));
-                break;
-            case ESupportedFilters.MediaTypes:
-                dispatch(selectMediaType({ slug }));
-                break;
-            case ESupportedFilters.Chains:
-            case ESupportedFilters.Coins:
-            case ESupportedFilters.ConceptTags:
-                dispatch(selectSyncedFilter({ slug, type: filterType }));
-                break;
-            default:
-                break;
-        }
+        toggleFilter(slug, filterType);
     };
 
     return (
