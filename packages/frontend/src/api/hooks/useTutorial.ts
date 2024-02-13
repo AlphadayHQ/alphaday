@@ -117,8 +117,8 @@ export const useTutorial: () => ITutorial = () => {
             // The last tip doesn't include a count
             tipCount: `${
                 currentTutorialTip
-                    ? (allowedTutorials.indexOf(currentTutorialTip) as number) +
-                      1
+                    ? // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+                      allowedTutorials.indexOf(currentTutorialTip) + 1
                     : 1
             }/${tutorials.length - 1}`,
         },
