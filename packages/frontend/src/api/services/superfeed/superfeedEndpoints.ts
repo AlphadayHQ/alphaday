@@ -22,9 +22,7 @@ export const superfeedApi = alphadayApi.injectEndpoints({
             query: (req) => {
                 const { ...reqParams } = req;
                 const params: string = queryString.stringify(reqParams);
-                const path = `${String(SUPERFEED.BASE)}${String(
-                    SUPERFEED.DEFAULT
-                )}?${params}`;
+                const path = `${SUPERFEED.BASE}${SUPERFEED.DEFAULT}?${params}`;
                 Logger.debug("getSuperfeedList: querying", path);
                 return path;
             },
@@ -61,9 +59,7 @@ export const superfeedApi = alphadayApi.injectEndpoints({
             TGetSuperfeedFilterDataRequest
         >({
             query: () => {
-                const path = `${String(SUPERFEED.BASE)}${String(
-                    SUPERFEED.FILTER_DATA
-                )}`;
+                const path = `${SUPERFEED.BASE}${SUPERFEED.FILTER_DATA}`;
                 Logger.debug("getSuperfeedFilterData: querying", path);
                 return path;
             },

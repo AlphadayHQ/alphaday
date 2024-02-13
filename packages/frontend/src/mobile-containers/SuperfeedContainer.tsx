@@ -13,7 +13,7 @@ const { MAX_PAGE_NUMBER } = CONFIG.SUPERFEED;
 const SuperfeedContainer: FC<{ onToggleFeedFilters: () => void }> = ({
     onToggleFeedFilters,
 }) => {
-    // TODO: implement superfeed search
+    // TODO(v-almonacid): implement superfeed search
     // const { tags } = useMobileGlobalSearch();
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
 
@@ -39,21 +39,15 @@ const SuperfeedContainer: FC<{ onToggleFeedFilters: () => void }> = ({
     });
     const prevFeedDataResponseRef = useRef<TSuperfeedItem[]>();
 
-    const {
-        nextPage,
-        handleNextPage,
-        // reset: resetPagination,
-    } = usePagination(feedDataResponse?.links, MAX_PAGE_NUMBER, isSuccess);
+    const { nextPage, handleNextPage } = usePagination(
+        feedDataResponse?.links,
+        MAX_PAGE_NUMBER,
+        isSuccess
+    );
 
     const feedDataForCurrentPage = [...(feedDataResponse?.results ?? [])];
 
     const [feedData, setfeedData] = useState<TSuperfeedItem[]>([]);
-
-    // const reset = () => {
-    //     if (feedData.length !== 0) setfeedData([]);
-    //     if (currentPage !== undefined) setCurrentPage(undefined);
-    //     resetPagination();
-    // };
 
     // Todo(xavier-charles) Will use this later
     // If the current response changes, it means the request parameters changed
