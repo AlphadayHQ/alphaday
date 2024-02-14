@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { Link, useHistory } from "react-router-dom";
+import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
-import { Logger } from "src/api/utils/logging";
 
 const NonAuthenticatedSection = () => {
     return (
