@@ -59,9 +59,12 @@ const NotificationItem: FC<
     };
     return (
         <div
+            onClick={handleShowDesc}
+            role="button"
+            tabIndex={0}
             className={twMerge(
                 "flex flex-col w-full p-4 rounded-lg mb-3 cursor-pointer",
-                isRead ? "bg-background" : "bg-backgroundVariant200"
+                isRead ? "bg-backgroundVariant100" : "bg-backgroundVariant200"
             )}
         >
             <div className="flex justify-between items-center">
@@ -85,13 +88,16 @@ const NotificationItem: FC<
             </div>
             <div className="flex justify-between">
                 <p className="fontGroup-highlightSemi m-0 mt-2">{title}</p>
-                <button
-                    onClick={handleShowDesc}
-                    type="button"
-                    className="fontGroup-normal text-primary border-b border-accentVariant100 self-end m-0"
-                >
-                    view
-                </button>
+                {!isRead && (
+                    <div
+                        onClick={handleShowDesc}
+                        role="button"
+                        tabIndex={0}
+                        className="fontGroup-normal text-primary border-b border-accentVariant100 self-end m-0"
+                    >
+                        view
+                    </div>
+                )}
             </div>
             {showDesc && <p className="fontGroup-normal">{description}</p>}
         </div>
