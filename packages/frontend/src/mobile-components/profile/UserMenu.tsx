@@ -6,6 +6,7 @@ import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
+import { Logger } from "src/api/utils/logging";
 
 const NonAuthenticatedSection = () => {
     return (
@@ -72,7 +73,7 @@ interface IUserMenu {
     // isOpen: boolean;
     // onClose: () => void;
     isAuthenticated: boolean;
-    onLogout: () => void;
+    onLogout: () => Promise<void>;
 }
 const UserMenu: FC<IUserMenu> = ({ isAuthenticated, onLogout }) => {
     const history = useHistory();
@@ -116,7 +117,9 @@ const UserMenu: FC<IUserMenu> = ({ isAuthenticated, onLogout }) => {
             subtext: null,
             onClick: () => {
                 navigate("profile/log-out");
-                onLogout();
+                onLogout().catch((e) =>
+                    Logger.error("UserMenu: logout failed", e)
+                );
             },
         },
     ];
