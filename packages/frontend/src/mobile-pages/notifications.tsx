@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useHistory } from "react-router";
 import { useAuth } from "src/api/hooks";
 import { EFeedItemType } from "src/api/types";
@@ -82,6 +83,14 @@ const mockNotifications = [
 const NotificationsPage = () => {
     const history = useHistory();
     const { isAuthenticated } = useAuth();
+
+    const [notifications, setNotifications] = useState(mockNotifications);
+
+    const markAsRead = (id: string) => {
+        setNotifications(
+            notifications.map((n) => (n.id === id ? { ...n, isRead: true } : n))
+        );
+    };
     return (
         <PagedMobileLayout
             title="Notifications"
@@ -91,7 +100,8 @@ const NotificationsPage = () => {
         >
             <Notifications
                 isAuthenticated={isAuthenticated}
-                notifications={mockNotifications}
+                notifications={notifications}
+                markAsRead={markAsRead}
             />
         </PagedMobileLayout>
     );

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { ReactComponent as BellSVG } from "src/assets/icons/bell.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
@@ -21,6 +21,7 @@ type TNotification = {
 interface INotifications {
     notifications: TNotification[] | undefined;
     isAuthenticated: boolean;
+    markAsRead: (id: string) => void;
 }
 
 const NoNotifications = () => {
@@ -38,18 +39,28 @@ const NoNotifications = () => {
     );
 };
 
-const NotificationItem: FC<TNotification> = ({
+const NotificationItem: FC<
+    TNotification & { markAsRead: (id: string) => void }
+> = ({
+    id,
     title,
     description,
     date,
     isRead,
     contentType,
     source,
+    markAsRead,
 }) => {
+    const [showDesc, setShowDesc] = useState(false);
+
+    const handleShowDesc = () => {
+        setShowDesc(true);
+        markAsRead(id);
+    };
     return (
         <div
             className={twMerge(
-                "flex flex-col w-full p-4 rounded-lg mb-3",
+                "flex flex-col w-full p-4 rounded-lg mb-3 cursor-pointer",
                 isRead ? "bg-background" : "bg-backgroundVariant200"
             )}
         >
@@ -74,22 +85,30 @@ const NotificationItem: FC<TNotification> = ({
             </div>
             <div className="flex justify-between">
                 <p className="fontGroup-highlightSemi m-0 mt-2">{title}</p>
-                <p className="fontGroup-normal text-primary border-b border-accentVariant100 self-end m-0">
+                <button
+                    onClick={handleShowDesc}
+                    type="button"
+                    className="fontGroup-normal text-primary border-b border-accentVariant100 self-end m-0"
+                >
                     view
-                </p>
+                </button>
             </div>
-            {/* <p className="fontGroup-normal">{description}</p> */}
+            {showDesc && <p className="fontGroup-normal">{description}</p>}
         </div>
     );
 };
-const Notifications: FC<INotifications> = ({ notifications }) => {
+const Notifications: FC<INotifications> = ({ notifications, markAsRead }) => {
     if (notifications === undefined) {
         return <NoNotifications />;
     }
     return (
         <div className="w-full flex flex-col px-4">
             {notifications.map((notification) => (
-                <NotificationItem key={notification.id} {...notification} />
+                <NotificationItem
+                    key={notification.id}
+                    {...notification}
+                    markAsRead={markAsRead}
+                />
             ))}
         </div>
     );
