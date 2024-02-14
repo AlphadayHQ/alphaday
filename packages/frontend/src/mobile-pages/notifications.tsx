@@ -91,6 +91,9 @@ const NotificationsPage = () => {
             notifications.map((n) => (n.id === id ? { ...n, isRead: true } : n))
         );
     };
+    const removeNotification = (id: string) => {
+        setNotifications((prev) => prev.filter((n) => n.id !== id));
+    };
     return (
         <PagedMobileLayout
             title="Notifications"
@@ -102,6 +105,7 @@ const NotificationsPage = () => {
                 isAuthenticated={isAuthenticated}
                 notifications={notifications}
                 markAsRead={markAsRead}
+                removeNotification={removeNotification}
             />
         </PagedMobileLayout>
     );

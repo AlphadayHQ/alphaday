@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, MouseEventHandler, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { ReactComponent as BellSVG } from "src/assets/icons/bell.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
@@ -22,6 +22,7 @@ interface INotifications {
     notifications: TNotification[] | undefined;
     isAuthenticated: boolean;
     markAsRead: (id: string) => void;
+    removeNotification: (id: string) => void;
 }
 
 const NoNotifications = () => {
@@ -40,7 +41,10 @@ const NoNotifications = () => {
 };
 
 const NotificationItem: FC<
-    TNotification & { markAsRead: (id: string) => void }
+    TNotification & {
+        markAsRead: (id: string) => void;
+        removeNotification: (id: string) => void;
+    }
 > = ({
     id,
     title,
@@ -50,12 +54,18 @@ const NotificationItem: FC<
     contentType,
     source,
     markAsRead,
+    removeNotification,
 }) => {
     const [showDesc, setShowDesc] = useState(false);
 
     const handleShowDesc = () => {
         setShowDesc(true);
         markAsRead(id);
+    };
+
+    const handleClose: MouseEventHandler<SVGSVGElement> = (e) => {
+        e.stopPropagation();
+        removeNotification(id);
     };
     return (
         <div
@@ -84,7 +94,10 @@ const NotificationItem: FC<
                         </p>
                     </div>
                 </div>
-                <CloseSVG className="w-4 h-4 text-primary" />
+                <CloseSVG
+                    onClick={handleClose}
+                    className="w-4 h-4 text-primary"
+                />
             </div>
             <div className="flex justify-between">
                 <p className="fontGroup-highlightSemi m-0 mt-2">{title}</p>
@@ -103,7 +116,11 @@ const NotificationItem: FC<
         </div>
     );
 };
-const Notifications: FC<INotifications> = ({ notifications, markAsRead }) => {
+const Notifications: FC<INotifications> = ({
+    notifications,
+    markAsRead,
+    removeNotification,
+}) => {
     if (notifications === undefined) {
         return <NoNotifications />;
     }
@@ -114,6 +131,7 @@ const Notifications: FC<INotifications> = ({ notifications, markAsRead }) => {
                     key={notification.id}
                     {...notification}
                     markAsRead={markAsRead}
+                    removeNotification={removeNotification}
                 />
             ))}
         </div>
