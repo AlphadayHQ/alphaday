@@ -12,6 +12,7 @@ export type TOption = {
     slug: string;
     selected: boolean;
     color?: string;
+    ticker?: string;
 };
 
 type TMediaOption = TOption & { contentType: EFeedItemType };

@@ -174,6 +174,7 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "PUT",
                 body: request,
             }),
+            invalidatesTags: ["Account"],
         }),
     }),
     overrideExisting: false,

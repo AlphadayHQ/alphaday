@@ -84,3 +84,5 @@ export const {
     useSsoLoginMutation,
     useSignoutMutation,
 } = authApi;
+
+export const { signout } = authApi.endpoints;
