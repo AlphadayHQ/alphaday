@@ -1,6 +1,8 @@
 import { FC } from "react";
+import { twMerge } from "@alphaday/ui-kit";
+import moment from "moment";
+import { TagButton } from "src/mobile-components/button/buttons";
 import { imgOnError } from "src/utils/errorHandling";
-import { twMerge } from "tailwind-merge";
 import {
     ActionButtons,
     CardTitle,
@@ -12,18 +14,46 @@ import {
 } from "./FeedElements";
 import { IFeedItem, feedItemIconMap } from "./types";
 
-export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
+const eventDateFormatter = (date: string) => {
+    const d = new Date(); // or whatever date you have
+    const tzName = d
+        .toLocaleString("en", { timeZoneName: "short" })
+        .split(" ")
+        .pop();
+    return (
+        <span className="flex flex-col text-primary fontGroup-mini">
+            <span>
+                {`${String(moment(date).format("MMM DD, YYYY"))}`}
+                <span className="mx-1.5 my-0 self-center">•</span>
+                <span>
+                    {`${String(moment(date).format("h:mmA"))} (${String(
+                        tzName
+                    )})`}
+                </span>
+            </span>
+        </span>
+    );
+};
+
+export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
         tags,
         likes,
         comments,
-        sourceName,
         url,
         image,
         type,
         shortDescription,
+        // category,
+        // location,
+        startsAt,
+        endsAt,
     } = item;
+
+    // TODO: remove this when we have real data
+    const location = "location";
+    const category = "category";
 
     const onLike = () => {};
     const isLiked = false;
@@ -35,18 +65,26 @@ export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
                     <FeedItemDisclosureButton open={open}>
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between">
-                                <div className="flex flex-col">
+                                <div className="flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
                                             icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                            <p className="text-primaryVariant100 capitalize fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                                {sourceName}
-                                            </p>
+                                            <div className="flex flex-col text-primary fontGroup-mini">
+                                                {startsAt &&
+                                                    eventDateFormatter(
+                                                        startsAt
+                                                    )}
+                                                {endsAt &&
+                                                    eventDateFormatter(endsAt)}
+                                            </div>
                                         </div>
                                     </div>
                                     <CardTitle title={title} />
+                                    <p className="mt-0.5 mb-0 line-clamp-2">
+                                        {location}
+                                    </p>
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
                                     <div
@@ -64,18 +102,16 @@ export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex justify-between">
-                                <div className="flex-col">
-                                    {!open && (
-                                        <TagButtons
-                                            truncated
-                                            tags={tags}
+                            {!open && (
+                                <div className="flex justify-between">
+                                    <div className="flex-col">
+                                        <TagButton
+                                            className="bg-[#C1DF91] text-background mt-3"
+                                            name={category}
                                             onClick={() => {}}
                                         />
-                                    )}
-                                </div>
-                                <div className="flex-col min-w-max ml-2">
-                                    {!open && (
+                                    </div>
+                                    <div className="flex-col min-w-max ml-2">
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
@@ -84,9 +120,9 @@ export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
                                             comments={comments}
                                             isLiked={isLiked}
                                         />
-                                    )}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
@@ -96,6 +132,10 @@ export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
                             className="w-full rounded-lg object-cover"
                             onError={imgOnError}
                         />
+                        <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
+                            {title}
+                        </p>
+                        <p className="mt-0.5 mb-0 line-clamp-2">{location}</p>
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
@@ -108,7 +148,14 @@ export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
                             Read more
                         </a>
                         <div className="my-2 flex justify-between">
-                            <TagButtons tags={tags} onClick={() => {}} />
+                            <div className="flex flex-col">
+                                <TagButton
+                                    className="bg-[#C1DF91] text-background mt-3"
+                                    name={category}
+                                    onClick={() => {}}
+                                />
+                                <TagButtons tags={tags} onClick={() => {}} />
+                            </div>
                             <div className="min-w-max ml-2 mt-0.5">
                                 <ActionButtons
                                     onLike={onLike}

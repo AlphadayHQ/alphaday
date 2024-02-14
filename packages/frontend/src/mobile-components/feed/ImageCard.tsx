@@ -1,7 +1,6 @@
 import { FC } from "react";
-import { computeDuration } from "src/utils/dateUtils";
+import { twMerge } from "@alphaday/ui-kit";
 import { imgOnError } from "src/utils/errorHandling";
-import { twMerge } from "tailwind-merge";
 import {
     ActionButtons,
     CardTitle,
@@ -9,24 +8,21 @@ import {
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
     FeedItemDisclosurePanel,
-    FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
 import { IFeedItem, feedItemIconMap } from "./types";
 
-export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
         tags,
         likes,
         comments,
-        sourceIcon,
         sourceName,
         url,
         image,
         type,
         shortDescription,
-        date,
     } = item;
 
     const onLike = () => {};
@@ -45,15 +41,8 @@ export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
                                             icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                            <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                                {computeDuration(date)}
-                                                <span className="mx-1.5 my-0 self-center">
-                                                    •
-                                                </span>{" "}
-                                                <FeedSourceInfo
-                                                    name={sourceName}
-                                                    img={sourceIcon}
-                                                />
+                                            <p className="text-primaryVariant100 capitalize fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                                {sourceName}
                                             </p>
                                         </div>
                                     </div>

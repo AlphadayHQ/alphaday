@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
+import { twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
 import { ApexAreaChart } from "src/components/charts/apexchart";
 import { Spinner } from "src/components/spinner/Spinner";
 import { darkColors } from "src/globalStyles/colors";
 import { renderToString } from "src/utils/textUtils";
-import { twMerge } from "tailwind-merge";
 
 type IProps = {
     data: number[][];

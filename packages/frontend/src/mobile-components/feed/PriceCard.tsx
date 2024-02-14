@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "@alphaday/ui-kit";
 import {
     ActionButtons,
     CardTitle,

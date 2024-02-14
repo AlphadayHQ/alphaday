@@ -1,8 +1,11 @@
 import { FC } from "react";
-import moment from "moment";
+import { twMerge } from "@alphaday/ui-kit";
+import { ReactComponent as PauseSVG } from "src/assets/svg/pause2.svg";
+import { ReactComponent as PlayAudioSVG } from "src/assets/svg/play-audio.svg";
+import { ReactComponent as SkipBackwardSVG } from "src/assets/svg/skip-backward.svg";
+import { ReactComponent as SkipForwardSVG } from "src/assets/svg/skip-forward.svg";
+import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
-import { twMerge } from "tailwind-merge";
-import { TagButton } from "../button/buttons";
 import {
     ActionButtons,
     CardTitle,
@@ -10,50 +13,25 @@ import {
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
     FeedItemDisclosurePanel,
+    FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
 import { IFeedItem, feedItemIconMap } from "./types";
 
-const eventDateFormatter = (date: string) => {
-    const d = new Date(); // or whatever date you have
-    const tzName = d
-        .toLocaleString("en", { timeZoneName: "short" })
-        .split(" ")
-        .pop();
-    return (
-        <span className="flex flex-col text-primary fontGroup-mini">
-            <span>
-                {`${String(moment(date).format("MMM DD, YYYY"))}`}
-                <span className="mx-1.5 my-0 self-center">•</span>
-                <span>
-                    {`${String(moment(date).format("h:mmA"))} (${String(
-                        tzName
-                    )})`}
-                </span>
-            </span>
-        </span>
-    );
-};
-
-export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const PodcastCard: FC<{ item: IFeedItem }> = ({ item }) => {
     const {
         title,
         tags,
         likes,
         comments,
+        sourceName,
+        sourceIcon,
+        date,
         url,
         image,
         type,
         shortDescription,
-        // category,
-        // location,
-        startsAt,
-        endsAt,
     } = item;
-
-    // TODO: remove this when we have real data
-    const location = "location";
-    const category = "category";
 
     const onLike = () => {};
     const isLiked = false;
@@ -65,38 +43,43 @@ export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
                     <FeedItemDisclosureButton open={open}>
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between">
-                                <div className="flex-col">
+                                <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
                                             icon={feedItemIconMap[type]}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                            <div className="flex flex-col text-primary fontGroup-mini">
-                                                {startsAt &&
-                                                    eventDateFormatter(
-                                                        startsAt
-                                                    )}
-                                                {endsAt &&
-                                                    eventDateFormatter(endsAt)}
-                                            </div>
+                                            <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                                {computeDuration(date)}
+                                                <span className="mx-1.5 my-0 self-center">
+                                                    •
+                                                </span>{" "}
+                                                <FeedSourceInfo
+                                                    name={sourceName}
+                                                    img={sourceIcon}
+                                                />{" "}
+                                            </p>
                                         </div>
                                     </div>
                                     <CardTitle title={title} />
-                                    <p className="mt-0.5 mb-0 line-clamp-2">
-                                        {location}
-                                    </p>
+                                    {open ? undefined : (
+                                        <div className="flex items-center mt-1">
+                                            <PlayAudioSVG className="w-6 h-6 mr-1.5 text-primary" />
+                                        </div>
+                                    )}
                                 </div>
+
                                 <div className="flex-col min-w-max ml-2">
                                     <div
                                         className={twMerge(
                                             "w-full flex justify-end items-start",
-                                            open && "hidden"
+                                            open ? "" : "h-24"
                                         )}
                                     >
                                         <img
                                             src={image || undefined}
                                             alt=""
-                                            className="h-24 rounded-lg object-cover"
+                                            className="w-14 h-14 rounded-lg object-cover"
                                             onError={imgOnError}
                                         />
                                     </div>
@@ -105,9 +88,9 @@ export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
                             {!open && (
                                 <div className="flex justify-between">
                                     <div className="flex-col">
-                                        <TagButton
-                                            className="bg-[#C1DF91] text-background mt-3"
-                                            name={category}
+                                        <TagButtons
+                                            truncated
+                                            tags={tags}
                                             onClick={() => {}}
                                         />
                                     </div>
@@ -126,16 +109,18 @@ export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <img
-                            src={image || undefined}
-                            alt=""
-                            className="w-full rounded-lg object-cover"
-                            onError={imgOnError}
-                        />
-                        <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
-                            {title}
-                        </p>
-                        <p className="mt-0.5 mb-0 line-clamp-2">{location}</p>
+                        <div className="flex justify-center">
+                            <SkipForwardSVG className="w-6 h-6 text-primaryVariant100" />
+                            <div className="relative w-full min-w-[100px] px-2 flex  items-center justify-start">
+                                <div className="bg-backgroundVariant200 w-full h-1 rounded" />
+                                <div className="absolute bg-primaryVariant200 w-12 h-1 rounded" />
+                            </div>
+                            <SkipBackwardSVG className="w-6 h-6 mr-1.5 text-primaryVariant100" />
+                            <span className="fontGroup-mini self-center text-primary mr-1.5">
+                                3:37
+                            </span>
+                            <PauseSVG className="w-6 h-6 mr-1.5 text-primary" />
+                        </div>{" "}
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
@@ -148,14 +133,7 @@ export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
                             Read more
                         </a>
                         <div className="my-2 flex justify-between">
-                            <div className="flex flex-col">
-                                <TagButton
-                                    className="bg-[#C1DF91] text-background mt-3"
-                                    name={category}
-                                    onClick={() => {}}
-                                />
-                                <TagButtons tags={tags} onClick={() => {}} />
-                            </div>
+                            <TagButtons tags={tags} onClick={() => {}} />
                             <div className="min-w-max ml-2 mt-0.5">
                                 <ActionButtons
                                     onLike={onLike}
