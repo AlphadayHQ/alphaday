@@ -12,7 +12,7 @@ export type TRemoteSuperfeedItem = {
     image: string;
     short_description: string;
     file_url: string | null;
-    duration: number | null;
+    duration: string | null;
     starts_at: string | null;
     ends_at: string | null;
     source: {

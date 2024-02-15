@@ -1,5 +1,5 @@
 import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Transition } from "@headlessui/react";
 import { useLayer } from "react-laag";
 import { twMerge } from "tailwind-merge";
 import { Arrow } from "./src/components/arrow/Arrow";
@@ -94,8 +94,6 @@ import { themeColors } from "./src/globalStyles/themes";
 import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
 import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
 import { Pager } from "./src/mobile-components/pager/Pager";
-import { FeedCard } from "./src/mobile-components/superfeed/FeedCard";
-import { feedItemIconMap } from "./src/mobile-components/superfeed/types";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
@@ -121,7 +119,6 @@ export {
     Carousel,
     CarouselImage,
     Lightbox,
-    feedItemIconMap,
     Timer,
     Toggle,
     ErrorModal,
@@ -179,7 +176,7 @@ export {
     NavBottom,
     NavHeader,
     Pager,
-    FeedCard,
     Disclosure,
+    Transition,
     MiniDialog,
 };

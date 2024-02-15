@@ -1,12 +1,10 @@
 import { FC, MouseEventHandler, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import { EFeedItemType } from "src/api/types";
 import { ReactComponent as BellSVG } from "src/assets/icons/bell.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
-import {
-    EFeedItemType,
-    feedItemIconMap,
-} from "src/mobile-components/superfeed/types";
 import { computeDuration } from "src/utils/dateUtils";
+import { feedItemIconMap } from "../feed/types";
 
 type TNotification = {
     id: string;

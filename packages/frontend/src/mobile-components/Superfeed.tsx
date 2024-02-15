@@ -1,16 +1,22 @@
 import { useRef, FC, FormEvent, useCallback } from "react";
-import { twMerge, FeedCard, ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import { twMerge, ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import { AudioPlayerProvider } from "react-use-audio-player";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import { ReactComponent as Settings2SVG } from "src/assets/icons/settings3.svg";
+import { FeedCard } from "./feed/FeedCard";
 
 interface ISuperfeedModule {
     isLoading: boolean;
     feed: TSuperfeedItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
+    selectedPodcast: TSuperfeedItem | null;
+    setSelectedPodcast: React.Dispatch<
+        React.SetStateAction<TSuperfeedItem | null>
+    >;
 }
 
 const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
@@ -56,6 +62,8 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     feed,
     handlePaginate,
     toggleShowFeedFilters,
+    selectedPodcast,
+    setSelectedPodcast,
 }) => {
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -72,9 +80,16 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     return (
         <ScrollBar onScroll={handleScrollEvent} className="w-full px-5 pt-4">
             <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
-            {feed.map((item) => (
-                <FeedCard key={item.id} item={item} />
-            ))}
+            <AudioPlayerProvider>
+                {feed.map((item) => (
+                    <FeedCard
+                        key={item.id}
+                        item={item}
+                        selectedPodcast={selectedPodcast}
+                        setSelectedPodcast={setSelectedPodcast}
+                    />
+                ))}
+            </AudioPlayerProvider>
         </ScrollBar>
     );
 };

@@ -1,12 +1,11 @@
 import { FC, ReactNode } from "react";
-import { Disclosure, Transition } from "@headlessui/react";
+import { Disclosure, Transition, twMerge } from "@alphaday/ui-kit";
 import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
 import { ReactComponent as LikeSVG } from "src/assets/svg/like.svg";
 import { ReactComponent as LikedSVG } from "src/assets/svg/liked.svg";
 import { ReactComponent as ShareSVG } from "src/assets/svg/share.svg";
+import { ActionButton, TagButton } from "src/mobile-components/button/buttons";
 import { imgOnError } from "src/utils/errorHandling";
-import { twMerge } from "tailwind-merge";
-import { ActionButton, TagButton } from "../button/buttons";
 
 export const ActionButtons: FC<{
     onLike: () => void;
