@@ -127,13 +127,6 @@ export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        {/* <video
-                            className="mb-2 rounded bg-backgroundVariant200"
-                            onError={() => {}}
-                        >
-                            <source src={url} />
-                            <track kind="captions" label="English" />
-                        </video> */}
                         <div className="w-full relative text-[0]">
                             <iframe
                                 title={title}
