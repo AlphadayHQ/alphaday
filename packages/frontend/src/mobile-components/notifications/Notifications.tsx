@@ -42,7 +42,7 @@ const NoNotifications = () => {
 
 const NotificationItem: FC<
     TNotification & {
-        markAsRead: (id: string) => void;
+        onMarkAsRead: (id: string) => void;
         removeNotification: (id: string) => void;
     }
 > = ({
@@ -53,14 +53,14 @@ const NotificationItem: FC<
     isRead,
     contentType,
     source,
-    markAsRead,
+    onMarkAsRead,
     removeNotification,
 }) => {
     const [showDesc, setShowDesc] = useState(false);
 
     const handleShowDesc = () => {
         setShowDesc(true);
-        markAsRead(id);
+        onMarkAsRead(id);
     };
 
     const handleClose: MouseEventHandler<SVGSVGElement> = (e) => {
@@ -130,7 +130,7 @@ const Notifications: FC<INotifications> = ({
                 <NotificationItem
                     key={notification.id}
                     {...notification}
-                    markAsRead={markAsRead}
+                    onMarkAsRead={markAsRead}
                     removeNotification={removeNotification}
                 />
             ))}
