@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { TSuperfeedItem } from "src/api/types";
 import { computeDuration } from "src/utils/dateUtils";
 import {
     ActionButtons,
@@ -11,9 +12,9 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IFeedItem, feedItemIconMap } from "./types";
+import { feedItemIconMap } from "./types";
 
-export const NewsCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const NewsCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const {
         title,
         tags,

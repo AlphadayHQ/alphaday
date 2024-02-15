@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
+import { TSuperfeedItem } from "src/api/types";
 import { TagButton } from "src/mobile-components/button/buttons";
 import { imgOnError } from "src/utils/errorHandling";
 import {
@@ -12,7 +13,7 @@ import {
     FeedItemDisclosurePanel,
     TagButtons,
 } from "./FeedElements";
-import { IFeedItem, feedItemIconMap } from "./types";
+import { feedItemIconMap } from "./types";
 
 const eventDateFormatter = (date: string) => {
     const d = new Date(); // or whatever date you have
@@ -35,7 +36,7 @@ const eventDateFormatter = (date: string) => {
     );
 };
 
-export const EventCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const EventCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const {
         title,
         tags,

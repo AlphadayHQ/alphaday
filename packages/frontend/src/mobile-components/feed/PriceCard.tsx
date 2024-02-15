@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import { EFeedItemType, TSuperfeedItem } from "src/api/types";
 import {
     ActionButtons,
     CardTitle,
@@ -11,9 +12,9 @@ import {
     TagButtons,
 } from "./FeedElements";
 // import LineChart from "./LineChart";
-import { EFeedItemType, IFeedItem, feedItemIconMap } from "./types";
+import { feedItemIconMap } from "./types";
 
-export const PriceCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 
     // const price = isTVL ? item.tvl : item.price;

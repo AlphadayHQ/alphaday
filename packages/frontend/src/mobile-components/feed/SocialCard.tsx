@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import { TSuperfeedItem } from "src/api/types";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
@@ -12,9 +13,9 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IFeedItem, feedItemIconMap } from "./types";
+import { feedItemIconMap } from "./types";
 
-export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const SocialCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const {
         title,
         tags,

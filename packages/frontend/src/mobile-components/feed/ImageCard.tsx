@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import { TSuperfeedItem } from "src/api/types";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,
@@ -10,9 +11,9 @@ import {
     FeedItemDisclosurePanel,
     TagButtons,
 } from "./FeedElements";
-import { IFeedItem, feedItemIconMap } from "./types";
+import { feedItemIconMap } from "./types";
 
-export const ImageCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const ImageCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const {
         title,
         tags,
