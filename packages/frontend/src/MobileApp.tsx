@@ -1,6 +1,8 @@
 import { Suspense, memo } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useAppInit } from "./api/hooks";
+import { IonApp, IonRouterOutlet } from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { Redirect, Route } from "react-router-dom";
+import { useAppInit, useAuth } from "./api/hooks";
 import { lazyRetry } from "./api/utils/helpers";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
@@ -18,27 +20,43 @@ const UserSettingsPage = lazyRetry(
 const MobileApp: React.FC = () => {
     useAppInit();
 
+    const { isAuthenticated } = useAuth();
+
     return (
-        <BrowserRouter>
-            <Switch>
-                <Suspense fallback={<PreloaderPage />}>
-                    <Route path="/" exact component={SuperfeedPage} />
-                    <Route path="/auth*" exact component={AuthPage} />
-                    <Route path="/filters" exact component={FiltersPage} />
-                    <Route
-                        path="/user-settings"
-                        exact
-                        component={UserSettingsPage}
-                    />
-                    <Route
-                        path="/notifications"
-                        exact
-                        component={NotificationsPage}
-                    />
-                    {/* Add more routes as needed */}
-                </Suspense>
-            </Switch>
-        </BrowserRouter>
+        <IonApp className="theme-dark">
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    <Suspense fallback={<PreloaderPage />}>
+                        <Route path="/" exact component={SuperfeedPage} />
+                        <Route path="/auth*" exact component={AuthPage} />
+                        <Route path="/filters" exact component={FiltersPage} />
+                        <Route
+                            path="/user-settings"
+                            exact
+                            render={() =>
+                                isAuthenticated ? (
+                                    <UserSettingsPage />
+                                ) : (
+                                    <SuperfeedPage />
+                                )
+                            }
+                        />
+                        <Route
+                            path="/notifications"
+                            exact
+                            render={() =>
+                                isAuthenticated ? (
+                                    <NotificationsPage />
+                                ) : (
+                                    <SuperfeedPage />
+                                )
+                            }
+                        />
+                        <Route render={() => <Redirect to="/" />} />
+                    </Suspense>
+                </IonRouterOutlet>
+            </IonReactRouter>
+        </IonApp>
     );
 };
 

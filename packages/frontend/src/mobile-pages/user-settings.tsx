@@ -1,3 +1,4 @@
+import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
@@ -8,14 +9,16 @@ const UserSettings: React.FC = () => {
     const { isAuthenticated, logout } = useAuth();
 
     return (
-        <PagedMobileLayout
-            title=""
-            handleBack={() =>
-                history.length > 1 ? history.goBack() : history.push("/")
-            }
-        >
-            <UserMenu isAuthenticated={isAuthenticated} onLogout={logout} />
-        </PagedMobileLayout>
+        <IonPage>
+            <PagedMobileLayout
+                title=""
+                handleBack={() =>
+                    history.length > 1 ? history.goBack() : history.push("/")
+                }
+            >
+                <UserMenu isAuthenticated={isAuthenticated} onLogout={logout} />
+            </PagedMobileLayout>
+        </IonPage>
     );
 };
 
