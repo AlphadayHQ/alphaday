@@ -102,7 +102,7 @@ const UserMenu: FC<IUserMenu> = ({ isAuthenticated }) => {
         history.push(link);
     };
     return (
-        <div className="mx-5">
+        <div className="mx-5 w-full">
             {/* <div className="flex flex-start w-full items-center mb-4">
                 <ChevronSVG
                     onClick={onClose}
