@@ -1,4 +1,4 @@
-import { FC, useCallback, useRef } from "react";
+import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { useAudioPlayer, useAudioPosition } from "react-use-audio-player";
 import { TSuperfeedItem } from "src/api/types";
@@ -83,8 +83,6 @@ export const PodcastCard: FC<IPodcastCard> = ({
     selectedPodcast,
     setSelectedPodcast,
 }) => {
-    const audioPlayerRef = useRef<HTMLDivElement | null>(null);
-
     const {
         title,
         tags,
@@ -119,23 +117,8 @@ export const PodcastCard: FC<IPodcastCard> = ({
     });
 
     const setPosition = (count: number) => {
-        // if (!audioPlayerRef.current) return;
-        // const { x: playerXPos, width: playerWidth } =
-        //     audioPlayerRef.current.getBoundingClientRect();
-        // const { clientX: eventXPos } = event;
         seek(position + count);
     };
-
-    const setPlaybackPosition = useCallback(
-        (event: React.MouseEvent) => {
-            if (!audioPlayerRef.current) return;
-            const { x: playerXPos, width: playerWidth } =
-                audioPlayerRef.current.getBoundingClientRect();
-            const { clientX: eventXPos } = event;
-            seek(((eventXPos - playerXPos) / playerWidth) * currentDuration);
-        },
-        [currentDuration, seek]
-    );
 
     const isSelected = selectedPodcast?.id === item.id;
 
@@ -256,21 +239,10 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                     onClick={() => setPosition(15)}
                                     className="w-6 h-6 text-primaryVariant100 hover:text-primary"
                                 />
-                                <div
-                                    className="relative w-full min-w-[100px] px-2 flex  items-center justify-start"
-                                    role="button"
-                                    tabIndex={-1}
-                                    onClick={setPlaybackPosition}
-                                >
+                                <div className="relative w-full min-w-[100px] px-2 flex  items-center justify-start">
                                     <div className="bg-backgroundVariant200 w-full h-1 rounded" />
                                     <div
                                         className="absolute bg-primaryVariant200 h-1 rounded"
-                                        role="button"
-                                        tabIndex={-1}
-                                        onClick={(e: React.MouseEvent) => {
-                                            e.stopPropagation();
-                                            setPlaybackPosition(e);
-                                        }}
                                         style={{ width: `${percentComplete}%` }}
                                     />
                                 </div>
