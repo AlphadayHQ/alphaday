@@ -33,13 +33,7 @@ const MobileApp: React.FC = () => {
                         <Route
                             path="/user-settings"
                             exact
-                            render={() =>
-                                isAuthenticated ? (
-                                    <UserSettingsPage />
-                                ) : (
-                                    <SuperfeedPage />
-                                )
-                            }
+                            component={UserSettingsPage}
                         />
                         <Route
                             path="/notifications"
