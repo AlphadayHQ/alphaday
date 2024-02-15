@@ -19,6 +19,7 @@ const AuthContainer = () => {
         requestCode(email)
             .then(() => toast("OTP sent to your email"))
             .catch(() => {
+                toast("Email could not be sent. Please try again.");
                 Logger.error("Failed to send OTP to email", email);
             });
     }, [requestCode, email]);
@@ -30,6 +31,7 @@ const AuthContainer = () => {
                     toast("Successfully verified email");
                 })
                 .catch(() => {
+                    toast("We couldn't verify your email. Please try again.");
                     Logger.error("Failed to verify OTP", otp);
                 });
         },
