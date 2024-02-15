@@ -33,6 +33,7 @@ import {
 } from "./src/components/charts/apexchart";
 import { ChatForm } from "./src/components/chat/ChatForm";
 import { Dialog } from "./src/components/dialog/Dialog";
+import { MiniDialog } from "./src/components/dialog/MiniDialog";
 import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
 import {
     ViewDialog,
@@ -94,7 +95,7 @@ import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
 import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
 import { Pager } from "./src/mobile-components/pager/Pager";
 import { FeedCard } from "./src/mobile-components/superfeed/FeedCard";
-import { MiniDialog } from "./src/components/dialog/MiniDialog";
+import { feedItemIconMap } from "./src/mobile-components/superfeed/types";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
@@ -120,6 +121,7 @@ export {
     Carousel,
     CarouselImage,
     Lightbox,
+    feedItemIconMap,
     Timer,
     Toggle,
     ErrorModal,
