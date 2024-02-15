@@ -84,15 +84,6 @@ const AuthenticatedSection = () => {
                     See all notifications
                 </Link>
             </div>
-            <p className="mt-6">
-                <span className="mt-6">Already have an account?</span>
-                <Link
-                    to="/#"
-                    className="ml-2 font-semibold border-b border-accentVariant100"
-                >
-                    Log in here
-                </Link>
-            </p>
         </div>
     );
 };
