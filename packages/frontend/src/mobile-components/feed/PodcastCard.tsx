@@ -1,7 +1,9 @@
-import { FC } from "react";
+import { FC, useCallback, useRef } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import { useAudioPlayer, useAudioPosition } from "react-use-audio-player";
+import { TSuperfeedItem } from "src/api/types";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause2.svg";
-import { ReactComponent as PlayAudioSVG } from "src/assets/svg/play-audio.svg";
+import { ReactComponent as PlaySVG } from "src/assets/svg/play-audio.svg";
 import { ReactComponent as SkipBackwardSVG } from "src/assets/svg/skip-backward.svg";
 import { ReactComponent as SkipForwardSVG } from "src/assets/svg/skip-forward.svg";
 import { computeDuration } from "src/utils/dateUtils";
@@ -16,9 +18,73 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IFeedItem, feedItemIconMap } from "./types";
+import { feedItemIconMap } from "./types";
 
-export const PodcastCard: FC<{ item: IFeedItem }> = ({ item }) => {
+interface IPodcastCard {
+    item: TSuperfeedItem;
+    selectedPodcast: TSuperfeedItem | null;
+    setSelectedPodcast: React.Dispatch<
+        React.SetStateAction<TSuperfeedItem | null>
+    >;
+}
+
+const SpinnerSVG = () => (
+    <svg
+        aria-hidden="true"
+        role="status"
+        className="inline mr-3 w-4 h-4 text-white animate-spin"
+        viewBox="0 0 100 101"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+            className="fill-accentVariant100"
+        />
+        <path
+            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+            className="fill-gray-400"
+        />
+    </svg>
+);
+
+const PlayPauseButton: FC<{
+    isPlaying: boolean;
+    className?: string;
+}> = ({ isPlaying, className }) => {
+    return isPlaying ? (
+        <PauseSVG
+            className={twMerge(
+                "w-4 h-4 mr-1.5 text-primaryVariant100 group-hover:text-primary hover:text-primary",
+                className
+            )}
+        />
+    ) : (
+        <PlaySVG
+            className={twMerge(
+                "w-4 h-4 mr-1.5 text-primaryVariant100 group-hover:text-primary hover:text-primary",
+                className
+            )}
+        />
+    );
+};
+
+const parseProgressTime = (count: number) =>
+    `${Math.floor(count / 60).toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+    })}:${Math.floor(count % 60).toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+    })}`;
+
+export const PodcastCard: FC<IPodcastCard> = ({
+    item,
+    selectedPodcast,
+    setSelectedPodcast,
+}) => {
+    const audioPlayerRef = useRef<HTMLDivElement | null>(null);
+
     const {
         title,
         tags,
@@ -31,7 +97,57 @@ export const PodcastCard: FC<{ item: IFeedItem }> = ({ item }) => {
         image,
         type,
         shortDescription,
+        duration,
     } = item;
+
+    const {
+        duration: currentDuration,
+        percentComplete,
+        position,
+        seek,
+    } = useAudioPosition();
+    const {
+        togglePlayPause,
+        ready: isAudioReady,
+        loading: isAudioLoading,
+        playing: isAudioPlaying,
+    } = useAudioPlayer({
+        src: selectedPodcast?.fileUrl,
+        format: "mp3",
+        autoplay: true,
+        html5: true,
+    });
+
+    const setPosition = (count: number) => {
+        // if (!audioPlayerRef.current) return;
+        // const { x: playerXPos, width: playerWidth } =
+        //     audioPlayerRef.current.getBoundingClientRect();
+        // const { clientX: eventXPos } = event;
+        seek(position + count);
+    };
+
+    const setPlaybackPosition = useCallback(
+        (event: React.MouseEvent) => {
+            if (!audioPlayerRef.current) return;
+            const { x: playerXPos, width: playerWidth } =
+                audioPlayerRef.current.getBoundingClientRect();
+            const { clientX: eventXPos } = event;
+            seek(((eventXPos - playerXPos) / playerWidth) * currentDuration);
+        },
+        [currentDuration, seek]
+    );
+
+    const isSelected = selectedPodcast?.id === item.id;
+
+    const isReady = isAudioReady && isSelected;
+    const isLoading = isAudioLoading && isSelected;
+    const isPlaying = isAudioPlaying && isSelected;
+
+    const handlePlay = (e: React.MouseEvent, open: boolean) => {
+        if (!open || (open && !isReady)) e.stopPropagation();
+        setSelectedPodcast(item);
+        togglePlayPause();
+    };
 
     const onLike = () => {};
     const isLiked = false;
@@ -62,9 +178,34 @@ export const PodcastCard: FC<{ item: IFeedItem }> = ({ item }) => {
                                         </div>
                                     </div>
                                     <CardTitle title={title} />
-                                    {open ? undefined : (
-                                        <div className="flex items-center mt-1">
-                                            <PlayAudioSVG className="w-6 h-6 mr-1.5 text-primary" />
+                                    {isReady && open ? undefined : (
+                                        <div
+                                            className={twMerge(
+                                                "flex items-center group border border-borderLine bg-backgroundVariant100 max-w-fit px-3 py-1 rounded-xl",
+                                                open ? "mt-3" : "mt-2",
+                                                isPlaying &&
+                                                    !open &&
+                                                    "bg-accentVariant200"
+                                            )}
+                                            onClick={(e) => handlePlay(e, open)}
+                                            role="button"
+                                            tabIndex={0}
+                                        >
+                                            {isLoading && selectedPodcast ? (
+                                                <SpinnerSVG />
+                                            ) : (
+                                                <PlayPauseButton
+                                                    isPlaying={isPlaying}
+                                                />
+                                            )}
+                                            <span
+                                                className={twMerge(
+                                                    "fontGroup-normal text-primaryVariant100 group-hover:text-primary",
+                                                    isPlaying && "text-primary"
+                                                )}
+                                            >
+                                                {duration}
+                                            </span>
                                         </div>
                                     )}
                                 </div>
@@ -109,18 +250,51 @@ export const PodcastCard: FC<{ item: IFeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <div className="flex justify-center">
-                            <SkipForwardSVG className="w-6 h-6 text-primaryVariant100" />
-                            <div className="relative w-full min-w-[100px] px-2 flex  items-center justify-start">
-                                <div className="bg-backgroundVariant200 w-full h-1 rounded" />
-                                <div className="absolute bg-primaryVariant200 w-12 h-1 rounded" />
+                        {isReady && (
+                            <div className="flex justify-center">
+                                <SkipForwardSVG
+                                    onClick={() => setPosition(15)}
+                                    className="w-6 h-6 text-primaryVariant100 hover:text-primary"
+                                />
+                                <div
+                                    className="relative w-full min-w-[100px] px-2 flex  items-center justify-start"
+                                    role="button"
+                                    tabIndex={-1}
+                                    onClick={setPlaybackPosition}
+                                >
+                                    <div className="bg-backgroundVariant200 w-full h-1 rounded" />
+                                    <div
+                                        className="absolute bg-primaryVariant200 h-1 rounded"
+                                        role="button"
+                                        tabIndex={-1}
+                                        onClick={(e: React.MouseEvent) => {
+                                            e.stopPropagation();
+                                            setPlaybackPosition(e);
+                                        }}
+                                        style={{ width: `${percentComplete}%` }}
+                                    />
+                                </div>
+                                <SkipBackwardSVG
+                                    onClick={() => setPosition(-15)}
+                                    className="w-6 h-6 mr-1.5 text-primaryVariant100 hover:text-primary"
+                                />
+                                <span className="fontGroup-mini self-center text-primary mr-1.5">
+                                    {parseProgressTime(position)}/
+                                    {parseProgressTime(currentDuration)}
+                                </span>
+                                <span
+                                    tabIndex={0}
+                                    role="button"
+                                    onClick={togglePlayPause}
+                                    className="self-center"
+                                >
+                                    <PlayPauseButton
+                                        className="w-5 h-5 cursor-pointer"
+                                        isPlaying={isPlaying}
+                                    />
+                                </span>
                             </div>
-                            <SkipBackwardSVG className="w-6 h-6 mr-1.5 text-primaryVariant100" />
-                            <span className="fontGroup-mini self-center text-primary mr-1.5">
-                                3:37
-                            </span>
-                            <PauseSVG className="w-6 h-6 mr-1.5 text-primary" />
-                        </div>{" "}
+                        )}
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
