@@ -52,4 +52,6 @@ export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
     tags: { name: string; slug: string }[];
     likes: number;
     comments: number;
+    fileUrl: string | null;
+    duration: string | null;
 };

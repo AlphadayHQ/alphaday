@@ -1,4 +1,5 @@
 import { FC, MouseEventHandler } from "react";
+import { TSuperfeedItem } from "src/api/types";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play-video.svg";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
@@ -12,7 +13,7 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IFeedItem, feedItemIconMap } from "./types";
+import { feedItemIconMap } from "./types";
 
 const VideoPlaceholder: FC<{
     url: string | undefined;
@@ -32,7 +33,7 @@ const VideoPlaceholder: FC<{
     </div>
 );
 
-export const VideoCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const {
         title,
         tags,
