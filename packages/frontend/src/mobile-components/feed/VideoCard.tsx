@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from "react";
+import { FC, MouseEventHandler, useEffect, useRef } from "react";
 import { TSuperfeedItem } from "src/api/types";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play-video.svg";
 import { computeDuration } from "src/utils/dateUtils";
@@ -50,6 +50,22 @@ export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
 
     const onLike = () => {};
     const isLiked = false;
+
+    /**
+     * Before the iframe loads the browser displays a white page.
+     * For that reason we set its visibility to hidden until it loads
+     */
+    const frameRef = useRef<HTMLIFrameElement>(null);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            // in case onLoad didn't fire, check visibility after some time
+            if (frameRef.current?.style?.visibility === "hidden") {
+                frameRef.current.style.visibility = "visible";
+            }
+        }, 60 * 1000);
+        return () => clearTimeout(timeout);
+    }, []);
 
     return (
         <FeedItemDisclosure>
@@ -111,14 +127,34 @@ export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <video
+                        {/* <video
                             className="mb-2 rounded bg-backgroundVariant200"
                             onError={() => {}}
                         >
                             <source src={url} />
                             <track kind="captions" label="English" />
-                        </video>
-                        <p className="m-0 text-primaryVariant100 line-clamp-4">
+                        </video> */}
+                        <div className="w-full relative text-[0]">
+                            <iframe
+                                title={title}
+                                className="w-full border-0 border-none"
+                                src={url
+                                    ?.replace("watch?v=", "embed/")
+                                    .concat("?autoplay=1")}
+                                allow="autoplay; encrypted-media"
+                                allowFullScreen
+                                height={300}
+                                style={{ visibility: "hidden" }}
+                                ref={frameRef}
+                                onLoad={() => {
+                                    if (frameRef.current) {
+                                        frameRef.current.style.visibility =
+                                            "visible";
+                                    }
+                                }}
+                            />
+                        </div>
+                        <p className="m-0 mt-2 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
                         <a
