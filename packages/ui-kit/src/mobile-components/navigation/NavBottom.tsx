@@ -63,7 +63,7 @@ const NavItem = ({ href, icon, current, name }: (typeof navigation)[0]) => (
 
 export const NavBottom = () => {
     return (
-        <div className="fixed bottom-0 left-0 z-50 w-full border-t bg-background border-borderLine">
+        <div className="fixed bottom-0 left-0 w-full border-t bg-background border-borderLine">
             <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
                 {navigation.map((item) => (
                     <NavItem key={item.name} {...item} />
