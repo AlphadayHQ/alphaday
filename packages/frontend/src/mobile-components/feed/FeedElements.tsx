@@ -1,11 +1,20 @@
 import { FC, ReactNode } from "react";
 import { Disclosure, Transition, twMerge } from "@alphaday/ui-kit";
+import { EFeedItemType } from "src/api/types";
 import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
 import { ReactComponent as LikeSVG } from "src/assets/svg/like.svg";
 import { ReactComponent as LikedSVG } from "src/assets/svg/liked.svg";
 import { ReactComponent as ShareSVG } from "src/assets/svg/share.svg";
 import { ActionButton, TagButton } from "src/mobile-components/button/buttons";
 import { imgOnError } from "src/utils/errorHandling";
+import { feedItemIconMap } from "./iconMap";
+
+export const getFeedItemIcon = (type: EFeedItemType, isDown?: boolean) => {
+    if (type === EFeedItemType.MARKET) {
+        return feedItemIconMap[type]?.(!!isDown);
+    }
+    return feedItemIconMap[type];
+};
 
 export const ActionButtons: FC<{
     onLike: () => void;

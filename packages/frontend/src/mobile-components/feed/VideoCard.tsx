@@ -12,8 +12,8 @@ import {
     FeedItemDisclosurePanel,
     FeedSourceInfo,
     TagButtons,
+    getFeedItemIcon,
 } from "./FeedElements";
-import { feedItemIconMap } from "./types";
 
 const VideoPlaceholder: FC<{
     url: string | undefined;
@@ -77,7 +77,7 @@ export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedItemIconMap[type]}
+                                            icon={getFeedItemIcon(type)}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">

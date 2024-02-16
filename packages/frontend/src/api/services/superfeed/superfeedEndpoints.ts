@@ -50,6 +50,7 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                     tags: i.tags || [],
                     likes: i.likes,
                     comments: i.comments,
+                    data: i.data,
                 })),
             }),
             keepUnusedDataFor: 0,

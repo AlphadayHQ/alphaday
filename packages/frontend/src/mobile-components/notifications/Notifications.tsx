@@ -4,7 +4,7 @@ import { EFeedItemType } from "src/api/types";
 import { ReactComponent as BellSVG } from "src/assets/icons/bell.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 import { computeDuration } from "src/utils/dateUtils";
-import { feedItemIconMap } from "../feed/types";
+import { getFeedItemIcon } from "../feed/FeedElements";
 
 type TNotification = {
     id: string;
@@ -78,7 +78,7 @@ const NotificationItem: FC<
             <div className="flex justify-between items-center">
                 <div className="flex items-center">
                     <img
-                        src={feedItemIconMap[contentType]}
+                        src={getFeedItemIcon(contentType)}
                         alt="feed icon"
                         className="w-8 h-8 mr-2"
                     />

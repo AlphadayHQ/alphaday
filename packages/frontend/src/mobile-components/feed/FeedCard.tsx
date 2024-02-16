@@ -3,9 +3,9 @@ import { EFeedItemType, TSuperfeedItem } from "src/api/types";
 import { BlogCard } from "./BlogCard";
 import { EventCard } from "./EventCard";
 import { ImageCard } from "./ImageCard";
+import { MarketCard } from "./MarketCard";
 import { NewsCard } from "./NewsCard";
 import { PodcastCard } from "./PodcastCard";
-import { PriceCard } from "./PriceCard";
 import { SocialCard } from "./SocialCard";
 import { VideoCard } from "./VideoCard";
 
@@ -51,10 +51,10 @@ export const FeedCard: FC<IFeedCard> = ({
             return <SocialCard item={item} />;
         case EFeedItemType.DISCORD:
             return <SocialCard item={item} />;
-        case EFeedItemType.PRICE:
-            return <PriceCard item={item} />;
+        case EFeedItemType.MARKET:
+            return <MarketCard item={item} />;
         case EFeedItemType.TVL:
-            return <PriceCard item={item} />;
+            return <MarketCard item={item} />;
         default:
             return null;
     }

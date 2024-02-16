@@ -105,11 +105,11 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
             },
             {
                 id: 6,
-                slug: EFeedItemType.PRICE,
+                slug: EFeedItemType.MARKET,
                 name: "Price action",
                 selected: false,
                 color: themeColors.categorySix,
-                contentType: EFeedItemType.PRICE,
+                contentType: EFeedItemType.MARKET,
             },
             {
                 id: 7,

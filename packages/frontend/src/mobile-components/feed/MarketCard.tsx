@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { EFeedItemType, TSuperfeedItem } from "src/api/types";
+import { ENumberStyle, formatNumber } from "src/api/utils/format";
+import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,
     CardTitle,
@@ -8,32 +10,29 @@ import {
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
     FeedItemDisclosurePanel,
-    FeedSourceInfo,
     TagButtons,
+    getFeedItemIcon,
 } from "./FeedElements";
-// import LineChart from "./LineChart";
-import { feedItemIconMap } from "./types";
+import LineChart from "./LineChart";
 
-export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 
-    // const price = isTVL ? item.tvl : item.price;
-    // TODO (xavier-charles) get data from API
-    const price = 3000;
+    const {
+        tags,
+        likes,
+        comments,
+        image,
+        url,
+        shortDescription,
+        type,
+        data: coinData,
+    } = item;
 
-    const { tags, likes, comments, sourceName, sourceIcon, url } = item;
     const onLike = () => {};
     const isLiked = false;
 
-    // TODO (xavier-charles)  get change from API
-    const change = 0.1;
-    const isDown = change < 0;
-
-    const icon = isTVL
-        ? feedItemIconMap[EFeedItemType.TVL]
-        : feedItemIconMap[EFeedItemType.PRICE];
-
-    const title = `${sourceName} price is ${isDown ? "down" : "up"} ${change}%`;
+    const isDown = shortDescription?.includes("down");
 
     return (
         <FeedItemDisclosure>
@@ -45,32 +44,49 @@ export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={icon}
+                                            icon={getFeedItemIcon(type, isDown)}
                                         />
-                                        <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                            <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                                {isTVL ? (
-                                                    <span className="text-secondarySteelPink">
-                                                        TVL Milestone
-                                                    </span>
-                                                ) : (
-                                                    <span className="text-success">
-                                                        Price Alert
-                                                    </span>
-                                                )}
-                                                <span className="mx-1.5 my-0 self-center">
-                                                    •
-                                                </span>{" "}
-                                                <FeedSourceInfo
-                                                    name={sourceName}
-                                                    img={sourceIcon}
+                                        <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
+                                            {isTVL ? (
+                                                <span className="text-secondarySteelPink">
+                                                    TVL Milestone
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    className={twMerge(
+                                                        isDown
+                                                            ? "text-secondaryOrangeSoda"
+                                                            : "text-success"
+                                                    )}
+                                                >
+                                                    Price Alert
+                                                </span>
+                                            )}
+                                            <span className="mx-1.5 my-0 self-center">
+                                                •
+                                            </span>{" "}
+                                            <span>
+                                                <span className="capitalize text-primary">
+                                                    {coinData?.coin.name}
+                                                </span>
+                                                <img
+                                                    src={image || undefined}
+                                                    alt=""
+                                                    className="w-3.5 h-3.5 mr-[5px] rounded-full inline-flex ml-1.5"
+                                                    onError={imgOnError}
                                                 />
-                                            </p>
-                                        </div>
+                                            </span>
+                                        </p>
                                     </div>
-                                    <CardTitle title={title} />
-                                    <p className="fontGroup-highlight">
-                                        ${price}
+                                    <CardTitle title={shortDescription || ""} />
+                                    <p className="fontGroup-highlight mt-1">
+                                        Price:{" "}
+                                        {coinData?.price &&
+                                            formatNumber({
+                                                value: coinData.price,
+                                                style: ENumberStyle.Currency,
+                                                currency: "USD",
+                                            }).value}
                                     </p>
                                 </div>
                                 <div className="flex-col min-w-max mr-9">
@@ -80,13 +96,13 @@ export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                             open && "hidden"
                                         )}
                                     >
-                                        {/* // TODO (xavier-charles) get data from API */}
-                                        {/* <LineChart
-                                            data={history}
-                                            isLoading={false}
+                                        <LineChart
+                                            data={
+                                                coinData?.history ?? [[0], [1]]
+                                            }
                                             className="!h-20 !w-28"
                                             isPreview
-                                        /> */}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -116,8 +132,7 @@ export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        {/* // TODO (xavier-charles) get data from API */}
-                        {/* <LineChart data={history} isLoading={false} /> */}
+                        <LineChart data={coinData?.history ?? [[0], [1]]} />
                         <a
                             href={url}
                             target="_blank"
