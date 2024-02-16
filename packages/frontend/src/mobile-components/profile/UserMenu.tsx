@@ -84,15 +84,6 @@ const AuthenticatedSection = () => {
                     See all notifications
                 </Link>
             </div>
-            <p className="mt-6">
-                <span className="mt-6">Already have an account?</span>
-                <Link
-                    to="/#"
-                    className="ml-2 font-semibold border-b border-accentVariant100"
-                >
-                    Log in here
-                </Link>
-            </p>
         </div>
     );
 };
@@ -111,7 +102,7 @@ const UserMenu: FC<IUserMenu> = ({ isAuthenticated }) => {
         history.push(link);
     };
     return (
-        <div className="mx-5">
+        <div className="mx-5 w-full">
             {/* <div className="flex flex-start w-full items-center mb-4">
                 <ChevronSVG
                     onClick={onClose}

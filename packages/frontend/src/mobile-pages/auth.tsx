@@ -29,7 +29,7 @@ const AuthPage: React.FC = () => {
                 toast("OTP has been sent to your email");
             })
             .catch(() => {
-                toast("Failed to send OTP to email");
+                toast("Email could not be sent. Please try again.");
                 Logger.error("Failed to send OTP to email", email);
             });
     }, [email, requestCode]);
@@ -41,6 +41,7 @@ const AuthPage: React.FC = () => {
                     toast("Successfully verified email");
                 })
                 .catch(() => {
+                    toast("We couldn't verify your email. Please try again.");
                     Logger.error("Failed to verify OTP", otp);
                 });
         },

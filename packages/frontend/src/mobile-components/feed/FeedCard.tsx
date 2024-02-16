@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { EFeedItemType, TSuperfeedItem } from "src/api/types";
 import { BlogCard } from "./BlogCard";
 import { EventCard } from "./EventCard";
 import { ImageCard } from "./ImageCard";
@@ -6,12 +7,21 @@ import { NewsCard } from "./NewsCard";
 import { PodcastCard } from "./PodcastCard";
 import { PriceCard } from "./PriceCard";
 import { SocialCard } from "./SocialCard";
-import { EFeedItemType, IFeedItem } from "./types";
 import { VideoCard } from "./VideoCard";
 
-// TODO move to frontend package
+interface IFeedCard {
+    item: TSuperfeedItem;
+    selectedPodcast: TSuperfeedItem | null;
+    setSelectedPodcast: React.Dispatch<
+        React.SetStateAction<TSuperfeedItem | null>
+    >;
+}
 
-export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
+export const FeedCard: FC<IFeedCard> = ({
+    item,
+    selectedPodcast,
+    setSelectedPodcast,
+}) => {
     switch (item.type) {
         case EFeedItemType.NEWS:
             return <NewsCard item={item} />;
@@ -24,7 +34,13 @@ export const FeedCard: FC<{ item: IFeedItem }> = ({ item }) => {
         case EFeedItemType.VIDEO:
             return <VideoCard item={item} />;
         case EFeedItemType.PODCAST:
-            return <PodcastCard item={item} />;
+            return (
+                <PodcastCard
+                    item={item}
+                    selectedPodcast={selectedPodcast}
+                    setSelectedPodcast={setSelectedPodcast}
+                />
+            );
         case EFeedItemType.EVENT:
             return <EventCard item={item} />;
         case EFeedItemType.MEME:

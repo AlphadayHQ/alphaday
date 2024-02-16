@@ -1,7 +1,6 @@
 import { FC } from "react";
-import { computeDuration } from "src/utils/dateUtils";
-import { imgOnError } from "src/utils/errorHandling";
-import { twMerge } from "tailwind-merge";
+import { twMerge } from "@alphaday/ui-kit";
+import { EFeedItemType, TSuperfeedItem } from "src/api/types";
 import {
     ActionButtons,
     CardTitle,
@@ -12,25 +11,29 @@ import {
     FeedSourceInfo,
     TagButtons,
 } from "./FeedElements";
-import { IFeedItem, feedItemIconMap } from "./types";
+// import LineChart from "./LineChart";
+import { feedItemIconMap } from "./types";
 
-export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
-    const {
-        title,
-        tags,
-        likes,
-        comments,
-        sourceIcon,
-        sourceName,
-        url,
-        image,
-        type,
-        shortDescription,
-        date,
-    } = item;
+export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+    const isTVL = item.type === EFeedItemType.TVL;
 
+    // const price = isTVL ? item.tvl : item.price;
+    // TODO (xavier-charles) get data from API
+    const price = 3000;
+
+    const { tags, likes, comments, sourceName, sourceIcon, url } = item;
     const onLike = () => {};
     const isLiked = false;
+
+    // TODO (xavier-charles)  get change from API
+    const change = 0.1;
+    const isDown = change < 0;
+
+    const icon = isTVL
+        ? feedItemIconMap[EFeedItemType.TVL]
+        : feedItemIconMap[EFeedItemType.PRICE];
+
+    const title = `${sourceName} price is ${isDown ? "down" : "up"} ${change}%`;
 
     return (
         <FeedItemDisclosure>
@@ -42,11 +45,19 @@ export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={feedItemIconMap[type]}
+                                            icon={icon}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                                {computeDuration(date)}
+                                                {isTVL ? (
+                                                    <span className="text-secondarySteelPink">
+                                                        TVL Milestone
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-success">
+                                                        Price Alert
+                                                    </span>
+                                                )}
                                                 <span className="mx-1.5 my-0 self-center">
                                                     •
                                                 </span>{" "}
@@ -58,20 +69,24 @@ export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
                                         </div>
                                     </div>
                                     <CardTitle title={title} />
+                                    <p className="fontGroup-highlight">
+                                        ${price}
+                                    </p>
                                 </div>
-                                <div className="flex-col min-w-max ml-2">
+                                <div className="flex-col min-w-max mr-9">
                                     <div
                                         className={twMerge(
                                             "w-full flex justify-end items-start",
                                             open && "hidden"
                                         )}
                                     >
-                                        <img
-                                            src={image || undefined}
-                                            alt=""
-                                            className="h-24 rounded-lg object-cover"
-                                            onError={imgOnError}
-                                        />
+                                        {/* // TODO (xavier-charles) get data from API */}
+                                        {/* <LineChart
+                                            data={history}
+                                            isLoading={false}
+                                            className="!h-20 !w-28"
+                                            isPreview
+                                        /> */}
                                     </div>
                                 </div>
                             </div>
@@ -101,22 +116,15 @@ export const SocialCard: FC<{ item: IFeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <img
-                            src={image || undefined}
-                            alt=""
-                            className="w-full rounded-lg object-cover"
-                            onError={imgOnError}
-                        />
-                        <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {shortDescription}
-                        </p>
+                        {/* // TODO (xavier-charles) get data from API */}
+                        {/* <LineChart data={history} isLoading={false} /> */}
                         <a
                             href={url}
                             target="_blank"
                             rel="noreferrer"
-                            className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
+                            className="underline hover:underline fontGroup-supportBold mb-0 pt-2 leading-5 [text-underline-offset:_6px]"
                         >
-                            Read more
+                            View Details
                         </a>
                         <div className="my-2 flex justify-between">
                             <TagButtons tags={tags} onClick={() => {}} />

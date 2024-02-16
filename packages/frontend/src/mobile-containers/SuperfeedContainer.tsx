@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
+import { AudioPlayerProvider } from "react-use-audio-player";
 import { usePagination } from "src/api/hooks";
 import { useGetSuperfeedListQuery } from "src/api/services";
 import { selectedLocalFiltersSelector } from "src/api/store";
@@ -17,6 +18,8 @@ const SuperfeedContainer: FC<{ onToggleFeedFilters: () => void }> = ({
     // const { tags } = useMobileGlobalSearch();
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
 
+    const [selectedPodcast, setSelectedPodcast] =
+        useState<TSuperfeedItem | null>(null);
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
         .map((op) => op.contentType)
@@ -74,12 +77,16 @@ const SuperfeedContainer: FC<{ onToggleFeedFilters: () => void }> = ({
     }, [nextPage]);
 
     return (
-        <SuperfeedModule
-            isLoading={isLoading}
-            feed={feedData}
-            handlePaginate={handleNextPage}
-            toggleShowFeedFilters={onToggleFeedFilters}
-        />
+        <AudioPlayerProvider>
+            <SuperfeedModule
+                isLoading={isLoading}
+                feed={feedData}
+                handlePaginate={handleNextPage}
+                toggleShowFeedFilters={onToggleFeedFilters}
+                selectedPodcast={selectedPodcast}
+                setSelectedPodcast={setSelectedPodcast}
+            />
+        </AudioPlayerProvider>
     );
 };
 
