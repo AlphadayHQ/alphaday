@@ -4,7 +4,7 @@ import { EAuthMethod, EAuthState, TUserAccess } from "src/api/types";
 import { validateEmail } from "src/api/utils/accountUtils";
 import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
 import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
-import OtpInput from "./OtpInput";
+import { OTPInputComponent } from "./OtpInput";
 
 export interface AuthProps {
     email: string;
@@ -26,19 +26,26 @@ export const Auth: FC<AuthProps> = ({
 }) => {
     const isValidEmail = useMemo(() => validateEmail(email), [email]);
     return authState.status === EAuthState.VerifyingEmail ? (
-        <div className="flex h-full w-full flex-col justify-center p-5">
-            <p className="text-primary text-sm">
-                Enter the 6 digit verification code we sent to
-                <span className="font-bold"> {email}</span>
+        <div className="flex flex-col justify-start p-5">
+            <p className="text-primary text-sm mb-0 whitespace-normal">
+                Enter the 6 digit verification code we sent to{" "}
             </p>
+            <p className="fontGroup-highlight !font-bold text-primary">
+                {email}
+            </p>
+
             <div className="max-w-screen-single-col flex justify-between gap-2.5 py-4">
-                <OtpInput handleOtpSubmit={handleOtpSubmit} />
+                <OTPInputComponent
+                    length={6}
+                    autoFocus
+                    onChangeOTP={handleOtpSubmit}
+                />
             </div>
             <div className="text-primary text-sm">
                 <div>Didn&apos;t get a verification code?</div>
                 <button
                     type="button"
-                    className="text-primary text-sm font-bold underline underline-offset-4"
+                    className="text-primary text-sm font-bold underline underline-offset-4 hover:text-accentVariant200 active:hover:text-accentVariant100"
                 >
                     Resend now
                 </button>
