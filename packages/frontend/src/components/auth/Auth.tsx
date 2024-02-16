@@ -14,6 +14,7 @@ export interface AuthProps {
     handleEmailSubmit: () => void;
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+const ENABLE_APPLE_AUTH = false;
 
 export const Auth: FC<AuthProps> = ({
     email,
@@ -25,12 +26,12 @@ export const Auth: FC<AuthProps> = ({
 }) => {
     const isValidEmail = useMemo(() => validateEmail(email), [email]);
     return authState.status === EAuthState.VerifyingEmail ? (
-        <div className="flex flex-col justify-center w-full h-full p-5">
+        <div className="flex h-full w-full flex-col justify-center p-5">
             <p className="text-primary text-sm">
                 Enter the 6 digit verification code we sent to
                 <span className="font-bold"> {email}</span>
             </p>
-            <div className="flex justify-between gap-2.5 py-4 max-w-screen-single-col">
+            <div className="max-w-screen-single-col flex justify-between gap-2.5 py-4">
                 <OtpInput handleOtpSubmit={handleOtpSubmit} />
             </div>
             <div className="text-primary text-sm">
@@ -51,24 +52,26 @@ export const Auth: FC<AuthProps> = ({
                 handleEmailChange={handleEmailChange}
             />
 
-            <div className="opacity-60 text-primary text-xs tracking-wide">
+            <div className="text-primary text-xs tracking-wide opacity-60">
                 Or continue with
             </div>
-            <div className="w-full flex gap-2.5 py-2 justify-evenly">
+            <div className="flex w-full justify-evenly gap-2.5 py-2">
                 <button
                     type="button"
-                    className="px-4 py-3 bg-primary rounded-lg justify-center items-center gap-2 inline-flex text-primaryVariant100 hover:text-black text-base font-bold flex-grow"
+                    className="bg-primary text-primaryVariant100 inline-flex flex-grow items-center justify-center gap-2 rounded-lg px-4 py-3 text-base font-bold hover:text-black"
                     onClick={() => handleSSOCallback(EAuthMethod.Google)}
                 >
                     <GoogleIcon /> Google
                 </button>
-                <button
-                    type="button"
-                    className="px-4 py-3 bg-primary rounded-lg justify-center items-center gap-2 inline-flex text-primaryVariant100 hover:text-black text-base font-bold flex-grow"
-                    onClick={() => handleSSOCallback(EAuthMethod.Apple)}
-                >
-                    <AppleIcon className="text-black" /> Apple
-                </button>
+                {ENABLE_APPLE_AUTH && (
+                    <button
+                        type="button"
+                        className="bg-primary text-primaryVariant100 inline-flex flex-grow items-center justify-center gap-2 rounded-lg px-4 py-3 text-base font-bold hover:text-black"
+                        onClick={() => handleSSOCallback(EAuthMethod.Apple)}
+                    >
+                        <AppleIcon className="text-black" /> Apple
+                    </button>
+                )}
             </div>
         </div>
     );

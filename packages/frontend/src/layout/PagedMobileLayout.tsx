@@ -9,13 +9,13 @@ const PagedMobileLayout: FC<{
     handleBack?: () => void;
 }> = ({ children, title, onScroll, handleBack, handleClose }) => {
     return (
-        <ScrollBar onScroll={onScroll}>
+        <ScrollBar className="h-screen flex flex-col" onScroll={onScroll}>
             <Pager
                 title={title}
                 handleBack={handleBack}
                 handleClose={handleClose}
             />
-            {children}
+            <div className="w-full flex flex-grow min-w-max">{children}</div>
         </ScrollBar>
     );
 };

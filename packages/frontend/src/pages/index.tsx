@@ -5,7 +5,6 @@ import {
     useAvailableViews,
     useWidgetLib,
     useViewUpdater,
-    useWalletViewStateUpdater,
     useTutorial,
     useWindowSize,
 } from "src/api/hooks";
@@ -30,7 +29,6 @@ import CONFIG from "src/config/config";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
-import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
@@ -273,7 +271,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     }, [layoutState]);
 
     useViewUpdater();
-    useWalletViewStateUpdater();
 
     if (
         subscribedViews.length === 0 &&
@@ -322,7 +319,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                     }
                 }}
             >
-                <div className="grid grid-cols-1 two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 gap-5 w-full px-4">
+                <div className="two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -356,7 +353,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 </div>
             </DragDropContext>
             <CookieDisclaimerContainer />
-            <WalletConnectionDialogContainer />
             <AuthContainer />
             <TutorialContainer />
         </MainLayout>
