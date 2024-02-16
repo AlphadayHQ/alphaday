@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useMemo } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useScript } from "usehooks-ts";
 
@@ -30,9 +30,12 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
     );
     return (
         <AuthContext.Provider
-            value={{
-                isLoading: appleScript !== "ready",
-            }}
+            value={useMemo(
+                () => ({
+                    isLoading: appleScript !== "ready",
+                }),
+                [appleScript]
+            )}
         >
             {children}
         </AuthContext.Provider>
