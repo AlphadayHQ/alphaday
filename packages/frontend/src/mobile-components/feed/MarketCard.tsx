@@ -98,8 +98,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                     >
                                         <LineChart
                                             data={
-                                                coinData?.history ??
-                                                "[[0], [1]]"
+                                                coinData?.history ?? [[0], [1]]
                                             }
                                             className="!h-20 !w-28"
                                             isPreview
@@ -133,7 +132,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <LineChart data={coinData?.history ?? "[[0], [1]]"} />
+                        <LineChart data={coinData?.history ?? [[0], [1]]} />
                         <a
                             href={url}
                             target="_blank"
