@@ -353,7 +353,9 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             accounts={accounts}
             authAccount={authWallet.account}
             selectedAddress={selectedAddress}
-            onConnectWallet={() => connectWallet(EWalletConnectionMethod.Metamask)}
+            onConnectWallet={() =>
+                connectWallet(EWalletConnectionMethod.Metamask)
+            }
             showVerify={showVerify}
             onVerifyWallet={verifyWallet}
             onAddAddress={(address: string) => {
