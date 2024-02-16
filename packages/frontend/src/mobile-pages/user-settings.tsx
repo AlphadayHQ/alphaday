@@ -5,7 +5,7 @@ import UserMenu from "src/mobile-components/profile/UserMenu";
 
 const UserSettings: React.FC = () => {
     const history = useHistory();
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
 
     return (
         <PagedMobileLayout
@@ -14,7 +14,7 @@ const UserSettings: React.FC = () => {
                 history.length > 1 ? history.goBack() : history.push("/")
             }
         >
-            <UserMenu isAuthenticated={isAuthenticated} />
+            <UserMenu isAuthenticated={isAuthenticated} onLogout={logout} />
         </PagedMobileLayout>
     );
 };

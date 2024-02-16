@@ -1,42 +1,12 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { Link, useHistory } from "react-router-dom";
+import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
-
-const menu = [
-    {
-        id: 1,
-        icon: UserSVG,
-        title: "Edit profile",
-        subtext: "Edit your profile",
-        link: "/profile",
-    },
-    {
-        id: 2,
-        icon: DocSVG,
-        title: "Privacy policy",
-        subtext: "How we work & use your data",
-        link: "profile/privacy",
-    },
-    {
-        id: 3,
-        icon: StarSVG,
-        title: "Rate us",
-        subtext: "Tell us what we think",
-        link: "profile/rate",
-    },
-    {
-        id: 4,
-        icon: LogoutSVG,
-        title: "Log out",
-        subtext: null,
-        link: "profile/log-out",
-    },
-];
 
 const NonAuthenticatedSection = () => {
     return (
@@ -94,13 +64,57 @@ interface IUserMenu {
     // isOpen: boolean;
     // onClose: () => void;
     isAuthenticated: boolean;
+    onLogout: () => Promise<void>;
 }
-const UserMenu: FC<IUserMenu> = ({ isAuthenticated }) => {
+const UserMenu: FC<IUserMenu> = ({ isAuthenticated, onLogout }) => {
     const history = useHistory();
 
     const navigate = (link: string) => {
         history.push(link);
     };
+
+    const menu = [
+        {
+            id: 1,
+            icon: UserSVG,
+            title: "Edit profile",
+            subtext: "Edit your profile",
+            onClick: () => {
+                if (isAuthenticated) navigate("/profile");
+            },
+        },
+        {
+            id: 2,
+            icon: DocSVG,
+            title: "Privacy policy",
+            subtext: "How we work & use your data",
+            onClick: () => {
+                if (isAuthenticated) navigate("profile/privacy");
+            },
+        },
+        {
+            id: 3,
+            icon: StarSVG,
+            title: "Rate us",
+            subtext: "Tell us what we think",
+            onClick: () => {
+                if (isAuthenticated) navigate("profile/rate");
+            },
+        },
+        {
+            id: 4,
+            icon: LogoutSVG,
+            title: "Log out",
+            subtext: null,
+            onClick: () => {
+                navigate("profile/log-out");
+                onLogout().catch((e) =>
+                    Logger.error("UserMenu: logout failed", e)
+                );
+            },
+        },
+    ];
+
     return (
         <div className="mx-5 w-full">
             {/* <div className="flex flex-start w-full items-center mb-4">
@@ -119,9 +133,7 @@ const UserMenu: FC<IUserMenu> = ({ isAuthenticated }) => {
             <div className="mt-10 w-full">
                 {menu.map((item) => (
                     <div
-                        onClick={() =>
-                            isAuthenticated ? navigate(item.link) : {}
-                        }
+                        onClick={item.onClick}
                         tabIndex={0}
                         role="button"
                         key={item.id}

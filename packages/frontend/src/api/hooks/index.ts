@@ -1,8 +1,10 @@
+export * from "./useAccount";
 export * from "./useActivityLogger";
 export * from "./useAppInit";
-export * from "./useAccount";
+export * from "./useAuth";
 export * from "./useAvailableViews";
 export * from "./useCookieChoice";
+export * from "./useFilters";
 export * from "./useGATracker";
 export * from "./useGlobalSearch";
 export * from "./useGlobalHooks";
@@ -23,5 +25,5 @@ export * from "./useKeyPress";
 export * from "./useFeatureFlags";
 export * from "./useWalletViewStateUpdater";
 export * from "./useWidgetHeight";
-export * from "./useAuth";
+
 export * from "./useOnScreen";
