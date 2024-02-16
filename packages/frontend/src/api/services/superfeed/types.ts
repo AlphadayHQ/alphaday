@@ -1,4 +1,4 @@
-import { EFeedItemType, TSuperfeedItem } from "src/api/types";
+import { EFeedItemType, TFeedMarketData, TSuperfeedItem } from "src/api/types";
 import { TPagination, TBaseFilterItem } from "../baseTypes";
 
 export type TRemoteSuperfeedItem = {
@@ -26,6 +26,7 @@ export type TRemoteSuperfeedItem = {
     }[];
     likes: number;
     comments: number;
+    data: TFeedMarketData | null;
 };
 
 export type TGetSuperfeedItemsRequest = {
