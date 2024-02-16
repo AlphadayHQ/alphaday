@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
 import { EAuthMethod, EAuthState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
+import { toast } from "../utils/toastUtils";
 
 interface IUseAuth {
     isAuthenticated: boolean;
@@ -86,6 +87,7 @@ export const useAuth = (): IUseAuth => {
                     dispatch(userStore.setAuthState(EAuthState.Verified));
                 })
                 .catch((e) => {
+                    toast("Could not login with Google");
                     Logger.error("useAuth::googleSSOLogin: error", e);
                 });
         },
