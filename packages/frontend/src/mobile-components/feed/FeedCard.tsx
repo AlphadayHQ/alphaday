@@ -51,8 +51,8 @@ export const FeedCard: FC<IFeedCard> = ({
             return <SocialCard item={item} />;
         case EFeedItemType.DISCORD:
             return <SocialCard item={item} />;
-        // case EFeedItemType.MARKET:
-        //     return <MarketCard item={item} />;
+        case EFeedItemType.MARKET:
+            return <MarketCard item={item} />;
         case EFeedItemType.TVL:
             return <MarketCard item={item} />;
         default:
