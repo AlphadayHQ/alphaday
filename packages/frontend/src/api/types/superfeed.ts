@@ -12,7 +12,7 @@ export enum EFeedItemType {
     PERSON = "personitem",
     REDDIT = "reddititem",
     DISCORD = "discorditem",
-    PRICE = "priceitem",
+    MARKET = "marketitem",
     TVL = "tvlitem",
 }
 

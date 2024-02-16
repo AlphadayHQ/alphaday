@@ -24,9 +24,9 @@ export const feedItemIconMap = {
     [EFeedItemType.MEME]: imageIcon,
     [EFeedItemType.REDDIT]: socialIcon,
     [EFeedItemType.DISCORD]: socialIcon,
-    [EFeedItemType.PRICE]: trendUpIcon,
+    [EFeedItemType.MARKET]: trendUpIcon,
     // TODO(xavier-charles) handle trend down icon
-    // [EFeedItemType.PRICE]: (down: boolean) =>
+    // [EFeedItemType.MARKET]: (down: boolean) =>
     //     down ? trendDownIcon : trendUpIcon,
     [EFeedItemType.TVL]: tvlIcon,
 };

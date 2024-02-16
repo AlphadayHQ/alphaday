@@ -14,14 +14,16 @@ import {
 // import LineChart from "./LineChart";
 import { feedItemIconMap } from "./types";
 
-export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 
     // const price = isTVL ? item.tvl : item.price;
     // TODO (xavier-charles) get data from API
     const price = 3000;
 
-    const { tags, likes, comments, sourceName, sourceIcon, url } = item;
+    const { tags, likes, comments, image, url, title } = item;
+    // const { tags, likes, comments, sourceName, sourceIcon, url } = item;
+
     const onLike = () => {};
     const isLiked = false;
 
@@ -31,9 +33,9 @@ export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
 
     const icon = isTVL
         ? feedItemIconMap[EFeedItemType.TVL]
-        : feedItemIconMap[EFeedItemType.PRICE];
+        : feedItemIconMap[EFeedItemType.MARKET];
 
-    const title = `${sourceName} price is ${isDown ? "down" : "up"} ${change}%`;
+    // const title = `${sourceName} price is ${isDown ? "down" : "up"} ${change}%`;
 
     return (
         <FeedItemDisclosure>
@@ -62,8 +64,8 @@ export const PriceCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
-                                                    name={sourceName}
-                                                    img={sourceIcon}
+                                                    name=""
+                                                    img={image || ""}
                                                 />
                                             </p>
                                         </div>
