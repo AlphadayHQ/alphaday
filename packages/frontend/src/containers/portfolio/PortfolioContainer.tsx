@@ -20,7 +20,11 @@ import {
     setWidgetHeight,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { TPortfolio, WalletConnectionState } from "src/api/types";
+import {
+    EWalletConnectionMethod,
+    TPortfolio,
+    WalletConnectionState,
+} from "src/api/types";
 import {
     mapAccountsToAddressArray,
     validateENSAddr,
@@ -46,7 +50,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
 
     const { authWallet } = useAccount();
-    const { openWalletConnectionDialog, verifyWallet } = useWallet();
+    const { connectWallet, verifyWallet } = useWallet();
     const {
         portfolioAccounts,
         addPortfolioAccount,
@@ -349,7 +353,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             accounts={accounts}
             authAccount={authWallet.account}
             selectedAddress={selectedAddress}
-            onConnectWallet={openWalletConnectionDialog}
+            onConnectWallet={() => connectWallet(EWalletConnectionMethod.Metamask)}
             showVerify={showVerify}
             onVerifyWallet={verifyWallet}
             onAddAddress={(address: string) => {
