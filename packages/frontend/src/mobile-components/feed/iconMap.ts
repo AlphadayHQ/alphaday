@@ -7,7 +7,7 @@ import newsIcon from "src/assets/feedIcons/news.png";
 import personIcon from "src/assets/feedIcons/person.png";
 import podcastIcon from "src/assets/feedIcons/podcast.png";
 import socialIcon from "src/assets/feedIcons/social.png";
-// import trendDownIcon from "src/assets/feedIcons/trend-down.png";
+import trendDownIcon from "src/assets/feedIcons/trend-down.png";
 import trendUpIcon from "src/assets/feedIcons/trend-up.png";
 import tvlIcon from "src/assets/feedIcons/TVL.png";
 import videoIcon from "src/assets/feedIcons/video.png";
@@ -24,9 +24,7 @@ export const feedItemIconMap = {
     [EFeedItemType.MEME]: imageIcon,
     [EFeedItemType.REDDIT]: socialIcon,
     [EFeedItemType.DISCORD]: socialIcon,
-    [EFeedItemType.MARKET]: trendUpIcon,
-    // TODO(xavier-charles) handle trend down icon
-    // [EFeedItemType.MARKET]: (down: boolean) =>
-    //     down ? trendDownIcon : trendUpIcon,
+    [EFeedItemType.MARKET]: (down: boolean) =>
+        down ? trendDownIcon : trendUpIcon,
     [EFeedItemType.TVL]: tvlIcon,
 };
