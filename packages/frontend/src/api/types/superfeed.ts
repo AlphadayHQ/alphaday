@@ -42,6 +42,16 @@ export enum ETimeRange {
     Last6Months = "last-6-months",
 }
 
+export type TFeedMarketData = {
+    coin: {
+        name: string;
+        slug: string;
+        ticker: string;
+    };
+    price: number;
+    history: [number, number][];
+};
+
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
     type: EFeedItemType;
     date: string;
@@ -54,4 +64,5 @@ export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
     comments: number;
     fileUrl: string | null;
     duration: string | null;
+    data: TFeedMarketData | null;
 };
