@@ -46,8 +46,13 @@ jobs:
                     echo "ERROR: missing google oauth client id"
                     exit 1
                   fi
+                  if [ -z "$VITE_OAUTH_ID_APPLE" ]; then
+                    echo "ERROR: missing apple oauth client id"
+                    exit 1
+                  fi
               env:
                   VITE_OAUTH_ID_GOOGLE: ${{ secrets.PROD__REACT_APP_OAUTH_ID_GOOGLE }}
+                  VITE_OAUTH_ID_APPLE: ${{ secrets.PROD__REACT_APP_OAUTH_ID_APPLE }}
 
             - name: Set tag ENV
               run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
