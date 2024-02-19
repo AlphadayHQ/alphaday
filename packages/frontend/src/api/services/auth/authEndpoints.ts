@@ -50,6 +50,9 @@ export const authApi = alphadayApi.injectEndpoints({
                 if (req.provider === EAuthMethod.Google) {
                     path = `${AUTH.BASE}${AUTH.GOOGLE_LOGIN}`;
                 }
+                if (req.provider === EAuthMethod.Apple) {
+                    path = `${AUTH.BASE}${AUTH.APPLE_LOGIN}`;
+                }
 
                 Logger.debug("ssoLogin: body", JSON.stringify(req));
                 Logger.debug("ssoLogin: querying", path);

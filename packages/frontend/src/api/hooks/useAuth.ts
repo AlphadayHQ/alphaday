@@ -105,12 +105,27 @@ export const useAuth = (): IUseAuth => {
                 Logger.debug("useAuth::appleSSOLogin: received token", {
                     data,
                 });
+                ssoLoginMut({
+                    accessToken: data.authorization.id_token,
+                    provider: EAuthMethod.Apple,
+                })
+                    .unwrap()
+                    .then((r) => {
+                        Logger.debug("useAuth::appleSSOLogin: success", r);
+                        dispatch(userStore.setAuthToken({ value: r.token }));
+                        dispatch(userStore.setAuthEmail(r.user.email));
+                        dispatch(userStore.setAuthState(EAuthState.Verified));
+                    })
+                    .catch((e) => {
+                        Logger.error("useAuth::appleSSOLogin: error", e);
+                        toast("Could not login with Apple");
+                    });
             })
             .catch((e) => {
                 Logger.error("useAuth::appleSSOLogin: error", e);
                 toast("Could not login with Apple");
             });
-    }, []);
+    }, [ssoLoginMut]);
 
     const ssoLogin = useCallback(
         (provider: EAuthMethod) => {

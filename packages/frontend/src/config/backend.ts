@@ -80,6 +80,7 @@ const API_V0 = {
             REQUEST_TOKEN: "/email/get-otp/",
             VERIFY_TOKEN: "/email/verify-otp/",
             GOOGLE_LOGIN: "/sso/google/",
+            APPLE_LOGIN: "/sso/apple/",
             LOGOUT: "/logout/",
         },
         USER: {

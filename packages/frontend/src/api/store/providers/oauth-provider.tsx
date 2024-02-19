@@ -4,7 +4,20 @@ import { useScript } from "usehooks-ts";
 
 declare const AppleID: {
     auth: {
-        signIn: () => Promise<JSONValue>;
+        signIn: () => Promise<{
+            authorization: {
+                code: string;
+                id_token: string;
+                state: string;
+            };
+            user: {
+                email: string;
+                name: {
+                    firstName: string;
+                    lastName: string;
+                };
+            };
+        }>;
     };
 };
 
