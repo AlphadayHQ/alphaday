@@ -4,7 +4,7 @@ import { EAuthMethod, EAuthState, TUserAccess } from "src/api/types";
 import { validateEmail } from "src/api/utils/accountUtils";
 import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
 import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
-import { OTPInputComponent } from "./OtpInput";
+import { OTPInput } from "./OtpInput";
 
 export interface AuthProps {
     email: string;
@@ -36,7 +36,7 @@ export const Auth: FC<AuthProps> = ({
             </p>
 
             <div className="max-w-screen-single-col flex justify-between gap-2.5 py-4">
-                <OTPInputComponent
+                <OTPInput
                     length={OTP_INPUT_LENGTH}
                     autoFocus
                     onChangeOTP={handleOtpSubmit}

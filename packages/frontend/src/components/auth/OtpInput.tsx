@@ -46,7 +46,7 @@ export interface OTPInputProps {
     inputClassName?: string;
 }
 
-export function OTPInputComponent(props: OTPInputProps) {
+export function OTPInput(props: OTPInputProps) {
     const {
         length,
         isNumberInput,
