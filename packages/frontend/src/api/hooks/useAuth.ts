@@ -11,6 +11,7 @@ import * as userStore from "../store/slices/user";
 import { EAuthMethod, EAuthState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
 import { toast } from "../utils/toastUtils";
+import { signInWithApple } from "../store/providers/oauth-provider";
 
 interface IUseAuth {
     isAuthenticated: boolean;
@@ -98,6 +99,19 @@ export const useAuth = (): IUseAuth => {
         onSuccess: googleSSOCallback,
         redirect_uri: `${window.location.origin}/auth/google_callback/`,
     });
+    const appleSSOLogin = useCallback(() => {
+        signInWithApple()
+            .then((data) => {
+                Logger.debug("useAuth::appleSSOLogin: received token", {
+                    data,
+                });
+            })
+            .catch((e) => {
+                Logger.error("useAuth::appleSSOLogin: error", e);
+                toast("Could not login with Apple");
+            });
+    }, []);
+
     const ssoLogin = useCallback(
         (provider: EAuthMethod) => {
             dispatch(userStore.setAuthMethod(provider));
@@ -106,7 +120,9 @@ export const useAuth = (): IUseAuth => {
                 googleSSOLogin();
             }
 
-            // TODO: Add other providers here
+            if (provider === EAuthMethod.Apple) {
+                appleSSOLogin();
+            }
         },
         [googleSSOLogin, dispatch]
     );

@@ -12,14 +12,11 @@ export const AuthContext = createContext({
     isLoading: true,
 });
 
-export const signInWithApple = async (callback: (data: JSONValue) => void) => {
+export const signInWithApple = async () => {
     if (typeof AppleID === "undefined") {
         throw new Error("Apple auth script is not yet loaded.");
     }
-    const data = await AppleID.auth.signIn();
-    if (data) {
-        callback(data);
-    }
+    return await AppleID.auth.signIn();
 };
 
 const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
