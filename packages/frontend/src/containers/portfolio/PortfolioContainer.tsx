@@ -20,11 +20,7 @@ import {
     setWidgetHeight,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import {
-    EWalletConnectionMethod,
-    TPortfolio,
-    WalletConnectionState,
-} from "src/api/types";
+import { TPortfolio, WalletConnectionState } from "src/api/types";
 import {
     mapAccountsToAddressArray,
     validateENSAddr,
