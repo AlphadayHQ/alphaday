@@ -4,6 +4,12 @@ import { useScript } from "usehooks-ts";
 
 declare const AppleID: {
     auth: {
+        init: (config: {
+            clientId: string;
+            scope: string;
+            redirectURI: string;
+            state: string;
+        }) => void;
         signIn: () => Promise<{
             authorization: {
                 code: string;
@@ -36,17 +42,29 @@ export const signInWithApple = async () => {
 const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
     children,
 }) => {
-    const appleScript = useScript(
+    const appleScriptStatus = useScript(
         "https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"
     );
+
     return (
         <AuthContext.Provider
-            value={useMemo(
-                () => ({
-                    isLoading: appleScript !== "ready",
-                }),
-                [appleScript]
-            )}
+            value={useMemo(() => {
+                // we need to call the apple auth initialization function once the script is loaded
+                // and then we can use the signInWithApple function
+                //
+                // Calling this here, ensures we only do so Once!
+                if (appleScriptStatus === "ready") {
+                    AppleID.auth.init({
+                        clientId: import.meta.env.VITE_OAUTH_ID_APPLE,
+                        scope: "email name",
+                        redirectURI: `${window.location.origin}/auth/apple_callback/`,
+                        state: "state",
+                    });
+                }
+                return {
+                    isLoading: appleScriptStatus !== "ready",
+                };
+            }, [appleScriptStatus])}
         >
             {children}
         </AuthContext.Provider>

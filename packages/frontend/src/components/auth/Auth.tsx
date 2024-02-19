@@ -14,7 +14,6 @@ export interface AuthProps {
     handleEmailSubmit: () => void;
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-const ENABLE_APPLE_AUTH = false;
 
 export const Auth: FC<AuthProps> = ({
     email,
@@ -63,15 +62,14 @@ export const Auth: FC<AuthProps> = ({
                 >
                     <GoogleIcon /> Google
                 </button>
-                {ENABLE_APPLE_AUTH && (
-                    <button
-                        type="button"
-                        className="bg-primary text-primaryVariant100 inline-flex flex-grow items-center justify-center gap-2 rounded-lg px-4 py-3 text-base font-bold hover:text-black"
-                        onClick={() => handleSSOCallback(EAuthMethod.Apple)}
-                    >
-                        <AppleIcon className="text-black" /> Apple
-                    </button>
-                )}
+
+                <button
+                    type="button"
+                    className="bg-primary text-primaryVariant100 inline-flex flex-grow items-center justify-center gap-2 rounded-lg px-4 py-3 text-base font-bold hover:text-black"
+                    onClick={() => handleSSOCallback(EAuthMethod.Apple)}
+                >
+                    <AppleIcon className="text-black" /> Apple
+                </button>
             </div>
         </div>
     );
