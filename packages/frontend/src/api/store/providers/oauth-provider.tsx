@@ -9,6 +9,7 @@ declare const AppleID: {
             scope: string;
             redirectURI: string;
             state: string;
+            usePopup?: boolean;
         }) => void;
         signIn: () => Promise<{
             authorization: {
@@ -63,6 +64,7 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
                         scope: "email name",
                         redirectURI: `${window.location.origin}/auth/apple_callback/`,
                         state: "state",
+                        usePopup: true,
                     });
                 }
                 return {
