@@ -125,7 +125,7 @@ export const useAuth = (): IUseAuth => {
                 Logger.error("useAuth::appleSSOLogin: error", e);
                 toast("Could not login with Apple");
             });
-    }, [ssoLoginMut]);
+    }, [ssoLoginMut, dispatch]);
 
     const ssoLogin = useCallback(
         (provider: EAuthMethod) => {
