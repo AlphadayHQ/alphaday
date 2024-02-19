@@ -7,11 +7,11 @@ import {
     useSignoutMutation,
 } from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { signInWithApple } from "../store/providers/oauth-provider";
 import * as userStore from "../store/slices/user";
 import { EAuthMethod, EAuthState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
 import { toast } from "../utils/toastUtils";
-import { signInWithApple } from "../store/providers/oauth-provider";
 
 interface IUseAuth {
     isAuthenticated: boolean;
@@ -124,7 +124,7 @@ export const useAuth = (): IUseAuth => {
                 appleSSOLogin();
             }
         },
-        [googleSSOLogin, dispatch]
+        [googleSSOLogin, appleSSOLogin, dispatch]
     );
 
     const resetAuthState = useCallback(() => {
