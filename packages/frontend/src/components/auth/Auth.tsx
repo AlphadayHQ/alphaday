@@ -15,6 +15,7 @@ export interface AuthProps {
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 const ENABLE_APPLE_AUTH = false;
+const OTP_INPUT_LENGTH = 6;
 
 export const Auth: FC<AuthProps> = ({
     email,
@@ -36,7 +37,7 @@ export const Auth: FC<AuthProps> = ({
 
             <div className="max-w-screen-single-col flex justify-between gap-2.5 py-4">
                 <OTPInputComponent
-                    length={6}
+                    length={OTP_INPUT_LENGTH}
                     autoFocus
                     onChangeOTP={handleOtpSubmit}
                 />
