@@ -53,7 +53,11 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
                 // and then we can use the signInWithApple function
                 //
                 // Calling this here, ensures we only do so Once!
-                if (appleScriptStatus === "ready") {
+                if (
+                    appleScriptStatus === "ready" &&
+                    import.meta.env.VITE_OAUTH_ID_APPLE &&
+                    typeof AppleID !== "undefined"
+                ) {
                     AppleID.auth.init({
                         clientId: import.meta.env.VITE_OAUTH_ID_APPLE,
                         scope: "email name",
