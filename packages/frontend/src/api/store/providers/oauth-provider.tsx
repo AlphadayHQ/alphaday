@@ -27,7 +27,7 @@ declare const AppleID: {
     };
 };
 
-export const AuthContext = createContext({
+export const AppleAuthContext = createContext({
     isLoading: true,
 });
 
@@ -47,7 +47,7 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
     );
 
     return (
-        <AuthContext.Provider
+        <AppleAuthContext.Provider
             value={useMemo(() => {
                 // we need to call the apple auth initialization function once the script is loaded
                 // and then we can use the signInWithApple function
@@ -71,7 +71,7 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
             }, [appleScriptStatus])}
         >
             {children}
-        </AuthContext.Provider>
+        </AppleAuthContext.Provider>
     );
 };
 
