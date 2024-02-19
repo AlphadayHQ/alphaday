@@ -7,7 +7,7 @@ export interface SingleOTPInputProps
     focus?: boolean;
 }
 
-export function SingleOTPInputComponent(props: SingleOTPInputProps) {
+export function SingleOTPInput(props: SingleOTPInputProps) {
     const { focus, autoFocus, className, ...rest } = props;
     const inputRef = useRef<HTMLInputElement>(null);
     const prevFocus = usePrevious(!!focus);
@@ -225,7 +225,7 @@ export function OTPInputComponent(props: OTPInputProps) {
             {Array(length)
                 .fill("")
                 .map((_, index) => (
-                    <SingleOTPInputComponent
+                    <SingleOTPInput
                         // eslint-disable-next-line react/no-array-index-key
                         key={`SingleInput-${index}`}
                         type={isNumberInput ? "number" : "text"}
