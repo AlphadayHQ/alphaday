@@ -52,7 +52,7 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                     comments: i.comments,
                 })),
             }),
-            keepUnusedDataFor: 0,
+            // keepUnusedDataFor: 0,
         }),
         getFilterData: builder.query<
             TGetSuperfeedFilterDataResponse,

@@ -1,0 +1,31 @@
+ion-tab-bar {
+    position: relative;
+    width: 100%;
+    margin: 0 10px;
+    background-color: theme("colors.background");
+  }
+
+/**
+ * Recall: ionic uses shadow parts, so without the part selector
+ * we can't change some style properties
+ */
+ion-tab-button::part(native) {
+    color: theme("colors.primaryVariant100");
+}
+
+ion-tab-button {
+    color: theme("colors.primaryVariant100");
+
+    svg {
+        color: theme("colors.primaryVariant100");
+    }
+
+    &.tab-selected {
+        span {
+            color: theme("colors.primary");
+        }
+        svg {
+            color: theme("colors.secondaryOrange");
+        }
+    }
+}

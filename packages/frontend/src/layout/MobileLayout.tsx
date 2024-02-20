@@ -9,7 +9,7 @@ const MobileLayout: FC<{
         <div className="h-screen" onScroll={onScroll}>
             <NavHeader avatar={undefined} />
             {children}
-            <NavBottom />
+            {/* <NavBottom /> */}
         </div>
     );
 };
