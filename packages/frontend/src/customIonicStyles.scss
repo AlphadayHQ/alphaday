@@ -1,9 +1,11 @@
 ion-tab-bar {
     position: relative;
     width: 100%;
-    margin: 0 10px;
+    margin: 10px auto;
     background-color: theme("colors.background");
-  }
+    border: solid 1px;
+    border-color:  theme("colors.borderLine");
+}
 
 /**
  * Recall: ionic uses shadow parts, so without the part selector
@@ -15,6 +17,7 @@ ion-tab-button::part(native) {
 
 ion-tab-button {
     color: theme("colors.primaryVariant100");
+    background: theme("colors.background");
 
     svg {
         color: theme("colors.primaryVariant100");
