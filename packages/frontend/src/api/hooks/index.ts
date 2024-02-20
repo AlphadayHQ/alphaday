@@ -25,5 +25,5 @@ export * from "./useKeyPress";
 export * from "./useFeatureFlags";
 export * from "./useWalletViewStateUpdater";
 export * from "./useWidgetHeight";
-
+export * from "./usePrevious";
 export * from "./useOnScreen";
