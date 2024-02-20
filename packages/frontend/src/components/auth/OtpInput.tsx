@@ -2,12 +2,12 @@ import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { usePrevious } from "src/api/hooks";
 
-export interface SingleOTPInputProps
+export interface ISingleOTPInputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
     focus?: boolean;
 }
 
-export function SingleOTPInput(props: SingleOTPInputProps) {
+export function SingleOTPInput(props: ISingleOTPInputProps) {
     const { focus, autoFocus, className, ...rest } = props;
     const inputRef = useRef<HTMLInputElement>(null);
     const prevFocus = usePrevious(!!focus);
@@ -36,7 +36,7 @@ export function SingleOTPInput(props: SingleOTPInputProps) {
     );
 }
 
-export interface OTPInputProps {
+export interface IOTPInputProps {
     length: number;
     onChangeOTP: (otp: string) => void;
     autoFocus?: boolean;
@@ -46,7 +46,7 @@ export interface OTPInputProps {
     inputClassName?: string;
 }
 
-export function OTPInput(props: OTPInputProps) {
+export function OTPInput(props: IOTPInputProps) {
     const {
         length,
         isNumberInput,
