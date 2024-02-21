@@ -1,7 +1,7 @@
-import React from "react";
+import MobileLayout from "src/layout/MobileLayout";
 
 const PortfolioPage = () => {
-    return <div>PortfolioPage</div>;
+    return <MobileLayout>PortfolioPage</MobileLayout>;
 };
 
 export default PortfolioPage;

@@ -1,4 +1,5 @@
 import { twMerge } from "@alphaday/ui-kit";
+import { useLocation } from "react-router-dom";
 import { ReactComponent as ExploreSVG } from "src/assets/svg/explore.svg";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
@@ -7,7 +8,7 @@ import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
 const navigation = [
     {
         name: "Superfeed",
-        href: "#",
+        href: "/",
         current: true,
         hasNew: true,
         icon: <SuperfeedSVG className="w-6 h-6 my-0.5" />,
@@ -21,7 +22,7 @@ const navigation = [
     },
     {
         name: "Portfolio",
-        href: "#",
+        href: "/portfolio",
         current: false,
         hasNew: true,
 
@@ -62,11 +63,16 @@ const NavItem = ({ href, icon, current, name }: (typeof navigation)[0]) => (
 );
 
 export const NavBottom = () => {
+    const location = useLocation();
     return (
         <div className="fixed bottom-0 left-0 z-50 w-full border-t bg-background border-borderLine">
             <div className="grid h-full max-w-lg grid-cols-4 mx-auto">
                 {navigation.map((item) => (
-                    <NavItem key={item.name} {...item} />
+                    <NavItem
+                        key={item.name}
+                        {...item}
+                        current={location.pathname === item.href}
+                    />
                 ))}
             </div>
         </div>
