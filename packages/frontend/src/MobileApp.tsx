@@ -22,6 +22,8 @@ import "./customIonicStyles.scss";
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
+const FiltersPage = lazyRetry(() => import("./mobile-pages/filters"));
+const PortfolioPage = lazyRetry(() => import("./mobile-pages/portfolio"));
 const NotificationsPage = lazyRetry(
     () => import("./mobile-pages/notifications")
 );
@@ -112,6 +114,23 @@ const MobileApp: React.FC = () => {
                 <IonRouterOutlet>
                     <Suspense fallback={<PreloaderPage />}>
                         <Route path="/" render={() => <TabNavigator />} />
+                        <Route path="/auth*" exact component={AuthPage} />
+                        <Route path="/filters" exact component={FiltersPage} />
+                        <Route
+                            path="/user-settings"
+                            exact
+                            component={UserSettingsPage}
+                        />
+                        <Route
+                            path="/notifications"
+                            exact
+                            component={NotificationsPage}
+                        />
+                        <Route
+                            path="/portfolio"
+                            exact
+                            component={PortfolioPage}
+                        />
                     </Suspense>
                 </IonRouterOutlet>
             </IonReactRouter>
