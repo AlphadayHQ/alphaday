@@ -13,6 +13,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
     plugins: [
         basicSsl({
+            name: "Alphaday",
             domains: ["app.localday.com"],
             certDir: process.env.CERT_DIR || path.resolve(__dirname, "certs"),
         }),
