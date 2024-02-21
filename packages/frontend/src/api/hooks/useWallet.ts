@@ -348,7 +348,8 @@ export const useWallet: () => IWallet = () => {
                     };
                     dispatch(userStore.addPortfolioAccount(normalisedAccount));
                     dispatch(userStore.setWalletAccount(address));
-                    dispatch(userStore.requestWalletVerification());
+                    // dispatch(userStore.requestWalletVerification());
+                    dispatch(userStore.setWalletVerified());
                     // when user connects a wallet, it becomes the selected
                     // address in the portfolio widget
                     Logger.debug(
