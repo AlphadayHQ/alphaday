@@ -6,7 +6,7 @@ declare const AppleID: {
     auth: {
         init: (config: {
             clientId: string;
-            scope: string;
+            scope?: string;
             redirectURI: string;
             state: string;
             usePopup?: boolean;
@@ -61,8 +61,7 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
                 ) {
                     AppleID.auth.init({
                         clientId: import.meta.env.VITE_OAUTH_ID_APPLE,
-                        scope: "email name",
-                        redirectURI: `${window.location.origin}/auth/apple_callback/`,
+                        redirectURI: `${window.location.origin}/auth/apple_callback`,
                         state: "state",
                         usePopup: true,
                     });
