@@ -17,7 +17,6 @@ import { ECookieChoice } from "./api/types";
 import { lazyRetry } from "./api/utils/helpers";
 import { Logger } from "./api/utils/logging";
 import CONFIG from "./config";
-import InstallPWAContainer from "./containers/dialogs/InstallPWAContainer";
 import SeoContainer from "./containers/seo/SeoContainer";
 import PreloaderPage from "./pages/preloader";
 
@@ -97,6 +96,5 @@ root.render(
                 </WagmiConfig>
             </AppContextProvider>
         </PersistProvider>
-        <InstallPWAContainer />
     </Provider>
 );
