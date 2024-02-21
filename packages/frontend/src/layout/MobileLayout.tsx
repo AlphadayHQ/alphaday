@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { NavHeader } from "@alphaday/ui-kit";
+import { NavHeader } from "src/mobile-components/navigation/NavHeader";
 
 const MobileLayout: FC<{
     children: ReactNode;
