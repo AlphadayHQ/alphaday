@@ -1,5 +1,6 @@
 import "./polyfills";
 import { Suspense } from "react";
+import { setupIonicReact } from "@ionic/react";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
@@ -22,6 +23,8 @@ import PreloaderPage from "./pages/preloader";
 
 const MobileApp = lazyRetry(() => import("./MobileApp"));
 const App = lazyRetry(() => import("./App"));
+
+setupIonicReact();
 
 /**
  * at this point, the store is still not loaded and we can't read the state
