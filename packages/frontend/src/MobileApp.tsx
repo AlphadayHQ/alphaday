@@ -1,5 +1,4 @@
 import { Suspense, memo } from "react";
-import { themeColors } from "@alphaday/ui-kit";
 import {
     IonApp,
     IonRouterOutlet,
@@ -10,16 +9,18 @@ import {
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
+import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import { useAppInit, useAuth } from "./api/hooks";
+import { useAuth } from "./api/hooks";
+import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
 
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
+const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
-const FiltersPage = lazyRetry(() => import("./mobile-pages/filters"));
 const NotificationsPage = lazyRetry(
     () => import("./mobile-pages/notifications")
 );
@@ -40,14 +41,41 @@ const CustomNavTab: React.FC<{
 );
 
 const TabNavigator: React.FC = () => {
+    const { isAuthenticated } = useAuth();
     return (
         <IonTabs>
             <IonRouterOutlet>
-                <Route path="/superfeed">
+                <Route exact path="/superfeed">
                     <SuperfeedPage />
+                </Route>
+                <Route exact path="/superfeed/user-settings">
+                    <UserSettingsPage />
+                </Route>
+                <Route exact path="/superfeed/auth">
+                    <AuthPage />
+                </Route>
+                <Route
+                    exact
+                    path="/superfeed/notifications"
+                    render={() => {
+                        return isAuthenticated ? (
+                            <NotificationsPage />
+                        ) : (
+                            <SuperfeedPage />
+                        );
+                    }}
+                />
+                <Route exact path="/market">
+                    <Placeholder />
+                </Route>
+                <Route exact path="/portfolio">
+                    <Placeholder />
                 </Route>
                 <Route exact path="/auth*">
                     <AuthPage />
+                </Route>
+                <Route exact path="/">
+                    <Redirect to="/superfeed" />
                 </Route>
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
@@ -57,15 +85,16 @@ const TabNavigator: React.FC = () => {
                 <IonTabButton tab="market" href="/market">
                     <CustomNavTab label="Market" Icon={MarketsSVG} />
                 </IonTabButton>
+                <IonTabButton tab="portfolio" href="/portfolio">
+                    <CustomNavTab label="Portfolio" Icon={PortfolioSVG} />
+                </IonTabButton>
             </IonTabBar>
         </IonTabs>
     );
 };
 
 const MobileApp: React.FC = () => {
-    useAppInit();
-
-    // const { isAuthenticated } = useAuth();
+    useGetFeaturesQuery();
 
     return (
         <IonApp className="theme-dark">
@@ -73,24 +102,6 @@ const MobileApp: React.FC = () => {
                 <IonRouterOutlet>
                     <Suspense fallback={<PreloaderPage />}>
                         <Route path="/" render={() => <TabNavigator />} />
-                        {/* <Route path="/auth*" exact component={AuthPage} />
-                        <Route path="/filters" exact component={FiltersPage} />
-                        <Route
-                            path="/user-settings"
-                            exact
-                            component={UserSettingsPage}
-                        />
-                        <Route
-                            path="/notifications"
-                            exact
-                            render={() =>
-                                isAuthenticated ? (
-                                    <NotificationsPage />
-                                ) : (
-                                    <SuperfeedPage />
-                                )
-                            }
-                        /> */}
                     </Suspense>
                 </IonRouterOutlet>
             </IonReactRouter>

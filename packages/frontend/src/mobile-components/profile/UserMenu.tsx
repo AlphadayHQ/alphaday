@@ -15,7 +15,7 @@ const NonAuthenticatedSection = () => {
                 Sign up to unlock the complete experience{" "}
             </p>
             <Link
-                to="/auth"
+                to="/superfeed/auth"
                 className="flex fontGroup-highlight !font-semibold py-3 px-4 bg-accentVariant100 hover:bg-accentVariant200 w-full mt-5 justify-center rounded-lg"
             >
                 Sign up
@@ -23,7 +23,7 @@ const NonAuthenticatedSection = () => {
             <p className="mt-6">
                 <span className="mt-6">Already have an account?</span>
                 <Link
-                    to="/auth"
+                    to="/superfeed/auth"
                     className="ml-2 font-semibold border-b border-accentVariant100"
                 >
                     Log in here
@@ -48,7 +48,7 @@ const AuthenticatedSection = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-secondaryOrangeSoda absolute top-4 right-4" />
                 <p className="block ">Some major notification here...</p>
                 <Link
-                    to="/notifications"
+                    to="/superfeed/notifications"
                     className="fontGroup-highlight border-b border-accentVariant100 m-0"
                 >
                     See all notifications

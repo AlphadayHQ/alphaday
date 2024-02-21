@@ -1,10 +1,9 @@
 ion-tab-bar {
     position: relative;
     width: 100%;
-    margin: 10px auto;
+    padding: 8px 0;
     background-color: theme("colors.background");
-    border: solid 1px;
-    border-color:  theme("colors.borderLine");
+    border-top: solid 1px theme("colors.borderLine");
 }
 
 /**

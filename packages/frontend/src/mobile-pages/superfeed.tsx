@@ -5,7 +5,7 @@ import MobileLayout from "src/layout/MobileLayout";
 import SuperfeedContainer from "src/mobile-containers/SuperfeedContainer";
 import UserFiltersContainer from "src/mobile-containers/UserFiltersContainer";
 
-const SuperfeedPage = () => {
+const SuperfeedPage: React.FC = () => {
     const [showFeedFilters, setshowFeedFilters] = useState(false);
     const toggleFeedFilters = () => setshowFeedFilters(!showFeedFilters);
     return (

@@ -1,7 +1,7 @@
 import { IonPage } from "@ionic/react";
 import MobileLayout from "src/layout/MobileLayout";
 
-const PlaceholderPage = () => {
+const PlaceholderPage: React.FC = () => {
     return (
         <IonPage>
             <MobileLayout>
