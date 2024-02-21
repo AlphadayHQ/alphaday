@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 import * as path from "path";
 import react from "@vitejs/plugin-react";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { optimizeCssModules } from "vite-plugin-optimize-css-modules";
@@ -11,6 +12,10 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
+        basicSsl({
+            domains: ["app.localday.com"],
+            certDir: process.env.CERT_DIR || path.resolve(__dirname, "certs"),
+        }),
         tsconfigPaths(),
         VitePWA({
             registerType: "autoUpdate",
