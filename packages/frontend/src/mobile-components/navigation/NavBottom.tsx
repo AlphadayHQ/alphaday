@@ -62,6 +62,13 @@ const NavItem = ({ href, icon, current, name }: (typeof navigation)[0]) => (
     </a>
 );
 
+const handleIsCurrent = (href: string, pathname: string) => {
+    if (href === "/") {
+        return pathname === "/";
+    }
+    return pathname.includes(href);
+};
+
 export const NavBottom = () => {
     const location = useLocation();
     return (
@@ -71,7 +78,7 @@ export const NavBottom = () => {
                     <NavItem
                         key={item.name}
                         {...item}
-                        current={location.pathname === item.href}
+                        current={handleIsCurrent(item.href, location.pathname)}
                     />
                 ))}
             </div>
