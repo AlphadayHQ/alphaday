@@ -13,7 +13,7 @@ import { ReactComponent as InfoSVG } from "src/assets/svg/info2.svg";
 const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
     if (isAuthenticated) {
         return (
-            <div className="w-full flex px-5 mt-4 fontGroup-highlight font-bold">
+            <div className="w-full flex px-5 mt-4 fontGroup-highlight !font-bold">
                 Add your portfolio for a quick overview and easy swaps.
             </div>
         );

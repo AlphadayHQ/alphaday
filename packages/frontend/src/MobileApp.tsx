@@ -30,6 +30,9 @@ const NotificationsPage = lazyRetry(
 const UserSettingsPage = lazyRetry(
     () => import("./mobile-pages/user-settings")
 );
+const ConnectWalletPage = lazyRetry(
+    () => import("./mobile-pages/connect-wallet")
+);
 
 const CustomNavTab: React.FC<{
     label: string;
@@ -130,6 +133,11 @@ const MobileApp: React.FC = () => {
                             path="/portfolio"
                             exact
                             component={PortfolioPage}
+                        />
+                        <Route
+                            path="/portfolio/connect-wallet"
+                            exact
+                            component={ConnectWalletPage}
                         />
                     </Suspense>
                 </IonRouterOutlet>
