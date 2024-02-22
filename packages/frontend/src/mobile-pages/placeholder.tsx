@@ -1,14 +1,14 @@
 import { IonPage } from "@ionic/react";
 import MobileLayout from "src/layout/MobileLayout";
 
-const FiltersPage = () => {
+const PlaceholderPage: React.FC = () => {
     return (
         <IonPage>
             <MobileLayout>
-                <h1 className="mx-6 my-10 fontGroup-major">Filters Page</h1>
+                <h1 className="mx-6 my-10 fontGroup-major">Placeholder</h1>
             </MobileLayout>
         </IonPage>
     );
 };
 
-export default FiltersPage;
+export default PlaceholderPage;

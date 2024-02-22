@@ -53,7 +53,9 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                     data: i.data,
                 })),
             }),
-            keepUnusedDataFor: 0,
+            // When commented out, keepUnsedDataFor defaults to 60s
+            // TODO(v-almonacid): Re-assess this value post-MVP release
+            // keepUnusedDataFor: 60,
         }),
         getFilterData: builder.query<
             TGetSuperfeedFilterDataResponse,

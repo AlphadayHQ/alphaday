@@ -91,8 +91,6 @@ import {
 } from "./src/components/view-tab-menu/ViewTabMenu";
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
-import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
-import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
 import { Pager } from "./src/mobile-components/pager/Pager";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
@@ -173,8 +171,6 @@ export {
     /**
      * Mobile-only components
      */
-    NavBottom,
-    NavHeader,
     Pager,
     Disclosure,
     Transition,

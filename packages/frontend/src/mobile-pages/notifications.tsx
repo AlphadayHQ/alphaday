@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router";
 import { useAuth } from "src/api/hooks";
 import { EFeedItemType } from "src/api/types";
@@ -95,19 +96,21 @@ const NotificationsPage = () => {
         setNotifications((prev) => prev.filter((n) => n.id !== id));
     };
     return (
-        <PagedMobileLayout
-            title="Notifications"
-            handleBack={() =>
-                history.length > 1 ? history.goBack() : history.push("/")
-            }
-        >
-            <Notifications
-                isAuthenticated={isAuthenticated}
-                notifications={notifications}
-                markAsRead={markAsRead}
-                removeNotification={removeNotification}
-            />
-        </PagedMobileLayout>
+        <IonPage>
+            <PagedMobileLayout
+                title="Notifications"
+                handleBack={() =>
+                    history.length > 1 ? history.goBack() : history.push("/")
+                }
+            >
+                <Notifications
+                    isAuthenticated={isAuthenticated}
+                    notifications={notifications}
+                    markAsRead={markAsRead}
+                    removeNotification={removeNotification}
+                />
+            </PagedMobileLayout>
+        </IonPage>
     );
 };
 

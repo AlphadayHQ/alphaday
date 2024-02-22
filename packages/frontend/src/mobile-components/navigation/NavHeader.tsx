@@ -11,7 +11,7 @@ export const NavHeader: FC<IProps> = ({ avatar }) => {
     return (
         <div className="w-full flex justify-between py-2 px-5">
             <Link
-                to="/user-settings"
+                to="superfeed/user-settings"
                 role="button"
                 tabIndex={0}
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
