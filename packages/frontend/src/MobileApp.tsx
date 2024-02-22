@@ -41,6 +41,11 @@ const CustomNavTab: React.FC<{
     </div>
 );
 
+/**
+ * TODO: Move user-settings (and any other view that should be accessible from multiple tabs)
+ * to a modal.
+ * For the MVP it's fine to nest everything within /superfeed
+ */
 const TabNavigator: React.FC = () => {
     const { isAuthenticated } = useAuth();
     return (
