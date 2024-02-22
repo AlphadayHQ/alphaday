@@ -15,6 +15,9 @@ const SeoContainer = () => {
 
     const isMobile = useIsMobile();
 
+    /**
+     * TODO(v-almonacid): Amend when route handling is 100% defined for mobile
+     */
     if (isMobile) {
         return (
             <SuperSEO
