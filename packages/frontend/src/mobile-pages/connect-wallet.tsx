@@ -8,7 +8,7 @@ const PortfolioPage = () => {
     return (
         <>
             <Pager
-                title="CONNECT WALLET"
+                title="Connect wallet"
                 handleBack={() =>
                     history.length > 1 ? history.goBack() : history.push("/")
                 }

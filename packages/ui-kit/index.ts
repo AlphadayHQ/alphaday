@@ -92,6 +92,7 @@ import {
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
 import { OutlineButton } from "./src/mobile-components/button/buttons";
+import { FormInput } from "./src/mobile-components/form-elements/FormElements";
 import { Pager } from "./src/mobile-components/pager/Pager";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
@@ -177,4 +178,5 @@ export {
     Transition,
     MiniDialog,
     OutlineButton,
+    FormInput,
 };
