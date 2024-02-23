@@ -15,6 +15,14 @@ import {
 } from "./FeedElements";
 import LineChart from "./LineChart";
 
+const parseHistory = (history: string): [number, number][] => {
+    const parsedHistory = JSON.parse(history);
+    if (!Array.isArray(parsedHistory)) {
+        return [];
+    }
+    return parsedHistory;
+};
+
 export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 
@@ -98,7 +106,11 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                     >
                                         <LineChart
                                             data={
-                                                coinData?.history ?? [[0], [1]]
+                                                coinData?.history
+                                                    ? parseHistory(
+                                                          coinData.history
+                                                      )
+                                                    : [[0], [1]]
                                             }
                                             className="!h-20 !w-28"
                                             isPreview
@@ -132,7 +144,13 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <LineChart data={coinData?.history ?? [[0], [1]]} />
+                        <LineChart
+                            data={
+                                coinData?.history
+                                    ? parseHistory(coinData.history)
+                                    : [[0], [1]]
+                            }
+                        />
                         <a
                             href={url}
                             target="_blank"
