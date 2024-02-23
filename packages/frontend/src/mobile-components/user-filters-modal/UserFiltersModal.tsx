@@ -7,8 +7,8 @@ import {
 } from "@alphaday/ui-kit";
 import { ESortFeedBy, ESupportedFilters } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
+import FilterSearchBar from "../FilterSearchBar";
 import { TFilterOptions } from "./filterOptions";
-import FilterSearchBar from "./FilterSearchBar";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
 
 interface IUserFiltersModalProps {

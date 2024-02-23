@@ -11,15 +11,16 @@ import CONFIG from "src/config";
 
 const { MAX_PAGE_NUMBER } = CONFIG.SUPERFEED;
 
-const SuperfeedContainer: FC<{ onToggleFeedFilters: () => void }> = ({
-    onToggleFeedFilters,
-}) => {
-    // TODO(v-almonacid): implement superfeed search
-    // const { tags } = useMobileGlobalSearch();
+const SuperfeedContainer: FC<{
+    onToggleFeedFilters: () => void;
+    tags: string | undefined;
+}> = ({ tags, onToggleFeedFilters }) => {
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
 
-    const [selectedPodcast, setSelectedPodcast] =
-        useState<TSuperfeedItem | null>(null);
+    const [
+        selectedPodcast,
+        setSelectedPodcast,
+    ] = useState<TSuperfeedItem | null>(null);
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
         .map((op) => op.contentType)
@@ -38,7 +39,8 @@ const SuperfeedContainer: FC<{ onToggleFeedFilters: () => void }> = ({
         page: currentPage,
         content_types: contentTypes,
         days: timeRangeInDays?.value,
-        user_filter: true,
+        user_filter: !tags, // if tags are present, we don't want to use user filters
+        tags,
     });
     const prevFeedDataResponseRef = useRef<TSuperfeedItem[]>();
 
