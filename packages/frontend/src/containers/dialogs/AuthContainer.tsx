@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Dialog } from "@alphaday/ui-kit";
 import { useKeyPress, useAuth } from "src/api/hooks";
 import { useAppDispatch } from "src/api/store/hooks";
@@ -14,6 +14,23 @@ const AuthContainer = () => {
     const dispatch = useAppDispatch();
     const { authState, resetAuthState, requestCode, ssoLogin, verifyToken } =
         useAuth();
+
+    useEffect(() => {
+        /**
+         * Reset auth state when the component mounts and the state is a transient state
+         * This is necessary because the auth state is persisted
+         */
+        if (
+            authState.status === EAuthState.SigningIn ||
+            authState.status === EAuthState.SelectingMethod ||
+            authState.status === EAuthState.GenericError
+        ) {
+            Logger.debug("AuthContainer: Found user in transient auth state");
+            resetAuthState();
+        }
+        // should only run on mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
