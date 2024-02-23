@@ -18,6 +18,7 @@ import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
 import { isCookieEnabled } from "./api/utils/cookie";
 import { getRtkErrorCode } from "./api/utils/errorHandling";
+import { Logger } from "./api/utils/logging";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
 import { appRoutes, errorRoutes } from "./routes";
@@ -65,6 +66,7 @@ const AppRoutes = () => {
      * we need to reset the auth state and reload the app
      */
     if ((error as FetchBaseQueryError)?.status === 401) {
+        Logger.debug("App::AppRoutes: 401 received");
         dispatch(userStore.resetAuthState());
         location.reload();
     }

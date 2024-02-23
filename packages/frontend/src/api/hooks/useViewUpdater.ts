@@ -56,8 +56,7 @@ export const useViewUpdater: () => void = () => {
     });
 
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const [prevIsAuthenticated, setPrevIsAuthenticated] =
-        useState(isAuthenticated);
+    const prevIsAuthenticated = useRef<boolean>(isAuthenticated);
 
     useWalletView();
 
@@ -146,7 +145,7 @@ export const useViewUpdater: () => void = () => {
     /**
      * Handle login/logout transitions
      */
-    if (isAuthenticated !== prevIsAuthenticated) {
+    if (isAuthenticated !== prevIsAuthenticated.current) {
         Logger.debug("useViewUpdater: isAuthenticated changed");
         if (!isAuthenticated) {
             /**
@@ -158,7 +157,7 @@ export const useViewUpdater: () => void = () => {
                 navigate.push("/");
             }
         }
-        setPrevIsAuthenticated(isAuthenticated);
+        prevIsAuthenticated.current = isAuthenticated;
     }
 
     /**
