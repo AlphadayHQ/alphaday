@@ -6053,10 +6053,10 @@
   dependencies:
     "@vibrant/types" "^3.2.1-alpha.1"
 
-"@vite-pwa/assets-generator@0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@vite-pwa/assets-generator/-/assets-generator-0.2.2.tgz#e1e8f4a65de66916c84719b6dfd60fc2737a3483"
-  integrity sha512-Trk0ryNl33te5iSmMIQmGMSaEpcSSmgQwhN45DMVm1cSAueUFCj1WnEfEBOQrWH2NPpTcRKuD3pWrSYgSlorUA==
+"@vite-pwa/assets-generator@0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@vite-pwa/assets-generator/-/assets-generator-0.2.4.tgz#ffd5dee762f6e98eaff9938fd52591cb04d8dbc7"
+  integrity sha512-DXyPLPR/IpbZPSpo1amZEPghY/ziIwpTUKNaz0v1xG+ELzCXmrVQhVzEMqr2JLSqRxjc+UzKfGJA/YdUuaao3w==
   dependencies:
     cac "^6.7.14"
     colorette "^2.0.20"
