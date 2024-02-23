@@ -7,7 +7,7 @@ import { darkColors } from "src/globalStyles/colors";
 import { renderToString } from "src/utils/textUtils";
 
 type IProps = {
-    data: number[][];
+    data: [number, number][];
     isLoading?: boolean;
     className?: string;
     isPreview?: boolean;
@@ -44,7 +44,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
     className,
     isPreview,
 }) {
-    const minValue = minVal(data || [[0], [0]])[0];
+    const minValue = minVal(data)[0];
     const startPrice = data[0][1];
     const lastPrice = data[data.length - 1][1];
 
