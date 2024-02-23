@@ -2,10 +2,10 @@ import { FC, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AudioPlayerProvider } from "react-use-audio-player";
 import { usePagination } from "src/api/hooks";
+import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import { useGetSuperfeedListQuery } from "src/api/services";
 import { selectedLocalFiltersSelector } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
-import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import { TSuperfeedItem } from "src/api/types";
 import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
@@ -24,10 +24,8 @@ const SuperfeedContainer: FC<{
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const prevTagsRef = useRef<string | undefined>(tags);
 
-    const [
-        selectedPodcast,
-        setSelectedPodcast,
-    ] = useState<TSuperfeedItem | null>(null);
+    const [selectedPodcast, setSelectedPodcast] =
+        useState<TSuperfeedItem | null>(null);
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
         .map((op) => op.contentType)
