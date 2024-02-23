@@ -29,6 +29,25 @@ export type TRemoteSuperfeedItem = {
     data: TFeedMarketData | null;
 };
 
+/**
+ * Filter data types
+ */
+
+export type TBaseFilterTag = {
+    name: string;
+    slug: string;
+    tag_type: string;
+};
+export type TFilterDatum = TBaseFilterItem & { id: number };
+export type TTaggedFilterDatum = TBaseFilterItem & {
+    icon: string;
+    tags: TBaseFilterTag[];
+};
+
+/**
+ * Query types
+ */
+
 export type TGetSuperfeedItemsRequest = {
     tags?: string;
     page?: number;
@@ -47,12 +66,12 @@ export type TGetSuperfeedItemsResponse = TPagination & {
 
 export type TGetSuperfeedFilterDataRequest = void;
 export type TGetSuperfeedFilterDataRawResponse = {
-    concept_tags: TBaseFilterItem[];
-    coins: TBaseFilterItem[];
-    projects: TBaseFilterItem[];
+    concept_tags: TFilterDatum[];
+    coins: TTaggedFilterDatum[];
+    projects: TTaggedFilterDatum[];
 };
 export type TGetSuperfeedFilterDataResponse = {
-    conceptTags: TBaseFilterItem[];
-    coins: TBaseFilterItem[];
-    chains: TBaseFilterItem[];
+    conceptTags: TFilterDatum[];
+    coins: TTaggedFilterDatum[];
+    chains: TTaggedFilterDatum[];
 };

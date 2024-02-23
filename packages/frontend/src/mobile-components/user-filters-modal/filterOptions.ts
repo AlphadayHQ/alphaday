@@ -12,7 +12,6 @@ export type TOption = {
     slug: string;
     selected: boolean;
     color?: string;
-    ticker?: string;
 };
 
 type TMediaOption = TOption & { contentType: EFeedItemType };
@@ -50,7 +49,11 @@ export type TSyncedFilterOptions = {
         type: ESupportedFilters.Chains;
         options: TOption[];
     };
-    // TODO
+    conceptTags: {
+        label: string;
+        type: ESupportedFilters.ConceptTags;
+        options: TOption[];
+    };
 };
 
 export type TFilterOptions = {
