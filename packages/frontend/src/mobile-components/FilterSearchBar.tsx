@@ -1,8 +1,8 @@
 import { FC, useEffect } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
+import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import { TBaseFilterItem } from "src/api/services";
 import { Logger } from "src/api/utils/logging";
-import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 
 type TOption = TBaseFilterItem;
 

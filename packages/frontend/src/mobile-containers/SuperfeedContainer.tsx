@@ -17,10 +17,8 @@ const SuperfeedContainer: FC<{
 }> = ({ tags, onToggleFeedFilters }) => {
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
 
-    const [
-        selectedPodcast,
-        setSelectedPodcast,
-    ] = useState<TSuperfeedItem | null>(null);
+    const [selectedPodcast, setSelectedPodcast] =
+        useState<TSuperfeedItem | null>(null);
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
         .map((op) => op.contentType)

@@ -37,6 +37,7 @@ export const NavHeader: FC<IProps> = ({ avatar }) => {
                     )}
                 </Link>
                 <button
+                    type="button"
                     className="bg-backgroundVariant300 self-center rounded-lg p-2"
                     onClick={() => setShowSearchBar((show) => !show)}
                 >

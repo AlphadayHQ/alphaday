@@ -22,11 +22,11 @@ import "./customIonicStyles.scss";
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
-const NotificationsPage = lazyRetry(() =>
-    import("./mobile-pages/notifications")
+const NotificationsPage = lazyRetry(
+    () => import("./mobile-pages/notifications")
 );
-const UserSettingsPage = lazyRetry(() =>
-    import("./mobile-pages/user-settings")
+const UserSettingsPage = lazyRetry(
+    () => import("./mobile-pages/user-settings")
 );
 
 const CustomNavTab: React.FC<{
