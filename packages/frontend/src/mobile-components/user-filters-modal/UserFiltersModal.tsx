@@ -135,9 +135,7 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                                         {filter.options.map((option) => (
                                             <OptionButton
                                                 key={option.slug}
-                                                name={
-                                                    option.ticker ?? option.name
-                                                }
+                                                name={option.name}
                                                 bgColor={
                                                     option.color ??
                                                     themeColors.accentVariant100
