@@ -1,31 +1,24 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
-import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import { TBaseFilterItem } from "src/api/services";
+import { TKeyword } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 
 type TOption = TBaseFilterItem;
 
 interface FilterSearchBarProps {
     tags?: string;
-    onChange?: (value: readonly TOption[]) => void;
+    keywordResults?: TKeyword[];
+    setSearchState: (value: string) => void;
+    onChange: (value: readonly TOption[]) => void;
 }
 
-const FilterSearchBar: FC<FilterSearchBarProps> = ({ onChange, tags }) => {
-    const { setSearchState, keywordResults } = useKeywordSearch();
-
-    useEffect(() => {
-        /**
-         * If tags have been passed in, but keywordResults have not been fetched yet,
-         * It means the tags are being passed in from the URL or some other source.
-         *
-         * In this case, we want to set the search state to the tags.
-         */
-        if (tags && !keywordResults) {
-            setSearchState(tags);
-        }
-    }, [tags, keywordResults, setSearchState]);
-
+const FilterSearchBar: FC<FilterSearchBarProps> = ({
+    onChange,
+    tags,
+    setSearchState,
+    keywordResults,
+}) => {
     const tagList =
         keywordResults?.map((kw) => ({
             name: kw.tag.name,
@@ -52,7 +45,7 @@ const FilterSearchBar: FC<FilterSearchBarProps> = ({ onChange, tags }) => {
                     showBackdrop
                     onChange={(o) => {
                         Logger.debug("onChange called");
-                        onChange?.(o);
+                        onChange(o);
                     }}
                     onInputChange={(e) => {
                         Logger.debug("onInputChange called");

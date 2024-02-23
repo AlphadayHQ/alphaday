@@ -9,11 +9,14 @@ import UserFiltersContainer from "src/mobile-containers/UserFiltersContainer";
 const SuperfeedPage: React.FC = () => {
     const query = useQuery();
     const [showFeedFilters, setshowFeedFilters] = useState(false);
+    const [showSearchBar, setShowSearchBar] = useState(false);
     const toggleFeedFilters = () => setshowFeedFilters(!showFeedFilters);
 
     return (
         <IonPage>
-            <MobileLayout>
+            <MobileLayout
+                onSearchHandleClick={() => setShowSearchBar((show) => !show)}
+            >
                 <UserFiltersContainer
                     onToggleFeedFilters={toggleFeedFilters}
                     show={showFeedFilters}
@@ -21,6 +24,7 @@ const SuperfeedPage: React.FC = () => {
                 <AuthPromptContainer />
                 <SuperfeedContainer
                     tags={query.get("tags") ?? undefined}
+                    showSearchBar={showSearchBar}
                     onToggleFeedFilters={toggleFeedFilters}
                 />
             </MobileLayout>
