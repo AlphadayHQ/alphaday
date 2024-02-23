@@ -18,7 +18,7 @@ import LineChart from "./LineChart";
 const parseHistory = (history: string): [number, number][] => {
     const parsedHistory = JSON.parse(history);
     if (!Array.isArray(parsedHistory)) {
-        return [];
+        return [[0, 1]];
     }
     return parsedHistory;
 };
@@ -110,7 +110,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                                     ? parseHistory(
                                                           coinData.history
                                                       )
-                                                    : [[0], [1]]
+                                                    : [[0, 1]]
                                             }
                                             className="!h-20 !w-28"
                                             isPreview
@@ -148,7 +148,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                             data={
                                 coinData?.history
                                     ? parseHistory(coinData.history)
-                                    : [[0], [1]]
+                                    : [[0, 1]]
                             }
                         />
                         <a
