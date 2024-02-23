@@ -5,7 +5,7 @@ import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 
 interface IProps {
     avatar: string | undefined;
-    onSearchHandleClick: () => void;
+    onSearchHandleClick?: () => void;
 }
 
 export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {

@@ -35,9 +35,10 @@ export const TagButton: FC<{
         e.stopPropagation();
         onClick();
     };
-    if (!slug)
+    if (!slug) {
         return (
             <button
+                type="button"
                 onClick={handleClick}
                 className={twMerge(
                     "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-4 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
@@ -47,6 +48,7 @@ export const TagButton: FC<{
                 {name}
             </button>
         );
+    }
     return (
         <Link
             to={`/superfeed?tags=${slug}`}
