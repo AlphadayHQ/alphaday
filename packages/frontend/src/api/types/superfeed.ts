@@ -49,7 +49,7 @@ export type TFeedMarketData = {
         ticker: string;
     };
     price: number;
-    history: [number, number][];
+    history: string;
 };
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
