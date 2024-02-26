@@ -51,7 +51,7 @@ export const TagButton: FC<{
     }
     return (
         <Link
-            to={`/superfeed?tags=${slug}`}
+            to={`/superfeed/search/${slug}`}
             className={twMerge(
                 "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-4 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
                 className

@@ -104,16 +104,24 @@ const SuperfeedContainer: FC<{
             {showSearchBar && (!tags || (tags && keywordResults)) && (
                 <div className="py-2 px-5">
                     <FilterSearchBar
-                        tags={tags ?? undefined}
+                        tags={tags}
                         setSearchState={setSearchState}
-                        keywordResults={keywordResults}
+                        tagsList={
+                            keywordResults?.map((kw) => ({
+                                name: kw.tag.name,
+                                slug: kw.tag.slug,
+                                id: kw.tag.id,
+                                label: kw.tag.name,
+                                value: kw.tag.slug,
+                            })) ?? []
+                        }
                         onChange={(t) => {
                             if (t.length === 0) {
                                 history.push("/superfeed");
                                 return;
                             }
                             history.push(
-                                `/superfeed?tags=${t
+                                `/superfeed/search/${t
                                     .map((tag) => tag.slug)
                                     .join(",")}`
                             );

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { IonPage } from "@ionic/react";
-import { useQuery } from "src/api/hooks";
+import { useParams } from "react-router-dom";
 import AuthPromptContainer from "src/containers/dialogs/AuthPromptContainer";
 import MobileLayout from "src/layout/MobileLayout";
 import SuperfeedContainer from "src/mobile-containers/SuperfeedContainer";
 import UserFiltersContainer from "src/mobile-containers/UserFiltersContainer";
 
 const SuperfeedPage: React.FC = () => {
-    const query = useQuery();
+    const { tags } = useParams<{ tags?: string }>();
     const [showFeedFilters, setshowFeedFilters] = useState(false);
     const [showSearchBar, setShowSearchBar] = useState(false);
     const toggleFeedFilters = () => setshowFeedFilters(!showFeedFilters);
@@ -23,7 +23,7 @@ const SuperfeedPage: React.FC = () => {
                 />
                 <AuthPromptContainer />
                 <SuperfeedContainer
-                    tags={query.get("tags") ?? undefined}
+                    tags={tags}
                     showSearchBar={showSearchBar}
                     onToggleFeedFilters={toggleFeedFilters}
                 />

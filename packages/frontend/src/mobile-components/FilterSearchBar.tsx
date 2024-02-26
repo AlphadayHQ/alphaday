@@ -1,14 +1,13 @@
 import { FC } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
 import { TBaseFilterItem } from "src/api/services";
-import { TKeyword } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 
 type TOption = TBaseFilterItem;
 
 interface FilterSearchBarProps {
     tags?: string;
-    keywordResults?: TKeyword[];
+    tagsList: TOption[];
     setSearchState: (value: string) => void;
     onChange: (value: readonly TOption[]) => void;
 }
@@ -17,21 +16,12 @@ const FilterSearchBar: FC<FilterSearchBarProps> = ({
     onChange,
     tags,
     setSearchState,
-    keywordResults,
+    tagsList,
 }) => {
-    const tagList =
-        keywordResults?.map((kw) => ({
-            name: kw.tag.name,
-            slug: kw.tag.slug,
-            id: kw.tag.id,
-            label: kw.tag.name,
-            value: kw.tag.slug,
-        })) ?? [];
-
     const searchValues = tags
         ?.split(",")
         .map((tag) => {
-            return tagList.filter((t) => t.slug === tag)[0];
+            return tagsList.filter((t) => t.slug === tag)[0];
         })
         .filter((t) => t);
 
@@ -47,13 +37,13 @@ const FilterSearchBar: FC<FilterSearchBarProps> = ({
                         Logger.debug("onChange called");
                         onChange(o);
                     }}
-                    onInputChange={(e) => {
+                    onInputChange={(searchString) => {
                         Logger.debug("onInputChange called");
-                        setSearchState(e);
+                        setSearchState(searchString);
                     }}
                     placeholder="Search for assets, projects, events, etc."
                     initialSearchValues={searchValues ?? []}
-                    options={tagList}
+                    options={tagsList}
                     isFetchingKeywordResults={false}
                     isFetchingTrendingKeywordResults={false}
                 />
