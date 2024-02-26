@@ -17,7 +17,7 @@ interface IFormInput extends IFormElement<HTMLInputElement> {
     isOptional?: boolean;
     errorMsg?: string;
     type: "text" | "email" | "password";
-    name: string;
+    name?: string;
 }
 
 export const FormInput: FC<IFormInput> = ({
