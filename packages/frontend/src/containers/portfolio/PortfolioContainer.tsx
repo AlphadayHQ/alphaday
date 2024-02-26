@@ -46,7 +46,8 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
 
     const { authWallet } = useAccount();
-    const { openWalletConnectionDialog, verifyWallet } = useWallet();
+    const { openWalletConnectionDialog, verifyWallet, resetWalletConnection } =
+        useWallet();
     const {
         portfolioAccounts,
         addPortfolioAccount,
@@ -220,6 +221,13 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return balances;
     }, [nftBalanceForAddresses]);
 
+    const onDisconnectWallet = () => {
+        if (authWallet.account) {
+            resetWalletConnection();
+            removePortfolioAccount({ address: authWallet.account.address });
+        }
+    };
+
     useEffect(() => {
         /**
          * This condition will only pass while: tokensBalance.assets is undefined,
@@ -350,6 +358,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             authAccount={authWallet.account}
             selectedAddress={selectedAddress}
             onConnectWallet={openWalletConnectionDialog}
+            onDisconnectWallet={onDisconnectWallet}
             showVerify={showVerify}
             onVerifyWallet={verifyWallet}
             onAddAddress={(address: string) => {

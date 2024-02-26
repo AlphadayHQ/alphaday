@@ -22,6 +22,7 @@ interface IPortfolio {
     authAccount: TCryptoAccount | undefined;
     selectedAddress: string | null;
     onConnectWallet: () => MaybeAsync<void>;
+    onDisconnectWallet: () => MaybeAsync<void>;
     showVerify: boolean;
     onVerifyWallet: () => MaybeAsync<void>;
     onAddAddress: (address: string) => void;
@@ -47,6 +48,7 @@ const Portfolio: FC<IPortfolio> = ({
     selectedAddress,
     accounts,
     onConnectWallet,
+    onDisconnectWallet,
     showVerify,
     onVerifyWallet,
     portfolioDataForAddress,
@@ -135,6 +137,10 @@ const Portfolio: FC<IPortfolio> = ({
                                     switchPortfolioType={switchPortfolioType}
                                     handleShowEnterAddress={
                                         handleShowEnterAddress
+                                    }
+                                    onDisconnectWallet={onDisconnectWallet}
+                                    selectedIsAuthWallet={
+                                        authAccount?.address === selectedAddress
                                     }
                                 />
                                 {portfolioType === EPortfolioType.Ft ? (
