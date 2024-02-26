@@ -1,46 +1,111 @@
-import { useState } from "react";
-import { Input, Pager } from "@alphaday/ui-kit";
-import { useHistory } from "react-router";
-import { ReactComponent as SearchSVG } from "src/assets/svg/search.svg";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { usePagination } from "src/api/hooks";
+import { useGetCoinsQuery } from "src/api/services";
+import { TCoin } from "src/api/types";
+import {
+    buildUniqueItemList,
+    shouldFetchMoreItems,
+} from "src/api/utils/itemUtils";
+
+import AddHolding from "src/mobile-components/portfolio/AddHolding";
+import SelectHoldingCoin from "src/mobile-components/portfolio/SelectHoldingCoin";
+import CONFIG from "src/config";
+
+const INITIAL_PAGE = 1;
+const pollingInterval = CONFIG.WIDGETS.MARKET.COIN_POLLING_INTERVAL * 1000;
 
 const AddHoldingPage = () => {
-    const history = useHistory();
-
     const [searchText, setSearchText] = useState("");
+    const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
+    const [coins, setCoins] = useState<TCoin[] | undefined>();
+    const [selectedCoin, setSelectedCoin] = useState<TCoin>();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+        data: coinsDataResponse,
+        isLoading: isLoadingCoinsData,
+        isSuccess,
+    } = useGetCoinsQuery(
+        {
+            page: currentPage,
+            tags: undefined,
+            limit: CONFIG.WIDGETS.MARKET.QUERY_HARD_LIMIT,
+        },
+        {
+            pollingInterval,
+        }
+    );
+
+    const { nextPage, handleNextPage } = usePagination(
+        coinsDataResponse?.links,
+        CONFIG.UI.BOARD_LIBRARY.MAX_PAGE_NUMBER,
+        isSuccess
+    );
+
+    const coinsData = useMemo(
+        () => coinsDataResponse?.results ?? [],
+        [coinsDataResponse]
+    );
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
     };
 
-    return (
-        <>
-            <Pager
-                title="Add Manually"
-                handleClose={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+    const handleScrollEvent = useCallback(
+        ({ currentTarget }: FormEvent<HTMLElement>) => {
+            if (shouldFetchMoreItems(currentTarget)) {
+                handleNextPage("next");
+            }
+        },
+        [handleNextPage]
+    );
+
+    useEffect(() => {
+        if (coinsData !== undefined) {
+            setCoins((prevItems) => {
+                if (prevItems) {
+                    const newItems = buildUniqueItemList([
+                        ...prevItems,
+                        ...coinsData,
+                    ]);
+                    return newItems;
                 }
-            />
-            <p className="mx-4 fontGroup-highlight">
-                Search or select the desired crypto coin that you have in your
-                portfolio.
-            </p>
-            <div className="fontGroup-normal relative w-full">
-                <Input
-                    onChange={handleChange}
-                    id="widgetlib-search"
-                    name="widgetlib-search"
-                    placeholder="Search..."
-                    height="44px"
-                    value={searchText}
-                    className="mx-auto pl-8 text-primary placeholder:text-primaryVariant200 fontGroup-highlight outline-none border-none focus:outline-none focus:border-none bg-backgroundVariant200"
-                />
-                <SearchSVG
-                    className="h-4 w-4 absolute top-3.5 left-5 text-primaryVariant200"
-                    aria-hidden="true"
-                />
+                return coinsData;
+            });
+        }
+    }, [coinsData]);
+
+    // set current page 350ms after next page is set.
+    // RTK should cache requests, so we don't need to be too careful about rerenders.
+    useEffect(() => {
+        if (nextPage === undefined) {
+            return () => null;
+        }
+        const timeout = setTimeout(() => {
+            setCurrentPage(nextPage);
+        }, 350);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [nextPage]);
+
+    if (selectedCoin !== undefined) {
+        return (
+            <div className="h-screen">
+                <AddHolding selectedCoin={selectedCoin} />
             </div>
-            <p className="mx-4 mt-7">Or simply select from the list below.</p>
-        </>
+        );
+    }
+    return (
+        <div className="h-screen">
+            <SelectHoldingCoin
+                onScroll={handleScrollEvent}
+                onInputChange={handleInputChange}
+                inputValue={searchText}
+                isLoadingCoinsData={isLoadingCoinsData}
+                coins={coins}
+                setSelectedCoin={setSelectedCoin}
+            />
+        </div>
     );
 };
 
