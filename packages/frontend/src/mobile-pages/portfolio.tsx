@@ -74,21 +74,21 @@ const PortfolioPage = () => {
                     title="Add Portfolio"
                     subtext="Add your portfolio to get started"
                     icon={<WalletSVG className="w-[24px] mr-1" />}
-                    onClick={() => history.push("/add-portfolio")}
+                    onClick={() => history.push("/portfolio/add-wallet")}
                     isAuthenticated={isAuthenticated}
                 />
                 <OutlineButton
                     title="Connect Wallet"
                     subtext="Connect your wallet to get started"
                     icon={<CopySVG className="w-[22px] mr-1" />}
-                    onClick={() => history.push("/connect-wallet")}
+                    onClick={() => history.push("/portfolio/connect-wallet")}
                     isAuthenticated={isAuthenticated}
                 />
                 <OutlineButton
                     title="Add transaction Manually"
                     subtext="Add your transaction manually"
                     icon={<HandSVG className="w-[20px] mr-1" />}
-                    onClick={() => history.push("/add-transaction")}
+                    onClick={() => history.push("/portfolio/add-transaction")}
                     isAuthenticated={isAuthenticated}
                 />
             </div>

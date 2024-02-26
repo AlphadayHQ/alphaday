@@ -93,6 +93,8 @@ export type TCryptoAccount = {
     // networkId: number | undefined;
     address: string | null;
     ens?: string | null;
+    // name given by user
+    name?: string | null;
 };
 
 export enum ECookieChoice {

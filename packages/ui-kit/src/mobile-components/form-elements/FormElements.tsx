@@ -17,6 +17,7 @@ interface IFormInput extends IFormElement<HTMLInputElement> {
     isOptional?: boolean;
     errorMsg?: string;
     type: "text" | "email" | "password";
+    name: string;
 }
 
 export const FormInput: FC<IFormInput> = ({
@@ -30,6 +31,7 @@ export const FormInput: FC<IFormInput> = ({
     isOptional,
     type = "text",
     errorMsg,
+    name,
 }) => {
     const [hasBlured, sethasBlured] = useState(false);
     return (
@@ -58,7 +60,7 @@ export const FormInput: FC<IFormInput> = ({
             <div className="relative mt-1 rounded-md shadow-sm">
                 <input
                     type={type}
-                    name={label}
+                    name={name}
                     value={value}
                     onChange={onChange}
                     onBlur={() => sethasBlured(true)}
@@ -67,7 +69,7 @@ export const FormInput: FC<IFormInput> = ({
                         className,
                         errorMsg &&
                             hasBlured &&
-                            "ring-red-400 text-red-900 placeholder-red-300 focus:ring-red-500"
+                            "ring-red-400 placeholder-red-300 focus:ring-red-500"
                     )}
                     placeholder={placeholder}
                     defaultValue={defaultValue}
@@ -77,7 +79,10 @@ export const FormInput: FC<IFormInput> = ({
                 />
             </div>
             {errorMsg && hasBlured && (
-                <p className="mt-1 text-sm text-red-600" id="email-error">
+                <p
+                    className="mt-1 text-sm text-red-600 fontGroup-mini"
+                    id="email-error"
+                >
                     {errorMsg}
                 </p>
             )}
