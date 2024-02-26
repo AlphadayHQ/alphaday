@@ -1,11 +1,5 @@
 import { FC, useState } from "react";
-import {
-    FormInput,
-    MiniDialog,
-    NavBottom,
-    Pager,
-    Toggle,
-} from "@alphaday/ui-kit";
+import { FormInput, MiniDialog, NavBottom, Pager } from "@alphaday/ui-kit";
 import { useHistory } from "react-router";
 import { usePortfolioAccount } from "src/api/hooks";
 import { validateEthAddr } from "src/api/utils/accountUtils";

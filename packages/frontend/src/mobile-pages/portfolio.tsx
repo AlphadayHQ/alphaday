@@ -85,10 +85,10 @@ const PortfolioPage = () => {
                     isAuthenticated={isAuthenticated}
                 />
                 <OutlineButton
-                    title="Add transaction Manually"
-                    subtext="Add your transaction manually"
+                    title="Add Holdings Manually"
+                    subtext="Add your holdings manually"
                     icon={<HandSVG className="w-[20px] mr-1" />}
-                    onClick={() => history.push("/portfolio/add-transaction")}
+                    onClick={() => history.push("/portfolio/add-holding")}
                     isAuthenticated={isAuthenticated}
                 />
             </div>

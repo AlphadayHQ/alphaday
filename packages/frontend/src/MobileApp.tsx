@@ -34,6 +34,7 @@ const ConnectWalletPage = lazyRetry(
     () => import("./mobile-pages/connect-wallet")
 );
 const AddWalletPage = lazyRetry(() => import("./mobile-pages/add-wallet"));
+const AddHoldingPage = lazyRetry(() => import("./mobile-pages/add-holding"));
 
 const CustomNavTab: React.FC<{
     label: string;
@@ -144,6 +145,11 @@ const MobileApp: React.FC = () => {
                             path="/portfolio/add-wallet"
                             exact
                             component={AddWalletPage}
+                        />
+                        <Route
+                            path="/portfolio/add-holding"
+                            exact
+                            component={AddHoldingPage}
                         />
                     </Suspense>
                 </IonRouterOutlet>
