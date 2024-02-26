@@ -356,6 +356,9 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             isLoading={isLoading}
             accounts={accounts}
             authAccount={authWallet.account}
+            isWalletConnected={
+                authWallet.status === WalletConnectionState.Verified
+            }
             selectedAddress={selectedAddress}
             onConnectWallet={openWalletConnectionDialog}
             onDisconnectWallet={onDisconnectWallet}

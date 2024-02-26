@@ -7,8 +7,10 @@ interface ITopBarProps {
     switchPortfolioType: () => void;
     portfolioType: EPortfolioType;
     handleShowEnterAddress: () => void;
+    onConnectWallet: () => void;
     onDisconnectWallet: () => MaybeAsync<void>;
     selectedIsAuthWallet: boolean;
+    isWalletConnected: boolean;
 }
 
 const TopBar: FC<ITopBarProps> = ({
@@ -16,7 +18,9 @@ const TopBar: FC<ITopBarProps> = ({
     portfolioType,
     handleShowEnterAddress,
     onDisconnectWallet,
+    onConnectWallet,
     selectedIsAuthWallet,
+    isWalletConnected,
 }) => {
     return (
         <div className="m-0 mx-2 flex justify-between pt-4 h-[42px]">
@@ -40,15 +44,21 @@ const TopBar: FC<ITopBarProps> = ({
                     />{" "}
                     Add New Wallet
                 </TabButton>
-                {selectedIsAuthWallet && (
+                {(selectedIsAuthWallet || !isWalletConnected) && (
                     <TabButton
                         variant="extraSmall"
                         open={false}
                         uppercase={false}
-                        onClick={onDisconnectWallet}
+                        onClick={
+                            isWalletConnected
+                                ? onDisconnectWallet
+                                : onConnectWallet
+                        }
                         className="portfolio-addWallet border border-borderLine text-primary"
                     >
-                        Disconnect wallet
+                        {isWalletConnected
+                            ? "Disconnect wallet"
+                            : "Connect wallet"}
                     </TabButton>
                 )}
             </span>
