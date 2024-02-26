@@ -64,6 +64,7 @@ export const TagButtons: FC<{
             <TagButton
                 key={tag.slug}
                 name={tag.name}
+                slug={tag.slug}
                 onClick={() => onClick(tag)}
             />
         ))}

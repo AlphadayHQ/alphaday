@@ -5,9 +5,10 @@ import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
 
 interface IProps {
     avatar: string | undefined;
+    onSearchHandleClick?: () => void;
 }
 
-export const NavHeader: FC<IProps> = ({ avatar }) => {
+export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
     return (
         <div className="w-full flex justify-between py-2 px-5">
             <Link
@@ -30,9 +31,13 @@ export const NavHeader: FC<IProps> = ({ avatar }) => {
                     </div>
                 )}
             </Link>
-            <div className="bg-backgroundVariant300 self-center rounded-lg p-2">
+            <button
+                type="button"
+                className="bg-backgroundVariant300 self-center rounded-lg p-2"
+                onClick={onSearchHandleClick}
+            >
                 <SearchSVG className="h-4 w-4" aria-hidden="true" />
-            </div>
+            </button>
         </div>
     );
 };

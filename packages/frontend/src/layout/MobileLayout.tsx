@@ -4,10 +4,14 @@ import { NavHeader } from "src/mobile-components/navigation/NavHeader";
 const MobileLayout: FC<{
     children: ReactNode;
     onScroll?: () => void;
-}> = ({ children, onScroll }) => {
+    onSearchHandleClick?: () => void;
+}> = ({ children, onScroll, onSearchHandleClick }) => {
     return (
         <div className="h-screen" onScroll={onScroll}>
-            <NavHeader avatar={undefined} />
+            <NavHeader
+                avatar={undefined}
+                onSearchHandleClick={onSearchHandleClick}
+            />
             {children}
         </div>
     );

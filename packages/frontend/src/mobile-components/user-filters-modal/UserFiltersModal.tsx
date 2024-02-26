@@ -7,8 +7,8 @@ import {
 } from "@alphaday/ui-kit";
 import { ESortFeedBy, ESupportedFilters } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
+// import FilterSearchBar from "../FilterSearchBar";
 import { TFilterOptions } from "./filterOptions";
-import FilterSearchBar from "./FilterSearchBar";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
 
 interface IUserFiltersModalProps {
@@ -72,7 +72,7 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                         </p>
                         {/* TODO: implement filter search when properly spec-ed */}
                         <div className="flex relative z-10 justify-center [&>div]:w-full">
-                            <FilterSearchBar />
+                            {/* <FilterSearchBar /> */}
                         </div>
                     </div>
                     <div className="w-full flex justify-between py-6 border-b border-borderLine">
