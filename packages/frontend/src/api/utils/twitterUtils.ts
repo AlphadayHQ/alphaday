@@ -124,8 +124,8 @@ export const parseRemoteTweetV1 = (
         attachments: {
             media_keys: t.attachments?.media_keys ?? [],
             attachments:
-                r.includes.media?.filter((m) =>
-                    t.attachments?.media_keys?.includes(m.media_key)
+                r.includes.media?.filter(
+                    (m) => t.attachments?.media_keys?.includes(m.media_key)
                 ) ?? [],
         },
         author: r.includes.users.find(

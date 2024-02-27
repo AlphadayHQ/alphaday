@@ -99,8 +99,8 @@ export function TweetMedia<
     E = T extends "video"
         ? HTMLVideoElement
         : T extends "audio"
-          ? HTMLAudioElement
-          : HTMLImageElement,
+        ? HTMLAudioElement
+        : HTMLImageElement,
 >({ mediaType, className, ...props }: ITweetMedia<T, E>) {
     const MediaComponent = mediaType as unknown as FC<HTMLProps<E>> | null;
     return (

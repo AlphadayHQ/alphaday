@@ -15,6 +15,7 @@ describe("shareUtils", () => {
 
     describe("shareData", () => {
         it("should share the provided data using the Web Share API", () => {
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             expect(shareData({ title: "Test", text: "Test" })).resolves.toBe(
                 undefined
             );
@@ -23,6 +24,7 @@ describe("shareUtils", () => {
         it("should not share the data if the Web Share API is not supported", () => {
             // @ts-expect-error navigator is read-only, we're just testing
             navigator.share = undefined;
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
             expect(shareData({ title: "Test", text: "Test" })).rejects.toThrow(
                 "Sharing not supported"
             );
