@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 export const ActionButton: FC<{ children: ReactNode; onClick: () => void }> = ({
@@ -25,26 +26,38 @@ export const ActionButton: FC<{ children: ReactNode; onClick: () => void }> = ({
 
 export const TagButton: FC<{
     name: string;
+    slug?: string;
     onClick: () => void;
     className?: string;
-}> = ({ name, onClick, className }) => {
-    const handleClick = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
+}> = ({ name, slug, onClick, className }) => {
+    const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
         e.preventDefault();
         e.stopPropagation();
         onClick();
     };
+    if (!slug) {
+        return (
+            <button
+                type="button"
+                onClick={handleClick}
+                className={twMerge(
+                    "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-4 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
+                    className
+                )}
+            >
+                {name}
+            </button>
+        );
+    }
     return (
-        <button
-            type="button"
-            onClick={handleClick}
+        <Link
+            to={`/superfeed/search/${slug}`}
             className={twMerge(
                 "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-4 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
                 className
             )}
         >
             {name}
-        </button>
+        </Link>
     );
 };

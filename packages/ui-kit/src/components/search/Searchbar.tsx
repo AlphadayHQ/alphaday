@@ -72,7 +72,7 @@ const CustomMenuList = (showTrending: boolean) => {
                         <HotSVG className="text-primaryVariant100 mb-0 ml-[3px] mr-0 mt-px h-3 w-2.5 pb-0.5" />
                     </div>
                 )}
-                <div data-testid="searchbar-menu">
+                <div data-testid="searchbar-menu" className="z-[1000]">
                     <MenuList {...props} />
                 </div>
             </>

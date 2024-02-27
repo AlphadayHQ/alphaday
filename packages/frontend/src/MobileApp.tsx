@@ -64,6 +64,9 @@ const TabNavigator: React.FC = () => {
                 <Route exact path="/superfeed/auth">
                     <AuthPage />
                 </Route>
+                <Route exact path="/superfeed/search/:tags">
+                    <SuperfeedPage />
+                </Route>
                 <Route
                     exact
                     path="/superfeed/notifications"
