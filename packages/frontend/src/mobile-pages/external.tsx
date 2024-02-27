@@ -1,47 +1,52 @@
 import { useRef } from "react";
+import { CenteredBlock } from "@alphaday/ui-kit";
 import { IonPage } from "@ionic/react";
 import queryString from "query-string";
-import { useHistory, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import MobileLayout from "src/layout/MobileLayout";
 
-const ExternalPage: React.FC = () => {
-    const frameRef = useRef<HTMLIFrameElement>(null);
-    const { search } = useLocation();
+const parseParams = (
+    search: string
+): { url: string; title: string } | undefined => {
     const { url, title } = queryString.parse(search);
-
-    const history = useHistory();
-
-    if (typeof url !== "string") throw new Error("expected string");
-
-    /**
-     * This is a hack to detect whether the iframe loads successfuly. If it doesn't
-     * (because of same origin policy, in most cases) we open the link in a new tab instead
-     * and navigate back to the superfeed.
-     */
-    const onLoad = () => {
-        try {
-            // eslint-disable-next-line
-            const contentDoc =
-                // @ts-expect-error
-                frameRef.contentDocument || frameRef.contentWindow.document;
-        } catch (_e) {
-            window.open(url);
-            history.goBack();
-        }
+    if (typeof url !== "string" || typeof title !== "string") return undefined;
+    return {
+        url,
+        title,
     };
+};
+
+const ExternalPage: React.FC = () => {
+    /**
+     * Before the iframe loads the browser displays a white page.
+     * For that reason we set its visibility to hidden until it loads
+     */
+    const frameRef = useRef<HTMLIFrameElement>(null);
+
+    const { search } = useLocation();
+    const parsedParams = parseParams(search);
 
     return (
         <IonPage>
             <MobileLayout>
-                <iframe
-                    // @ts-expect-error
-                    title={title}
-                    className="w-full h-full border-0 border-none"
-                    src={url}
-                    allowFullScreen
-                    onLoad={onLoad}
-                    ref={frameRef}
-                />
+                {!parsedParams ? (
+                    <CenteredBlock>Error loading content</CenteredBlock>
+                ) : (
+                    <iframe
+                        id="my-iframe"
+                        title={parsedParams.title}
+                        className="w-full h-full border-0 border-none"
+                        style={{ visibility: "hidden" }}
+                        src={parsedParams.url}
+                        allowFullScreen
+                        ref={frameRef}
+                        onLoad={() => {
+                            if (frameRef.current) {
+                                frameRef.current.style.visibility = "visible";
+                            }
+                        }}
+                    />
+                )}
             </MobileLayout>
         </IonPage>
     );
