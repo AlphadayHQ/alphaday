@@ -16,6 +16,10 @@ const parseParams = (
     };
 };
 
+/**
+ * TODO(v-almonacid):
+ * How to handle websites that enforce same origin policy, and hence, can't be rendered?
+ */
 const ExternalPage: React.FC = () => {
     /**
      * Before the iframe loads the browser displays a white page.
