@@ -209,9 +209,12 @@ export function OTPInput(props: IOTPInputProps) {
                 });
                 setOTPValues(updatedOTPValues);
                 setActiveInput(Math.min(nextFocusIndex + 1, length - 1));
+                if (updatedOTPValues.length === length) {
+                    handleOtpChange(updatedOTPValues);
+                }
             }
         },
-        [activeInput, getRightValue, length, otpValues]
+        [activeInput, getRightValue, handleOtpChange, length, otpValues]
     );
 
     return (
