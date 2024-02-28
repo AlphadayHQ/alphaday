@@ -13,7 +13,6 @@ import CONFIG from "src/config";
 import { THolding } from "./types";
 
 const INITIAL_PAGE = 1;
-const pollingInterval = CONFIG.WIDGETS.MARKET.COIN_POLLING_INTERVAL * 1000;
 
 const AddHoldingPage = () => {
     const [searchText, setSearchText] = useState("");
@@ -26,16 +25,11 @@ const AddHoldingPage = () => {
         data: coinsDataResponse,
         isLoading: isLoadingCoinsData,
         isSuccess,
-    } = useGetCoinsQuery(
-        {
-            page: currentPage,
-            tags: undefined,
-            limit: CONFIG.WIDGETS.MARKET.QUERY_HARD_LIMIT,
-        },
-        {
-            pollingInterval,
-        }
-    );
+    } = useGetCoinsQuery({
+        page: currentPage,
+        tags: undefined,
+        limit: CONFIG.WIDGETS.MARKET.QUERY_HARD_LIMIT,
+    });
 
     const { nextPage, handleNextPage } = usePagination(
         coinsDataResponse?.links,
