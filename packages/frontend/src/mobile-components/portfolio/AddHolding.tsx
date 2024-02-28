@@ -89,7 +89,7 @@ const AddHolding: FC<IAddHolding> = ({
                     className="px-4 py-3 w-full mx-4 bg-accentVariant100 hover:bg-accentVariant200 text-primary  rounded-md fontGroup-highlightSemi cursor-pointer disabled:bg-gray-600 disabled:opacity-30"
                     onClick={() => {}}
                 >
-                    Add Wallet
+                    Add Holding
                 </button>
             </div>
         </ScrollBar>
