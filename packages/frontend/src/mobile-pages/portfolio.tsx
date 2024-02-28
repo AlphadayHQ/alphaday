@@ -35,7 +35,6 @@ const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
 const PortfolioPage = () => {
     const history = useHistory();
     const { isAuthenticated } = useAuth();
-    const avatar = false; // TODO get this from user data
     return (
         <>
             <Pager
