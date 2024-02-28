@@ -8,6 +8,7 @@ import {
     IconButton,
     twMerge,
 } from "@alphaday/ui-kit";
+import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
 import globalMessages from "src/globalMessages";
@@ -23,6 +24,7 @@ interface IProps {
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>
         | undefined;
+    profile: TUserProfile | undefined;
 }
 
 const Divider = () => (
@@ -36,6 +38,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     showTutorial,
     isAuthenticated,
     setTutFocusElemRef,
+    profile,
 }) => {
     const [toggleState, setToggleState] = useState(false);
 
@@ -84,13 +87,16 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
             {!showTutorial && (
                 <DropdownMenu
                     className={twMerge(
-                        "two-col:p-[18px_0px] border-borderLine left-auto right-0 mt-1 w-[275px] rounded-lg rounded-t-none rounded-bl rounded-br border border-solid shadow-none",
+                        "two-col:p-[18px_0px] border-borderLine left-auto right-0 mt-1 w-[275px] rounded-lg rounded-t rounded-bl rounded-br border border-solid shadow-none",
                         styles["dropdown-menu"]
                     )}
                 >
                     <div className="mx-2">
-                        <div className="flex justify-between px-2 pb-5 pt-0">
+                        <div className="flex justify-start px-2 pb-5 pt-0">
                             <DropdownAvatar />
+                            <p className="m-0 self-center ml-4 capitalize fontGroup-highlight">
+                                {profile?.user.username}
+                            </p>
                         </div>
                         <Divider />
                         <DropdownItem
