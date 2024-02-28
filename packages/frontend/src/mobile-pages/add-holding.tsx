@@ -10,6 +10,7 @@ import {
 import AddHolding from "src/mobile-components/portfolio/AddHolding";
 import SelectHoldingCoin from "src/mobile-components/portfolio/SelectHoldingCoin";
 import CONFIG from "src/config";
+import { THolding } from "./types";
 
 const INITIAL_PAGE = 1;
 const pollingInterval = CONFIG.WIDGETS.MARKET.COIN_POLLING_INTERVAL * 1000;
@@ -19,6 +20,7 @@ const AddHoldingPage = () => {
     const [currentPage, setCurrentPage] = useState(INITIAL_PAGE);
     const [coins, setCoins] = useState<TCoin[] | undefined>();
     const [selectedCoin, setSelectedCoin] = useState<TCoin>();
+    const [holding, setholding] = useState<THolding>();
 
     const {
         data: coinsDataResponse,
@@ -91,7 +93,12 @@ const AddHoldingPage = () => {
     if (selectedCoin !== undefined) {
         return (
             <div className="h-screen">
-                <AddHolding selectedCoin={selectedCoin} />
+                <AddHolding
+                    selectedCoin={selectedCoin}
+                    setSelectedCoin={setSelectedCoin}
+                    holding={holding}
+                    setHolding={setholding}
+                />
             </div>
         );
     }
