@@ -14,7 +14,9 @@ import {
 
 export const BlogCard: FC<{
     item: TSuperfeedItem;
-}> = ({ item }) => {
+    onLike: () => void;
+    onShare: () => void;
+}> = ({ item, onLike, onShare }) => {
     const {
         title,
         tags,
@@ -27,7 +29,6 @@ export const BlogCard: FC<{
         shortDescription,
         date,
     } = item;
-    const onLike = () => {};
     const isLiked = false;
 
     return (
@@ -72,7 +73,7 @@ export const BlogCard: FC<{
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -100,7 +101,7 @@ export const BlogCard: FC<{
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}

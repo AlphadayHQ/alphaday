@@ -27,6 +27,8 @@ interface IPodcastCard {
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
     >;
+    onLike: () => void;
+    onShare: () => void;
 }
 
 const PlayPauseButton: FC<{
@@ -63,6 +65,8 @@ export const PodcastCard: FC<IPodcastCard> = ({
     item,
     selectedPodcast,
     setSelectedPodcast,
+    onLike,
+    onShare,
 }) => {
     const {
         title,
@@ -112,8 +116,6 @@ export const PodcastCard: FC<IPodcastCard> = ({
         setSelectedPodcast(item);
         togglePlayPause();
     };
-
-    const onLike = () => {};
     const isLiked = false;
 
     return (
@@ -203,7 +205,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -265,7 +267,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}

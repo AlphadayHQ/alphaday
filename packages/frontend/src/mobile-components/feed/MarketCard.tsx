@@ -23,7 +23,11 @@ const parseHistory = (history: string): [number, number][] => {
     return parsedHistory;
 };
 
-export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+export const MarketCard: FC<{
+    item: TSuperfeedItem;
+    onLike: () => void;
+    onShare: () => void;
+}> = ({ item, onLike, onShare }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 
     const {
@@ -37,7 +41,6 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
         data: coinData,
     } = item;
 
-    const onLike = () => {};
     const isLiked = false;
 
     const isDown = shortDescription?.includes("down");
@@ -133,7 +136,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -165,7 +168,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}

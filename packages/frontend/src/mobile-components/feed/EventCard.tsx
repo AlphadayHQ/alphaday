@@ -36,7 +36,11 @@ const eventDateFormatter = (date: string) => {
     );
 };
 
-export const EventCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+export const EventCard: FC<{
+    item: TSuperfeedItem;
+    onLike: () => void;
+    onShare: () => void;
+}> = ({ item, onLike, onShare }) => {
     const {
         title,
         tags,
@@ -56,7 +60,6 @@ export const EventCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
     const location = "location";
     const category = "category";
 
-    const onLike = () => {};
     const isLiked = false;
 
     return (
@@ -116,7 +119,7 @@ export const EventCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -161,7 +164,7 @@ export const EventCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}

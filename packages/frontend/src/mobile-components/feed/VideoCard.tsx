@@ -33,7 +33,11 @@ const VideoPlaceholder: FC<{
     </div>
 );
 
-export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+export const VideoCard: FC<{
+    item: TSuperfeedItem;
+    onLike: () => void;
+    onShare: () => void;
+}> = ({ item, onLike, onShare }) => {
     const {
         title,
         tags,
@@ -48,7 +52,6 @@ export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
         shortDescription,
     } = item;
 
-    const onLike = () => {};
     const isLiked = false;
 
     /**
@@ -116,7 +119,7 @@ export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -164,7 +167,7 @@ export const VideoCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}
