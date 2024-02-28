@@ -8,7 +8,7 @@ interface IFormElement<T> {
     label: string;
     placeholder?: string;
     defaultValue?: string;
-    value: string;
+    value: string | number;
     onChange: ChangeEventHandler<T>;
     disabled?: boolean;
     className?: string;
@@ -16,8 +16,9 @@ interface IFormElement<T> {
 interface IFormInput extends IFormElement<HTMLInputElement> {
     isOptional?: boolean;
     errorMsg?: string;
-    type: "text" | "email" | "password";
+    type: "text" | "email" | "password" | "number" | "date";
     name?: string;
+    min?: number;
 }
 
 export const FormInput: FC<IFormInput> = ({
@@ -32,6 +33,7 @@ export const FormInput: FC<IFormInput> = ({
     type = "text",
     errorMsg,
     name,
+    min,
 }) => {
     const [hasBlured, sethasBlured] = useState(false);
     return (
@@ -76,6 +78,7 @@ export const FormInput: FC<IFormInput> = ({
                     aria-invalid="true"
                     aria-describedby="email-error"
                     disabled={disabled}
+                    min={min}
                 />
             </div>
             {errorMsg && hasBlured && (

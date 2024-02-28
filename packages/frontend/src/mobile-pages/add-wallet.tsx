@@ -81,7 +81,6 @@ const AddWalletPage: FC<IAddWalletPageProps> = () => {
                 >
                     Add Wallet
                 </button>
-                ssT
             </div>
             <MiniDialog
                 show={isWalletAdded}

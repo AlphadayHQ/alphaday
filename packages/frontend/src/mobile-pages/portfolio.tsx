@@ -13,7 +13,7 @@ import { ReactComponent as InfoSVG } from "src/assets/svg/info2.svg";
 const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
     if (isAuthenticated) {
         return (
-            <div className="w-full flex px-5 mt-4 fontGroup-highlight !font-bold">
+            <div className="w-full flex px-5 mt-4 fontGroup-highlight !font-semibold">
                 Add your portfolio for a quick overview and easy swaps.
             </div>
         );
@@ -71,8 +71,8 @@ const PortfolioPage = () => {
             <TopSection isAuthenticated={isAuthenticated} />
             <div className="flex flex-col items-center mt-4 mx-4">
                 <OutlineButton
-                    title="Add Portfolio"
-                    subtext="Add your portfolio to get started"
+                    title="Add Wallet"
+                    subtext="Add your wallet manually to get started"
                     icon={<WalletSVG className="w-[24px] mr-1" />}
                     onClick={() => history.push("/portfolio/add-wallet")}
                     isAuthenticated={isAuthenticated}
