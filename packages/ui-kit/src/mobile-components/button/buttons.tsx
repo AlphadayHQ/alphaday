@@ -11,6 +11,7 @@ export const ActionButton: FC<{
     ) => {
         e.preventDefault();
         e.stopPropagation();
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         onClick();
     };
     return (
