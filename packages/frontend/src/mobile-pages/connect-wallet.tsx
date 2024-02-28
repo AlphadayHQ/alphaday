@@ -1,9 +1,9 @@
-import { NavBottom, OutlineButton, Pager } from "@alphaday/ui-kit";
+import { OutlineButton, Pager } from "@alphaday/ui-kit";
 import { useHistory } from "react-router";
 import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
 import { ReactComponent as WalletConnectSVG } from "src/assets/icons/wallet-connect.svg";
 
-const PortfolioPage = () => {
+const ConnectWalletPage = () => {
     const history = useHistory();
     return (
         <>
@@ -33,9 +33,8 @@ const PortfolioPage = () => {
                     isAuthenticated
                 />
             </div>
-            <NavBottom />
         </>
     );
 };
 
-export default PortfolioPage;
+export default ConnectWalletPage;

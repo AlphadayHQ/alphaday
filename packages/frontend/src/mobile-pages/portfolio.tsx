@@ -1,12 +1,10 @@
 import { FC } from "react";
-import { NavBottom, OutlineButton, Pager } from "@alphaday/ui-kit";
+import { OutlineButton, Pager } from "@alphaday/ui-kit";
 import { useHistory } from "react-router";
-import { Link } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
 import { ReactComponent as CopySVG } from "src/assets/icons/copy.svg";
 import { ReactComponent as HandSVG } from "src/assets/icons/hand.svg";
-import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
 import { ReactComponent as WalletSVG } from "src/assets/icons/wallet.svg";
 import { ReactComponent as InfoSVG } from "src/assets/svg/info2.svg";
 
@@ -46,28 +44,6 @@ const PortfolioPage = () => {
                     history.length > 1 ? history.goBack() : history.push("/")
                 }
             />
-            <div className="w-full flex justify-between py-2 px-5">
-                <Link
-                    to="/user-settings"
-                    role="button"
-                    tabIndex={0}
-                    className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                    <span className="absolute -inset-1.5" />
-                    <span className="sr-only">Open user menu</span>
-                    {avatar ? (
-                        <img
-                            className="h-12 w-12 rounded-full"
-                            src={avatar}
-                            alt=""
-                        />
-                    ) : (
-                        <div className="bg-backgroundVariant300 border-borderLine flex h-12 w-12 items-center justify-center rounded-full border-2">
-                            <UserSVG className="fill-primary h-7 w-7" />
-                        </div>
-                    )}
-                </Link>
-            </div>
             <TopSection isAuthenticated={isAuthenticated} />
             <div className="flex flex-col items-center mt-4 mx-4">
                 <OutlineButton
@@ -92,7 +68,6 @@ const PortfolioPage = () => {
                     isAuthenticated={isAuthenticated}
                 />
             </div>
-            <NavBottom />
         </>
     );
 };

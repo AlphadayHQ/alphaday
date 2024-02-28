@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { FormInput, MiniDialog, NavBottom, Pager } from "@alphaday/ui-kit";
+import { useState } from "react";
+import { FormInput, MiniDialog, Pager } from "@alphaday/ui-kit";
 import { useHistory } from "react-router";
 import { usePortfolioAccount } from "src/api/hooks";
 import { validateEthAddr } from "src/api/utils/accountUtils";
@@ -10,17 +10,15 @@ type TWalletInfo = {
     address: string;
 };
 
-interface IAddWalletPageProps {
-    handleAddNewWallet: (walletInfo: TWalletInfo) => void;
-}
-
-const AddWalletPage: FC<IAddWalletPageProps> = () => {
+const AddWalletPage = () => {
     const history = useHistory();
     const [isWalletAdded, setIsWalletAdded] = useState(false);
     const [walletInfo, setwalletInfo] = useState<TWalletInfo>({
         name: "",
         address: "",
     });
+
+    // const handleAddNewWallet = (w: TWalletInfo) => {};
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setwalletInfo((prev) => ({
@@ -95,7 +93,6 @@ const AddWalletPage: FC<IAddWalletPageProps> = () => {
                     Your account has been created!
                 </div>
             </MiniDialog>
-            <NavBottom />
         </>
     );
 };

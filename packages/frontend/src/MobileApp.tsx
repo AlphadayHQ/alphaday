@@ -85,8 +85,21 @@ const TabNavigator: React.FC = () => {
                     <Placeholder />
                 </Route>
                 <Route exact path="/portfolio">
-                    <Placeholder />
+                    <PortfolioPage />
                 </Route>
+                <Route path="/portfolio/connect-wallet" exact>
+                    <ConnectWalletPage />
+                </Route>
+                <Route path="/portfolio/add-wallet" exact>
+                    <AddWalletPage />
+                </Route>
+                <Route path="/filters" exact component={FiltersPage} />
+
+                <Route
+                    path="/portfolio/add-holding"
+                    exact
+                    component={AddHoldingPage}
+                />
                 <Route exact path="/auth*">
                     <AuthPage />
                 </Route>
@@ -119,38 +132,6 @@ const MobileApp: React.FC = () => {
                 <IonRouterOutlet>
                     <Suspense fallback={<PreloaderPage />}>
                         <Route path="/" render={() => <TabNavigator />} />
-                        <Route path="/auth*" exact component={AuthPage} />
-                        <Route path="/filters" exact component={FiltersPage} />
-                        <Route
-                            path="/user-settings"
-                            exact
-                            component={UserSettingsPage}
-                        />
-                        <Route
-                            path="/notifications"
-                            exact
-                            component={NotificationsPage}
-                        />
-                        <Route
-                            path="/portfolio"
-                            exact
-                            component={PortfolioPage}
-                        />
-                        <Route
-                            path="/portfolio/connect-wallet"
-                            exact
-                            component={ConnectWalletPage}
-                        />
-                        <Route
-                            path="/portfolio/add-wallet"
-                            exact
-                            component={AddWalletPage}
-                        />
-                        <Route
-                            path="/portfolio/add-holding"
-                            exact
-                            component={AddHoldingPage}
-                        />
                     </Suspense>
                 </IonRouterOutlet>
             </IonReactRouter>
