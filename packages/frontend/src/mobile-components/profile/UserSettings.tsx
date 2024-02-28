@@ -1,12 +1,14 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { Link, useHistory } from "react-router-dom";
+import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
+import { EditProfileModal } from "./EditProfileModal";
 
 const NonAuthenticatedSection = () => {
     return (
@@ -33,7 +35,9 @@ const NonAuthenticatedSection = () => {
     );
 };
 
-const AuthenticatedSection = () => {
+const AuthenticatedSection: FC<{ profile: TUserProfile | undefined }> = ({
+    profile,
+}) => {
     return (
         <div className="flex flex-col flex-start w-full items-start mb-4">
             <div className="flex">
@@ -42,7 +46,9 @@ const AuthenticatedSection = () => {
                     alt="username"
                     className="mr-3 w-[60px] h-[60px] rounded-full border border-solid border-green-400"
                 />
-                <p className="m-0 fontGroup-major self-center">Hi Username!</p>
+                <p className="m-0 fontGroup-major self-center">
+                    Hi {profile?.handle}!
+                </p>
             </div>
             <div className="relative flex flex-col items-center fontGroup-highlight !font-semibold py-4 px-4 bg-backgroundVariant300 w-full mt-5 justify-center rounded-lg">
                 <span className="w-1.5 h-1.5 rounded-full bg-secondaryOrangeSoda absolute top-4 right-4" />
@@ -69,19 +75,30 @@ type TMenuEntry = {
 };
 
 interface IUserSettings {
-    // avatar: string;
-    // username: string;
+    profile: TUserProfile | undefined;
     // isOpen: boolean;
     // onClose: () => void;
     isAuthenticated: boolean;
+    onSaveProfile: (req: { handle: string }) => void;
+    isSavingProfile: boolean;
     onLogout: () => Promise<void>;
 }
-const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
+const UserSettings: FC<IUserSettings> = ({
+    profile,
+    isAuthenticated,
+    onSaveProfile,
+    isSavingProfile,
+    onLogout,
+}) => {
+    const [showProfileEditModal, setShowProfileEditModal] =
+        useState<boolean>(false);
     const history = useHistory();
 
     const navigate = (link: string) => {
         history.push(link);
     };
+
+    const handleCloseModal = () => setShowProfileEditModal(false);
 
     const menu: TMenuEntry[] = [
         {
@@ -91,7 +108,7 @@ const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
             subtext: "Edit your profile",
             requiresAuth: true,
             onClick: () => {
-                if (isAuthenticated) navigate("/profile");
+                if (isAuthenticated) setShowProfileEditModal(true);
             },
         },
         {
@@ -135,8 +152,9 @@ const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
     ];
 
     return (
-        <div className="mx-5 w-full">
-            {/* <div className="flex flex-start w-full items-center mb-4">
+        <>
+            <div className="mx-5 w-full">
+                {/* <div className="flex flex-start w-full items-center mb-4">
                 <ChevronSVG
                     onClick={onClose}
                     tabIndex={0}
@@ -144,44 +162,57 @@ const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
                     className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5"
                 />
             </div> */}
-            {isAuthenticated ? (
-                <AuthenticatedSection />
-            ) : (
-                <NonAuthenticatedSection />
-            )}
-            <div className="mt-10 w-full">
-                {menu.map((item) => {
-                    if (item.requiresAuth || item.disabled) return null;
-                    return (
-                        <div
-                            onClick={item.onClick}
-                            tabIndex={0}
-                            role="button"
-                            key={item.id}
-                            className={twMerge(
-                                "flex w-full justify-start items-center border-b border-primaryVariant100 pb-2.5 pt-2.5 last:pb-0 last:border-none first:pt-0 cursor-pointer",
-                                isAuthenticated
-                                    ? "text-primary"
-                                    : "text-primaryVariant100"
-                            )}
-                        >
-                            <item.icon className="mr-4 w-6 h-6" />
-                            <div className="flex flex-grow min-w-max justify-between items-center">
-                                <div className="flex flex-col w-full">
-                                    <span className="block fontGroup-highlightSemi">
-                                        {item.title}
-                                    </span>
-                                    <span className="fontGroup-support">
-                                        {item.subtext}
-                                    </span>
+                {isAuthenticated ? (
+                    <AuthenticatedSection profile={profile} />
+                ) : (
+                    <NonAuthenticatedSection />
+                )}
+                <div className="mt-10 w-full">
+                    {menu.map((item) => {
+                        if (
+                            (item.requiresAuth && !isAuthenticated) ||
+                            item.disabled
+                        ) {
+                            return null;
+                        }
+                        return (
+                            <div
+                                onClick={item.onClick}
+                                tabIndex={0}
+                                role="button"
+                                key={item.id}
+                                className={twMerge(
+                                    "flex w-full justify-start items-center border-b border-primaryVariant100 pb-2.5 pt-2.5 last:pb-0 last:border-none first:pt-0 cursor-pointer",
+                                    isAuthenticated
+                                        ? "text-primary"
+                                        : "text-primaryVariant100"
+                                )}
+                            >
+                                <item.icon className="mr-4 w-6 h-6" />
+                                <div className="flex flex-grow min-w-max justify-between items-center">
+                                    <div className="flex flex-col w-full">
+                                        <span className="block fontGroup-highlightSemi">
+                                            {item.title}
+                                        </span>
+                                        <span className="fontGroup-support">
+                                            {item.subtext}
+                                        </span>
+                                    </div>
+                                    <ChevronSVG className="h-3.5" />
                                 </div>
-                                <ChevronSVG className="h-3.5" />
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
-        </div>
+            <EditProfileModal
+                profile={profile}
+                show={showProfileEditModal}
+                onSave={onSaveProfile}
+                isSavingProfile={isSavingProfile}
+                onCloseModal={handleCloseModal}
+            />
+        </>
     );
 };
 
