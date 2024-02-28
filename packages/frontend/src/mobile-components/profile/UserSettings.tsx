@@ -59,7 +59,7 @@ const AuthenticatedSection = () => {
 };
 
 type TMenuEntry = {
-    id: number;
+    id: string;
     icon: FC<React.SVGProps<SVGSVGElement>>;
     title: string;
     subtext: string | null;
@@ -85,7 +85,7 @@ const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
 
     const menu: TMenuEntry[] = [
         {
-            id: 1,
+            id: "edit-profile",
             icon: UserSVG,
             title: "Edit profile",
             subtext: "Edit your profile",
@@ -95,14 +95,24 @@ const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
             },
         },
         {
-            id: 2,
+            id: "privacy-policy",
             icon: DocSVG,
             title: "Privacy policy",
             subtext: "How we work & use your data",
             onClick: () => window.open("https://alphaday.com/privacy"),
         },
         {
-            id: 3,
+            id: "toc",
+            icon: DocSVG,
+            title: "Terms and Conditions",
+            subtext: "Legal conditions for you to use Alphaday",
+            onClick: () =>
+                window.open(
+                    "https://app.termly.io/document/terms-of-use-for-website/0f183823-fe52-47af-87d2-d1058b844918"
+                ),
+        },
+        {
+            id: "rate",
             icon: StarSVG,
             title: "Rate us",
             subtext: "Tell us what we think",
@@ -110,7 +120,7 @@ const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
             onClick: () => navigate("profile/rate"),
         },
         {
-            id: 4,
+            id: "log-out",
             icon: LogoutSVG,
             title: "Log out",
             subtext: null,
