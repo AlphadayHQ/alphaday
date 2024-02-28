@@ -99,7 +99,7 @@ const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
             icon: DocSVG,
             title: "Privacy policy",
             subtext: "How we work & use your data",
-            onClick: () => navigate("profile/privacy"),
+            onClick: () => window.open("https://alphaday.com/privacy"),
         },
         {
             id: 3,
