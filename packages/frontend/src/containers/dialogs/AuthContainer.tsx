@@ -86,7 +86,7 @@ const AuthContainer = () => {
                 authState.status === EAuthState.SelectingMethod
             }
             useKeyPress={useKeyPress}
-            closeButtonProps={{ className: "border-0" }}
+            closeButtonProps={{ className: "border-0 [&_svg]:w-3 [&_svg]:h-3" }}
             onClose={resetAuthState}
         >
             <AuthModule

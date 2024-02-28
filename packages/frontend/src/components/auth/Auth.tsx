@@ -28,7 +28,7 @@ export const Auth: FC<AuthProps> = ({
     const isValidEmail = useMemo(() => validateEmail(email), [email]);
     return authState.status === EAuthState.VerifyingEmail ? (
         <div className="flex flex-col justify-start p-5">
-            <p className="text-primary text-sm mb-0 whitespace-normal">
+            <p className="text-primary mb-0 whitespace-normal">
                 Enter the 6 digit verification code we sent to{" "}
             </p>
             <p className="fontGroup-highlight !font-bold text-primary">
