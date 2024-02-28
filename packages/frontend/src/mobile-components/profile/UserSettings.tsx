@@ -58,7 +58,17 @@ const AuthenticatedSection = () => {
     );
 };
 
-interface IUserMenu {
+type TMenuEntry = {
+    id: number;
+    icon: FC<React.SVGProps<SVGSVGElement>>;
+    title: string;
+    subtext: string | null;
+    requiresAuth?: boolean;
+    disabled?: boolean;
+    onClick: () => void;
+};
+
+interface IUserSettings {
     // avatar: string;
     // username: string;
     // isOpen: boolean;
@@ -66,19 +76,20 @@ interface IUserMenu {
     isAuthenticated: boolean;
     onLogout: () => Promise<void>;
 }
-const UserMenu: FC<IUserMenu> = ({ isAuthenticated, onLogout }) => {
+const UserSettings: FC<IUserSettings> = ({ isAuthenticated, onLogout }) => {
     const history = useHistory();
 
     const navigate = (link: string) => {
         history.push(link);
     };
 
-    const menu = [
+    const menu: TMenuEntry[] = [
         {
             id: 1,
             icon: UserSVG,
             title: "Edit profile",
             subtext: "Edit your profile",
+            requiresAuth: true,
             onClick: () => {
                 if (isAuthenticated) navigate("/profile");
             },
@@ -88,24 +99,22 @@ const UserMenu: FC<IUserMenu> = ({ isAuthenticated, onLogout }) => {
             icon: DocSVG,
             title: "Privacy policy",
             subtext: "How we work & use your data",
-            onClick: () => {
-                if (isAuthenticated) navigate("profile/privacy");
-            },
+            onClick: () => navigate("profile/privacy"),
         },
         {
             id: 3,
             icon: StarSVG,
             title: "Rate us",
             subtext: "Tell us what we think",
-            onClick: () => {
-                if (isAuthenticated) navigate("profile/rate");
-            },
+            disabled: true,
+            onClick: () => navigate("profile/rate"),
         },
         {
             id: 4,
             icon: LogoutSVG,
             title: "Log out",
             subtext: null,
+            requiresAuth: true,
             onClick: () => {
                 navigate("profile/log-out");
                 onLogout().catch((e) =>
@@ -131,36 +140,39 @@ const UserMenu: FC<IUserMenu> = ({ isAuthenticated, onLogout }) => {
                 <NonAuthenticatedSection />
             )}
             <div className="mt-10 w-full">
-                {menu.map((item) => (
-                    <div
-                        onClick={item.onClick}
-                        tabIndex={0}
-                        role="button"
-                        key={item.id}
-                        className={twMerge(
-                            "flex w-full justify-start items-center border-b border-primaryVariant100 pb-2.5 pt-2.5 last:pb-0 last:border-none first:pt-0 cursor-pointer",
-                            isAuthenticated
-                                ? "text-primary"
-                                : "text-primaryVariant100"
-                        )}
-                    >
-                        <item.icon className="mr-4 w-6 h-6" />
-                        <div className="flex flex-grow min-w-max justify-between items-center">
-                            <div className="flex flex-col w-full">
-                                <span className="block fontGroup-highlightSemi">
-                                    {item.title}
-                                </span>
-                                <span className="fontGroup-support">
-                                    {item.subtext}
-                                </span>
+                {menu.map((item) => {
+                    if (item.requiresAuth || item.disabled) return null;
+                    return (
+                        <div
+                            onClick={item.onClick}
+                            tabIndex={0}
+                            role="button"
+                            key={item.id}
+                            className={twMerge(
+                                "flex w-full justify-start items-center border-b border-primaryVariant100 pb-2.5 pt-2.5 last:pb-0 last:border-none first:pt-0 cursor-pointer",
+                                isAuthenticated
+                                    ? "text-primary"
+                                    : "text-primaryVariant100"
+                            )}
+                        >
+                            <item.icon className="mr-4 w-6 h-6" />
+                            <div className="flex flex-grow min-w-max justify-between items-center">
+                                <div className="flex flex-col w-full">
+                                    <span className="block fontGroup-highlightSemi">
+                                        {item.title}
+                                    </span>
+                                    <span className="fontGroup-support">
+                                        {item.subtext}
+                                    </span>
+                                </div>
+                                <ChevronSVG className="h-3.5" />
                             </div>
-                            <ChevronSVG className="h-3.5" />
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );
 };
 
-export default UserMenu;
+export default UserSettings;
