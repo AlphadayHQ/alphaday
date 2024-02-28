@@ -35,8 +35,8 @@ const VideoPlaceholder: FC<{
 
 export const VideoCard: FC<{
     item: TSuperfeedItem;
-    onLike: () => void;
-    onShare: () => void;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
 }> = ({ item, onLike, onShare }) => {
     const {
         title,
@@ -101,7 +101,7 @@ export const VideoCard: FC<{
                                     {open ? null : (
                                         <VideoPlaceholder
                                             url={image || undefined}
-                                            onPlayVideo={onLike}
+                                            onPlayVideo={() => {}}
                                         />
                                     )}
                                 </div>

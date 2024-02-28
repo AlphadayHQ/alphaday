@@ -38,8 +38,8 @@ const eventDateFormatter = (date: string) => {
 
 export const EventCard: FC<{
     item: TSuperfeedItem;
-    onLike: () => void;
-    onShare: () => void;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
 }> = ({ item, onLike, onShare }) => {
     const {
         title,

@@ -14,8 +14,8 @@ import {
 
 export const BlogCard: FC<{
     item: TSuperfeedItem;
-    onLike: () => void;
-    onShare: () => void;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
 }> = ({ item, onLike, onShare }) => {
     const {
         title,

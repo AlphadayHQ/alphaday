@@ -25,8 +25,8 @@ const parseHistory = (history: string): [number, number][] => {
 
 export const MarketCard: FC<{
     item: TSuperfeedItem;
-    onLike: () => void;
-    onShare: () => void;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
 }> = ({ item, onLike, onShare }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 

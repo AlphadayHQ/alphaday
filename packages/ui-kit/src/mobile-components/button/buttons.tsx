@@ -2,10 +2,10 @@ import { FC, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
-export const ActionButton: FC<{ children: ReactNode; onClick: () => void }> = ({
-    onClick,
-    children,
-}) => {
+export const ActionButton: FC<{
+    children: ReactNode;
+    onClick: () => MaybeAsync<void>;
+}> = ({ onClick, children }) => {
     const handleClick = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {

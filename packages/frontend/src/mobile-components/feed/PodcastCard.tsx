@@ -27,8 +27,8 @@ interface IPodcastCard {
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
     >;
-    onLike: () => void;
-    onShare: () => void;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
 }
 
 const PlayPauseButton: FC<{
