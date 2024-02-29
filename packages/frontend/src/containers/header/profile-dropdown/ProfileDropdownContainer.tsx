@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useAccount } from "src/api/hooks";
 import { useAuth } from "src/api/hooks/useAuth";
 import { useTutorial } from "src/api/hooks/useTutorial";
 import { ETutorialTipId } from "src/api/types";
@@ -6,6 +7,7 @@ import ProfileDropdownWrapper from "./ProfileDropdownWrapper";
 
 const ProfileDropdownContainer: FC = () => {
     const { openAuthModal, isAuthenticated, logout } = useAuth();
+    const { userProfile } = useAccount();
     const {
         showTutorial,
         currentTutorial,
@@ -25,6 +27,7 @@ const ProfileDropdownContainer: FC = () => {
                     ? setTutFocusElemRef
                     : undefined
             }
+            profile={userProfile}
         />
     );
 };
