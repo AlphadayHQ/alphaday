@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import * as userStore from "../store/slices/user";
 import { EAuthMethod, EAuthState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
+import { toast } from "../utils/toastUtils";
 
 interface IUseAuth {
     isAuthenticated: boolean;
@@ -62,8 +63,7 @@ export const useAuth = (): IUseAuth => {
             }).unwrap();
 
             Logger.debug("useAuth::verifyToken: verified OTP", verifyResp);
-            dispatch(userStore.setAuthToken({ value: verifyResp.token }));
-            dispatch(userStore.setAuthEmail(verifyResp.user.email));
+            // note: token an user email are set through RTK-query (see verifyToken::onQueryStarted)
             dispatch(userStore.setAuthState(EAuthState.Verified));
         },
         [dispatch, verifyTokenMut]
@@ -86,6 +86,7 @@ export const useAuth = (): IUseAuth => {
                     dispatch(userStore.setAuthState(EAuthState.Verified));
                 })
                 .catch((e) => {
+                    toast("Could not login with Google");
                     Logger.error("useAuth::googleSSOLogin: error", e);
                 });
         },
@@ -117,8 +118,7 @@ export const useAuth = (): IUseAuth => {
     const logout = useCallback(async () => {
         Logger.debug("useAuth::logout: logging out");
         await logoutMut().unwrap();
-        resetAuthState();
-    }, [logoutMut, resetAuthState]);
+    }, [logoutMut]);
 
     return {
         isAuthenticated,

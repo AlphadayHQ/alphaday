@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, current } from "@reduxjs/toolkit";
+import { signout } from "src/api/services/auth/authEndpoints";
 import { logout } from "src/api/services/user/userEndpoints";
 import {
     TUserAuth,
@@ -204,10 +205,15 @@ const userSlice = createSlice({
         reset: () => initialState,
     },
     extraReducers: (builder) => {
-        builder.addMatcher(logout.matchFulfilled, (_draft) => {
-            Logger.debug("user::logout: fulfilled");
-            return initialState;
-        });
+        builder
+            .addMatcher(logout.matchFulfilled, (_draft) => {
+                Logger.debug("slices::user: logout (legacy) fulfilled");
+                return initialState;
+            })
+            .addMatcher(signout.matchFulfilled, (_draft) => {
+                Logger.debug("slices::user: signout fulfilled");
+                return initialState;
+            });
     },
 });
 

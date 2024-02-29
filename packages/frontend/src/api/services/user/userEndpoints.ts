@@ -74,6 +74,10 @@ const userApi = alphadayApi.injectEndpoints({
         >({
             query: ({ id }) => `${USER.BASE}${USER.ACCOUNT_BY_ID(id)}`,
         }),
+        /**
+         * @deprecated
+         * login/logout now handled in authEndpoints
+         */
         login: builder.mutation<TRemoteLogin, TRemoteLogin>({
             query: (request) => ({
                 url: `${USER.BASE}${USER.LOGIN}`,
@@ -81,6 +85,10 @@ const userApi = alphadayApi.injectEndpoints({
                 body: request,
             }),
         }),
+        /**
+         * @deprecated
+         * login/logout now handled in authEndpoints
+         */
         logout: builder.mutation<void, void>({
             query: () => ({
                 url: `${USER.BASE}${USER.LOGOUT}`,
@@ -105,6 +113,10 @@ const userApi = alphadayApi.injectEndpoints({
                 body: request,
             }),
         }),
+        /**
+         * @deprecated
+         * authentication no longer works using wallet signatures, use authEndpoints instead
+         */
         generateMessage: builder.mutation<
             TGenerateMessageResponse,
             TGenerateMessageRequest
@@ -115,6 +127,10 @@ const userApi = alphadayApi.injectEndpoints({
                 body: request,
             }),
         }),
+        /**
+         * @deprecated
+         * authentication no longer works using wallet signatures, use authEndpoints instead
+         */
         verifySignature: builder.mutation<
             TVerifySignatureResponse,
             TVerifySignatureRequest
@@ -174,6 +190,7 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "PUT",
                 body: request,
             }),
+            invalidatesTags: ["Account"],
         }),
     }),
     overrideExisting: false,

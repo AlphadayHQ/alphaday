@@ -1,6 +1,7 @@
 import { EAuthMethod } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
+import { setAuthToken, setAuthEmail } from "../../store/slices/user";
 import { alphadayApi } from "../alphadayApi";
 import {
     TVerificationCodeRequest,
@@ -43,6 +44,39 @@ export const authApi = alphadayApi.injectEndpoints({
                     method: "POST",
                 };
             },
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                const verifyResp = (await queryFulfilled).data;
+                if (verifyResp.token) {
+                    Logger.debug(
+                        "authEndpoints::verifyToken: success",
+                        verifyResp
+                    );
+                    dispatch(setAuthToken({ value: verifyResp.token }));
+                    dispatch(setAuthEmail(verifyResp.user.email));
+                    /**
+                     * Invalidate user-specific RTK-query tags upon login
+                     *
+                     * We can't just use RTK query tag invalidation to refetch views
+                     * because right after authentication, when tag invalidation
+                     * triggers a new getViews/getSubscribedViews request, the user token
+                     * is still not updated in the store and the request does not include
+                     * it in the header.
+                     */
+                    dispatch(
+                        alphadayApi.util.invalidateTags([
+                            "Account",
+                            "AccountPortfolio",
+                            "Views",
+                            "SubscribedViews",
+                        ])
+                    );
+                    return;
+                }
+                Logger.error(
+                    "verifySignature: response does not include token",
+                    verifyResp
+                );
+            },
         }),
         ssoLogin: builder.mutation<TAuthLoginResponse, TSSOLoginRequest>({
             query: (req) => {
@@ -73,6 +107,7 @@ export const authApi = alphadayApi.injectEndpoints({
                     method: "POST",
                 };
             },
+            invalidatesTags: ["Views", "SubscribedViews"],
         }),
     }),
     overrideExisting: false,
@@ -84,3 +119,5 @@ export const {
     useSsoLoginMutation,
     useSignoutMutation,
 } = authApi;
+
+export const { signout } = authApi.endpoints;

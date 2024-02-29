@@ -1,5 +1,6 @@
 import { ReactComponent as ChevronLeftIcon } from "src/assets/svg/chevron-left.svg";
 import { ReactComponent as Close3Icon } from "src/assets/svg/close3.svg";
+import { twMerge } from "tailwind-merge";
 
 interface PagerProps {
     title?: string;
@@ -26,7 +27,10 @@ export const Pager: React.FC<PagerProps> = ({
             </div>
             <button
                 type="button"
-                className="flex flex-grow justify-end"
+                className={twMerge(
+                    "flex flex-grow justify-end",
+                    !handleClose && "invisible"
+                )}
                 onClick={handleClose}
             >
                 <Close3Icon />

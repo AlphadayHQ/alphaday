@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { signout } from "src/api/services/auth/authEndpoints";
+import { logout } from "src/api/services/user/userEndpoints";
 import { RootState } from "src/api/store/store";
 import { ESortFeedBy, ESupportedFilters, ETimeRange } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
-// import { ETag, TBaseTag } from "src/api/services";
-// import { TKeyword } from "src/api/types";
 
 export type TSelectedFiltersLocal = {
     // TODO(v-almonacid): Not sure whether we need to keep search state in the store,
@@ -21,10 +21,15 @@ export type TSelectedFiltersSynced = Omit<
 
 export interface IUserFiltersState {
     /**
-     * local filters are only persisted locally
-     * synced filters are both kept locally and in the remote
+     * Object containing user selected filters which are only
+     * stored *locally*
      */
     selectedFiltersLocal: TSelectedFiltersLocal;
+    /**
+     * Object containing user selected filters which are
+     * are both stored locally and in the remote (hence need to
+     * be "synced")
+     */
     selectedFiltersSynced: TSelectedFiltersSynced;
 }
 
@@ -45,9 +50,8 @@ const userFiltersSlice = createSlice({
     name: "userFilters",
     initialState,
     reducers: {
-        // TODO: use object payload instead for consistency
-        setSortBy(draft, action: PayloadAction<ESortFeedBy>) {
-            const { payload: sortBy } = action;
+        setSortBy(draft, action: PayloadAction<{ slug: ESortFeedBy }>) {
+            const { slug: sortBy } = action.payload;
             draft.selectedFiltersLocal.sortBy = sortBy;
         },
         setTimeRange(draft, action: PayloadAction<{ slug: string }>) {
@@ -101,6 +105,36 @@ const userFiltersSlice = createSlice({
                 selectedFilters.push(selectedSlug);
             }
         },
+        setSelectedFiltersSynced(
+            draft,
+            action: PayloadAction<TSelectedFiltersSynced>
+        ) {
+            const newFilters = action.payload;
+            draft.selectedFiltersSynced = newFilters;
+        },
+        resetSyncedFilter(draft) {
+            Logger.debug(
+                "user-filters::resetSyncedFilter: resetting cached filters"
+            );
+            draft.selectedFiltersSynced = initialState.selectedFiltersSynced;
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addMatcher(logout.matchFulfilled, (draft) => {
+                Logger.debug(
+                    "slices::user-filters: logout (legacy) fulfilled, resetting cached filters"
+                );
+                draft.selectedFiltersSynced =
+                    initialState.selectedFiltersSynced;
+            })
+            .addMatcher(signout.matchFulfilled, (draft) => {
+                Logger.debug(
+                    "slices::user-filters: signout fulfilled, resetting cached filters"
+                );
+                draft.selectedFiltersSynced =
+                    initialState.selectedFiltersSynced;
+            });
     },
 });
 
@@ -112,7 +146,12 @@ export const selectedSyncedFiltersSelector = (
     state: RootState
 ): TSelectedFiltersSynced => state.userFilters.selectedFiltersSynced;
 
-export const { setSortBy, setTimeRange, selectSyncedFilter, selectMediaType } =
-    userFiltersSlice.actions;
+export const {
+    setSortBy,
+    setTimeRange,
+    selectSyncedFilter,
+    selectMediaType,
+    setSelectedFiltersSynced,
+} = userFiltersSlice.actions;
 
 export default userFiltersSlice.reducer;

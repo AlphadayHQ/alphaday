@@ -1,4 +1,4 @@
-import { EFeedItemType, TSuperfeedItem } from "src/api/types";
+import { EFeedItemType, TFeedMarketData, TSuperfeedItem } from "src/api/types";
 import { TPagination, TBaseFilterItem } from "../baseTypes";
 
 export type TRemoteSuperfeedItem = {
@@ -12,7 +12,7 @@ export type TRemoteSuperfeedItem = {
     image: string;
     short_description: string;
     file_url: string | null;
-    duration: number | null;
+    duration: string | null;
     starts_at: string | null;
     ends_at: string | null;
     source: {
@@ -26,7 +26,27 @@ export type TRemoteSuperfeedItem = {
     }[];
     likes: number;
     comments: number;
+    data: TFeedMarketData | null;
 };
+
+/**
+ * Filter data types
+ */
+
+export type TBaseFilterTag = {
+    name: string;
+    slug: string;
+    tag_type: string;
+};
+export type TFilterDatum = TBaseFilterItem & { id: number };
+export type TTaggedFilterDatum = TBaseFilterItem & {
+    icon: string;
+    tags: TBaseFilterTag[];
+};
+
+/**
+ * Query types
+ */
 
 export type TGetSuperfeedItemsRequest = {
     tags?: string;
@@ -46,12 +66,12 @@ export type TGetSuperfeedItemsResponse = TPagination & {
 
 export type TGetSuperfeedFilterDataRequest = void;
 export type TGetSuperfeedFilterDataRawResponse = {
-    concept_tags: TBaseFilterItem[];
-    coins: TBaseFilterItem[];
-    projects: TBaseFilterItem[];
+    concept_tags: TFilterDatum[];
+    coins: TTaggedFilterDatum[];
+    projects: TTaggedFilterDatum[];
 };
 export type TGetSuperfeedFilterDataResponse = {
-    conceptTags: TBaseFilterItem[];
-    coins: TBaseFilterItem[];
-    chains: TBaseFilterItem[];
+    conceptTags: TFilterDatum[];
+    coins: TTaggedFilterDatum[];
+    chains: TTaggedFilterDatum[];
 };

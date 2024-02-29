@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { MiniDialog } from "@alphaday/ui-kit";
+import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { EAuthMethod } from "src/api/types";
@@ -29,7 +30,7 @@ const AuthPage: React.FC = () => {
                 toast("OTP has been sent to your email");
             })
             .catch(() => {
-                toast("Failed to send OTP to email");
+                toast("Email could not be sent. Please try again.");
                 Logger.error("Failed to send OTP to email", email);
             });
     }, [email, requestCode]);
@@ -41,6 +42,7 @@ const AuthPage: React.FC = () => {
                     toast("Successfully verified email");
                 })
                 .catch(() => {
+                    toast("We couldn't verify your email. Please try again.");
                     Logger.error("Failed to verify OTP", otp);
                 });
         },
@@ -69,34 +71,36 @@ const AuthPage: React.FC = () => {
     }
 
     return (
-        <PagedMobileLayout
-            title="Continue with Email"
-            handleClose={resetAuthState}
-            handleBack={() =>
-                history.length > 1 ? history.goBack() : history.push("/")
-            }
-        >
-            <Auth
-                email={email}
-                authState={authState}
-                handleOtpSubmit={handleOtpSubmit}
-                handleSSOCallback={handleSSOCallback}
-                handleEmailSubmit={handleEmailSubmit}
-                handleEmailChange={handleEmailChange}
-            />
-            <MiniDialog
-                show={isAuthenticated}
-                icon={<GreenCheckSVG />}
-                title="CONGRATS"
-                onActionClick={() => {
-                    history.push("/");
-                }}
+        <IonPage>
+            <PagedMobileLayout
+                title="Continue with Email"
+                handleClose={resetAuthState}
+                handleBack={() =>
+                    history.length > 1 ? history.goBack() : history.push("/")
+                }
             >
-                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
-                    Your account has been created!
-                </div>
-            </MiniDialog>
-        </PagedMobileLayout>
+                <Auth
+                    email={email}
+                    authState={authState}
+                    handleOtpSubmit={handleOtpSubmit}
+                    handleSSOCallback={handleSSOCallback}
+                    handleEmailSubmit={handleEmailSubmit}
+                    handleEmailChange={handleEmailChange}
+                />
+                <MiniDialog
+                    show={isAuthenticated}
+                    icon={<GreenCheckSVG />}
+                    title="CONGRATS"
+                    onActionClick={() => {
+                        history.push("/");
+                    }}
+                >
+                    <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                        Your account has been created!
+                    </div>
+                </MiniDialog>
+            </PagedMobileLayout>
+        </IonPage>
     );
 };
 

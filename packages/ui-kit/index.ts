@@ -1,5 +1,5 @@
 import { EventClickArg, DatesSetArg } from "@fullcalendar/core";
-import { Disclosure } from "@headlessui/react";
+import { Disclosure, Transition } from "@headlessui/react";
 import { useLayer } from "react-laag";
 import { twMerge } from "tailwind-merge";
 import { Arrow } from "./src/components/arrow/Arrow";
@@ -33,6 +33,7 @@ import {
 } from "./src/components/charts/apexchart";
 import { ChatForm } from "./src/components/chat/ChatForm";
 import { Dialog } from "./src/components/dialog/Dialog";
+import { MiniDialog } from "./src/components/dialog/MiniDialog";
 import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
 import {
     ViewDialog,
@@ -90,11 +91,7 @@ import {
 } from "./src/components/view-tab-menu/ViewTabMenu";
 import { breakpoints } from "./src/globalStyles/breakpoints";
 import { themeColors } from "./src/globalStyles/themes";
-import { NavBottom } from "./src/mobile-components/navigation/NavBottom";
-import { NavHeader } from "./src/mobile-components/navigation/NavHeader";
 import { Pager } from "./src/mobile-components/pager/Pager";
-import { FeedCard } from "./src/mobile-components/superfeed/FeedCard";
-import { MiniDialog } from "./src/components/dialog/MiniDialog";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export {
@@ -174,10 +171,8 @@ export {
     /**
      * Mobile-only components
      */
-    NavBottom,
-    NavHeader,
     Pager,
-    FeedCard,
     Disclosure,
+    Transition,
     MiniDialog,
 };
