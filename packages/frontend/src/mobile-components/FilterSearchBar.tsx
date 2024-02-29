@@ -5,19 +5,19 @@ import { Logger } from "src/api/utils/logging";
 
 type TOption = TBaseFilterItem;
 
-interface FilterSearchBarProps {
+interface FilterSearchBarProps<T extends TBaseFilterItem = TOption> {
     tags?: string;
-    tagsList: TOption[];
+    tagsList: T[];
     setSearchState: (value: string) => void;
-    onChange: (value: readonly TOption[]) => void;
+    onChange: (value: readonly T[]) => void;
 }
 
-const FilterSearchBar: FC<FilterSearchBarProps> = ({
+const FilterSearchBar = <T extends TBaseFilterItem>({
     onChange,
     tags,
     setSearchState,
     tagsList,
-}) => {
+}: FilterSearchBarProps<T>) => {
     const searchValues = tags
         ?.split(",")
         .map((tag) => {
@@ -31,7 +31,7 @@ const FilterSearchBar: FC<FilterSearchBarProps> = ({
             data-testid="header-search-container"
         >
             <span className="w-full max-w-[524px]">
-                <SearchBar<TOption>
+                <SearchBar<T>
                     showBackdrop
                     onChange={(o) => {
                         Logger.debug("onChange called");
