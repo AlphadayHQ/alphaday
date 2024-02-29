@@ -9,6 +9,8 @@ import {
     TGetSuperfeedFilterDataRawResponse,
     TGetSuperfeedFilterDataResponse,
     TGetSuperfeedFilterDataRequest,
+    TGetSuperfeedFilterKeywordsResponse,
+    TGetSuperfeedFilterKeywordsRequest,
 } from "./types";
 
 const { SUPERFEED } = CONFIG.API.DEFAULT.ROUTES;
@@ -88,6 +90,18 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                         ) === index
                 ),
             }),
+        }),
+        getFilterKeywords: builder.query<
+            TGetSuperfeedFilterKeywordsResponse,
+            TGetSuperfeedFilterKeywordsRequest
+        >({
+            query: (req) => {
+                const { ...reqParams } = req;
+                const params: string = queryString.stringify(reqParams);
+                const path = `${SUPERFEED.BASE}${SUPERFEED.FILTER_KEYWORDS}?${params}`;
+                Logger.debug("getSuperfeedFilterKeywords: querying", path);
+                return path;
+            },
         }),
     }),
     overrideExisting: false,

@@ -75,3 +75,13 @@ export type TGetSuperfeedFilterDataResponse = {
     coins: TTaggedFilterDatum[];
     chains: TTaggedFilterDatum[];
 };
+
+export type TGetSuperfeedFilterKeywordsRequest = {
+    filter_text: string;
+};
+
+export type TGetSuperfeedFilterKeywordsResponse = {
+    conceptTags: TFilterDatum[];
+    coins: TTaggedFilterDatum[];
+    chains: TTaggedFilterDatum[];
+};
