@@ -81,21 +81,27 @@ const SuperfeedContainer: FC<{
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
 
-    const shareItem = useCallback(async (item: TSuperfeedItem) => {
-        try {
-            await shareData({
-                title: item.title,
-                text: item.shortDescription,
-                url: item.url,
-            });
+    const shareItem = useCallback(
+        async (item: TSuperfeedItem) => {
+            try {
+                await shareData({
+                    title: item.title,
+                    text: item.shortDescription,
+                    url: item.url,
+                });
 
-            // Log the share
-            logShareSuperfeedItem(item);
-        } catch (e) {
-            Logger.error("SuperfeedModule::FeedCard: error sharing item", e);
-            toast("Error sharing item");
-        }
-    }, [logShareSuperfeedItem]);
+                // Log the share
+                logShareSuperfeedItem(item);
+            } catch (e) {
+                Logger.error(
+                    "SuperfeedModule::FeedCard: error sharing item",
+                    e
+                );
+                toast("Error sharing item");
+            }
+        },
+        [logShareSuperfeedItem]
+    );
     // set current page 350ms after next page is set.
     // RTK should cache requests, so we don't need to be too careful about rerenders.
     useEffect(() => {

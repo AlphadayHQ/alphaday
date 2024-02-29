@@ -13,7 +13,7 @@ interface ISuperfeedModule {
     feed: TSuperfeedItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
-    onShareItem: (item: TSuperfeedItem) => void;
+    onShareItem: (item: TSuperfeedItem) => Promise<void>;
     selectedPodcast: TSuperfeedItem | null;
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
