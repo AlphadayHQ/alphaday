@@ -77,10 +77,10 @@ export const Dropdown: FC<DropdownProps> = ({
 
 export const DropdownAvatar: FC = () => {
     return (
-        <div className="bg-backgroundVariant200 relative h-16 w-16 rounded-full">
+        <div className="bg-backgroundVariant200 relative h-12 w-12 rounded-full">
             <div className="absolute inset-0 flex h-full w-full items-center justify-center rounded-full text-4 font-bold uppercase leading-[100%] text-primary">
                 <div>
-                    <UserSVG className="fill-primary w-5" />
+                    <UserSVG className="fill-primary w-4" />
                 </div>
             </div>
         </div>
