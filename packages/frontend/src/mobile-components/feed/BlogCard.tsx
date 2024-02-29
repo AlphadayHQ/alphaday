@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { Link } from "react-router-dom";
 import { TSuperfeedItem } from "src/api/types";
 import { computeDuration } from "src/utils/dateUtils";
 import {
@@ -86,14 +87,15 @@ export const BlogCard: FC<{
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
+                        <Link
+                            to={{
+                                pathname: "/superfeed/external",
+                                search: `?url=${url}&title=${title}`,
+                            }}
                             className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
                         >
                             Read more
-                        </a>
+                        </Link>
                         <div className="my-2 flex justify-between">
                             <TagButtons tags={tags} onClick={() => {}} />
                             <div className="min-w-max ml-2 mt-0.5">

@@ -22,6 +22,7 @@ import "./customIonicStyles.scss";
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
+const ExternalPage = lazyRetry(() => import("./mobile-pages/external"));
 const NotificationsPage = lazyRetry(
     () => import("./mobile-pages/notifications")
 );
@@ -53,6 +54,9 @@ const TabNavigator: React.FC = () => {
             <IonRouterOutlet>
                 <Route exact path="/superfeed">
                     <SuperfeedPage />
+                </Route>
+                <Route exact path="/superfeed/external">
+                    <ExternalPage />
                 </Route>
                 <Route exact path="/superfeed/user-settings">
                     <UserSettingsPage />
