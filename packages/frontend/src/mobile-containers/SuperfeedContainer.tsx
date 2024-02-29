@@ -27,10 +27,8 @@ const SuperfeedContainer: FC<{
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const prevTagsRef = useRef<string | undefined>(tags);
 
-    const [
-        selectedPodcast,
-        setSelectedPodcast,
-    ] = useState<TSuperfeedItem | null>(null);
+    const [selectedPodcast, setSelectedPodcast] =
+        useState<TSuperfeedItem | null>(null);
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
         .map((op) => op.contentType)
@@ -97,7 +95,7 @@ const SuperfeedContainer: FC<{
             Logger.error("SuperfeedModule::FeedCard: error sharing item", e);
             toast("Error sharing item");
         }
-    }, []);
+    }, [logShareSuperfeedItem]);
     // set current page 350ms after next page is set.
     // RTK should cache requests, so we don't need to be too careful about rerenders.
     useEffect(() => {
