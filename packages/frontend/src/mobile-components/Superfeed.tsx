@@ -4,9 +4,6 @@ import { AudioPlayerProvider } from "react-use-audio-player";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { Logger } from "src/api/utils/logging";
-import { shareData } from "src/api/utils/shareUtils";
-import { toast } from "src/api/utils/toastUtils";
 import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import { ReactComponent as Settings2SVG } from "src/assets/icons/settings3.svg";
 import { FeedCard } from "./feed/FeedCard";
@@ -16,6 +13,7 @@ interface ISuperfeedModule {
     feed: TSuperfeedItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
+    onShareItem: (item: TSuperfeedItem) => void;
     selectedPodcast: TSuperfeedItem | null;
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
@@ -67,6 +65,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     toggleShowFeedFilters,
     selectedPodcast,
     setSelectedPodcast,
+    onShareItem,
 }) => {
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -91,21 +90,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                         selectedPodcast={selectedPodcast}
                         setSelectedPodcast={setSelectedPodcast}
                         onLike={() => {}}
-                        onShare={async () => {
-                            try {
-                                await shareData({
-                                    title: item.title,
-                                    text: item.shortDescription,
-                                    url: item.url,
-                                });
-                            } catch (e) {
-                                Logger.error(
-                                    "SuperfeedModule::FeedCard: error sharing item",
-                                    e
-                                );
-                                toast("Error sharing item");
-                            }
-                        }}
+                        onShare={() => onShareItem(item)}
                     />
                 ))}
             </AudioPlayerProvider>

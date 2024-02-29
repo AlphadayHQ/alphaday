@@ -1,12 +1,15 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AudioPlayerProvider } from "react-use-audio-player";
-import { usePagination } from "src/api/hooks";
+import { useActivityLogger, usePagination } from "src/api/hooks";
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import { useGetSuperfeedListQuery } from "src/api/services";
 import { selectedLocalFiltersSelector } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
 import { TSuperfeedItem } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
+import { shareData } from "src/api/utils/shareUtils";
+import { toast } from "src/api/utils/toastUtils";
 import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters-modal/filterOptions";
@@ -24,8 +27,10 @@ const SuperfeedContainer: FC<{
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const prevTagsRef = useRef<string | undefined>(tags);
 
-    const [selectedPodcast, setSelectedPodcast] =
-        useState<TSuperfeedItem | null>(null);
+    const [
+        selectedPodcast,
+        setSelectedPodcast,
+    ] = useState<TSuperfeedItem | null>(null);
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
         .map((op) => op.contentType)
@@ -55,6 +60,8 @@ const SuperfeedContainer: FC<{
         isSuccess
     );
 
+    const { logShareSuperfeedItem } = useActivityLogger();
+
     const feedDataForCurrentPage = [...(feedDataResponse?.results ?? [])];
 
     const [feedData, setfeedData] = useState<TSuperfeedItem[]>([]);
@@ -75,6 +82,22 @@ const SuperfeedContainer: FC<{
         setfeedData((prevState) => [...prevState, ...feedDataForCurrentPage]);
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
+
+    const shareItem = useCallback(async (item: TSuperfeedItem) => {
+        try {
+            await shareData({
+                title: item.title,
+                text: item.shortDescription,
+                url: item.url,
+            });
+
+            // Log the share
+            logShareSuperfeedItem(item);
+        } catch (e) {
+            Logger.error("SuperfeedModule::FeedCard: error sharing item", e);
+            toast("Error sharing item");
+        }
+    }, []);
     // set current page 350ms after next page is set.
     // RTK should cache requests, so we don't need to be too careful about rerenders.
     useEffect(() => {
@@ -136,6 +159,7 @@ const SuperfeedContainer: FC<{
                 toggleShowFeedFilters={onToggleFeedFilters}
                 selectedPodcast={selectedPodcast}
                 setSelectedPodcast={setSelectedPodcast}
+                onShareItem={shareItem}
             />
         </AudioPlayerProvider>
     );
