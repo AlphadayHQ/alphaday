@@ -94,6 +94,7 @@ import { themeColors } from "./src/globalStyles/themes";
 import { Pager } from "./src/mobile-components/pager/Pager";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
+export * from "./src/mobile-components/form-elements/FormElements";
 export {
     ApexAreaChart,
     ApexBarChart,

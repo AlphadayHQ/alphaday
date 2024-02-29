@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, FullPageModal } from "@alphaday/ui-kit";
+import { Button, FullPageModal, FormInput } from "@alphaday/ui-kit";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
@@ -45,20 +45,20 @@ export const EditProfileModal: FC<IEditProfileModal> = ({
                     Edit Profile
                 </h1>
             </div>
-            <div className="flex flex-col mb-5">
-                <div className="flex flex-row items-center mb-5 pb-2.5 border-b border-primaryVariant100 last:border-none">
-                    <span className="mr-4">Handle</span>
-                    <input
+            <div className="flex flex-col mt-5">
+                <div className="w-full items-center mb-5 pb-2.5">
+                    <FormInput
                         value={handle ?? profile?.handle ?? ""}
+                        label="Handle"
                         type="text"
-                        className="self-stretch px-4 py-6 border-0 bg-neutral-800 rounded-lg justify-start items-center inline-flex grow shrink basis-0 text-primary text-base leading-tight tracking-tight"
                         onChange={handleHandleChange}
+                        placeholder="Pick a handle"
                     />
                 </div>
             </div>
             <div className="flex flex-col ">
                 <Button
-                    className="w-full border-0 justify-center items-center gap-1 text-base font-bold px-4 py-6 bg-accentVariant100 text-primary rounded-lg tracking-tight"
+                    className="w-full border-0 justify-center items-center text-base font-bold px-4 py-6 bg-accentVariant100 text-primary rounded-lg tracking-tight"
                     onClick={handleSaveProfile}
                     disabled={isSavingProfile}
                 >

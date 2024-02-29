@@ -7,14 +7,13 @@ import { ReactComponent as ChevronUpDownSVG } from "../../assets/svg/chevron-up-
 interface IFormElement<T> {
     label: string;
     placeholder: string;
-    defaultValue: string;
+    defaultValue?: string;
     value: string;
     onChange: ChangeEventHandler<T>;
     disabled?: boolean;
     classNames?: string;
 }
 interface IFormInput extends IFormElement<HTMLInputElement> {
-    isOptional?: boolean;
     errorMsg?: string;
     type: "text" | "email" | "password";
 }
@@ -27,33 +26,19 @@ export const FormInput: FC<IFormInput> = ({
     value,
     onChange,
     disabled,
-    isOptional,
     type = "text",
     errorMsg,
 }) => {
     const [hasBlured, sethasBlured] = useState(false);
     return (
         <div>
-            <div
-                className={twMerge(
-                    "flex",
-                    isOptional ? "justify-between" : "justify-start"
-                )}
-            >
+            <div className="flex justify-start">
                 <label
                     htmlFor="email"
                     className="block text-sm font-medium leading-6 text-primary"
                 >
                     {label}
                 </label>
-                {isOptional && (
-                    <span
-                        className="text-sm leading-6 text-gray-400"
-                        id="email-optional"
-                    >
-                        Optional
-                    </span>
-                )}
             </div>
             <div className="relative mt-1 rounded-md shadow-sm">
                 <input
