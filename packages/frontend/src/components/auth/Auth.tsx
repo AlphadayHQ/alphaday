@@ -14,7 +14,7 @@ export interface AuthProps {
     handleSSOCallback: (provider: EAuthMethod) => void;
     handleEmailSubmit: () => void;
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    isVerifyingOTP: boolean;
+    isVerifyingOTP?: boolean;
 }
 const ENABLE_APPLE_AUTH = false;
 const OTP_INPUT_LENGTH = 6;
