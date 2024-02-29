@@ -1,4 +1,5 @@
 import { FC, useMemo } from "react";
+import { Spinner } from "@alphaday/ui-kit";
 import { EmailInput } from "@alphaday/ui-kit/src/mobile-components/auth/EmailInput";
 import { EAuthMethod, EAuthState, TUserAccess } from "src/api/types";
 import { validateEmail } from "src/api/utils/accountUtils";
@@ -13,6 +14,7 @@ export interface AuthProps {
     handleSSOCallback: (provider: EAuthMethod) => void;
     handleEmailSubmit: () => void;
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    isVerifyingOTP?: boolean;
 }
 const ENABLE_APPLE_AUTH = false;
 const OTP_INPUT_LENGTH = 6;
@@ -24,11 +26,12 @@ export const Auth: FC<AuthProps> = ({
     handleSSOCallback,
     handleEmailSubmit,
     handleEmailChange,
+    isVerifyingOTP,
 }) => {
     const isValidEmail = useMemo(() => validateEmail(email), [email]);
     return authState.status === EAuthState.VerifyingEmail ? (
         <div className="flex flex-col justify-start p-5">
-            <p className="text-primary text-sm mb-0 whitespace-normal">
+            <p className="text-primary mb-0 whitespace-normal">
                 Enter the 6 digit verification code we sent to{" "}
             </p>
             <p className="fontGroup-highlight !font-bold text-primary">
@@ -36,11 +39,17 @@ export const Auth: FC<AuthProps> = ({
             </p>
 
             <div className="max-w-screen-single-col flex justify-between gap-2.5 py-4">
-                <OTPInput
-                    length={OTP_INPUT_LENGTH}
-                    autoFocus
-                    onChangeOTP={handleOtpSubmit}
-                />
+                {isVerifyingOTP ? (
+                    <div className="w-full flex justify-center mt-2 mb-4">
+                        <Spinner />
+                    </div>
+                ) : (
+                    <OTPInput
+                        length={OTP_INPUT_LENGTH}
+                        autoFocus
+                        onChangeOTP={handleOtpSubmit}
+                    />
+                )}
             </div>
             <div className="text-primary text-sm">
                 <div>Didn&apos;t get a verification code?</div>
