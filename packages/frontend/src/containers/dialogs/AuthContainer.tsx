@@ -12,6 +12,7 @@ import AuthModule from "src/components/auth/AuthModule";
 const AuthContainer = () => {
     const [email, setEmail] = useState("");
     const dispatch = useAppDispatch();
+    const [verifyingOTP, setVerifyingOTP] = useState(false);
     const { authState, resetAuthState, requestCode, ssoLogin, verifyToken } =
         useAuth();
 
@@ -43,12 +44,15 @@ const AuthContainer = () => {
 
     const handleOtpSubmit = useCallback(
         (otp: string) => {
+            setVerifyingOTP(true);
             verifyToken(email, otp)
                 .then(() => {
                     toast("Successfully verified email");
+                    setVerifyingOTP(false);
                 })
                 .catch(() => {
                     toast("We couldn't verify your email. Please try again.");
+                    setVerifyingOTP(false);
                     Logger.error("Failed to verify OTP", otp);
                 });
         },
@@ -86,7 +90,7 @@ const AuthContainer = () => {
                 authState.status === EAuthState.SelectingMethod
             }
             useKeyPress={useKeyPress}
-            closeButtonProps={{ className: "border-0" }}
+            closeButtonProps={{ className: "border-0 [&_svg]:w-3 [&_svg]:h-3" }}
             onClose={resetAuthState}
         >
             <AuthModule
@@ -96,6 +100,7 @@ const AuthContainer = () => {
                 handleSSOCallback={handleSSOCallback}
                 handleEmailSubmit={handleEmailSubmit}
                 handleEmailChange={handleEmailChange}
+                isVerifyingOTP={verifyingOTP}
             />
         </Dialog>
     );
