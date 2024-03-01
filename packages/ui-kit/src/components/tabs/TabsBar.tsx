@@ -80,7 +80,7 @@ export const TabsBar: FC<{
                                     {tab.label}
                                     {tab.removable && (
                                         <CloseSVG
-                                            className="close w-2 h-2 ml-1 !p-0 !pt-0.5"
+                                            className="close w-2 h-2 ml-1 !p-0 !pt-0.5 text-primaryVariant200"
                                             onClick={(e) => {
                                                 const handler = async () => {
                                                     e.stopPropagation();
