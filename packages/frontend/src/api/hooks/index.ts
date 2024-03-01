@@ -8,6 +8,7 @@ export * from "./useCookieChoice";
 export * from "./useIsMobile";
 export * from "./useFeatureFlags";
 export * from "./useFilters";
+export * from "./useFilterKeywordSearch";
 export * from "./useGATracker";
 export * from "./useGlobalSearch";
 export * from "./useGlobalHooks";

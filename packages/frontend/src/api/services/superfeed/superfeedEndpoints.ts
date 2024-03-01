@@ -11,6 +11,7 @@ import {
     TGetSuperfeedFilterDataRequest,
     TGetSuperfeedFilterKeywordsResponse,
     TGetSuperfeedFilterKeywordsRequest,
+    TGetSuperfeedFilterKeywordsRawResponse,
 } from "./types";
 
 const { SUPERFEED } = CONFIG.API.DEFAULT.ROUTES;
@@ -102,6 +103,13 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                 Logger.debug("getSuperfeedFilterKeywords: querying", path);
                 return path;
             },
+            transformResponse: (
+                r: TGetSuperfeedFilterKeywordsRawResponse
+            ): TGetSuperfeedFilterKeywordsResponse => ({
+                coins: r.coin_keywords,
+                conceptTags: r.concept_keywords,
+                chains: r.chain_keywords,
+            }),
         }),
     }),
     overrideExisting: false,

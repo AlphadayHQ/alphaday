@@ -43,6 +43,7 @@ export enum ETimeRange {
 }
 
 export type TFilterKeyword = {
+    id: number;
     name: string;
     slug: string;
     type: ESupportedFilters;

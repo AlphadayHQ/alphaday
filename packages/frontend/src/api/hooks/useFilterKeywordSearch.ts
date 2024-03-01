@@ -4,7 +4,7 @@ import { TFilterKeyword, ESupportedFilters } from "src/api/types";
 
 interface IFilterKeywordSearch {
     searchState: string;
-    keywordResults: TFilterKeyword[] | undefined;
+    keywordResults: TFilterKeyword[];
     isFetchingKeywordResults: boolean;
     setSearchState: (s: string) => void;
 }
@@ -36,21 +36,28 @@ export const useFilterKeywordSearch: () => IFilterKeywordSearch = () => {
         if (!keywordsData) return [];
         return [
             ...keywordsData.conceptTags.map((keyword) => ({
+                id: keyword.id,
                 name: keyword.name,
-                slug: keyword.slug,
+                slug: keyword.tag.slug,
                 type: ESupportedFilters.ConceptTags,
             })),
             ...keywordsData.chains.map((keyword) => ({
+                id: keyword.id,
                 name: keyword.name,
-                slug: keyword.tags[0].slug ?? keyword.slug,
+                slug: keyword.tag.slug,
                 type: ESupportedFilters.Chains,
             })),
             ...keywordsData.coins.map((keyword) => ({
+                id: keyword.id,
                 name: keyword.name,
-                slug: keyword.tags[0].slug ?? keyword.slug,
+                slug: keyword.tag.slug,
                 type: ESupportedFilters.Coins,
             })),
-        ];
+        ].filter(
+            (item, index, self) =>
+                self.findIndex((innerItem) => innerItem.slug === item.slug) ===
+                index
+        );
     }, [keywordsData]);
 
     return {

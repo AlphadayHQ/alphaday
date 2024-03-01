@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
 import { TBaseFilterItem } from "src/api/services";
 import { Logger } from "src/api/utils/logging";

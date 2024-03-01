@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useFilters } from "src/api/hooks";
+import { useFilters, useFilterKeywordSearch } from "src/api/hooks";
 import {
     useGetFilterDataQuery,
     TFilterDatum,
@@ -101,6 +101,8 @@ const UserFiltersContainer: FC<{
 
     const { toggleFilter } = useFilters();
 
+    const { setSearchState, keywordResults } = useFilterKeywordSearch();
+
     const filterOptions: TFilterOptions = {
         localFilterOptions: updateLocalFilterOptionsState(selectedLocalFilters),
         syncedFilterOptions: {
@@ -146,6 +148,8 @@ const UserFiltersContainer: FC<{
             filterOptions={filterOptions}
             isLoading={isLoading}
             onSelectFilter={handleSelectFilter}
+            filterKeywords={keywordResults}
+            onSearchInputChange={setSearchState}
         />
     );
 };
