@@ -9,9 +9,6 @@ interface IFormElement<T> {
     placeholder?: string;
     defaultValue?: string;
     value: string | number;
-    placeholder: string;
-    defaultValue?: string;
-    value: string;
     onChange: ChangeEventHandler<T>;
     disabled?: boolean;
     className?: string;
@@ -39,12 +36,7 @@ export const FormInput: FC<IFormInput> = ({
     const [hasBlured, sethasBlured] = useState(false);
     return (
         <div className="w-full">
-            <div
-                className={twMerge(
-                    "flex",
-                    isOptional ? "justify-between" : "justify-start"
-                )}
-            >
+            <div className="flex justify-start">
                 <label
                     htmlFor="email"
                     className="block text-sm fontGroup-normal text-primaryVariant100"

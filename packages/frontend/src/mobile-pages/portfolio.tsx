@@ -5,8 +5,8 @@ import { useAuth } from "src/api/hooks";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
 import { ReactComponent as CopySVG } from "src/assets/icons/copy.svg";
 import { ReactComponent as HandSVG } from "src/assets/icons/hand.svg";
+import { ReactComponent as InfoSVG } from "src/assets/icons/Info2.svg";
 import { ReactComponent as WalletSVG } from "src/assets/icons/wallet.svg";
-import { ReactComponent as InfoSVG } from "src/assets/svg/info2.svg";
 
 const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
     if (isAuthenticated) {
