@@ -22,12 +22,19 @@ import "./customIonicStyles.scss";
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
+const FiltersPage = lazyRetry(() => import("./mobile-pages/filters"));
+const PortfolioPage = lazyRetry(() => import("./mobile-pages/portfolio"));
 const NotificationsPage = lazyRetry(
     () => import("./mobile-pages/notifications")
 );
 const UserSettingsPage = lazyRetry(
     () => import("./mobile-pages/user-settings")
 );
+const ConnectWalletPage = lazyRetry(
+    () => import("./mobile-pages/connect-wallet")
+);
+const AddWalletPage = lazyRetry(() => import("./mobile-pages/add-wallet"));
+const AddHoldingPage = lazyRetry(() => import("./mobile-pages/add-holding"));
 
 const CustomNavTab: React.FC<{
     label: string;
@@ -78,8 +85,21 @@ const TabNavigator: React.FC = () => {
                     <Placeholder />
                 </Route>
                 <Route exact path="/portfolio">
-                    <Placeholder />
+                    <PortfolioPage />
                 </Route>
+                <Route path="/portfolio/connect-wallet" exact>
+                    <ConnectWalletPage />
+                </Route>
+                <Route path="/portfolio/add-wallet" exact>
+                    <AddWalletPage />
+                </Route>
+                <Route path="/filters" exact component={FiltersPage} />
+
+                <Route
+                    path="/portfolio/add-holding"
+                    exact
+                    component={AddHoldingPage}
+                />
                 <Route exact path="/auth*">
                     <AuthPage />
                 </Route>
