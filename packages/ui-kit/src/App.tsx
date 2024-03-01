@@ -29,7 +29,6 @@ function App() {
                         label="Full name"
                         placeholder="Nina Faraggi"
                         defaultValue="test"
-                        isOptional
                         type="text"
                         onChange={(e) => setName(e.target.value)}
                         errorMsg="This field is required"

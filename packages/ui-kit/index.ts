@@ -96,6 +96,7 @@ import { FormInput } from "./src/mobile-components/form-elements/FormElements";
 import { Pager } from "./src/mobile-components/pager/Pager";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
+export * from "./src/mobile-components/form-elements/FormElements";
 export {
     ApexAreaChart,
     ApexBarChart,

@@ -9,12 +9,14 @@ interface IFormElement<T> {
     placeholder?: string;
     defaultValue?: string;
     value: string | number;
+    placeholder: string;
+    defaultValue?: string;
+    value: string;
     onChange: ChangeEventHandler<T>;
     disabled?: boolean;
     className?: string;
 }
 interface IFormInput extends IFormElement<HTMLInputElement> {
-    isOptional?: boolean;
     errorMsg?: string;
     type: "text" | "email" | "password" | "number" | "date";
     name?: string;
@@ -29,7 +31,6 @@ export const FormInput: FC<IFormInput> = ({
     value,
     onChange,
     disabled,
-    isOptional,
     type = "text",
     errorMsg,
     name,
@@ -50,14 +51,6 @@ export const FormInput: FC<IFormInput> = ({
                 >
                     {label}
                 </label>
-                {isOptional && (
-                    <span
-                        className="text-sm leading-6 text-gray-400"
-                        id="email-optional"
-                    >
-                        Optional
-                    </span>
-                )}
             </div>
             <div className="relative mt-1 rounded-md shadow-sm">
                 <input

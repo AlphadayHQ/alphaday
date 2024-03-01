@@ -111,6 +111,11 @@ export type TGetUserAccountByIdResponse = TRemoteAccount;
 export type TGetUserProfileRequest = void;
 export type TGetUserProfileResponse = TRemoteProfile;
 
+export type TUpdateUserProfileRequest = {
+    handle: string;
+};
+export type TUpdateUserProfileResponse = TRemoteProfile;
+
 export type TRemoteFilterTag = { slug: string };
 export type TUpdateUserProfileFiltersRequest = {
     filter_tags: TRemoteFilterTag[];
