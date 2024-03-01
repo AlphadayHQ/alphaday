@@ -2,8 +2,7 @@ import { FC } from "react";
 import { FormInput, Pager, ScrollBar } from "@alphaday/ui-kit";
 import moment from "moment";
 import { useHistory } from "react-router";
-import { TCoin } from "src/api/types";
-import { THolding } from "src/mobile-pages/types";
+import { TCoin, THolding } from "src/api/types";
 
 interface IAddHolding {
     selectedCoin: TCoin;

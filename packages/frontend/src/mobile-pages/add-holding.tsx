@@ -1,7 +1,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { usePagination } from "src/api/hooks";
 import { useGetCoinsQuery } from "src/api/services";
-import { TCoin } from "src/api/types";
+import { TCoin, THolding } from "src/api/types";
 import {
     buildUniqueItemList,
     shouldFetchMoreItems,
@@ -10,7 +10,6 @@ import {
 import AddHolding from "src/mobile-components/portfolio/AddHolding";
 import SelectHoldingCoin from "src/mobile-components/portfolio/SelectHoldingCoin";
 import CONFIG from "src/config";
-import { THolding } from "./types";
 
 const INITIAL_PAGE = 1;
 
