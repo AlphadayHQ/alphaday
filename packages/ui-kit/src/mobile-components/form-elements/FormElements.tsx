@@ -6,36 +6,48 @@ import { ReactComponent as ChevronUpDownSVG } from "../../assets/svg/chevron-up-
 
 interface IFormElement<T> {
     label: string;
+    placeholder?: string;
+    defaultValue?: string;
+    value: string | number;
     placeholder: string;
     defaultValue?: string;
     value: string;
     onChange: ChangeEventHandler<T>;
     disabled?: boolean;
-    classNames?: string;
+    className?: string;
 }
 interface IFormInput extends IFormElement<HTMLInputElement> {
     errorMsg?: string;
-    type: "text" | "email" | "password";
+    type: "text" | "email" | "password" | "number" | "date";
+    name?: string;
+    min?: number;
 }
 
 export const FormInput: FC<IFormInput> = ({
     label,
     placeholder,
     defaultValue,
-    classNames,
+    className,
     value,
     onChange,
     disabled,
     type = "text",
     errorMsg,
+    name,
+    min,
 }) => {
     const [hasBlured, sethasBlured] = useState(false);
     return (
-        <div>
-            <div className="flex justify-start">
+        <div className="w-full">
+            <div
+                className={twMerge(
+                    "flex",
+                    isOptional ? "justify-between" : "justify-start"
+                )}
+            >
                 <label
                     htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-primary"
+                    className="block text-sm fontGroup-normal text-primaryVariant100"
                 >
                     {label}
                 </label>
@@ -43,26 +55,30 @@ export const FormInput: FC<IFormInput> = ({
             <div className="relative mt-1 rounded-md shadow-sm">
                 <input
                     type={type}
-                    name={label}
+                    name={name}
                     value={value}
                     onChange={onChange}
                     onBlur={() => sethasBlured(true)}
                     className={twMerge(
                         "block w-full bg-backgroundVariant100 rounded-md border-0 py-1.5 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500 disabled:ring-gray-200 ring-1 ring-inset focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 placeholder:text-gray-400",
-                        classNames,
+                        className,
                         errorMsg &&
                             hasBlured &&
-                            "ring-red-400 text-red-900 placeholder-red-300 focus:ring-red-500"
+                            "ring-red-400 placeholder-red-300 focus:ring-red-500"
                     )}
                     placeholder={placeholder}
                     defaultValue={defaultValue}
                     aria-invalid="true"
                     aria-describedby="email-error"
                     disabled={disabled}
+                    min={min}
                 />
             </div>
             {errorMsg && hasBlured && (
-                <p className="mt-1 text-sm text-red-600" id="email-error">
+                <p
+                    className="mt-1 text-sm text-red-600 fontGroup-mini"
+                    id="email-error"
+                >
                     {errorMsg}
                 </p>
             )}
@@ -74,7 +90,7 @@ export const FormTextArea: FC<IFormElement<HTMLTextAreaElement>> = ({
     label,
     placeholder,
     defaultValue,
-    classNames,
+    className,
     value,
     onChange,
     disabled,
@@ -94,7 +110,7 @@ export const FormTextArea: FC<IFormElement<HTMLTextAreaElement>> = ({
                     id="comment"
                     className={twMerge(
                         "block w-full bg-backgroundVariant100 rounded-md border-0 py-1.5 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-50 disabled:ring-gray-200 text-primary shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6",
-                        classNames
+                        className
                     )}
                     defaultValue={defaultValue}
                     value={value}
@@ -124,7 +140,7 @@ export const FormSelect: FC<IFormSelect> = ({
     options,
     placeholder,
     defaultValue,
-    classNames,
+    className,
     selected,
     onChange,
     disabled,
@@ -137,7 +153,7 @@ export const FormSelect: FC<IFormSelect> = ({
             onChange={onChange}
         >
             {({ open }) => (
-                <div className={classNames}>
+                <div className={className}>
                     <Listbox.Label className="block text-sm font-medium leading-6 text-primary">
                         {label}
                     </Listbox.Label>
