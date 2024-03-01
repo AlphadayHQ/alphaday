@@ -223,7 +223,10 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                                 "cursor-not-allowed bg-transparent opacity-50"
                         )}
                     >
-                        <CloseSVG style={IconStyle} className="icon" />
+                        <CloseSVG
+                            style={IconStyle}
+                            className="icon text-primaryVariant200"
+                        />
 
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             Remove Widget

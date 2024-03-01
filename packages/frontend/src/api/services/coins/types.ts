@@ -19,7 +19,11 @@ export type TRemoteCoin = TBaseCoin & {
  */
 
 // /coins/
-export type TGetCoinsRequest = { tags?: string; limit?: number } | void;
+export type TGetCoinsRequest = {
+    tags?: string;
+    limit?: number;
+    page?: number;
+} | void;
 export type TGetCoinsRawResponse = TPagination & {
     results: TRemoteCoin[];
 };
