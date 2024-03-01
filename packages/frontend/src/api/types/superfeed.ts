@@ -42,6 +42,12 @@ export enum ETimeRange {
     Last6Months = "last-6-months",
 }
 
+export type TFilterKeyword = {
+    name: string;
+    slug: string;
+    type: ESupportedFilters;
+};
+
 export type TFeedMarketData = {
     coin: {
         name: string;

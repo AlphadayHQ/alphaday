@@ -79,7 +79,6 @@ export type TGetSuperfeedFilterDataResponse = {
 export type TGetSuperfeedFilterKeywordsRequest = {
     filter_text: string;
 };
-
 export type TGetSuperfeedFilterKeywordsResponse = {
     conceptTags: TFilterDatum[];
     coins: TTaggedFilterDatum[];

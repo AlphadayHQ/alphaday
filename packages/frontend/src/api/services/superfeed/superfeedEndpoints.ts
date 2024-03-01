@@ -107,4 +107,8 @@ export const superfeedApi = alphadayApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useGetSuperfeedListQuery, useGetFilterDataQuery } = superfeedApi;
+export const {
+    useGetSuperfeedListQuery,
+    useGetFilterDataQuery,
+    useGetFilterKeywordsQuery,
+} = superfeedApi;
