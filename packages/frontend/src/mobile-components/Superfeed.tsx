@@ -87,6 +87,8 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                     item={item}
                     selectedPodcast={selectedPodcast}
                     setSelectedPodcast={setSelectedPodcast}
+                    onLike={() => {}}
+                    onShare={() => onShareItem(item)}
                 />
             ))}
         </ScrollBar>
