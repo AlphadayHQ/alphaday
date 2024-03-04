@@ -23,6 +23,7 @@ export const Pager: React.FC<PagerProps> = ({
                     handleBack && "visible"
                 )}
                 onClick={handleBack}
+                title="Back"
             >
                 <ChevronLeftIcon />
             </button>
@@ -36,6 +37,7 @@ export const Pager: React.FC<PagerProps> = ({
                     handleClose && "visible"
                 )}
                 onClick={handleClose}
+                title="Close"
             >
                 <Close3Icon className="text-primary" />
             </button>
