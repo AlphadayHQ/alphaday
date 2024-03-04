@@ -235,7 +235,7 @@ const PortfolioHoldings: React.FC = () => {
                 }}
                 onClose={() => setShowDialog(false)}
             >
-                <div className="">
+                <div className="w-full">
                     <div className="w-full text-center px-5 fontGroup-highlight !font-semibold">
                         <span>Choose A Method</span>
                     </div>
