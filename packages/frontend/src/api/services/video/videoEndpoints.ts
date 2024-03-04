@@ -113,6 +113,23 @@ export const videoApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
+        likeVideoItem: builder.mutation<
+            TBookmarkVideoItemResponse,
+            TBookmarkVideoItemRequest
+        >({
+            query: (req: TBookmarkVideoItemRequest) => {
+                const { item } = req;
+                const path = `${String(VIDEO.BASE)}${String(
+                    VIDEO.LIKE(item.id)
+                )}`;
+                Logger.debug("likeVideoItem: querying", path);
+                return {
+                    url: path,
+                    method: "POST",
+                    body: {},
+                };
+            },
+        }),
         openVideoItem: builder.mutation<
             TOpenVideoItemResponse,
             TOpenVideoItemRequest
@@ -139,4 +156,5 @@ export const {
     useOpenVideoItemMutation,
     useBookmarkVideoItemMutation,
     useGetVideoChannelsListQuery,
+    useLikeVideoItemMutation,
 } = videoApi;

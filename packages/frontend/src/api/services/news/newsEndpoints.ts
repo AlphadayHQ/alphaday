@@ -85,6 +85,23 @@ const newsApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
+        likeNewsItem: builder.mutation<
+            TBookmarkNewsItemResponse,
+            TBookmarkNewsItemRequest
+        >({
+            query: (req: TBookmarkNewsItemRequest) => {
+                const { item } = req;
+                const path = `${String(NEWS.BASE)}${String(
+                    NEWS.LIKE(item.id)
+                )}`;
+                Logger.debug("likeNewsItem: querying", path);
+                return {
+                    url: path,
+                    method: "POST",
+                    body: {},
+                };
+            },
+        }),
         openNewsItem: builder.mutation<
             TOpenNewsItemResponse,
             TOpenNewsItemRequest
@@ -110,4 +127,5 @@ export const {
     useGetNewsSummaryQuery,
     useOpenNewsItemMutation,
     useBookmarkNewsItemMutation,
+    useLikeNewsItemMutation,
 } = newsApi;

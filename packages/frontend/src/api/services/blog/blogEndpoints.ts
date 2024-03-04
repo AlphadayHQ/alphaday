@@ -71,6 +71,23 @@ export const blogApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
+        likeBlogItem: builder.mutation<
+            TBookmarkBlogItemResponse,
+            TBookmarkBlogItemRequest
+        >({
+            query: (req: TBookmarkBlogItemRequest) => {
+                const { item } = req;
+                const path = `${String(BLOG.BASE)}${String(
+                    BLOG.LIKE(item.id)
+                )}`;
+                Logger.debug("likeBlogItem: querying", path);
+                return {
+                    url: path,
+                    method: "POST",
+                    body: {},
+                };
+            },
+        }),
         openBlogItem: builder.mutation<
             TOpenBlogItemResponse,
             TOpenBlogItemRequest
@@ -95,4 +112,5 @@ export const {
     useGetBlogListQuery,
     useOpenBlogItemMutation,
     useBookmarkBlogItemMutation,
+    useLikeBlogItemMutation,
 } = blogApi;

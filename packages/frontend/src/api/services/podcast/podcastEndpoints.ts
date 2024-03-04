@@ -91,6 +91,23 @@ export const podcastApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
+        likePodcastItem: builder.mutation<
+            TBookmarkPodcastItemResponse,
+            TBookmarkPodcastItemRequest
+        >({
+            query: (req: TBookmarkPodcastItemRequest) => {
+                const { item } = req;
+                const path = `${String(PODCAST.BASE)}${String(
+                    PODCAST.LIKE(item.id)
+                )}`;
+                Logger.debug("likePodcastItem: querying", path);
+                return {
+                    url: path,
+                    method: "POST",
+                    body: {},
+                };
+            },
+        }),
         openPodcastItem: builder.mutation<
             TOpenPodcastItemResponse,
             TOpenPodcastItemRequest
@@ -116,4 +133,5 @@ export const {
     useOpenPodcastItemMutation,
     useBookmarkPodcastItemMutation,
     useGetPodcastChannelsListQuery,
+    useLikePodcastItemMutation,
 } = podcastApi;
