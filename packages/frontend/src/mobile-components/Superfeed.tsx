@@ -1,6 +1,5 @@
 import { useRef, FC, FormEvent, useCallback } from "react";
 import { twMerge, ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
-import { AudioPlayerProvider } from "react-use-audio-player";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
@@ -13,6 +12,7 @@ interface ISuperfeedModule {
     feed: TSuperfeedItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
+    onShareItem: (item: TSuperfeedItem) => Promise<void>;
     selectedPodcast: TSuperfeedItem | null;
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
@@ -47,7 +47,7 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
                 role="button"
                 title="Open filters"
                 className={twMerge(
-                    "absolute bg-accentVariant100 rounded-lg p-4 bottom-24 right-5 z-10 delay-300",
+                    "absolute bg-accentVariant100 rounded-lg p-4 bottom-10 right-5 z-10 delay-300",
                     element1Visible && "hidden delay-0"
                 )}
             >
@@ -64,6 +64,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     toggleShowFeedFilters,
     selectedPodcast,
     setSelectedPodcast,
+    onShareItem,
 }) => {
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -80,16 +81,16 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     return (
         <ScrollBar onScroll={handleScrollEvent} className="w-full px-5 pt-4">
             <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
-            <AudioPlayerProvider>
-                {feed.map((item) => (
-                    <FeedCard
-                        key={item.id}
-                        item={item}
-                        selectedPodcast={selectedPodcast}
-                        setSelectedPodcast={setSelectedPodcast}
-                    />
-                ))}
-            </AudioPlayerProvider>
+            {feed.map((item) => (
+                <FeedCard
+                    key={item.id}
+                    item={item}
+                    selectedPodcast={selectedPodcast}
+                    setSelectedPodcast={setSelectedPodcast}
+                    onLike={() => {}}
+                    onShare={() => onShareItem(item)}
+                />
+            ))}
         </ScrollBar>
     );
 };

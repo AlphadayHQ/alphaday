@@ -23,6 +23,8 @@ import {
     TGetUserProfileResponse,
     TUpdateUserProfileFiltersRequest,
     TUpdateUserProfileFiltersResponse,
+    TUpdateUserProfileRequest,
+    TUpdateUserProfileResponse,
 } from "./types";
 
 const { USER } = CONFIG.API.DEFAULT.ROUTES;
@@ -74,6 +76,10 @@ const userApi = alphadayApi.injectEndpoints({
         >({
             query: ({ id }) => `${USER.BASE}${USER.ACCOUNT_BY_ID(id)}`,
         }),
+        /**
+         * @deprecated
+         * login/logout now handled in authEndpoints
+         */
         login: builder.mutation<TRemoteLogin, TRemoteLogin>({
             query: (request) => ({
                 url: `${USER.BASE}${USER.LOGIN}`,
@@ -81,6 +87,10 @@ const userApi = alphadayApi.injectEndpoints({
                 body: request,
             }),
         }),
+        /**
+         * @deprecated
+         * login/logout now handled in authEndpoints
+         */
         logout: builder.mutation<void, void>({
             query: () => ({
                 url: `${USER.BASE}${USER.LOGOUT}`,
@@ -105,6 +115,10 @@ const userApi = alphadayApi.injectEndpoints({
                 body: request,
             }),
         }),
+        /**
+         * @deprecated
+         * authentication no longer works using wallet signatures, use authEndpoints instead
+         */
         generateMessage: builder.mutation<
             TGenerateMessageResponse,
             TGenerateMessageRequest
@@ -115,6 +129,10 @@ const userApi = alphadayApi.injectEndpoints({
                 body: request,
             }),
         }),
+        /**
+         * @deprecated
+         * authentication no longer works using wallet signatures, use authEndpoints instead
+         */
         verifySignature: builder.mutation<
             TVerifySignatureResponse,
             TVerifySignatureRequest
@@ -165,6 +183,17 @@ const userApi = alphadayApi.injectEndpoints({
             query: () => `${USER.BASE}${USER.PROFILE}`,
             providesTags: ["Account"], // refetch if a user account is updated
         }),
+        updateUserProfile: builder.mutation<
+            TUpdateUserProfileResponse,
+            TUpdateUserProfileRequest
+        >({
+            query: (request) => ({
+                url: `${USER.BASE}${USER.PROFILE}`,
+                method: "PUT",
+                body: request,
+            }),
+            invalidatesTags: ["Account"],
+        }),
         updateUserProfileFilters: builder.mutation<
             TUpdateUserProfileFiltersResponse,
             TUpdateUserProfileFiltersRequest
@@ -191,6 +220,7 @@ export const {
     useGenerateMessageMutation,
     useVerifySignatureMutation,
     useGetUserProfileQuery,
+    useUpdateUserProfileMutation,
     useUpdateUserProfileFiltersMutation,
 } = userApi;
 export const { logout } = userApi.endpoints;

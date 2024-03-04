@@ -1,31 +1,48 @@
-import { FC } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
 import { TBaseFilterItem } from "src/api/services";
 import { Logger } from "src/api/utils/logging";
 
 type TOption = TBaseFilterItem;
 
-// TODO(v-almonacid): This is just a placeholder for now
+interface FilterSearchBarProps<T extends TBaseFilterItem = TOption> {
+    tags?: string;
+    tagsList: T[];
+    setSearchState: (value: string) => void;
+    onChange: (value: readonly T[]) => void;
+}
 
-const FilterSearchBar: FC = () => {
+const FilterSearchBar = <T extends TBaseFilterItem>({
+    onChange,
+    tags,
+    setSearchState,
+    tagsList,
+}: FilterSearchBarProps<T>) => {
+    const searchValues = tags
+        ?.split(",")
+        .map((tag) => {
+            return tagsList.filter((t) => t.slug === tag)[0];
+        })
+        .filter((t) => t);
+
     return (
         <div
             className="two-col:mx-2.5 two-col:my-auto three-col:m-auto flex w-full justify-center"
             data-testid="header-search-container"
         >
             <span className="w-full max-w-[524px]">
-                <SearchBar<TOption>
+                <SearchBar<T>
                     showBackdrop
-                    onChange={() => {
+                    onChange={(o) => {
                         Logger.debug("onChange called");
+                        onChange(o);
                     }}
-                    onInputChange={() => {
+                    onInputChange={(searchString) => {
                         Logger.debug("onInputChange called");
+                        setSearchState(searchString);
                     }}
                     placeholder="Search for assets, projects, events, etc."
-                    initialSearchValues={[]}
-                    options={[]}
-                    trendingOptions={[]}
+                    initialSearchValues={searchValues ?? []}
+                    options={tagsList}
                     isFetchingKeywordResults={false}
                     isFetchingTrendingKeywordResults={false}
                 />

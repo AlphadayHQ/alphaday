@@ -1,5 +1,5 @@
 import { SuperSEO } from "react-super-seo";
-import { useAvailableViews, useCookieChoice } from "src/api/hooks";
+import { useAvailableViews, useCookieChoice, useIsMobile } from "src/api/hooks";
 import { useAppSelector } from "src/api/store/hooks";
 import { getBoardDescription, getBoardTitle } from "src/api/utils/seo";
 import CONFIG from "../../config";
@@ -12,6 +12,22 @@ const SeoContainer = () => {
         (state) => state.views.selectedViewId
     );
     const { allowTracking } = useCookieChoice();
+
+    const isMobile = useIsMobile();
+
+    /**
+     * TODO(v-almonacid): Amend when route handling is 100% defined for mobile
+     */
+    if (isMobile) {
+        return (
+            <SuperSEO
+                title="Alphaday"
+                description={DESCRIPTION}
+                lang="en"
+                robots="noindex"
+            />
+        );
+    }
 
     const selectedView = availableViews?.find(
         (v) => v.data.id === selectedViewId

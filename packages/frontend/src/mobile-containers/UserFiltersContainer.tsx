@@ -1,6 +1,10 @@
 import { FC } from "react";
-import { useFilters } from "src/api/hooks";
-import { useGetFilterDataQuery, TBaseFilterItem } from "src/api/services";
+import { useFilters, useFilterKeywordSearch } from "src/api/hooks";
+import {
+    useGetFilterDataQuery,
+    TFilterDatum,
+    TTaggedFilterDatum,
+} from "src/api/services";
 import {
     selectedLocalFiltersSelector,
     selectedSyncedFiltersSelector,
@@ -54,15 +58,35 @@ const updateLocalFilterOptionsState = (
     },
 });
 
+/**
+ * Note on filter data tyos: Some filters have a 1-to-1 correspondance with
+ * the tag model. Others, like coins and projects/chains, include a parent tag
+ * field which we use to identify the unique tag they belong to.
+ */
+
 const updateRemoteFilterOptionsState = (
     selectedOptions: string[],
-    remoteOptions: TBaseFilterItem[]
+    remoteOptions: TFilterDatum[]
 ): TOption[] =>
     remoteOptions
         .map((option) => ({
             name: option.name,
             slug: option.slug,
             selected: selectedOptions.some((slug) => slug === option.slug),
+        }))
+        .sort(sortBySelected);
+
+const updateRemoteTaggedFilterOptionsState = (
+    selectedOptions: string[],
+    remoteOptions: TTaggedFilterDatum[]
+): TOption[] =>
+    remoteOptions
+        .map((option) => ({
+            name: option.name,
+            slug: option.tags[0]?.slug ?? option.slug,
+            selected: selectedOptions.some(
+                (slug) => slug === option.slug || slug === option.tags[0]?.slug
+            ),
         }))
         .sort(sortBySelected);
 
@@ -77,13 +101,15 @@ const UserFiltersContainer: FC<{
 
     const { toggleFilter } = useFilters();
 
+    const { setSearchState, keywordResults } = useFilterKeywordSearch();
+
     const filterOptions: TFilterOptions = {
         localFilterOptions: updateLocalFilterOptionsState(selectedLocalFilters),
         syncedFilterOptions: {
             coins: {
                 label: "Coins",
                 type: ESupportedFilters.Coins,
-                options: updateRemoteFilterOptionsState(
+                options: updateRemoteTaggedFilterOptionsState(
                     selectedSyncedFilters.coins,
                     filtersData?.coins ?? []
                 ),
@@ -91,9 +117,17 @@ const UserFiltersContainer: FC<{
             chains: {
                 label: "Chains",
                 type: ESupportedFilters.Chains,
-                options: updateRemoteFilterOptionsState(
+                options: updateRemoteTaggedFilterOptionsState(
                     selectedSyncedFilters.chains,
                     filtersData?.chains ?? []
+                ),
+            },
+            conceptTags: {
+                label: "General",
+                type: ESupportedFilters.ConceptTags,
+                options: updateRemoteFilterOptionsState(
+                    selectedSyncedFilters.conceptTags,
+                    filtersData?.conceptTags ?? []
                 ),
             },
         },
@@ -114,6 +148,8 @@ const UserFiltersContainer: FC<{
             filterOptions={filterOptions}
             isLoading={isLoading}
             onSelectFilter={handleSelectFilter}
+            filterKeywords={keywordResults}
+            onSearchInputChange={setSearchState}
         />
     );
 };

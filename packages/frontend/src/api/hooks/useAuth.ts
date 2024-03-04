@@ -64,8 +64,7 @@ export const useAuth = (): IUseAuth => {
             }).unwrap();
 
             Logger.debug("useAuth::verifyToken: verified OTP", verifyResp);
-            dispatch(userStore.setAuthToken({ value: verifyResp.token }));
-            dispatch(userStore.setAuthEmail(verifyResp.user.email));
+            // note: token an user email are set through RTK-query (see verifyToken::onQueryStarted)
             dispatch(userStore.setAuthState(EAuthState.Verified));
         },
         [dispatch, verifyTokenMut]

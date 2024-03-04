@@ -20,8 +20,10 @@ interface IPortfolio {
     isLoading: boolean;
     accounts: Array<TPortfolioTabAccount>;
     authAccount: TCryptoAccount | undefined;
+    isWalletConnected: boolean;
     selectedAddress: string | null;
-    onConnectWallet: () => MaybeAsync<void>;
+    onConnectWallet: () => void;
+    onDisconnectWallet: () => MaybeAsync<void>;
     showVerify: boolean;
     onVerifyWallet: () => MaybeAsync<void>;
     onAddAddress: (address: string) => void;
@@ -47,6 +49,7 @@ const Portfolio: FC<IPortfolio> = ({
     selectedAddress,
     accounts,
     onConnectWallet,
+    onDisconnectWallet,
     showVerify,
     onVerifyWallet,
     portfolioDataForAddress,
@@ -67,6 +70,7 @@ const Portfolio: FC<IPortfolio> = ({
     nftBalanceForAddresses,
     nftsQueryFailed,
     authAccount,
+    isWalletConnected,
     moduleId,
 }) => {
     const [showEnterAddress, setShowEnterAddress] = useState(false);
@@ -136,6 +140,12 @@ const Portfolio: FC<IPortfolio> = ({
                                     handleShowEnterAddress={
                                         handleShowEnterAddress
                                     }
+                                    onDisconnectWallet={onDisconnectWallet}
+                                    onConnectWallet={onConnectWallet}
+                                    selectedIsAuthWallet={
+                                        authAccount?.address === selectedAddress
+                                    }
+                                    isWalletConnected={isWalletConnected}
                                 />
                                 {portfolioType === EPortfolioType.Ft ? (
                                     <PortfolioStats

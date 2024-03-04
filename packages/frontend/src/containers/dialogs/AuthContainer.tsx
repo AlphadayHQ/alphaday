@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Dialog } from "@alphaday/ui-kit";
 import { useKeyPress, useAuth } from "src/api/hooks";
 import { useAppDispatch } from "src/api/store/hooks";
@@ -12,8 +12,26 @@ import AuthModule from "src/components/auth/AuthModule";
 const AuthContainer = () => {
     const [email, setEmail] = useState("");
     const dispatch = useAppDispatch();
+    const [verifyingOTP, setVerifyingOTP] = useState(false);
     const { authState, resetAuthState, requestCode, ssoLogin, verifyToken } =
         useAuth();
+
+    useEffect(() => {
+        /**
+         * Reset auth state when the component mounts and the state is a transient state
+         * This is necessary because the auth state is persisted
+         */
+        if (
+            authState.status === EAuthState.SigningIn ||
+            authState.status === EAuthState.SelectingMethod ||
+            authState.status === EAuthState.GenericError
+        ) {
+            Logger.debug("AuthContainer: Found user in transient auth state");
+            resetAuthState();
+        }
+        // should only run on mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleEmailSubmit = useCallback(() => {
         requestCode(email)
@@ -26,12 +44,15 @@ const AuthContainer = () => {
 
     const handleOtpSubmit = useCallback(
         (otp: string) => {
+            setVerifyingOTP(true);
             verifyToken(email, otp)
                 .then(() => {
                     toast("Successfully verified email");
+                    setVerifyingOTP(false);
                 })
                 .catch(() => {
                     toast("We couldn't verify your email. Please try again.");
+                    setVerifyingOTP(false);
                     Logger.error("Failed to verify OTP", otp);
                 });
         },
@@ -69,7 +90,7 @@ const AuthContainer = () => {
                 authState.status === EAuthState.SelectingMethod
             }
             useKeyPress={useKeyPress}
-            closeButtonProps={{ className: "border-0" }}
+            closeButtonProps={{ className: "border-0 [&_svg]:w-3 [&_svg]:h-3" }}
             onClose={resetAuthState}
         >
             <AuthModule
@@ -79,6 +100,7 @@ const AuthContainer = () => {
                 handleSSOCallback={handleSSOCallback}
                 handleEmailSubmit={handleEmailSubmit}
                 handleEmailChange={handleEmailChange}
+                isVerifyingOTP={verifyingOTP}
             />
         </Dialog>
     );

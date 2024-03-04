@@ -15,7 +15,19 @@ import {
 } from "./FeedElements";
 import LineChart from "./LineChart";
 
-export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+const parseHistory = (history: string): [number, number][] => {
+    const parsedHistory = JSON.parse(history);
+    if (!Array.isArray(parsedHistory)) {
+        return [[0, 1]];
+    }
+    return parsedHistory;
+};
+
+export const MarketCard: FC<{
+    item: TSuperfeedItem;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
+}> = ({ item, onLike, onShare }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 
     const {
@@ -29,7 +41,6 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
         data: coinData,
     } = item;
 
-    const onLike = () => {};
     const isLiked = false;
 
     const isDown = shortDescription?.includes("down");
@@ -98,7 +109,11 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                     >
                                         <LineChart
                                             data={
-                                                coinData?.history ?? [[0], [1]]
+                                                coinData?.history
+                                                    ? parseHistory(
+                                                          coinData.history
+                                                      )
+                                                    : [[0, 1]]
                                             }
                                             className="!h-20 !w-28"
                                             isPreview
@@ -121,7 +136,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -132,7 +147,13 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <LineChart data={coinData?.history ?? [[0], [1]]} />
+                        <LineChart
+                            data={
+                                coinData?.history
+                                    ? parseHistory(coinData.history)
+                                    : [[0, 1]]
+                            }
+                        />
                         <a
                             href={url}
                             target="_blank"
@@ -147,7 +168,7 @@ export const MarketCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}

@@ -17,9 +17,9 @@ export const getFeedItemIcon = (type: EFeedItemType, isDown?: boolean) => {
 };
 
 export const ActionButtons: FC<{
-    onLike: () => void;
-    onCommentClick: () => void;
-    onShare: () => void;
+    onLike: () => MaybeAsync<void>;
+    onCommentClick: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
     likes: number;
     comments: number;
     isLiked: boolean;
@@ -64,6 +64,7 @@ export const TagButtons: FC<{
             <TagButton
                 key={tag.slug}
                 name={tag.name}
+                slug={tag.slug}
                 onClick={() => onClick(tag)}
             />
         ))}

@@ -1,3 +1,5 @@
+import { TCoin } from "./primitives";
+
 export type TPortfolioToken = {
     id: string;
     networkId: number;
@@ -32,4 +34,11 @@ export type TPortfolio = {
     network: string;
     updatedAt: string;
     token: TPortfolioToken;
+};
+
+// TODO: Update this type to match the API response
+export type THolding = {
+    coin: TCoin;
+    amount: number;
+    date: Date;
 };
