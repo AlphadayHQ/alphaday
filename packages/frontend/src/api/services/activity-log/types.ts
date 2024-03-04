@@ -4,6 +4,7 @@ export enum EActivityLogEventTypes {
     KeywordSelected = "KEYWORD_SELECTED",
     CookieChoiceSet = "COOKIE_CHOICE_SET",
     WalletConnection = "WALLET_CONNECT",
+    ShareSuperfeedItem = "SHARE_ITEM",
 }
 
 export enum EActivityLogObjectTypes {
@@ -11,6 +12,7 @@ export enum EActivityLogObjectTypes {
     Widget,
     View,
     WalletConnection,
+    ShareSuperfeedItem,
 }
 
 export type TKeywordActivityLog = {
@@ -45,12 +47,20 @@ export type TWalletConnectionActivityLog = {
     data?: JSONValue;
 };
 
+export type TShareSuperfeedItemActivityLog = {
+    event_type: EActivityLogEventTypes.ShareSuperfeedItem;
+    object_type: EActivityLogObjectTypes.ShareSuperfeedItem;
+    object_id: number;
+    data: JSONValue;
+};
+
 export type TRemoteActivityLog =
     | TKeywordActivityLog
     | TWidgetActivityLog
     | TViewActivityLog
     | TCookieActivityLog
-    | TWalletConnectionActivityLog;
+    | TWalletConnectionActivityLog
+    | TShareSuperfeedItemActivityLog;
 
 export type TActivityLogRequest = TRemoteActivityLog;
 export type TActivityLogResponse = TRemoteActivityLog;
