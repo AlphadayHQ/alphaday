@@ -52,7 +52,7 @@ jobs:
                   fi
               env:
                   VITE_OAUTH_ID_GOOGLE: ${{ secrets.PROD__REACT_APP_OAUTH_ID_GOOGLE }}
-                  VITE_OAUTH_ID_APPLE: ${{ secrets.PROD__REACT_APP_OAUTH_ID_APPLE }}
+                  VITE_OAUTH_ID_APPLE: ${{ secrets.PROD__FRONTEND__OAUTH_ID_APPLE }}
 
             - name: Set tag ENV
               run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
