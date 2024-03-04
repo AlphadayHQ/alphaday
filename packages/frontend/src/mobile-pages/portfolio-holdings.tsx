@@ -1,19 +1,17 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Dialog, DropdownSelect } from "@alphaday/ui-kit";
 import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router";
 import { useKeyPress } from "src/api/hooks";
-import {
-    toggleShowBalance as toggleShowBalanceInStore,
-    toggleShowAllAssets as toggleShowAllAssetsInStore,
-    selectShowAllAssets,
-    setWidgetHeight,
-} from "src/api/store";
+import { toggleShowBalance as toggleShowBalanceInStore } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
+
+import { ReactComponent as ArrowUpSVG } from "src/assets/icons/arrow-up.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 import { ReactComponent as ShowSVG } from "src/assets/icons/shown.svg";
+
+import PortfolioChart from "src/mobile-components/portfolio/PortfolioChart";
 import WalletConnectionOptions from "src/mobile-components/portfolio/WalletConnectionOptions";
-import { useAccount } from "wagmi";
 
 const UserWalletsInfo: FC<{ toggleBalance: () => void }> = ({
     toggleBalance,
@@ -37,7 +35,7 @@ const UserWalletsInfo: FC<{ toggleBalance: () => void }> = ({
                     <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-sm text-primaryflex items-center">
                         $12,555
                     </p>
-                    <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-xs text-primaryflex items-center">
+                    <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-xs items-center">
                         <span className="text-success">+58.54 (1.4%)</span> /
                         24h
                     </p>
@@ -102,6 +100,22 @@ const PortfolioHoldings: React.FC = () => {
                     setShowDialog(true);
                 }}
             />
+            <div className="mx-5">
+                <div className="mb-0.5">
+                    <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-sm text-primaryflex items-center">
+                        Balance
+                    </p>
+                    <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-xs text-primaryflex items-center">
+                        <span className="text-success inline-flex self-center">
+                            <ArrowUpSVG className="w-3 h-3 ml-2 mr-1 self-center" />{" "}
+                            (1.4%)
+                        </span>{" "}
+                        / 24h
+                    </p>
+                </div>
+                <p className="mb-0 fontGroup-major items-center">$12,555</p>
+            </div>
+            <PortfolioChart />
             <Dialog
                 size="xs"
                 showXButton
