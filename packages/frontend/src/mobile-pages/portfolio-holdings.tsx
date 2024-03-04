@@ -77,7 +77,7 @@ const WalletsList: FC<{
 const AssetsList: FC<{ assets: TPortfolio[] }> = ({ assets }) => {
     if (assets.length > 0) {
         return (
-            <div className="mt-5">
+            <div>
                 <div>
                     {assets.map((asset) => {
                         const assetKey = `single-
@@ -195,7 +195,7 @@ const PortfolioHoldings: React.FC = () => {
         },
     ];
     return (
-        <IonPage className="justify-start">
+        <IonPage className="justify-start portfolio-widget">
             <div className="w-full flex justify-between items-center px-4 py-5">
                 <div className="flex flex-grow justify-center uppercase font-bold text-base">
                     PORTFOLIO
