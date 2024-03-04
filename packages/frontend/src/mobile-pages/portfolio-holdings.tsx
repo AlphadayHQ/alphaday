@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import { Dialog, DropdownSelect } from "@alphaday/ui-kit";
 import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router";
@@ -6,12 +6,19 @@ import { useKeyPress } from "src/api/hooks";
 import { toggleShowBalance as toggleShowBalanceInStore } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 
+import { TPortfolio } from "src/api/types";
+import { ENumberStyle, formatNumber } from "src/api/utils/format";
+import { getAssetPrefix } from "src/api/utils/portfolioUtils";
 import { ReactComponent as ArrowUpSVG } from "src/assets/icons/arrow-up.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 import { ReactComponent as ShowSVG } from "src/assets/icons/shown.svg";
 
+import { portfolioData } from "src/mobile-components/portfolio/mockData";
 import PortfolioChart from "src/mobile-components/portfolio/PortfolioChart";
 import WalletConnectionOptions from "src/mobile-components/portfolio/WalletConnectionOptions";
+import CONFIG from "src/config";
+
+const { SMALL_PRICE_CUTOFF_LG } = CONFIG.WIDGETS.PORTFOLIO;
 
 const UserWalletsInfo: FC<{ toggleBalance: () => void }> = ({
     toggleBalance,
@@ -67,6 +74,107 @@ const WalletsList: FC<{
     );
 };
 
+const AssetsList: FC<{ assets: TPortfolio[] }> = ({ assets }) => {
+    if (assets.length > 0) {
+        return (
+            <div className="mt-5">
+                <div>
+                    {assets.map((asset) => {
+                        const assetKey = `single-
+                        ${asset.address}-${asset.network}-${asset.updatedAt}-${asset.token.id}`;
+
+                        return (
+                            <div
+                                className="flex flex-col mx-2 py-3 px-2 justify-between fontGroup-normal border-t border-borderLine first-of-type:border-t-0 rounded-sm"
+                                key={assetKey}
+                            >
+                                <div className="flex flex-1 justify-start mb-2">
+                                    <span className="flex flex-wrap">
+                                        {asset.token.tokenImage && (
+                                            <img
+                                                alt=""
+                                                src={asset.token.tokenImage}
+                                                className="w-5 h-5 rounded-full mr-[10px]"
+                                            />
+                                        )}
+                                        <span className="mr-0.5 font-bold">
+                                            {asset.token.symbol}
+                                        </span>{" "}
+                                        <span className="text-primaryVariant100 mx-0.5">
+                                            {asset.token.name}
+                                        </span>
+                                        <span className="secondCol text-primaryVariant100 ml-0.5">
+                                            {getAssetPrefix(asset)}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <div className="flex flex-1 flex-end">
+                                        <div className="flex flex-col">
+                                            <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
+                                                Balance
+                                            </p>
+                                            <span>
+                                                {
+                                                    formatNumber({
+                                                        value: asset.token
+                                                            .balance,
+                                                    }).value
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-1 flex-end">
+                                        <div className="flex flex-col w-full">
+                                            <p className="capitalize ml-[30%] text-start tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
+                                                Price
+                                            </p>
+                                            <span className="ml-[30%]">
+                                                {
+                                                    formatNumber({
+                                                        value:
+                                                            asset.token.price ||
+                                                            0,
+                                                        style: ENumberStyle.Currency,
+                                                        currency: "USD",
+                                                        useEllipsis: true,
+                                                        ellipsisCutoff:
+                                                            SMALL_PRICE_CUTOFF_LG,
+                                                    }).value
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-1 flex-end">
+                                        <div className="flex flex-col w-full">
+                                            <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
+                                                Value
+                                            </p>
+                                            <span className="text-end">
+                                                {
+                                                    formatNumber({
+                                                        value:
+                                                            asset.token
+                                                                .balanceUSD ||
+                                                            0,
+                                                        style: ENumberStyle.Currency,
+                                                        currency: "USD",
+                                                    }).value
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
+    return null;
+};
+
 const PortfolioHoldings: React.FC = () => {
     const dispatch = useAppDispatch();
     const [showDialog, setShowDialog] = useState(false);
@@ -78,11 +186,11 @@ const PortfolioHoldings: React.FC = () => {
     const wallets = [
         { label: "All Assets", value: "all" },
         {
-            label: "xavier-Charles",
+            label: "xavier-charles",
             value: "0xe70d4BdacC0444CAa973b0A05CB6f2974C34aF0c",
         },
         {
-            label: "pipe",
+            label: "brine",
             value: "0x93450d4BdacC0444CAa973b0A05CB6f2974C34DDc",
         },
     ];
@@ -116,6 +224,7 @@ const PortfolioHoldings: React.FC = () => {
                 <p className="mb-0 fontGroup-major items-center">$12,555</p>
             </div>
             <PortfolioChart />
+            <AssetsList assets={portfolioData.assets} />
             <Dialog
                 size="xs"
                 showXButton
