@@ -44,6 +44,16 @@ export type TTaggedFilterDatum = TBaseFilterItem & {
     tags: TBaseFilterTag[];
 };
 
+export type TRemoteFilterKeyword = {
+    id: number;
+    name: string;
+    tag: {
+        id: number;
+        name: string;
+        slug: string;
+    };
+};
+
 /**
  * Query types
  */
@@ -74,4 +84,18 @@ export type TGetSuperfeedFilterDataResponse = {
     conceptTags: TFilterDatum[];
     coins: TTaggedFilterDatum[];
     chains: TTaggedFilterDatum[];
+};
+
+export type TGetSuperfeedFilterKeywordsRequest = {
+    filter_text: string;
+};
+export type TGetSuperfeedFilterKeywordsRawResponse = {
+    concept_keywords: TRemoteFilterKeyword[];
+    coin_keywords: TRemoteFilterKeyword[];
+    chain_keywords: TRemoteFilterKeyword[];
+};
+export type TGetSuperfeedFilterKeywordsResponse = {
+    conceptTags: TRemoteFilterKeyword[];
+    coins: TRemoteFilterKeyword[];
+    chains: TRemoteFilterKeyword[];
 };

@@ -9,6 +9,9 @@ import {
     TGetSuperfeedFilterDataRawResponse,
     TGetSuperfeedFilterDataResponse,
     TGetSuperfeedFilterDataRequest,
+    TGetSuperfeedFilterKeywordsResponse,
+    TGetSuperfeedFilterKeywordsRequest,
+    TGetSuperfeedFilterKeywordsRawResponse,
 } from "./types";
 
 const { SUPERFEED } = CONFIG.API.DEFAULT.ROUTES;
@@ -89,8 +92,31 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                 ),
             }),
         }),
+        getFilterKeywords: builder.query<
+            TGetSuperfeedFilterKeywordsResponse,
+            TGetSuperfeedFilterKeywordsRequest
+        >({
+            query: (req) => {
+                const { ...reqParams } = req;
+                const params: string = queryString.stringify(reqParams);
+                const path = `${SUPERFEED.BASE}${SUPERFEED.FILTER_KEYWORDS}?${params}`;
+                Logger.debug("getSuperfeedFilterKeywords: querying", path);
+                return path;
+            },
+            transformResponse: (
+                r: TGetSuperfeedFilterKeywordsRawResponse
+            ): TGetSuperfeedFilterKeywordsResponse => ({
+                coins: r.coin_keywords,
+                conceptTags: r.concept_keywords,
+                chains: r.chain_keywords,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetSuperfeedListQuery, useGetFilterDataQuery } = superfeedApi;
+export const {
+    useGetSuperfeedListQuery,
+    useGetFilterDataQuery,
+    useGetFilterKeywordsQuery,
+} = superfeedApi;
