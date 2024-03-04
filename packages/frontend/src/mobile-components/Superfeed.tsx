@@ -1,6 +1,5 @@
 import { useRef, FC, FormEvent, useCallback } from "react";
 import { twMerge, ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
-import { AudioPlayerProvider } from "react-use-audio-player";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
@@ -80,16 +79,14 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     return (
         <ScrollBar onScroll={handleScrollEvent} className="w-full px-5 pt-4">
             <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
-            <AudioPlayerProvider>
-                {feed.map((item) => (
-                    <FeedCard
-                        key={item.id}
-                        item={item}
-                        selectedPodcast={selectedPodcast}
-                        setSelectedPodcast={setSelectedPodcast}
-                    />
-                ))}
-            </AudioPlayerProvider>
+            {feed.map((item) => (
+                <FeedCard
+                    key={item.id}
+                    item={item}
+                    selectedPodcast={selectedPodcast}
+                    setSelectedPodcast={setSelectedPodcast}
+                />
+            ))}
         </ScrollBar>
     );
 };
