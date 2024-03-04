@@ -9,6 +9,7 @@ import {
     EXPLORERS,
     WALLET_CONNECT,
     UNISWAP,
+    OAUTH,
 } from "./thirdparty";
 import UI_CONFIG from "./ui";
 import USER_CONFIG from "./user";
@@ -87,6 +88,7 @@ const CONFIG = {
     EXPLORERS,
     WALLET_CONNECT,
     UNISWAP,
+    OAUTH,
     VIEWS: VIEWS_CONFIG,
     USER: USER_CONFIG,
     APP: {

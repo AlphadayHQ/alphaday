@@ -1,6 +1,7 @@
 import { createContext, useMemo } from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { useScript } from "usehooks-ts";
+import { useScript } from "src/api/hooks";
+import CONFIG from "src/config";
 
 declare const AppleID: {
     auth: {
@@ -56,11 +57,11 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
                 // Calling this here, ensures we only do so Once!
                 if (
                     appleScriptStatus === "ready" &&
-                    import.meta.env.VITE_OAUTH_ID_APPLE &&
+                    CONFIG.OAUTH.APPLE_CLIENT_ID &&
                     typeof AppleID !== "undefined"
                 ) {
                     AppleID.auth.init({
-                        clientId: import.meta.env.VITE_OAUTH_ID_APPLE,
+                        clientId: CONFIG.OAUTH.APPLE_CLIENT_ID,
                         redirectURI: `${window.location.origin}/auth/apple_callback`,
                         state: "state",
                         usePopup: true,
@@ -80,7 +81,7 @@ export const OauthProvider: React.FC<{ children?: React.ReactNode }> = ({
     children,
 }) => {
     return (
-        <GoogleOAuthProvider clientId={import.meta.env.VITE_OAUTH_ID_GOOGLE}>
+        <GoogleOAuthProvider clientId={CONFIG.OAUTH.GOOGLE_CLIENT_ID}>
             <AppleOAuthProvider>{children}</AppleOAuthProvider>
         </GoogleOAuthProvider>
     );
