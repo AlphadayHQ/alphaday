@@ -114,22 +114,17 @@ const PortfolioChart: FC = () => {
         ],
     };
 
-    const d = true;
-
-    if (d) {
-        return (
-            <div className="flex justify-between donut-chart ml-2 [&_.apexcharts-inner]:!translate-x-[200px] [&_.apexcharts-inner]:!translate-y-10 [&_.apexcharts-svg]:!w-80 ">
-                {donutData.series && (
-                    <ApexDonutChart
-                        options={donutData?.options}
-                        series={donutData?.series}
-                        width="260px"
-                        height="400px"
-                    />
-                )}
-            </div>
-        );
-    }
-    return null;
+    return (
+        <div className="flex justify-between donut-chart ml-2 [&_.apexcharts-inner]:!translate-x-[200px] [&_.apexcharts-inner]:!translate-y-10 [&_.apexcharts-svg]:!w-80 ">
+            {donutData.series && (
+                <ApexDonutChart
+                    options={donutData?.options}
+                    series={donutData?.series}
+                    width="260px"
+                    height="400px"
+                />
+            )}
+        </div>
+    );
 };
 export default PortfolioChart;
