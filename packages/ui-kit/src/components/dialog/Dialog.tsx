@@ -84,7 +84,7 @@ export const Dialog: FC<IDialog> = ({
                         className="border-borderLine bg-background flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-2 border-solid"
                         {...closeButtonProps}
                     >
-                        <CloseSVG className="h-[8.4px] w-[8.4px] text-borderLine outline-none" />
+                        <CloseSVG className="h-[8.4px] w-[8.4px] text-borderLine outline-none  text-primaryVariant200" />
                     </button>
                 )}
             </div>

@@ -23,6 +23,8 @@ import {
     TGetUserProfileResponse,
     TUpdateUserProfileFiltersRequest,
     TUpdateUserProfileFiltersResponse,
+    TUpdateUserProfileRequest,
+    TUpdateUserProfileResponse,
 } from "./types";
 
 const { USER } = CONFIG.API.DEFAULT.ROUTES;
@@ -181,6 +183,17 @@ const userApi = alphadayApi.injectEndpoints({
             query: () => `${USER.BASE}${USER.PROFILE}`,
             providesTags: ["Account"], // refetch if a user account is updated
         }),
+        updateUserProfile: builder.mutation<
+            TUpdateUserProfileResponse,
+            TUpdateUserProfileRequest
+        >({
+            query: (request) => ({
+                url: `${USER.BASE}${USER.PROFILE}`,
+                method: "PUT",
+                body: request,
+            }),
+            invalidatesTags: ["Account"],
+        }),
         updateUserProfileFilters: builder.mutation<
             TUpdateUserProfileFiltersResponse,
             TUpdateUserProfileFiltersRequest
@@ -207,6 +220,7 @@ export const {
     useGenerateMessageMutation,
     useVerifySignatureMutation,
     useGetUserProfileQuery,
+    useUpdateUserProfileMutation,
     useUpdateUserProfileFiltersMutation,
 } = userApi;
 export const { logout } = userApi.endpoints;

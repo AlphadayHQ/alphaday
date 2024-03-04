@@ -1,12 +1,10 @@
 import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "src/api/hooks";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
-import UserMenu from "src/mobile-components/profile/UserMenu";
+import UserSettingsContainer from "src/mobile-containers/UserSettingsContainer";
 
 const UserSettings: React.FC = () => {
     const history = useHistory();
-    const { isAuthenticated, logout } = useAuth();
 
     return (
         <IonPage>
@@ -16,7 +14,7 @@ const UserSettings: React.FC = () => {
                     history.length > 1 ? history.goBack() : history.push("/")
                 }
             >
-                <UserMenu isAuthenticated={isAuthenticated} onLogout={logout} />
+                <UserSettingsContainer />
             </PagedMobileLayout>
         </IonPage>
     );
