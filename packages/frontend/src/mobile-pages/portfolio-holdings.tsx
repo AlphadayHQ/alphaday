@@ -61,7 +61,7 @@ const WalletsList: FC<{
 }> = ({ onAddWallet, wallets }) => {
     return (
         <div className="flex items-center mb-4 mx-5">
-            <DropdownSelect wallets={wallets} />
+            <DropdownSelect items={wallets} />
             <button
                 onClick={onAddWallet}
                 className="bg-accentVariant100 text-white self-center rounded-md py-2 px-2 ml-2"
