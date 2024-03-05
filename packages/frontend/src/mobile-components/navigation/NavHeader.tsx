@@ -35,6 +35,7 @@ export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
                 type="button"
                 className="bg-backgroundVariant300 self-center rounded-lg p-2"
                 onClick={onSearchHandleClick}
+                title="Search"
             >
                 <SearchSVG className="h-4 w-4" aria-hidden="true" />
             </button>
