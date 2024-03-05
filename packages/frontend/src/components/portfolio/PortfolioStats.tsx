@@ -200,7 +200,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                     Total Balance{" "}
                                     <ShowSVG
                                         onClick={toggleBalance}
-                                        className="cursor-pointer ml-0.5 p-[1px]"
+                                        className="cursor-pointer ml-0.5 p-[1px] text-primaryVariant100"
                                     />
                                 </p>
                                 {portfolioData === undefined ? (

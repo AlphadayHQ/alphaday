@@ -35,6 +35,9 @@ const ConnectWalletPage = lazyRetry(
 );
 const AddWalletPage = lazyRetry(() => import("./mobile-pages/add-wallet"));
 const AddHoldingPage = lazyRetry(() => import("./mobile-pages/add-holding"));
+const PortfolioHoldingsPage = lazyRetry(
+    () => import("./mobile-pages/portfolio-holdings")
+);
 
 const CustomNavTab: React.FC<{
     label: string;
@@ -100,6 +103,9 @@ const TabNavigator: React.FC = () => {
                     exact
                     component={AddHoldingPage}
                 />
+                <Route exact path="/portfolio/holdings">
+                    <PortfolioHoldingsPage />
+                </Route>
                 <Route exact path="/auth*">
                     <AuthPage />
                 </Route>
