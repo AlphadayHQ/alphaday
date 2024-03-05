@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import DOMPurify from "dompurify";
 import moment from "moment";
 import { TSuperfeedItem } from "src/api/types";
 import { TagButton } from "src/mobile-components/button/buttons";
@@ -140,9 +141,16 @@ export const EventCard: FC<{
                             {title}
                         </p>
                         {/* <p className="mt-0.5 mb-0 line-clamp-2">{location}</p> */}
-                        <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {shortDescription}
-                        </p>
+                        <p
+                            // DOMPurify will 100% secure dangerouslySetInnerHTML
+                            // eslint-disable-next-line react/no-danger
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(
+                                    shortDescription || ""
+                                ),
+                            }}
+                            className="m-0 text-primaryVariant100 line-clamp-4"
+                        />
                         <a
                             href={url}
                             target="_blank"
