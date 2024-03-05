@@ -35,10 +35,10 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
                 tabIndex={0}
                 role="button"
             >
-                <p className="m-0 pr-2 fontGroup-highlight self-center">
+                <p className="m-0 pr-4 fontGroup-highlight self-center">
                     Craft your superfeed with personalized filters
                 </p>
-                <SettingsSVG className="w-6 text-accentVariant100 mt-[3px]" />
+                <SettingsSVG className="w-6 text-accentVariant100 self-center" />
             </div>
             <div
                 ref={element2}
