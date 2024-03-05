@@ -79,7 +79,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     }
 
     return (
-        <ScrollBar onScroll={handleScrollEvent} className="w-full px-4 pt-4">
+        <ScrollBar onScroll={handleScrollEvent} className="w-full px-3.5 pt-4">
             <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
             {feed.map((item) => (
                 <FeedCard

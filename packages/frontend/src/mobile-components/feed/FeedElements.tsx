@@ -120,7 +120,7 @@ export const FeedItemDisclosureButton: FC<{
 export const FeedItemDisclosureButtonImage: FC<{
     icon: string;
 }> = ({ icon }) => {
-    return <img src={icon} alt="feed icon" className="w-8 h-8 mr-2" />;
+    return <img src={icon} alt="feed icon" className="w-8 h-8 mr-1" />;
 };
 
 export const CardTitle: FC<{ title: string }> = ({ title }) => (
