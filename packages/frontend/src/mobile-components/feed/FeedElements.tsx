@@ -145,3 +145,16 @@ export const FeedItemDisclosurePanel: FC<{
         </Transition>
     );
 };
+
+export const ReadMoreLink: FC<{ url: string }> = ({ url }) => {
+    return (
+        <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:underline hover:text-secondaryOrange50 fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
+        >
+            Read more
+        </a>
+    );
+};

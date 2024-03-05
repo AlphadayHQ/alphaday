@@ -12,6 +12,7 @@ import {
     FeedItemDisclosureButton,
     FeedItemDisclosureButtonImage,
     FeedItemDisclosurePanel,
+    ReadMoreLink,
     TagButtons,
     getFeedItemIcon,
 } from "./FeedElements";
@@ -86,7 +87,7 @@ export const EventCard: FC<{
                                             </div>
                                         </div>
                                     </div>
-                                    <CardTitle title={title} />
+                                    {!open && <CardTitle title={title} />}
                                     {/* <p className="mt-0.5 mb-0 line-clamp-2">
                                         {location}
                                     </p> */}
@@ -137,7 +138,7 @@ export const EventCard: FC<{
                             className="w-full rounded-lg object-cover"
                             onError={imgOnError}
                         />
-                        <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
+                        <p className="mt-2 mb-1 fontGroup-highlight line-clamp-3">
                             {title}
                         </p>
                         {/* <p className="mt-0.5 mb-0 line-clamp-2">{location}</p> */}
@@ -151,14 +152,7 @@ export const EventCard: FC<{
                             }}
                             className="m-0 text-primaryVariant100 line-clamp-4"
                         />
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
-                        >
-                            Read more
-                        </a>
+                        <ReadMoreLink url={url} />
                         <div className="my-2 flex justify-between">
                             <div className="flex flex-col">
                                 <TagButton

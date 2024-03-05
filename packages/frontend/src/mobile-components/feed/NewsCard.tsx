@@ -10,6 +10,7 @@ import {
     FeedItemDisclosureButtonImage,
     FeedItemDisclosurePanel,
     FeedSourceInfo,
+    ReadMoreLink,
     TagButtons,
     getFeedItemIcon,
 } from "./FeedElements";
@@ -97,14 +98,8 @@ export const NewsCard: FC<{
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
-                        >
-                            Read more
-                        </a>
+                        <ReadMoreLink url={url} />
+
                         <div className="my-2 flex justify-between">
                             <TagButtons tags={tags} onClick={() => {}} />
                             <div className="min-w-max ml-2 mt-0.5">
