@@ -18,7 +18,7 @@ export const ActionButton: FC<{
         <button
             type="button"
             onClick={handleClick}
-            className="bg-backgroundVariant300 text-primary fontGroup-mini mx-0.5 flex h-4 max-w-[48px] items-center justify-center rounded-lg px-2 py-0.5"
+            className="bg-backgroundVariant300 min-w-[36px] text-primary fontGroup-mini mx-0.5 flex h-5 max-w-[48px] items-center justify-center rounded-lg px-2 py-1"
         >
             {children}
         </button>
@@ -42,7 +42,7 @@ export const TagButton: FC<{
                 type="button"
                 onClick={handleClick}
                 className={twMerge(
-                    "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-4 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
+                    "bg-backgroundBlue100 text-primary fontGroup-mini !font-semibold m-0.5 flex h-5 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
                     className
                 )}
             >
@@ -54,7 +54,7 @@ export const TagButton: FC<{
         <Link
             to={`/superfeed/search/${slug}`}
             className={twMerge(
-                "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-4 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
+                "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-5 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
                 className
             )}
         >
