@@ -56,8 +56,8 @@ export const EventCard: FC<{
         endsAt,
     } = item;
 
-    // TODO: remove this when we have real data
-    const location = "location";
+    // TODO: update this when we have real data
+    // const location = "location";
     const category = "category";
 
     const isLiked = false;
@@ -86,9 +86,9 @@ export const EventCard: FC<{
                                         </div>
                                     </div>
                                     <CardTitle title={title} />
-                                    <p className="mt-0.5 mb-0 line-clamp-2">
+                                    {/* <p className="mt-0.5 mb-0 line-clamp-2">
                                         {location}
-                                    </p>
+                                    </p> */}
                                 </div>
                                 <div className="flex-col min-w-max ml-2">
                                     <div
@@ -139,7 +139,7 @@ export const EventCard: FC<{
                         <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">
                             {title}
                         </p>
-                        <p className="mt-0.5 mb-0 line-clamp-2">{location}</p>
+                        {/* <p className="mt-0.5 mb-0 line-clamp-2">{location}</p> */}
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
