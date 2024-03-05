@@ -30,7 +30,7 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
         <>
             <div
                 ref={element1}
-                className="flex justify-between mb-4 px-4 py-2 border border-accentVariant100 rounded-lg"
+                className="flex justify-between mb-5 px-4 py-2 border border-accentVariant100 rounded-lg"
                 onClick={toggleShowFeedFilters}
                 tabIndex={0}
                 role="button"
@@ -79,7 +79,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     }
 
     return (
-        <ScrollBar onScroll={handleScrollEvent} className="w-full px-5 pt-4">
+        <ScrollBar onScroll={handleScrollEvent} className="w-full px-4 pt-4">
             <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
             {feed.map((item) => (
                 <FeedCard

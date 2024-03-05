@@ -25,7 +25,7 @@ const eventDateFormatter = (date: string) => {
         <span className="flex flex-col text-primary fontGroup-mini">
             <span>
                 {`${String(moment(date).format("MMM DD, YYYY"))}`}
-                <span className="mx-1.5 my-0 self-center">•</span>
+                <span className="mx-1 my-0 self-center">•</span>
                 <span>
                     {`${String(moment(date).format("h:mmA"))} (${String(
                         tzName
@@ -100,7 +100,7 @@ export const EventCard: FC<{
                                         <img
                                             src={image || undefined}
                                             alt=""
-                                            className="h-24 rounded-lg object-cover"
+                                            className="h-24 max-w-[120px] rounded-lg object-cover"
                                             onError={imgOnError}
                                         />
                                     </div>

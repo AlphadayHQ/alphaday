@@ -10,7 +10,7 @@ interface IProps {
 
 export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
     return (
-        <div className="w-full flex justify-between py-2 px-5">
+        <div className="w-full flex justify-between pt-2 px-5">
             <Link
                 to="superfeed/user-settings"
                 role="button"

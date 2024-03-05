@@ -73,7 +73,7 @@ export const MarketCard: FC<{
                                                     Price Alert
                                                 </span>
                                             )}
-                                            <span className="mx-1.5 my-0 self-center">
+                                            <span className="mx-1 my-0 self-center">
                                                 •
                                             </span>{" "}
                                             <span>

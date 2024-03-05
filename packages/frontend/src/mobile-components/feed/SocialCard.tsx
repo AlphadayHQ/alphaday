@@ -51,7 +51,7 @@ export const SocialCard: FC<{
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                                 {computeDuration(date)}
-                                                <span className="mx-1.5 my-0 self-center">
+                                                <span className="mx-1 my-0 self-center">
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
