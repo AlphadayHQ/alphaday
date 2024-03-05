@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 import { Dialog, DropdownSelect } from "@alphaday/ui-kit";
-import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router";
 import { useKeyPress } from "src/api/hooks";
 import { toggleShowBalance as toggleShowBalanceInStore } from "src/api/store";
@@ -13,6 +12,7 @@ import { ReactComponent as ArrowUpSVG } from "src/assets/icons/arrow-up.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 import { ReactComponent as ShowSVG } from "src/assets/icons/shown.svg";
 
+import PagedMobileLayout from "src/layout/PagedMobileLayout";
 import { portfolioData } from "src/mobile-components/portfolio/mockData";
 import PortfolioChart from "src/mobile-components/portfolio/PortfolioChart";
 import WalletConnectionOptions from "src/mobile-components/portfolio/WalletConnectionOptions";
@@ -195,59 +195,57 @@ const PortfolioHoldings: React.FC = () => {
         },
     ];
     return (
-        <IonPage className="justify-start portfolio-widget">
-            <div className="w-full flex justify-between items-center px-4 py-5">
-                <div className="flex flex-grow justify-center uppercase font-bold text-base">
-                    PORTFOLIO
-                </div>
-            </div>
-            <UserWalletsInfo toggleBalance={toggleBalance} />
-            <WalletsList
-                wallets={wallets}
-                onAddWallet={() => {
-                    setShowDialog(true);
-                }}
-            />
-            <div className="mx-5">
-                <div className="mb-0.5">
-                    <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-sm text-primaryflex items-center">
-                        Balance
-                    </p>
-                    <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-xs text-primaryflex items-center">
-                        <span className="text-success inline-flex self-center">
-                            <ArrowUpSVG className="w-3 h-3 ml-2 mr-1 self-center" />{" "}
-                            (1.4%)
-                        </span>{" "}
-                        / 24h
-                    </p>
-                </div>
-                <p className="mb-0 fontGroup-major items-center">$12,555</p>
-            </div>
-            <PortfolioChart />
-            <AssetsList assets={portfolioData.assets} />
-            <Dialog
-                size="xs"
-                showXButton
-                showDialog={showDialog}
-                useKeyPress={useKeyPress}
-                closeButtonProps={{
-                    className: "border-0 [&_svg]:w-3 [&_svg]:h-3",
-                }}
-                onClose={() => setShowDialog(false)}
-            >
-                <div className="w-full">
-                    <div className="w-full text-center px-5 fontGroup-highlight !font-semibold">
-                        <span>Choose A Method</span>
+        <PagedMobileLayout title="Portfolio">
+            {/* // TODO (xavier-charles) update classname */}
+            <div className="portfolio-widget w-full mb-20">
+                <UserWalletsInfo toggleBalance={toggleBalance} />
+                <WalletsList
+                    wallets={wallets}
+                    onAddWallet={() => {
+                        setShowDialog(true);
+                    }}
+                />
+                <div className="mx-5">
+                    <div className="mb-0.5">
+                        <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-sm text-primaryflex items-center">
+                            Balance
+                        </p>
+                        <p className="mb-0 inline-flex capitalize tracking-[0.5px] fontGroup-mini !text-xs text-primaryflex items-center">
+                            <span className="text-success inline-flex self-center">
+                                <ArrowUpSVG className="w-3 h-3 ml-2 mr-1 self-center" />{" "}
+                                (1.4%)
+                            </span>{" "}
+                            / 24h
+                        </p>
                     </div>
-                    <WalletConnectionOptions
-                        isAuthenticated
-                        onClick={(path: string) => {
-                            history.push(path);
-                        }}
-                    />
+                    <p className="mb-0 fontGroup-major items-center">$12,555</p>
                 </div>
-            </Dialog>
-        </IonPage>
+                <PortfolioChart />
+                <AssetsList assets={portfolioData.assets} />
+                <Dialog
+                    size="xs"
+                    showXButton
+                    showDialog={showDialog}
+                    useKeyPress={useKeyPress}
+                    closeButtonProps={{
+                        className: "border-0 [&_svg]:w-3 [&_svg]:h-3",
+                    }}
+                    onClose={() => setShowDialog(false)}
+                >
+                    <div className="w-full">
+                        <div className="w-full text-center px-5 fontGroup-highlight !font-semibold">
+                            <span>Choose A Method</span>
+                        </div>
+                        <WalletConnectionOptions
+                            isAuthenticated
+                            onClick={(path: string) => {
+                                history.push(path);
+                            }}
+                        />
+                    </div>
+                </Dialog>
+            </div>
+        </PagedMobileLayout>
     );
 };
 
