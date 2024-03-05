@@ -18,7 +18,7 @@ export const ActionButton: FC<{
         <button
             type="button"
             onClick={handleClick}
-            className="bg-backgroundVariant300 min-w-[36px] text-primary fontGroup-mini mx-0.5 flex h-5 max-w-[48px] items-center justify-center rounded-lg px-2 py-1"
+            className="bg-backgroundVariant300 hover:bg-backgroundVariant400 min-w-[36px] text-primary fontGroup-mini mx-0.5 flex h-5 max-w-[48px] items-center justify-center rounded-lg px-2 py-1"
         >
             {children}
         </button>
