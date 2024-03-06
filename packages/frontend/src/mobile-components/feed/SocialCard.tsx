@@ -41,7 +41,7 @@ export const SocialCard: FC<{
         <FeedItemDisclosure>
             {({ open }) => (
                 <>
-                    <FeedItemDisclosureButton open={open}>
+                    <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between">
                                 <div className="flex flex-col">

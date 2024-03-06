@@ -36,7 +36,7 @@ export const BlogCard: FC<{
         <FeedItemDisclosure>
             {({ open }) => (
                 <>
-                    <FeedItemDisclosureButton open={open}>
+                    <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
                             <div className="flex flex-col">
                                 <div className="flex items-center">

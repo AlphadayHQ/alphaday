@@ -24,7 +24,7 @@ export const ActionButtons: FC<{
     comments: number;
     isLiked: boolean;
 }> = ({ onLike, onCommentClick, onShare, isLiked, likes, comments }) => (
-    <div className="flex mt-2">
+    <div className="flex mt-2.5">
         <ActionButton onClick={onLike}>
             {isLiked ? (
                 <LikedSVG className="w-3 h-3 pt-[1px]" />
@@ -49,7 +49,7 @@ export const DisclosureButtonMedia: FC<{
     <img
         src={img}
         alt=""
-        className="w-full h-24 rounded-lg object-cover"
+        className="max-w-[120px] h-24 rounded-lg object-cover"
         onError={imgOnError}
     />
 );
@@ -102,16 +102,10 @@ export const FeedSourceInfo = ({
 };
 
 export const FeedItemDisclosureButton: FC<{
-    open: boolean;
     children?: ReactNode;
-}> = ({ open, children }) => {
+}> = ({ children }) => {
     return (
-        <Disclosure.Button
-            className={twMerge(
-                "flex w-full justify-between rounded-lg py-2 text-left text-sm font-medium focus:outline-none cursor-pointer",
-                open ? "" : "mb-2"
-            )}
-        >
+        <Disclosure.Button className="flex w-full justify-between rounded-lg py-4 text-left text-sm font-medium focus:outline-none cursor-pointer">
             {children}
         </Disclosure.Button>
     );

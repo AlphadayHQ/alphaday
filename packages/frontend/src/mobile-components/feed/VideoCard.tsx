@@ -24,7 +24,7 @@ const VideoPlaceholder: FC<{
         <img
             src={url}
             alt=""
-            className="w-full h-24 rounded-lg object-cover"
+            className="max-w-[120px] h-24 rounded-lg object-cover"
             onError={imgOnError}
         />
         <PlaySVG
@@ -75,7 +75,7 @@ export const VideoCard: FC<{
         <FeedItemDisclosure>
             {({ open }) => (
                 <>
-                    <FeedItemDisclosureButton open={open}>
+                    <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between">
                                 <div className="flex flex-col">
