@@ -47,7 +47,7 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
                 role="button"
                 title="Open filters"
                 className={twMerge(
-                    "absolute bg-accentVariant100 rounded-lg p-4 bottom-10 right-5 z-10 delay-300",
+                    "absolute bg-accentVariant100 rounded-2xl p-4 bottom-10 right-5 z-10 delay-300",
                     element1Visible && "hidden delay-0"
                 )}
             >
