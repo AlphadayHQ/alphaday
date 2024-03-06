@@ -8,6 +8,7 @@ const config: CapacitorConfig = {
         androidScheme: "http",
         iosScheme: "http",
     },
+    backgroundColor: "#FAA202",
 };
 
 export default config;
