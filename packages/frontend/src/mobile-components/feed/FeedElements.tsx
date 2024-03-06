@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { Disclosure, Transition, twMerge } from "@alphaday/ui-kit";
+import { Disclosure, Transition } from "@alphaday/ui-kit";
 import { EFeedItemType } from "src/api/types";
 import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
 import { ReactComponent as LikeSVG } from "src/assets/svg/like.svg";
