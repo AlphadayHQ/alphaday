@@ -6,7 +6,6 @@ import { ReactComponent as EnvelopeIcon } from "src/assets/icons/socials/envelop
 import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
 import { Auth, AuthProps } from "./Auth";
 
-
 export const AuthMethodSelection: FC<{
     handleLogin: () => void;
     handleSSOCallback: (provider: EAuthMethod) => void;
