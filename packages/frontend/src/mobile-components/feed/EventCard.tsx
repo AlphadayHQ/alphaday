@@ -77,7 +77,7 @@ export const EventCard: FC<{
                                             icon={getFeedItemIcon(type)}
                                         />
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                            <div className="flex flex-col text-primary fontGroup-mini">
+                                            <div className="flex flex-col text-primary [&_span]:text-primaryVariant100 fontGroup-mini">
                                                 {startsAt &&
                                                     eventDateFormatter(
                                                         startsAt
@@ -150,7 +150,7 @@ export const EventCard: FC<{
                                     shortDescription || ""
                                 ),
                             }}
-                            className="m-0 text-primaryVariant100 line-clamp-4"
+                            className="m-0 text-primaryVariant100 prose-p:text-primaryVariant100 prose-a:text-secondaryOrange50 line-clamp-4"
                         />
                         <ReadMoreLink url={url} />
                         <div className="my-2 flex justify-between">
