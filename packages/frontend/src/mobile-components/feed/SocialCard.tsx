@@ -15,7 +15,11 @@ import {
     getFeedItemIcon,
 } from "./FeedElements";
 
-export const SocialCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
+export const SocialCard: FC<{
+    item: TSuperfeedItem;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
+}> = ({ item, onLike, onShare }) => {
     const {
         title,
         tags,
@@ -30,7 +34,6 @@ export const SocialCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
         date,
     } = item;
 
-    const onLike = () => {};
     const isLiked = false;
 
     return (
@@ -91,7 +94,7 @@ export const SocialCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -125,7 +128,7 @@ export const SocialCard: FC<{ item: TSuperfeedItem }> = ({ item }) => {
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}
