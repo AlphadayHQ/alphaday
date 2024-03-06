@@ -71,8 +71,8 @@ export const EventCard: FC<{
                     <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between">
-                                <div className="flex-col">
-                                    <div className="flex items-center">
+                                <div className="inline-block">
+                                    <div className="flex items-center min-w-max">
                                         <FeedItemDisclosureButtonImage
                                             icon={getFeedItemIcon(type)}
                                         />
@@ -95,7 +95,7 @@ export const EventCard: FC<{
                                 <div className="flex-col min-w-max ml-2">
                                     <div
                                         className={twMerge(
-                                            "w-full flex justify-end items-start",
+                                            "w-full flex items-start",
                                             open && "hidden"
                                         )}
                                     >
