@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { twMerge } from "@alphaday/ui-kit";
+import { Spinner, twMerge } from "@alphaday/ui-kit";
 import { useAudioPlayer, useAudioPosition } from "react-use-audio-player";
 import { TSuperfeedItem } from "src/api/types";
-import { ReactComponent as SpinnerSVG } from "src/assets/icons/spinners.svg";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause2.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play-audio.svg";
 import { ReactComponent as SkipBackwardSVG } from "src/assets/svg/skip-backward.svg";
@@ -152,14 +151,17 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                                 open ? "mt-3" : "mt-2",
                                                 isPlaying &&
                                                     !open &&
-                                                    "bg-accentVariant200"
+                                                    "bg-accentVariant100"
                                             )}
                                             onClick={(e) => handlePlay(e, open)}
                                             role="button"
                                             tabIndex={0}
                                         >
                                             {isLoading && selectedPodcast ? (
-                                                <SpinnerSVG />
+                                                <Spinner
+                                                    size="xs"
+                                                    className="text-primaryVariant100 border-[1px] w-3 h-3"
+                                                />
                                             ) : (
                                                 <PlayPauseButton
                                                     isPlaying={isPlaying}
@@ -167,7 +169,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                             )}
                                             <span
                                                 className={twMerge(
-                                                    "fontGroup-normal text-primaryVariant100 group-hover:text-primary",
+                                                    "fontGroup-normal text-primaryVariant100 group-hover:text-primary ml-1",
                                                     isPlaying && "text-primary"
                                                 )}
                                             >
