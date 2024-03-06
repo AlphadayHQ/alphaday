@@ -1,12 +1,10 @@
 import { FC } from "react";
-import { OutlineButton, Pager } from "@alphaday/ui-kit";
+import { Pager } from "@alphaday/ui-kit";
 import { useHistory } from "react-router";
 import { useAuth } from "src/api/hooks";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
-import { ReactComponent as CopySVG } from "src/assets/icons/copy.svg";
-import { ReactComponent as HandSVG } from "src/assets/icons/hand.svg";
 import { ReactComponent as InfoSVG } from "src/assets/icons/Info2.svg";
-import { ReactComponent as WalletSVG } from "src/assets/icons/wallet.svg";
+import WalletConnectionOptions from "src/mobile-components/portfolio/WalletConnectionOptions";
 
 const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
     if (isAuthenticated) {
@@ -35,6 +33,8 @@ const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
 const PortfolioPage = () => {
     const history = useHistory();
     const { isAuthenticated } = useAuth();
+
+    // TODO if user has holdings route to holdings
     return (
         <>
             <Pager
@@ -44,29 +44,13 @@ const PortfolioPage = () => {
                 }
             />
             <TopSection isAuthenticated={isAuthenticated} />
-            <div className="flex flex-col items-center mt-4 mx-4">
-                <OutlineButton
-                    title="Add Wallet"
-                    subtext="Add your wallet manually to get started"
-                    icon={<WalletSVG className="w-[24px] mr-1" />}
-                    onClick={() => history.push("/portfolio/add-wallet")}
-                    isAuthenticated={isAuthenticated}
-                />
-                <OutlineButton
-                    title="Connect Wallet"
-                    subtext="Connect your wallet to get started"
-                    icon={<CopySVG className="w-[22px] mr-1" />}
-                    onClick={() => history.push("/portfolio/connect-wallet")}
-                    isAuthenticated={isAuthenticated}
-                />
-                <OutlineButton
-                    title="Add Holdings Manually"
-                    subtext="Add your holdings manually"
-                    icon={<HandSVG className="w-[20px] mr-1" />}
-                    onClick={() => history.push("/portfolio/add-holding")}
-                    isAuthenticated={isAuthenticated}
-                />
-            </div>
+            <WalletConnectionOptions
+                isAuthenticated={isAuthenticated}
+                onClick={(path: string) => {
+                    history.push(path);
+                }}
+                className="mx-4"
+            />
         </>
     );
 };
