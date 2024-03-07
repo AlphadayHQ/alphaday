@@ -72,6 +72,7 @@ jobs:
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
                   VITE_CLARITY_PROJECT_ID: ${{ secrets.DEV__REACT_APP_CLARITY_PROJECT_ID }}
                   VITE_OAUTH_ID_GOOGLE: ${{ secrets.DEV__REACT_APP_OAUTH_ID_GOOGLE }}
+                  VITE_OAUTH_ID_APPLE: ${{ secrets.DEV__FRONTEND__OAUTH_ID_APPLE }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
 

@@ -7,10 +7,11 @@ import {
     useSignoutMutation,
 } from "../services";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { signInWithApple } from "../store/providers/oauth-provider";
 import * as userStore from "../store/slices/user";
 import { EAuthMethod, EAuthState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
-import { toast } from "../utils/toastUtils";
+import { toast, EToastRole } from "../utils/toastUtils";
 
 interface IUseAuth {
     isAuthenticated: boolean;
@@ -97,6 +98,37 @@ export const useAuth = (): IUseAuth => {
         onSuccess: googleSSOCallback,
         redirect_uri: `${window.location.origin}/auth/google_callback/`,
     });
+    const appleSSOLogin = useCallback(() => {
+        signInWithApple()
+            .then((data) => {
+                Logger.debug("useAuth::appleSSOLogin: received token", {
+                    data,
+                });
+                ssoLoginMut({
+                    accessToken: data.authorization.id_token,
+                    idToken: data.authorization.id_token,
+                    provider: EAuthMethod.Apple,
+                })
+                    .unwrap()
+                    .then((r) => {
+                        Logger.debug("useAuth::appleSSOLogin: success", r);
+                        dispatch(userStore.setAuthToken({ value: r.token }));
+                        dispatch(userStore.setAuthEmail(r.user.email));
+                        dispatch(userStore.setAuthState(EAuthState.Verified));
+                    })
+                    .catch((e) => {
+                        Logger.error("useAuth::appleSSOLogin: error", e);
+                        toast("Could not login with Apple");
+                    });
+            })
+            .catch((e) => {
+                Logger.error("useAuth::appleSSOLogin: error", e);
+                toast("Could not login with Apple", {
+                    type: EToastRole.Error,
+                });
+            });
+    }, [ssoLoginMut, dispatch]);
+
     const ssoLogin = useCallback(
         (provider: EAuthMethod) => {
             dispatch(userStore.setAuthMethod(provider));
@@ -105,9 +137,11 @@ export const useAuth = (): IUseAuth => {
                 googleSSOLogin();
             }
 
-            // TODO: Add other providers here
+            if (provider === EAuthMethod.Apple) {
+                appleSSOLogin();
+            }
         },
-        [googleSSOLogin, dispatch]
+        [googleSSOLogin, appleSSOLogin, dispatch]
     );
 
     const resetAuthState = useCallback(() => {
