@@ -11,7 +11,7 @@ import { signInWithApple } from "../store/providers/oauth-provider";
 import * as userStore from "../store/slices/user";
 import { EAuthMethod, EAuthState, TUserAccess } from "../types";
 import { Logger } from "../utils/logging";
-import { toast } from "../utils/toastUtils";
+import { toast, EToastRole } from "../utils/toastUtils";
 
 interface IUseAuth {
     isAuthenticated: boolean;
@@ -123,7 +123,9 @@ export const useAuth = (): IUseAuth => {
             })
             .catch((e) => {
                 Logger.error("useAuth::appleSSOLogin: error", e);
-                toast("Could not login with Apple");
+                toast("Could not login with Apple", {
+                    type: EToastRole.Error,
+                });
             });
     }, [ssoLoginMut, dispatch]);
 
