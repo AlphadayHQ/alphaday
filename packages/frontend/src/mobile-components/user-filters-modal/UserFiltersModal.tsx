@@ -57,7 +57,7 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
     if (show) {
         return (
             <FullPageModal isOpen={isOpen} closeModal={() => setIsOpen(false)}>
-                <ScrollBar>
+                <ScrollBar className="p-4">
                     <div className="flex flex-start w-full items-center mb-4">
                         <ChevronSVG
                             onClick={onToggleFeedFilters}
@@ -65,7 +65,7 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                             role="button"
                             className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5"
                         />
-                        <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0">
+                        <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0 focus:outline-transparent">
                             Superfeed filters
                         </h1>
                     </div>
