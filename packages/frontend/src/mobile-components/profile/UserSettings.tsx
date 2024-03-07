@@ -143,7 +143,6 @@ const UserSettings: FC<IUserSettings> = ({
             subtext: null,
             requiresAuth: true,
             onClick: () => {
-                navigate("profile/log-out");
                 onLogout().catch((e) =>
                     Logger.error("UserMenu: logout failed", e)
                 );
