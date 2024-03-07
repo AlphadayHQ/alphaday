@@ -19,6 +19,7 @@ interface IUserFiltersModalProps {
     onSelectFilter: (slug: string, type: ESupportedFilters) => void;
     filterKeywords: TFilterKeyword[];
     onSearchInputChange: (value: string) => void;
+    isFetchingKeywordResults: boolean;
 }
 
 const UserFiltersModal: FC<IUserFiltersModalProps> = ({
@@ -29,6 +30,7 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
     onSelectFilter,
     filterKeywords,
     onSearchInputChange,
+    isFetchingKeywordResults,
 }) => {
     const [isOpen, setIsOpen] = useState(true);
 
@@ -86,6 +88,9 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                                     values.forEach((kw) =>
                                         onSelectFilter(kw.slug, kw.type)
                                     )
+                                }
+                                isFetchingKeywordResults={
+                                    isFetchingKeywordResults
                                 }
                             />
                         </div>

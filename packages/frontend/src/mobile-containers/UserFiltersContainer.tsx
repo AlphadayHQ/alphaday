@@ -101,7 +101,8 @@ const UserFiltersContainer: FC<{
 
     const { toggleFilter } = useFilters();
 
-    const { setSearchState, keywordResults } = useFilterKeywordSearch();
+    const { setSearchState, keywordResults, isFetchingKeywordResults } =
+        useFilterKeywordSearch();
 
     const filterOptions: TFilterOptions = {
         localFilterOptions: updateLocalFilterOptionsState(selectedLocalFilters),
@@ -149,6 +150,7 @@ const UserFiltersContainer: FC<{
             isLoading={isLoading}
             onSelectFilter={handleSelectFilter}
             filterKeywords={keywordResults}
+            isFetchingKeywordResults={isFetchingKeywordResults}
             onSearchInputChange={setSearchState}
         />
     );

@@ -9,6 +9,7 @@ interface FilterSearchBarProps<T extends TBaseFilterItem = TOption> {
     tagsList: T[];
     setSearchState: (value: string) => void;
     onChange: (value: readonly T[]) => void;
+    isFetchingKeywordResults: boolean;
 }
 
 const FilterSearchBar = <T extends TBaseFilterItem>({
@@ -16,6 +17,7 @@ const FilterSearchBar = <T extends TBaseFilterItem>({
     tags,
     setSearchState,
     tagsList,
+    isFetchingKeywordResults,
 }: FilterSearchBarProps<T>) => {
     const searchValues = tags
         ?.split(",")
@@ -43,7 +45,7 @@ const FilterSearchBar = <T extends TBaseFilterItem>({
                     placeholder="Search for assets, projects, events, etc."
                     initialSearchValues={searchValues ?? []}
                     options={tagsList}
-                    isFetchingKeywordResults={false}
+                    isFetchingKeywordResults={isFetchingKeywordResults}
                     isFetchingTrendingKeywordResults={false}
                 />
             </span>
