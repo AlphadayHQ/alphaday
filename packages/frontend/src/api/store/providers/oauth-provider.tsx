@@ -31,7 +31,7 @@ export const signInWithApple = async () => {
     if (typeof AppleID === "undefined") {
         throw new Error("Apple auth script is not yet loaded.");
     }
-    if(!CONFIG.OAUTH.APPLE_CLIENT_ID) {
+    if (!CONFIG.OAUTH.APPLE_CLIENT_ID) {
         throw new Error("Apple client id is not defined.");
     }
     AppleID.auth.init({
