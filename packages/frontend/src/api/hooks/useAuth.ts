@@ -106,6 +106,7 @@ export const useAuth = (): IUseAuth => {
                 });
                 ssoLoginMut({
                     accessToken: data.authorization.id_token,
+                    idToken: data.authorization.id_token,
                     provider: EAuthMethod.Apple,
                 })
                     .unwrap()

@@ -64,6 +64,7 @@ const AppleOAuthProvider: React.FC<{ children?: React.ReactNode }> = ({
                         clientId: CONFIG.OAUTH.APPLE_CLIENT_ID,
                         redirectURI: `${window.location.origin}/auth/apple_callback`,
                         state: "state",
+                        scope: "email",
                         usePopup: true,
                     });
                 }
