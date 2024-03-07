@@ -8,6 +8,7 @@ import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
+import CONFIG from "src/config";
 import { EditProfileModal } from "./EditProfileModal";
 
 const NonAuthenticatedSection = () => {
@@ -150,6 +151,8 @@ const UserSettings: FC<IUserSettings> = ({
         },
     ];
 
+    console.log(CONFIG);
+
     return (
         <>
             <div className="mx-5 w-full">
@@ -202,6 +205,15 @@ const UserSettings: FC<IUserSettings> = ({
                             </div>
                         );
                     })}
+                    {(CONFIG.IS_DEV || CONFIG.IS_LOCAL) && (
+                        <div className="pb-2.5 pt-2.5 text-primaryVariant100">
+                            Environment: {CONFIG.ENVIRONMENT}
+                            <br />
+                            Version: {CONFIG.APP.VERSION}
+                            <br />
+                            Commit: {CONFIG.APP.COMMIT}
+                        </div>
+                    )}
                 </div>
             </div>
             <EditProfileModal
