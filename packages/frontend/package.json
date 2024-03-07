@@ -15,7 +15,7 @@
     "test.e2e": "cypress run",
     "test.unit": "vitest",
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore . --ext ts --ext tsx",
-    "resources": "cordova-res ios && cordova-res android && node scripts/resources.cjs",
+    "resources": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy",
     "typecheck": "tsc"
   },
   "dependencies": {
