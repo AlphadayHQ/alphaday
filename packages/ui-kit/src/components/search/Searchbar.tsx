@@ -83,12 +83,12 @@ const CustomMenuList = (showTrending: boolean) => {
 };
 
 const CustomOption =
-    (selectedOptionValues: string[]) =>
+    (selectedOptionValues: string[] | undefined) =>
     <Option,>({
         isSelected,
         ...props
     }: OptionProps<Option, true, GroupBase<Option>>) => {
-        const optionSelected = selectedOptionValues.includes(props.value);
+        const optionSelected = selectedOptionValues?.includes(props.value);
 
         return (
             <div
@@ -155,7 +155,7 @@ export interface ISearchProps<Option = unknown> {
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
     showBackdrop?: boolean;
-    selectedOptionValues: string[];
+    selectedOptionValues?: string[];
     message?: string | null;
     customComponents?:
         | Partial<SelectComponentsConfig<Option, true, GroupBase<Option>>>
