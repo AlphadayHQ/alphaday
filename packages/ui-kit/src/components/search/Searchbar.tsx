@@ -133,7 +133,7 @@ const Feedback: FC<{ message: string | null | undefined }> = ({ message }) => {
     return (
         <div
             className={twMerge(
-                "absolute !font-medium w-full fontGroup-mini text-background rounded-t-lg bg-success px-5 pb-3 pt-[3px] ease-in duration-200",
+                "absolute !font-medium w-full fontGroup-mini text-background rounded-t-lg bg-secondaryOrange px-5 pb-3 pt-[3px] ease-in duration-200",
                 message && message !== ""
                     ? "opacity-100 -translate-y-5"
                     : "opacity-0"
