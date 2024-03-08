@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
             workbox: {
                 clientsClaim: true,
                 skipWaiting: true,
-                navigateFallbackAllowlist: [/^\//],
+                navigateFallbackAllowlist: [/^\/$/],
                 maximumFileSizeToCacheInBytes: 1024 * 1024 * 4,
             },
             includeAssets: [
