@@ -10,8 +10,8 @@ interface FilterSearchBarProps<T extends TBaseFilterItem = TOption> {
     setSearchState: (value: string) => void;
     onChange: (value: readonly T[]) => void;
     isFetchingKeywordResults: boolean;
-    selectedFilters: string[];
-    message: string | null;
+    selectedFilters?: string[];
+    message?: string | null;
 }
 
 const FilterSearchBar = <T extends TBaseFilterItem>({
