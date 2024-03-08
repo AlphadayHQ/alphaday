@@ -3,7 +3,11 @@ import {
     EActivityLogEventTypes,
     EActivityLogObjectTypes,
 } from "src/api/services/activity-log/types";
-import { ECookieChoice, EWalletConnectionMethod } from "src/api/types";
+import {
+    ECookieChoice,
+    EWalletConnectionMethod,
+    TSuperfeedItem,
+} from "src/api/types";
 import { Logger } from "../utils/logging";
 
 interface IActivityLogger {
@@ -11,6 +15,7 @@ interface IActivityLogger {
     logViewVisited: (id: number) => void;
     logKeywordSelected: (id: number) => void;
     logWalletConnection: (method: EWalletConnectionMethod) => void;
+    logShareSuperfeedItem: (item: TSuperfeedItem) => void;
 }
 
 export const useActivityLogger = (): IActivityLogger => {
@@ -103,10 +108,37 @@ export const useActivityLogger = (): IActivityLogger => {
             );
     };
 
+    const logShareSuperfeedItem = (item: TSuperfeedItem) => {
+        sendActivityLog({
+            event_type: EActivityLogEventTypes.ShareSuperfeedItem,
+            object_type: EActivityLogObjectTypes.ShareSuperfeedItem,
+            object_id: item.id,
+            data: {
+                title: item.title,
+                text: item.shortDescription ?? item.title,
+                url: item.url,
+            },
+        })
+            .unwrap()
+            .then((resp) =>
+                Logger.debug(
+                    "useActivityLogger::logShareSuperfeedItem: updated share superfeed item activity log",
+                    resp
+                )
+            )
+            .catch((err) =>
+                Logger.error(
+                    "useActivityLogger::logShareSuperfeedItem: error updating share superfeed item activity log",
+                    err
+                )
+            );
+    };
+
     return {
         logViewVisited,
         logCookieChoice,
         logKeywordSelected,
         logWalletConnection,
+        logShareSuperfeedItem,
     };
 };

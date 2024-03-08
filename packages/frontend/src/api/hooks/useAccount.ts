@@ -1,10 +1,15 @@
-import { useRef } from "react";
-import { TRemoteProfile, useGetUserProfileQuery } from "src/api/services";
+import { useCallback, useRef } from "react";
+import {
+    TRemoteProfile,
+    useGetUserProfileQuery,
+    useUpdateUserProfileMutation,
+} from "src/api/services";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import { TAuthWallet, TUserProfile } from "src/api/types";
 import CONFIG from "src/config/config";
 import { EFeaturesRegistry } from "src/constants";
+import { Logger } from "../utils/logging";
 import { useFeatureFlags } from "./useFeatureFlags";
 
 const pollingInterval = CONFIG.USER.POLLING_INTERVAL * 1000;
@@ -38,7 +43,12 @@ interface IAccount {
      * Whether or not the account smart tags have been updated.
      */
     accountSmartTagsUpdated: boolean;
+    /**
+     * Current user profile stored in the remote
+     */
     userProfile: TUserProfile | undefined;
+    saveProfile: (req: { handle: string }) => void;
+    isSavingProfile: boolean;
 }
 
 /**
@@ -54,11 +64,14 @@ export const useAccount: () => IAccount = () => {
     const localProfile = remoteProfileRef.current;
     const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
 
+    const [updateProfileMut, { isLoading: isSavingProfile }] =
+        useUpdateUserProfileMutation();
+
     /**
      * Fetch the remote profile if the user is authenticated.
      * Poll for updates when the profile is authenticated but the smartTags have not been added.
      */
-    const { currentData: remoteProfile } = useGetUserProfileQuery(undefined, {
+    const { data: remoteProfile } = useGetUserProfileQuery(undefined, {
         skip: !isAuthenticated,
         refetchOnMountOrArgChange: true,
         pollingInterval:
@@ -92,6 +105,26 @@ export const useAccount: () => IAccount = () => {
         remoteProfileRef.current = undefined;
     }
 
+    const saveProfile = useCallback(
+        (req: { handle: string }) => {
+            updateProfileMut(req)
+                .unwrap()
+                .then((resp) =>
+                    Logger.debug(
+                        "useAccount::saveProfile: updated profile",
+                        resp
+                    )
+                )
+                .catch((err) =>
+                    Logger.error(
+                        "useAccount::saveProfile: error updating profile",
+                        err
+                    )
+                );
+        },
+        [updateProfileMut]
+    );
+
     return {
         authWallet,
         isAuthenticated,
@@ -101,5 +134,7 @@ export const useAccount: () => IAccount = () => {
         accountSmartTagsUpdated,
         userProfile: localProfile,
         cleanAuthState,
+        saveProfile,
+        isSavingProfile,
     };
 };

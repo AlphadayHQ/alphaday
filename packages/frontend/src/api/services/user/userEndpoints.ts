@@ -23,6 +23,8 @@ import {
     TGetUserProfileResponse,
     TUpdateUserProfileFiltersRequest,
     TUpdateUserProfileFiltersResponse,
+    TUpdateUserProfileRequest,
+    TUpdateUserProfileResponse,
 } from "./types";
 
 const { USER } = CONFIG.API.DEFAULT.ROUTES;
@@ -181,6 +183,33 @@ const userApi = alphadayApi.injectEndpoints({
             query: () => `${USER.BASE}${USER.PROFILE}`,
             providesTags: ["Account"], // refetch if a user account is updated
         }),
+        updateUserProfile: builder.mutation<
+            TUpdateUserProfileResponse,
+            TUpdateUserProfileRequest
+        >({
+            query: (request) => ({
+                url: `${USER.BASE}${USER.PROFILE}`,
+                method: "PUT",
+                body: request,
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const patchResult = dispatch(
+                    userApi.util.updateQueryData(
+                        "getUserProfile",
+                        undefined,
+                        (draft) => {
+                            Object.assign(draft, arg);
+                        }
+                    )
+                );
+                try {
+                    await queryFulfilled;
+                } catch {
+                    patchResult.undo();
+                }
+            },
+            invalidatesTags: ["Account"],
+        }),
         updateUserProfileFilters: builder.mutation<
             TUpdateUserProfileFiltersResponse,
             TUpdateUserProfileFiltersRequest
@@ -190,6 +219,22 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "PUT",
                 body: request,
             }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const patchResult = dispatch(
+                    userApi.util.updateQueryData(
+                        "getUserProfile",
+                        undefined,
+                        (draft) => {
+                            Object.assign(draft, arg);
+                        }
+                    )
+                );
+                try {
+                    await queryFulfilled;
+                } catch {
+                    patchResult.undo();
+                }
+            },
             invalidatesTags: ["Account"],
         }),
     }),
@@ -207,6 +252,7 @@ export const {
     useGenerateMessageMutation,
     useVerifySignatureMutation,
     useGetUserProfileQuery,
+    useUpdateUserProfileMutation,
     useUpdateUserProfileFiltersMutation,
 } = userApi;
 export const { logout } = userApi.endpoints;

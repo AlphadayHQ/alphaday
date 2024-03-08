@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { Disclosure, Transition, twMerge } from "@alphaday/ui-kit";
+import { Disclosure, Transition } from "@alphaday/ui-kit";
 import { EFeedItemType } from "src/api/types";
 import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
 import { ReactComponent as LikeSVG } from "src/assets/svg/like.svg";
@@ -17,14 +17,14 @@ export const getFeedItemIcon = (type: EFeedItemType, isDown?: boolean) => {
 };
 
 export const ActionButtons: FC<{
-    onLike: () => void;
-    onCommentClick: () => void;
-    onShare: () => void;
+    onLike: () => MaybeAsync<void>;
+    onCommentClick: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
     likes: number;
     comments: number;
     isLiked: boolean;
 }> = ({ onLike, onCommentClick, onShare, isLiked, likes, comments }) => (
-    <div className="flex mt-2">
+    <div className="flex mt-2.5">
         <ActionButton onClick={onLike}>
             {isLiked ? (
                 <LikedSVG className="w-3 h-3 pt-[1px]" />
@@ -49,7 +49,7 @@ export const DisclosureButtonMedia: FC<{
     <img
         src={img}
         alt=""
-        className="w-full h-24 rounded-lg object-cover"
+        className="max-w-[120px] h-24 rounded-lg object-cover"
         onError={imgOnError}
     />
 );
@@ -102,16 +102,10 @@ export const FeedSourceInfo = ({
 };
 
 export const FeedItemDisclosureButton: FC<{
-    open: boolean;
     children?: ReactNode;
-}> = ({ open, children }) => {
+}> = ({ children }) => {
     return (
-        <Disclosure.Button
-            className={twMerge(
-                "flex w-full justify-between rounded-lg py-2 text-left text-sm font-medium focus:outline-none cursor-pointer",
-                open ? "" : "mb-2"
-            )}
-        >
+        <Disclosure.Button className="flex w-full justify-between rounded-lg py-4 text-left text-sm font-medium focus:outline-none cursor-pointer">
             {children}
         </Disclosure.Button>
     );
@@ -120,7 +114,7 @@ export const FeedItemDisclosureButton: FC<{
 export const FeedItemDisclosureButtonImage: FC<{
     icon: string;
 }> = ({ icon }) => {
-    return <img src={icon} alt="feed icon" className="w-8 h-8 mr-2" />;
+    return <img src={icon} alt="feed icon" className="w-8 h-8 mr-1" />;
 };
 
 export const CardTitle: FC<{ title: string }> = ({ title }) => (
@@ -143,5 +137,18 @@ export const FeedItemDisclosurePanel: FC<{
                 {children}
             </Disclosure.Panel>
         </Transition>
+    );
+};
+
+export const ReadMoreLink: FC<{ url: string }> = ({ url }) => {
+    return (
+        <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            className="underline hover:underline hover:text-secondaryOrange50 fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
+        >
+            Read more
+        </a>
     );
 };

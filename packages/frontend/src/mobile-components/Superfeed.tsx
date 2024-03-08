@@ -1,6 +1,5 @@
 import { useRef, FC, FormEvent, useCallback } from "react";
 import { twMerge, ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
-import { AudioPlayerProvider } from "react-use-audio-player";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
@@ -13,6 +12,7 @@ interface ISuperfeedModule {
     feed: TSuperfeedItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
+    onShareItem: (item: TSuperfeedItem) => Promise<void>;
     selectedPodcast: TSuperfeedItem | null;
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
@@ -30,15 +30,15 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
         <>
             <div
                 ref={element1}
-                className="flex justify-between mb-4 px-4 py-2 border border-accentVariant100 rounded-lg"
+                className="flex justify-between mb-5 px-4 py-2 border border-accentVariant100 rounded-lg"
                 onClick={toggleShowFeedFilters}
                 tabIndex={0}
                 role="button"
             >
-                <p className="m-0 pr-2 fontGroup-highlight self-center">
+                <p className="m-0 pr-4 fontGroup-highlight self-center">
                     Craft your superfeed with personalized filters
                 </p>
-                <SettingsSVG className="w-6 text-accentVariant100 mt-[3px]" />
+                <SettingsSVG className="w-6 text-accentVariant100 self-center" />
             </div>
             <div
                 ref={element2}
@@ -47,7 +47,7 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
                 role="button"
                 title="Open filters"
                 className={twMerge(
-                    "absolute bg-accentVariant100 rounded-lg p-4 bottom-10 right-5 z-10 delay-300",
+                    "absolute bg-accentVariant100 rounded-2xl p-4 bottom-10 right-5 z-10 delay-300",
                     element1Visible && "hidden delay-0"
                 )}
             >
@@ -64,6 +64,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     toggleShowFeedFilters,
     selectedPodcast,
     setSelectedPodcast,
+    onShareItem,
 }) => {
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -78,18 +79,18 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     }
 
     return (
-        <ScrollBar onScroll={handleScrollEvent} className="w-full px-5 pt-4">
+        <ScrollBar onScroll={handleScrollEvent} className="w-full px-3.5 pt-4">
             <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
-            <AudioPlayerProvider>
-                {feed.map((item) => (
-                    <FeedCard
-                        key={item.id}
-                        item={item}
-                        selectedPodcast={selectedPodcast}
-                        setSelectedPodcast={setSelectedPodcast}
-                    />
-                ))}
-            </AudioPlayerProvider>
+            {feed.map((item) => (
+                <FeedCard
+                    key={item.id}
+                    item={item}
+                    selectedPodcast={selectedPodcast}
+                    setSelectedPodcast={setSelectedPodcast}
+                    onLike={() => {}}
+                    onShare={() => onShareItem(item)}
+                />
+            ))}
         </ScrollBar>
     );
 };

@@ -1,16 +1,28 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AudioPlayerProvider } from "react-use-audio-player";
-import { usePagination } from "src/api/hooks";
+import { useAccount, useActivityLogger, usePagination } from "src/api/hooks";
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import { useGetSuperfeedListQuery } from "src/api/services";
-import { selectedLocalFiltersSelector } from "src/api/store";
+import {
+    TSelectedFiltersSynced,
+    selectedLocalFiltersSelector,
+    selectedSyncedFiltersSelector,
+} from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
 import { TSuperfeedItem } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
+import { shareData } from "src/api/utils/shareUtils";
+import { toast } from "src/api/utils/toastUtils";
 import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters-modal/filterOptions";
 import CONFIG from "src/config";
+
+const buildTagsQueryParam = (syncedFilters: TSelectedFiltersSynced) =>
+    Object.values(syncedFilters)
+        .reduce((acc, curr) => [...acc, ...curr], [])
+        .join(",");
 
 const { MAX_PAGE_NUMBER } = CONFIG.SUPERFEED;
 
@@ -18,11 +30,19 @@ const SuperfeedContainer: FC<{
     showSearchBar: boolean;
     onToggleFeedFilters: () => void;
     tags: string | undefined;
-}> = ({ tags, onToggleFeedFilters, showSearchBar }) => {
+}> = ({ tags: tagsFromSearch, onToggleFeedFilters, showSearchBar }) => {
     const history = useHistory();
     const { setSearchState, keywordResults } = useKeywordSearch();
+
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
-    const prevTagsRef = useRef<string | undefined>(tags);
+    const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
+
+    // these come from the user filters page
+    const tagsFromCustomFilters = buildTagsQueryParam(selectedSyncedFilters);
+
+    const prevTagsFromSearchRef = useRef<string | undefined>(tagsFromSearch);
+
+    const { isAuthenticated } = useAccount();
 
     const [selectedPodcast, setSelectedPodcast] =
         useState<TSuperfeedItem | null>(null);
@@ -44,8 +64,8 @@ const SuperfeedContainer: FC<{
         page: currentPage,
         content_types: contentTypes,
         days: timeRangeInDays?.value,
-        user_filter: !tags, // if tags are present, we don't want to use user filters
-        tags,
+        user_filter: isAuthenticated && !tagsFromSearch, // if tags are present, we don't want to use user filters
+        tags: tagsFromSearch ?? tagsFromCustomFilters,
     });
     const prevFeedDataResponseRef = useRef<TSuperfeedItem[]>();
 
@@ -55,16 +75,17 @@ const SuperfeedContainer: FC<{
         isSuccess
     );
 
+    const { logShareSuperfeedItem } = useActivityLogger();
+
     const feedDataForCurrentPage = [...(feedDataResponse?.results ?? [])];
 
     const [feedData, setfeedData] = useState<TSuperfeedItem[]>([]);
 
-    if (tags !== prevTagsRef.current) {
-        prevTagsRef.current = tags;
+    if (tagsFromSearch !== prevTagsFromSearchRef.current) {
+        prevTagsFromSearchRef.current = tagsFromSearch;
         setfeedData([...feedDataForCurrentPage]);
     }
 
-    // Todo(xavier-charles) Will use this later
     // If the current response changes, it means the request parameters changed
     // This happens 1. when user scrolled to the bottom or 2. tags changed.
     // Case 2 is handled separately.
@@ -75,6 +96,28 @@ const SuperfeedContainer: FC<{
         setfeedData((prevState) => [...prevState, ...feedDataForCurrentPage]);
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
+
+    const shareItem = useCallback(
+        async (item: TSuperfeedItem) => {
+            try {
+                await shareData({
+                    title: item.title,
+                    text: item.shortDescription,
+                    url: item.url,
+                });
+
+                // Log the share
+                logShareSuperfeedItem(item);
+            } catch (e) {
+                Logger.error(
+                    "SuperfeedModule::FeedCard: error sharing item",
+                    e
+                );
+                toast("Error sharing item");
+            }
+        },
+        [logShareSuperfeedItem]
+    );
     // set current page 350ms after next page is set.
     // RTK should cache requests, so we don't need to be too careful about rerenders.
     useEffect(() => {
@@ -94,41 +137,45 @@ const SuperfeedContainer: FC<{
          *
          * In this case, we want to set the search state to the tags.
          */
-        if (tags && !keywordResults?.find((kw) => tags.includes(kw.tag.slug))) {
-            setSearchState(tags);
+        if (
+            tagsFromSearch &&
+            !keywordResults?.find((kw) => tagsFromSearch.includes(kw.tag.slug))
+        ) {
+            setSearchState(tagsFromSearch);
         }
-    }, [tags, keywordResults, setSearchState]);
+    }, [tagsFromSearch, keywordResults, setSearchState]);
 
     return (
         <AudioPlayerProvider>
-            {showSearchBar && (!tags || (tags && keywordResults)) && (
-                <div className="py-2 px-5">
-                    <FilterSearchBar
-                        tags={tags}
-                        setSearchState={setSearchState}
-                        tagsList={
-                            keywordResults?.map((kw) => ({
-                                name: kw.tag.name,
-                                slug: kw.tag.slug,
-                                id: kw.tag.id,
-                                label: kw.tag.name,
-                                value: kw.tag.slug,
-                            })) ?? []
-                        }
-                        onChange={(t) => {
-                            if (t.length === 0) {
-                                history.push("/superfeed");
-                                return;
+            {showSearchBar &&
+                (!tagsFromSearch || (tagsFromSearch && keywordResults)) && (
+                    <div className="py-2 px-5">
+                        <FilterSearchBar
+                            tags={tagsFromSearch}
+                            setSearchState={setSearchState}
+                            tagsList={
+                                keywordResults?.map((kw) => ({
+                                    name: kw.tag.name,
+                                    slug: kw.tag.slug,
+                                    id: kw.tag.id,
+                                    label: kw.tag.name,
+                                    value: kw.tag.slug,
+                                })) ?? []
                             }
-                            history.push(
-                                `/superfeed/search/${t
-                                    .map((tag) => tag.slug)
-                                    .join(",")}`
-                            );
-                        }}
-                    />
-                </div>
-            )}
+                            onChange={(t) => {
+                                if (t.length === 0) {
+                                    history.push("/superfeed");
+                                    return;
+                                }
+                                history.push(
+                                    `/superfeed/search/${t
+                                        .map((tag) => tag.slug)
+                                        .join(",")}`
+                                );
+                            }}
+                        />
+                    </div>
+                )}
             <SuperfeedModule
                 isLoading={isLoading}
                 feed={feedData}
@@ -136,6 +183,7 @@ const SuperfeedContainer: FC<{
                 toggleShowFeedFilters={onToggleFeedFilters}
                 selectedPodcast={selectedPodcast}
                 setSelectedPodcast={setSelectedPodcast}
+                onShareItem={shareItem}
             />
         </AudioPlayerProvider>
     );

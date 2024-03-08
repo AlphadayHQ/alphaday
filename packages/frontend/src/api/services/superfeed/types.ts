@@ -1,4 +1,4 @@
-import { EFeedItemType, TFeedMarketData, TSuperfeedItem } from "src/api/types";
+import { EFeedItemType, TFeedItemData, TSuperfeedItem } from "src/api/types";
 import { TPagination, TBaseFilterItem } from "../baseTypes";
 
 export type TRemoteSuperfeedItem = {
@@ -26,7 +26,7 @@ export type TRemoteSuperfeedItem = {
     }[];
     likes: number;
     comments: number;
-    data: TFeedMarketData | null;
+    data: TFeedItemData | null;
 };
 
 /**
@@ -42,6 +42,16 @@ export type TFilterDatum = TBaseFilterItem & { id: number };
 export type TTaggedFilterDatum = TBaseFilterItem & {
     icon: string;
     tags: TBaseFilterTag[];
+};
+
+export type TRemoteFilterKeyword = {
+    id: number;
+    name: string;
+    tag: {
+        id: number;
+        name: string;
+        slug: string;
+    };
 };
 
 /**
@@ -74,4 +84,18 @@ export type TGetSuperfeedFilterDataResponse = {
     conceptTags: TFilterDatum[];
     coins: TTaggedFilterDatum[];
     chains: TTaggedFilterDatum[];
+};
+
+export type TGetSuperfeedFilterKeywordsRequest = {
+    filter_text: string;
+};
+export type TGetSuperfeedFilterKeywordsRawResponse = {
+    concept_keywords: TRemoteFilterKeyword[];
+    coin_keywords: TRemoteFilterKeyword[];
+    chain_keywords: TRemoteFilterKeyword[];
+};
+export type TGetSuperfeedFilterKeywordsResponse = {
+    conceptTags: TRemoteFilterKeyword[];
+    coins: TRemoteFilterKeyword[];
+    chains: TRemoteFilterKeyword[];
 };

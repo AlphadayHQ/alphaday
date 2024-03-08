@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { twMerge } from "@alphaday/ui-kit";
+import { Spinner, twMerge } from "@alphaday/ui-kit";
 import { useAudioPlayer, useAudioPosition } from "react-use-audio-player";
 import { TSuperfeedItem } from "src/api/types";
-import { ReactComponent as SpinnerSVG } from "src/assets/icons/spinners.svg";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause2.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play-audio.svg";
 import { ReactComponent as SkipBackwardSVG } from "src/assets/svg/skip-backward.svg";
@@ -17,6 +16,7 @@ import {
     FeedItemDisclosureButtonImage,
     FeedItemDisclosurePanel,
     FeedSourceInfo,
+    ReadMoreLink,
     TagButtons,
     getFeedItemIcon,
 } from "./FeedElements";
@@ -27,6 +27,8 @@ interface IPodcastCard {
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
     >;
+    onLike: () => MaybeAsync<void>;
+    onShare: () => MaybeAsync<void>;
 }
 
 const PlayPauseButton: FC<{
@@ -63,6 +65,8 @@ export const PodcastCard: FC<IPodcastCard> = ({
     item,
     selectedPodcast,
     setSelectedPodcast,
+    onLike,
+    onShare,
 }) => {
     const {
         title,
@@ -112,15 +116,13 @@ export const PodcastCard: FC<IPodcastCard> = ({
         setSelectedPodcast(item);
         togglePlayPause();
     };
-
-    const onLike = () => {};
     const isLiked = false;
 
     return (
         <FeedItemDisclosure>
             {({ open }) => (
                 <>
-                    <FeedItemDisclosureButton open={open}>
+                    <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between">
                                 <div className="flex flex-col">
@@ -131,7 +133,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                         <div className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                                 {computeDuration(date)}
-                                                <span className="mx-1.5 my-0 self-center">
+                                                <span className="mx-1 my-0 self-center">
                                                     •
                                                 </span>{" "}
                                                 <FeedSourceInfo
@@ -149,14 +151,17 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                                 open ? "mt-3" : "mt-2",
                                                 isPlaying &&
                                                     !open &&
-                                                    "bg-accentVariant200"
+                                                    "bg-accentVariant100"
                                             )}
                                             onClick={(e) => handlePlay(e, open)}
                                             role="button"
                                             tabIndex={0}
                                         >
                                             {isLoading && selectedPodcast ? (
-                                                <SpinnerSVG />
+                                                <Spinner
+                                                    size="xs"
+                                                    className="text-primaryVariant100 border-[1px] w-3 h-3"
+                                                />
                                             ) : (
                                                 <PlayPauseButton
                                                     isPlaying={isPlaying}
@@ -164,7 +169,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                             )}
                                             <span
                                                 className={twMerge(
-                                                    "fontGroup-normal text-primaryVariant100 group-hover:text-primary",
+                                                    "fontGroup-normal text-primaryVariant100 group-hover:text-primary ml-1",
                                                     isPlaying && "text-primary"
                                                 )}
                                             >
@@ -203,7 +208,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                         <ActionButtons
                                             onLike={onLike}
                                             onCommentClick={onLike}
-                                            onShare={onLike}
+                                            onShare={onShare}
                                             likes={likes}
                                             comments={comments}
                                             isLiked={isLiked}
@@ -251,21 +256,14 @@ export const PodcastCard: FC<IPodcastCard> = ({
                         <p className="m-0 text-primaryVariant100 line-clamp-4">
                             {shortDescription}
                         </p>
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
-                        >
-                            Read more
-                        </a>
+                        <ReadMoreLink url={url} />
                         <div className="my-2 flex justify-between">
                             <TagButtons tags={tags} onClick={() => {}} />
                             <div className="min-w-max ml-2 mt-0.5">
                                 <ActionButtons
                                     onLike={onLike}
                                     onCommentClick={onLike}
-                                    onShare={onLike}
+                                    onShare={onShare}
                                     likes={likes}
                                     comments={comments}
                                     isLiked={isLiked}

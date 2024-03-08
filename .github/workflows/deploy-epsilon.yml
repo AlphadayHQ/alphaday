@@ -72,6 +72,7 @@ jobs:
                   VITE_SENTRY_DSN: ${{ secrets.PROD__VITE_SENTRY_DSN }}
                   VITE_CLARITY_PROJECT_ID: ${{ secrets.DEV__REACT_APP_CLARITY_PROJECT_ID }}
                   VITE_OAUTH_ID_GOOGLE: ${{ secrets.DEV__REACT_APP_OAUTH_ID_GOOGLE }}
+                  VITE_OAUTH_ID_APPLE: ${{ secrets.DEV__FRONTEND__OAUTH_ID_APPLE }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
 
@@ -88,6 +89,15 @@ jobs:
                   DISTRIBUTION_ID: ${{ secrets.DEV__FRONTENDV2__DISTRIBUTION_ID }}
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
+
+    set-cache-control:
+        uses: ./.github/workflows/set-cache-control.yml
+        needs: deploy
+        if: needs.deploy.result == 'success'
+        with:
+            ENVIRONMENT: epsilon
+            VALUE: "no-cache"
+        secrets: inherit
 
     # Get message VARs and Notify team through discord of deployment
     notify:

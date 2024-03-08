@@ -5,9 +5,9 @@ import {
     Toggle,
     themeColors,
 } from "@alphaday/ui-kit";
-import { ESortFeedBy, ESupportedFilters } from "src/api/types";
+import { ESortFeedBy, ESupportedFilters, TFilterKeyword } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
-// import FilterSearchBar from "../FilterSearchBar";
+import FilterSearchBar from "../FilterSearchBar";
 import { TFilterOptions } from "./filterOptions";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
 
@@ -17,6 +17,8 @@ interface IUserFiltersModalProps {
     filterOptions: TFilterOptions;
     isLoading: boolean;
     onSelectFilter: (slug: string, type: ESupportedFilters) => void;
+    filterKeywords: TFilterKeyword[];
+    onSearchInputChange: (value: string) => void;
 }
 
 const UserFiltersModal: FC<IUserFiltersModalProps> = ({
@@ -25,6 +27,8 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
     filterOptions,
     isLoading,
     onSelectFilter,
+    filterKeywords,
+    onSearchInputChange,
 }) => {
     const [isOpen, setIsOpen] = useState(true);
 
@@ -70,9 +74,20 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                             Craft your ideal superfeed by customizing the
                             filters below.
                         </p>
-                        {/* TODO: implement filter search when properly spec-ed */}
                         <div className="flex relative z-10 justify-center [&>div]:w-full">
-                            {/* <FilterSearchBar /> */}
+                            <FilterSearchBar<TFilterKeyword>
+                                setSearchState={onSearchInputChange}
+                                tagsList={filterKeywords.map((kw) => ({
+                                    ...kw,
+                                    label: kw.name,
+                                    value: kw.slug,
+                                }))}
+                                onChange={(values) =>
+                                    values.forEach((kw) =>
+                                        onSelectFilter(kw.slug, kw.type)
+                                    )
+                                }
+                            />
                         </div>
                     </div>
                     <div className="w-full flex justify-between py-6 border-b border-borderLine">

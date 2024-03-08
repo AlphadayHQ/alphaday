@@ -98,6 +98,12 @@ export const SUPPORTED_EVM_NETWORKS = {
         icon: "",
         explorerUrl: "https://basescan.org/",
     },
+    blast: {
+        name: "blast",
+        abbrev: "blast",
+        icon: "",
+        explorerUrl: "https://blastscan.io/",
+    },
 };
 
 const ZAPPER = {
@@ -171,7 +177,7 @@ export const API_PROVIDERS: TApiProviders = {
 };
 
 export const EXPLORERS = {
-    TOKEN_METADATA_URL: (asset: TPortfolio): string => {
+    TOKEN_METADATA_URL: (asset: TPortfolio): string | undefined => {
         /**
          * Zapper returns 0x000000000... for some native coins contract address
          * e.g AVAX has 0x0000000.. but this is not the true
@@ -200,7 +206,7 @@ export const EXPLORERS = {
         const explorer: string =
             SUPPORTED_EVM_NETWORKS[
                 asset.network as keyof typeof SUPPORTED_EVM_NETWORKS
-            ].explorerUrl;
+            ]?.explorerUrl;
         return `${explorer}${asset.token.address}`;
     },
     COINGECKO_URL: (coin: string): string =>
@@ -228,4 +234,9 @@ export const UNISWAP = {
         ? parseInt(import.meta.env.VITE_SWAP_FEE, 10)
         : undefined,
     convenienceFeeRecipient: import.meta.env.VITE_SWAP_FEE_ADDRESS || undefined,
+} as const;
+
+export const OAUTH = {
+    GOOGLE_CLIENT_ID: import.meta.env.VITE_OAUTH_ID_GOOGLE,
+    APPLE_CLIENT_ID: import.meta.env.VITE_OAUTH_ID_APPLE,
 } as const;
