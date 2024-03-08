@@ -213,6 +213,8 @@ const UserSettings: FC<IUserSettings> = ({
                             Version: {CONFIG.APP.VERSION}
                             <br />
                             Commit: {CONFIG.APP.COMMIT}
+                            <br />
+                            Timestamp: {CONFIG.APP.COMMIT_TIMESTAMP}
                         </div>
                     )}
                 </div>
