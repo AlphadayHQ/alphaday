@@ -1,0 +1,104 @@
+# This workflow is used to set the cache-control header of sensitive files, namely
+# - index.html
+# - sw.js
+# - manifest.webmanifest
+# (which should in general be set to `no-cache`).
+
+name: Set Cache Control
+
+on:
+    workflow_dispatch:
+        inputs:
+            VALUE:
+                required: true
+                # eg. "max-age=86400" or "no-cache"
+                type: string
+            ENVIRONMENT:
+                description: "Environment to set the cache control header for sensitive files"
+                required: true
+                default: "zetta"
+                type: choice
+                options:
+                    - "epsilon"
+                    - "zetta"
+                    - "gamma"
+                    - "alpha"
+
+    workflow_call:
+        inputs:
+            VALUE:
+                required: true
+                type: string
+            ENVIRONMENT:
+                required: true
+                default: "zetta"
+                type: string
+
+jobs:
+    set-cache-control:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Sets env vars for production
+              run: |
+                  echo "BUCKET=${{ secrets.PROD__FRONTEND__S3_BUCKET }}" >> $GITHUB_ENV
+              if: contains(inputs.ENVIRONMENT, 'alpha')
+
+            - name: Sets env vars for staging
+              run: |
+                  echo "BUCKET=${{ secrets.STAGING__FRONTEND__S3_BUCKET }}" >> $GITHUB_ENV
+              if: contains(inputs.ENVIRONMENT, 'gamma')
+
+            - name: Sets env vars for development (zetta)
+              run: |
+                  echo "BUCKET=${{ secrets.DEV__FRONTEND__S3_BUCKET }}" >> $GITHUB_ENV
+              if: contains(inputs.ENVIRONMENT, 'zetta')
+
+            - name: Sets env vars for development (epsilon)
+              run: |
+                  echo "BUCKET=${{ secrets.DEV__FRONTENDV2__S3_BUCKET }}" >> $GITHUB_ENV
+              if: contains(inputs.ENVIRONMENT, 'epsilon')
+
+            # Set cache for index.html
+            - uses: keithweaver/aws-s3-github-action@v1.0.0
+              with:
+                  command: cp
+                  source: ${{ env.AWS_S3_PATH }}
+                  destination: ${{ env.AWS_S3_PATH }}
+                  flags: "--cache-control ${{ inputs.VALUE }}"
+                  aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
+                  aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+                  aws_region: us-west-1
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
+                  AWS_S3_PATH: s3://${{ env.BUCKET }}/index.html
+
+            # Set cache for sw.js
+            - uses: keithweaver/aws-s3-github-action@v1.0.0
+              with:
+                  command: cp
+                  source: ${{ env.AWS_S3_PATH }}
+                  destination: ${{ env.AWS_S3_PATH }}
+                  flags: "--cache-control ${{ inputs.VALUE }}"
+                  aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
+                  aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+                  aws_region: us-west-1
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
+                  AWS_S3_PATH: s3://${{ env.BUCKET }}/sw.js
+
+            # Set cache for manifest.webmanifest
+            - uses: keithweaver/aws-s3-github-action@v1.0.0
+              with:
+                  command: cp
+                  source: ${{ env.AWS_S3_PATH }}
+                  destination: ${{ env.AWS_S3_PATH }}
+                  flags: "--cache-control ${{ inputs.VALUE }}"
+                  aws_access_key_id: ${{ env.AWS_ACCESS_KEY_ID }}
+                  aws_secret_access_key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+                  aws_region: us-west-1
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}
+                  AWS_S3_PATH: s3://${{ env.BUCKET }}/manifest.webmanifest
