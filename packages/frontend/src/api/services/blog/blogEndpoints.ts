@@ -84,7 +84,7 @@ export const blogApi = alphadayApi.injectEndpoints({
                     body: {},
                 };
             },
-            invalidatesTags: ["SuperfeedItems"]
+            invalidatesTags: ["SuperfeedItems"],
         }),
         openBlogItem: builder.mutation<
             TOpenBlogItemResponse,
