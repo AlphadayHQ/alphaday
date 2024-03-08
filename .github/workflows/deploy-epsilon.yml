@@ -90,6 +90,15 @@ jobs:
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
 
+    set-cache-control:
+        uses: ./.github/workflows/set-cache-control.yml
+        needs: deploy
+        if: needs.deploy.result == 'success'
+        with:
+            ENVIRONMENT: epsilon
+            VALUE: "no-cache"
+        secrets: inherit
+
     # Get message VARs and Notify team through discord of deployment
     notify:
         name: Notify

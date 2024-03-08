@@ -101,8 +101,8 @@ jobs:
                   AWS_REGION: "eu-west-1" # optional: defaults to us-east-1
                   SOURCE_DIR: "dist"
 
-    set-index-cache-control:
-        uses: ./.github/workflows/set-index-cache-control.yml
+    set-cache-control:
+        uses: ./.github/workflows/set-cache-control.yml
         needs: deploy
         if: needs.deploy.result == 'success'
         with:
