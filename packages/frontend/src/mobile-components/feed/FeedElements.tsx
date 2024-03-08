@@ -40,7 +40,7 @@ export const ActionButtons: FC<{
             ) : (
                 <LikeSVG className="w-3 h-3 pt-[1px]" />
             )}{" "}
-            <span className="ml-0.5">{likes}</span>
+            {likes > 0 && <span className="ml-0.5">{likes}</span>}
         </ActionButton>
         <ActionButton onClick={onCommentClick} disabled={!isAuthenticated}>
             <CommentSVG className="w-3 h-3 pt-[1px]" />
