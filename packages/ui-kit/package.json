@@ -11,7 +11,7 @@
     "typecheck": "tsc --build tsconfig.json"
   },
   "dependencies": {
-    "@fullcalendar/core": "6.1.9",
+    "@fullcalendar/core": "6.1.11",
     "@fullcalendar/daygrid": "6.1.9",
     "@fullcalendar/interaction": "6.1.10",
     "@fullcalendar/list": "6.1.11",
