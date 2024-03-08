@@ -13,6 +13,7 @@ interface ISuperfeedModule {
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
     onShareItem: (item: TSuperfeedItem) => Promise<void>;
+    onLikeItem: (item: TSuperfeedItem) => Promise<void>;
     selectedPodcast: TSuperfeedItem | null;
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
@@ -65,6 +66,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     selectedPodcast,
     setSelectedPodcast,
     onShareItem,
+    onLikeItem,
 }) => {
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -87,7 +89,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                     item={item}
                     selectedPodcast={selectedPodcast}
                     setSelectedPodcast={setSelectedPodcast}
-                    onLike={() => {}}
+                    onLike={() => onLikeItem(item)}
                     onShare={() => onShareItem(item)}
                 />
             ))}

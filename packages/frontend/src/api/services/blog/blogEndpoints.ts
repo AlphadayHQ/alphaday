@@ -11,6 +11,8 @@ import {
     TOpenBlogItemResponse,
     TBookmarkBlogItemRequest,
     TBookmarkBlogItemResponse,
+    TLikeBlogItemRequest,
+    TLikeBlogItemResponse,
 } from "./types";
 
 const { BLOG } = CONFIG.API.DEFAULT.ROUTES;
@@ -60,9 +62,7 @@ export const blogApi = alphadayApi.injectEndpoints({
         >({
             query: (req: TBookmarkBlogItemRequest) => {
                 const { item } = req;
-                const path = `${String(BLOG.BASE)}${String(
-                    BLOG.BOOKMARK(item.id)
-                )}`;
+                const path = `${BLOG.BASE}${BLOG.BOOKMARK(item.id)}`;
                 Logger.debug("bookmarkBlogItem: querying", path);
                 return {
                     url: path,
@@ -72,14 +72,11 @@ export const blogApi = alphadayApi.injectEndpoints({
             },
         }),
         likeBlogItem: builder.mutation<
-            TBookmarkBlogItemResponse,
-            TBookmarkBlogItemRequest
+            TLikeBlogItemResponse,
+            TLikeBlogItemRequest
         >({
-            query: (req: TBookmarkBlogItemRequest) => {
-                const { item } = req;
-                const path = `${String(BLOG.BASE)}${String(
-                    BLOG.LIKE(item.id)
-                )}`;
+            query: (req: TLikeBlogItemRequest) => {
+                const path = `${BLOG.BASE}${BLOG.LIKE(req.id)}`;
                 Logger.debug("likeBlogItem: querying", path);
                 return {
                     url: path,
@@ -87,6 +84,7 @@ export const blogApi = alphadayApi.injectEndpoints({
                     body: {},
                 };
             },
+            invalidatesTags: ["SuperfeedItems"]
         }),
         openBlogItem: builder.mutation<
             TOpenBlogItemResponse,

@@ -12,6 +12,8 @@ import {
     TBookmarkPodcastItemResponse,
     TBookmarkPodcastItemRequest,
     TGetPodcastChannelsResponse,
+    TLikePodcastItemRequest,
+    TLikePodcastItemResponse,
 } from "./types";
 
 const { PODCAST, SOURCES } = CONFIG.API.DEFAULT.ROUTES;
@@ -66,9 +68,7 @@ export const podcastApi = alphadayApi.injectEndpoints({
             void
         >({
             query: () => {
-                const path = `${String(SOURCES.BASE)}${String(
-                    SOURCES.PODCAST
-                )}`;
+                const path = `${SOURCES.BASE}${SOURCES.PODCAST}`;
                 Logger.debug("getPodcastList: querying", path);
                 return path;
             },
@@ -80,9 +80,7 @@ export const podcastApi = alphadayApi.injectEndpoints({
         >({
             query: (req: TBookmarkPodcastItemRequest) => {
                 const { item } = req;
-                const path = `${String(PODCAST.BASE)}${String(
-                    PODCAST.BOOKMARK(item.id)
-                )}`;
+                const path = `${PODCAST.BASE}${PODCAST.BOOKMARK(item.id)}`;
                 Logger.debug("bookmarkPodcastItem: querying", path);
                 return {
                     url: path,
@@ -92,14 +90,11 @@ export const podcastApi = alphadayApi.injectEndpoints({
             },
         }),
         likePodcastItem: builder.mutation<
-            TBookmarkPodcastItemResponse,
-            TBookmarkPodcastItemRequest
+            TLikePodcastItemResponse,
+            TLikePodcastItemRequest
         >({
-            query: (req: TBookmarkPodcastItemRequest) => {
-                const { item } = req;
-                const path = `${String(PODCAST.BASE)}${String(
-                    PODCAST.LIKE(item.id)
-                )}`;
+            query: (req: TLikePodcastItemRequest) => {
+                const path = `${PODCAST.BASE}${PODCAST.LIKE(req.id)}`;
                 Logger.debug("likePodcastItem: querying", path);
                 return {
                     url: path,
@@ -107,15 +102,14 @@ export const podcastApi = alphadayApi.injectEndpoints({
                     body: {},
                 };
             },
+            invalidatesTags: ["SuperfeedItems"]
         }),
         openPodcastItem: builder.mutation<
             TOpenPodcastItemResponse,
             TOpenPodcastItemRequest
         >({
             query: (request) => {
-                const path = `${String(PODCAST.BASE)}${String(
-                    PODCAST.CLICKED(request.id)
-                )}`;
+                const path = `${PODCAST.BASE}${PODCAST.CLICKED(request.id)}`;
                 Logger.debug("openPodcastItem: querying", path);
                 return {
                     url: path,

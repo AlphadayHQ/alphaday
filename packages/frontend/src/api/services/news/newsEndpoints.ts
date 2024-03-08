@@ -13,6 +13,8 @@ import {
     TBookmarkNewsItemResponse,
     TGetNewsSummaryRawResponse,
     TGetNewsSummaryRequest,
+    TLikeNewsItemRequest,
+    TLikeNewsItemResponse,
 } from "./types";
 
 const { NEWS } = CONFIG.API.DEFAULT.ROUTES;
@@ -86,14 +88,11 @@ const newsApi = alphadayApi.injectEndpoints({
             },
         }),
         likeNewsItem: builder.mutation<
-            TBookmarkNewsItemResponse,
-            TBookmarkNewsItemRequest
+            TLikeNewsItemResponse,
+            TLikeNewsItemRequest
         >({
-            query: (req: TBookmarkNewsItemRequest) => {
-                const { item } = req;
-                const path = `${String(NEWS.BASE)}${String(
-                    NEWS.LIKE(item.id)
-                )}`;
+            query: (req: TLikeNewsItemRequest) => {
+                const path = `${NEWS.BASE}${NEWS.LIKE(req.id)}`;
                 Logger.debug("likeNewsItem: querying", path);
                 return {
                     url: path,
@@ -101,6 +100,7 @@ const newsApi = alphadayApi.injectEndpoints({
                     body: {},
                 };
             },
+            invalidatesTags: ["SuperfeedItems"]
         }),
         openNewsItem: builder.mutation<
             TOpenNewsItemResponse,
