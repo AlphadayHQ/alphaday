@@ -6,6 +6,7 @@
   "scripts": {
     "prepare": "export VITE_COMMIT=$(git rev-parse --short HEAD)",
     "dev": "pwa-assets-generator && VITE_COMMIT=$(git rev-parse --short HEAD) vite",
+    "dev:ssl": "yarn dev --host --port 443",
     "build": "pwa-assets-generator && VITE_COMMIT=$(git rev-parse --short HEAD) vite build",
     "build:apk": "ionic capacitor build android",
     "platform:add": "ionic capacitor add",
@@ -14,7 +15,7 @@
     "test.e2e": "cypress run",
     "test.unit": "vitest",
     "lint": "eslint --max-warnings=0 --ignore-path .gitignore . --ext ts --ext tsx",
-    "resources": "cordova-res ios && cordova-res android && node scripts/resources.cjs",
+    "resources": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -80,6 +81,7 @@
     "@types/react-test-renderer": "18.0.0",
     "@types/uuid": "9.0.2",
     "@vite-pwa/assets-generator": "0.2.4",
+    "@vitejs/plugin-basic-ssl": "1.1.0",
     "@vitejs/plugin-legacy": "4.1.0",
     "cordova-res": "0.15.4",
     "cypress": "12.7.0",

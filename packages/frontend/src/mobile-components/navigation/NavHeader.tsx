@@ -10,7 +10,7 @@ interface IProps {
 
 export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
     return (
-        <div className="w-full flex justify-between py-2 px-5">
+        <div className="w-full flex justify-between pt-2 px-5">
             <Link
                 to="superfeed/user-settings"
                 role="button"
@@ -35,6 +35,7 @@ export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
                 type="button"
                 className="bg-backgroundVariant300 self-center rounded-lg p-2"
                 onClick={onSearchHandleClick}
+                title="Search"
             >
                 <SearchSVG className="h-4 w-4" aria-hidden="true" />
             </button>

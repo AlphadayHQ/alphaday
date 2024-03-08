@@ -86,7 +86,6 @@ const SuperfeedContainer: FC<{
         setfeedData([...feedDataForCurrentPage]);
     }
 
-    // Todo(xavier-charles) Will use this later
     // If the current response changes, it means the request parameters changed
     // This happens 1. when user scrolled to the bottom or 2. tags changed.
     // Case 2 is handled separately.
