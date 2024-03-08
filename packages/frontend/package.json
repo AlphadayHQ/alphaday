@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "prepare": "export VITE_COMMIT=$(git rev-parse --short HEAD)",
-    "dev": "pwa-assets-generator && VITE_COMMIT=$(git rev-parse --short HEAD) vite",
+    "dev": "pwa-assets-generator && VITE_COMMIT=$(git rev-parse --short HEAD) VITE_COMMIT_TS=$(git log -1 --pretty='format:%cd' --date=format:'%Y-%m-%d %H:%M:%S') vite",
     "dev:ssl": "USE_SSL=true yarn dev --host --port 443",
     "build": "pwa-assets-generator && VITE_COMMIT=$(git rev-parse --short HEAD) vite build",
     "build:apk": "ionic capacitor build android",
