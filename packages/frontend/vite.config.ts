@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => {
         ViteImageOptimizer(), // optimize images, svgs and gifs
         optimizeCssModules(), // optimize css modules
     ];
-    if (env.VITE_USE_SSH === "true") {
+    if (env.USE_SSL === "true") {
         plugins.push(
             basicSsl({
                 name: "Alphaday",
