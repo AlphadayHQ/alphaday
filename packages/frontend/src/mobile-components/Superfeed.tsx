@@ -9,6 +9,7 @@ import { FeedCard } from "./feed/FeedCard";
 
 interface ISuperfeedModule {
     isLoading: boolean;
+    isAuthenticated: boolean;
     feed: TSuperfeedItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
@@ -60,6 +61,7 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
 
 const SuperfeedModule: FC<ISuperfeedModule> = ({
     isLoading,
+    isAuthenticated,
     feed,
     handlePaginate,
     toggleShowFeedFilters,
@@ -86,7 +88,8 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
             {feed.map((item) => (
                 <FeedCard
                     key={item.id}
-                    item={item}
+                    item={ item }
+                    isAuthenticated={isAuthenticated}
                     selectedPodcast={selectedPodcast}
                     setSelectedPodcast={setSelectedPodcast}
                     onLike={() => onLikeItem(item)}

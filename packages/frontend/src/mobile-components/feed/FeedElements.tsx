@@ -23,6 +23,7 @@ export const ActionButtons: FC<{
     likes: number;
     comments: number;
     isLiked: boolean;
+    isAuthenticated: boolean;
 }> = ({ onLike, onCommentClick, onShare, isLiked, likes, comments }) => (
     <div className="flex mt-2.5">
         <ActionButton onClick={onLike}>
