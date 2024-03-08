@@ -49,7 +49,7 @@ export type TFilterKeyword = {
     type: ESupportedFilters;
 };
 
-export type TFeedMarketData = {
+export type TFeedItemData = {
     coin: {
         name: string;
         slug: string;
@@ -57,6 +57,8 @@ export type TFeedMarketData = {
     };
     price: number;
     history: string;
+    location?: string | null;
+    item_type?: string | null;
 };
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
@@ -71,5 +73,5 @@ export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
     comments: number;
     fileUrl: string | null;
     duration: string | null;
-    data: TFeedMarketData | null;
+    data: TFeedItemData | null;
 };
