@@ -6,6 +6,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
 import { clarity } from "react-microsoft-clarity";
 import { Provider } from "react-redux";
+import { registerSW } from "virtual:pwa-register";
 import { WagmiConfig } from "wagmi";
 import { useIsMobile } from "./api/hooks/useIsMobile";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
@@ -24,6 +25,14 @@ const MobileApp = lazyRetry(() => import("./MobileApp"));
 const App = lazyRetry(() => import("./App"));
 
 setupIonicReact();
+
+/**
+ * Enable automatic page reload.
+ * We adopted the `autoUpdate` behavior, but according to the workbox docs
+ * the app wouldn't reload unless we import at least one virtual module in the app code.
+ * See https://vite-pwa-org.netlify.app/guide/auto-update.html
+ */
+registerSW({ immediate: true });
 
 /**
  * at this point, the store is still not loaded and we can't read the state
