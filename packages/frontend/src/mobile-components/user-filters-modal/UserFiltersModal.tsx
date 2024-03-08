@@ -20,6 +20,8 @@ interface IUserFiltersModalProps {
     filterKeywords: TFilterKeyword[];
     onSearchInputChange: (value: string) => void;
     isFetchingKeywordResults: boolean;
+    selectedSycnedFilters: string[];
+    message: string | null;
 }
 
 const UserFiltersModal: FC<IUserFiltersModalProps> = ({
@@ -31,6 +33,8 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
     filterKeywords,
     onSearchInputChange,
     isFetchingKeywordResults,
+    selectedSycnedFilters,
+    message,
 }) => {
     const [isOpen, setIsOpen] = useState(true);
 
@@ -92,6 +96,8 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                                 isFetchingKeywordResults={
                                     isFetchingKeywordResults
                                 }
+                                selectedFilters={selectedSycnedFilters}
+                                message={message}
                             />
                         </div>
                     </div>

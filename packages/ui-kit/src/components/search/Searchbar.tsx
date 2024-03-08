@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, FC } from "react";
 import Select, {
     components,
     GroupBase,
@@ -16,6 +16,8 @@ import Select, {
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
+import { ReactComponent as CheckMarkSVG } from "src/assets/svg/checkmark.svg";
+import { twMerge } from "tailwind-merge";
 import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
 import { Spinner } from "../spinner/Spinner";
 /**
@@ -80,17 +82,31 @@ const CustomMenuList = (showTrending: boolean) => {
     };
 };
 
-const CustomOption = <Option,>(
-    props: OptionProps<Option, true, GroupBase<Option>>
-) => {
-    return (
-        <div
-        // data-testid={`searchbar-option-${slugify(props.label)}`}
-        >
-            <Option {...props} />
-        </div>
-    );
-};
+const CustomOption =
+    (selectedOptionValues: string[]) =>
+    <Option,>({
+        isSelected,
+        ...props
+    }: OptionProps<Option, true, GroupBase<Option>>) => {
+        const optionSelected = selectedOptionValues.includes(props.value);
+
+        return (
+            <div
+            // data-testid={`searchbar-option-${slugify(props.label)}`}
+            >
+                <Option
+                    isSelected={isSelected}
+                    {...props}
+                    className="flex justify-between items-center"
+                >
+                    <span>{props.label}</span>
+                    {optionSelected && (
+                        <CheckMarkSVG className="w-3 h-3 ml-1" />
+                    )}
+                </Option>
+            </div>
+        );
+    };
 
 const CustomNoOptionsMessage = (isFetching: boolean | undefined) => {
     return function Message<Option = unknown>(
@@ -112,13 +128,25 @@ const CustomNoOptionsMessage = (isFetching: boolean | undefined) => {
     };
 };
 
+const Feedback: FC<{ message: string | null | undefined }> = ({ message }) => {
+    return (
+        <div
+            className={twMerge(
+                "absolute !font-medium w-full fontGroup-mini text-background rounded-t-lg bg-success px-5 pb-3 pt-[3px] ease-in duration-200",
+                message && message !== ""
+                    ? "opacity-100 -translate-y-5"
+                    : "opacity-0"
+            )}
+        >
+            {message}
+        </div>
+    );
+};
+
 export interface ISearchProps<Option = unknown> {
     options?: Option[];
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
-    // TODO (xavier-charles): handle/remove prop if not needed
-    // uppercase?: boolean;
-    // label?: string;
     placeholder: string;
     initialInputValue?: string;
     initialSearchValues: Option[];
@@ -127,6 +155,8 @@ export interface ISearchProps<Option = unknown> {
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
     showBackdrop?: boolean;
+    selectedOptionValues: string[];
+    message?: string | null;
     customComponents?:
         | Partial<SelectComponentsConfig<Option, true, GroupBase<Option>>>
         | undefined;
@@ -157,6 +187,8 @@ export const SearchBar = <T,>({
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
     showBackdrop,
+    selectedOptionValues,
+    message,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
     const [isFocused, setIsFocused] = useState(false);
     const [searchValues, setSearchValues] = useState<T[]>(initialSearchValues);
@@ -277,6 +309,7 @@ export const SearchBar = <T,>({
             {isFocused && showBackdrop && (
                 <div className="bg-black w-full h-full top-0 left-0 fixed opacity-40" />
             )}
+            <Feedback message={message} />
             <Select
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
@@ -291,7 +324,7 @@ export const SearchBar = <T,>({
                     DropdownIndicator: null,
                     NoOptionsMessage: CustomNoOptionsMessage(isFetching),
                     MenuList: CustomMenuList(showTrending),
-                    Option: CustomOption,
+                    Option: CustomOption(selectedOptionValues),
                     Input: CustomInput,
                     Placeholder: CustomPlaceholder,
                     ValueContainer: CustomValueContainer,

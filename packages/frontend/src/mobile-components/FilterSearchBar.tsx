@@ -10,6 +10,8 @@ interface FilterSearchBarProps<T extends TBaseFilterItem = TOption> {
     setSearchState: (value: string) => void;
     onChange: (value: readonly T[]) => void;
     isFetchingKeywordResults: boolean;
+    selectedFilters: string[];
+    message: string | null;
 }
 
 const FilterSearchBar = <T extends TBaseFilterItem>({
@@ -18,6 +20,8 @@ const FilterSearchBar = <T extends TBaseFilterItem>({
     setSearchState,
     tagsList,
     isFetchingKeywordResults,
+    selectedFilters,
+    message,
 }: FilterSearchBarProps<T>) => {
     const searchValues = tags
         ?.split(",")
@@ -31,7 +35,7 @@ const FilterSearchBar = <T extends TBaseFilterItem>({
             className="two-col:mx-2.5 two-col:my-auto three-col:m-auto flex w-full justify-center"
             data-testid="header-search-container"
         >
-            <span className="w-full max-w-[524px]">
+            <span className="w-full max-w-[524px] mt-2">
                 <SearchBar<T>
                     showBackdrop
                     onChange={(o) => {
@@ -47,6 +51,9 @@ const FilterSearchBar = <T extends TBaseFilterItem>({
                     options={tagsList}
                     isFetchingKeywordResults={isFetchingKeywordResults}
                     isFetchingTrendingKeywordResults={false}
+                    updateSearch={false}
+                    selectedOptionValues={selectedFilters}
+                    message={message}
                 />
             </span>
         </div>

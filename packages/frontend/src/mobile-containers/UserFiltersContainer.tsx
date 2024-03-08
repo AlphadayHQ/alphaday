@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useFilters, useFilterKeywordSearch } from "src/api/hooks";
 import {
     useGetFilterDataQuery,
@@ -90,6 +90,14 @@ const updateRemoteTaggedFilterOptionsState = (
         }))
         .sort(sortBySelected);
 
+function reduceToArrayOfStrings(data: { [key: string]: string[] }) {
+    let result: string[] = [];
+    Object.keys(data).forEach((key) => {
+        result = result.concat(data[key]);
+    });
+    return result;
+}
+
 const UserFiltersContainer: FC<{
     onToggleFeedFilters: () => void;
     show: boolean;
@@ -97,9 +105,15 @@ const UserFiltersContainer: FC<{
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
 
+    const selectedSycnedFiltersArray = reduceToArrayOfStrings(
+        selectedSyncedFilters
+    );
+
     const { data: filtersData, isLoading } = useGetFilterDataQuery();
 
     const { toggleFilter } = useFilters();
+
+    const [message, setMessage] = useState<string | null>(null);
 
     const { setSearchState, keywordResults, isFetchingKeywordResults } =
         useFilterKeywordSearch();
@@ -134,18 +148,40 @@ const UserFiltersContainer: FC<{
         },
     };
 
+    let timer: NodeJS.Timeout;
     const handleSelectFilter = (
         slug: string,
         filterType: ESupportedFilters
     ) => {
         Logger.debug("handleSlectedFilter:", slug, filterType);
         toggleFilter(slug, filterType);
+        const keyword = keywordResults.find((k) => k.slug === slug);
+        if (
+            (filterType === ESupportedFilters.Chains ||
+                filterType === ESupportedFilters.Coins ||
+                filterType === ESupportedFilters.ConceptTags) &&
+            keyword
+        ) {
+            const isSelected = selectedSycnedFiltersArray.some(
+                (selectedSlug) => selectedSlug === keyword.slug
+            );
+            const filterLabel =
+                filterOptions.syncedFilterOptions[filterType].label;
+
+            setMessage(
+                `${!isSelected ? "Added" : "Removed"} ${keyword.name} ${!isSelected ? "to" : "from"} ${filterLabel} filters`
+            );
+            clearTimeout(timer);
+            timer = setTimeout(() => setMessage(null), 3000);
+        }
     };
 
     return (
         <UserFiltersModal
             onToggleFeedFilters={onToggleFeedFilters}
             show={show}
+            message={message}
+            selectedSycnedFilters={selectedSycnedFiltersArray}
             filterOptions={filterOptions}
             isLoading={isLoading}
             onSelectFilter={handleSelectFilter}
