@@ -88,6 +88,7 @@ const CustomOption =
         isSelected,
         ...props
     }: OptionProps<Option, true, GroupBase<Option>>) => {
+        // @ts-ignore value exists on OptionProps but is not typed correctly.
         const optionSelected = selectedOptionValues?.includes(props.value);
 
         return (
