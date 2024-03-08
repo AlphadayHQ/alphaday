@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
@@ -43,7 +44,9 @@ const AuthenticatedSection: FC<{ profile: TUserProfile | undefined }> = ({
         <div className="flex flex-col flex-start w-full items-start mb-4">
             <div className="flex">
                 <img
-                    src="	https://tailwindui.com/img/avatar-3.jpg"
+                    src={`https://www.gravatar.com/avatar/${md5(
+                        profile?.user.email ?? "Guest"
+                    ).toString()}?d=retro`}
                     alt="username"
                     className="mr-3 w-[60px] h-[60px] rounded-full border border-solid border-green-400"
                 />
