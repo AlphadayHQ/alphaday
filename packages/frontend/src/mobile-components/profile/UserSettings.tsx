@@ -151,8 +151,6 @@ const UserSettings: FC<IUserSettings> = ({
         },
     ];
 
-    console.log(CONFIG);
-
     return (
         <>
             <div className="mx-5 w-full">
