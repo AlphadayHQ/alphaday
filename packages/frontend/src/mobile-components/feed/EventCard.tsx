@@ -52,12 +52,11 @@ export const EventCard: FC<{
         image,
         type,
         shortDescription,
-        // category,
-        // location,
         startsAt,
         endsAt,
     } = item;
 
+    const location = item.data?.location;
     const category = "category";
     const isLiked = false;
 
