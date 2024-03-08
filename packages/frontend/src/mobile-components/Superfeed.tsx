@@ -88,7 +88,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
             {feed.map((item) => (
                 <FeedCard
                     key={item.id}
-                    item={ item }
+                    item={item}
                     isAuthenticated={isAuthenticated}
                     selectedPodcast={selectedPodcast}
                     setSelectedPodcast={setSelectedPodcast}
