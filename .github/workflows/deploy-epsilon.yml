@@ -95,7 +95,7 @@ jobs:
         needs: deploy
         if: needs.deploy.result == 'success'
         with:
-            ENVIRONMENT: zetta
+            ENVIRONMENT: epsilon
             VALUE: "no-cache"
         secrets: inherit
 
