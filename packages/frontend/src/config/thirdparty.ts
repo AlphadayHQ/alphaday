@@ -235,3 +235,8 @@ export const UNISWAP = {
         : undefined,
     convenienceFeeRecipient: import.meta.env.VITE_SWAP_FEE_ADDRESS || undefined,
 } as const;
+
+export const OAUTH = {
+    GOOGLE_CLIENT_ID: import.meta.env.VITE_OAUTH_ID_GOOGLE,
+    APPLE_CLIENT_ID: import.meta.env.VITE_OAUTH_ID_APPLE,
+} as const;

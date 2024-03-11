@@ -192,6 +192,22 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "PUT",
                 body: request,
             }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const patchResult = dispatch(
+                    userApi.util.updateQueryData(
+                        "getUserProfile",
+                        undefined,
+                        (draft) => {
+                            Object.assign(draft, arg);
+                        }
+                    )
+                );
+                try {
+                    await queryFulfilled;
+                } catch {
+                    patchResult.undo();
+                }
+            },
             invalidatesTags: ["Account"],
         }),
         updateUserProfileFilters: builder.mutation<
@@ -203,6 +219,22 @@ const userApi = alphadayApi.injectEndpoints({
                 method: "PUT",
                 body: request,
             }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                const patchResult = dispatch(
+                    userApi.util.updateQueryData(
+                        "getUserProfile",
+                        undefined,
+                        (draft) => {
+                            Object.assign(draft, arg);
+                        }
+                    )
+                );
+                try {
+                    await queryFulfilled;
+                } catch {
+                    patchResult.undo();
+                }
+            },
             invalidatesTags: ["Account"],
         }),
     }),

@@ -9,6 +9,7 @@ import {
     EXPLORERS,
     WALLET_CONNECT,
     UNISWAP,
+    OAUTH,
 } from "./thirdparty";
 import UI_CONFIG from "./ui";
 import USER_CONFIG from "./user";
@@ -87,6 +88,7 @@ const CONFIG = {
     EXPLORERS,
     WALLET_CONNECT,
     UNISWAP,
+    OAUTH,
     VIEWS: VIEWS_CONFIG,
     USER: USER_CONFIG,
     APP: {
@@ -94,6 +96,7 @@ const CONFIG = {
         STORAGE_KEY: "alphaday",
         STORAGE_VERSION: 105,
         COMMIT: import.meta.env.VITE_COMMIT,
+        COMMIT_TIMESTAMP: import.meta.env.VITE_COMMIT_TS || "",
         X_APP_ID: import.meta.env.VITE_X_APP_ID || "",
         X_APP_SECRET: import.meta.env.VITE_X_APP_SECRET || "",
     },

@@ -12,7 +12,7 @@ export type TVerifyEmailRequest = {
 };
 
 export type TSSOLoginRequest = {
-    accessToken: string;
+    accessToken?: string;
     provider: EAuthMethod;
     idToken?: string;
     code?: string;

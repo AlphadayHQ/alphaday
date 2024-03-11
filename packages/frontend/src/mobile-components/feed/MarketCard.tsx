@@ -15,12 +15,17 @@ import {
 } from "./FeedElements";
 import LineChart from "./LineChart";
 
-const parseHistory = (history: string): [number, number][] => {
-    const parsedHistory = JSON.parse(history);
-    if (!Array.isArray(parsedHistory)) {
-        return [[0, 1]];
+const parseHistory = (
+    history: string | [number, number][]
+): [number, number][] => {
+    if (typeof history === "string") {
+        const parsedHistory = JSON.parse(history);
+        if (!Array.isArray(parsedHistory)) {
+            return [[0, 1]];
+        }
+        return parsedHistory;
     }
-    return parsedHistory;
+    return history;
 };
 
 export const MarketCard: FC<{
@@ -49,7 +54,7 @@ export const MarketCard: FC<{
         <FeedItemDisclosure>
             {({ open }) => (
                 <>
-                    <FeedItemDisclosureButton open={open}>
+                    <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
                             <div className="flex justify-between">
                                 <div className="flex flex-col">
@@ -73,7 +78,7 @@ export const MarketCard: FC<{
                                                     Price Alert
                                                 </span>
                                             )}
-                                            <span className="mx-1.5 my-0 self-center">
+                                            <span className="mx-1 my-0 self-center">
                                                 •
                                             </span>{" "}
                                             <span>

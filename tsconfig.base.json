@@ -22,7 +22,8 @@
     "forceConsistentCasingInFileNames": true,
     "types": [
       "vite-plugin-svgr/client",
-      "vitest/globals"
+      "vitest/globals",
+      "vite-plugin-pwa/client"
     ]
   }
 }

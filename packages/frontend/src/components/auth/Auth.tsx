@@ -16,7 +16,7 @@ export interface AuthProps {
     handleEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     isVerifyingOTP?: boolean;
 }
-const ENABLE_APPLE_AUTH = false;
+
 const OTP_INPUT_LENGTH = 6;
 
 export const Auth: FC<AuthProps> = ({
@@ -80,15 +80,14 @@ export const Auth: FC<AuthProps> = ({
                 >
                     <GoogleIcon /> Google
                 </button>
-                {ENABLE_APPLE_AUTH && (
-                    <button
-                        type="button"
-                        className="bg-primary text-primaryVariant100 inline-flex flex-grow items-center justify-center gap-2 rounded-lg px-4 py-3 text-base font-bold hover:text-black"
-                        onClick={() => handleSSOCallback(EAuthMethod.Apple)}
-                    >
-                        <AppleIcon className="text-black" /> Apple
-                    </button>
-                )}
+
+                <button
+                    type="button"
+                    className="bg-primary text-primaryVariant100 inline-flex flex-grow items-center justify-center gap-2 rounded-lg px-4 py-3 text-base font-bold hover:text-black"
+                    onClick={() => handleSSOCallback(EAuthMethod.Apple)}
+                >
+                    <AppleIcon className="text-black" /> Apple
+                </button>
             </div>
         </div>
     );

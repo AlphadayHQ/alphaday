@@ -71,7 +71,7 @@ export const useAccount: () => IAccount = () => {
      * Fetch the remote profile if the user is authenticated.
      * Poll for updates when the profile is authenticated but the smartTags have not been added.
      */
-    const { currentData: remoteProfile } = useGetUserProfileQuery(undefined, {
+    const { data: remoteProfile } = useGetUserProfileQuery(undefined, {
         skip: !isAuthenticated,
         refetchOnMountOrArgChange: true,
         pollingInterval:

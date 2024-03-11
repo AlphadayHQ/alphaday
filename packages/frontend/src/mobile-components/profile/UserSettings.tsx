@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
@@ -8,6 +9,7 @@ import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
+import CONFIG from "src/config";
 import { EditProfileModal } from "./EditProfileModal";
 
 const NonAuthenticatedSection = () => {
@@ -42,7 +44,9 @@ const AuthenticatedSection: FC<{ profile: TUserProfile | undefined }> = ({
         <div className="flex flex-col flex-start w-full items-start mb-4">
             <div className="flex">
                 <img
-                    src="	https://tailwindui.com/img/avatar-3.jpg"
+                    src={`https://www.gravatar.com/avatar/${md5(
+                        profile?.user.email ?? "Guest"
+                    ).toString()}?d=retro`}
                     alt="username"
                     className="mr-3 w-[60px] h-[60px] rounded-full border border-solid border-green-400"
                 />
@@ -143,7 +147,6 @@ const UserSettings: FC<IUserSettings> = ({
             subtext: null,
             requiresAuth: true,
             onClick: () => {
-                navigate("profile/log-out");
                 onLogout().catch((e) =>
                     Logger.error("UserMenu: logout failed", e)
                 );
@@ -203,6 +206,17 @@ const UserSettings: FC<IUserSettings> = ({
                             </div>
                         );
                     })}
+                    {(CONFIG.IS_DEV || CONFIG.IS_LOCAL) && (
+                        <div className="pb-2.5 pt-2.5 text-primaryVariant100">
+                            Environment: {CONFIG.ENVIRONMENT}
+                            <br />
+                            Version: {CONFIG.APP.VERSION}
+                            <br />
+                            Commit: {CONFIG.APP.COMMIT}
+                            <br />
+                            Timestamp: {CONFIG.APP.COMMIT_TIMESTAMP}
+                        </div>
+                    )}
                 </div>
             </div>
             <EditProfileModal
