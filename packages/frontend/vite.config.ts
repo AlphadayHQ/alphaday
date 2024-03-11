@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
                 skipWaiting: true,
                 navigateFallbackAllowlist: [/^\/$/],
                 maximumFileSizeToCacheInBytes: 1024 * 1024 * 4,
+                cacheId: "alphaday",
             },
             includeAssets: [
                 "favicon.ico",
@@ -37,6 +38,7 @@ export default defineConfig(({ mode }) => {
                 description: "News, Information & Curated Research - Alphaday",
                 theme_color: "#FAA202",
                 orientation: "portrait",
+                start_url: "/",
                 icons: [
                     {
                         src: "pwa-64x64.png",
