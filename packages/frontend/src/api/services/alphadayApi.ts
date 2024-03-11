@@ -14,7 +14,7 @@ export const alphadayApi = createApi({
         "Account", // verified account
         "AccountPortfolio", // account portfolio
         "PinnedCoins",
-        "SuperfeedItems",
+        "Superfeed",
     ],
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,

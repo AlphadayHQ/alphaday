@@ -102,7 +102,7 @@ export const podcastApi = alphadayApi.injectEndpoints({
                     body: {},
                 };
             },
-            invalidatesTags: ["SuperfeedItems"],
+            invalidatesTags: ["Superfeed"],
         }),
         openPodcastItem: builder.mutation<
             TOpenPodcastItemResponse,

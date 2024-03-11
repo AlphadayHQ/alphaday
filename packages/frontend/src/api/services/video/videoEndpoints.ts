@@ -126,7 +126,7 @@ export const videoApi = alphadayApi.injectEndpoints({
                     body: {},
                 };
             },
-            invalidatesTags: ["SuperfeedItems"],
+            invalidatesTags: ["Superfeed"],
         }),
         openVideoItem: builder.mutation<
             TOpenVideoItemResponse,

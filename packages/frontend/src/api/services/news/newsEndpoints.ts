@@ -100,7 +100,7 @@ const newsApi = alphadayApi.injectEndpoints({
                     body: {},
                 };
             },
-            invalidatesTags: ["SuperfeedItems"],
+            invalidatesTags: ["Superfeed"],
         }),
         openNewsItem: builder.mutation<
             TOpenNewsItemResponse,
