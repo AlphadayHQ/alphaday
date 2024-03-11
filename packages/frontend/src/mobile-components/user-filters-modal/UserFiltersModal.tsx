@@ -8,9 +8,20 @@ import {
 import { ESortFeedBy, ESupportedFilters, TFilterKeyword } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import FilterSearchBar from "../FilterSearchBar";
-import { TFilterOptions } from "./filterOptions";
+import { TFilterOptions, TSyncedFilterOptions } from "./filterOptions";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
 
+function reduceToArrayOfSlugs(data: TSyncedFilterOptions) {
+    const result: string[] = [];
+    Object.values(data).forEach((value) => {
+        value.options.forEach((option) => {
+            if (option.selected) {
+                result.push(option.slug);
+            }
+        });
+    });
+    return result;
+}
 interface IUserFiltersModalProps {
     onToggleFeedFilters: () => void;
     show: boolean;
@@ -20,8 +31,8 @@ interface IUserFiltersModalProps {
     filterKeywords: TFilterKeyword[];
     onSearchInputChange: (value: string) => void;
     isFetchingKeywordResults: boolean;
-    selectedSycnedFilters: string[];
     message: string | null;
+    setMessage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const UserFiltersModal: FC<IUserFiltersModalProps> = ({
@@ -33,8 +44,8 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
     filterKeywords,
     onSearchInputChange,
     isFetchingKeywordResults,
-    selectedSycnedFilters,
     message,
+    setMessage,
 }) => {
     const [isOpen, setIsOpen] = useState(true);
 
@@ -58,6 +69,37 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                 : ESortFeedBy.Trendiness,
             ESupportedFilters.SortBy
         );
+    };
+
+    const selectedSycnedFilters = reduceToArrayOfSlugs(
+        filterOptions.syncedFilterOptions
+    );
+
+    let timer: NodeJS.Timeout;
+    const handleSelectFilter = (
+        slug: string,
+        filterType: ESupportedFilters
+    ) => {
+        onSelectFilter(slug, filterType);
+        const keyword = filterKeywords.find((k) => k.slug === slug);
+        if (
+            (filterType === ESupportedFilters.Chains ||
+                filterType === ESupportedFilters.Coins ||
+                filterType === ESupportedFilters.ConceptTags) &&
+            keyword
+        ) {
+            const isSelected = selectedSycnedFilters.some(
+                (selectedSlug) => selectedSlug === keyword.slug
+            );
+            const filterLabel =
+                filterOptions.syncedFilterOptions[filterType].label;
+
+            setMessage(
+                `${!isSelected ? "Added" : "Removed"} ${keyword.name} ${!isSelected ? "to" : "from"} ${filterLabel} filters`
+            );
+            clearTimeout(timer);
+            timer = setTimeout(() => setMessage(null), 3000);
+        }
     };
 
     if (show) {
@@ -90,7 +132,7 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                                 }))}
                                 onChange={(values) =>
                                     values.forEach((kw) =>
-                                        onSelectFilter(kw.slug, kw.type)
+                                        handleSelectFilter(kw.slug, kw.type)
                                     )
                                 }
                                 isFetchingKeywordResults={
