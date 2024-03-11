@@ -40,3 +40,8 @@ export type TBookmarkPodcastItemRequest = {
 export type TBookmarkPodcastItemResponse = Omit<TRemotePodcastItem, "id">;
 
 export type TGetPodcastChannelsResponse = TPodcastChannel[];
+
+export type TLikePodcastItemRequest = {
+    id: number;
+};
+export type TLikePodcastItemResponse = Omit<TRemotePodcastItem, "id">;

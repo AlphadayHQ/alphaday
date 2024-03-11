@@ -25,6 +25,7 @@ export type TRemoteSuperfeedItem = {
         slug: string;
     }[];
     likes: number;
+    is_liked: boolean;
     comments: number;
     data: TFeedItemData | null;
 };

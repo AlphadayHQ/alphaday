@@ -3,17 +3,23 @@ import { useHistory } from "react-router-dom";
 import { AudioPlayerProvider } from "react-use-audio-player";
 import { useAccount, useActivityLogger, usePagination } from "src/api/hooks";
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
-import { useGetSuperfeedListQuery } from "src/api/services";
+import {
+    useGetSuperfeedListQuery,
+    useLikeBlogItemMutation,
+    useLikeNewsItemMutation,
+} from "src/api/services";
+import { useLikePodcastItemMutation } from "src/api/services/podcast/podcastEndpoints";
+import { useLikeVideoItemMutation } from "src/api/services/video/videoEndpoints";
 import {
     TSelectedFiltersSynced,
     selectedLocalFiltersSelector,
     selectedSyncedFiltersSelector,
 } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
-import { TSuperfeedItem } from "src/api/types";
+import { EFeedItemType, TSuperfeedItem } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { shareData } from "src/api/utils/shareUtils";
-import { toast } from "src/api/utils/toastUtils";
+import { EToastRole, toast } from "src/api/utils/toastUtils";
 import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters-modal/filterOptions";
@@ -114,11 +120,46 @@ const SuperfeedContainer: FC<{
                     "SuperfeedModule::FeedCard: error sharing item",
                     e
                 );
-                toast("Error sharing item");
+                toast("Error sharing item", {
+                    type: EToastRole.Error,
+                });
             }
         },
         [logShareSuperfeedItem]
     );
+
+    const [likeBlogItemMut] = useLikeBlogItemMutation();
+    const [likeNewsItemMut] = useLikeNewsItemMutation();
+    const [likeVideoItemMut] = useLikeVideoItemMutation();
+    const [likePodcastItemMut] = useLikePodcastItemMutation();
+
+    const likeItem = useCallback(
+        async (item: TSuperfeedItem) => {
+            try {
+                if (item.type === EFeedItemType.BLOG) {
+                    await likeBlogItemMut({ id: item.id });
+                } else if (item.type === EFeedItemType.NEWS) {
+                    await likeNewsItemMut({ id: item.id });
+                } else if (item.type === EFeedItemType.VIDEO) {
+                    await likeVideoItemMut({ id: item.id });
+                } else if (item.type === EFeedItemType.PODCAST) {
+                    await likePodcastItemMut({ id: item.id });
+                } else {
+                    Logger.debug(
+                        "SuperfeedModule::FeedCard: unsupported item type",
+                        item.type
+                    );
+                }
+            } catch (e) {
+                Logger.error("SuperfeedModule::FeedCard: error liking item", e);
+                toast("Error sharing item", {
+                    type: EToastRole.Error,
+                });
+            }
+        },
+        [likeBlogItemMut, likeNewsItemMut, likeVideoItemMut, likePodcastItemMut]
+    );
+
     // set current page 350ms after next page is set.
     // RTK should cache requests, so we don't need to be too careful about rerenders.
     useEffect(() => {
@@ -180,12 +221,14 @@ const SuperfeedContainer: FC<{
                 )}
             <SuperfeedModule
                 isLoading={isLoading}
+                isAuthenticated={isAuthenticated}
                 feed={feedData}
                 handlePaginate={handleNextPage}
                 toggleShowFeedFilters={onToggleFeedFilters}
                 selectedPodcast={selectedPodcast}
                 setSelectedPodcast={setSelectedPodcast}
                 onShareItem={shareItem}
+                onLikeItem={likeItem}
             />
         </AudioPlayerProvider>
     );

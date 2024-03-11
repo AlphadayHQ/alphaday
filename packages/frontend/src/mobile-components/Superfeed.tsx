@@ -9,10 +9,12 @@ import { FeedCard } from "./feed/FeedCard";
 
 interface ISuperfeedModule {
     isLoading: boolean;
+    isAuthenticated: boolean;
     feed: TSuperfeedItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
     onShareItem: (item: TSuperfeedItem) => Promise<void>;
+    onLikeItem: (item: TSuperfeedItem) => Promise<void>;
     selectedPodcast: TSuperfeedItem | null;
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
@@ -59,12 +61,14 @@ const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
 
 const SuperfeedModule: FC<ISuperfeedModule> = ({
     isLoading,
+    isAuthenticated,
     feed,
     handlePaginate,
     toggleShowFeedFilters,
     selectedPodcast,
     setSelectedPodcast,
     onShareItem,
+    onLikeItem,
 }) => {
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -85,9 +89,10 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                 <FeedCard
                     key={item.id}
                     item={item}
+                    isAuthenticated={isAuthenticated}
                     selectedPodcast={selectedPodcast}
                     setSelectedPodcast={setSelectedPodcast}
-                    onLike={() => {}}
+                    onLike={() => onLikeItem(item)}
                     onShare={() => onShareItem(item)}
                 />
             ))}
