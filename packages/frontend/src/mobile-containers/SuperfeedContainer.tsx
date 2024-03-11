@@ -38,7 +38,8 @@ const SuperfeedContainer: FC<{
     tags: string | undefined;
 }> = ({ tags: tagsFromSearch, onToggleFeedFilters, showSearchBar }) => {
     const history = useHistory();
-    const { setSearchState, keywordResults } = useKeywordSearch();
+    const { setSearchState, keywordResults, isFetchingKeywordResults } =
+        useKeywordSearch();
 
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
@@ -193,6 +194,7 @@ const SuperfeedContainer: FC<{
                     <div className="py-2 px-5">
                         <FilterSearchBar
                             tags={tagsFromSearch}
+                            isFetchingKeywordResults={isFetchingKeywordResults}
                             setSearchState={setSearchState}
                             tagsList={
                                 keywordResults?.map((kw) => ({

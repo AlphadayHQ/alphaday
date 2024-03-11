@@ -140,14 +140,7 @@ export const FeedCard: FC<IFeedCard> = ({
                 />
             );
         case EFeedItemType.TVL:
-            return (
-                <MarketCard
-                    item={item}
-                    onLike={onLike}
-                    onShare={onShare}
-                    isAuthenticated={isAuthenticated}
-                />
-            );
+            return null;
         default:
             return null;
     }
