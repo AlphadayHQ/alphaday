@@ -60,7 +60,7 @@ export const FeedCard: FC<IFeedCard> = ({
         case EFeedItemType.MARKET:
             return <MarketCard item={item} onLike={onLike} onShare={onShare} />;
         case EFeedItemType.TVL:
-            return <MarketCard item={item} onLike={onLike} onShare={onShare} />;
+            return null;
         default:
             return null;
     }
