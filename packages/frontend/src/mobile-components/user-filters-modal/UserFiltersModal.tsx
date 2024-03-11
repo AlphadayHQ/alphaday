@@ -31,8 +31,6 @@ interface IUserFiltersModalProps {
     filterKeywords: TFilterKeyword[];
     onSearchInputChange: (value: string) => void;
     isFetchingKeywordResults: boolean;
-    message: string | null;
-    setMessage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const UserFiltersModal: FC<IUserFiltersModalProps> = ({
@@ -44,11 +42,9 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
     filterKeywords,
     onSearchInputChange,
     isFetchingKeywordResults,
-    message,
-    setMessage,
 }) => {
     const [isOpen, setIsOpen] = useState(true);
-
+    const [message, setMessage] = useState<string | null>(null);
     const { media, timeRange, sortBy } = filterOptions.localFilterOptions;
 
     const selectedTimeRange = timeRange.options.find(

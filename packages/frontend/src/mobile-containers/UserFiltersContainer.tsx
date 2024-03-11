@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useFilters, useFilterKeywordSearch } from "src/api/hooks";
 import {
     useGetFilterDataQuery,
@@ -101,8 +101,6 @@ const UserFiltersContainer: FC<{
 
     const { toggleFilter } = useFilters();
 
-    const [message, setMessage] = useState<string | null>(null);
-
     const { setSearchState, keywordResults, isFetchingKeywordResults } =
         useFilterKeywordSearch();
 
@@ -148,8 +146,6 @@ const UserFiltersContainer: FC<{
         <UserFiltersModal
             onToggleFeedFilters={onToggleFeedFilters}
             show={show}
-            message={message}
-            setMessage={setMessage}
             filterOptions={filterOptions}
             isLoading={isLoading}
             onSelectFilter={handleSelectFilter}
