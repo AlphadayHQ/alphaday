@@ -11,7 +11,7 @@ import { Redirect, Route } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import PullToRefreshContainer from "src/mobile-containers/PullToRefresh";
+import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
