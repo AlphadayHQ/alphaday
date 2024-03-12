@@ -15,6 +15,7 @@ export interface IUIState {
     mobile: {
         widgetsNavOpen: boolean;
         selectedMobileSortOrder: number;
+        lastInstallPrompt: number | undefined;
     };
     acceptedSwapToS: boolean | undefined;
     lastAuthPrompted: number | undefined;
@@ -29,6 +30,7 @@ const initialState: IUIState = {
     mobile: {
         widgetsNavOpen: false,
         selectedMobileSortOrder: 0,
+        lastInstallPrompt: undefined,
     },
     acceptedSwapToS: undefined,
     lastAuthPrompted: undefined,
@@ -87,6 +89,9 @@ const uiSlice = createSlice({
         setLastAuthPrompted(draft, action: PayloadAction<number>) {
             draft.lastAuthPrompted = action.payload;
         },
+        setLastInstallPrompt(draft, action: PayloadAction<number>) {
+            draft.mobile.lastInstallPrompt = action.payload;
+        },
     },
 });
 
@@ -101,5 +106,6 @@ export const {
     setSelectedMobileSortOrder,
     setAcceptedSwapToS,
     setLastAuthPrompted,
+    setLastInstallPrompt,
 } = uiSlice.actions;
 export default uiSlice.reducer;

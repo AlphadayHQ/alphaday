@@ -1,22 +1,36 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Button, Modal } from "@alphaday/ui-kit";
 import { useIsMobile } from "src/api/hooks/useIsMobile";
+import { setLastInstallPrompt } from "src/api/store";
+import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import { usePWAInstallContext } from "src/api/store/providers/pwa-install-provider";
 import { isPWA } from "src/api/utils/helpers";
 import { ReactComponent as CloseSVG } from "../../assets/icons/close3.svg";
 import { ReactComponent as LogoShadowSVG } from "../../assets/icons/logo-shadow.svg";
 
 const InstallPWAContainer: FC = () => {
+    const dispatch = useAppDispatch();
     const handleInstall = usePWAInstallContext();
     const isMobile = useIsMobile();
     const [showModal, setShowModal] = useState(!isPWA());
+    const lastInstallPrompt = useAppSelector(
+        (state) => state.ui.mobile.lastInstallPrompt
+    );
 
-    const handleCloseDialog = () => setShowModal(false);
+    const handleCloseDialog = useCallback(() => {
+        dispatch(setLastInstallPrompt(Date.now()));
+        setShowModal(false);
+    }, [dispatch]);
 
     return (
         <Modal
             size="sm"
-            showModal={isMobile && showModal}
+            showModal={
+                isMobile &&
+                showModal &&
+                (!lastInstallPrompt ||
+                    lastInstallPrompt > Date.now() - 1000 * 60 * 60 * 24 * 7) // 7 days
+            }
             className="p-8 m-8 rounded-xl"
             onClose={handleCloseDialog}
         >
