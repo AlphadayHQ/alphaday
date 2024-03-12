@@ -18,9 +18,10 @@ import {
 
 export const SocialCard: FC<{
     item: TSuperfeedItem;
+    isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare }) => {
+}> = ({ item, onLike, onShare, isAuthenticated }) => {
     const {
         title,
         tags,
@@ -34,8 +35,6 @@ export const SocialCard: FC<{
         shortDescription,
         date,
     } = item;
-
-    const isLiked = false;
 
     return (
         <FeedItemDisclosure>
@@ -98,7 +97,8 @@ export const SocialCard: FC<{
                                             onShare={onShare}
                                             likes={likes}
                                             comments={comments}
-                                            isLiked={isLiked}
+                                            isAuthenticated={isAuthenticated}
+                                            isLiked={item.isLiked}
                                         />
                                     )}
                                 </div>
@@ -125,7 +125,8 @@ export const SocialCard: FC<{
                                     onShare={onShare}
                                     likes={likes}
                                     comments={comments}
-                                    isLiked={isLiked}
+                                    isAuthenticated={isAuthenticated}
+                                    isLiked={item.isLiked}
                                 />
                             </div>
                         </div>

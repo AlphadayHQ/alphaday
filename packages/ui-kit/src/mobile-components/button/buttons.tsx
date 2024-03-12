@@ -4,8 +4,9 @@ import { twMerge } from "tailwind-merge";
 
 export const ActionButton: FC<{
     children: ReactNode;
+    disabled?: boolean;
     onClick: () => MaybeAsync<void>;
-}> = ({ onClick, children }) => {
+}> = ({ onClick, children, disabled }) => {
     const handleClick = (
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
@@ -18,7 +19,12 @@ export const ActionButton: FC<{
         <button
             type="button"
             onClick={handleClick}
-            className="bg-backgroundVariant300 hover:bg-backgroundVariant400 min-w-[36px] text-primary fontGroup-mini mx-0.5 flex h-5 max-w-[48px] items-center justify-center rounded-lg px-2 py-1"
+            className={twMerge(
+                "bg-backgroundVariant300 hover:bg-backgroundVariant400 min-w-[36px] text-primary fontGroup-mini mx-0.5 flex h-5 max-w-[48px] items-center justify-center rounded-lg px-2 py-1",
+                disabled &&
+                    "bg-backgroundVariant200 hover:bg-backgroundVariant200 text-backgroundVariant400"
+            )}
+            disabled={disabled}
         >
             {children}
         </button>

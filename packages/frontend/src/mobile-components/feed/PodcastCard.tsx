@@ -27,6 +27,7 @@ interface IPodcastCard {
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
     >;
+    isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
 }
@@ -67,6 +68,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
     setSelectedPodcast,
     onLike,
     onShare,
+    isAuthenticated,
 }) => {
     const {
         title,
@@ -116,7 +118,6 @@ export const PodcastCard: FC<IPodcastCard> = ({
         setSelectedPodcast(item);
         togglePlayPause();
     };
-    const isLiked = false;
 
     return (
         <FeedItemDisclosure>
@@ -211,7 +212,8 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                             onShare={onShare}
                                             likes={likes}
                                             comments={comments}
-                                            isLiked={isLiked}
+                                            isAuthenticated={isAuthenticated}
+                                            isLiked={item.isLiked}
                                         />
                                     </div>
                                 </div>
@@ -266,7 +268,8 @@ export const PodcastCard: FC<IPodcastCard> = ({
                                     onShare={onShare}
                                     likes={likes}
                                     comments={comments}
-                                    isLiked={isLiked}
+                                    isAuthenticated={isAuthenticated}
+                                    isLiked={item.isLiked}
                                 />
                             </div>
                         </div>

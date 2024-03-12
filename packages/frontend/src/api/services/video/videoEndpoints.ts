@@ -15,6 +15,8 @@ import {
     TGetLatestVideoResponse,
     TGetLatestVideoRequest,
     TGetLatestVideoRawResponse,
+    TLikeVideoItemRequest,
+    TLikeVideoItemResponse,
 } from "./types";
 
 const { VIDEO, SOURCES } = CONFIG.API.DEFAULT.ROUTES;
@@ -102,9 +104,7 @@ export const videoApi = alphadayApi.injectEndpoints({
         >({
             query: (req: TBookmarkVideoItemRequest) => {
                 const { item } = req;
-                const path = `${String(VIDEO.BASE)}${String(
-                    VIDEO.BOOKMARK(item.id)
-                )}`;
+                const path = `${VIDEO.BASE}${VIDEO.BOOKMARK(item.id)}`;
                 Logger.debug("bookmarkVideoItem: querying", path);
                 return {
                     url: path,
@@ -113,14 +113,27 @@ export const videoApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
+        likeVideoItem: builder.mutation<
+            TLikeVideoItemResponse,
+            TLikeVideoItemRequest
+        >({
+            query: (req: TLikeVideoItemRequest) => {
+                const path = `${VIDEO.BASE}${VIDEO.LIKE(req.id)}`;
+                Logger.debug("likeVideoItem: querying", path);
+                return {
+                    url: path,
+                    method: "POST",
+                    body: {},
+                };
+            },
+            invalidatesTags: ["Superfeed"],
+        }),
         openVideoItem: builder.mutation<
             TOpenVideoItemResponse,
             TOpenVideoItemRequest
         >({
             query: (request) => {
-                const path = `${String(VIDEO.BASE)}${String(
-                    VIDEO.CLICKED(request.id)
-                )}`;
+                const path = `${VIDEO.BASE}${VIDEO.CLICKED(request.id)}`;
                 Logger.debug("openVideoItem: querying", path);
                 return {
                     url: path,
@@ -139,4 +152,5 @@ export const {
     useOpenVideoItemMutation,
     useBookmarkVideoItemMutation,
     useGetVideoChannelsListQuery,
+    useLikeVideoItemMutation,
 } = videoApi;
