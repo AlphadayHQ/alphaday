@@ -29,7 +29,8 @@ const InstallPWAContainer: FC = () => {
                 isMobile &&
                 showModal &&
                 (!lastInstallPrompt ||
-                    lastInstallPrompt > Date.now() - 1000 * 60 * 60 * 24 * 7) // 7 days
+                    (lastInstallPrompt - Date.now()) / (1000 * 60 * 60 * 24) >
+                        7) // 7 days
             }
             className="p-8 m-8 rounded-xl"
             onClose={handleCloseDialog}
