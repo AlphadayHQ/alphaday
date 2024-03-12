@@ -18,13 +18,18 @@ export default defineConfig(({ mode }) => {
             registerType: "autoUpdate",
             devOptions: {
                 enabled: true,
+                type: "module",
             },
             workbox: {
                 clientsClaim: true,
                 skipWaiting: true,
                 navigateFallbackAllowlist: [/^\/$/],
                 maximumFileSizeToCacheInBytes: 1024 * 1024 * 4,
-                cacheId: "alphaday",
+                cleanupOutdatedCaches: true,
+                globPatterns: [
+                    "assets/*.{js,css,html,png,jpg,svg}", // prevent caching of index.html, index file, and SW related files
+                    "**/*.{png,ico}", // cache PWA images and favicon
+                ],
             },
             includeAssets: [
                 "favicon.ico",
