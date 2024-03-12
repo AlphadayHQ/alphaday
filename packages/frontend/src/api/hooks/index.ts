@@ -29,5 +29,5 @@ export * from "./useWidgetSize";
 export * from "./useWidgetHeight";
 export * from "./usePrevious";
 export * from "./useQuery";
-export * from "./useQueryParamWatcher";
+export * from "./useValueWatcher";
 export * from "./useOnScreen";

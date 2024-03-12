@@ -5,7 +5,7 @@ import {
     useAccount,
     useActivityLogger,
     usePagination,
-    useQueryParamWatcher,
+    useValueWatcher,
 } from "src/api/hooks";
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import {
@@ -94,11 +94,11 @@ const SuperfeedContainer: FC<{
 
     const { logShareSuperfeedItem } = useActivityLogger();
 
-    const didContentTypesChange = useQueryParamWatcher(contentTypes, true);
-    const didSortByChange = useQueryParamWatcher(sortBy, true);
-    const didTimeRangeChange = useQueryParamWatcher(timeRangeInDays, true);
-    const didTagsFromSearchChange = useQueryParamWatcher(tagsFromSearch, true);
-    const didTagsFromCustomFiltersChange = useQueryParamWatcher(
+    const didContentTypesChange = useValueWatcher(contentTypes, true);
+    const didSortByChange = useValueWatcher(sortBy, true);
+    const didTimeRangeChange = useValueWatcher(timeRangeInDays, true);
+    const didTagsFromSearchChange = useValueWatcher(tagsFromSearch, true);
+    const didTagsFromCustomFiltersChange = useValueWatcher(
         tagsFromCustomFilters,
         true
     );
