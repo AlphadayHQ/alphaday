@@ -1,24 +1,37 @@
 import { FC, useCallback, useState } from "react";
 import { Button, Modal } from "@alphaday/ui-kit";
 import { useIsMobile } from "src/api/hooks/useIsMobile";
-import { setLastInstallPrompt } from "src/api/store";
+import { setLastInstallPromptTimestamp } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import { usePWAInstallContext } from "src/api/store/providers/pwa-install-provider";
 import { isPWA } from "src/api/utils/helpers";
+import CONFIG from "src/config";
 import { ReactComponent as CloseSVG } from "../../assets/icons/close3.svg";
 import { ReactComponent as LogoShadowSVG } from "../../assets/icons/logo-shadow.svg";
+
+/**
+ * Check if the time has elapsed
+ *
+ * @param timestamp
+ */
+const hasTimeElapsed = (timestamp: number) => {
+    const now = Date.now();
+    const timeElapsed = now - timestamp;
+    const timeInterval = CONFIG.IS_LOCAL ? 60: 86400 * 7; // 1 week or 1 minute in dev
+    return timeElapsed > timeInterval * 1000;
+};
 
 const InstallPWAContainer: FC = () => {
     const dispatch = useAppDispatch();
     const handleInstall = usePWAInstallContext();
     const isMobile = useIsMobile();
     const [showModal, setShowModal] = useState(!isPWA());
-    const lastInstallPrompt = useAppSelector(
-        (state) => state.ui.mobile.lastInstallPrompt
+    const lastInstallPromptTimestamp = useAppSelector(
+        (state) => state.ui.mobile.lastInstallPromptTimestamp
     );
 
     const handleCloseDialog = useCallback(() => {
-        dispatch(setLastInstallPrompt(Date.now()));
+        dispatch(setLastInstallPromptTimestamp(Date.now()));
         setShowModal(false);
     }, [dispatch]);
 
@@ -28,9 +41,7 @@ const InstallPWAContainer: FC = () => {
             showModal={
                 isMobile &&
                 showModal &&
-                (!lastInstallPrompt ||
-                    (Date.now() - lastInstallPrompt) / (1000 * 60 * 60 * 24) >
-                        7) // 7 days
+                (!lastInstallPromptTimestamp || hasTimeElapsed(lastInstallPromptTimestamp))
             }
             className="p-8 m-8 rounded-xl"
             onClose={handleCloseDialog}
