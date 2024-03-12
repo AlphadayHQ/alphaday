@@ -1,7 +1,12 @@
-import { FC, useCallback, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AudioPlayerProvider } from "react-use-audio-player";
-import { useAccount, useActivityLogger, usePagination } from "src/api/hooks";
+import {
+    useAccount,
+    useActivityLogger,
+    usePagination,
+    useValueWatcher,
+} from "src/api/hooks";
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import {
     useGetSuperfeedListQuery,
@@ -45,14 +50,16 @@ const SuperfeedContainer: FC<{
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
 
     // these come from the user filters page
-    const tagsFromCustomFilters = buildTagsQueryParam(selectedSyncedFilters);
-
-    const prevTagsFromSearchRef = useRef<string | undefined>(tagsFromSearch);
+    const tagsFromCustomFilters = useMemo(
+        () => buildTagsQueryParam(selectedSyncedFilters),
+        [selectedSyncedFilters]
+    );
 
     const { isAuthenticated } = useAccount();
 
     const [selectedPodcast, setSelectedPodcast] =
         useState<TSuperfeedItem | null>(null);
+
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
         .map((op) => op.contentType)
@@ -60,6 +67,7 @@ const SuperfeedContainer: FC<{
     const timeRangeInDays = STATIC_FILTER_OPTIONS.timeRange.options.find(
         (t) => t.slug === selectedLocalFilters.timeRange
     );
+    const { sortBy } = selectedLocalFilters;
 
     const [currentPage, setCurrentPage] = useState<number | undefined>();
 
@@ -71,12 +79,14 @@ const SuperfeedContainer: FC<{
         page: currentPage,
         content_types: contentTypes,
         days: timeRangeInDays?.value,
+        sort_order: sortBy,
         user_filter: isAuthenticated && !tagsFromSearch, // if tags are present, we don't want to use user filters
         tags: tagsFromSearch ?? tagsFromCustomFilters,
     });
     const prevFeedDataResponseRef = useRef<TSuperfeedItem[]>();
+    const feedDataForCurrentPage = [...(feedDataResponse?.results ?? [])];
 
-    const { nextPage, handleNextPage } = usePagination(
+    const { nextPage, handleNextPage, reset } = usePagination(
         feedDataResponse?.links,
         MAX_PAGE_NUMBER,
         isSuccess
@@ -84,23 +94,40 @@ const SuperfeedContainer: FC<{
 
     const { logShareSuperfeedItem } = useActivityLogger();
 
-    const feedDataForCurrentPage = [...(feedDataResponse?.results ?? [])];
+    const didContentTypesChange = useValueWatcher(contentTypes, true);
+    const didSortByChange = useValueWatcher(sortBy, true);
+    const didTimeRangeChange = useValueWatcher(timeRangeInDays, true);
+    const didTagsFromSearchChange = useValueWatcher(tagsFromSearch, true);
+    const didTagsFromCustomFiltersChange = useValueWatcher(
+        tagsFromCustomFilters,
+        true
+    );
 
-    const [feedData, setfeedData] = useState<TSuperfeedItem[]>([]);
+    const [feedData, setfeedData] = useState<TSuperfeedItem[] | undefined>(
+        undefined
+    );
 
-    if (tagsFromSearch !== prevTagsFromSearchRef.current) {
-        prevTagsFromSearchRef.current = tagsFromSearch;
-        setfeedData([...feedDataForCurrentPage]);
+    if (
+        didTagsFromSearchChange ||
+        didTagsFromCustomFiltersChange ||
+        didContentTypesChange ||
+        didSortByChange ||
+        didTimeRangeChange
+    ) {
+        Logger.debug("params changed, resetting feed data");
+        setfeedData(undefined);
+        reset();
     }
 
-    // If the current response changes, it means the request parameters changed
-    // This happens 1. when user scrolled to the bottom or 2. tags changed.
-    // Case 2 is handled separately.
+    //  When results change, append them
     if (
         feedDataResponse?.results !== undefined &&
         prevFeedDataResponseRef.current !== feedDataResponse?.results
     ) {
-        setfeedData((prevState) => [...prevState, ...feedDataForCurrentPage]);
+        setfeedData((prevState) => [
+            ...(prevState ?? []),
+            ...feedDataForCurrentPage,
+        ]);
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
 

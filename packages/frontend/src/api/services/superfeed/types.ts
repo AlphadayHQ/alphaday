@@ -66,6 +66,7 @@ export type TGetSuperfeedItemsRequest = {
     content_types?: string;
     days?: number;
     user_filter?: boolean;
+    sort_order?: string;
 };
 
 export type TGetSuperfeedItemsRawResponse = TPagination & {
