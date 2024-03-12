@@ -36,9 +36,10 @@ const VideoPlaceholder: FC<{
 
 export const VideoCard: FC<{
     item: TSuperfeedItem;
+    isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare }) => {
+}> = ({ item, onLike, onShare, isAuthenticated }) => {
     const {
         title,
         tags,
@@ -52,8 +53,6 @@ export const VideoCard: FC<{
         type,
         shortDescription,
     } = item;
-
-    const isLiked = false;
 
     /**
      * Before the iframe loads the browser displays a white page.
@@ -123,7 +122,8 @@ export const VideoCard: FC<{
                                             onShare={onShare}
                                             likes={likes}
                                             comments={comments}
-                                            isLiked={isLiked}
+                                            isAuthenticated={isAuthenticated}
+                                            isLiked={item.isLiked}
                                         />
                                     </div>
                                 </div>
@@ -164,7 +164,8 @@ export const VideoCard: FC<{
                                     onShare={onShare}
                                     likes={likes}
                                     comments={comments}
-                                    isLiked={isLiked}
+                                    isAuthenticated={isAuthenticated}
+                                    isLiked={item.isLiked}
                                 />
                             </div>
                         </div>
