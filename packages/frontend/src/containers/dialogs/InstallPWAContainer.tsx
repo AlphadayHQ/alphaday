@@ -17,7 +17,7 @@ import { ReactComponent as LogoShadowSVG } from "../../assets/icons/logo-shadow.
 const hasTimeElapsed = (timestamp: number) => {
     const now = Date.now();
     const timeElapsed = now - timestamp;
-    const timeInterval = CONFIG.IS_LOCAL ? 60: 86400 * 7; // 1 week or 1 minute in dev
+    const timeInterval = CONFIG.IS_LOCAL ? 60 : 86400 * 7; // 1 week or 1 minute in dev
     return timeElapsed > timeInterval * 1000;
 };
 
@@ -41,7 +41,8 @@ const InstallPWAContainer: FC = () => {
             showModal={
                 isMobile &&
                 showModal &&
-                (!lastInstallPromptTimestamp || hasTimeElapsed(lastInstallPromptTimestamp))
+                (!lastInstallPromptTimestamp ||
+                    hasTimeElapsed(lastInstallPromptTimestamp))
             }
             className="p-8 m-8 rounded-xl"
             onClose={handleCloseDialog}
