@@ -6,8 +6,8 @@ import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import { usePWAInstallContext } from "src/api/store/providers/pwa-install-provider";
 import { isPWA } from "src/api/utils/helpers";
 import CONFIG from "src/config";
-import { ReactComponent as CloseSVG } from "../../assets/icons/close3.svg";
-import { ReactComponent as LogoShadowSVG } from "../../assets/icons/logo-shadow.svg";
+import { ReactComponent as CloseSVG } from "../assets/icons/close3.svg";
+import { ReactComponent as LogoShadowSVG } from "../assets/icons/logo-shadow.svg";
 
 /**
  * Check if the time has elapsed
