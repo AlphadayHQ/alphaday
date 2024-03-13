@@ -134,7 +134,6 @@ const MobileApp: React.FC = () => {
 
     return (
         <IonApp className="theme-dark">
-            <InstallPWAContainer />
             <PullToRefreshContainer />
             <IonReactRouter>
                 <IonRouterOutlet>
@@ -143,6 +142,7 @@ const MobileApp: React.FC = () => {
                     </Suspense>
                 </IonRouterOutlet>
             </IonReactRouter>
+            <InstallPWAContainer />
         </IonApp>
     );
 };

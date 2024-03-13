@@ -1,7 +1,8 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect, useId } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import { twMerge } from "tailwind-merge";
+import { useSharedState } from "src/hooks";
 
 export interface IProps {
     /**
@@ -44,6 +45,8 @@ export const Modal: FC<IModal> = ({
     children,
     showModal,
 }) => {
+    const modalId = useId();
+    const [currentModalId, setCurrentModalId] = useSharedState("current-modal", modalId);
     const maxWidth = {
         max: "1600px",
         xl: "1050px",
@@ -55,9 +58,17 @@ export const Modal: FC<IModal> = ({
 
     const handleClose = (val: boolean) => {
         if (!val) onClose?.();
+        setCurrentModalId("");
     };
+
+    useEffect(() => {
+        if (showModal && !currentModalId) {
+            setCurrentModalId(modalId);
+        }
+    }, [showModal, setCurrentModalId]);
+
     return (
-        <Transition.Root show={showModal} as={Fragment}>
+        <Transition.Root show={showModal && (!currentModalId || currentModalId === modalId)} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
                 <Transition.Child
                     as={Fragment}
