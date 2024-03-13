@@ -46,7 +46,10 @@ export const Modal: FC<IModal> = ({
     showModal,
 }) => {
     const modalId = useId();
-    const [currentModalId, setCurrentModalId] = useSharedState("current-modal", modalId);
+    const [currentModalId, setCurrentModalId] = useSharedState(
+        "current-modal",
+        modalId
+    );
     const maxWidth = {
         max: "1600px",
         xl: "1050px",
@@ -65,10 +68,13 @@ export const Modal: FC<IModal> = ({
         if (showModal && !currentModalId) {
             setCurrentModalId(modalId);
         }
-    }, [showModal, setCurrentModalId]);
+    }, [showModal, currentModalId, modalId, setCurrentModalId]);
 
     return (
-        <Transition.Root show={showModal && (!currentModalId || currentModalId === modalId)} as={Fragment}>
+        <Transition.Root
+            show={showModal && (!currentModalId || currentModalId === modalId)}
+            as={Fragment}
+        >
             <Dialog as="div" className="relative z-10" onClose={handleClose}>
                 <Transition.Child
                     as={Fragment}
