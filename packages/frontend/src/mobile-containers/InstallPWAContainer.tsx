@@ -17,7 +17,7 @@ import { ReactComponent as LogoShadowSVG } from "../../assets/icons/logo-shadow.
 const hasTimeElapsed = (timestamp: number) => {
     const now = Date.now();
     const timeElapsed = now - timestamp;
-    const timeInterval = CONFIG.IS_LOCAL ? 60 : 86400 * 7; // 1 week or 1 minute in dev
+    const timeInterval = CONFIG.IS_LOCAL ? 3600 : 86400 * 7; // 1 week or 1 hour in dev
     return timeElapsed > timeInterval * 1000;
 };
 
