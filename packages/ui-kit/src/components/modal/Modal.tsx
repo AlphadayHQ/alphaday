@@ -1,8 +1,8 @@
-import { FC, Fragment, useEffect, useId } from "react";
+import { FC, Fragment, useId } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
+import createSharedState from "src/hooks/use-shared-state";
 import { twMerge } from "tailwind-merge";
-import { useSharedState } from "src/hooks";
 
 export interface IProps {
     /**
@@ -27,6 +27,9 @@ export interface IModal extends IProps {
      */
     onClose?: () => void;
 }
+
+const useCurrentModalId = createSharedState<string>("current-modal");
+
 /**
  * This is a modal component uses the triggerId to open the modal.
  * when an element with the triggerId is clicked, the modal will open.
@@ -46,10 +49,7 @@ export const Modal: FC<IModal> = ({
     showModal,
 }) => {
     const modalId = useId();
-    const [currentModalId, setCurrentModalId] = useSharedState(
-        "current-modal",
-        modalId
-    );
+    const [currentModalId, setCurrentModalId] = useCurrentModalId("");
     const maxWidth = {
         max: "1600px",
         xl: "1050px",
@@ -64,15 +64,15 @@ export const Modal: FC<IModal> = ({
         setCurrentModalId("");
     };
 
-    useEffect(() => {
-        if (showModal && !currentModalId) {
-            setCurrentModalId(modalId);
-        }
-    }, [showModal, currentModalId, modalId, setCurrentModalId]);
+    if (showModal && !currentModalId) {
+        setCurrentModalId(modalId);
+    }
+
+    console.log("currentModalId", currentModalId, modalId);
 
     return (
         <Transition.Root
-            show={showModal && (!currentModalId || currentModalId === modalId)}
+            show={showModal && currentModalId === modalId}
             as={Fragment}
         >
             <Dialog as="div" className="relative z-10" onClose={handleClose}>

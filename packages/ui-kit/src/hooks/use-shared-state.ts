@@ -1,32 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-/**
- * useSharedState allows a state to be shared between multiple components
- * It makes use of custom events to update the state in real time
- *
- * @param key - the key to use for the shared state
- * @param initialValue - the initial value of the shared state
- */
-const useSharedState = <T>(key: string, initialValue: T) => {
-    const [state, setState] = useState<T>(initialValue);
-    const setSharedState = (newState: T) => {
-        const event = new CustomEvent(`shared-state-${key}`, {
-            detail: newState,
-        });
-        window.dispatchEvent(event);
-    };
+type SetStateAction<S> = S | ((prevState: S) => S);
+type SharedStateHook<S> = (
+    initialValue: S
+) => [S, (action: SetStateAction<S>) => void];
 
-    useEffect(() => {
-        const handler = (event: CustomEvent) => {
-            setState(event.detail);
+function createSharedState<S>(key: string): SharedStateHook<S> {
+    const stateValue = new Map<string, S>();
+
+    return (initialState: S) => {
+        const [state, setState] = useState<S>(
+            stateValue.get(key) || initialState
+        );
+
+        const setSharedState = (action: SetStateAction<S>) => {
+            setState((prevState) => {
+                const newState =
+                    action instanceof Function ? action(prevState) : action;
+                console.log("newState", newState, prevState);
+                stateValue.set(key, newState);
+                return newState;
+            });
         };
-        // @ts-ignore
-        window.addEventListener(`shared-state-${key}`, handler);
-        // @ts-ignore
-        return () => window.removeEventListener(`shared-state-${key}`, handler);
-    }, [key]);
 
-    return [state, setSharedState] as const;
-};
+        return [state, setSharedState];
+    };
+}
 
-export default useSharedState;
+export default createSharedState;
