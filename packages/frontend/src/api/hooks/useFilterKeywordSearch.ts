@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 import { useGetFilterKeywordsQuery } from "src/api/services";
-import { TFilterKeyword, ESupportedFilters } from "src/api/types";
+import { TGroupedFilterKeywords, ESupportedFilters } from "src/api/types";
 
 interface IFilterKeywordSearch {
     searchState: string;
-    keywordResults: TFilterKeyword[];
+    keywordResults: TGroupedFilterKeywords | undefined;
     isFetchingKeywordResults: boolean;
     setSearchState: (s: string) => void;
 }
@@ -33,31 +33,29 @@ export const useFilterKeywordSearch: () => IFilterKeywordSearch = () => {
         );
 
     const keywordResults = useMemo(() => {
-        if (!keywordsData) return [];
-        return [
-            ...keywordsData.conceptTags.map((keyword) => ({
-                id: keyword.id,
-                name: keyword.name,
-                slug: keyword.tag.slug,
-                type: ESupportedFilters.ConceptTags,
-            })),
-            ...keywordsData.chains.map((keyword) => ({
+        if (!keywordsData) return undefined;
+        return {
+            [ESupportedFilters.ConceptTags]: keywordsData.conceptTags.map(
+                (keyword) => ({
+                    id: keyword.id,
+                    name: keyword.name,
+                    slug: keyword.tag.slug,
+                    type: ESupportedFilters.ConceptTags,
+                })
+            ),
+            [ESupportedFilters.Chains]: keywordsData.chains.map((keyword) => ({
                 id: keyword.id,
                 name: keyword.name,
                 slug: keyword.tag.slug,
                 type: ESupportedFilters.Chains,
             })),
-            ...keywordsData.coins.map((keyword) => ({
+            [ESupportedFilters.Coins]: keywordsData.coins.map((keyword) => ({
                 id: keyword.id,
                 name: keyword.name,
                 slug: keyword.tag.slug,
                 type: ESupportedFilters.Coins,
             })),
-        ].filter(
-            (item, index, self) =>
-                self.findIndex((innerItem) => innerItem.slug === item.slug) ===
-                index
-        );
+        };
     }, [keywordsData]);
 
     return {

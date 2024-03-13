@@ -1,13 +1,17 @@
 import { SearchBar } from "@alphaday/ui-kit";
+import { OptionsOrGroups, GroupBase } from "react-select";
 import { TBaseFilterItem } from "src/api/services";
 import { debounce } from "src/api/utils/helpers";
 import { Logger } from "src/api/utils/logging";
 
-type TOption = TBaseFilterItem;
+type TOption = TBaseFilterItem & { label: string; value: string };
 
-interface FilterSearchBarProps<T extends TBaseFilterItem = TOption> {
-    tags?: string;
-    tagsList: T[];
+// type TFilterItem = TOption | TGroupedOption;
+
+// interface FilterSearchBarProps<T extends TFilterItem = TFilterItem> {
+interface FilterSearchBarProps<T extends TOption> {
+    keywords: OptionsOrGroups<T, GroupBase<T>>;
+    initialSearchValues?: T[];
     setSearchState: (value: string) => void;
     onChange: (value: readonly T[]) => void;
     isFetchingKeywordResults: boolean;
@@ -16,23 +20,16 @@ interface FilterSearchBarProps<T extends TBaseFilterItem = TOption> {
     debounceTime?: number | undefined;
 }
 
-const FilterSearchBar = <T extends TBaseFilterItem>({
+const FilterSearchBar = <T extends TOption>({
     onChange,
-    tags,
     setSearchState,
-    tagsList,
+    keywords,
+    initialSearchValues,
     isFetchingKeywordResults,
     selectedFilters,
     message,
     debounceTime,
 }: FilterSearchBarProps<T>) => {
-    const searchValues = tags
-        ?.split(",")
-        .map((tag) => {
-            return tagsList.filter((t) => t.slug === tag)[0];
-        })
-        .filter((t) => t);
-
     return (
         <div
             className="two-col:mx-2.5 two-col:my-auto three-col:m-auto flex w-full justify-center"
@@ -50,8 +47,8 @@ const FilterSearchBar = <T extends TBaseFilterItem>({
                         setSearchState(searchString);
                     }, debounceTime ?? 500)}
                     placeholder="Search for assets, projects, events, etc."
-                    initialSearchValues={searchValues ?? []}
-                    options={tagsList}
+                    initialSearchValues={initialSearchValues ?? []}
+                    options={keywords}
                     isFetchingKeywordResults={isFetchingKeywordResults}
                     isFetchingTrendingKeywordResults={false}
                     updateSearch={false}

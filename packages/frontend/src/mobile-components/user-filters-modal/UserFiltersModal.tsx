@@ -1,15 +1,41 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import {
     FullPageModal,
     ScrollBar,
     Toggle,
     themeColors,
 } from "@alphaday/ui-kit";
-import { ESortFeedBy, ESupportedFilters, TFilterKeyword } from "src/api/types";
+import {
+    ESortFeedBy,
+    ESupportedFilters,
+    TFilterKeyword,
+    TGroupedFilterKeywords,
+} from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import FilterSearchBar from "../FilterSearchBar";
 import { TFilterOptions, TSyncedFilterOptions } from "./filterOptions";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
+
+type TFilterKeywordOption = TFilterKeyword & {
+    label: string;
+    value: string;
+};
+type TFilterKeywordOptionGroup = {
+    label: string;
+    options: TFilterKeywordOption[];
+};
+
+const GROUP_NAME_MAP: Record<string, string> = {
+    [ESupportedFilters.Chains]: "Chains",
+    [ESupportedFilters.Coins]: "Coins",
+    [ESupportedFilters.ConceptTags]: "Other",
+};
+
+const flattenGroupedKeywords = <T extends object>(
+    obj: Record<string, T[]>
+): T[] => {
+    return Object.values(obj).reduce((acc, curr) => [...acc, ...curr], []);
+};
 
 function reduceToArrayOfSlugs(data: TSyncedFilterOptions) {
     const result: string[] = [];
@@ -28,7 +54,7 @@ interface IUserFiltersModalProps {
     filterOptions: TFilterOptions;
     isLoading: boolean;
     onSelectFilter: (slug: string, type: ESupportedFilters) => void;
-    filterKeywords: TFilterKeyword[];
+    filterKeywords: TGroupedFilterKeywords | undefined;
     onSearchInputChange: (value: string) => void;
     isFetchingKeywordResults: boolean;
 }
@@ -77,7 +103,9 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
         filterType: ESupportedFilters
     ) => {
         onSelectFilter(slug, filterType);
-        const keyword = filterKeywords.find((k) => k.slug === slug);
+        const keyword = flattenGroupedKeywords(filterKeywords ?? {}).find(
+            (k) => k.slug === slug && k.type === filterType
+        );
         if (
             (filterType === ESupportedFilters.Chains ||
                 filterType === ESupportedFilters.Coins ||
@@ -97,6 +125,24 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
             timer = setTimeout(() => setMessage(null), 3000);
         }
     };
+
+    const filterKeywordOptions = useMemo(() => {
+        if (!filterKeywords) return [];
+        return Object.entries(filterKeywords).reduce(
+            (acc, [currKey, currVal]) => [
+                ...acc,
+                {
+                    label: GROUP_NAME_MAP[currKey] ?? currKey,
+                    options: currVal.map((kw) => ({
+                        ...kw,
+                        label: kw.name,
+                        value: kw.slug,
+                    })),
+                },
+            ],
+            [] as TFilterKeywordOptionGroup[]
+        );
+    }, [filterKeywords]);
 
     if (show) {
         return (
@@ -119,13 +165,9 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
                             filters below.
                         </p>
                         <div className="flex relative z-10 justify-center [&>div]:w-full">
-                            <FilterSearchBar<TFilterKeyword>
+                            <FilterSearchBar<TFilterKeywordOption>
                                 setSearchState={onSearchInputChange}
-                                tagsList={filterKeywords.map((kw) => ({
-                                    ...kw,
-                                    label: kw.name,
-                                    value: kw.slug,
-                                }))}
+                                keywords={filterKeywordOptions}
                                 onChange={(values) =>
                                     values.forEach((kw) =>
                                         handleSelectFilter(kw.slug, kw.type)
