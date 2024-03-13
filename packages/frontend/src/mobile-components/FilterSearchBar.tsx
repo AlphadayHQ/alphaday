@@ -6,9 +6,6 @@ import { Logger } from "src/api/utils/logging";
 
 type TOption = TBaseFilterItem & { label: string; value: string };
 
-// type TFilterItem = TOption | TGroupedOption;
-
-// interface FilterSearchBarProps<T extends TFilterItem = TFilterItem> {
 interface FilterSearchBarProps<T extends TOption> {
     keywords: OptionsOrGroups<T, GroupBase<T>>;
     initialSearchValues?: T[];
