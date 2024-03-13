@@ -17,12 +17,10 @@ const usePWAInstall = () => {
                     `PWAInstallProvider::useEventListener: user choice: ${choiceResult.outcome}`
                 );
                 if (choiceResult.outcome === "accepted") {
-                    Logger.debug(
-                        "PWAInstallProvider::useEventListener: accepted"
-                    );
+                    Logger.debug("PWAInstallProvider::handleInstall: accepted");
                 } else {
                     Logger.debug(
-                        "PWAInstallProvider::useEventListener: dismissed"
+                        "PWAInstallProvider::handleInstall: dismissed"
                     );
                 }
                 setEventRef(null);
