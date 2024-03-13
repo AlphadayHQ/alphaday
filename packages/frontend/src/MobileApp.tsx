@@ -11,10 +11,11 @@ import { Redirect, Route } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
+import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
-import InstallPWAContainer from "./containers/dialogs/InstallPWAContainer";
+import InstallPWAContainer from "./mobile-containers/InstallPWAContainer";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
@@ -134,6 +135,7 @@ const MobileApp: React.FC = () => {
     return (
         <IonApp className="theme-dark">
             <InstallPWAContainer />
+            <PullToRefreshContainer />
             <IonReactRouter>
                 <IonRouterOutlet>
                     <Suspense fallback={<PreloaderPage />}>

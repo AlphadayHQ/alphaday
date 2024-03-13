@@ -30,9 +30,10 @@ const parseHistory = (
 
 export const MarketCard: FC<{
     item: TSuperfeedItem;
+    isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare }) => {
+}> = ({ item, onLike, onShare, isAuthenticated }) => {
     const isTVL = item.type === EFeedItemType.TVL;
 
     const {
@@ -45,8 +46,6 @@ export const MarketCard: FC<{
         type,
         data: coinData,
     } = item;
-
-    const isLiked = false;
 
     const isDown = shortDescription?.includes("down");
 
@@ -144,7 +143,8 @@ export const MarketCard: FC<{
                                             onShare={onShare}
                                             likes={likes}
                                             comments={comments}
-                                            isLiked={isLiked}
+                                            isAuthenticated={isAuthenticated}
+                                            isLiked={item.isLiked}
                                         />
                                     )}
                                 </div>
@@ -176,7 +176,8 @@ export const MarketCard: FC<{
                                     onShare={onShare}
                                     likes={likes}
                                     comments={comments}
-                                    isLiked={isLiked}
+                                    isAuthenticated={isAuthenticated}
+                                    isLiked={item.isLiked}
                                 />
                             </div>
                         </div>

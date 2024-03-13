@@ -34,7 +34,7 @@ export const FullPageModal: FC<IProps> = ({ isOpen, closeModal, children }) => {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full h-screen max-w-3xl transform overflow-hidden bg-background p-4 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-full h-screen max-w-3xl transform overflow-hidden bg-background text-left align-middle shadow-xl transition-all">
                                 {children}
                             </Dialog.Panel>
                         </Transition.Child>

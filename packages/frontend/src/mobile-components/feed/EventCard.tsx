@@ -40,9 +40,10 @@ const eventDateFormatter = (date: string) => {
 
 export const EventCard: FC<{
     item: TSuperfeedItem;
+    isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare }) => {
+}> = ({ item, onLike, onShare, isAuthenticated }) => {
     const {
         title,
         tags,
@@ -58,7 +59,6 @@ export const EventCard: FC<{
 
     const location = item.data?.location;
     const category = "category";
-    const isLiked = false;
 
     return (
         <FeedItemDisclosure>
@@ -126,7 +126,8 @@ export const EventCard: FC<{
                                             onShare={onShare}
                                             likes={likes}
                                             comments={comments}
-                                            isLiked={isLiked}
+                                            isAuthenticated={isAuthenticated}
+                                            isLiked={item.isLiked}
                                         />
                                     </div>
                                 </div>
@@ -186,7 +187,8 @@ export const EventCard: FC<{
                                     onShare={onShare}
                                     likes={likes}
                                     comments={comments}
-                                    isLiked={isLiked}
+                                    isAuthenticated={isAuthenticated}
+                                    isLiked={item.isLiked}
                                 />
                             </div>
                         </div>

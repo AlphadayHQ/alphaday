@@ -17,9 +17,10 @@ import {
 
 export const NewsCard: FC<{
     item: TSuperfeedItem;
+    isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare }) => {
+}> = ({ item, onLike, onShare, isAuthenticated }) => {
     const {
         title,
         tags,
@@ -33,8 +34,6 @@ export const NewsCard: FC<{
         shortDescription,
         date,
     } = item;
-
-    const isLiked = false;
 
     return (
         <FeedItemDisclosure>
@@ -82,12 +81,13 @@ export const NewsCard: FC<{
                                 <div className="flex-col min-w-max ml-2">
                                     {!open && (
                                         <ActionButtons
+                                            isAuthenticated={isAuthenticated}
                                             onLike={onLike}
                                             onCommentClick={onLike}
                                             onShare={onShare}
                                             likes={likes}
                                             comments={comments}
-                                            isLiked={isLiked}
+                                            isLiked={item.isLiked}
                                         />
                                     )}
                                 </div>
@@ -109,7 +109,8 @@ export const NewsCard: FC<{
                                     onShare={onShare}
                                     likes={likes}
                                     comments={comments}
-                                    isLiked={isLiked}
+                                    isLiked={item.isLiked}
+                                    isAuthenticated={isAuthenticated}
                                 />
                             </div>
                         </div>

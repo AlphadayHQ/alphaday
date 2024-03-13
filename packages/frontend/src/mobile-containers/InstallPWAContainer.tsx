@@ -1,22 +1,49 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { Button, Modal } from "@alphaday/ui-kit";
 import { useIsMobile } from "src/api/hooks/useIsMobile";
+import { setLastInstallPromptTimestamp } from "src/api/store";
+import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import { usePWAInstallContext } from "src/api/store/providers/pwa-install-provider";
 import { isPWA } from "src/api/utils/helpers";
-import { ReactComponent as CloseSVG } from "../../assets/icons/close3.svg";
-import { ReactComponent as LogoShadowSVG } from "../../assets/icons/logo-shadow.svg";
+import CONFIG from "src/config";
+import { ReactComponent as CloseSVG } from "../assets/icons/close3.svg";
+import { ReactComponent as LogoShadowSVG } from "../assets/icons/logo-shadow.svg";
+
+/**
+ * Check if the time has elapsed
+ *
+ * @param timestamp
+ */
+const hasTimeElapsed = (timestamp: number) => {
+    const now = Date.now();
+    const timeElapsed = now - timestamp;
+    const timeInterval = CONFIG.IS_LOCAL ? 3600 : 86400 * 7; // 1 week or 1 hour in dev
+    return timeElapsed > timeInterval * 1000;
+};
 
 const InstallPWAContainer: FC = () => {
+    const dispatch = useAppDispatch();
     const handleInstall = usePWAInstallContext();
     const isMobile = useIsMobile();
     const [showModal, setShowModal] = useState(!isPWA());
+    const lastInstallPromptTimestamp = useAppSelector(
+        (state) => state.ui.mobile.lastInstallPromptTimestamp
+    );
 
-    const handleCloseDialog = () => setShowModal(false);
+    const handleCloseDialog = useCallback(() => {
+        dispatch(setLastInstallPromptTimestamp(Date.now()));
+        setShowModal(false);
+    }, [dispatch]);
 
     return (
         <Modal
             size="sm"
-            showModal={isMobile && showModal}
+            showModal={
+                isMobile &&
+                showModal &&
+                (!lastInstallPromptTimestamp ||
+                    hasTimeElapsed(lastInstallPromptTimestamp))
+            }
             className="p-8 m-8 rounded-xl"
             onClose={handleCloseDialog}
         >

@@ -26,6 +26,7 @@ const API_V0 = {
             BOOKMARKS: "/bookmarks/",
             CLICKED: (id: number): string => `/${id}/clicked/`,
             BOOKMARK: (id: number): string => `/${id}/toggle_bookmark/`,
+            LIKE: (id: number): string => `/${id}/toggle_like/`,
         },
         BLOG: {
             BASE: "items/blogs",
@@ -34,6 +35,7 @@ const API_V0 = {
             BOOKMARKS: "/bookmarks/",
             CLICKED: (id: number): string => `/${id}/clicked/`,
             BOOKMARK: (id: number): string => `/${id}/toggle_bookmark/`,
+            LIKE: (id: number): string => `/${id}/toggle_like/`,
         },
         COINS: {
             BASE: "coins",
@@ -159,6 +161,7 @@ const API_V0 = {
             DETAILS: (id: number): string => `/${id}/`,
             CLICKED: (id: number): string => `/${id}/clicked/`,
             BOOKMARK: (id: number): string => `/${id}/toggle_bookmark/`,
+            LIKE: (id: number): string => `/${id}/toggle_like/`,
         },
         VIDEO: {
             BASE: "items/videos",
@@ -169,6 +172,7 @@ const API_V0 = {
             DETAILS: (id: number): string => `/${id}/`,
             CLICKED: (id: number): string => `/${id}/clicked/`,
             BOOKMARK: (id: number): string => `/${id}/toggle_bookmark/`,
+            LIKE: (id: number): string => `/${id}/toggle_like/`,
         },
         SOURCES: {
             BASE: "/sources/",

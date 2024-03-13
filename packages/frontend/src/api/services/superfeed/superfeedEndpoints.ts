@@ -52,10 +52,12 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                     sourceName: i.source.name,
                     tags: i.tags || [],
                     likes: i.likes,
+                    isLiked: i.is_liked,
                     comments: i.comments,
                     data: i.data,
                 })),
             }),
+            providesTags: ["Superfeed"],
             // When commented out, keepUnsedDataFor defaults to 60s
             // TODO(v-almonacid): Re-assess this value post-MVP release
             // keepUnusedDataFor: 60,
