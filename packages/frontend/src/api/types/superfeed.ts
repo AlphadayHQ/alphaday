@@ -49,6 +49,12 @@ export type TFilterKeyword = {
     type: ESupportedFilters;
 };
 
+export type TGroupedFilterKeywords = {
+    [ESupportedFilters.Coins]: TFilterKeyword[];
+    [ESupportedFilters.Chains]: TFilterKeyword[];
+    [ESupportedFilters.ConceptTags]: TFilterKeyword[];
+};
+
 export type TFeedItemData = {
     coin: {
         name: string;
