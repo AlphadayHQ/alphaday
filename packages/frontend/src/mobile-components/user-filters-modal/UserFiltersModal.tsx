@@ -128,20 +128,22 @@ const UserFiltersModal: FC<IUserFiltersModalProps> = ({
 
     const filterKeywordOptions = useMemo(() => {
         if (!filterKeywords) return [];
-        return Object.entries(filterKeywords).reduce(
-            (acc, [currKey, currVal]) => [
-                ...acc,
-                {
-                    label: GROUP_NAME_MAP[currKey] ?? currKey,
-                    options: currVal.map((kw) => ({
-                        ...kw,
-                        label: kw.name,
-                        value: kw.slug,
-                    })),
-                },
-            ],
-            [] as TFilterKeywordOptionGroup[]
-        );
+        return Object.entries(filterKeywords)
+            .reduce(
+                (acc, [currKey, currVal]) => [
+                    ...acc,
+                    {
+                        label: GROUP_NAME_MAP[currKey] ?? currKey,
+                        options: currVal.map((kw) => ({
+                            ...kw,
+                            label: kw.name,
+                            value: kw.slug,
+                        })),
+                    },
+                ],
+                [] as TFilterKeywordOptionGroup[]
+            )
+            .sort((a, d) => a.label.localeCompare(d.label));
     }, [filterKeywords]);
 
     if (show) {
