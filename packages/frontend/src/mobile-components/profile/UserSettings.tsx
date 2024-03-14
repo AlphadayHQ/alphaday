@@ -156,7 +156,7 @@ const UserSettings: FC<IUserSettings> = ({
 
     return (
         <>
-            <div className="mx-5 w-full">
+            <div className="px-5 w-full">
                 {/* <div className="flex flex-start w-full items-center mb-4">
                 <ChevronSVG
                     onClick={onClose}
