@@ -68,8 +68,6 @@ export const Modal: FC<IModal> = ({
         setCurrentModalId(modalId);
     }
 
-    console.log("currentModalId", currentModalId, modalId);
-
     return (
         <Transition.Root
             show={showModal && currentModalId === modalId}

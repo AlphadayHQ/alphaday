@@ -17,7 +17,6 @@ function createSharedState<S>(key: string): SharedStateHook<S> {
             setState((prevState) => {
                 const newState =
                     action instanceof Function ? action(prevState) : action;
-                console.log("newState", newState, prevState);
                 stateValue.set(key, newState);
                 return newState;
             });
