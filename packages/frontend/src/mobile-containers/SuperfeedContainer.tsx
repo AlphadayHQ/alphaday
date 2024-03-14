@@ -29,6 +29,7 @@ import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters-modal/filterOptions";
 import CONFIG from "src/config";
+import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 
 const buildTagsQueryParam = (syncedFilters: TSelectedFiltersSynced) =>
     Object.values(syncedFilters)
@@ -245,17 +246,19 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <SuperfeedModule
-                isLoading={isLoading}
-                isAuthenticated={isAuthenticated}
-                feed={feedData}
-                handlePaginate={handleNextPage}
-                toggleShowFeedFilters={onToggleFeedFilters}
-                selectedPodcast={selectedPodcast}
-                setSelectedPodcast={setSelectedPodcast}
-                onShareItem={shareItem}
-                onLikeItem={likeItem}
-            />
+            <PullToRefreshContainer handleRefresh={reset}>
+                <SuperfeedModule
+                    isLoading={isLoading}
+                    isAuthenticated={isAuthenticated}
+                    feed={feedData}
+                    handlePaginate={handleNextPage}
+                    toggleShowFeedFilters={onToggleFeedFilters}
+                    selectedPodcast={selectedPodcast}
+                    setSelectedPodcast={setSelectedPodcast}
+                    onShareItem={shareItem}
+                    onLikeItem={likeItem}
+                />
+            </PullToRefreshContainer>
         </AudioPlayerProvider>
     );
 };
