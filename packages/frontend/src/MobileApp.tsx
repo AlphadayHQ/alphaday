@@ -1,5 +1,4 @@
 import { Suspense, memo } from "react";
-import { twMerge } from "@alphaday/ui-kit";
 import {
     IonApp,
     IonRouterOutlet,
@@ -53,12 +52,7 @@ const CustomNavTab: React.FC<{
         <span className="rounded-2xl relative">
             <Icon />
         </span>
-        <span
-            className={twMerge(
-                "capitalize mt-1 fontGroup-highlightSemi",
-                disabled ? "text-xl" : "text-base"
-            )}
-        >
+        <span className="capitalize mt-1 fontGroup-highlightSemi">
             {disabled ? `${label} (soon)` : label}
         </span>
         {/* {disabled && <div className="text-xs leading-3">(soon)</div>} */}
