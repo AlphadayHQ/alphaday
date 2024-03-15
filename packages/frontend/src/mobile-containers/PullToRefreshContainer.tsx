@@ -15,7 +15,10 @@ const PullToRefreshContainer: React.FC<PullToRefreshContainerProps> = ({
                 pullFactor={0.5}
                 pullMin={100}
                 pullMax={200}
-                onIonRefresh={handleRefresh}
+                onIonRefresh={(e) => {
+                    handleRefresh();
+                    e.detail.complete();
+                }}
             >
                 <IonRefresherContent />
             </IonRefresher>
