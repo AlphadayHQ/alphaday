@@ -90,9 +90,7 @@ const updateRemoteTaggedFilterOptionsState = (
         }))
         .sort(sortBySelected);
 
-const UserFiltersContainer: FC<{
-    onToggleFeedFilters: () => void;
-}> = ({ onToggleFeedFilters }) => {
+const UserFiltersContainer: FC = () => {
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
 
