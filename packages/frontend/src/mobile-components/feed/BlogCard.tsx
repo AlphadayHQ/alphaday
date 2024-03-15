@@ -1,4 +1,5 @@
 import { FC } from "react";
+import DOMPurify from "dompurify";
 import { TSuperfeedItem } from "src/api/types";
 import { computeDuration } from "src/utils/dateUtils";
 import {
