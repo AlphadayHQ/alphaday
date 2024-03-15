@@ -59,7 +59,7 @@ const updateLocalFilterOptionsState = (
 });
 
 /**
- * Note on filter data tyos: Some filters have a 1-to-1 correspondance with
+ * Note on filter data types: Some filters have a 1-to-1 correspondance with
  * the tag model. Others, like coins and projects/chains, include a parent tag
  * field which we use to identify the unique tag they belong to.
  */

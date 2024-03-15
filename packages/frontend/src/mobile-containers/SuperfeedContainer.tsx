@@ -215,23 +215,30 @@ const SuperfeedContainer: FC<{
         }
     }, [tagsFromSearch, keywordResults, setSearchState]);
 
+    const keywordOptions =
+        keywordResults?.map((kw) => ({
+            name: kw.tag.name,
+            slug: kw.tag.slug,
+            id: kw.tag.id,
+            label: kw.tag.name,
+            value: kw.tag.slug,
+        })) ?? [];
+
+    const initialSearchValues = tagsFromSearch
+        ?.split(",")
+        .map((tag) => {
+            return keywordOptions.filter((t) => t.slug === tag)[0];
+        })
+        .filter((t) => t);
+
     return (
         <AudioPlayerProvider>
             {(showSearchBar || (tagsFromSearch && keywordResults)) && (
                 <div className="py-2 px-5">
                     <FilterSearchBar
-                        tags={tagsFromSearch}
                         isFetchingKeywordResults={isFetchingKeywordResults}
                         setSearchState={setSearchState}
-                        tagsList={
-                            keywordResults?.map((kw) => ({
-                                name: kw.tag.name,
-                                slug: kw.tag.slug,
-                                id: kw.tag.id,
-                                label: kw.tag.name,
-                                value: kw.tag.slug,
-                            })) ?? []
-                        }
+                        keywords={keywordOptions}
                         onChange={(t) => {
                             if (t.length === 0) {
                                 history.push("/superfeed");
@@ -243,6 +250,7 @@ const SuperfeedContainer: FC<{
                                     .join(",")}`
                             );
                         }}
+                        initialSearchValues={initialSearchValues}
                     />
                 </div>
             )}
