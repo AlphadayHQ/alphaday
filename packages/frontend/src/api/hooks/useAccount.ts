@@ -132,7 +132,7 @@ export const useAccount: () => IAccount = () => {
         resetAuthState,
         accountHasSmartTags,
         accountSmartTagsUpdated,
-        userProfile: localProfile,
+        userProfile: localProfile ?? remoteProfile,
         cleanAuthState,
         saveProfile,
         isSavingProfile,
