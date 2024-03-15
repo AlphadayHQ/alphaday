@@ -11,7 +11,6 @@ import { Redirect, Route } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
@@ -133,7 +132,6 @@ const MobileApp: React.FC = () => {
 
     return (
         <IonApp className="theme-dark">
-            <PullToRefreshContainer />
             <IonReactRouter>
                 <IonRouterOutlet>
                     <Suspense fallback={<PreloaderPage />}>
