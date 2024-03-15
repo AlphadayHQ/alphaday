@@ -14,6 +14,7 @@ import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
 import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
+import CONFIG from "./config";
 import InstallPWAContainer from "./mobile-containers/InstallPWAContainer";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
@@ -39,15 +40,21 @@ const PortfolioHoldingsPage = lazyRetry(
     () => import("./mobile-pages/portfolio-holdings")
 );
 
+const { IS_DEV } = CONFIG;
+
 const CustomNavTab: React.FC<{
     label: string;
     Icon: React.FC<React.SVGProps<SVGSVGElement>>;
-}> = ({ label, Icon }) => (
+    disabled?: boolean;
+}> = ({ label, Icon, disabled }) => (
     <div className="inline-flex flex-col items-center justify-center py-3 px-2">
         <span className="rounded-2xl relative">
             <Icon />
         </span>
-        <span className="capitalize mt-1 fontGroup-highlightSemi">{label}</span>
+        <span className="capitalize mt-1 fontGroup-highlightSemi">
+            {disabled ? `${label} (soon)` : label}
+        </span>
+        {/* {disabled && <div className="text-xs leading-3">(soon)</div>} */}
     </div>
 );
 
@@ -117,11 +124,21 @@ const TabNavigator: React.FC = () => {
                 <IonTabButton tab="superfeed" href="/superfeed">
                     <CustomNavTab label="Superfeed" Icon={SuperfeedSVG} />
                 </IonTabButton>
-                <IonTabButton tab="market" href="/market">
-                    <CustomNavTab label="Market" Icon={MarketsSVG} />
-                </IonTabButton>
-                <IonTabButton tab="portfolio" href="/portfolio">
-                    <CustomNavTab label="Portfolio" Icon={PortfolioSVG} />
+                {IS_DEV && (
+                    <IonTabButton tab="market" href="/market">
+                        <CustomNavTab label="Market" Icon={MarketsSVG} />
+                    </IonTabButton>
+                )}
+                <IonTabButton
+                    tab="portfolio"
+                    href="/portfolio"
+                    disabled={!IS_DEV}
+                >
+                    <CustomNavTab
+                        label="Portfolio"
+                        Icon={PortfolioSVG}
+                        disabled={!IS_DEV}
+                    />
                 </IonTabButton>
             </IonTabBar>
         </IonTabs>
