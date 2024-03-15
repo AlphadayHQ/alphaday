@@ -87,7 +87,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
             <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
             {feed.map((item) => (
                 <FeedCard
-                    key={item.id}
+                    key={`${item.type}-${item.title}`}
                     item={item}
                     isAuthenticated={isAuthenticated}
                     selectedPodcast={selectedPodcast}

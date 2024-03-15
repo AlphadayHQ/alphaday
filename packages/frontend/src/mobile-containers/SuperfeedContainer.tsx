@@ -103,7 +103,7 @@ const SuperfeedContainer: FC<{
         true
     );
 
-    const [feedData, setfeedData] = useState<TSuperfeedItem[] | undefined>(
+    const [feedData, setFeedData] = useState<TSuperfeedItem[] | undefined>(
         undefined
     );
 
@@ -115,7 +115,7 @@ const SuperfeedContainer: FC<{
         didTimeRangeChange
     ) {
         Logger.debug("params changed, resetting feed data");
-        setfeedData(undefined);
+        setFeedData(undefined);
         reset();
     }
 
@@ -124,7 +124,7 @@ const SuperfeedContainer: FC<{
         feedDataResponse?.results !== undefined &&
         prevFeedDataResponseRef.current !== feedDataResponse?.results
     ) {
-        setfeedData((prevState) => [
+        setFeedData((prevState) => [
             ...(prevState ?? []),
             ...feedDataForCurrentPage,
         ]);
@@ -177,6 +177,19 @@ const SuperfeedContainer: FC<{
                         item.type
                     );
                 }
+                // update the UI optimistically
+                setFeedData((prevFeedData) => {
+                    return prevFeedData?.map((it) => {
+                        if (item.type === it.type && item.id === it.id) {
+                            return {
+                                ...it,
+                                likes: Number(it.likes) + 1,
+                                isLiked: true,
+                            };
+                        }
+                        return it;
+                    });
+                });
             } catch (e) {
                 Logger.error("SuperfeedModule::FeedCard: error liking item", e);
                 toast("Error sharing item", {
