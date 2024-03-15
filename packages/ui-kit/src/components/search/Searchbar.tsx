@@ -13,6 +13,7 @@ import Select, {
     OptionProps,
     PlaceholderProps,
     ValueContainerProps,
+    OptionsOrGroups,
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
@@ -145,7 +146,7 @@ const Feedback: FC<{ message: string | null | undefined }> = ({ message }) => {
 };
 
 export interface ISearchProps<Option = unknown> {
-    options?: Option[];
+    options?: OptionsOrGroups<Option, GroupBase<Option>>;
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
     placeholder: string;
