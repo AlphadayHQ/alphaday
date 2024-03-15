@@ -18,8 +18,8 @@ import {
     TFilterOptions,
     STATIC_FILTER_OPTIONS,
     TOption,
-} from "src/mobile-components/user-filters-modal/filterOptions";
-import UserFiltersModal from "src/mobile-components/user-filters-modal/UserFiltersModal";
+} from "src/mobile-components/user-filters/filterOptions";
+import UserFiltersModal from "src/mobile-components/user-filters/UserFiltersModal";
 
 /**
  * Sort options and show selected ones first
