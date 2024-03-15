@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Disclosure, Transition } from "@alphaday/ui-kit";
 import { EFeedItemType } from "src/api/types";
-import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
+// import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
 import { ReactComponent as LikeSVG } from "src/assets/svg/like.svg";
 import { ReactComponent as LikedSVG } from "src/assets/svg/liked.svg";
 import { ReactComponent as ShareSVG } from "src/assets/svg/share.svg";
@@ -26,11 +26,11 @@ export const ActionButtons: FC<{
     isAuthenticated: boolean;
 }> = ({
     onLike,
-    onCommentClick,
+    onCommentClick: _onCommentClick,
     onShare,
     isLiked,
     likes,
-    comments,
+    comments: _comments,
     isAuthenticated,
 }) => (
     <div className="flex mt-2.5">
@@ -42,10 +42,10 @@ export const ActionButtons: FC<{
             )}{" "}
             {likes > 0 && <span className="ml-0.5">{likes}</span>}
         </ActionButton>
-        <ActionButton onClick={onCommentClick} disabled={!isAuthenticated}>
+        {/* <ActionButton onClick={onCommentClick} disabled>
             <CommentSVG className="w-3 h-3 pt-[1px]" />
             <span className="ml-0.5">{comments}</span>
-        </ActionButton>
+        </ActionButton> */}
         <ActionButton onClick={onShare}>
             <ShareSVG className="w-3 h-3 pt-[1px]" />
         </ActionButton>
