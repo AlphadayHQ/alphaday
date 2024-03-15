@@ -28,6 +28,7 @@ import { EToastRole, toast } from "src/api/utils/toastUtils";
 import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters-modal/filterOptions";
+import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import CONFIG from "src/config";
 
 const buildTagsQueryParam = (syncedFilters: TSelectedFiltersSynced) =>
@@ -253,17 +254,19 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <SuperfeedModule
-                isLoading={isLoading}
-                isAuthenticated={isAuthenticated}
-                feed={feedData}
-                handlePaginate={handleNextPage}
-                toggleShowFeedFilters={onToggleFeedFilters}
-                selectedPodcast={selectedPodcast}
-                setSelectedPodcast={setSelectedPodcast}
-                onShareItem={shareItem}
-                onLikeItem={likeItem}
-            />
+            <PullToRefreshContainer handleRefresh={reset}>
+                <SuperfeedModule
+                    isLoading={isLoading}
+                    isAuthenticated={isAuthenticated}
+                    feed={feedData}
+                    handlePaginate={handleNextPage}
+                    toggleShowFeedFilters={onToggleFeedFilters}
+                    selectedPodcast={selectedPodcast}
+                    setSelectedPodcast={setSelectedPodcast}
+                    onShareItem={shareItem}
+                    onLikeItem={likeItem}
+                />
+            </PullToRefreshContainer>
         </AudioPlayerProvider>
     );
 };
