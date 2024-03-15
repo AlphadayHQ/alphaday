@@ -22,7 +22,7 @@ import "./customIonicStyles.scss";
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
-const FiltersPage = lazyRetry(() => import("./mobile-pages/filters"));
+const UserFiltersPage = lazyRetry(() => import("./mobile-pages/user-filters"));
 const PortfolioPage = lazyRetry(() => import("./mobile-pages/portfolio"));
 const NotificationsPage = lazyRetry(
     () => import("./mobile-pages/notifications")
@@ -73,6 +73,9 @@ const TabNavigator: React.FC = () => {
                 <Route exact path="/superfeed/user-settings">
                     <UserSettingsPage />
                 </Route>
+                <Route exact path="/superfeed/user-filters">
+                    <UserFiltersPage />
+                </Route>
                 <Route exact path="/superfeed/auth">
                     <AuthPage />
                 </Route>
@@ -102,8 +105,6 @@ const TabNavigator: React.FC = () => {
                 <Route path="/portfolio/add-wallet" exact>
                     <AddWalletPage />
                 </Route>
-                <Route path="/filters" exact component={FiltersPage} />
-
                 <Route
                     path="/portfolio/add-holding"
                     exact

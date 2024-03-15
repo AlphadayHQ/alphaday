@@ -18,8 +18,8 @@ import {
     TFilterOptions,
     STATIC_FILTER_OPTIONS,
     TOption,
-} from "src/mobile-components/user-filters-modal/filterOptions";
-import UserFiltersModal from "src/mobile-components/user-filters-modal/UserFiltersModal";
+} from "src/mobile-components/user-filters/filterOptions";
+import UserFilters from "src/mobile-components/user-filters/UserFilters";
 
 /**
  * Sort options and show selected ones first
@@ -90,10 +90,7 @@ const updateRemoteTaggedFilterOptionsState = (
         }))
         .sort(sortBySelected);
 
-const UserFiltersContainer: FC<{
-    onToggleFeedFilters: () => void;
-    show: boolean;
-}> = ({ onToggleFeedFilters, show }) => {
+const UserFiltersContainer: FC = () => {
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
 
@@ -143,9 +140,7 @@ const UserFiltersContainer: FC<{
     };
 
     return (
-        <UserFiltersModal
-            onToggleFeedFilters={onToggleFeedFilters}
-            show={show}
+        <UserFilters
             filterOptions={filterOptions}
             isLoading={isLoading}
             onSelectFilter={handleSelectFilter}
