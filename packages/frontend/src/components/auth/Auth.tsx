@@ -56,6 +56,7 @@ export const Auth: FC<AuthProps> = ({
                 <button
                     type="button"
                     className="text-primary text-sm font-bold underline underline-offset-4 hover:text-accentVariant200 active:hover:text-accentVariant100"
+                    onClick={handleEmailSubmit}
                 >
                     Resend now
                 </button>
