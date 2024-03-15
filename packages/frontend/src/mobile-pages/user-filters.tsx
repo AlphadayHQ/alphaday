@@ -14,7 +14,7 @@ const UserSettings: React.FC = () => {
                     history.length > 1 ? history.goBack() : history.push("/")
                 }
             >
-                <UserFiltersContainer onToggleFeedFilters={() => ({})} />
+                <UserFiltersContainer />
             </PagedMobileLayout>
         </IonPage>
     );
