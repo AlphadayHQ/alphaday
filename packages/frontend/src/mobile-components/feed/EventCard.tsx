@@ -144,6 +144,11 @@ export const EventCard: FC<{
                         <p className="mt-2 mb-1 fontGroup-highlight line-clamp-3">
                             {title}
                         </p>
+                        {location && (
+                            <p className="mt-0.5 mb-0 line-clamp-2">
+                                {location}
+                            </p>
+                        )}
                         <p
                             // DOMPurify will 100% secure dangerouslySetInnerHTML
                             // eslint-disable-next-line react/no-danger
@@ -155,22 +160,7 @@ export const EventCard: FC<{
                             className="m-0 text-primaryVariant100 prose-p:text-primaryVariant100 prose-a:text-secondaryOrange50 line-clamp-4"
                         />
                         <ReadMoreLink url={url} />
-                        {location && (
-                            <p className="mt-0.5 mb-0 line-clamp-2">
-                                {location}
-                            </p>
-                        )}
-                        <p className="mt-2 text-primaryVariant100 line-clamp-4">
-                            {shortDescription}
-                        </p>
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:underline fontGroup-supportBold mb-0 mt-0.5 leading-5 [text-underline-offset:_6px]"
-                        >
-                            Read more
-                        </a>
+
                         <div className="my-2 flex justify-between">
                             <div className="flex flex-col">
                                 <TagButton

@@ -62,7 +62,7 @@ export const ImageCard: FC<{
                                         <img
                                             src={image || undefined}
                                             alt=""
-                                            className="h-24 rounded-lg object-cover"
+                                            className="h-24  max-w-[120px] rounded-lg object-cover"
                                             onError={imgOnError}
                                         />
                                     </div>
