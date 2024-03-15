@@ -15,7 +15,7 @@ const PagedMobileLayout: FC<{
                 handleBack={handleBack}
                 handleClose={handleClose}
             />
-            <div className="w-full flex flex-grow min-w-max">{children}</div>
+            <div className="w-full flex flex-grow flex-col">{children}</div>
         </ScrollBar>
     );
 };
