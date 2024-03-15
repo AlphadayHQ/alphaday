@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import DOMPurify from "dompurify";
 import { TSuperfeedItem } from "src/api/types";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
@@ -35,6 +36,8 @@ export const SocialCard: FC<{
         shortDescription,
         date,
     } = item;
+
+    console.log(item.type, item.shortDescription);
 
     return (
         <FeedItemDisclosure>
@@ -112,9 +115,16 @@ export const SocialCard: FC<{
                             className="w-full rounded-lg object-cover"
                             onError={imgOnError}
                         />
-                        <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {shortDescription}
-                        </p>
+                        <p
+                            // DOMPurify will 100% secure dangerouslySetInnerHTML
+                            // eslint-disable-next-line react/no-danger
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(
+                                    shortDescription || ""
+                                ),
+                            }}
+                            className="m-0 text-primaryVariant100 prose-p:text-primaryVariant100 prose-a:text-secondaryOrange50 line-clamp-4"
+                        />
                         <ReadMoreLink url={url} />
                         <div className="my-2 flex justify-between">
                             <TagButtons tags={tags} onClick={() => {}} />
