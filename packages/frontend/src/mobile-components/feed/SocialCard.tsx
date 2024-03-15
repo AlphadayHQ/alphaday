@@ -37,8 +37,6 @@ export const SocialCard: FC<{
         date,
     } = item;
 
-    console.log(item.type, item.shortDescription);
-
     return (
         <FeedItemDisclosure>
             {({ open }) => (
