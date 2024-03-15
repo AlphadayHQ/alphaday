@@ -12,6 +12,8 @@ import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
 import CONFIG from "src/config";
 import { EditProfileModal } from "./EditProfileModal";
 
+const { IS_DEV } = CONFIG;
+
 const NonAuthenticatedSection = () => {
     return (
         <div className="flex flex-col flex-start w-full items-start mb-4">
@@ -54,16 +56,18 @@ const AuthenticatedSection: FC<{ profile: TUserProfile | undefined }> = ({
                     Hi {profile?.handle}!
                 </p>
             </div>
-            <div className="relative flex flex-col items-center fontGroup-highlight !font-semibold py-4 px-4 bg-backgroundVariant300 w-full mt-5 justify-center rounded-lg">
-                <span className="w-1.5 h-1.5 rounded-full bg-secondaryOrangeSoda absolute top-4 right-4" />
-                <p className="block ">Some major notification here...</p>
-                <Link
-                    to="/superfeed/notifications"
-                    className="fontGroup-highlight border-b border-accentVariant100 m-0"
-                >
-                    See all notifications
-                </Link>
-            </div>
+            {IS_DEV && (
+                <div className="relative flex flex-col items-center fontGroup-highlight !font-semibold py-4 px-4 bg-backgroundVariant300 w-full mt-5 justify-center rounded-lg">
+                    <span className="w-1.5 h-1.5 rounded-full bg-secondaryOrangeSoda absolute top-4 right-4" />
+                    <p className="block ">Some major notification here...</p>
+                    <Link
+                        to="/superfeed/notifications"
+                        className="fontGroup-highlight border-b border-accentVariant100 m-0"
+                    >
+                        See all notifications
+                    </Link>
+                </div>
+            )}
         </div>
     );
 };
