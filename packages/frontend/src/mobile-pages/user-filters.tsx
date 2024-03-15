@@ -1,7 +1,7 @@
 import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
-import UserSettingsContainer from "src/mobile-containers/UserSettingsContainer";
+import UserFiltersContainer from "src/mobile-containers/UserFiltersContainer";
 
 const UserSettings: React.FC = () => {
     const history = useHistory();
@@ -9,12 +9,12 @@ const UserSettings: React.FC = () => {
     return (
         <IonPage>
             <PagedMobileLayout
-                title=""
+                title="Superfeed filters"
                 handleBack={() =>
                     history.length > 1 ? history.goBack() : history.push("/")
                 }
             >
-                <UserSettingsContainer />
+                <UserFiltersContainer onToggleFeedFilters={() => ({})} />
             </PagedMobileLayout>
         </IonPage>
     );

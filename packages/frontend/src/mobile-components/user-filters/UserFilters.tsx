@@ -6,7 +6,6 @@ import {
     TFilterKeyword,
     TGroupedFilterKeywords,
 } from "src/api/types";
-import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import FilterSearchBar from "../FilterSearchBar";
 import { TFilterOptions, TSyncedFilterOptions } from "./filterOptions";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
@@ -43,8 +42,7 @@ function reduceToArrayOfSlugs(data: TSyncedFilterOptions) {
     });
     return result;
 }
-interface IUserFiltersModalProps {
-    onToggleFeedFilters: () => void;
+interface IUserFiltersProps {
     filterOptions: TFilterOptions;
     isLoading: boolean;
     onSelectFilter: (slug: string, type: ESupportedFilters) => void;
@@ -53,8 +51,7 @@ interface IUserFiltersModalProps {
     isFetchingKeywordResults: boolean;
 }
 
-const UserFilters: FC<IUserFiltersModalProps> = ({
-    onToggleFeedFilters,
+const UserFilters: FC<IUserFiltersProps> = ({
     filterOptions,
     isLoading,
     onSelectFilter,
@@ -139,19 +136,8 @@ const UserFilters: FC<IUserFiltersModalProps> = ({
     }, [filterKeywords]);
 
     return (
-        <div className="px-5 w-full">
+        <div className="w-full">
             <ScrollBar className="p-4">
-                <div className="flex flex-start w-full items-center mb-4">
-                    <ChevronSVG
-                        onClick={onToggleFeedFilters}
-                        tabIndex={0}
-                        role="button"
-                        className="w-6 h-6 mr-2 rotate-180 self-center -ml-1.5"
-                    />
-                    <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0 focus:outline-transparent">
-                        Superfeed filters
-                    </h1>
-                </div>
                 <div className="w-full">
                     <p className="fontGroup-highlight">
                         Craft your ideal superfeed by customizing the filters
