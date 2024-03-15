@@ -31,10 +31,10 @@ export const ActionButtons: FC<{
     isLiked,
     likes,
     comments,
-    isAuthenticated,
+    isAuthenticated: _isAuthenticated,
 }) => (
     <div className="flex mt-2.5">
-        <ActionButton onClick={onLike} disabled={!isAuthenticated}>
+        <ActionButton onClick={onLike} disabled>
             {isLiked ? (
                 <LikedSVG className="w-3 h-3 pt-[1px]" />
             ) : (
@@ -42,7 +42,7 @@ export const ActionButtons: FC<{
             )}{" "}
             {likes > 0 && <span className="ml-0.5">{likes}</span>}
         </ActionButton>
-        <ActionButton onClick={onCommentClick} disabled={!isAuthenticated}>
+        <ActionButton onClick={onCommentClick} disabled>
             <CommentSVG className="w-3 h-3 pt-[1px]" />
             <span className="ml-0.5">{comments}</span>
         </ActionButton>

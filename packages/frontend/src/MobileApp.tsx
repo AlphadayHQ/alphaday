@@ -15,7 +15,6 @@ import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer
 import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
-import InstallPWAContainer from "./mobile-containers/InstallPWAContainer";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
@@ -134,7 +133,6 @@ const MobileApp: React.FC = () => {
 
     return (
         <IonApp className="theme-dark">
-            <InstallPWAContainer />
             <PullToRefreshContainer />
             <IonReactRouter>
                 <IonRouterOutlet>
