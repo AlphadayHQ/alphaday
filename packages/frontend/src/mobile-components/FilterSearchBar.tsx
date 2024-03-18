@@ -12,7 +12,7 @@ interface FilterSearchBarProps<T extends TOption> {
     setSearchState: (value: string) => void;
     onChange: (value: readonly T[]) => void;
     isFetchingKeywordResults: boolean;
-    selectedFilters?: string[];
+    isOptionSelected?: (option: T) => boolean;
     message?: string | null;
     debounceTime?: number | undefined;
 }
@@ -23,7 +23,7 @@ const FilterSearchBar = <T extends TOption>({
     keywords,
     initialSearchValues,
     isFetchingKeywordResults,
-    selectedFilters,
+    isOptionSelected,
     message,
     debounceTime,
 }: FilterSearchBarProps<T>) => {
@@ -49,7 +49,7 @@ const FilterSearchBar = <T extends TOption>({
                     isFetchingKeywordResults={isFetchingKeywordResults}
                     isFetchingTrendingKeywordResults={false}
                     updateSearch={false}
-                    selectedOptionValues={selectedFilters}
+                    isOptionSelected={isOptionSelected}
                     message={message}
                 />
             </span>
