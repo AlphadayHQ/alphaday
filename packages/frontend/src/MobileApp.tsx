@@ -11,11 +11,10 @@ import { Redirect, Route } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
-import InstallPWAContainer from "./mobile-containers/InstallPWAContainer";
+import CONFIG from "./config";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
@@ -23,7 +22,7 @@ import "./customIonicStyles.scss";
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
-const FiltersPage = lazyRetry(() => import("./mobile-pages/filters"));
+const UserFiltersPage = lazyRetry(() => import("./mobile-pages/user-filters"));
 const PortfolioPage = lazyRetry(() => import("./mobile-pages/portfolio"));
 const NotificationsPage = lazyRetry(
     () => import("./mobile-pages/notifications")
@@ -40,15 +39,21 @@ const PortfolioHoldingsPage = lazyRetry(
     () => import("./mobile-pages/portfolio-holdings")
 );
 
+const { IS_DEV } = CONFIG;
+
 const CustomNavTab: React.FC<{
     label: string;
     Icon: React.FC<React.SVGProps<SVGSVGElement>>;
-}> = ({ label, Icon }) => (
+    disabled?: boolean;
+}> = ({ label, Icon, disabled }) => (
     <div className="inline-flex flex-col items-center justify-center py-3 px-2">
         <span className="rounded-2xl relative">
             <Icon />
         </span>
-        <span className="capitalize mt-1 fontGroup-highlightSemi">{label}</span>
+        <span className="capitalize mt-1 fontGroup-highlightSemi">
+            {disabled ? `${label} (soon)` : label}
+        </span>
+        {/* {disabled && <div className="text-xs leading-3">(soon)</div>} */}
     </div>
 );
 
@@ -67,6 +72,9 @@ const TabNavigator: React.FC = () => {
                 </Route>
                 <Route exact path="/superfeed/user-settings">
                     <UserSettingsPage />
+                </Route>
+                <Route exact path="/superfeed/user-filters">
+                    <UserFiltersPage />
                 </Route>
                 <Route exact path="/superfeed/auth">
                     <AuthPage />
@@ -97,8 +105,6 @@ const TabNavigator: React.FC = () => {
                 <Route path="/portfolio/add-wallet" exact>
                     <AddWalletPage />
                 </Route>
-                <Route path="/filters" exact component={FiltersPage} />
-
                 <Route
                     path="/portfolio/add-holding"
                     exact
@@ -118,11 +124,21 @@ const TabNavigator: React.FC = () => {
                 <IonTabButton tab="superfeed" href="/superfeed">
                     <CustomNavTab label="Superfeed" Icon={SuperfeedSVG} />
                 </IonTabButton>
-                <IonTabButton tab="market" href="/market">
-                    <CustomNavTab label="Market" Icon={MarketsSVG} />
-                </IonTabButton>
-                <IonTabButton tab="portfolio" href="/portfolio">
-                    <CustomNavTab label="Portfolio" Icon={PortfolioSVG} />
+                {IS_DEV && (
+                    <IonTabButton tab="market" href="/market">
+                        <CustomNavTab label="Market" Icon={MarketsSVG} />
+                    </IonTabButton>
+                )}
+                <IonTabButton
+                    tab="portfolio"
+                    href="/portfolio"
+                    disabled={!IS_DEV}
+                >
+                    <CustomNavTab
+                        label="Portfolio"
+                        Icon={PortfolioSVG}
+                        disabled={!IS_DEV}
+                    />
                 </IonTabButton>
             </IonTabBar>
         </IonTabs>
@@ -134,8 +150,6 @@ const MobileApp: React.FC = () => {
 
     return (
         <IonApp className="theme-dark">
-            <InstallPWAContainer />
-            <PullToRefreshContainer />
             <IonReactRouter>
                 <IonRouterOutlet>
                     <Suspense fallback={<PreloaderPage />}>

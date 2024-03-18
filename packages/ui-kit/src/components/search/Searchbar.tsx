@@ -13,6 +13,7 @@ import Select, {
     OptionProps,
     PlaceholderProps,
     ValueContainerProps,
+    OptionsOrGroups,
 } from "react-select";
 // TODO (xavier-charles): add slugify util
 // import { slugify } from "src/api/utils/textUtils";
@@ -83,13 +84,13 @@ const CustomMenuList = (showTrending: boolean) => {
 };
 
 const CustomOption =
-    (selectedOptionValues: string[] | undefined) =>
+    <T,>(isOptionSelected: ((option: T) => boolean) | undefined) =>
     <Option,>({
         isSelected,
         ...props
     }: OptionProps<Option, true, GroupBase<Option>>) => {
-        // @ts-ignore value exists on OptionProps but is not typed correctly.
-        const optionSelected = selectedOptionValues?.includes(props.value);
+        // @ts-ignore T and Option are the same
+        const optionSelected = isOptionSelected?.(props.data);
 
         return (
             <div
@@ -145,7 +146,7 @@ const Feedback: FC<{ message: string | null | undefined }> = ({ message }) => {
 };
 
 export interface ISearchProps<Option = unknown> {
-    options?: Option[];
+    options?: OptionsOrGroups<Option, GroupBase<Option>>;
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
     placeholder: string;
@@ -156,7 +157,7 @@ export interface ISearchProps<Option = unknown> {
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
     showBackdrop?: boolean;
-    selectedOptionValues?: string[];
+    isOptionSelected?: (option: Option) => boolean;
     message?: string | null;
     customComponents?:
         | Partial<SelectComponentsConfig<Option, true, GroupBase<Option>>>
@@ -188,7 +189,7 @@ export const SearchBar = <T,>({
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
     showBackdrop,
-    selectedOptionValues,
+    isOptionSelected,
     message,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
     const [isFocused, setIsFocused] = useState(false);
@@ -325,7 +326,7 @@ export const SearchBar = <T,>({
                     DropdownIndicator: null,
                     NoOptionsMessage: CustomNoOptionsMessage(isFetching),
                     MenuList: CustomMenuList(showTrending),
-                    Option: CustomOption(selectedOptionValues),
+                    Option: CustomOption<T>(isOptionSelected),
                     Input: CustomInput,
                     Placeholder: CustomPlaceholder,
                     ValueContainer: CustomValueContainer,

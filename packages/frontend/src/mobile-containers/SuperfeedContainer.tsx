@@ -27,7 +27,8 @@ import { shareData } from "src/api/utils/shareUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
-import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters-modal/filterOptions";
+import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters/filterOptions";
+import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import CONFIG from "src/config";
 
 const buildTagsQueryParam = (syncedFilters: TSelectedFiltersSynced) =>
@@ -103,7 +104,7 @@ const SuperfeedContainer: FC<{
         true
     );
 
-    const [feedData, setfeedData] = useState<TSuperfeedItem[] | undefined>(
+    const [feedData, setFeedData] = useState<TSuperfeedItem[] | undefined>(
         undefined
     );
 
@@ -115,7 +116,7 @@ const SuperfeedContainer: FC<{
         didTimeRangeChange
     ) {
         Logger.debug("params changed, resetting feed data");
-        setfeedData(undefined);
+        setFeedData(undefined);
         reset();
     }
 
@@ -124,7 +125,7 @@ const SuperfeedContainer: FC<{
         feedDataResponse?.results !== undefined &&
         prevFeedDataResponseRef.current !== feedDataResponse?.results
     ) {
-        setfeedData((prevState) => [
+        setFeedData((prevState) => [
             ...(prevState ?? []),
             ...feedDataForCurrentPage,
         ]);
@@ -177,6 +178,19 @@ const SuperfeedContainer: FC<{
                         item.type
                     );
                 }
+                // update the UI optimistically
+                setFeedData((prevFeedData) => {
+                    return prevFeedData?.map((it) => {
+                        if (item.type === it.type && item.id === it.id) {
+                            return {
+                                ...it,
+                                likes: Number(it.likes) + 1,
+                                isLiked: true,
+                            };
+                        }
+                        return it;
+                    });
+                });
             } catch (e) {
                 Logger.error("SuperfeedModule::FeedCard: error liking item", e);
                 toast("Error sharing item", {
@@ -214,23 +228,30 @@ const SuperfeedContainer: FC<{
         }
     }, [tagsFromSearch, keywordResults, setSearchState]);
 
+    const keywordOptions =
+        keywordResults?.map((kw) => ({
+            name: kw.tag.name,
+            slug: kw.tag.slug,
+            id: kw.tag.id,
+            label: kw.tag.name,
+            value: kw.tag.slug,
+        })) ?? [];
+
+    const initialSearchValues = tagsFromSearch
+        ?.split(",")
+        .map((tag) => {
+            return keywordOptions.filter((t) => t.slug === tag)[0];
+        })
+        .filter((t) => t);
+
     return (
         <AudioPlayerProvider>
             {(showSearchBar || (tagsFromSearch && keywordResults)) && (
                 <div className="py-2 px-5">
                     <FilterSearchBar
-                        tags={tagsFromSearch}
                         isFetchingKeywordResults={isFetchingKeywordResults}
                         setSearchState={setSearchState}
-                        tagsList={
-                            keywordResults?.map((kw) => ({
-                                name: kw.tag.name,
-                                slug: kw.tag.slug,
-                                id: kw.tag.id,
-                                label: kw.tag.name,
-                                value: kw.tag.slug,
-                            })) ?? []
-                        }
+                        keywords={keywordOptions}
                         onChange={(t) => {
                             if (t.length === 0) {
                                 history.push("/superfeed");
@@ -242,20 +263,23 @@ const SuperfeedContainer: FC<{
                                     .join(",")}`
                             );
                         }}
+                        initialSearchValues={initialSearchValues}
                     />
                 </div>
             )}
-            <SuperfeedModule
-                isLoading={isLoading}
-                isAuthenticated={isAuthenticated}
-                feed={feedData}
-                handlePaginate={handleNextPage}
-                toggleShowFeedFilters={onToggleFeedFilters}
-                selectedPodcast={selectedPodcast}
-                setSelectedPodcast={setSelectedPodcast}
-                onShareItem={shareItem}
-                onLikeItem={likeItem}
-            />
+            <PullToRefreshContainer handleRefresh={reset}>
+                <SuperfeedModule
+                    isLoading={isLoading}
+                    isAuthenticated={isAuthenticated}
+                    feed={feedData}
+                    handlePaginate={handleNextPage}
+                    toggleShowFeedFilters={onToggleFeedFilters}
+                    selectedPodcast={selectedPodcast}
+                    setSelectedPodcast={setSelectedPodcast}
+                    onShareItem={shareItem}
+                    onLikeItem={likeItem}
+                />
+            </PullToRefreshContainer>
         </AudioPlayerProvider>
     );
 };
