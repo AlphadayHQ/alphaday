@@ -7,7 +7,7 @@ import {
     TGroupedFilterKeywords,
 } from "src/api/types";
 import FilterSearchBar from "../FilterSearchBar";
-import { TFilterOptions, TSyncedFilterOptions } from "./filterOptions";
+import { TFilterOptions } from "./filterOptions";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
 
 type TFilterKeywordOption = TFilterKeyword & {
@@ -25,23 +25,6 @@ const GROUP_NAME_MAP: Record<string, string> = {
     [ESupportedFilters.ConceptTags]: "Other",
 };
 
-const flattenGroupedKeywords = <T extends object>(
-    obj: Record<string, T[]>
-): T[] => {
-    return Object.values(obj).reduce((acc, curr) => [...acc, ...curr], []);
-};
-
-function reduceToArrayOfSlugs(data: TSyncedFilterOptions) {
-    const result: string[] = [];
-    Object.values(data).forEach((value) => {
-        value.options.forEach((option) => {
-            if (option.selected) {
-                result.push(option.slug);
-            }
-        });
-    });
-    return result;
-}
 interface IUserFiltersProps {
     filterOptions: TFilterOptions;
     isLoading: boolean;
@@ -82,33 +65,38 @@ const UserFilters: FC<IUserFiltersProps> = ({
         );
     };
 
-    const selectedSycnedFilters = reduceToArrayOfSlugs(
-        filterOptions.syncedFilterOptions
-    );
+    const isFilterSelected = (type: ESupportedFilters, slug: string) => {
+        if (
+            type === ESupportedFilters.Chains ||
+            type === ESupportedFilters.Coins ||
+            type === ESupportedFilters.ConceptTags
+        ) {
+            return !!filterOptions.syncedFilterOptions[type].options.find(
+                (option) => option.slug === slug
+            )?.selected;
+        }
+        return false;
+    };
 
     let timer: NodeJS.Timeout;
     const handleSelectFilter = (
+        name: string,
         slug: string,
         filterType: ESupportedFilters
     ) => {
         onSelectFilter(slug, filterType);
-        const keyword = flattenGroupedKeywords(filterKeywords ?? {}).find(
-            (k) => k.slug === slug && k.type === filterType
-        );
         if (
-            (filterType === ESupportedFilters.Chains ||
-                filterType === ESupportedFilters.Coins ||
-                filterType === ESupportedFilters.ConceptTags) &&
-            keyword
+            filterType === ESupportedFilters.Chains ||
+            filterType === ESupportedFilters.Coins ||
+            filterType === ESupportedFilters.ConceptTags
         ) {
-            const isSelected = selectedSycnedFilters.some(
-                (selectedSlug) => selectedSlug === keyword.slug
-            );
+            const isSelected = isFilterSelected(filterType, slug);
+
             const filterLabel =
                 filterOptions.syncedFilterOptions[filterType].label;
 
             setMessage(
-                `${!isSelected ? "Added" : "Removed"} ${keyword.name} ${!isSelected ? "to" : "from"} ${filterLabel} filters`
+                `${!isSelected ? "Added" : "Removed"} ${name} ${!isSelected ? "to" : "from"} ${filterLabel} filters`
             );
             clearTimeout(timer);
             timer = setTimeout(() => setMessage(null), 3000);
@@ -137,7 +125,7 @@ const UserFilters: FC<IUserFiltersProps> = ({
 
     return (
         <div className="w-full">
-            <ScrollBar className="p-4">
+            <ScrollBar className="p-4 pr-[11px]">
                 <div className="w-full">
                     <p className="fontGroup-highlight">
                         Craft your ideal superfeed by customizing the filters
@@ -149,11 +137,17 @@ const UserFilters: FC<IUserFiltersProps> = ({
                             keywords={filterKeywordOptions}
                             onChange={(values) =>
                                 values.forEach((kw) =>
-                                    handleSelectFilter(kw.slug, kw.type)
+                                    handleSelectFilter(
+                                        kw.name,
+                                        kw.slug,
+                                        kw.type
+                                    )
                                 )
                             }
                             isFetchingKeywordResults={isFetchingKeywordResults}
-                            selectedFilters={selectedSycnedFilters}
+                            isOptionSelected={(op) =>
+                                isFilterSelected(op.type, op.slug)
+                            }
                             message={message}
                         />
                     </div>
