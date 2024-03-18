@@ -111,83 +111,106 @@ export enum EMobileRoutePaths {
     Market = `${BASE_TABS_ROUTE}market`,
 }
 
-type IMobileRoute = {
-    path: string;
-    component: React.FC;
-    exact?: boolean;
-    authWalled?: boolean;
-};
-export const mobileRoutes: IMobileRoute[] = [
+type TMobileRoute =
+    | {
+          path: string;
+          component: React.FC;
+          exact?: boolean;
+          authWalled?: boolean;
+          redirectTo?: string;
+          type: "regular";
+      }
+    | {
+          path: string;
+          redirectTo: string;
+          exact?: boolean;
+          type: "redirect";
+      };
+export const mobileRoutes: TMobileRoute[] = [
     {
         path: EMobileRoutePaths.Base,
         component: SuperfeedPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.Superfeed,
         component: SuperfeedPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.Search,
         component: SuperfeedPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.UserSettings,
         component: UserSettingsPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.UserFilters,
         component: UserFiltersPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.Auth,
         component: AuthPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.AuthFallback,
         component: AuthPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.Notifications,
         component: NotificationsPage,
         exact: true,
         authWalled: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.Market,
         component: Placeholder,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.Portfolio,
         component: PortfolioPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.PortfolioConnectWallet,
         component: ConnectWalletPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.PortfolioAddWallet,
         component: AddWalletPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.PortfolioAddHolding,
         component: AddHoldingPage,
         exact: true,
+        type: "regular",
     },
     {
         path: EMobileRoutePaths.PortfolioHoldings,
         component: PortfolioHoldingsPage,
         exact: true,
+        type: "regular",
     },
     /**
      * The following are desktop routes.
@@ -197,17 +220,23 @@ export const mobileRoutes: IMobileRoute[] = [
      */
     {
         path: EDesktopRoutePaths.Boards,
-        component: SuperfeedPage,
-        exact: true,
+        redirectTo: EMobileRoutePaths.Superfeed,
+        type: "redirect",
     },
     {
         path: EDesktopRoutePaths.Calendar,
-        component: SuperfeedPage,
-        exact: true,
+        redirectTo: EMobileRoutePaths.Superfeed,
+        type: "redirect",
     },
     {
         path: EDesktopRoutePaths.CalendarEvent,
-        component: SuperfeedPage,
-        exact: true,
+        redirectTo: EMobileRoutePaths.Superfeed,
+        type: "redirect",
     },
+    // this doesn't work with IonTabs
+    // {
+    //     path: "*",
+    //     redirectTo: EMobileRoutePaths.Superfeed,
+    //     type: "redirect",
+    // },
 ];
