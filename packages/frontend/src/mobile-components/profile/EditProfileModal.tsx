@@ -34,36 +34,38 @@ export const EditProfileModal: FC<IEditProfileModal> = ({
 
     return (
         <FullPageModal isOpen={show} closeModal={onCloseModal}>
-            <div className="flex flex-start w-full items-center mb-4">
-                <ChevronSVG
-                    onClick={onCloseModal}
-                    tabIndex={0}
-                    role="button"
-                    className="w-6 h-6 mr-2 rotate-180 -ml-1.5"
-                />
-                <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0">
-                    Edit Profile
-                </h1>
-            </div>
-            <div className="flex flex-col mt-5">
-                <div className="w-full items-center mb-5 pb-2.5">
-                    <FormInput
-                        value={handle ?? profile?.handle ?? ""}
-                        label="Handle"
-                        type="text"
-                        onChange={handleHandleChange}
-                        placeholder="Pick a handle"
+            <div className="p-5">
+                <div className="flex flex-start w-full items-center mb-4">
+                    <ChevronSVG
+                        onClick={onCloseModal}
+                        tabIndex={0}
+                        role="button"
+                        className="w-6 h-6 mr-2 rotate-180 -ml-1.5"
                     />
+                    <h1 className="uppercase fontGroup-major !text-lg flex-grow text-center mb-0">
+                        Edit Profile
+                    </h1>
                 </div>
-            </div>
-            <div className="flex flex-col ">
-                <Button
-                    className="w-full border-0 justify-center items-center text-base font-bold px-4 py-6 bg-accentVariant100 text-primary rounded-lg tracking-tight"
-                    onClick={handleSaveProfile}
-                    disabled={isSavingProfile}
-                >
-                    Save
-                </Button>
+                <div className="flex flex-col mt-5">
+                    <div className="w-full items-center mb-5 pb-2.5">
+                        <FormInput
+                            value={handle ?? profile?.handle ?? ""}
+                            label="Handle"
+                            type="text"
+                            onChange={handleHandleChange}
+                            placeholder="Pick a handle"
+                        />
+                    </div>
+                </div>
+                <div className="flex flex-col ">
+                    <Button
+                        className="w-full border-0 justify-center items-center text-base font-bold px-4 py-6 bg-accentVariant100 text-primary rounded-lg tracking-tight"
+                        onClick={handleSaveProfile}
+                        disabled={isSavingProfile}
+                    >
+                        Save
+                    </Button>
+                </div>
             </div>
         </FullPageModal>
     );
