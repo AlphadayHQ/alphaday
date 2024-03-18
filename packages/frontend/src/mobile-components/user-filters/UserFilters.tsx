@@ -125,7 +125,7 @@ const UserFilters: FC<IUserFiltersProps> = ({
 
     return (
         <div className="w-full">
-            <ScrollBar className="p-4">
+            <ScrollBar className="p-4 pr-[11px]">
                 <div className="w-full">
                     <p className="fontGroup-highlight">
                         Craft your ideal superfeed by customizing the filters
