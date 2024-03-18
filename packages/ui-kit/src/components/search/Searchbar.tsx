@@ -89,8 +89,8 @@ const CustomOption =
         isSelected,
         ...props
     }: OptionProps<Option, true, GroupBase<Option>>) => {
-        // @ts-ignore data exists on OptionProps but is not typed correctly.
-        const optionSelected = isOptionSelected(props.data);
+        // @ts-ignore T and Option are the same
+        const optionSelected = isOptionSelected?.(props.data);
 
         return (
             <div
