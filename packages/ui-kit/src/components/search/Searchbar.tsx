@@ -84,13 +84,13 @@ const CustomMenuList = (showTrending: boolean) => {
 };
 
 const CustomOption =
-    <T,>(IsOptionSelected: ((option: T) => boolean) | undefined) =>
+    <T,>(isOptionSelected: ((option: T) => boolean) | undefined) =>
     <Option,>({
         isSelected,
         ...props
     }: OptionProps<Option, true, GroupBase<Option>>) => {
         // @ts-ignore data exists on OptionProps but is not typed correctly.
-        const optionSelected = IsOptionSelected(props.data);
+        const optionSelected = isOptionSelected(props.data);
 
         return (
             <div
@@ -157,7 +157,7 @@ export interface ISearchProps<Option = unknown> {
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
     showBackdrop?: boolean;
-    IsOptionSelected?: (option: Option) => boolean;
+    isOptionSelected?: (option: Option) => boolean;
     message?: string | null;
     customComponents?:
         | Partial<SelectComponentsConfig<Option, true, GroupBase<Option>>>
@@ -189,7 +189,7 @@ export const SearchBar = <T,>({
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
     showBackdrop,
-    IsOptionSelected,
+    isOptionSelected,
     message,
 }: ISearchProps<T>): ReturnType<React.FC<ISearchProps>> => {
     const [isFocused, setIsFocused] = useState(false);
@@ -326,7 +326,7 @@ export const SearchBar = <T,>({
                     DropdownIndicator: null,
                     NoOptionsMessage: CustomNoOptionsMessage(isFetching),
                     MenuList: CustomMenuList(showTrending),
-                    Option: CustomOption<T>(IsOptionSelected),
+                    Option: CustomOption<T>(isOptionSelected),
                     Input: CustomInput,
                     Placeholder: CustomPlaceholder,
                     ValueContainer: CustomValueContainer,

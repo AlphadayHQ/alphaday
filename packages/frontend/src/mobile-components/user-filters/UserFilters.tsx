@@ -145,7 +145,7 @@ const UserFilters: FC<IUserFiltersProps> = ({
                                 )
                             }
                             isFetchingKeywordResults={isFetchingKeywordResults}
-                            IsOptionSelected={(op) =>
+                            isOptionSelected={(op) =>
                                 isFilterSelected(op.type, op.slug)
                             }
                             message={message}
