@@ -7,7 +7,7 @@ import {
     IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
@@ -18,26 +18,9 @@ import CONFIG from "./config";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
+import { mobileRoutes } from "./routes";
 
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
-const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
-const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
-const UserFiltersPage = lazyRetry(() => import("./mobile-pages/user-filters"));
-const PortfolioPage = lazyRetry(() => import("./mobile-pages/portfolio"));
-const NotificationsPage = lazyRetry(
-    () => import("./mobile-pages/notifications")
-);
-const UserSettingsPage = lazyRetry(
-    () => import("./mobile-pages/user-settings")
-);
-const ConnectWalletPage = lazyRetry(
-    () => import("./mobile-pages/connect-wallet")
-);
-const AddWalletPage = lazyRetry(() => import("./mobile-pages/add-wallet"));
-const AddHoldingPage = lazyRetry(() => import("./mobile-pages/add-holding"));
-const PortfolioHoldingsPage = lazyRetry(
-    () => import("./mobile-pages/portfolio-holdings")
-);
 
 const { IS_DEV } = CONFIG;
 
@@ -67,58 +50,19 @@ const TabNavigator: React.FC = () => {
     return (
         <IonTabs>
             <IonRouterOutlet>
-                <Route exact path="/superfeed">
-                    <SuperfeedPage />
-                </Route>
-                <Route exact path="/superfeed/user-settings">
-                    <UserSettingsPage />
-                </Route>
-                <Route exact path="/superfeed/user-filters">
-                    <UserFiltersPage />
-                </Route>
-                <Route exact path="/superfeed/auth">
-                    <AuthPage />
-                </Route>
-                <Route exact path="/superfeed/search/:tags">
-                    <SuperfeedPage />
-                </Route>
-                <Route
-                    exact
-                    path="/superfeed/notifications"
-                    render={() => {
-                        return isAuthenticated ? (
-                            <NotificationsPage />
-                        ) : (
-                            <SuperfeedPage />
-                        );
-                    }}
-                />
-                <Route exact path="/market">
-                    <Placeholder />
-                </Route>
-                <Route exact path="/portfolio">
-                    <PortfolioPage />
-                </Route>
-                <Route path="/portfolio/connect-wallet" exact>
-                    <ConnectWalletPage />
-                </Route>
-                <Route path="/portfolio/add-wallet" exact>
-                    <AddWalletPage />
-                </Route>
-                <Route
-                    path="/portfolio/add-holding"
-                    exact
-                    component={AddHoldingPage}
-                />
-                <Route exact path="/portfolio/holdings">
-                    <PortfolioHoldingsPage />
-                </Route>
-                <Route exact path="/auth*">
-                    <AuthPage />
-                </Route>
-                <Route exact path="/">
-                    <Redirect to="/superfeed" />
-                </Route>
+                {mobileRoutes.map((route) => (
+                    <Route
+                        key={route.path}
+                        path={route.path}
+                        exact={route.exact}
+                        render={() => {
+                            if (route.authWalled && !isAuthenticated) {
+                                return <SuperfeedPage />;
+                            }
+                            return <route.component />;
+                        }}
+                    />
+                ))}
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
                 <IonTabButton tab="superfeed" href="/superfeed">
