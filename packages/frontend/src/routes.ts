@@ -2,11 +2,14 @@ import { lazyRetry } from "./api/utils/helpers";
 import PreloaderPage from "./pages/preloader";
 
 /**
- * desktop components
+ * desktop pages
  */
 const DashboardPage = lazyRetry(() => import("./pages/index"));
 const ErrorPage = lazyRetry(() => import("./pages/error"));
 
+/**
+ * Mobile pages
+ */
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
@@ -30,7 +33,7 @@ const PortfolioHoldingsPage = lazyRetry(
 /**
  * A basic route.
  *
- * It defines the path and the component to be rendered.
+ * It defines the path and the page to be rendered.
  */
 export interface IRoute {
     path: EDesktopRoutePaths;
@@ -56,7 +59,7 @@ export enum EDesktopRoutePaths {
 }
 
 /**
- * An array of all valid routes in the app.
+ * An array of all valid routes in the desktop app.
  */
 export const desktopRoutes: IRoute[] = [
     {
@@ -92,6 +95,10 @@ export const errorRoutes: IRoute[] = [
         component: ErrorPage,
     },
 ];
+
+/**
+ * Mobile route definitions
+ */
 
 const BASE_TABS_ROUTE = "/";
 export enum EMobileRoutePaths {
