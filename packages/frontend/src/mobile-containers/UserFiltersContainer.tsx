@@ -34,6 +34,7 @@ const updateLocalFilterOptionsState = (
     media: {
         ...STATIC_FILTER_OPTIONS.media,
         options: STATIC_FILTER_OPTIONS.media.options
+            .filter((option) => !option.disabled)
             .map((option) => ({
                 ...option,
                 selected: selectedFilters.mediaTypes.some(
