@@ -6,13 +6,15 @@ import { useAccount } from "src/api/hooks";
 import MobileLayout from "src/layout/MobileLayout";
 import AuthPromptContainer from "src/mobile-components/AuthPromptContainer";
 import SuperfeedContainer from "src/mobile-containers/SuperfeedContainer";
+import { EMobileRoutePaths } from "src/routes";
 
 const SuperfeedPage: React.FC = () => {
     const { tags } = useParams<{ tags?: string }>();
     const history = useHistory();
     const { userProfile } = useAccount();
     const [showSearchBar, setShowSearchBar] = useState(false);
-    const toggleFeedFilters = () => history.push("/superfeed/user-filters");
+
+    const toggleFeedFilters = () => history.push(EMobileRoutePaths.UserFilters);
 
     return (
         <IonPage>

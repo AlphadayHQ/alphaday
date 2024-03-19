@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import { usePortfolioAccount } from "src/api/hooks";
 import { validateEthAddr } from "src/api/utils/accountUtils";
 import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
+import { EMobileRoutePaths } from "src/routes";
 
 type TWalletInfo = {
     name: string;
@@ -86,7 +87,7 @@ const AddWalletPage = () => {
                 title="CONGRATS"
                 onActionClick={() => {
                     setIsWalletAdded(false);
-                    history.push("/portfolio");
+                    history.push(EMobileRoutePaths.Portfolio);
                 }}
             >
                 <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
