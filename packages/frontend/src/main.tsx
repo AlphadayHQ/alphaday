@@ -73,7 +73,7 @@ try {
     );
 }
 
-if (CONFIG.CLARITY.ENABLE) {
+if (CONFIG.CLARITY.ENABLE && CONFIG.CLARITY.PROJECT_ID) {
     Logger.debug("initializing clarity...");
     clarity.init(CONFIG.CLARITY.PROJECT_ID);
     clarity.consent();
