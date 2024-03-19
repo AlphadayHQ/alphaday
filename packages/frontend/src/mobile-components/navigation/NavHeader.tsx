@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as SearchSVG } from "src/assets/svg/search.svg";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
+import { EMobileRoutePaths } from "src/routes";
 
 interface IProps {
     avatar: string | undefined;
@@ -12,7 +13,7 @@ export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
     return (
         <div className="w-full flex justify-between pt-2 px-5">
             <Link
-                to="superfeed/user-settings"
+                to={EMobileRoutePaths.UserSettings}
                 role="button"
                 tabIndex={0}
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
