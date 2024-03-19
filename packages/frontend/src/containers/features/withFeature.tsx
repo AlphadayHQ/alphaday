@@ -23,7 +23,7 @@ export function withFeature<T>(
     featureId?: EFeaturesRegistry
 ): FC<PropsWithChildren<T>> {
     const WithFeature: FC<PropsWithChildren<T>> = (props) => {
-        const isFeatureAllowed = useFeatureFlags(featureId);
+        const { enabled: isFeatureAllowed } = useFeatureFlags(featureId);
 
         if (!isFeatureAllowed) return null;
 

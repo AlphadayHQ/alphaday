@@ -9,7 +9,9 @@ export const useWalletViewStateUpdater: () => EWalletViewState = () => {
     const { isAuthenticated, accountHasSmartTags, accountSmartTagsUpdated } =
         useAccount();
     const { subscribedViews } = useView();
-    const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
+    const { enabled: isWalletBoardAllowed } = useFeatureFlags(
+        EFeaturesRegistry.WalletBoard
+    );
 
     const { allowFetchWalletView, walletViewState, setWalletViewState } =
         useWalletViewContext();

@@ -23,7 +23,9 @@ export const useTutorial: () => ITutorial = () => {
     const dispatch = useAppDispatch();
     const { tutFocusElemRef, setTutFocusElemRef } = useTutorialContext();
     const { isFullSize } = useViewRoute();
-    const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
+    const { enabled: isWalletBoardAllowed } = useFeatureFlags(
+        EFeaturesRegistry.WalletBoard
+    );
 
     const allowedTutorials = isWalletBoardAllowed
         ? tutorials

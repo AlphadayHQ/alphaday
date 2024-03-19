@@ -9,7 +9,9 @@ import { useWindowSize } from "./useWindowSize";
  * @returns true if the current device is mobile
  */
 export const useIsMobile = () => {
-    const isMobileEnabled = useFeatureFlags(EFeaturesRegistry.MobileApp);
+    const { enabled: isMobileEnabled } = useFeatureFlags(
+        EFeaturesRegistry.MobileApp
+    );
     const { width } = useWindowSize();
     const isMobileAgent = isMobile();
 
