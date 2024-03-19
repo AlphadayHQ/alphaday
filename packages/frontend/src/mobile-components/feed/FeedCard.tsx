@@ -7,6 +7,7 @@ import { MarketCard } from "./MarketCard";
 import { NewsCard } from "./NewsCard";
 import { PodcastCard } from "./PodcastCard";
 import { SocialCard } from "./SocialCard";
+import { TVLCard } from "./TVLCard";
 import { VideoCard } from "./VideoCard";
 
 interface IFeedCard {
@@ -140,7 +141,14 @@ export const FeedCard: FC<IFeedCard> = ({
                 />
             );
         case EFeedItemType.TVL:
-            return null;
+            return (
+                <TVLCard
+                    item={item}
+                    onLike={onLike}
+                    onShare={onShare}
+                    isAuthenticated={isAuthenticated}
+                />
+            );
         default:
             return null;
     }
