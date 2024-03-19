@@ -1,6 +1,14 @@
 import { EFeedItemType, TFeedItemData, TSuperfeedItem } from "src/api/types";
 import { TPagination, TBaseFilterItem } from "../baseTypes";
 
+export type TRemoteFeedItemData = Omit<
+    TFeedItemData,
+    "item_type" | "project_type"
+> & {
+    item_type?: string | null;
+    project_type?: "protocol" | "chain";
+};
+
 export type TRemoteSuperfeedItem = {
     id: number;
     content_type: EFeedItemType;
@@ -27,7 +35,7 @@ export type TRemoteSuperfeedItem = {
     likes: number;
     is_liked: boolean;
     comments: number;
-    data: TFeedItemData | null;
+    data: TRemoteFeedItemData | null;
 };
 
 /**
