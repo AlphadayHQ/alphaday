@@ -1,10 +1,13 @@
 import { memo, useCallback, useMemo, useState } from "react";
 import { Modal } from "@alphaday/ui-kit";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as uiStore from "src/api/store/slices/ui";
-import { EAuthMethod } from "src/api/types";
+import * as userStore from "src/api/store/slices/user";
+import { EAuthMethod, EAuthState } from "src/api/types";
 import { AuthMethodSelection } from "src/components/auth/AuthModule";
+import { EMobileRoutePaths } from "src/routes";
 
 const hasTimeElapsed = (lastAuthPromptedTs: number) => {
     const now = new Date().getTime();
@@ -15,6 +18,7 @@ const hasTimeElapsed = (lastAuthPromptedTs: number) => {
 
 const AuthPromptContainer = memo(() => {
     const dispatch = useAppDispatch();
+    const history = useHistory();
     const lastAuthPromptedTs = useAppSelector(
         (state) => state.ui.lastAuthPrompted
     );
@@ -33,12 +37,21 @@ const AuthPromptContainer = memo(() => {
     const [isSignIn, setIsSignIn] = useState(false);
     const handleSSOCallback = useCallback(
         (method: EAuthMethod) => {
+            // proceed as usual
             ssoLogin(method);
+
+            if (method === EAuthMethod.Email) {
+                dispatch(
+                    userStore.setAuthState(
+                        isSignIn ? EAuthState.SigningIn : EAuthState.SigningUp
+                    )
+                );
+                history.push(EMobileRoutePaths.Auth);
+            }
         },
-        [ssoLogin]
+        [ssoLogin, dispatch, isSignIn, history]
     );
 
-    // TODO: improve this modal styles
     return (
         <Modal
             showModal={isAuthPromptVisible}
