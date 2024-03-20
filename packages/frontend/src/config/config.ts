@@ -46,13 +46,19 @@ const LOGLEVEL =
         : 0;
 
 const SENTRY = {
-    DSN: import.meta.env.VITE_SENTRY_DSN,
     ENABLE: true,
+    DSN: import.meta.env.VITE_SENTRY_DSN,
 };
 
 const CLARITY = {
-    ENABLE: !!import.meta.env.VITE_CLARITY_PROJECT_ID,
+    ENABLE: true,
     PROJECT_ID: import.meta.env.VITE_CLARITY_PROJECT_ID,
+};
+
+const HOTJAR = {
+    ENABLE: false,
+    SITE_ID: import.meta.env.VITE_HOTJAR_SITE_ID,
+    SNIPPET_VERSION: import.meta.env.VITE_HOTJAR_SNIPPET_VERSION,
 };
 
 const COOKIES = {
@@ -82,6 +88,7 @@ const CONFIG = {
     FIREBASE: FIREBASE_CONFIG,
     SENTRY,
     CLARITY,
+    HOTJAR,
     COOKIES,
     API_PROVIDERS,
     NUMBERS,

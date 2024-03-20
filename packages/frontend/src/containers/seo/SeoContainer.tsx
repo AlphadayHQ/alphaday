@@ -4,7 +4,8 @@ import { useAppSelector } from "src/api/store/hooks";
 import { getBoardDescription, getBoardTitle } from "src/api/utils/seo";
 import CONFIG from "../../config";
 
-const { DEFAULT_TITLE, DESCRIPTION, HOTJAR } = CONFIG.SEO;
+const { DEFAULT_TITLE, DESCRIPTION } = CONFIG.SEO;
+const { HOTJAR, IS_PROD, IS_STAGING } = CONFIG;
 
 const SeoContainer = () => {
     const availableViews = useAvailableViews();
@@ -83,7 +84,7 @@ const SeoContainer = () => {
                 },
             }}
         >
-            {((CONFIG.IS_PROD && allowTracking) || CONFIG.IS_STAGING) && (
+            {HOTJAR.ENABLE && ((IS_PROD && allowTracking) || IS_STAGING) && (
                 <script>
                     {`(function(h,o,t,j,a,r){ h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)}; h._hjSettings={hjid:${hotjarId},hjsv:${hotjarVersion}}; a=o.getElementsByTagName('head')[0]; r=o.createElement('script');r.async=1; r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv; a.appendChild(r); })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`}
                 </script>
