@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Modal } from "@alphaday/ui-kit";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as uiStore from "src/api/store/slices/ui";
@@ -49,7 +49,7 @@ const AuthPromptContainer = memo(() => {
                 history.push(EMobileRoutePaths.Auth);
             }
         },
-        [ssoLogin, dispatch, isSignIn]
+        [ssoLogin, dispatch, isSignIn, history]
     );
 
     return (
