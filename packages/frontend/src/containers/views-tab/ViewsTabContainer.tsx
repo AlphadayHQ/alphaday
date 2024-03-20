@@ -53,7 +53,9 @@ const ViewsTabContainer: FC<IViewsTab> = ({
     const { isAuthenticated, isStaff } = useAccount();
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
     const { setAllowFetchWalletView, walletViewState } = useWalletViewContext();
-    const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
+    const { enabled: isWalletBoardAllowed } = useFeatureFlags(
+        EFeaturesRegistry.WalletBoard
+    );
     const { logViewVisited } = useActivityLogger();
 
     const [targetViewMeta, setTargetViewMeta] = useState<TViewMeta | undefined>(

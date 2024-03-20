@@ -26,7 +26,7 @@ type TPropsDict = Partial<
 
 const WalletConnectionDialogContainer: FC = memo(() => {
     const { authWallet, resetAuthState } = useAccount();
-    const isWalletConnectFeatureAllowed = useFeatureFlags(
+    const { enabled: isWalletConnectFeatureAllowed } = useFeatureFlags(
         EFeaturesRegistry.WalletConnect
     );
     const { logWalletConnection } = useActivityLogger();

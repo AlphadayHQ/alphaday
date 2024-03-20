@@ -82,6 +82,7 @@ if (CONFIG.CLARITY.ENABLE) {
 
 const AppSwitcher = () => {
     const isMobile = useIsMobile();
+    if (isMobile === undefined) return <PreloaderPage />;
     return (
         <Suspense fallback={<PreloaderPage />}>
             {isMobile ? <MobileApp /> : <App />}

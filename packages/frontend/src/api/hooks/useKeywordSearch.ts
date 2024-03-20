@@ -24,7 +24,7 @@ interface IKeywordSearch {
  * @returns - The search state and results.
  */
 export const useKeywordSearch: () => IKeywordSearch = () => {
-    const isTrendingKeywordsAllowed = useFeatureFlags(
+    const { enabled: isTrendingKeywordsAllowed } = useFeatureFlags(
         EFeaturesRegistry.TrendingKeywords
     );
     const [searchState, setSearchState] = useState("");
