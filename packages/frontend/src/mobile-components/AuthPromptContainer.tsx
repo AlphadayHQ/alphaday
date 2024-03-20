@@ -3,7 +3,8 @@ import { Modal } from "@alphaday/ui-kit";
 import { useAuth } from "src/api/hooks";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as uiStore from "src/api/store/slices/ui";
-import { EAuthMethod } from "src/api/types";
+import * as userStore from "src/api/store/slices/user";
+import { EAuthMethod, EAuthState } from "src/api/types";
 import { AuthMethodSelection } from "src/components/auth/AuthModule";
 
 const hasTimeElapsed = (lastAuthPromptedTs: number) => {
@@ -33,12 +34,19 @@ const AuthPromptContainer = memo(() => {
     const [isSignIn, setIsSignIn] = useState(false);
     const handleSSOCallback = useCallback(
         (method: EAuthMethod) => {
+            if (method === EAuthMethod.Email) {
+                dispatch(
+                    userStore.setAuthState(
+                        isSignIn ? EAuthState.SigningIn : EAuthState.SigningUp
+                    )
+                );
+            }
+            // proceed as usual
             ssoLogin(method);
         },
-        [ssoLogin]
+        [ssoLogin, dispatch, isSignIn]
     );
 
-    // TODO: improve this modal styles
     return (
         <Modal
             showModal={isAuthPromptVisible}
