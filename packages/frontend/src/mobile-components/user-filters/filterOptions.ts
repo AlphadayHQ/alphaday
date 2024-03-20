@@ -12,6 +12,7 @@ export type TOption = {
     slug: string;
     selected: boolean;
     color?: string;
+    disabled?: boolean;
 };
 
 type TMediaOption = TOption & { contentType: EFeedItemType };
@@ -97,6 +98,7 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 selected: false,
                 color: themeColors.categoryFour,
                 contentType: EFeedItemType.IMAGE,
+                disabled: true,
             },
             {
                 id: 5,
@@ -137,6 +139,7 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 selected: false,
                 color: themeColors.categoryNine,
                 contentType: EFeedItemType.TVL,
+                disabled: true,
             },
             {
                 id: 10,
@@ -153,6 +156,7 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 selected: false,
                 color: themeColors.categoryEleven,
                 contentType: EFeedItemType.PERSON,
+                disabled: true,
             },
             {
                 id: 12,
@@ -161,6 +165,7 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 selected: false,
                 color: themeColors.categoryTwelve,
                 contentType: EFeedItemType.MEME,
+                disabled: true,
             },
             {
                 id: 13,

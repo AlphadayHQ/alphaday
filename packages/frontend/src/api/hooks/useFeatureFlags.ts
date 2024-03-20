@@ -3,17 +3,27 @@ import { useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
 import { EFeatureStatus, EFeaturesRegistry } from "src/constants";
 
+interface IFeatureFlag {
+    /**
+     * true if the feature is allowed for the current user/guest
+     */
+    enabled: boolean;
+    isLoading: boolean;
+}
+
 /**
  * This hook checks if a feature is allowed for the current user/guest.
  * It relies on a notion that the list of features fetched from the backend contains a list of enabled features.
  * If the feature is not found in the list or if status is disabled, it is considered disabled.
  *
  * @param featureId - feature id to check
- * @returns true if the feature is allowed for the current user/guest
+ * @returns IFeatureFlag
  */
-export const useFeatureFlags = (featureId?: EFeaturesRegistry): boolean => {
+export const useFeatureFlags = (
+    featureId?: EFeaturesRegistry
+): IFeatureFlag => {
     // this should only return cached results from the initial load
-    const { data } = useGetFeaturesQuery();
+    const { data, isLoading } = useGetFeaturesQuery();
     const feature = data?.find((f) => f.slug === featureId);
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
@@ -26,5 +36,8 @@ export const useFeatureFlags = (featureId?: EFeaturesRegistry): boolean => {
             feature?.status === EFeatureStatus.Protected) &&
         isAuthenticated;
 
-    return shouldGuestHaveAccess || shouldUserHaveAccess;
+    return {
+        enabled: shouldGuestHaveAccess || shouldUserHaveAccess,
+        isLoading,
+    };
 };

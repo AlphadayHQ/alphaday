@@ -10,10 +10,6 @@ const SEO_CONFIG = {
         twitter: "https://twitter.com/AlphadayHQ",
         linkedIn: "https://www.linkedin.com/company/alphaday",
     },
-    HOTJAR: {
-        SITE_ID: import.meta.env.VITE_HOTJAR_SITE_ID,
-        SNIPPET_VERSION: import.meta.env.VITE_HOTJAR_SNIPPET_VERSION,
-    },
     BOARDS_WITH_DEFAULT_CONFIG: ["default", "beginner", "nft", "trading"],
 };
 

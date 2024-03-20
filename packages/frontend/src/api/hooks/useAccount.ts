@@ -62,7 +62,9 @@ export const useAccount: () => IAccount = () => {
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
     const remoteProfileRef = useRef<TRemoteProfile>();
     const localProfile = remoteProfileRef.current;
-    const isWalletBoardAllowed = useFeatureFlags(EFeaturesRegistry.WalletBoard);
+    const { enabled: isWalletBoardAllowed } = useFeatureFlags(
+        EFeaturesRegistry.WalletBoard
+    );
 
     const [updateProfileMut, { isLoading: isSavingProfile }] =
         useUpdateUserProfileMutation();

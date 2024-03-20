@@ -73,7 +73,7 @@ try {
     );
 }
 
-if (CONFIG.CLARITY.ENABLE) {
+if (CONFIG.CLARITY.ENABLE && CONFIG.CLARITY.PROJECT_ID) {
     Logger.debug("initializing clarity...");
     clarity.init(CONFIG.CLARITY.PROJECT_ID);
     clarity.consent();
@@ -82,6 +82,7 @@ if (CONFIG.CLARITY.ENABLE) {
 
 const AppSwitcher = () => {
     const isMobile = useIsMobile();
+    if (isMobile === undefined) return <PreloaderPage />;
     return (
         <Suspense fallback={<PreloaderPage />}>
             {isMobile ? <MobileApp /> : <App />}

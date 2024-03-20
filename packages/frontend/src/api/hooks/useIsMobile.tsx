@@ -8,8 +8,10 @@ import { useWindowSize } from "./useWindowSize";
 /**
  * @returns true if the current device is mobile
  */
-export const useIsMobile = () => {
-    const isMobileEnabled = useFeatureFlags(EFeaturesRegistry.MobileApp);
+export const useIsMobile = (): boolean | undefined => {
+    const { enabled: isMobileEnabled, isLoading } = useFeatureFlags(
+        EFeaturesRegistry.MobileApp
+    );
     const { width } = useWindowSize();
     const isMobileAgent = isMobile();
 
@@ -19,6 +21,8 @@ export const useIsMobile = () => {
     if (CONFIG.IS_DEV || CONFIG.IS_LOCAL) {
         return width < breakpoints.TwoColMinWidth;
     }
+
+    if (isLoading) return undefined;
 
     /**
      * If the mobile app feature flag is disabled, we don't want to
