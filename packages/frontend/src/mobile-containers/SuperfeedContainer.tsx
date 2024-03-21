@@ -124,10 +124,12 @@ const SuperfeedContainer: FC<{
         prevFeedDataResponseRef.current !== feedDataResponse?.results
     ) {
         setFeedData((prevState) => [
-            ...(prevState ?? []),
-            ...feedDataForCurrentPage.filter(
-                (it) => prevState?.find((i) => i.id === it.id) === undefined
+            ...(prevState ?? []).filter(
+                (it) =>
+                    feedDataForCurrentPage.find((i) => i.id === it.id) ===
+                    undefined
             ),
+            ...feedDataForCurrentPage,
         ]);
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
