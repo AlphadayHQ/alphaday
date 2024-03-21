@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
-import { EFeedItemType, TSuperfeedItem } from "src/api/types";
+import { TSuperfeedItem } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
