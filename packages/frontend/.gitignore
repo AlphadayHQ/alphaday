@@ -10,7 +10,7 @@ dist/
 # tsconfig
 *.tsbuildinfo
 .env
-
+.env.*
 /public/*-*x*.png
 /public/favicon.ico
 
