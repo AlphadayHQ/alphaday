@@ -12,8 +12,6 @@ import {
     TBookmarkPodcastItemResponse,
     TBookmarkPodcastItemRequest,
     TGetPodcastChannelsResponse,
-    TLikePodcastItemRequest,
-    TLikePodcastItemResponse,
 } from "./types";
 
 const { PODCAST, SOURCES } = CONFIG.API.DEFAULT.ROUTES;
@@ -89,21 +87,6 @@ export const podcastApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
-        likePodcastItem: builder.mutation<
-            TLikePodcastItemResponse,
-            TLikePodcastItemRequest
-        >({
-            query: (req: TLikePodcastItemRequest) => {
-                const path = `${PODCAST.BASE}${PODCAST.LIKE(req.id)}`;
-                Logger.debug("likePodcastItem: querying", path);
-                return {
-                    url: path,
-                    method: "POST",
-                    body: {},
-                };
-            },
-            invalidatesTags: ["Superfeed"],
-        }),
         openPodcastItem: builder.mutation<
             TOpenPodcastItemResponse,
             TOpenPodcastItemRequest
@@ -127,5 +110,4 @@ export const {
     useOpenPodcastItemMutation,
     useBookmarkPodcastItemMutation,
     useGetPodcastChannelsListQuery,
-    useLikePodcastItemMutation,
 } = podcastApi;

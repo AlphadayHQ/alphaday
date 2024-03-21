@@ -10,18 +10,15 @@ import {
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import {
     useGetSuperfeedListQuery,
-    useLikeBlogItemMutation,
-    useLikeNewsItemMutation,
+    useLikeSuperfeedItemMutation,
 } from "src/api/services";
-import { useLikePodcastItemMutation } from "src/api/services/podcast/podcastEndpoints";
-import { useLikeVideoItemMutation } from "src/api/services/video/videoEndpoints";
 import {
     TSelectedFiltersSynced,
     selectedLocalFiltersSelector,
     selectedSyncedFiltersSelector,
 } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
-import { EFeedItemType, TSuperfeedItem } from "src/api/types";
+import { TSuperfeedItem } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { shareData } from "src/api/utils/shareUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
@@ -72,6 +69,7 @@ const SuperfeedContainer: FC<{
 
     const [currentPage, setCurrentPage] = useState<number | undefined>();
 
+    const [likeSuperfeedItemMut] = useLikeSuperfeedItemMutation();
     const {
         currentData: feedDataResponse,
         isLoading,
@@ -126,7 +124,11 @@ const SuperfeedContainer: FC<{
         prevFeedDataResponseRef.current !== feedDataResponse?.results
     ) {
         setFeedData((prevState) => [
-            ...(prevState ?? []),
+            ...(prevState ?? []).filter(
+                (it) =>
+                    feedDataForCurrentPage.find((i) => i.id === it.id) ===
+                    undefined
+            ),
             ...feedDataForCurrentPage,
         ]);
         prevFeedDataResponseRef.current = feedDataResponse?.results;
@@ -156,41 +158,12 @@ const SuperfeedContainer: FC<{
         [logShareSuperfeedItem]
     );
 
-    const [likeBlogItemMut] = useLikeBlogItemMutation();
-    const [likeNewsItemMut] = useLikeNewsItemMutation();
-    const [likeVideoItemMut] = useLikeVideoItemMutation();
-    const [likePodcastItemMut] = useLikePodcastItemMutation();
-
     const likeItem = useCallback(
         async (item: TSuperfeedItem) => {
             try {
-                if (item.type === EFeedItemType.BLOG) {
-                    await likeBlogItemMut({ id: item.id });
-                } else if (item.type === EFeedItemType.NEWS) {
-                    await likeNewsItemMut({ id: item.id });
-                } else if (item.type === EFeedItemType.VIDEO) {
-                    await likeVideoItemMut({ id: item.id });
-                } else if (item.type === EFeedItemType.PODCAST) {
-                    await likePodcastItemMut({ id: item.id });
-                } else {
-                    Logger.debug(
-                        "SuperfeedModule::FeedCard: unsupported item type",
-                        item.type
-                    );
-                }
-                // update the UI optimistically
-                setFeedData((prevFeedData) => {
-                    return prevFeedData?.map((it) => {
-                        if (item.type === it.type && item.id === it.id) {
-                            return {
-                                ...it,
-                                likes: Number(it.likes) + 1,
-                                isLiked: true,
-                            };
-                        }
-                        return it;
-                    });
-                });
+                await likeSuperfeedItemMut({
+                    id: item.id,
+                }).unwrap();
             } catch (e) {
                 Logger.error("SuperfeedModule::FeedCard: error liking item", e);
                 toast("Error sharing item", {
@@ -198,7 +171,7 @@ const SuperfeedContainer: FC<{
                 });
             }
         },
-        [likeBlogItemMut, likeNewsItemMut, likeVideoItemMut, likePodcastItemMut]
+        [likeSuperfeedItemMut]
     );
 
     // set current page 350ms after next page is set.

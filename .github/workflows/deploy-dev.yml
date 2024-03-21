@@ -84,6 +84,7 @@ jobs:
                   VITE_OAUTH_ID_GOOGLE: ${{ secrets.DEV__REACT_APP_OAUTH_ID_GOOGLE }}
                   VITE_OAUTH_ID_APPLE: ${{ secrets.DEV__FRONTEND__OAUTH_ID_APPLE }}
                   VITE_CLARITY_PROJECT_ID: ${{ secrets.DEV__FRONTEND__CLARITY_PROJECT_ID }}
+                  VITE_CLARITY_MOBILE_PROJECT_ID: ${{ secrets.DEV__FRONTEND__CLARITY_MOBILE_PROJECT_ID }}
 
                   NODE_OPTIONS: "--max_old_space_size=4096"
 

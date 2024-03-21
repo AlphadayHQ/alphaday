@@ -101,3 +101,9 @@ export type TGetSuperfeedFilterKeywordsResponse = {
     coins: TRemoteFilterKeyword[];
     chains: TRemoteFilterKeyword[];
 };
+
+export type TLikeSuperfeedItemRequest = {
+    id: number;
+};
+export type TLikeSuperfeedItemRawResponse = TRemoteSuperfeedItem;
+export type TLikeSuperfeedItemResponse = TSuperfeedItem;
