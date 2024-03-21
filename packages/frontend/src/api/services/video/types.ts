@@ -42,8 +42,3 @@ export type TBookmarkVideoItemRequest = {
 export type TBookmarkVideoItemResponse = Omit<TRemoteVideoItem, "id">;
 
 export type TGetVideoChannelsResponse = TVideoChannel[];
-
-export type TLikeVideoItemRequest = {
-    id: number;
-};
-export type TLikeVideoItemResponse = Omit<TRemoteVideoItem, "id">;
