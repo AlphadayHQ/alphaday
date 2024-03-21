@@ -26,8 +26,3 @@ export type TOpenBlogItemRequest = {
     id: number;
 };
 export type TOpenBlogItemResponse = Omit<TRemoteBlogItem, "id">;
-
-export type TLikeBlogItemRequest = {
-    id: number;
-};
-export type TLikeBlogItemResponse = Omit<TRemoteBlogItem, "id">;

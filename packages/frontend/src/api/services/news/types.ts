@@ -40,8 +40,3 @@ export type TOpenNewsItemRequest = {
     id: number;
 };
 export type TOpenNewsItemResponse = Omit<TRemoteNewsItem, "id">;
-
-export type TLikeNewsItemRequest = {
-    id: number;
-};
-export type TLikeNewsItemResponse = Omit<TRemoteNewsItem, "id">;
