@@ -53,6 +53,7 @@ const SENTRY = {
 const CLARITY = {
     ENABLE: true,
     PROJECT_ID: import.meta.env.VITE_CLARITY_PROJECT_ID,
+    MOBILE_PROJECT_ID: import.meta.env.VITE_CLARITY_MOBILE_PROJECT_ID,
 };
 
 const HOTJAR = {

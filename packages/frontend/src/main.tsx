@@ -15,7 +15,7 @@ import { wagmiConfig } from "./api/store/providers/wallet-connect-provider";
 // TODO (xavier-charles): add themes support import ThemeProvider from "./api/store/providers/theme-provider";
 import { store } from "./api/store/store";
 import { ECookieChoice } from "./api/types";
-import { lazyRetry } from "./api/utils/helpers";
+import { lazyRetry, isMobile } from "./api/utils/helpers";
 import { Logger } from "./api/utils/logging";
 import CONFIG from "./config";
 import SeoContainer from "./containers/seo/SeoContainer";
@@ -73,19 +73,26 @@ try {
     );
 }
 
-if (CONFIG.CLARITY.ENABLE && CONFIG.CLARITY.PROJECT_ID) {
-    Logger.debug("initializing clarity...");
-    clarity.init(CONFIG.CLARITY.PROJECT_ID);
-    clarity.consent();
-    Logger.debug("clarity initialized");
+if (CONFIG.CLARITY.ENABLE) {
+    if (isMobile() && CONFIG.CLARITY.MOBILE_PROJECT_ID) {
+        Logger.debug("initializing clarity for mobile...");
+        clarity.init(CONFIG.CLARITY.MOBILE_PROJECT_ID);
+        clarity.consent();
+        Logger.debug("clarity initialized");
+    } else if (CONFIG.CLARITY.PROJECT_ID) {
+        Logger.debug("initializing clarity for desktop...");
+        clarity.init(CONFIG.CLARITY.PROJECT_ID);
+        clarity.consent();
+        Logger.debug("clarity initialized");
+    }
 }
 
 const AppSwitcher = () => {
-    const isMobile = useIsMobile();
+    const isMobileApp = useIsMobile();
     if (isMobile === undefined) return <PreloaderPage />;
     return (
         <Suspense fallback={<PreloaderPage />}>
-            {isMobile ? <MobileApp /> : <App />}
+            {isMobileApp ? <MobileApp /> : <App />}
         </Suspense>
     );
 };
