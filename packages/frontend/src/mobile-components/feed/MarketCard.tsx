@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
-import { EFeedItemType, TSuperfeedItem } from "src/api/types";
+import { TSuperfeedItem } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
+import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,
@@ -34,8 +35,6 @@ export const MarketCard: FC<{
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
 }> = ({ item, onLike, onShare, isAuthenticated }) => {
-    const isTVL = item.type === EFeedItemType.TVL;
-
     const {
         tags,
         likes,
@@ -44,6 +43,7 @@ export const MarketCard: FC<{
         url,
         shortDescription,
         type,
+        date,
         data: coinData,
     } = item;
 
@@ -62,21 +62,7 @@ export const MarketCard: FC<{
                                             icon={getFeedItemIcon(type, isDown)}
                                         />
                                         <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
-                                            {isTVL ? (
-                                                <span className="text-secondarySteelPink">
-                                                    TVL Milestone
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    className={twMerge(
-                                                        isDown
-                                                            ? "text-secondaryOrangeSoda"
-                                                            : "text-success"
-                                                    )}
-                                                >
-                                                    Price Alert
-                                                </span>
-                                            )}
+                                            {computeDuration(date)}
                                             <span className="mx-1 my-0 self-center">
                                                 •
                                             </span>{" "}
