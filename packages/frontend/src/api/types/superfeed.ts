@@ -55,7 +55,7 @@ export type TGroupedFilterKeywords = {
     [ESupportedFilters.ConceptTags]: TFilterKeyword[];
 };
 
-export type TTVLFeedItem = {
+export type TTVLFeedDataItem = {
     tvl: number;
     icon: string;
     name: string;
@@ -72,7 +72,7 @@ export type TFeedItemData = {
     history?: string;
     location?: string | null;
     itemType?: string | null;
-    projects?: TTVLFeedItem[];
+    projects?: TTVLFeedDataItem[];
     projectType?: "protocol" | "chain";
 };
 

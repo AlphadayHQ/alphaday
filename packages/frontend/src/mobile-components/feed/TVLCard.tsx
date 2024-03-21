@@ -1,7 +1,13 @@
 import { FC } from "react";
-import { TSuperfeedItem } from "src/api/types";
+import logoDay from "@alphaday/ui-kit/src/assets/svg/logo-white.svg";
+import { TSuperfeedItem, TTVLFeedDataItem } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
+import {
+    PROJECTS_LOGO_KEYS,
+    PROJECTS_LOGO_MAPPING,
+} from "src/components/tvl/common";
 import { computeDuration } from "src/utils/dateUtils";
+import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,
     FeedItemDisclosure,
@@ -12,6 +18,75 @@ import {
     TagButtons,
     getFeedItemIcon,
 } from "./FeedElements";
+
+const TVLItem: FC<{ projectData: TTVLFeedDataItem; index: number }> = ({
+    projectData,
+    index,
+}) => {
+    return (
+        <div
+            className="flex flex-row flex-[1_auto] py-[10px] pr-4 pl-1"
+            role="button"
+            tabIndex={0}
+        >
+            <div
+                className="flex flex-row flex-1 items-center"
+                style={{
+                    flex: 1,
+                }}
+            >
+                <div className="flex flex-row justify-start flex-1 items-center text-primary fontGroup-supportBold">
+                    {index + 1}
+                </div>
+            </div>
+            <div
+                className="flex flex-row flex-1 items-center"
+                style={{
+                    flex: 6,
+                }}
+            >
+                <div className="flex flex-row flex-[0_1_auto] h-[21px] w-[21px] relative overflow-hidden items-center justify-center">
+                    <div className="absolute inset-0 bg-background" />
+                    <img
+                        src={
+                            projectData.icon ??
+                            PROJECTS_LOGO_MAPPING[
+                                PROJECTS_LOGO_KEYS.find(
+                                    (e) => e === projectData.name
+                                ) || "Unknown"
+                            ]
+                        }
+                        onError={imgOnError}
+                        alt=""
+                        className="absolute inset-0 bg-background rounded-full"
+                        style={{
+                            backgroundImage: `url(${logoDay})`,
+                        }}
+                    />
+                </div>
+                <div className="text-primary fontGroup-highlightSemi ml-1.5">
+                    {projectData.name}
+                </div>
+            </div>
+            <div
+                className="flex flex-row flex-1 items-center"
+                style={{
+                    flex: 2,
+                }}
+            >
+                <div className="flex flex-row flex-1 items-center justify-end text-primary">
+                    {
+                        formatNumber({
+                            value: projectData.tvl,
+                            style: ENumberStyle.Currency,
+                            currency: "USD",
+                        }).value
+                    }
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export const TVLCard: FC<{
     item: TSuperfeedItem;
@@ -27,7 +102,6 @@ export const TVLCard: FC<{
         sourceIcon,
         sourceName,
         type,
-        shortDescription,
         date,
         data,
     } = item;
@@ -111,9 +185,10 @@ export const TVLCard: FC<{
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <p className="m-0 text-primaryVariant100 line-clamp-4">
-                            {shortDescription}
-                        </p>
+                        {data?.projects?.map((project, i) => (
+                            <TVLItem projectData={project} index={i} />
+                        ))}
+
                         <div className="my-2 flex justify-between">
                             <TagButtons tags={tags} onClick={() => {}} />
                             <div className="min-w-max ml-2 mt-0.5">
