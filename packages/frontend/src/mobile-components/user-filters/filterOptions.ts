@@ -174,6 +174,14 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 color: themeColors.categoryTwelve,
                 contentType: EFeedItemType.DISCORD,
             },
+            {
+                id: 14,
+                slug: EFeedItemType.GAS,
+                name: "Gas",
+                selected: false,
+                color: themeColors.categoryEleven,
+                contentType: EFeedItemType.GAS,
+            },
         ],
     },
     timeRange: {
