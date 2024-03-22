@@ -42,11 +42,8 @@ const SuperfeedContainer: FC<{
     tags: string | undefined;
 }> = ({ tags: tagsFromSearch, onToggleFeedFilters, showSearchBar }) => {
     const history = useHistory();
-    const {
-        setSearchState,
-        keywordResults,
-        isFetchingKeywordResults,
-    } = useKeywordSearch();
+    const { setSearchState, keywordResults, isFetchingKeywordResults } =
+        useKeywordSearch();
 
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
@@ -59,10 +56,8 @@ const SuperfeedContainer: FC<{
 
     const { isAuthenticated } = useAccount();
 
-    const [
-        selectedPodcast,
-        setSelectedPodcast,
-    ] = useState<TSuperfeedItem | null>(null);
+    const [selectedPodcast, setSelectedPodcast] =
+        useState<TSuperfeedItem | null>(null);
 
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
