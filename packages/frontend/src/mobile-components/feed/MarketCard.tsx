@@ -48,6 +48,7 @@ export const MarketCard: FC<{
     } = item;
 
     const isDown = shortDescription?.includes("down");
+    const isATH = coinData?.interval === "ATH";
 
     return (
         <FeedItemDisclosure>
@@ -80,34 +81,54 @@ export const MarketCard: FC<{
                                         </p>
                                     </div>
                                     <CardTitle title={shortDescription || ""} />
-                                    <p className="fontGroup-highlight mt-1">
-                                        Price:{" "}
-                                        {coinData?.price &&
-                                            formatNumber({
-                                                value: coinData.price,
-                                                style: ENumberStyle.Currency,
-                                                currency: "USD",
-                                            }).value}
-                                    </p>
+                                    {!isATH && (
+                                        <p className="fontGroup-highlight mt-1">
+                                            Price:{" "}
+                                            {coinData?.price &&
+                                                formatNumber({
+                                                    value: coinData.price,
+                                                    style: ENumberStyle.Currency,
+                                                    currency: "USD",
+                                                }).value}
+                                        </p>
+                                    )}
                                 </div>
-                                <div className="flex-col min-w-max mr-9">
+                                <div
+                                    className={twMerge(
+                                        "flex-col min-w-max mr-9",
+                                        isATH &&
+                                            "mr-0 p-4 rounded-md items-center justify-center",
+                                        isATH && !open && "h-20 w-28"
+                                    )}
+                                >
                                     <div
                                         className={twMerge(
                                             "w-full flex justify-end items-start",
                                             open && "hidden"
                                         )}
                                     >
-                                        <LineChart
-                                            data={
-                                                coinData?.history
-                                                    ? parseHistory(
-                                                          coinData.history
-                                                      )
-                                                    : [[0, 1]]
-                                            }
-                                            className="!h-20 !w-28"
-                                            isPreview
-                                        />
+                                        {isATH ? (
+                                            <p className="text-success text-4xl font-semibold">
+                                                {coinData?.price &&
+                                                    formatNumber({
+                                                        value: coinData.price,
+                                                        style: ENumberStyle.Currency,
+                                                        currency: "USD",
+                                                    }).value}
+                                            </p>
+                                        ) : (
+                                            <LineChart
+                                                data={
+                                                    coinData?.history
+                                                        ? parseHistory(
+                                                              coinData.history
+                                                          )
+                                                        : [[0, 1]]
+                                                }
+                                                className="!h-20 !w-28"
+                                                isPreview
+                                            />
+                                        )}
                                     </div>
                                 </div>
                             </div>
