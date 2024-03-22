@@ -69,7 +69,7 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                         gasSlow: i.data?.GAS_SLOW,
                         gasStandard: i.data?.GAS_STANDARD,
                         percentChange: i.data?.PERCENT_CHANGE,
-                        PrevGasStandard: i.data?.PREV_GAS_STANDARD,
+                        prevGasStandard: i.data?.PREV_GAS_STANDARD,
                     },
                 })),
             }),
