@@ -55,16 +55,25 @@ export type TGroupedFilterKeywords = {
     [ESupportedFilters.ConceptTags]: TFilterKeyword[];
 };
 
+export type TTVLFeedDataItem = {
+    tvl: number;
+    icon: string;
+    name: string;
+    slug: string;
+};
+
 export type TFeedItemData = {
-    coin: {
+    coin?: {
         name: string;
         slug: string;
         ticker: string;
     };
-    price: number;
-    history: string;
+    price?: number;
+    history?: string;
     location?: string | null;
-    item_type?: string | null;
+    itemType?: string | null;
+    projects?: TTVLFeedDataItem[];
+    projectType?: "protocol" | "chain";
 };
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {

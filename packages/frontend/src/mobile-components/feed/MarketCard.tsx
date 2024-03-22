@@ -68,7 +68,7 @@ export const MarketCard: FC<{
                                             </span>{" "}
                                             <span>
                                                 <span className="capitalize text-primary">
-                                                    {coinData?.coin.name}
+                                                    {coinData?.coin?.name}
                                                 </span>
                                                 <img
                                                     src={image || undefined}
