@@ -10,18 +10,21 @@ const PullToRefreshContainer: React.FC<PullToRefreshContainerProps> = ({
     handleRefresh,
 }) => {
     return isPWA() ? (
-        <IonContent>
+        <IonContent forceOverscroll role="feed">
             <IonRefresher
                 slot="fixed"
-                pullFactor={0.5}
-                pullMin={100}
+                pullFactor={0.1}
+                pullMin={60}
                 pullMax={200}
                 onIonRefresh={(e) => {
                     handleRefresh();
                     e.detail.complete();
                 }}
             >
-                <IonRefresherContent />
+                <IonRefresherContent
+                    pullingIcon="bubbles"
+                    refreshingSpinner="bubbles"
+                />
             </IonRefresher>
             {children}
         </IonContent>
