@@ -77,6 +77,8 @@ export type TFeedItemData = {
 };
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
+    itemId: number;
+    trendiness: number;
     type: EFeedItemType;
     date: string;
     startsAt: string | null;

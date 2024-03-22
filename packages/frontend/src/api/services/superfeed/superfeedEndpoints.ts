@@ -12,6 +12,9 @@ import {
     TGetSuperfeedFilterKeywordsResponse,
     TGetSuperfeedFilterKeywordsRequest,
     TGetSuperfeedFilterKeywordsRawResponse,
+    TLikeSuperfeedItemResponse,
+    TLikeSuperfeedItemRequest,
+    TLikeSuperfeedItemRawResponse,
 } from "./types";
 
 const { SUPERFEED } = CONFIG.API.DEFAULT.ROUTES;
@@ -47,9 +50,9 @@ export const superfeedApi = alphadayApi.injectEndpoints({
                     fileUrl: i.file_url,
                     startsAt: i.starts_at,
                     endsAt: i.ends_at,
-                    sourceIcon: i.source.icon,
-                    sourceSlug: i.source.slug,
-                    sourceName: i.source.name,
+                    sourceIcon: i.source?.icon,
+                    sourceSlug: i.source?.slug,
+                    sourceName: i.source?.name,
                     tags: i.tags || [],
                     likes: i.likes,
                     isLiked: i.is_liked,
@@ -69,6 +72,42 @@ export const superfeedApi = alphadayApi.injectEndpoints({
             // When commented out, keepUnsedDataFor defaults to 60s
             // TODO(v-almonacid): Re-assess this value post-MVP release
             // keepUnusedDataFor: 60,
+        }),
+        likeSuperfeedItem: builder.mutation<
+            TLikeSuperfeedItemResponse,
+            TLikeSuperfeedItemRequest
+        >({
+            query: (req) => ({
+                url: `${SUPERFEED.BASE}${SUPERFEED.LIKE(req.id)}`,
+                method: "POST",
+                body: undefined,
+            }),
+            transformResponse: (
+                i: TLikeSuperfeedItemRawResponse
+            ): TLikeSuperfeedItemResponse => ({
+                id: i.id,
+                type: i.content_type,
+                title: i.title,
+                date: i.item_date,
+                itemId: i.item_id,
+                trendiness: i.trendiness,
+                url: i.url,
+                image: i.image,
+                shortDescription: i.short_description,
+                duration: i.duration,
+                fileUrl: i.file_url,
+                startsAt: i.starts_at,
+                endsAt: i.ends_at,
+                sourceIcon: i.source?.icon,
+                sourceSlug: i.source?.slug,
+                sourceName: i.source?.name,
+                tags: i.tags || [],
+                likes: i.likes,
+                isLiked: i.is_liked,
+                comments: i.comments,
+                data: i.data,
+            }),
+            invalidatesTags: ["Superfeed"],
         }),
         getFilterData: builder.query<
             TGetSuperfeedFilterDataResponse,
@@ -129,4 +168,5 @@ export const {
     useGetSuperfeedListQuery,
     useGetFilterDataQuery,
     useGetFilterKeywordsQuery,
+    useLikeSuperfeedItemMutation,
 } = superfeedApi;

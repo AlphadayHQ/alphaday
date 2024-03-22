@@ -15,8 +15,6 @@ import {
     TGetLatestVideoResponse,
     TGetLatestVideoRequest,
     TGetLatestVideoRawResponse,
-    TLikeVideoItemRequest,
-    TLikeVideoItemResponse,
 } from "./types";
 
 const { VIDEO, SOURCES } = CONFIG.API.DEFAULT.ROUTES;
@@ -113,21 +111,6 @@ export const videoApi = alphadayApi.injectEndpoints({
                 };
             },
         }),
-        likeVideoItem: builder.mutation<
-            TLikeVideoItemResponse,
-            TLikeVideoItemRequest
-        >({
-            query: (req: TLikeVideoItemRequest) => {
-                const path = `${VIDEO.BASE}${VIDEO.LIKE(req.id)}`;
-                Logger.debug("likeVideoItem: querying", path);
-                return {
-                    url: path,
-                    method: "POST",
-                    body: {},
-                };
-            },
-            invalidatesTags: ["Superfeed"],
-        }),
         openVideoItem: builder.mutation<
             TOpenVideoItemResponse,
             TOpenVideoItemRequest
@@ -152,5 +135,4 @@ export const {
     useOpenVideoItemMutation,
     useBookmarkVideoItemMutation,
     useGetVideoChannelsListQuery,
-    useLikeVideoItemMutation,
 } = videoApi;
