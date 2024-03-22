@@ -78,8 +78,8 @@ export type TFeedItemData = {
     gasFast?: number;
     gasSlow?: number;
     gasStandard?: number;
-    precentChange?: number;
-    PrevGasStandard?: number;
+    percentChange?: number;
+    prevGasStandard?: number;
 };
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
