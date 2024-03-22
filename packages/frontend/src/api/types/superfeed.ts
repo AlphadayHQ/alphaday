@@ -75,6 +75,11 @@ export type TFeedItemData = {
     itemType?: string | null;
     projects?: TTVLFeedDataItem[];
     projectType?: "protocol" | "chain";
+    gasFast?: number;
+    gasSlow?: number;
+    gasStandard?: number;
+    precentChange?: number;
+    PrevGasStandard?: number;
 };
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {
