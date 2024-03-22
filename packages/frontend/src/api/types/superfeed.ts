@@ -14,6 +14,7 @@ export enum EFeedItemType {
     DISCORD = "discorditem",
     MARKET = "marketitem",
     TVL = "tvlitem",
+    GAS = "gasitem",
 }
 
 /**
