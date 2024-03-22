@@ -139,7 +139,6 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 selected: false,
                 color: themeColors.categoryNine,
                 contentType: EFeedItemType.TVL,
-                disabled: true,
             },
             {
                 id: 10,
