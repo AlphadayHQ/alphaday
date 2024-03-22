@@ -1,5 +1,4 @@
 import { IonContent, IonRefresher, IonRefresherContent } from "@ionic/react";
-import { isPWA } from "src/api/utils/helpers";
 
 interface PullToRefreshContainerProps {
     children: React.ReactNode;
@@ -9,7 +8,7 @@ const PullToRefreshContainer: React.FC<PullToRefreshContainerProps> = ({
     children,
     handleRefresh,
 }) => {
-    return isPWA() ? (
+    return (
         <IonContent forceOverscroll role="feed">
             <IonRefresher
                 slot="fixed"
@@ -28,8 +27,6 @@ const PullToRefreshContainer: React.FC<PullToRefreshContainerProps> = ({
             </IonRefresher>
             {children}
         </IonContent>
-    ) : (
-        children
     );
 };
 
