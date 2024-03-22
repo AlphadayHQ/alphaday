@@ -2,6 +2,7 @@ import { FC } from "react";
 import { EFeedItemType, TSuperfeedItem } from "src/api/types";
 import { BlogCard } from "./BlogCard";
 import { EventCard } from "./EventCard";
+import { GasCard } from "./GasCard";
 import { ImageCard } from "./ImageCard";
 import { MarketCard } from "./MarketCard";
 import { NewsCard } from "./NewsCard";
@@ -134,6 +135,15 @@ export const FeedCard: FC<IFeedCard> = ({
         case EFeedItemType.MARKET:
             return (
                 <MarketCard
+                    item={item}
+                    onLike={onLike}
+                    onShare={onShare}
+                    isAuthenticated={isAuthenticated}
+                />
+            );
+        case EFeedItemType.GAS:
+            return (
+                <GasCard
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
