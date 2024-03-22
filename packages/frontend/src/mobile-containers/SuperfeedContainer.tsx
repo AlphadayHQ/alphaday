@@ -27,6 +27,7 @@ import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters/filterOptions";
 import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import CONFIG from "src/config";
+import { EMobileRoutePaths } from "src/routes";
 
 const buildTagsQueryParam = (syncedFilters: TSelectedFiltersSynced) =>
     Object.values(syncedFilters)
@@ -41,8 +42,11 @@ const SuperfeedContainer: FC<{
     tags: string | undefined;
 }> = ({ tags: tagsFromSearch, onToggleFeedFilters, showSearchBar }) => {
     const history = useHistory();
-    const { setSearchState, keywordResults, isFetchingKeywordResults } =
-        useKeywordSearch();
+    const {
+        setSearchState,
+        keywordResults,
+        isFetchingKeywordResults,
+    } = useKeywordSearch();
 
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
@@ -55,8 +59,10 @@ const SuperfeedContainer: FC<{
 
     const { isAuthenticated } = useAccount();
 
-    const [selectedPodcast, setSelectedPodcast] =
-        useState<TSuperfeedItem | null>(null);
+    const [
+        selectedPodcast,
+        setSelectedPodcast,
+    ] = useState<TSuperfeedItem | null>(null);
 
     const contentTypes = Object.values(STATIC_FILTER_OPTIONS.media.options)
         .filter((op) => selectedLocalFilters.mediaTypes.includes(op.slug))
@@ -140,7 +146,7 @@ const SuperfeedContainer: FC<{
                 await shareData({
                     title: item.title,
                     text: item.shortDescription,
-                    url: item.url,
+                    url: item.url ?? EMobileRoutePaths.Superfeed,
                 });
 
                 // Log the share
