@@ -3,7 +3,7 @@ import { twMerge, ModuleLoader } from "@alphaday/ui-kit";
 import { IonFab, IonList } from "@ionic/react";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
-import { isIOS, isPWA } from "src/api/utils/helpers";
+import { isPWA } from "src/api/utils/helpers";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import { ReactComponent as Settings2SVG } from "src/assets/icons/settings3.svg";
@@ -85,16 +85,16 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                 slot="fixed"
                 horizontal="end"
                 vertical="bottom"
-                className={twMerge(isFiltersVisible && "hidden delay-0")}
+                className={twMerge(
+                    "fixed",
+                    isFiltersVisible && "hidden delay-0"
+                )}
             >
                 <button
                     type="button"
                     onClick={toggleShowFeedFilters}
                     title="Open filters"
-                    className={twMerge(
-                        "bg-accentVariant100 rounded-2xl p-4 delay-300 mr-2.5 mb-[12vh]",
-                        isIOS() ? "shadow-2xl mb-[24vh]" : "shadow-3xl"
-                    )}
+                    className="bg-accentVariant100 rounded-2xl p-4 delay-300 mr-2.5 mb-[5vh]"
                 >
                     <Settings2SVG className="w-6 text-primary" />
                 </button>
