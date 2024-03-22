@@ -97,7 +97,7 @@ export const MarketCard: FC<{
                                     className={twMerge(
                                         "flex-col min-w-max mr-9",
                                         isATH &&
-                                            "mr-0 p-4 rounded-md items-center justify-center",
+                                            "mr-0 p-4 pr-0 rounded-md items-center justify-center",
                                         isATH && !open && "h-20 w-28"
                                     )}
                                 >
