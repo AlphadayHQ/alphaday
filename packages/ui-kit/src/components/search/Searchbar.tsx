@@ -315,6 +315,7 @@ export const SearchBar = <T,>({
             <Select
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
+                autoFocus
                 onChange={(e, changeType) => handleSearchValues(e, changeType)}
                 onInputChange={handleInputChange}
                 isClearable

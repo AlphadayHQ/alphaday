@@ -15,6 +15,7 @@ import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
 import CONFIG from "./config";
+import ToastContainer from "./containers/toasts/ToastContainer";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
@@ -104,6 +105,11 @@ const MobileApp: React.FC = () => {
                     </Suspense>
                 </IonRouterOutlet>
             </IonReactRouter>
+            <ToastContainer
+                position="bottom-center"
+                duration={CONFIG.UI.TOAST_DURATION}
+                className="fontGroup-supportBold mb-20"
+            />
         </IonApp>
     );
 };

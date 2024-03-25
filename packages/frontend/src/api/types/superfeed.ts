@@ -71,6 +71,7 @@ export type TFeedItemData = {
     };
     price?: number;
     history?: string;
+    interval?: string;
     location?: string | null;
     itemType?: string | null;
     projects?: TTVLFeedDataItem[];
