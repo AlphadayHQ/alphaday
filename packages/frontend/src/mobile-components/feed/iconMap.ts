@@ -2,6 +2,7 @@ import { EFeedItemType } from "src/api/types";
 import blogIcon from "src/assets/feedIcons/blog.png";
 import eventIcon from "src/assets/feedIcons/event.png";
 import forumIcon from "src/assets/feedIcons/forum.png";
+import gasIcon from "src/assets/feedIcons/gas.png";
 import imageIcon from "src/assets/feedIcons/image.png";
 import newsIcon from "src/assets/feedIcons/news.png";
 import personIcon from "src/assets/feedIcons/person.png";
@@ -27,4 +28,5 @@ export const feedItemIconMap = {
     [EFeedItemType.MARKET]: (down: boolean) =>
         down ? trendDownIcon : trendUpIcon,
     [EFeedItemType.TVL]: tvlIcon,
+    [EFeedItemType.GAS]: gasIcon,
 };

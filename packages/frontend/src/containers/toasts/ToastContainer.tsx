@@ -4,8 +4,9 @@ import { ToastOptions, ToastBar, Toaster, toast } from "react-hot-toast";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 
 const ToastContainer: FC<ToastOptions> = (options) => {
+    const { position } = options;
     return (
-        <Toaster position="top-right" toastOptions={options}>
+        <Toaster position={position ?? "top-right"} toastOptions={options}>
             {(t) => (
                 <ToastBar
                     toast={t}

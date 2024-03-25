@@ -139,7 +139,6 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 selected: false,
                 color: themeColors.categoryNine,
                 contentType: EFeedItemType.TVL,
-                disabled: true,
             },
             {
                 id: 10,
@@ -174,6 +173,14 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
                 selected: false,
                 color: themeColors.categoryTwelve,
                 contentType: EFeedItemType.DISCORD,
+            },
+            {
+                id: 14,
+                slug: EFeedItemType.GAS,
+                name: "Gas Prices",
+                selected: false,
+                color: themeColors.categoryEleven,
+                contentType: EFeedItemType.GAS,
             },
         ],
     },

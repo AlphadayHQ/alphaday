@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { twMerge } from "@alphaday/ui-kit";
+import { Arrow, twMerge } from "@alphaday/ui-kit";
 import { TSuperfeedItem } from "src/api/types";
-import { ENumberStyle, formatNumber } from "src/api/utils/format";
+import GasPriceBox from "src/components/gas/GasPriceBox";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
@@ -14,22 +14,8 @@ import {
     TagButtons,
     getFeedItemIcon,
 } from "./FeedElements";
-import LineChart from "./LineChart";
 
-const parseHistory = (
-    history: string | [number, number][]
-): [number, number][] => {
-    if (typeof history === "string") {
-        const parsedHistory = JSON.parse(history);
-        if (!Array.isArray(parsedHistory)) {
-            return [[0, 1]];
-        }
-        return parsedHistory;
-    }
-    return history;
-};
-
-export const MarketCard: FC<{
+export const GasCard: FC<{
     item: TSuperfeedItem;
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
@@ -39,16 +25,14 @@ export const MarketCard: FC<{
         tags,
         likes,
         comments,
-        image,
-        url,
-        shortDescription,
+        title,
         type,
         date,
-        data: coinData,
+        sourceIcon,
+        data: gasData,
     } = item;
 
-    const isDown = shortDescription?.includes("down");
-    const isATH = coinData?.interval === "ATH";
+    const isDown = gasData?.gasPercentChange && gasData.gasPercentChange < 0;
 
     return (
         <FeedItemDisclosure>
@@ -60,7 +44,7 @@ export const MarketCard: FC<{
                                 <div className="flex flex-col">
                                     <div className="flex items-center">
                                         <FeedItemDisclosureButtonImage
-                                            icon={getFeedItemIcon(type, isDown)}
+                                            icon={getFeedItemIcon(type)}
                                         />
                                         <p className="text-primaryVariant100 fontGroup-mini leading-[18px] flex flex-wrap whitespace-nowrap">
                                             {computeDuration(date)}
@@ -68,11 +52,8 @@ export const MarketCard: FC<{
                                                 •
                                             </span>{" "}
                                             <span>
-                                                <span className="capitalize text-primary">
-                                                    {coinData?.coin?.name}
-                                                </span>
                                                 <img
-                                                    src={image || undefined}
+                                                    src={sourceIcon}
                                                     alt=""
                                                     className="w-3.5 h-3.5 mr-[5px] rounded-full inline-flex ml-1.5"
                                                     onError={imgOnError}
@@ -80,56 +61,30 @@ export const MarketCard: FC<{
                                             </span>
                                         </p>
                                     </div>
-                                    <CardTitle title={shortDescription || ""} />
-                                    {!isATH && (
-                                        <p className="fontGroup-highlight mt-1">
-                                            Price:{" "}
-                                            {coinData?.price &&
-                                                formatNumber({
-                                                    value: coinData.price,
-                                                    style: ENumberStyle.Currency,
-                                                    currency: "USD",
-                                                }).value}
-                                        </p>
-                                    )}
+                                    <CardTitle title={title || ""} />
+                                    <p className="mt-4">
+                                        Gas Fees are {isDown ? "down" : "up"}{" "}
+                                        {isDown ? (
+                                            <Arrow
+                                                className="h-2.5"
+                                                direction="down"
+                                            />
+                                        ) : (
+                                            <Arrow
+                                                className="h-2.5"
+                                                direction="up"
+                                            />
+                                        )}{" "}
+                                        {gasData?.gasPercentChange}%
+                                    </p>
                                 </div>
-                                <div
-                                    className={twMerge(
-                                        "flex-col min-w-max mr-9",
-                                        isATH &&
-                                            "mr-0 p-4 pr-0 rounded-md items-center justify-center",
-                                        isATH && !open && "h-20 w-28"
-                                    )}
-                                >
+                                <div className="flex-col min-w-max mr-9">
                                     <div
                                         className={twMerge(
                                             "w-full flex justify-end items-start",
                                             open && "hidden"
                                         )}
-                                    >
-                                        {isATH ? (
-                                            <p className="text-success text-4xl font-semibold">
-                                                {coinData?.price &&
-                                                    formatNumber({
-                                                        value: coinData.price,
-                                                        style: ENumberStyle.Currency,
-                                                        currency: "USD",
-                                                    }).value}
-                                            </p>
-                                        ) : (
-                                            <LineChart
-                                                data={
-                                                    coinData?.history
-                                                        ? parseHistory(
-                                                              coinData.history
-                                                          )
-                                                        : [[0, 1]]
-                                                }
-                                                className="!h-20 !w-28"
-                                                isPreview
-                                            />
-                                        )}
-                                    </div>
+                                    />
                                 </div>
                             </div>
                             <div className="flex justify-between">
@@ -159,21 +114,26 @@ export const MarketCard: FC<{
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
-                        <LineChart
-                            data={
-                                coinData?.history
-                                    ? parseHistory(coinData.history)
-                                    : [[0, 1]]
-                            }
-                        />
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:underline fontGroup-supportBold mb-0 pt-2 leading-5 [text-underline-offset:_6px]"
-                        >
-                            View Details
-                        </a>
+                        <div className="my-2 flex justify-between max-w-sm mx-auto">
+                            <GasPriceBox
+                                type="slow"
+                                gweiPrice={gasData?.gasSlow}
+                                usdPrice={undefined}
+                                isCard
+                            />
+                            <GasPriceBox
+                                type="standard"
+                                gweiPrice={gasData?.gasStandard}
+                                usdPrice={undefined}
+                                isCard
+                            />
+                            <GasPriceBox
+                                type="fast"
+                                gweiPrice={gasData?.gasFast}
+                                usdPrice={undefined}
+                                isCard
+                            />
+                        </div>
                         <div className="my-2 flex justify-between">
                             <TagButtons tags={tags} onClick={() => {}} />
                             <div className="min-w-max ml-2 mt-0.5">

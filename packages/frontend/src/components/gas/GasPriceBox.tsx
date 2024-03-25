@@ -28,11 +28,22 @@ interface IGasPriceBox {
     type: "fast" | "standard" | "slow";
     gweiPrice: number | undefined;
     usdPrice: number | undefined;
+    isCard?: boolean; // if true, the element will be displayed in a feed card
 }
 
-const GasPriceBox: FC<IGasPriceBox> = ({ type, gweiPrice, usdPrice }) => {
+const GasPriceBox: FC<IGasPriceBox> = ({
+    type,
+    gweiPrice,
+    usdPrice,
+    isCard,
+}) => {
     return (
-        <div className="flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
+        <div
+            className={twMerge(
+                "flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]",
+                isCard && "w-[70px]"
+            )}
+        >
             {type === "fast" && (
                 <GasPriceTitle className="text-success">{type}</GasPriceTitle>
             )}
@@ -47,13 +58,15 @@ const GasPriceBox: FC<IGasPriceBox> = ({ type, gweiPrice, usdPrice }) => {
                 </GasPriceTitle>
             )}
             <div className="whitespace-nowrap text-center">
-                {gweiPrice && usdPrice ? (
+                {gweiPrice ? (
                     <div>
                         <p className="fontGroup-major text-primary mb-0 text-center">
                             {gweiPrice}
                         </p>
                         <p className="fontGroup-support mb-0 text-center text-primaryVariant100 mt-1">
-                            ${usdPrice.toFixed(2)}
+                            {isCard
+                                ? "(gwei)"
+                                : usdPrice && `$${usdPrice?.toFixed(2)}`}
                         </p>
                     </div>
                 ) : (

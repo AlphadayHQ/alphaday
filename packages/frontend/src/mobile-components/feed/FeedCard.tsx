@@ -2,11 +2,13 @@ import { FC } from "react";
 import { EFeedItemType, TSuperfeedItem } from "src/api/types";
 import { BlogCard } from "./BlogCard";
 import { EventCard } from "./EventCard";
+import { GasCard } from "./GasCard";
 import { ImageCard } from "./ImageCard";
 import { MarketCard } from "./MarketCard";
 import { NewsCard } from "./NewsCard";
 import { PodcastCard } from "./PodcastCard";
 import { SocialCard } from "./SocialCard";
+import { TVLCard } from "./TVLCard";
 import { VideoCard } from "./VideoCard";
 
 interface IFeedCard {
@@ -139,8 +141,24 @@ export const FeedCard: FC<IFeedCard> = ({
                     isAuthenticated={isAuthenticated}
                 />
             );
+        case EFeedItemType.GAS:
+            return (
+                <GasCard
+                    item={item}
+                    onLike={onLike}
+                    onShare={onShare}
+                    isAuthenticated={isAuthenticated}
+                />
+            );
         case EFeedItemType.TVL:
-            return null;
+            return (
+                <TVLCard
+                    item={item}
+                    onLike={onLike}
+                    onShare={onShare}
+                    isAuthenticated={isAuthenticated}
+                />
+            );
         default:
             return null;
     }

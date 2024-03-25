@@ -27,6 +27,7 @@ import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters/filterOptions";
 import PullToRefreshContainer from "src/mobile-containers/PullToRefreshContainer";
 import CONFIG from "src/config";
+import { EMobileRoutePaths } from "src/routes";
 
 const buildTagsQueryParam = (syncedFilters: TSelectedFiltersSynced) =>
     Object.values(syncedFilters)
@@ -74,6 +75,7 @@ const SuperfeedContainer: FC<{
         currentData: feedDataResponse,
         isLoading,
         isSuccess,
+        refetch,
     } = useGetSuperfeedListQuery({
         page: currentPage,
         content_types: contentTypes,
@@ -140,7 +142,7 @@ const SuperfeedContainer: FC<{
                 await shareData({
                     title: item.title,
                     text: item.shortDescription,
-                    url: item.url,
+                    url: item.url ?? EMobileRoutePaths.Superfeed,
                 });
 
                 // Log the share
@@ -240,7 +242,7 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <PullToRefreshContainer handleRefresh={reset}>
+            <PullToRefreshContainer handleRefresh={refetch}>
                 <SuperfeedModule
                     isLoading={isLoading}
                     isAuthenticated={isAuthenticated}
