@@ -121,6 +121,7 @@ const SuperfeedContainer: FC<{
 
     const handleFeedItemRefresh = useCallback(() => {
         refetch()
+            .unwrap()
             .then((e) => {
                 Logger.debug(
                     "SuperfeedContainer::handleFeedItemRefresh: success",
