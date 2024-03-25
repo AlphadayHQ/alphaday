@@ -120,23 +120,6 @@ const SuperfeedContainer: FC<{
         reset();
     }
 
-    const handleFeedItemRefresh = useCallback(() => {
-        refetch()
-            .unwrap()
-            .then((e) => {
-                Logger.debug(
-                    "SuperfeedContainer::handleFeedItemRefresh: success",
-                    e
-                );
-            })
-            .catch((e) => {
-                Logger.error(
-                    "SuperfeedContainer::handleFeedItemRefresh: failed to refresh items",
-                    e
-                );
-            });
-    }, [refetch]);
-
     //  When results change, append them
     if (
         feedDataResponse?.results !== undefined &&
@@ -259,7 +242,7 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <PullToRefreshContainer handleRefresh={handleFeedItemRefresh}>
+            <PullToRefreshContainer handleRefresh={refetch}>
                 <SuperfeedModule
                     isLoading={isLoading}
                     isAuthenticated={isAuthenticated}
