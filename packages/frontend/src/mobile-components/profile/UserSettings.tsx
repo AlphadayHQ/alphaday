@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { MiniDialog, Spinner, twMerge } from "@alphaday/ui-kit";
 import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
