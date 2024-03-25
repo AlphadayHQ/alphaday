@@ -32,7 +32,7 @@ export const GasCard: FC<{
         data: gasData,
     } = item;
 
-    const isDown = gasData?.percentChange && gasData.percentChange < 0;
+    const isDown = gasData?.gasPercentChange && gasData.gasPercentChange < 0;
 
     return (
         <FeedItemDisclosure>
@@ -75,7 +75,7 @@ export const GasCard: FC<{
                                                 direction="up"
                                             />
                                         )}{" "}
-                                        {gasData?.percentChange}%
+                                        {gasData?.gasPercentChange}%
                                     </p>
                                 </div>
                                 <div className="flex-col min-w-max mr-9">
