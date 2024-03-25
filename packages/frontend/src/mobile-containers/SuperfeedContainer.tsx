@@ -74,6 +74,7 @@ const SuperfeedContainer: FC<{
         currentData: feedDataResponse,
         isLoading,
         isSuccess,
+        refetch,
     } = useGetSuperfeedListQuery({
         page: currentPage,
         content_types: contentTypes,
@@ -117,6 +118,22 @@ const SuperfeedContainer: FC<{
         setFeedData(undefined);
         reset();
     }
+
+    const handleFeedItemRefresh = useCallback(() => {
+        refetch()
+            .then((e) => {
+                Logger.debug(
+                    "SuperfeedContainer::handleFeedItemRefresh: success",
+                    e
+                );
+            })
+            .catch((e) => {
+                Logger.error(
+                    "SuperfeedContainer::handleFeedItemRefresh: failed to refresh items",
+                    e
+                );
+            });
+    }, [refetch]);
 
     //  When results change, append them
     if (
@@ -240,7 +257,7 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <PullToRefreshContainer handleRefresh={reset}>
+            <PullToRefreshContainer handleRefresh={handleFeedItemRefresh}>
                 <SuperfeedModule
                     isLoading={isLoading}
                     isAuthenticated={isAuthenticated}

@@ -53,6 +53,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
         <>
             <IonList
                 onScroll={handleScrollEvent}
+                onScrollCapture={handleScrollEvent}
                 className={`w-full px-3.5 pt-4 bg-transparent ${
                     isPWA() ? "" : "overflow-y-auto overscroll-contain h-full"
                 }`}
