@@ -110,28 +110,6 @@ export const EventCard: FC<{
                                     </div>
                                 </div>
                             </div>
-                            {!open && (
-                                <div className="flex justify-between">
-                                    <div className="flex-col">
-                                        <TagButton
-                                            className="bg-[#C1DF91] text-background mt-3"
-                                            name={category}
-                                            onClick={() => {}}
-                                        />
-                                    </div>
-                                    <div className="flex-col min-w-max ml-2">
-                                        <ActionButtons
-                                            onLike={onLike}
-                                            onCommentClick={onLike}
-                                            onShare={onShare}
-                                            likes={likes}
-                                            comments={comments}
-                                            isAuthenticated={isAuthenticated}
-                                            isLiked={item.isLiked}
-                                        />
-                                    </div>
-                                </div>
-                            )}
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
@@ -160,29 +138,36 @@ export const EventCard: FC<{
                             className="m-0 text-primaryVariant100 prose-p:text-primaryVariant100 prose-a:text-secondaryOrange50 line-clamp-4"
                         />
                         <ReadMoreLink url={url} />
-
-                        <div className="my-2 flex justify-between">
-                            <div className="flex flex-col">
+                    </FeedItemDisclosurePanel>
+                    <div className="flex justify-between my-2">
+                        <div className="flex-col">
+                            <div className="flex-col">
                                 <TagButton
                                     className="bg-[#C1DF91] text-background mt-3"
                                     name={category}
                                     onClick={() => {}}
                                 />
-                                <TagButtons tags={tags} onClick={() => {}} />
                             </div>
-                            <div className="min-w-max ml-2 mt-0.5">
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onShare}
-                                    likes={likes}
-                                    comments={comments}
-                                    isAuthenticated={isAuthenticated}
-                                    isLiked={item.isLiked}
+                            {open && (
+                                <TagButtons
+                                    truncated
+                                    tags={tags}
+                                    onClick={() => {}}
                                 />
-                            </div>
+                            )}
                         </div>
-                    </FeedItemDisclosurePanel>
+                        <div className="flex-col min-w-max ml-2">
+                            <ActionButtons
+                                isAuthenticated={isAuthenticated}
+                                onLike={onLike}
+                                onCommentClick={onLike}
+                                onShare={onShare}
+                                likes={likes}
+                                comments={comments}
+                                isLiked={item.isLiked}
+                            />
+                        </div>
+                    </div>
                 </>
             )}
         </FeedItemDisclosure>
