@@ -75,9 +75,8 @@ export const NewsCard: FC<{
                             {shortDescription}
                         </p>
                         <ReadMoreLink url={url} />
-                        <div className="my-2" />
                     </FeedItemDisclosurePanel>
-                    <div className="flex justify-between mb-2">
+                    <div className="flex justify-between my-2">
                         <div className="flex-col">
                             <TagButtons
                                 truncated
