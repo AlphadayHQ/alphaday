@@ -1,11 +1,13 @@
 import { FC, useState } from "react";
-import { twMerge } from "@alphaday/ui-kit";
+import { MiniDialog, Spinner, twMerge } from "@alphaday/ui-kit";
 import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
+import { usePrevious } from "src/api/hooks";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
+import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
@@ -102,6 +104,12 @@ const UserSettings: FC<IUserSettings> = ({
     const [showProfileEditModal, setShowProfileEditModal] =
         useState<boolean>(false);
     const history = useHistory();
+    const [isProfileUpdated, setIsProfileUpdated] = useState(false);
+    const prevIsSavingProfile = usePrevious(isSavingProfile);
+
+    if (prevIsSavingProfile === true && isSavingProfile === false) {
+        setIsProfileUpdated(true);
+    }
 
     const navigate = (link: string) => {
         history.push(link);
@@ -231,6 +239,27 @@ const UserSettings: FC<IUserSettings> = ({
                 isSavingProfile={isSavingProfile}
                 onCloseModal={handleCloseModal}
             />
+            <MiniDialog show={isSavingProfile} title="Saving">
+                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                    Saving changes to your profile
+                </div>
+                <div className="text-center mt-4">
+                    <Spinner />
+                </div>
+            </MiniDialog>
+            <MiniDialog
+                icon={<GreenCheckSVG />}
+                show={isProfileUpdated}
+                title="Profile Updated"
+                onActionClick={() => {
+                    setIsProfileUpdated(false);
+                    history.push(EMobileRoutePaths.UserSettings);
+                }}
+            >
+                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                    Your Profile has been updated
+                </div>
+            </MiniDialog>
         </>
     );
 };

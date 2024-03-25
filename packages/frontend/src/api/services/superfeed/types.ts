@@ -7,6 +7,11 @@ export type TRemoteFeedItemData = Omit<
 > & {
     item_type?: string | null;
     project_type?: "protocol" | "chain";
+    GAS_FAST?: number;
+    GAS_SLOW?: number;
+    GAS_STANDARD?: number;
+    PERCENT_CHANGE?: number;
+    PREV_GAS_STANDARD?: number;
 };
 
 export type TRemoteSuperfeedItem = {
