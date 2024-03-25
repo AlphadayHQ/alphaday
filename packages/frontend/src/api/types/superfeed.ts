@@ -56,6 +56,27 @@ export type TGroupedFilterKeywords = {
     [ESupportedFilters.ConceptTags]: TFilterKeyword[];
 };
 
+/**
+ * defines how filter group names are displayed in the UI
+ */
+export const GROUP_NAME_MAP: Record<string, string> = {
+    [ESupportedFilters.Chains]: "Chains",
+    [ESupportedFilters.Coins]: "Coins",
+    [ESupportedFilters.ConceptTags]: "Other",
+};
+
+/**
+ * filter search bar types
+ */
+export type TFilterKeywordOption = TFilterKeyword & {
+    label: string;
+    value: string;
+};
+export type TFilterKeywordOptionGroup = {
+    label: string;
+    options: TFilterKeywordOption[];
+};
+
 export type TTVLFeedDataItem = {
     tvl: number;
     icon: string;
