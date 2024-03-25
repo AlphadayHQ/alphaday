@@ -107,11 +107,9 @@ const UserSettings: FC<IUserSettings> = ({
     const [isProfileUpdated, setisProfileUpdated] = useState(false);
     const prevIsSavingProfile = usePrevious(isSavingProfile);
 
-    useEffect(() => {
-        if (prevIsSavingProfile === true && isSavingProfile === false) {
-            setisProfileUpdated(true);
-        }
-    }, [isSavingProfile, prevIsSavingProfile]);
+    if (prevIsSavingProfile === true && isSavingProfile === false) {
+        setisProfileUpdated(true);
+    }
 
     const navigate = (link: string) => {
         history.push(link);
