@@ -37,7 +37,7 @@ export const NewsCard: FC<{
 
     return (
         <FeedItemDisclosure>
-            {({ open }) => (
+            {() => (
                 <>
                     <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
@@ -68,30 +68,6 @@ export const NewsCard: FC<{
                                     />
                                 </div>
                             </div>
-                            <div className="flex justify-between">
-                                <div className="flex-col">
-                                    {!open && (
-                                        <TagButtons
-                                            truncated
-                                            tags={tags}
-                                            onClick={() => {}}
-                                        />
-                                    )}
-                                </div>
-                                <div className="flex-col min-w-max ml-2">
-                                    {!open && (
-                                        <ActionButtons
-                                            isAuthenticated={isAuthenticated}
-                                            onLike={onLike}
-                                            onCommentClick={onLike}
-                                            onShare={onShare}
-                                            likes={likes}
-                                            comments={comments}
-                                            isLiked={item.isLiked}
-                                        />
-                                    )}
-                                </div>
-                            </div>
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
@@ -99,22 +75,28 @@ export const NewsCard: FC<{
                             {shortDescription}
                         </p>
                         <ReadMoreLink url={url} />
-
-                        <div className="my-2 flex justify-between">
-                            <TagButtons tags={tags} onClick={() => {}} />
-                            <div className="min-w-max ml-2 mt-0.5">
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onShare}
-                                    likes={likes}
-                                    comments={comments}
-                                    isLiked={item.isLiked}
-                                    isAuthenticated={isAuthenticated}
-                                />
-                            </div>
-                        </div>
+                        <div className="my-2" />
                     </FeedItemDisclosurePanel>
+                    <div className="flex justify-between mb-2">
+                        <div className="flex-col">
+                            <TagButtons
+                                truncated
+                                tags={tags}
+                                onClick={() => {}}
+                            />
+                        </div>
+                        <div className="flex-col min-w-max ml-2">
+                            <ActionButtons
+                                isAuthenticated={isAuthenticated}
+                                onLike={onLike}
+                                onCommentClick={onLike}
+                                onShare={onShare}
+                                likes={likes}
+                                comments={comments}
+                                isLiked={item.isLiked}
+                            />
+                        </div>
+                    </div>
                 </>
             )}
         </FeedItemDisclosure>
