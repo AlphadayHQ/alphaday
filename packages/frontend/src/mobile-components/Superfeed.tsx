@@ -1,7 +1,9 @@
 import { useRef, FC, FormEvent, useCallback } from "react";
-import { twMerge, ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import { twMerge, ModuleLoader } from "@alphaday/ui-kit";
+import { IonFab, IonList } from "@ionic/react";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
+import { isPWA } from "src/api/utils/helpers";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import { ReactComponent as Settings2SVG } from "src/assets/icons/settings3.svg";
@@ -21,44 +23,6 @@ interface ISuperfeedModule {
     >;
 }
 
-const FiltersButton: FC<{ toggleShowFeedFilters: () => void }> = ({
-    toggleShowFeedFilters,
-}) => {
-    const element1: React.Ref<HTMLDivElement> = useRef(null);
-    const element2: React.Ref<HTMLDivElement> = useRef(null);
-    const element1Visible = useOnScreen(element1);
-
-    return (
-        <>
-            <div
-                ref={element1}
-                className="flex justify-between mb-5 px-4 py-2 border border-accentVariant100 rounded-lg"
-                onClick={toggleShowFeedFilters}
-                tabIndex={0}
-                role="button"
-            >
-                <p className="m-0 pr-4 fontGroup-highlight self-center">
-                    Craft your superfeed with personalized filters
-                </p>
-                <SettingsSVG className="w-6 text-accentVariant100 self-center" />
-            </div>
-            <div
-                ref={element2}
-                onClick={toggleShowFeedFilters}
-                tabIndex={0}
-                role="button"
-                title="Open filters"
-                className={twMerge(
-                    "absolute bg-accentVariant100 rounded-2xl p-4 bottom-10 right-5 z-10 delay-300",
-                    element1Visible && "hidden delay-0"
-                )}
-            >
-                <Settings2SVG className="w-6 text-primary" />
-            </div>
-        </>
-    );
-};
-
 const SuperfeedModule: FC<ISuperfeedModule> = ({
     isLoading,
     isAuthenticated,
@@ -70,6 +34,8 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     onShareItem,
     onLikeItem,
 }) => {
+    const filtersWrap: React.Ref<HTMLDivElement> = useRef(null);
+    const isFiltersVisible = useOnScreen(filtersWrap);
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
             if (shouldFetchMoreItems(currentTarget)) {
@@ -78,25 +44,63 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
         },
         [handlePaginate]
     );
+
     if (isLoading || feed === undefined) {
         return <ModuleLoader $height="100%" />;
     }
 
     return (
-        <ScrollBar onScroll={handleScrollEvent} className="w-full px-3.5 pt-4">
-            <FiltersButton toggleShowFeedFilters={toggleShowFeedFilters} />
-            {feed.map((item) => (
-                <FeedCard
-                    key={`${item.type}-${item.id}`}
-                    item={item}
-                    isAuthenticated={isAuthenticated}
-                    selectedPodcast={selectedPodcast}
-                    setSelectedPodcast={setSelectedPodcast}
-                    onLike={() => onLikeItem(item)}
-                    onShare={() => onShareItem(item)}
-                />
-            ))}
-        </ScrollBar>
+        <>
+            <IonList
+                onScroll={handleScrollEvent}
+                onScrollCapture={handleScrollEvent}
+                className={`w-full px-3.5 pt-4 bg-transparent ${
+                    isPWA() ? "" : "overflow-y-auto overscroll-contain h-full"
+                }`}
+            >
+                <div
+                    ref={filtersWrap}
+                    className="flex justify-between mb-5 px-4 py-2 border border-accentVariant100 rounded-lg"
+                    onClick={toggleShowFeedFilters}
+                    tabIndex={0}
+                    role="button"
+                >
+                    <p className="m-0 pr-4 fontGroup-highlight self-center">
+                        Craft your superfeed with personalized filters
+                    </p>
+                    <SettingsSVG className="w-6 text-accentVariant100 self-center" />
+                </div>
+                {feed.map((item) => (
+                    <FeedCard
+                        key={`${item.type}-${item.id}`}
+                        item={item}
+                        isAuthenticated={isAuthenticated}
+                        selectedPodcast={selectedPodcast}
+                        setSelectedPodcast={setSelectedPodcast}
+                        onLike={() => onLikeItem(item)}
+                        onShare={() => onShareItem(item)}
+                    />
+                ))}
+            </IonList>
+            <IonFab
+                slot="fixed"
+                horizontal="end"
+                vertical="bottom"
+                className={twMerge(
+                    "fixed",
+                    isFiltersVisible && "hidden delay-0"
+                )}
+            >
+                <button
+                    type="button"
+                    onClick={toggleShowFeedFilters}
+                    title="Open filters"
+                    className="bg-accentVariant100 rounded-2xl p-4 delay-300 mr-2.5 mb-[5vh]"
+                >
+                    <Settings2SVG className="w-6 text-primary" />
+                </button>
+            </IonFab>
+        </>
     );
 };
 

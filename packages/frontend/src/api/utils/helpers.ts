@@ -156,6 +156,12 @@ export const isPWA = () => {
     );
 };
 
+export const isIOS = () => {
+    const userAgent = navigator.userAgent || navigator.vendor;
+    // @ts-ignore - TS doesn't know about MSStream
+    return /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+};
+
 /**
  * @returns true if the current device is a mobile device
  */

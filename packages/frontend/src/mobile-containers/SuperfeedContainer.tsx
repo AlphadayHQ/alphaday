@@ -90,6 +90,7 @@ const SuperfeedContainer: FC<{
         currentData: feedDataResponse,
         isLoading,
         isSuccess,
+        refetch,
     } = useGetSuperfeedListQuery({
         page: currentPage,
         content_types: contentTypes,
@@ -274,7 +275,7 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <PullToRefreshContainer handleRefresh={reset}>
+            <PullToRefreshContainer handleRefresh={refetch}>
                 <SuperfeedModule
                     isLoading={isLoading}
                     isAuthenticated={isAuthenticated}
