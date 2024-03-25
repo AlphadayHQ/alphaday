@@ -81,20 +81,6 @@ export const ImageCard: FC<{
                             {shortDescription}
                         </p>
                         <ReadMoreLink url={url} />
-                        <div className="my-2 flex justify-between">
-                            <TagButtons tags={tags} onClick={() => {}} />
-                            <div className="min-w-max ml-2 mt-0.5">
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onShare}
-                                    likes={likes}
-                                    comments={comments}
-                                    isAuthenticated={isAuthenticated}
-                                    isLiked={item.isLiked}
-                                />
-                            </div>
-                        </div>
                     </FeedItemDisclosurePanel>
                     <div className="flex justify-between my-2">
                         <div className="flex-col">
