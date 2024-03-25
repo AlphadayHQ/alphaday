@@ -177,7 +177,7 @@ export const STATIC_FILTER_OPTIONS: TLocalFilterOptions = {
             {
                 id: 14,
                 slug: EFeedItemType.GAS,
-                name: "Gas",
+                name: "Gas Prices",
                 selected: false,
                 color: themeColors.categoryEleven,
                 contentType: EFeedItemType.GAS,
