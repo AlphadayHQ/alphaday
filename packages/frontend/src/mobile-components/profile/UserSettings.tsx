@@ -104,11 +104,11 @@ const UserSettings: FC<IUserSettings> = ({
     const [showProfileEditModal, setShowProfileEditModal] =
         useState<boolean>(false);
     const history = useHistory();
-    const [isProfileUpdated, setisProfileUpdated] = useState(false);
+    const [isProfileUpdated, setIsProfileUpdated] = useState(false);
     const prevIsSavingProfile = usePrevious(isSavingProfile);
 
     if (prevIsSavingProfile === true && isSavingProfile === false) {
-        setisProfileUpdated(true);
+        setIsProfileUpdated(true);
     }
 
     const navigate = (link: string) => {
@@ -252,7 +252,7 @@ const UserSettings: FC<IUserSettings> = ({
                 show={isProfileUpdated}
                 title="Profile Updated"
                 onActionClick={() => {
-                    setisProfileUpdated(false);
+                    setIsProfileUpdated(false);
                     history.push(EMobileRoutePaths.UserSettings);
                 }}
             >
