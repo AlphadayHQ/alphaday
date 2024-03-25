@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { twMerge } from "@alphaday/ui-kit";
+import { MiniDialog, Spinner, twMerge } from "@alphaday/ui-kit";
 import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
 import { TUserProfile } from "src/api/types";
@@ -231,6 +231,14 @@ const UserSettings: FC<IUserSettings> = ({
                 isSavingProfile={isSavingProfile}
                 onCloseModal={handleCloseModal}
             />
+            <MiniDialog show={isSavingProfile} title="Saving">
+                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                    Saving changes to your profile
+                </div>
+                <div className="text-center mt-4">
+                    <Spinner />
+                </div>
+            </MiniDialog>
         </>
     );
 };
