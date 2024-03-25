@@ -14,6 +14,7 @@ export enum EFeedItemType {
     DISCORD = "discorditem",
     MARKET = "marketitem",
     TVL = "tvlitem",
+    GAS = "gasitem",
 }
 
 /**
@@ -75,6 +76,11 @@ export type TFeedItemData = {
     itemType?: string | null;
     projects?: TTVLFeedDataItem[];
     projectType?: "protocol" | "chain";
+    gasFast?: number;
+    gasSlow?: number;
+    gasStandard?: number;
+    gasPercentChange?: number;
+    gasPrevGasStandard?: number;
 };
 
 export type TSuperfeedItem = Omit<TBaseItem, "bookmarked"> & {

@@ -27,8 +27,8 @@ export const MiniDialog: React.FC<MiniDialogProps> = ({
             className="w-full gap-2 rounded-xl bg-zinc-800 px-5 py-6"
         >
             <div className="flex flex-col items-center justify-start">
-                {icon && <div className="p-2">{icon}</div>}
-                <div className="flex h-28 flex-col items-center justify-center gap-4 self-stretch">
+                {icon && <div className="p-2 pb-0">{icon}</div>}
+                <div className="flex h-28 flex-col items-center justify-center pt-2 gap-4 self-stretch">
                     <div className="self-stretch text-center text-sm font-semibold uppercase leading-tight tracking-wider text-slate-300">
                         {title}
                     </div>

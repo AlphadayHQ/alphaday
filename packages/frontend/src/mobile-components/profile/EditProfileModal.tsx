@@ -61,7 +61,11 @@ export const EditProfileModal: FC<IEditProfileModal> = ({
                     <Button
                         className="w-full border-0 justify-center items-center text-base font-bold px-4 py-6 bg-accentVariant100 text-primary rounded-lg tracking-tight"
                         onClick={handleSaveProfile}
-                        disabled={isSavingProfile}
+                        disabled={
+                            isSavingProfile ||
+                            handle === undefined ||
+                            profile?.handle === handle
+                        }
                     >
                         Save
                     </Button>
