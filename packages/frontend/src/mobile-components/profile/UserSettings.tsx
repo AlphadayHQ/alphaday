@@ -1,11 +1,13 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { MiniDialog, Spinner, twMerge } from "@alphaday/ui-kit";
 import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
+import { usePrevious } from "src/api/hooks";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
+import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
@@ -102,6 +104,14 @@ const UserSettings: FC<IUserSettings> = ({
     const [showProfileEditModal, setShowProfileEditModal] =
         useState<boolean>(false);
     const history = useHistory();
+    const [isProfileUpdated, setisProfileUpdated] = useState(false);
+    const prevIsSavingProfile = usePrevious(isSavingProfile);
+
+    useEffect(() => {
+        if (prevIsSavingProfile === true && isSavingProfile === false) {
+            setisProfileUpdated(true);
+        }
+    }, [isSavingProfile, prevIsSavingProfile]);
 
     const navigate = (link: string) => {
         history.push(link);
@@ -237,6 +247,19 @@ const UserSettings: FC<IUserSettings> = ({
                 </div>
                 <div className="text-center mt-4">
                     <Spinner />
+                </div>
+            </MiniDialog>
+            <MiniDialog
+                icon={<GreenCheckSVG />}
+                show={isProfileUpdated}
+                title="Profile Updated"
+                onActionClick={() => {
+                    setisProfileUpdated(false);
+                    history.push(EMobileRoutePaths.UserSettings);
+                }}
+            >
+                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                    Your Profile has been updated
                 </div>
             </MiniDialog>
         </>
