@@ -4,7 +4,7 @@ import md5 from "md5";
 import { useParams, useHistory } from "react-router-dom";
 import { useAccount } from "src/api/hooks";
 import MobileLayout from "src/layout/MobileLayout";
-import AuthPromptContainer from "src/mobile-components/AuthPromptContainer";
+import AuthPromptContainer from "src/mobile-containers/AuthPromptContainer";
 import SuperfeedContainer from "src/mobile-containers/SuperfeedContainer";
 import { EMobileRoutePaths } from "src/routes";
 
