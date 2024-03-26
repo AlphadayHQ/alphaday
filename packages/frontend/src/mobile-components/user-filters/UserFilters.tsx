@@ -3,27 +3,13 @@ import { ScrollBar, Toggle, themeColors } from "@alphaday/ui-kit";
 import {
     ESortFeedBy,
     ESupportedFilters,
-    TFilterKeyword,
+    TFilterKeywordOption,
     TGroupedFilterKeywords,
 } from "src/api/types";
+import { groupedKeywordsAsOptions } from "src/api/utils/filterUtils";
 import FilterSearchBar from "../FilterSearchBar";
 import { TFilterOptions } from "./filterOptions";
 import { OptionsDisclosure, OptionButton } from "./OptionsDisclosure";
-
-type TFilterKeywordOption = TFilterKeyword & {
-    label: string;
-    value: string;
-};
-type TFilterKeywordOptionGroup = {
-    label: string;
-    options: TFilterKeywordOption[];
-};
-
-const GROUP_NAME_MAP: Record<string, string> = {
-    [ESupportedFilters.Chains]: "Chains",
-    [ESupportedFilters.Coins]: "Coins",
-    [ESupportedFilters.ConceptTags]: "Other",
-};
 
 interface IUserFiltersProps {
     filterOptions: TFilterOptions;
@@ -103,25 +89,10 @@ const UserFilters: FC<IUserFiltersProps> = ({
         }
     };
 
-    const filterKeywordOptions = useMemo(() => {
-        if (!filterKeywords) return [];
-        return Object.entries(filterKeywords)
-            .reduce(
-                (acc, [currKey, currVal]) => [
-                    ...acc,
-                    {
-                        label: GROUP_NAME_MAP[currKey] ?? currKey,
-                        options: currVal.map((kw) => ({
-                            ...kw,
-                            label: kw.name,
-                            value: kw.slug,
-                        })),
-                    },
-                ],
-                [] as TFilterKeywordOptionGroup[]
-            )
-            .sort((a, d) => a.label.localeCompare(d.label));
-    }, [filterKeywords]);
+    const filterKeywordOptions = useMemo(
+        () => groupedKeywordsAsOptions(filterKeywords),
+        [filterKeywords]
+    );
 
     return (
         <div className="w-full">

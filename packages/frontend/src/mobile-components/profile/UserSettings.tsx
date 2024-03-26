@@ -107,7 +107,11 @@ const UserSettings: FC<IUserSettings> = ({
     const [isProfileUpdated, setIsProfileUpdated] = useState(false);
     const prevIsSavingProfile = usePrevious(isSavingProfile);
 
-    if (prevIsSavingProfile === true && isSavingProfile === false) {
+    if (
+        prevIsSavingProfile === true &&
+        isSavingProfile === false &&
+        isProfileUpdated === false
+    ) {
         setIsProfileUpdated(true);
     }
 

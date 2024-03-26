@@ -81,11 +81,18 @@ export const TagButtons: FC<{
 );
 
 export const FeedItemDisclosure: FC<{
-    children: ({ open }: { open: boolean }) => JSX.Element;
+    children: (({ open }: { open: boolean }) => JSX.Element) | ReactNode;
 }> = ({ children }) => {
     return (
         <div className="border-b border-borderLine">
-            <Disclosure>{({ open }) => children({ open })}</Disclosure>
+            <Disclosure>
+                {({ open }) => {
+                    if (typeof children === "function") {
+                        return children({ open });
+                    }
+                    return <span>{children}</span>;
+                }}
+            </Disclosure>
         </div>
     );
 };
@@ -114,7 +121,7 @@ export const FeedItemDisclosureButton: FC<{
     children?: ReactNode;
 }> = ({ children }) => {
     return (
-        <Disclosure.Button className="flex w-full justify-between rounded-lg py-4 text-left text-sm font-medium focus:outline-none cursor-pointer">
+        <Disclosure.Button className="flex w-full justify-between rounded-lg pt-4 text-left text-sm font-medium focus:outline-none cursor-pointer">
             {children}
         </Disclosure.Button>
     );
@@ -142,7 +149,7 @@ export const FeedItemDisclosurePanel: FC<{
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
         >
-            <Disclosure.Panel className="pt-2 text-primaryVariant100  fontGroup-normal">
+            <Disclosure.Panel className="pt-6 text-primaryVariant100  fontGroup-normal">
                 {children}
             </Disclosure.Panel>
         </Transition>
