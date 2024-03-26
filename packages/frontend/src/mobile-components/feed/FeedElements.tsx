@@ -81,11 +81,18 @@ export const TagButtons: FC<{
 );
 
 export const FeedItemDisclosure: FC<{
-    children: ({ open }: { open: boolean }) => JSX.Element;
+    children: (({ open }: { open: boolean }) => JSX.Element) | ReactNode;
 }> = ({ children }) => {
     return (
         <div className="border-b border-borderLine">
-            <Disclosure>{({ open }) => children({ open })}</Disclosure>
+            <Disclosure>
+                {({ open }) => {
+                    if (typeof children === "function") {
+                        return children({ open });
+                    }
+                    return <span>{children}</span>;
+                }}
+            </Disclosure>
         </div>
     );
 };
