@@ -16,6 +16,7 @@ import { useGetFeaturesQuery } from "./api/services";
 import { lazyRetry } from "./api/utils/helpers";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
+import InstallPWAContainer from "./mobile-containers/InstallPWAContainer";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
@@ -98,6 +99,7 @@ const MobileApp: React.FC = () => {
 
     return (
         <IonApp className="theme-dark">
+            <InstallPWAContainer />
             <IonReactRouter>
                 <IonRouterOutlet>
                     <Suspense fallback={<PreloaderPage />}>
