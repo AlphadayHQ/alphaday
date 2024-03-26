@@ -38,7 +38,9 @@ const AddWalletPage = () => {
             <Pager
                 title="Add wallet address"
                 handleClose={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+                    history.length > 1
+                        ? history.goBack()
+                        : history.push("/", {})
                 }
             />
             <div className="flex flex-col items-center mt-4 mx-4">
@@ -87,7 +89,7 @@ const AddWalletPage = () => {
                 title="CONGRATS"
                 onActionClick={() => {
                     setIsWalletAdded(false);
-                    history.push(EMobileRoutePaths.Portfolio);
+                    history.push(EMobileRoutePaths.Portfolio, {});
                 }}
             >
                 <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">

@@ -13,15 +13,15 @@ import {
     useLikeSuperfeedItemMutation,
 } from "src/api/services";
 import {
-    TSelectedFiltersSynced,
     selectedLocalFiltersSelector,
     selectedSyncedFiltersSelector,
+    TSelectedFiltersSynced,
 } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
-import { TSuperfeedItem } from "src/api/types";
+import { ESortFeedBy, TSuperfeedItem } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { shareData } from "src/api/utils/shareUtils";
-import { EToastRole, toast } from "src/api/utils/toastUtils";
+import { EToastRole, deferredToast, toast } from "src/api/utils/toastUtils";
 import FilterSearchBar from "src/mobile-components/FilterSearchBar";
 import SuperfeedModule from "src/mobile-components/Superfeed";
 import { STATIC_FILTER_OPTIONS } from "src/mobile-components/user-filters/filterOptions";
@@ -70,6 +70,11 @@ const SuperfeedContainer: FC<{
 
     const [currentPage, setCurrentPage] = useState<number | undefined>();
 
+    const superfeedPageState = history.location.state as {
+        sortBy?: ESortFeedBy;
+        shouldUseFilters?: boolean;
+    };
+
     const [likeSuperfeedItemMut] = useLikeSuperfeedItemMutation();
     const {
         currentData: feedDataResponse,
@@ -80,8 +85,10 @@ const SuperfeedContainer: FC<{
         page: currentPage,
         content_types: contentTypes,
         days: timeRangeInDays?.value,
-        sort_order: sortBy,
-        user_filter: isAuthenticated && !tagsFromSearch, // if tags are present, we don't want to use user filters
+        sort_order: superfeedPageState?.sortBy ?? sortBy,
+        user_filter:
+            superfeedPageState?.shouldUseFilters || // if filters are disabled or not
+            (isAuthenticated && !tagsFromSearch), // if tags are present, we don't want to use user filters
         tags: tagsFromSearch ?? tagsFromCustomFilters,
     });
     const prevFeedDataResponseRef = useRef<TSuperfeedItem[]>();
@@ -125,14 +132,38 @@ const SuperfeedContainer: FC<{
         feedDataResponse?.results !== undefined &&
         prevFeedDataResponseRef.current !== feedDataResponse?.results
     ) {
-        setFeedData((prevState) => [
-            ...(prevState ?? []).filter(
-                (it) =>
-                    feedDataForCurrentPage.find((i) => i.id === it.id) ===
-                    undefined
-            ),
-            ...feedDataForCurrentPage,
-        ]);
+        setFeedData((prevState) => {
+            const newFeedItems = [
+                ...(prevState ?? []).filter(
+                    (it) =>
+                        feedDataForCurrentPage.find((i) => i.id === it.id) ===
+                        undefined
+                ),
+                ...feedDataForCurrentPage,
+            ];
+            if (newFeedItems.length === 0) {
+                deferredToast(
+                    {
+                        delay: 1000,
+                        messages: {
+                            initial:
+                                "No results for your current filter preferences.",
+                            success: "Filters have been reset",
+                        },
+                        callback() {
+                            history.replace("/superfeed", {
+                                sortBy: ESortFeedBy.Trendiness,
+                                shouldUseFilters: false,
+                            });
+                        },
+                    },
+                    {
+                        duration: 1500,
+                    }
+                );
+            }
+            return newFeedItems;
+        });
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
 
@@ -229,13 +260,14 @@ const SuperfeedContainer: FC<{
                         keywords={keywordOptions}
                         onChange={(t) => {
                             if (t.length === 0) {
-                                history.push("/superfeed");
+                                history.push("/superfeed", {});
                                 return;
                             }
                             history.push(
                                 `/superfeed/search/${t
                                     .map((tag) => tag.slug)
-                                    .join(",")}`
+                                    .join(",")}`,
+                                {}
                             );
                         }}
                         initialSearchValues={initialSearchValues}

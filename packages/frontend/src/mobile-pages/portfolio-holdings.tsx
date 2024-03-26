@@ -239,7 +239,7 @@ const PortfolioHoldings: React.FC = () => {
                         <WalletConnectionOptions
                             isAuthenticated
                             onClick={(path: string) => {
-                                history.push(path);
+                                history.push(path, {});
                             }}
                         />
                     </div>

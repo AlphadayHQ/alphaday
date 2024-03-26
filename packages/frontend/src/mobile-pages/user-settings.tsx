@@ -11,7 +11,9 @@ const UserSettings: React.FC = () => {
             <PagedMobileLayout
                 title=""
                 handleBack={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+                    history.length > 1
+                        ? history.goBack()
+                        : history.push("/", {})
                 }
             >
                 <UserSettingsContainer />

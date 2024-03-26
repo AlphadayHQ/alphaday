@@ -14,7 +14,8 @@ const SuperfeedPage: React.FC = () => {
     const { userProfile } = useAccount();
     const [showSearchBar, setShowSearchBar] = useState(false);
 
-    const toggleFeedFilters = () => history.push(EMobileRoutePaths.UserFilters);
+    const toggleFeedFilters = () =>
+        history.push(EMobileRoutePaths.UserFilters, {});
 
     return (
         <IonPage>

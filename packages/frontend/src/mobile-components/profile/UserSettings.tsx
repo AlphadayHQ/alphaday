@@ -94,6 +94,7 @@ interface IUserSettings {
     isSavingProfile: boolean;
     onLogout: () => Promise<void>;
 }
+
 const UserSettings: FC<IUserSettings> = ({
     profile,
     isAuthenticated,
@@ -112,7 +113,7 @@ const UserSettings: FC<IUserSettings> = ({
     }
 
     const navigate = (link: string) => {
-        history.push(link);
+        history.push(link, {});
     };
 
     const handleCloseModal = () => setShowProfileEditModal(false);
@@ -253,7 +254,7 @@ const UserSettings: FC<IUserSettings> = ({
                 title="Profile Updated"
                 onActionClick={() => {
                     setIsProfileUpdated(false);
-                    history.push(EMobileRoutePaths.UserSettings);
+                    history.push(EMobileRoutePaths.UserSettings, {});
                 }}
             >
                 <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">

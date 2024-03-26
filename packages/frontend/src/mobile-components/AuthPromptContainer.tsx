@@ -46,7 +46,7 @@ const AuthPromptContainer = memo(() => {
                         isSignIn ? EAuthState.SigningIn : EAuthState.SigningUp
                     )
                 );
-                history.push(EMobileRoutePaths.Auth);
+                history.push(EMobileRoutePaths.Auth, {});
             }
         },
         [ssoLogin, dispatch, isSignIn, history]

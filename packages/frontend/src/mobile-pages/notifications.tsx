@@ -100,7 +100,9 @@ const NotificationsPage = () => {
             <PagedMobileLayout
                 title="Notifications"
                 handleBack={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+                    history.length > 1
+                        ? history.goBack()
+                        : history.push("/", {})
                 }
             >
                 <Notifications

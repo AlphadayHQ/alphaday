@@ -10,7 +10,9 @@ const ConnectWalletPage = () => {
             <Pager
                 title="Connect wallet"
                 handleBack={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+                    history.length > 1
+                        ? history.goBack()
+                        : history.push("/", {})
                 }
             />
             <div className="w-full flex px-5 mt-4 fontGroup-highlight !font-bold">

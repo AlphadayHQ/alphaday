@@ -29,7 +29,9 @@ const SelectHoldingCoin: FC<ISelectHoldingCoin> = ({
             <Pager
                 title="Add Manually"
                 handleClose={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+                    history.length > 1
+                        ? history.goBack()
+                        : history.push("/", {})
                 }
             />
             <p className="mx-4 fontGroup-highlight">

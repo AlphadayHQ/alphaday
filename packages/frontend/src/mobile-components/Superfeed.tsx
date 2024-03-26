@@ -45,7 +45,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
         [handlePaginate]
     );
 
-    if (isLoading || feed === undefined) {
+    if (isLoading || feed === undefined || feed.length === 0) {
         return <ModuleLoader $height="100%" />;
     }
 

@@ -40,14 +40,16 @@ const PortfolioPage = () => {
             <Pager
                 title="Portfolio"
                 handleBack={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+                    history.length > 1
+                        ? history.goBack()
+                        : history.push("/", {})
                 }
             />
             <TopSection isAuthenticated={isAuthenticated} />
             <WalletConnectionOptions
                 isAuthenticated={isAuthenticated}
                 onClick={(path: string) => {
-                    history.push(path);
+                    history.push(path, {});
                 }}
                 className="mx-4"
             />

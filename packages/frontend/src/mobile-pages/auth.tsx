@@ -66,7 +66,7 @@ const AuthPage: React.FC = () => {
      * If user is already authenticated, redirect to home page
      */
     if (isInitiallyAuthenticated) {
-        history.push("/");
+        history.push("/", {});
         return null;
     }
 
@@ -76,7 +76,9 @@ const AuthPage: React.FC = () => {
                 title="Continue with Email"
                 handleClose={resetAuthState}
                 handleBack={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
+                    history.length > 1
+                        ? history.goBack()
+                        : history.push("/", {})
                 }
             >
                 <Auth
@@ -92,7 +94,7 @@ const AuthPage: React.FC = () => {
                     icon={<GreenCheckSVG />}
                     title="CONGRATS"
                     onActionClick={() => {
-                        history.push("/");
+                        history.push("/", {});
                     }}
                 >
                     <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
