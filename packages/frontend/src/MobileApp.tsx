@@ -21,8 +21,6 @@ import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
 import { EMobileRoutePaths, mobileRoutes } from "./routes";
 
-const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
-
 const { IS_DEV } = CONFIG;
 
 const CustomNavTab: React.FC<{
