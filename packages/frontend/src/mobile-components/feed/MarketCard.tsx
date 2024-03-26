@@ -132,30 +132,6 @@ export const MarketCard: FC<{
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex justify-between">
-                                <div className="flex-col">
-                                    {!open && (
-                                        <TagButtons
-                                            truncated
-                                            tags={tags}
-                                            onClick={() => {}}
-                                        />
-                                    )}
-                                </div>
-                                <div className="flex-col min-w-max ml-2">
-                                    {!open && (
-                                        <ActionButtons
-                                            onLike={onLike}
-                                            onCommentClick={onLike}
-                                            onShare={onShare}
-                                            likes={likes}
-                                            comments={comments}
-                                            isAuthenticated={isAuthenticated}
-                                            isLiked={item.isLiked}
-                                        />
-                                    )}
-                                </div>
-                            </div>
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
@@ -174,21 +150,27 @@ export const MarketCard: FC<{
                         >
                             View Details
                         </a>
-                        <div className="my-2 flex justify-between">
-                            <TagButtons tags={tags} onClick={() => {}} />
-                            <div className="min-w-max ml-2 mt-0.5">
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onShare}
-                                    likes={likes}
-                                    comments={comments}
-                                    isAuthenticated={isAuthenticated}
-                                    isLiked={item.isLiked}
-                                />
-                            </div>
-                        </div>
                     </FeedItemDisclosurePanel>
+                    <div className="flex justify-between my-2">
+                        <div className="flex-col">
+                            <TagButtons
+                                truncated
+                                tags={tags}
+                                onClick={() => {}}
+                            />
+                        </div>
+                        <div className="flex-col min-w-max ml-2">
+                            <ActionButtons
+                                isAuthenticated={isAuthenticated}
+                                onLike={onLike}
+                                onCommentClick={onLike}
+                                onShare={onShare}
+                                likes={likes}
+                                comments={comments}
+                                isLiked={item.isLiked}
+                            />
+                        </div>
+                    </div>
                 </>
             )}
         </FeedItemDisclosure>
