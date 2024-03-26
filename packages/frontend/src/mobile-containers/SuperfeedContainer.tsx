@@ -18,16 +18,13 @@ import {
     TSelectedFiltersSynced,
 } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
-<<<<<<< HEAD
-import { ESortFeedBy, TSuperfeedItem } from "src/api/types";
-=======
 import {
+    ESortFeedBy,
     TSuperfeedItem,
     TFilterKeywordOption,
     ESupportedFilters,
 } from "src/api/types";
 import { groupedKeywordsAsOptions } from "src/api/utils/filterUtils";
->>>>>>> dev
 import { Logger } from "src/api/utils/logging";
 import { shareData } from "src/api/utils/shareUtils";
 import { EToastRole, deferredToast, toast } from "src/api/utils/toastUtils";

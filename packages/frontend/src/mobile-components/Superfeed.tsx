@@ -70,6 +70,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                     </p>
                     <SettingsSVG className="w-6 text-accentVariant100 self-center" />
                 </div>
+
                 {feed.map((item) => (
                     <FeedCard
                         key={`${item.type}-${item.id}`}
