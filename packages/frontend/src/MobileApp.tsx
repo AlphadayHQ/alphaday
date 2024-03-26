@@ -67,7 +67,7 @@ const MobileApp: React.FC = () => {
                                     );
                                 }
                                 // if the route is authwalled, let's just redirect to superfeed page.
-                                if (route.authWalled) {
+                                if (route.authWalled && !isAuthenticated) {
                                     return (
                                         <Redirect
                                             key={route.path}
