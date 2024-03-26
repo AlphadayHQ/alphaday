@@ -70,20 +70,17 @@ const AuthPage: React.FC = () => {
         return null;
     }
 
-    const goBack = () =>
-        history.length > 1 ? history.goBack() : history.push("/");
-
-    const handleCloseAndBack = () => {
+    const handleBack = () => {
         resetAuthState();
-        goBack();
+        if (history.length > 1) history.goBack();
+        else history.push("/");
     };
 
     return (
         <IonPage>
             <PagedMobileLayout
                 title="Continue with Email"
-                handleClose={handleCloseAndBack}
-                handleBack={handleCloseAndBack}
+                handleBack={handleBack}
             >
                 <Auth
                     email={email}
