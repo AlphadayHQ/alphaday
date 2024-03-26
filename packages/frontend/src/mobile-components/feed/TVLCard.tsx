@@ -116,7 +116,7 @@ export const TVLCard: FC<{
 
     return (
         <FeedItemDisclosure>
-            {({ open }) => (
+            {() => (
                 <>
                     <FeedItemDisclosureButton>
                         <div className="flex flex-col w-full">
@@ -159,51 +159,33 @@ export const TVLCard: FC<{
                                     </p>
                                 )}
                             </div>
-
-                            {!open && (
-                                <div className="flex justify-between">
-                                    <div className="flex-col">
-                                        <TagButtons
-                                            truncated
-                                            tags={tags}
-                                            onClick={() => {}}
-                                        />
-                                    </div>
-                                    <div className="flex-col min-w-max ml-2">
-                                        <ActionButtons
-                                            onLike={onLike}
-                                            onCommentClick={onLike}
-                                            onShare={onShare}
-                                            likes={likes}
-                                            comments={comments}
-                                            isAuthenticated={isAuthenticated}
-                                            isLiked={item.isLiked}
-                                        />
-                                    </div>
-                                </div>
-                            )}
                         </div>
                     </FeedItemDisclosureButton>
                     <FeedItemDisclosurePanel>
                         {data?.projects?.map((project, i) => (
                             <TVLItem projectData={project} index={i} />
                         ))}
-
-                        <div className="my-2 flex justify-between">
-                            <TagButtons tags={tags} onClick={() => {}} />
-                            <div className="min-w-max ml-2 mt-0.5">
-                                <ActionButtons
-                                    onLike={onLike}
-                                    onCommentClick={onLike}
-                                    onShare={onShare}
-                                    likes={likes}
-                                    comments={comments}
-                                    isAuthenticated={isAuthenticated}
-                                    isLiked={item.isLiked}
-                                />
-                            </div>
-                        </div>
                     </FeedItemDisclosurePanel>
+                    <div className="flex justify-between my-2">
+                        <div className="flex-col">
+                            <TagButtons
+                                truncated
+                                tags={tags}
+                                onClick={() => {}}
+                            />
+                        </div>
+                        <div className="flex-col min-w-max ml-2">
+                            <ActionButtons
+                                isAuthenticated={isAuthenticated}
+                                onLike={onLike}
+                                onCommentClick={onLike}
+                                onShare={onShare}
+                                likes={likes}
+                                comments={comments}
+                                isLiked={item.isLiked}
+                            />
+                        </div>
+                    </div>
                 </>
             )}
         </FeedItemDisclosure>

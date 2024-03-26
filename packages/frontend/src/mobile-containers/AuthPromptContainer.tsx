@@ -31,8 +31,8 @@ const AuthPromptContainer = memo(() => {
         if (!lastAuthPromptedTs) {
             return true;
         }
-        return !isAuthenticated && hasTimeElapsed(lastAuthPromptedTs); // 7days
-    }, [lastAuthPromptedTs, isAuthenticated]);
+        return hasTimeElapsed(lastAuthPromptedTs); // 7days
+    }, [lastAuthPromptedTs]);
 
     const [isSignIn, setIsSignIn] = useState(false);
     const handleSSOCallback = useCallback(
@@ -54,7 +54,7 @@ const AuthPromptContainer = memo(() => {
 
     return (
         <Modal
-            showModal={isAuthPromptVisible}
+            showModal={!isAuthenticated && isAuthPromptVisible}
             className="fixed bottom-0 m-0 w-full p-8 bg-backgroundVariant300 rounded-t-[12px] rounded-b-[0px]"
             onClose={setLastAuthPrompted}
         >

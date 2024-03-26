@@ -1,4 +1,9 @@
-import { TTag } from "src/api/types";
+import {
+    TTag,
+    TGroupedFilterKeywords,
+    TFilterKeywordOptionGroup,
+    GROUP_NAME_MAP,
+} from "src/api/types";
 import { TBaseTag } from "../services";
 
 export const tagsInclude: (tagList: TTag[], tag: TTag) => boolean = (
@@ -25,3 +30,25 @@ export const mapRemoteTags: (rawTags: TBaseTag[]) => TTag[] = (rawTags) =>
         slug: t.slug,
         tagType: t.tag_type,
     }));
+
+export const groupedKeywordsAsOptions = (
+    filterKeywords: TGroupedFilterKeywords | undefined
+) => {
+    if (!filterKeywords) return [];
+    return Object.entries(filterKeywords)
+        .reduce(
+            (acc, [currKey, currVal]) => [
+                ...acc,
+                {
+                    label: GROUP_NAME_MAP[currKey] ?? currKey,
+                    options: currVal.map((kw) => ({
+                        ...kw,
+                        label: kw.name,
+                        value: kw.slug,
+                    })),
+                },
+            ],
+            [] as TFilterKeywordOptionGroup[]
+        )
+        .sort((a, d) => a.label.localeCompare(d.label));
+};

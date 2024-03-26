@@ -4,10 +4,10 @@ import { AudioPlayerProvider } from "react-use-audio-player";
 import {
     useAccount,
     useActivityLogger,
+    useFilterKeywordSearch,
     usePagination,
     useValueWatcher,
 } from "src/api/hooks";
-import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
 import {
     useGetSuperfeedListQuery,
     useLikeSuperfeedItemMutation,
@@ -18,7 +18,16 @@ import {
     TSelectedFiltersSynced,
 } from "src/api/store";
 import { useAppSelector } from "src/api/store/hooks";
+<<<<<<< HEAD
 import { ESortFeedBy, TSuperfeedItem } from "src/api/types";
+=======
+import {
+    TSuperfeedItem,
+    TFilterKeywordOption,
+    ESupportedFilters,
+} from "src/api/types";
+import { groupedKeywordsAsOptions } from "src/api/utils/filterUtils";
+>>>>>>> dev
 import { Logger } from "src/api/utils/logging";
 import { shareData } from "src/api/utils/shareUtils";
 import { EToastRole, deferredToast, toast } from "src/api/utils/toastUtils";
@@ -42,8 +51,18 @@ const SuperfeedContainer: FC<{
     tags: string | undefined;
 }> = ({ tags: tagsFromSearch, onToggleFeedFilters, showSearchBar }) => {
     const history = useHistory();
+
     const { setSearchState, keywordResults, isFetchingKeywordResults } =
-        useKeywordSearch();
+        useFilterKeywordSearch();
+
+    const flattenedKeywordResults = useMemo(
+        () =>
+            Object.values(keywordResults ?? {}).reduce(
+                (acc, curr) => [...acc, ...curr],
+                []
+            ),
+        [keywordResults]
+    );
 
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
@@ -228,33 +247,51 @@ const SuperfeedContainer: FC<{
          */
         if (
             tagsFromSearch &&
-            !keywordResults?.find((kw) => tagsFromSearch.includes(kw.tag.slug))
+            !flattenedKeywordResults.find((kw) =>
+                tagsFromSearch.includes(kw.slug)
+            )
         ) {
             setSearchState(tagsFromSearch);
         }
-    }, [tagsFromSearch, keywordResults, setSearchState]);
+    }, [tagsFromSearch, flattenedKeywordResults, setSearchState]);
 
-    const keywordOptions =
-        keywordResults?.map((kw) => ({
-            name: kw.tag.name,
-            slug: kw.tag.slug,
-            id: kw.tag.id,
-            label: kw.tag.name,
-            value: kw.tag.slug,
-        })) ?? [];
+    const keywordOptions = useMemo(
+        () => groupedKeywordsAsOptions(keywordResults),
+        [keywordResults]
+    );
 
-    const initialSearchValues = tagsFromSearch
-        ?.split(",")
-        .map((tag) => {
-            return keywordOptions.filter((t) => t.slug === tag)[0];
-        })
-        .filter((t) => t);
+    const initialSearchValues = useMemo(() => {
+        if (!tagsFromSearch) return undefined;
+        const matchedKeywords = tagsFromSearch
+            ?.split(",")
+            .map((tag) => {
+                return flattenedKeywordResults.filter((t) => t.slug === tag)[0];
+            })
+            .filter((kw) => kw)
+            .map((kw) => ({
+                ...kw,
+                label: kw.name,
+                value: kw.slug,
+            }));
+        if (matchedKeywords.length > 0) return matchedKeywords;
+        return tagsFromSearch?.split(",").map((tagName, i) => ({
+            // this is not accurate, but unfortunately the filter_keywords endpoint doesn't
+            // provide good results so there is no guarantee that a superfeed item keyword
+            // exists in the filter_keywords response
+            id: i,
+            name: tagName,
+            slug: tagName,
+            type: ESupportedFilters.ConceptTags,
+            label: tagName,
+            value: tagName,
+        }));
+    }, [tagsFromSearch, flattenedKeywordResults]);
 
     return (
         <AudioPlayerProvider>
             {(showSearchBar || (tagsFromSearch && keywordResults)) && (
                 <div className="py-2 px-5">
-                    <FilterSearchBar
+                    <FilterSearchBar<TFilterKeywordOption>
                         isFetchingKeywordResults={isFetchingKeywordResults}
                         setSearchState={setSearchState}
                         keywords={keywordOptions}
