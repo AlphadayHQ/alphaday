@@ -13,7 +13,6 @@ import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
 import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
-import { lazyRetry } from "./api/utils/helpers";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import PreloaderPage from "./pages/preloader";
