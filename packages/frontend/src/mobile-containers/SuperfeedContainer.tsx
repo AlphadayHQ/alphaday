@@ -183,7 +183,7 @@ const SuperfeedContainer: FC<{
                 }).unwrap();
             } catch (e) {
                 Logger.error("SuperfeedModule::FeedCard: error liking item", e);
-                toast("Error sharing item", {
+                toast("We could not save your preference at this time", {
                     type: EToastRole.Error,
                 });
             }

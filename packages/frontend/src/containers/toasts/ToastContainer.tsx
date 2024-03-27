@@ -7,8 +7,11 @@ interface ToastContainerProps extends ToastOptions {
     containerClassName?: string;
 }
 
-const ToastContainer: FC<ToastContainerProps> = (options) => {
-    const { position, containerClassName, ...toastOptions } = options;
+const ToastContainer: FC<ToastContainerProps> = ({
+    position,
+    containerClassName,
+    ...toastOptions
+}) => {
     return (
         <Toaster
             containerClassName={containerClassName}
