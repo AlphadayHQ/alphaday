@@ -167,6 +167,7 @@ const SuperfeedContainer: FC<{
                     "SuperfeedModule::FeedCard: error sharing item",
                     e
                 );
+                alert((e as Error)?.message);
                 // don't show toast if user chooses not to share
                 if ((e as Error)?.message.match(/Share canceled/i)) {
                     toast((e as Error)?.message ?? "Error sharing item", {
