@@ -255,7 +255,7 @@ const SuperfeedContainer: FC<{
     return (
         <AudioPlayerProvider>
             {(showSearchBar || (tagsFromSearch && keywordResults)) && (
-                <div className="py-2 px-5">
+                <div className="py-2 px-5 z-10 relative">
                     <FilterSearchBar<TFilterKeywordOption>
                         isFetchingKeywordResults={isFetchingKeywordResults}
                         setSearchState={setSearchState}
