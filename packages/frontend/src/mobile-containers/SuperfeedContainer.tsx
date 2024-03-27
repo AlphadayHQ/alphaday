@@ -168,7 +168,7 @@ const SuperfeedContainer: FC<{
                     e
                 );
                 // don't show toast if user chooses not to share
-                if ((e as Error)?.message !== "Share Cancelled") {
+                if ((e as Error)?.message.match(/Share canceled/i)) {
                     toast((e as Error)?.message ?? "Error sharing item", {
                         type: EToastRole.Error,
                     });
