@@ -167,6 +167,7 @@ const SuperfeedContainer: FC<{
                     "SuperfeedModule::FeedCard: error sharing item",
                     e
                 );
+                alert(JSON.stringify(e));
                 toast((e as Error)?.message ?? "Error sharing item", {
                     type: EToastRole.Error,
                 });
