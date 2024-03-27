@@ -161,7 +161,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
                         e
                     );
                     toast(
-                        "Your board preferences could not be updated. Please try again later.",
+                        "You have reached the limit to pinned boards, please unpin some boards to pin others.",
                         {
                             type: EToastRole.Error,
                         }
