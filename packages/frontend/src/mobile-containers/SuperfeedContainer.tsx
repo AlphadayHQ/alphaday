@@ -51,15 +51,6 @@ const SuperfeedContainer: FC<{
     const { setSearchState, keywordResults, isFetchingKeywordResults } =
         useFilterKeywordSearch();
 
-    const flattenedKeywordResults = useMemo(
-        () =>
-            Object.values(keywordResults ?? {}).reduce(
-                (acc, curr) => [...acc, ...curr],
-                []
-            ),
-        [keywordResults]
-    );
-
     const selectedLocalFilters = useAppSelector(selectedLocalFiltersSelector);
     const selectedSyncedFilters = useAppSelector(selectedSyncedFiltersSelector);
 
@@ -210,15 +201,14 @@ const SuperfeedContainer: FC<{
          *
          * In this case, we want to set the search state to the tags.
          */
-        if (
-            tagsFromSearch &&
-            !flattenedKeywordResults.find((kw) =>
-                tagsFromSearch.includes(kw.slug)
-            )
-        ) {
+        if (tagsFromSearch) {
+            Logger.debug(
+                "Setting search state from search params:",
+                tagsFromSearch
+            );
             setSearchState(tagsFromSearch);
         }
-    }, [tagsFromSearch, flattenedKeywordResults, setSearchState]);
+    }, [tagsFromSearch, setSearchState]);
 
     const keywordOptions = useMemo(
         () => groupedKeywordsAsOptions(keywordResults),
@@ -227,22 +217,12 @@ const SuperfeedContainer: FC<{
 
     const initialSearchValues = useMemo(() => {
         if (!tagsFromSearch) return undefined;
-        const matchedKeywords = tagsFromSearch
-            ?.split(",")
-            .map((tag) => {
-                return flattenedKeywordResults.filter((t) => t.slug === tag)[0];
-            })
-            .filter((kw) => kw)
-            .map((kw) => ({
-                ...kw,
-                label: kw.name,
-                value: kw.slug,
-            }));
-        if (matchedKeywords.length > 0) return matchedKeywords;
         return tagsFromSearch?.split(",").map((tagName, i) => ({
             // this is not accurate, but unfortunately the filter_keywords endpoint doesn't
             // provide good results so there is no guarantee that a superfeed item keyword
-            // exists in the filter_keywords response
+            // exists in the filter_keywords response. Also, the filter_keywords response
+            // only includes results from the current search, but the search bar can include
+            // previously searched keywords.
             id: i,
             name: tagName,
             slug: tagName,
@@ -250,7 +230,7 @@ const SuperfeedContainer: FC<{
             label: tagName,
             value: tagName,
         }));
-    }, [tagsFromSearch, flattenedKeywordResults]);
+    }, [tagsFromSearch]);
 
     return (
         <AudioPlayerProvider>
