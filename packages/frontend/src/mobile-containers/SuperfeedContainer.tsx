@@ -167,9 +167,12 @@ const SuperfeedContainer: FC<{
                     "SuperfeedModule::FeedCard: error sharing item",
                     e
                 );
-                toast("Error sharing item", {
-                    type: EToastRole.Error,
-                });
+                // don't show toast if user chooses not to share
+                if (!(e as Error)?.message.match(/Share canceled/i)) {
+                    toast((e as Error)?.message ?? "Error sharing item", {
+                        type: EToastRole.Error,
+                    });
+                }
             }
         },
         [logShareSuperfeedItem]
@@ -183,7 +186,7 @@ const SuperfeedContainer: FC<{
                 }).unwrap();
             } catch (e) {
                 Logger.error("SuperfeedModule::FeedCard: error liking item", e);
-                toast("Error sharing item", {
+                toast("We could not save your preference at this time", {
                     type: EToastRole.Error,
                 });
             }
