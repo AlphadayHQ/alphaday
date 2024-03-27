@@ -13,6 +13,7 @@ interface ISuperfeedModule {
     isLoading: boolean;
     isAuthenticated: boolean;
     feed: TSuperfeedItem[] | undefined;
+    isEmptyFeedResult?: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     toggleShowFeedFilters: () => void;
     onShareItem: (item: TSuperfeedItem) => Promise<void>;
@@ -33,6 +34,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     setSelectedPodcast,
     onShareItem,
     onLikeItem,
+    isEmptyFeedResult,
 }) => {
     const filtersWrap: React.Ref<HTMLDivElement> = useRef(null);
     const isFiltersVisible = useOnScreen(filtersWrap);
@@ -60,16 +62,21 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
             >
                 <div
                     ref={filtersWrap}
-                    className="flex justify-between mb-5 px-4 py-2 border border-accentVariant100 rounded-lg"
+                    className="flex justify-between mb-5 px-4 py-2 border border-accentVariant100 rounded-lg cursor-pointer"
                     onClick={toggleShowFeedFilters}
                     tabIndex={0}
                     role="button"
                 >
-                    <p className="m-0 pr-4 fontGroup-highlight self-center">
-                        Craft your superfeed with personalized filters
+                    <p className="m-0 pr-4 font-semibold self-center">
+                        {isEmptyFeedResult
+                            ? "No results for your current filter preferences"
+                            : "Craft your superfeed with personalized filters"}
                     </p>
                     <SettingsSVG className="w-6 text-accentVariant100 self-center" />
                 </div>
+                {isEmptyFeedResult && (
+                    <h3 className="text-xl font-bold mt-4">Explore Trending</h3>
+                )}
                 {feed.map((item) => (
                     <FeedCard
                         key={`${item.type}-${item.id}`}
