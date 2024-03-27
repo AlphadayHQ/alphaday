@@ -35,26 +35,30 @@ export const useFilterKeywordSearch: () => IFilterKeywordSearch = () => {
     const keywordResults = useMemo(() => {
         if (!keywordsData) return undefined;
         return {
-            [ESupportedFilters.ConceptTags]: keywordsData.conceptTags.map(
-                (keyword) => ({
+            [ESupportedFilters.ConceptTags]: keywordsData.conceptTags
+                .slice(0, 6)
+                .map((keyword) => ({
                     id: keyword.id,
                     name: keyword.name,
                     slug: keyword.tag.slug,
                     type: ESupportedFilters.ConceptTags,
-                })
-            ),
-            [ESupportedFilters.Chains]: keywordsData.chains.map((keyword) => ({
-                id: keyword.id,
-                name: keyword.name,
-                slug: keyword.tag.slug,
-                type: ESupportedFilters.Chains,
-            })),
-            [ESupportedFilters.Coins]: keywordsData.coins.map((keyword) => ({
-                id: keyword.id,
-                name: keyword.name,
-                slug: keyword.tag.slug,
-                type: ESupportedFilters.Coins,
-            })),
+                })),
+            [ESupportedFilters.Chains]: keywordsData.chains
+                .slice(0, 6)
+                .map((keyword) => ({
+                    id: keyword.id,
+                    name: keyword.name,
+                    slug: keyword.tag.slug,
+                    type: ESupportedFilters.Chains,
+                })),
+            [ESupportedFilters.Coins]: keywordsData.coins
+                .slice(0, 6)
+                .map((keyword) => ({
+                    id: keyword.id,
+                    name: keyword.name,
+                    slug: keyword.tag.slug,
+                    type: ESupportedFilters.Coins,
+                })),
         };
     }, [keywordsData]);
 
