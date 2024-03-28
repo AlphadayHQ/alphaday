@@ -65,6 +65,15 @@ const MobileApp: React.FC = () => {
                                     />
                                 );
                             }
+                            if (route.type === "fallback") {
+                                return (
+                                    <Route
+                                        render={() => (
+                                            <Redirect to={route.redirectTo} />
+                                        )}
+                                    />
+                                );
+                            }
                             // if the route is authwalled, let's just redirect to superfeed page.
                             if (route.authWalled && !isAuthenticated) {
                                 return (
