@@ -124,7 +124,8 @@ const MobileApp: React.FC = () => {
             <ToastContainer
                 position="bottom-center"
                 duration={CONFIG.UI.TOAST_DURATION}
-                className="fontGroup-supportBold mb-20"
+                className="fontGroup-supportBold"
+                containerClassName="last:mb-20"
             />
         </IonApp>
     );
