@@ -30,16 +30,13 @@ const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
 };
 
 const PortfolioPage = () => {
-    const { isNonTabPage, backNavigation, ...history } = useHistory();
+    const history = useHistory();
     const { isAuthenticated } = useAuth();
 
     // TODO if user has holdings route to holdings
     return (
         <>
-            <Pager
-                title="Portfolio"
-                handleBack={isNonTabPage ? backNavigation : undefined}
-            />
+            <Pager title="Portfolio" />
             <TopSection isAuthenticated={isAuthenticated} />
             <WalletConnectionOptions
                 isAuthenticated={isAuthenticated}

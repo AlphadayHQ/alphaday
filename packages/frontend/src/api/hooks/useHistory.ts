@@ -1,20 +1,9 @@
-import { useCallback, useMemo } from "react";
-import { useHistory as useRRDHistory, useLocation } from "react-router-dom";
+import { useCallback } from "react";
+import { useHistory as useRRDHistory } from "react-router-dom";
 import { EMobileTabRoutePaths } from "src/routes";
 
 export const useHistory = () => {
     const history = useRRDHistory();
-    const location = useLocation();
-    const isNonTabPage = useMemo(() => {
-        return (
-            history.length > 0 &&
-            !Object.keys(EMobileTabRoutePaths)[
-                Object.values(EMobileTabRoutePaths).indexOf(
-                    location.pathname as EMobileTabRoutePaths
-                )
-            ]
-        );
-    }, [history, location]);
 
     /**
      * we shouldn't need this ideally, but adding a listener
@@ -23,16 +12,15 @@ export const useHistory = () => {
     history.listen(() => {});
 
     const backNavigation = useCallback(() => {
-        if (history.length > 0 && isNonTabPage) {
+        if (history.length > 0) {
             history.goBack();
-        } else if (isNonTabPage) {
+        } else {
             history.push(EMobileTabRoutePaths.Superfeed);
         }
-    }, [history, isNonTabPage]);
+    }, [history]);
 
     return {
         ...history,
-        isNonTabPage,
         backNavigation,
     };
 };
