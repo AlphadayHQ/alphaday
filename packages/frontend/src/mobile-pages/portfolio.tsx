@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Pager } from "@alphaday/ui-kit";
-import { useHistory } from "react-router";
-import { useAuth } from "src/api/hooks";
+import { useAuth, useHistory } from "src/api/hooks";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
 import { ReactComponent as InfoSVG } from "src/assets/icons/Info2.svg";
 import WalletConnectionOptions from "src/mobile-components/portfolio/WalletConnectionOptions";
@@ -37,12 +36,7 @@ const PortfolioPage = () => {
     // TODO if user has holdings route to holdings
     return (
         <>
-            <Pager
-                title="Portfolio"
-                handleBack={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
-                }
-            />
+            <Pager title="Portfolio" />
             <TopSection isAuthenticated={isAuthenticated} />
             <WalletConnectionOptions
                 isAuthenticated={isAuthenticated}
