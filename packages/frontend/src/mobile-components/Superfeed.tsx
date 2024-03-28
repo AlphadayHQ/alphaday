@@ -67,7 +67,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                     tabIndex={0}
                     role="button"
                 >
-                    <p className="m-0 pr-4 font-semibold self-center">
+                    <p className="m-0 pr-4 fontGroup-highlight self-center">
                         {isEmptyFeedResult
                             ? "No results for your current filter preferences"
                             : "Craft your superfeed with personalized filters"}
@@ -75,7 +75,9 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                     <SettingsSVG className="w-6 text-accentVariant100 self-center" />
                 </div>
                 {isEmptyFeedResult && (
-                    <h3 className="text-xl font-bold mt-4">Explore Trending</h3>
+                    <h3 className="text-xl fontGroup-major mt-4">
+                        Explore Trending
+                    </h3>
                 )}
                 {feed.map((item) => (
                     <FeedCard
