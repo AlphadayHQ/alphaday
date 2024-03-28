@@ -90,11 +90,6 @@ const SuperfeedContainer: FC<{
     const feedQueryParams = useMemo(() => {
         if (isEmptyFeedResult) {
             return {
-                content_types: Object.values(
-                    STATIC_FILTER_OPTIONS.media.options
-                )
-                    .map((op) => op.contentType)
-                    .join(","),
                 sort_order: ESortFeedBy.Trendiness,
                 user_filter: false,
                 tags: "",
