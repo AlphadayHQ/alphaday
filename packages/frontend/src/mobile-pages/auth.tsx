@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback } from "react";
 import { MiniDialog } from "@alphaday/ui-kit";
-import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { EAuthMethod } from "src/api/types";
@@ -70,40 +69,32 @@ const AuthPage: React.FC = () => {
         return null;
     }
 
-    const handleBack = () => {
-        resetAuthState();
-        if (history.length > 1) history.goBack();
-        else history.push("/");
-    };
-
     return (
-        <IonPage>
-            <PagedMobileLayout
-                title="Continue with Email"
-                handleBack={handleBack}
+        <PagedMobileLayout
+            title="Continue with Email"
+            handleBack={resetAuthState}
+        >
+            <Auth
+                email={email}
+                authState={authState}
+                handleOtpSubmit={handleOtpSubmit}
+                handleSSOCallback={handleSSOCallback}
+                handleEmailSubmit={handleEmailSubmit}
+                handleEmailChange={handleEmailChange}
+            />
+            <MiniDialog
+                show={isAuthenticated}
+                icon={<GreenCheckSVG />}
+                title="CONGRATS"
+                onActionClick={() => {
+                    history.push("/");
+                }}
             >
-                <Auth
-                    email={email}
-                    authState={authState}
-                    handleOtpSubmit={handleOtpSubmit}
-                    handleSSOCallback={handleSSOCallback}
-                    handleEmailSubmit={handleEmailSubmit}
-                    handleEmailChange={handleEmailChange}
-                />
-                <MiniDialog
-                    show={isAuthenticated}
-                    icon={<GreenCheckSVG />}
-                    title="CONGRATS"
-                    onActionClick={() => {
-                        history.push("/");
-                    }}
-                >
-                    <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
-                        Your account has been created!
-                    </div>
-                </MiniDialog>
-            </PagedMobileLayout>
-        </IonPage>
+                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                    Your account has been created!
+                </div>
+            </MiniDialog>
+        </PagedMobileLayout>
     );
 };
 

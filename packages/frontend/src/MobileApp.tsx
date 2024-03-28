@@ -18,7 +18,11 @@ import ToastContainer from "./containers/toasts/ToastContainer";
 import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
-import { EMobileRoutePaths, mobileRoutes } from "./routes";
+import {
+    EMobileRoutePaths,
+    EMobileTabRoutePaths,
+    mobileRoutes,
+} from "./routes";
 
 const { IS_DEV } = CONFIG;
 
@@ -51,49 +55,53 @@ const MobileApp: React.FC = () => {
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet ionPage>
-                        <Suspense fallback={<PreloaderPage />}>
-                            {mobileRoutes.map((route) => {
-                                if (route.type === "redirect") {
-                                    return (
-                                        <Redirect
-                                            key={route.path}
-                                            path={route.path}
-                                            to={route.redirectTo}
-                                            exact={route.exact ?? false}
-                                        />
-                                    );
-                                }
-                                // if the route is authwalled, let's just redirect to superfeed page.
-                                if (route.authWalled && !isAuthenticated) {
-                                    return (
-                                        <Redirect
-                                            key={route.path}
-                                            path={route.path}
-                                            to={EMobileRoutePaths.Superfeed}
-                                            exact={route.exact ?? false}
-                                        />
-                                    );
-                                }
+                        {mobileRoutes.map((route) => {
+                            if (route.type === "redirect") {
                                 return (
-                                    <Route
+                                    <Redirect
                                         key={route.path}
                                         path={route.path}
+                                        to={route.redirectTo}
                                         exact={route.exact ?? false}
-                                        render={() => <route.component />}
                                     />
                                 );
-                            })}
-                        </Suspense>
+                            }
+                            // if the route is authwalled, let's just redirect to superfeed page.
+                            if (route.authWalled && !isAuthenticated) {
+                                return (
+                                    <Redirect
+                                        key={route.path}
+                                        path={route.path}
+                                        to={EMobileRoutePaths.Superfeed}
+                                        exact={route.exact ?? false}
+                                    />
+                                );
+                            }
+                            return (
+                                <Route
+                                    key={route.path}
+                                    path={route.path}
+                                    exact={route.exact ?? false}
+                                    render={() => <route.component />}
+                                />
+                            );
+                        })}
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom">
-                        <IonTabButton tab="superfeed" href="/superfeed">
+                        <IonTabButton
+                            tab="superfeed"
+                            href={EMobileTabRoutePaths.Superfeed}
+                        >
                             <CustomNavTab
                                 label="Superfeed"
                                 Icon={SuperfeedSVG}
                             />
                         </IonTabButton>
                         {IS_DEV && (
-                            <IonTabButton tab="market" href="/market">
+                            <IonTabButton
+                                tab="market"
+                                href={EMobileTabRoutePaths.Market}
+                            >
                                 <CustomNavTab
                                     label="Market"
                                     Icon={MarketsSVG}
@@ -102,7 +110,7 @@ const MobileApp: React.FC = () => {
                         )}
                         <IonTabButton
                             tab="portfolio"
-                            href="/portfolio"
+                            href={EMobileTabRoutePaths.Portfolio}
                             disabled={!IS_DEV}
                         >
                             <CustomNavTab

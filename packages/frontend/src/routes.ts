@@ -101,6 +101,13 @@ export const errorRoutes: IRoute[] = [
  */
 
 const BASE_TABS_ROUTE = "/";
+
+export enum EMobileTabRoutePaths {
+    Superfeed = `${BASE_TABS_ROUTE}superfeed`,
+    Portfolio = `${BASE_TABS_ROUTE}portfolio`,
+    Market = `${BASE_TABS_ROUTE}market`,
+}
+
 export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
