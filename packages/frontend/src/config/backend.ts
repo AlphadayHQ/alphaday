@@ -125,7 +125,7 @@ const API_V0 = {
             DEFAULT: "/",
             FILTER_DATA: "/filter_data/",
             FILTER_KEYWORDS: "/filter_keywords/",
-            LIKE: (id: number): string => `/${id}/toggle_like/`,
+            LIKE: "/toggle_like/",
         },
         TVL: {
             BASE: "tvl",
