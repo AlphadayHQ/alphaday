@@ -9,6 +9,7 @@ import { toast } from "src/api/utils/toastUtils";
 import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 import { Auth } from "src/components/auth/Auth";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
+import { EMobileRoutePaths } from "src/routes";
 
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -65,7 +66,7 @@ const AuthPage: React.FC = () => {
      * If user is already authenticated, redirect to home page
      */
     if (isInitiallyAuthenticated) {
-        history.push("/");
+        history.push(EMobileRoutePaths.Superfeed);
         return null;
     }
 
@@ -87,7 +88,7 @@ const AuthPage: React.FC = () => {
                 icon={<GreenCheckSVG />}
                 title="CONGRATS"
                 onActionClick={() => {
-                    history.push("/");
+                    history.push(EMobileRoutePaths.Superfeed);
                 }}
             >
                 <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
