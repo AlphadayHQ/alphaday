@@ -343,7 +343,7 @@ export const useView: () => IView = () => {
                     );
                     return;
                 }
-
+                setDialogState(EViewDialogState.Closed);
                 saveViewAsMut(body)
                     .unwrap()
                     .then((response) => {
@@ -351,7 +351,6 @@ export const useView: () => IView = () => {
                             "useView::saveViewAs::saveViewAsMut: success. Response:",
                             response
                         );
-                        setDialogState(EViewDialogState.Closed);
                         setAllowEmptyView(false);
                         toast(`Created new Board: ${response.name}`, {
                             status: "alert",
