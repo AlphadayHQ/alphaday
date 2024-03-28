@@ -17,8 +17,7 @@ export default defineConfig(({ mode }) => {
         VitePWA({
             registerType: "autoUpdate",
             devOptions: {
-                enabled: true,
-                type: "module",
+                enabled: false,
             },
             workbox: {
                 clientsClaim: true,

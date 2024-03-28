@@ -69,7 +69,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
         limit: CONFIG.UI.BOARD_LIBRARY.LIMIT,
         page: currentPage,
         sortBy,
-        category: selectedCategory,
+        category: selectedCategory === "all" ? undefined : selectedCategory,
     });
 
     const [allViews, setAllViews] = useState<TRemoteUserViewPreview[]>([]);
@@ -161,7 +161,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
                         e
                     );
                     toast(
-                        "Your board preferences could not be updated. Please try again later.",
+                        "You have reached the limit to pinned boards, please unpin some boards to pin others.",
                         {
                             type: EToastRole.Error,
                         }

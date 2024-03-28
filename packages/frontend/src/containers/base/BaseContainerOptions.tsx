@@ -126,7 +126,6 @@ const TagsOptions: FC<ITagsOptions> = ({
                 {widget_setting.setting.name}:
             </div>
             <SearchBar
-                initialInputValue={searchState}
                 options={searchState ? options : undefined}
                 updateSearch={false}
                 initialSearchValues={[]}
