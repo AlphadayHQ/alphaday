@@ -208,7 +208,8 @@ const SuperfeedContainer: FC<{
         async (item: TSuperfeedItem) => {
             try {
                 await likeSuperfeedItemMut({
-                    id: item.id,
+                    itemId: item.itemId,
+                    contentType: item.type,
                 }).unwrap();
             } catch (e) {
                 Logger.error("SuperfeedModule::FeedCard: error liking item", e);
