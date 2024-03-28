@@ -69,7 +69,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
         limit: CONFIG.UI.BOARD_LIBRARY.LIMIT,
         page: currentPage,
         sortBy,
-        category: selectedCategory,
+        category: selectedCategory === "all" ? undefined : selectedCategory,
     });
 
     const [allViews, setAllViews] = useState<TRemoteUserViewPreview[]>([]);
