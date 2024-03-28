@@ -9,19 +9,15 @@ const PagedMobileLayout: FC<{
     handleClose?: () => void;
     handleBack?: () => void;
 }> = ({ children, title, onScroll, handleBack, handleClose }) => {
-    const { backNavigation, isNonTabPage } = useHistory();
+    const { backNavigation } = useHistory();
     return (
         <ScrollBar className="h-screen flex flex-col" onScroll={onScroll}>
             <Pager
                 title={title}
-                handleBack={
-                    isNonTabPage
-                        ? () => {
-                              handleBack?.();
-                              backNavigation();
-                          }
-                        : undefined
-                }
+                handleBack={() => {
+                    handleBack?.();
+                    backNavigation();
+                }}
                 handleClose={handleClose}
             />
             <div className="w-full flex flex-grow flex-col">{children}</div>
