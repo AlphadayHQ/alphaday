@@ -22,6 +22,7 @@ import {
     TSuperfeedItem,
     TFilterKeywordOption,
     ESupportedFilters,
+    ESortFeedBy,
 } from "src/api/types";
 import { groupedKeywordsAsOptions } from "src/api/utils/filterUtils";
 import { Logger } from "src/api/utils/logging";
@@ -84,6 +85,34 @@ const SuperfeedContainer: FC<{
     const { sortBy } = selectedLocalFilters;
 
     const [currentPage, setCurrentPage] = useState<number | undefined>();
+    const [isEmptyFeedResult, setIsEmptyFeedResult] = useState(false);
+
+    const feedQueryParams = useMemo(() => {
+        if (isEmptyFeedResult) {
+            return {
+                sort_order: ESortFeedBy.Trendiness,
+                user_filter: false,
+                tags: "",
+            };
+        }
+        return {
+            page: currentPage,
+            content_types: contentTypes,
+            days: timeRangeInDays?.value,
+            sort_order: sortBy,
+            user_filter: isAuthenticated && !tagsFromSearch,
+            tags: tagsFromSearch ?? tagsFromCustomFilters,
+        };
+    }, [
+        contentTypes,
+        currentPage,
+        isAuthenticated,
+        isEmptyFeedResult,
+        sortBy,
+        tagsFromCustomFilters,
+        tagsFromSearch,
+        timeRangeInDays?.value,
+    ]);
 
     const [likeSuperfeedItemMut] = useLikeSuperfeedItemMutation();
     const {
@@ -91,14 +120,7 @@ const SuperfeedContainer: FC<{
         isLoading,
         isSuccess,
         refetch,
-    } = useGetSuperfeedListQuery({
-        page: currentPage,
-        content_types: contentTypes,
-        days: timeRangeInDays?.value,
-        sort_order: sortBy,
-        user_filter: isAuthenticated && !tagsFromSearch, // if tags are present, we don't want to use user filters
-        tags: tagsFromSearch ?? tagsFromCustomFilters,
-    });
+    } = useGetSuperfeedListQuery(feedQueryParams);
     const prevFeedDataResponseRef = useRef<TSuperfeedItem[]>();
     const feedDataForCurrentPage = [...(feedDataResponse?.results ?? [])];
 
@@ -132,6 +154,7 @@ const SuperfeedContainer: FC<{
     ) {
         Logger.debug("params changed, resetting feed data");
         setFeedData(undefined);
+        setIsEmptyFeedResult(false);
         reset();
     }
 
@@ -148,6 +171,9 @@ const SuperfeedContainer: FC<{
             ),
             ...feedDataForCurrentPage,
         ]);
+        if (feedDataResponse?.results.length === 0) {
+            setIsEmptyFeedResult(true);
+        }
         prevFeedDataResponseRef.current = feedDataResponse?.results;
     }
 
@@ -167,9 +193,12 @@ const SuperfeedContainer: FC<{
                     "SuperfeedModule::FeedCard: error sharing item",
                     e
                 );
-                toast("Error sharing item", {
-                    type: EToastRole.Error,
-                });
+                // don't show toast if user chooses not to share
+                if (!(e as Error)?.message.match(/Share canceled/i)) {
+                    toast((e as Error)?.message ?? "Error sharing item", {
+                        type: EToastRole.Error,
+                    });
+                }
             }
         },
         [logShareSuperfeedItem]
@@ -179,11 +208,12 @@ const SuperfeedContainer: FC<{
         async (item: TSuperfeedItem) => {
             try {
                 await likeSuperfeedItemMut({
-                    id: item.id,
+                    itemId: item.itemId,
+                    contentType: item.type,
                 }).unwrap();
             } catch (e) {
                 Logger.error("SuperfeedModule::FeedCard: error liking item", e);
-                toast("Error sharing item", {
+                toast("We could not save your preference at this time", {
                     type: EToastRole.Error,
                 });
             }
@@ -279,6 +309,7 @@ const SuperfeedContainer: FC<{
                 <SuperfeedModule
                     isLoading={isLoading}
                     isAuthenticated={isAuthenticated}
+                    isEmptyFeedResult={isEmptyFeedResult}
                     feed={feedData}
                     handlePaginate={handleNextPage}
                     toggleShowFeedFilters={onToggleFeedFilters}
