@@ -244,6 +244,7 @@ p {
     &:only-child {
         margin-bottom: 0;
     }
+    font-family: theme("fontFamily.sans");
     @apply text-primary fontGroup-normal;
 }
 input,
