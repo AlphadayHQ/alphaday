@@ -51,6 +51,8 @@ const FilterSearchBar = <T extends TOption>({
                     updateSearch={false}
                     isOptionSelected={isOptionSelected}
                     message={message}
+                    closeMenuOnSelect
+                    autoFocus
                 />
             </span>
         </div>

@@ -83,9 +83,12 @@ export const superfeedApi = alphadayApi.injectEndpoints({
             TLikeSuperfeedItemRequest
         >({
             query: (req) => ({
-                url: `${SUPERFEED.BASE}${SUPERFEED.LIKE(req.id)}`,
+                url: `${SUPERFEED.BASE}${SUPERFEED.LIKE}`,
                 method: "POST",
-                body: undefined,
+                body: {
+                    item_id: req.itemId,
+                    content_type: req.contentType,
+                },
             }),
             transformResponse: (
                 i: TLikeSuperfeedItemRawResponse

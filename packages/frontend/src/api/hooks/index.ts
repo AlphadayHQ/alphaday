@@ -32,3 +32,4 @@ export * from "./useQuery";
 export * from "./useValueWatcher";
 export * from "./useOnScreen";
 export * from "./usePullToRefresh";
+export * from "./useHistory";

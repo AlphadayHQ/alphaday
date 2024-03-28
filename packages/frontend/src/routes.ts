@@ -101,6 +101,13 @@ export const errorRoutes: IRoute[] = [
  */
 
 const BASE_TABS_ROUTE = "/";
+
+export enum EMobileTabRoutePaths {
+    Superfeed = `${BASE_TABS_ROUTE}superfeed`,
+    Portfolio = `${BASE_TABS_ROUTE}portfolio`,
+    Market = `${BASE_TABS_ROUTE}market`,
+}
+
 export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
@@ -132,13 +139,17 @@ type TMobileRoute =
           redirectTo: string;
           exact?: boolean;
           type: "redirect";
+      }
+    | {
+          redirectTo: string;
+          type: "fallback";
       };
 export const mobileRoutes: TMobileRoute[] = [
     {
         path: EMobileRoutePaths.Base,
-        component: SuperfeedPage,
+        redirectTo: EMobileRoutePaths.Superfeed,
         exact: true,
-        type: "regular",
+        type: "redirect",
     },
     {
         path: EMobileRoutePaths.Superfeed,
@@ -220,30 +231,12 @@ export const mobileRoutes: TMobileRoute[] = [
         type: "regular",
     },
     /**
-     * The following are desktop routes.
-     * Ideally we would just use a wildcard `*` to handle all routes that doesn't
-     * match those listed above. However, that approach is not working correctly for some
-     * reason.
+     * Fallback route.
+     *
+     * This redirects all non-existing routes to the superfeed tab.
      */
     {
-        path: EDesktopRoutePaths.Boards,
         redirectTo: EMobileRoutePaths.Superfeed,
-        type: "redirect",
+        type: "fallback",
     },
-    {
-        path: EDesktopRoutePaths.Calendar,
-        redirectTo: EMobileRoutePaths.Superfeed,
-        type: "redirect",
-    },
-    {
-        path: EDesktopRoutePaths.CalendarEvent,
-        redirectTo: EMobileRoutePaths.Superfeed,
-        type: "redirect",
-    },
-    // this doesn't work with IonTabs
-    // {
-    //     path: "*",
-    //     redirectTo: EMobileRoutePaths.Superfeed,
-    //     type: "redirect",
-    // },
 ];

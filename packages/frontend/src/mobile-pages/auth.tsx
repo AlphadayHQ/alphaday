@@ -1,6 +1,5 @@
 import { useState, useRef, useCallback } from "react";
 import { MiniDialog } from "@alphaday/ui-kit";
-import { IonPage } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "src/api/hooks";
 import { EAuthMethod } from "src/api/types";
@@ -10,6 +9,7 @@ import { toast } from "src/api/utils/toastUtils";
 import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 import { Auth } from "src/components/auth/Auth";
 import PagedMobileLayout from "src/layout/PagedMobileLayout";
+import { EMobileRoutePaths } from "src/routes";
 
 const AuthPage: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -66,41 +66,36 @@ const AuthPage: React.FC = () => {
      * If user is already authenticated, redirect to home page
      */
     if (isInitiallyAuthenticated) {
-        history.push("/");
+        history.push(EMobileRoutePaths.Superfeed);
         return null;
     }
 
     return (
-        <IonPage>
-            <PagedMobileLayout
-                title="Continue with Email"
-                handleClose={resetAuthState}
-                handleBack={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
-                }
+        <PagedMobileLayout
+            title="Continue with Email"
+            handleBack={resetAuthState}
+        >
+            <Auth
+                email={email}
+                authState={authState}
+                handleOtpSubmit={handleOtpSubmit}
+                handleSSOCallback={handleSSOCallback}
+                handleEmailSubmit={handleEmailSubmit}
+                handleEmailChange={handleEmailChange}
+            />
+            <MiniDialog
+                show={isAuthenticated}
+                icon={<GreenCheckSVG />}
+                title="CONGRATS"
+                onActionClick={() => {
+                    history.push(EMobileRoutePaths.Superfeed);
+                }}
             >
-                <Auth
-                    email={email}
-                    authState={authState}
-                    handleOtpSubmit={handleOtpSubmit}
-                    handleSSOCallback={handleSSOCallback}
-                    handleEmailSubmit={handleEmailSubmit}
-                    handleEmailChange={handleEmailChange}
-                />
-                <MiniDialog
-                    show={isAuthenticated}
-                    icon={<GreenCheckSVG />}
-                    title="CONGRATS"
-                    onActionClick={() => {
-                        history.push("/");
-                    }}
-                >
-                    <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
-                        Your account has been created!
-                    </div>
-                </MiniDialog>
-            </PagedMobileLayout>
-        </IonPage>
+                <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">
+                    Your account has been created!
+                </div>
+            </MiniDialog>
+        </PagedMobileLayout>
     );
 };
 

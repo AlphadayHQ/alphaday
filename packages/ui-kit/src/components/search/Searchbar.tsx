@@ -150,10 +150,10 @@ export interface ISearchProps<Option = unknown> {
     trendingOptions?: Option[] | undefined;
     disabled?: boolean;
     placeholder: string;
-    initialInputValue?: string;
     initialSearchValues: Option[];
     closeMenuOnSelect?: boolean;
     updateSearch?: boolean;
+    autoFocus?: boolean;
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
     showBackdrop?: boolean;
@@ -183,9 +183,9 @@ export const SearchBar = <T,>({
     initialSearchValues,
     closeMenuOnSelect = false,
     updateSearch = true,
+    autoFocus = false,
     componentClassNames,
     customComponents,
-    initialInputValue,
     isFetchingKeywordResults,
     isFetchingTrendingKeywordResults,
     showBackdrop,
@@ -218,6 +218,7 @@ export const SearchBar = <T,>({
         }
     };
 
+    // keep input state on blur
     const handleInputChange = useCallback(
         (value: string, meta: InputActionMeta) => {
             if (["input-blur", "menu-close"].indexOf(meta.action) === -1) {
@@ -315,7 +316,7 @@ export const SearchBar = <T,>({
             <Select
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                autoFocus
+                autoFocus={autoFocus}
                 onChange={(e, changeType) => handleSearchValues(e, changeType)}
                 onInputChange={handleInputChange}
                 isClearable
@@ -341,7 +342,7 @@ export const SearchBar = <T,>({
                 onKeyDown={(e) => {
                     handleKeyDown(e);
                 }}
-                inputValue={initialInputValue}
+                inputValue={inputValue}
             />
         </div>
     );

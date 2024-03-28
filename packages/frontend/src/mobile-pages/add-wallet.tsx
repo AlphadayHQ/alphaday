@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { FormInput, MiniDialog, Pager } from "@alphaday/ui-kit";
-import { useHistory } from "react-router";
-import { usePortfolioAccount } from "src/api/hooks";
+import { usePortfolioAccount, useHistory } from "src/api/hooks";
 import { validateEthAddr } from "src/api/utils/accountUtils";
 import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 import { EMobileRoutePaths } from "src/routes";
@@ -37,9 +36,7 @@ const AddWalletPage = () => {
         <>
             <Pager
                 title="Add wallet address"
-                handleClose={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
-                }
+                handleClose={history.backNavigation}
             />
             <div className="flex flex-col items-center mt-4 mx-4">
                 <FormInput

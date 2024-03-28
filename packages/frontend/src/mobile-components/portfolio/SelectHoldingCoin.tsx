@@ -1,6 +1,6 @@
 import React, { FC, FormEvent } from "react";
 import { Input, Pager, ScrollBar, Spinner } from "@alphaday/ui-kit";
-import { useHistory } from "react-router";
+import { useHistory } from "src/api/hooks";
 import { TCoin } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-right.svg";
 import { ReactComponent as SearchSVG } from "src/assets/svg/search.svg";
@@ -26,12 +26,7 @@ const SelectHoldingCoin: FC<ISelectHoldingCoin> = ({
 
     return (
         <ScrollBar onScroll={onScroll}>
-            <Pager
-                title="Add Manually"
-                handleClose={() =>
-                    history.length > 1 ? history.goBack() : history.push("/")
-                }
-            />
+            <Pager title="Add Manually" handleClose={history.backNavigation} />
             <p className="mx-4 fontGroup-highlight">
                 Search or select the desired crypto coin that you have in your
                 portfolio.

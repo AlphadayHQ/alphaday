@@ -3,10 +3,21 @@ import { Button } from "@alphaday/ui-kit";
 import { ToastOptions, ToastBar, Toaster, toast } from "react-hot-toast";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 
-const ToastContainer: FC<ToastOptions> = (options) => {
-    const { position } = options;
+interface ToastContainerProps extends ToastOptions {
+    containerClassName?: string;
+}
+
+const ToastContainer: FC<ToastContainerProps> = ({
+    position,
+    containerClassName,
+    ...toastOptions
+}) => {
     return (
-        <Toaster position={position ?? "top-right"} toastOptions={options}>
+        <Toaster
+            containerClassName={containerClassName}
+            position={position ?? "top-right"}
+            toastOptions={toastOptions}
+        >
             {(t) => (
                 <ToastBar
                     toast={t}
