@@ -1,4 +1,4 @@
-import { Suspense, memo } from "react";
+import { memo } from "react";
 import {
     IonApp,
     IonRouterOutlet,
@@ -15,7 +15,6 @@ import { useAuth } from "./api/hooks";
 import { useGetFeaturesQuery } from "./api/services";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
-import PreloaderPage from "./pages/preloader";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
 import {
