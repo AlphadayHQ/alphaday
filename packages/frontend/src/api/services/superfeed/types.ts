@@ -116,7 +116,8 @@ export type TGetSuperfeedFilterKeywordsResponse = {
 };
 
 export type TLikeSuperfeedItemRequest = {
-    id: number;
+    itemId: number;
+    contentType: EFeedItemType;
 };
 export type TLikeSuperfeedItemRawResponse = TRemoteSuperfeedItem;
 export type TLikeSuperfeedItemResponse = TSuperfeedItem;
