@@ -2542,27 +2542,27 @@
     tslib "^2.4.0"
     xml2js "^0.5.0"
 
-"@capacitor/core@5.7.0":
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.7.0.tgz#ef376ce975634bb5031eedd52a15d6f14e4beb67"
-  integrity sha512-wa9Fao+Axa1t2ZERMyQD9r0xyfglQyC4DHQKintzKaIqcRuVe9J31TmfD3IxROYi9LGpY4X8cq4m4bjb0W94Qg==
+"@capacitor/core@5.7.4":
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.7.4.tgz#df894775972413982c03fad1ab9e39da38671549"
+  integrity sha512-iZBgvx3o4amzKv5ttA+QHB6i7cxK+/mYpCQd1tnSdipg6ZkvfBhg1HkzhEqHk+I7MNur+QwgYDZho9+ycHRwOw==
   dependencies:
     tslib "^2.1.0"
 
-"@capacitor/haptics@5.0.6":
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/@capacitor/haptics/-/haptics-5.0.6.tgz#c22fd6acbc62cbdff39279ded687c418f2c89a5a"
-  integrity sha512-UrMcR7p2X10ql4VLlowUuH/VckTeu0lj+RQpekxox14uxDmu5AGIFDK/iDTi8W6QZkxTJRZK6sbCjgwYgNJ7Pw==
+"@capacitor/haptics@5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@capacitor/haptics/-/haptics-5.0.7.tgz#7ae294b7180f08c27f9c8af12f3c5f2a8057d5ba"
+  integrity sha512-/j+7Qa4BxQA5aOU43cwXuiudfSXfoHFsAVfcehH5DkSjxLykZKWHEuE4uFJXqdkSIbAHjS37D0Sde6ENP6G/MA==
 
 "@capacitor/keyboard@5.0.8":
   version "5.0.8"
   resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-5.0.8.tgz#b8cc21bd6e06273ec61974be9d7f4d8c421a63a4"
   integrity sha512-XYyBzGlzjgLPqyPVdu5McGLYV6+G2efVR4I3l5cF1B27M6U/oFqv9CQU74WNG08nee28bfccboNpv6eWCLYn1A==
 
-"@capacitor/status-bar@5.0.6":
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-5.0.6.tgz#281568a7f7aeacf80777702cb9947c29dc32685c"
-  integrity sha512-7od8CxsBnot1XMK3IeOkproFL4hgoKoWAc3pwUvmDOkQsXoxwQm4SR9mLwQavv1XfxtHbFV9Ukd7FwMxOPSViw==
+"@capacitor/status-bar@5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@capacitor/status-bar/-/status-bar-5.0.7.tgz#a341e8dec9f93769bed4a42e8ad397e5df1b5287"
+  integrity sha512-KblB3gV2LDMEjx3fQoNBAzxb+Tr+2mv68SfFLLDCMiMUD3Eile2TAWRWd1yxy496pDFTOs2BJtup8++iuuuJ/w==
 
 "@coinbase/wallet-sdk@^3.6.6":
   version "3.7.1"
@@ -4040,21 +4040,21 @@
     ionicons "^7.2.1"
     tslib "^2.1.0"
 
-"@ionic/core@7.7.2":
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-7.7.2.tgz#32ce2cd371669120452d74445f63db6a343dd9b5"
-  integrity sha512-cH92OSqJBTaW8AAqh+M6NjzltVoAZCXqsHAOQMmZgrY4KgXNU+Wh+fs2La/UrFxTob9pZf30EpRddUG5rQYIFw==
+"@ionic/core@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@ionic/core/-/core-7.8.1.tgz#ef9710c56232011d99651100911430454dd5de7e"
+  integrity sha512-SsoDy0HaifCcWBlcyRIpTceboz6tSg4gjNr/LRGJyg+r2bWdoG3jeuQDg0Affox8dar7QvODk3AWO/7RFWLOfg==
   dependencies:
     "@stencil/core" "^4.12.2"
     ionicons "^7.2.2"
     tslib "^2.1.0"
 
-"@ionic/react-router@7.7.2":
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/@ionic/react-router/-/react-router-7.7.2.tgz#62f683341006c40187de12d5af86ceac12b5db83"
-  integrity sha512-tZQHsglnIzq0G94h++rYi7tauaLOqgoldhVA8/1f843szVGtRGON5A8/5YlzBDpCRvmdfqrrqhVZtRXKM6p+nA==
+"@ionic/react-router@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@ionic/react-router/-/react-router-7.8.1.tgz#4553a9a36ae364cf9f844aa099f1e40469550f8f"
+  integrity sha512-RmkucjZkMNE7OK8odL/+L9PLPINliH1uWiY9nObfwOtnyt9iXnPgs8MjxDGO3ndiTEPu+ssRLlol9GEwhxjjvw==
   dependencies:
-    "@ionic/react" "7.7.2"
+    "@ionic/react" "7.8.1"
     tslib "*"
 
 "@ionic/react@7.6.1":
@@ -4066,12 +4066,12 @@
     ionicons "^7.0.0"
     tslib "*"
 
-"@ionic/react@7.7.2":
-  version "7.7.2"
-  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-7.7.2.tgz#d6245da224f85d96751c49459d5aae59d08112db"
-  integrity sha512-oUR49V7XpfZf3kLu7lAZLFiK5B5HMiL5UigWYalGqSCxrK4Jj7Tt4OZEUoAoDnbdDx67S490w/PcIUIw8eE45Q==
+"@ionic/react@7.8.1":
+  version "7.8.1"
+  resolved "https://registry.yarnpkg.com/@ionic/react/-/react-7.8.1.tgz#a93176f20c0340325df7ed29ab2ab73c2329a554"
+  integrity sha512-MJgmlsm69lvHiPBFHSUg9ZGbWyjfn5ZDUidYSE8oWA/L0Mtd7XqNl9DMlSXWy87jaOET96R72eSwgsAPZ+FEBA==
   dependencies:
-    "@ionic/core" "7.7.2"
+    "@ionic/core" "7.8.1"
     ionicons "^7.0.0"
     tslib "*"
 
