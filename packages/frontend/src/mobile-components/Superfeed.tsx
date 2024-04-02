@@ -45,7 +45,6 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
         <>
             <IonList
                 onScroll={() => handlePaginate("next")}
-                onScrollEnd={() => handlePaginate("next")}
                 className="w-full px-3.5 pt-4 bg-transparent"
             >
                 <div
