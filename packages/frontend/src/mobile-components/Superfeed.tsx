@@ -1,10 +1,8 @@
-import { useRef, FC, FormEvent, useCallback } from "react";
+import { useRef, FC } from "react";
 import { twMerge, ModuleLoader } from "@alphaday/ui-kit";
 import { IonFab, IonList } from "@ionic/react";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
-import { isPWA } from "src/api/utils/helpers";
-import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import { ReactComponent as Settings2SVG } from "src/assets/icons/settings3.svg";
 import { FeedCard } from "./feed/FeedCard";
@@ -38,12 +36,6 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
 }) => {
     const filtersWrap: React.Ref<HTMLDivElement> = useRef(null);
     const isFiltersVisible = useOnScreen(filtersWrap);
-    const handleScrollEvent = useCallback(
-        ({ currentTarget }: FormEvent<HTMLElement>) => {
-            handlePaginate("next");
-        },
-        [handlePaginate]
-    );
 
     if (isLoading || feed === undefined) {
         return <ModuleLoader $height="100%" />;
@@ -52,8 +44,8 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     return (
         <>
             <IonList
-                onScroll={handleScrollEvent}
-                onScrollCapture={handleScrollEvent}
+                onScroll={() => handlePaginate("next")}
+                onScrollEnd={() => handlePaginate("next")}
                 className="w-full px-3.5 pt-4 bg-transparent"
             >
                 <div
