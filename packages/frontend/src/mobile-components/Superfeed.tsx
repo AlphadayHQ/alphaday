@@ -40,9 +40,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     const isFiltersVisible = useOnScreen(filtersWrap);
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
-            if (shouldFetchMoreItems(currentTarget)) {
-                handlePaginate("next");
-            }
+            handlePaginate("next");
         },
         [handlePaginate]
     );
@@ -56,9 +54,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
             <IonList
                 onScroll={handleScrollEvent}
                 onScrollCapture={handleScrollEvent}
-                className={`w-full px-3.5 pt-4 bg-transparent ${
-                    isPWA() ? "" : "overflow-y-auto overscroll-contain h-full"
-                }`}
+                className="w-full px-3.5 pt-4 bg-transparent"
             >
                 <div
                     ref={filtersWrap}
