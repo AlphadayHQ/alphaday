@@ -126,6 +126,7 @@ const API_V0 = {
             FILTER_DATA: "/filter_data/",
             FILTER_KEYWORDS: "/filter_keywords/",
             LIKE: "/toggle_like/",
+            LOG_CLICK: "/clicked/",
         },
         TVL: {
             BASE: "tvl",

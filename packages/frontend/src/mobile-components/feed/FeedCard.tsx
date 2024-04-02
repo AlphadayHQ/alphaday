@@ -20,6 +20,7 @@ interface IFeedCard {
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
+    onClick?: () => MaybeAsync<void>;
 }
 
 export const FeedCard: FC<IFeedCard> = ({
@@ -29,6 +30,7 @@ export const FeedCard: FC<IFeedCard> = ({
     isAuthenticated,
     onLike,
     onShare,
+    onClick,
 }) => {
     switch (item.type) {
         case EFeedItemType.NEWS:
@@ -37,6 +39,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );

@@ -15,6 +15,8 @@ import {
     TLikeSuperfeedItemResponse,
     TLikeSuperfeedItemRequest,
     TLikeSuperfeedItemRawResponse,
+    TLogClickSuperfeedItemRequest,
+    TLogClickSuperfeedItemResponse,
 } from "./types";
 
 const { SUPERFEED } = CONFIG.API.DEFAULT.ROUTES;
@@ -117,6 +119,19 @@ export const superfeedApi = alphadayApi.injectEndpoints({
             }),
             invalidatesTags: ["Superfeed"],
         }),
+        logClickSuperfeedItem: builder.mutation<
+            TLogClickSuperfeedItemResponse,
+            TLogClickSuperfeedItemRequest
+        >({
+            query: (req) => ({
+                url: `${SUPERFEED.BASE}${SUPERFEED.LOG_CLICK}`,
+                method: "POST",
+                body: {
+                    item_id: req.itemId,
+                    content_type: req.contentType,
+                },
+            }),
+        }),
         getFilterData: builder.query<
             TGetSuperfeedFilterDataResponse,
             TGetSuperfeedFilterDataRequest
@@ -177,4 +192,5 @@ export const {
     useGetFilterDataQuery,
     useGetFilterKeywordsQuery,
     useLikeSuperfeedItemMutation,
+    useLogClickSuperfeedItemMutation,
 } = superfeedApi;
