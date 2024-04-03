@@ -93,7 +93,8 @@ export const TVLCard: FC<{
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare, isAuthenticated }) => {
+    onClick: () => MaybeAsync<void>;
+}> = ({ item, onLike, onShare, onClick, isAuthenticated }) => {
     const {
         title,
         tags,
@@ -115,7 +116,7 @@ export const TVLCard: FC<{
     }, 0);
 
     return (
-        <FeedItemDisclosure>
+        <FeedItemDisclosure onClick={onClick}>
             {() => (
                 <>
                     <FeedItemDisclosureButton>

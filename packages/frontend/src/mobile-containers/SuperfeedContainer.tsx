@@ -11,6 +11,7 @@ import {
 import {
     useGetSuperfeedListQuery,
     useLikeSuperfeedItemMutation,
+    useLogClickSuperfeedItemMutation,
 } from "src/api/services";
 import {
     TSelectedFiltersSynced,
@@ -106,6 +107,7 @@ const SuperfeedContainer: FC<{
     ]);
 
     const [likeSuperfeedItemMut] = useLikeSuperfeedItemMutation();
+    const [logClickSuperfeedItemMut] = useLogClickSuperfeedItemMutation();
     const {
         currentData: feedDataResponse,
         isLoading,
@@ -212,6 +214,23 @@ const SuperfeedContainer: FC<{
         [likeSuperfeedItemMut]
     );
 
+    const logItemClick = useCallback(
+        async (item: TSuperfeedItem) => {
+            try {
+                await logClickSuperfeedItemMut({
+                    itemId: item.itemId,
+                    contentType: item.type,
+                }).unwrap();
+            } catch (e) {
+                Logger.error(
+                    "SuperfeedModule::FeedCard: error logging item interaction",
+                    e
+                );
+            }
+        },
+        [logClickSuperfeedItemMut]
+    );
+
     // set current page 350ms after next page is set.
     // RTK should cache requests, so we don't need to be too careful about rerenders.
     useEffect(() => {
@@ -282,6 +301,7 @@ const SuperfeedContainer: FC<{
                             );
                         }}
                         initialSearchValues={initialSearchValues}
+                        autoFocus={showSearchBar}
                     />
                 </div>
             )}
@@ -297,6 +317,7 @@ const SuperfeedContainer: FC<{
                     setSelectedPodcast={setSelectedPodcast}
                     onShareItem={shareItem}
                     onLikeItem={likeItem}
+                    onClickItem={logItemClick}
                 />
             </PullToRefreshContainer>
         </AudioPlayerProvider>

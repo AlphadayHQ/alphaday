@@ -15,6 +15,7 @@ interface FilterSearchBarProps<T extends TOption> {
     isOptionSelected?: (option: T) => boolean;
     message?: string | null;
     debounceTime?: number | undefined;
+    autoFocus?: boolean;
 }
 
 const FilterSearchBar = <T extends TOption>({
@@ -26,6 +27,7 @@ const FilterSearchBar = <T extends TOption>({
     isOptionSelected,
     message,
     debounceTime,
+    autoFocus,
 }: FilterSearchBarProps<T>) => {
     return (
         <div
@@ -52,7 +54,7 @@ const FilterSearchBar = <T extends TOption>({
                     isOptionSelected={isOptionSelected}
                     message={message}
                     closeMenuOnSelect
-                    autoFocus
+                    autoFocus={!!autoFocus}
                 />
             </span>
         </div>

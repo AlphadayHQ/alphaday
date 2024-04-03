@@ -223,17 +223,15 @@ const UserSettings: FC<IUserSettings> = ({
                             </div>
                         );
                     })}
-                    {(CONFIG.IS_DEV || CONFIG.IS_LOCAL) && (
-                        <div className="pb-2.5 pt-2.5 text-primaryVariant100">
-                            Environment: {CONFIG.ENVIRONMENT}
-                            <br />
-                            Version: {CONFIG.APP.VERSION}
-                            <br />
-                            Commit: {CONFIG.APP.COMMIT}
-                            <br />
-                            Timestamp: {CONFIG.APP.COMMIT_TIMESTAMP}
-                        </div>
-                    )}
+                    <div className="pb-2.5 pt-2.5 text-primaryVariant100">
+                        Environment: {CONFIG.ENVIRONMENT}
+                        <br />
+                        Version: {CONFIG.APP.VERSION}
+                        <br />
+                        Commit: {CONFIG.APP.COMMIT}
+                        <br />
+                        Timestamp: {CONFIG.APP.COMMIT_TIMESTAMP}
+                    </div>
                 </div>
             </div>
             <EditProfileModal

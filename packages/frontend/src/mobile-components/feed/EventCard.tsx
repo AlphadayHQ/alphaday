@@ -43,7 +43,8 @@ export const EventCard: FC<{
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare, isAuthenticated }) => {
+    onClick: () => MaybeAsync<void>;
+}> = ({ item, onLike, onShare, onClick, isAuthenticated }) => {
     const {
         title,
         tags,
@@ -61,7 +62,7 @@ export const EventCard: FC<{
     const category = "category";
 
     return (
-        <FeedItemDisclosure>
+        <FeedItemDisclosure onClick={onClick}>
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton>

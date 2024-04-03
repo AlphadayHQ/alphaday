@@ -120,6 +120,7 @@ const UserFilters: FC<IUserFiltersProps> = ({
                                 isFilterSelected(op.type, op.slug)
                             }
                             message={message}
+                            autoFocus={false}
                         />
                     </div>
                 </div>

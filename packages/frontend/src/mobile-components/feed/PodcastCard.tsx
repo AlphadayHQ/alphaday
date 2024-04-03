@@ -30,6 +30,7 @@ interface IPodcastCard {
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
+    onClick: () => MaybeAsync<void>;
 }
 
 const PlayPauseButton: FC<{
@@ -68,6 +69,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
     setSelectedPodcast,
     onLike,
     onShare,
+    onClick,
     isAuthenticated,
 }) => {
     const {
@@ -120,7 +122,7 @@ export const PodcastCard: FC<IPodcastCard> = ({
     };
 
     return (
-        <FeedItemDisclosure>
+        <FeedItemDisclosure onClick={onClick}>
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton>
