@@ -19,6 +19,8 @@ import { EditProfileModal } from "./EditProfileModal";
 
 const { IS_DEV } = CONFIG;
 
+const INSTALL_OPTION_ID = "install";
+
 const NonAuthenticatedSection = () => {
     return (
         <div className="flex flex-col flex-start w-full items-start mb-4">
@@ -163,7 +165,7 @@ const UserSettings: FC<IUserSettings> = ({
         ...(isInstallable
             ? [
                   {
-                      id: "install",
+                      id: INSTALL_OPTION_ID,
                       icon: Logoday,
                       title: "Install Alphaday",
                       subtext: "Get the app on your device",
@@ -220,7 +222,7 @@ const UserSettings: FC<IUserSettings> = ({
                                     isAuthenticated
                                         ? "text-primary"
                                         : "text-primaryVariant100",
-                                    item.id === "install" &&
+                                    item.id === INSTALL_OPTION_ID &&
                                         "[&_path]:!fill-secondaryOrange"
                                 )}
                             >
@@ -230,7 +232,7 @@ const UserSettings: FC<IUserSettings> = ({
                                         <span
                                             className={twMerge(
                                                 "block fontGroup-highlightSemi",
-                                                item.id === "install" &&
+                                                item.id === INSTALL_OPTION_ID &&
                                                     "text-secondaryOrange"
                                             )}
                                         >
