@@ -108,7 +108,7 @@ const UserSettings: FC<IUserSettings> = ({
     const history = useHistory();
     const [isProfileUpdated, setIsProfileUpdated] = useState(false);
     const prevIsSavingProfile = usePrevious(isSavingProfile);
-    const handleInstall = usePWAInstallContext();
+    const { handleInstall, isInstallable } = usePWAInstallContext();
 
     if (
         prevIsSavingProfile === true &&
@@ -160,13 +160,17 @@ const UserSettings: FC<IUserSettings> = ({
             disabled: true,
             onClick: () => navigate("profile/rate"),
         },
-        {
-            id: "install",
-            icon: Logoday,
-            title: "Install Alphaday",
-            subtext: "Get the app on your device",
-            onClick: () => handleInstall(),
-        },
+        ...(isInstallable
+            ? [
+                  {
+                      id: "install",
+                      icon: Logoday,
+                      title: "Install Alphaday",
+                      subtext: "Get the app on your device",
+                      onClick: () => handleInstall(),
+                  },
+              ]
+            : []),
         {
             id: "log-out",
             icon: LogoutSVG,
