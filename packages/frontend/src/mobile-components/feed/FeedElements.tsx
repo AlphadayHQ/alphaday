@@ -82,9 +82,15 @@ export const TagButtons: FC<{
 
 export const FeedItemDisclosure: FC<{
     children: (({ open }: { open: boolean }) => JSX.Element) | ReactNode;
-}> = ({ children }) => {
+    onClick?: () => MaybeAsync<void>;
+}> = ({ children, onClick }) => {
     return (
-        <div className="border-b border-borderLine">
+        <div
+            className="border-b border-borderLine"
+            onClick={onClick}
+            role="button"
+            tabIndex={0}
+        >
             <Disclosure>
                 {({ open }) => {
                     if (typeof children === "function") {

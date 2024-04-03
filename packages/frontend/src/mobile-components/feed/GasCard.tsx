@@ -20,7 +20,8 @@ export const GasCard: FC<{
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare, isAuthenticated }) => {
+    onClick: () => MaybeAsync<void>;
+}> = ({ item, onLike, onShare, onClick, isAuthenticated }) => {
     const {
         tags,
         likes,
@@ -35,7 +36,7 @@ export const GasCard: FC<{
     const isDown = gasData?.gasPercentChange && gasData.gasPercentChange < 0;
 
     return (
-        <FeedItemDisclosure>
+        <FeedItemDisclosure onClick={onClick}>
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton>

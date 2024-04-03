@@ -17,6 +17,7 @@ interface ISuperfeedModule {
     toggleShowFeedFilters: () => void;
     onShareItem: (item: TSuperfeedItem) => Promise<void>;
     onLikeItem: (item: TSuperfeedItem) => Promise<void>;
+    onClickItem: (item: TSuperfeedItem) => Promise<void>;
     selectedPodcast: TSuperfeedItem | null;
     setSelectedPodcast: React.Dispatch<
         React.SetStateAction<TSuperfeedItem | null>
@@ -33,6 +34,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
     setSelectedPodcast,
     onShareItem,
     onLikeItem,
+    onClickItem,
     isEmptyFeedResult,
 }) => {
     const filtersWrap: React.Ref<HTMLDivElement> = useRef(null);
@@ -85,6 +87,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                         setSelectedPodcast={setSelectedPodcast}
                         onLike={() => onLikeItem(item)}
                         onShare={() => onShareItem(item)}
+                        onClick={() => onClickItem(item)}
                     />
                 ))}
             </IonList>

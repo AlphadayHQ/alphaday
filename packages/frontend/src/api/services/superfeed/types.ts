@@ -121,3 +121,9 @@ export type TLikeSuperfeedItemRequest = {
 };
 export type TLikeSuperfeedItemRawResponse = TRemoteSuperfeedItem;
 export type TLikeSuperfeedItemResponse = TSuperfeedItem;
+
+export type TLogClickSuperfeedItemRequest = {
+    itemId: number;
+    contentType: EFeedItemType;
+};
+export type TLogClickSuperfeedItemResponse = TSuperfeedItem;
