@@ -301,6 +301,7 @@ const SuperfeedContainer: FC<{
                             );
                         }}
                         initialSearchValues={initialSearchValues}
+                        autoFocus={showSearchBar}
                     />
                 </div>
             )}
