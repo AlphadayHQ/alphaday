@@ -3,7 +3,6 @@ import { twMerge, ModuleLoader } from "@alphaday/ui-kit";
 import { IonFab, IonList } from "@ionic/react";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
-import { isPWA } from "src/api/utils/helpers";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
 import { ReactComponent as Settings2SVG } from "src/assets/icons/settings3.svg";
@@ -38,6 +37,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
 }) => {
     const filtersWrap: React.Ref<HTMLDivElement> = useRef(null);
     const isFiltersVisible = useOnScreen(filtersWrap);
+
     const handleScrollEvent = useCallback(
         ({ currentTarget }: FormEvent<HTMLElement>) => {
             if (shouldFetchMoreItems(currentTarget)) {
@@ -55,10 +55,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
         <>
             <IonList
                 onScroll={handleScrollEvent}
-                onScrollCapture={handleScrollEvent}
-                className={`w-full px-3.5 pt-4 bg-transparent ${
-                    isPWA() ? "" : "overflow-y-auto overscroll-contain h-full"
-                }`}
+                className="w-full px-3.5 pt-4 bg-transparent overflow-y-auto overscroll-contain h-full"
             >
                 <div
                     ref={filtersWrap}
