@@ -22,7 +22,8 @@ export const SocialCard: FC<{
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare, isAuthenticated }) => {
+    onClick: () => MaybeAsync<void>;
+}> = ({ item, onLike, onShare, onClick, isAuthenticated }) => {
     const {
         title,
         tags,
@@ -38,7 +39,7 @@ export const SocialCard: FC<{
     } = item;
 
     return (
-        <FeedItemDisclosure>
+        <FeedItemDisclosure onClick={onClick}>
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton>

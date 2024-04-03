@@ -20,7 +20,7 @@ export const NewsCard: FC<{
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-    onClick?: () => MaybeAsync<void>;
+    onClick: () => MaybeAsync<void>;
 }> = ({ item, onLike, onShare, onClick, isAuthenticated }) => {
     const {
         title,

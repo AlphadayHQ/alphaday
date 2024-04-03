@@ -20,7 +20,7 @@ interface IFeedCard {
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-    onClick?: () => MaybeAsync<void>;
+    onClick: () => MaybeAsync<void>;
 }
 
 export const FeedCard: FC<IFeedCard> = ({
@@ -49,6 +49,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -58,6 +59,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -67,6 +69,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -76,6 +79,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -87,6 +91,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     setSelectedPodcast={setSelectedPodcast}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -96,6 +101,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -105,6 +111,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -114,6 +121,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -123,6 +131,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -132,6 +141,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -141,6 +151,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -150,6 +161,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );
@@ -159,6 +171,7 @@ export const FeedCard: FC<IFeedCard> = ({
                     item={item}
                     onLike={onLike}
                     onShare={onShare}
+                    onClick={onClick}
                     isAuthenticated={isAuthenticated}
                 />
             );

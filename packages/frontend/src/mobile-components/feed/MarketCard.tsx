@@ -34,7 +34,8 @@ export const MarketCard: FC<{
     isAuthenticated: boolean;
     onLike: () => MaybeAsync<void>;
     onShare: () => MaybeAsync<void>;
-}> = ({ item, onLike, onShare, isAuthenticated }) => {
+    onClick: () => MaybeAsync<void>;
+}> = ({ item, onLike, onShare, onClick, isAuthenticated }) => {
     const {
         tags,
         likes,
@@ -51,7 +52,7 @@ export const MarketCard: FC<{
     const isATH = coinData?.interval === "ATH";
 
     return (
-        <FeedItemDisclosure>
+        <FeedItemDisclosure onClick={onClick}>
             {({ open }) => (
                 <>
                     <FeedItemDisclosureButton>
