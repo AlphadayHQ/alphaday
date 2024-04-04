@@ -40,8 +40,9 @@ We may now follow these steps:
 1. If the production version has bugs and a hotfix is needed, we add the bug fixes to a hot-fix branch that stems from the `main` branch. The version of this branch is bumped to `vX.Y.Z-hotfix` and then released to production. Once the hotfix is released, The bug fixes should also be added to the `dev` branch
 
 ## Android Release
+To create an Android bundle eligible for release on the Google Play Console, you first need a copy of Alphaday's signing certificate (a `.keystore` file), as well as some credentials (keystore password, alias, etc).
 
 1. Make sure you have your env variables correctly set locally in `.env.production`.
 1. Open a PR to bump both `versionCode` and `versionName` in the _app_ `build.graddle` (not the root one).
-1. From that branch, create an Android bundle (not just a simple apk as google requires a "bundle" now) using `yarn build:android:prod`.
+1. From that branch, create an Android bundle (not just a simple APK as google requires a "bundle" now) using `yarn build:android:prod`, then opening Android studio and selecting `build > generate signed bundle or APK`.
 1. Upload the bundle to `https://play.google.com/console` (make sure you have the rights to do it).
