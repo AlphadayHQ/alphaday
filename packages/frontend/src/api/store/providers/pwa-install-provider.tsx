@@ -2,7 +2,13 @@ import { createContext, useState, useContext, FC, useCallback } from "react";
 import useEventListener from "src/api/hooks/useEventListener";
 import { Logger } from "src/api/utils/logging";
 
-const PWAInstallContext = createContext<undefined | (() => void)>(undefined);
+const PWAInstallContext = createContext<
+    | undefined
+    | {
+          handleInstall: () => void;
+          isInstallable: boolean;
+      }
+>(undefined);
 
 const usePWAInstall = () => {
     const [eventRef, setEventRef] = useState<Event | null>(null);
@@ -37,7 +43,7 @@ const usePWAInstall = () => {
         setEventRef(e);
     });
 
-    return handleInstall;
+    return { handleInstall, isInstallable: !!eventRef };
 };
 
 interface PWAInstallProviderProps {
@@ -54,10 +60,10 @@ const PWAInstallProvider: FC<PWAInstallProviderProps> = ({ children }) => {
 };
 
 const usePWAInstallContext = () => {
-    const handleInstall = usePWAInstall();
+    const props = usePWAInstall();
     const context = useContext(PWAInstallContext);
     if (context === undefined) {
-        return handleInstall;
+        return props;
     }
     return context;
 };
