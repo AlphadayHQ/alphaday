@@ -60,10 +60,10 @@ const PWAInstallProvider: FC<PWAInstallProviderProps> = ({ children }) => {
 };
 
 const usePWAInstallContext = () => {
-    const handleInstall = usePWAInstall();
+    const props = usePWAInstall();
     const context = useContext(PWAInstallContext);
     if (context === undefined) {
-        return handleInstall;
+        return props;
     }
     return context;
 };
