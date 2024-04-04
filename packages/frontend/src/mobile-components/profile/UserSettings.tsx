@@ -3,6 +3,7 @@ import { MiniDialog, Spinner, twMerge } from "@alphaday/ui-kit";
 import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
 import { usePrevious } from "src/api/hooks";
+import { usePWAInstallContext } from "src/api/store/providers/pwa-install-provider";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
@@ -11,11 +12,14 @@ import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.sv
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
+import { ReactComponent as Logoday } from "src/assets/svg/logo-white.svg";
 import CONFIG from "src/config";
 import { EMobileRoutePaths } from "src/routes";
 import { EditProfileModal } from "./EditProfileModal";
 
 const { IS_DEV } = CONFIG;
+
+const INSTALL_OPTION_ID = "install";
 
 const NonAuthenticatedSection = () => {
     return (
@@ -106,6 +110,7 @@ const UserSettings: FC<IUserSettings> = ({
     const history = useHistory();
     const [isProfileUpdated, setIsProfileUpdated] = useState(false);
     const prevIsSavingProfile = usePrevious(isSavingProfile);
+    const { handleInstall, isInstallable } = usePWAInstallContext();
 
     if (
         prevIsSavingProfile === true &&
@@ -157,6 +162,17 @@ const UserSettings: FC<IUserSettings> = ({
             disabled: true,
             onClick: () => navigate("profile/rate"),
         },
+        ...(isInstallable
+            ? [
+                  {
+                      id: INSTALL_OPTION_ID,
+                      icon: Logoday,
+                      title: "Install Alphaday",
+                      subtext: "Get the app on your device",
+                      onClick: () => handleInstall(),
+                  },
+              ]
+            : []),
         {
             id: "log-out",
             icon: LogoutSVG,
@@ -205,13 +221,21 @@ const UserSettings: FC<IUserSettings> = ({
                                     "flex w-full justify-start items-center border-b border-primaryVariant100 pb-2.5 pt-2.5 last:pb-0 last:border-none first:pt-0 cursor-pointer",
                                     isAuthenticated
                                         ? "text-primary"
-                                        : "text-primaryVariant100"
+                                        : "text-primaryVariant100",
+                                    item.id === INSTALL_OPTION_ID &&
+                                        "[&_path]:!fill-secondaryOrange"
                                 )}
                             >
                                 <item.icon className="mr-4 w-6 h-6" />
                                 <div className="flex flex-grow min-w-max justify-between items-center">
                                     <div className="flex flex-col w-full">
-                                        <span className="block fontGroup-highlightSemi">
+                                        <span
+                                            className={twMerge(
+                                                "block fontGroup-highlightSemi",
+                                                item.id === INSTALL_OPTION_ID &&
+                                                    "text-secondaryOrange"
+                                            )}
+                                        >
                                             {item.title}
                                         </span>
                                         <span className="fontGroup-support">
