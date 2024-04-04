@@ -23,7 +23,7 @@ const hasTimeElapsed = (timestamp: number) => {
 
 const InstallPWAContainer: FC = () => {
     const dispatch = useAppDispatch();
-    const handleInstall = usePWAInstallContext();
+    const { handleInstall } = usePWAInstallContext();
     const isMobile = useIsMobile();
     const [showModal, setShowModal] = useState(!isPWA());
     const lastInstallPromptTimestamp = useAppSelector(
