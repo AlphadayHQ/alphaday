@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import { Disclosure, Transition } from "@alphaday/ui-kit";
 import { EFeedItemType } from "src/api/types";
 // import { ReactComponent as CommentSVG } from "src/assets/svg/comment.svg";
@@ -84,10 +84,17 @@ export const FeedItemDisclosure: FC<{
     children: (({ open }: { open: boolean }) => JSX.Element) | ReactNode;
     onClick?: () => MaybeAsync<void>;
 }> = ({ children, onClick }) => {
+    const [isClicked, setIsClicked] = useState<boolean>(false);
+    const handleOnClick = () => {
+        if (isClicked) return undefined;
+        setIsClicked(true);
+        return onClick;
+    };
+
     return (
         <div
             className="border-b border-borderLine"
-            onClick={onClick}
+            onClick={handleOnClick()}
             role="button"
             tabIndex={0}
         >
