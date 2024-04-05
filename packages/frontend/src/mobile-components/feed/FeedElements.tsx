@@ -152,7 +152,9 @@ export const FeedItemDisclosureButtonImage: FC<{
 };
 
 export const CardTitle: FC<{ title: string }> = ({ title }) => (
-    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">{title}</p>
+    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3 overflow-wrap-anywhere">
+        {title}
+    </p>
 );
 
 export const FeedItemDisclosurePanel: FC<{
@@ -167,7 +169,7 @@ export const FeedItemDisclosurePanel: FC<{
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
         >
-            <Disclosure.Panel className="pt-6 text-primaryVariant100  fontGroup-normal">
+            <Disclosure.Panel className="pt-6 text-primaryVariant100  fontGroup-normal overflow-wrap-anywhere">
                 {children}
             </Disclosure.Panel>
         </Transition>
