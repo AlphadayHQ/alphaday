@@ -28,7 +28,7 @@
     "@capacitor/keyboard": "5.0.8",
     "@capacitor/status-bar": "5.0.7",
     "@ionic/react": "7.8.1",
-    "@ionic/react-router": "7.8.1",
+    "@ionic/react-router": "7.8.3",
     "@react-oauth/google": "0.12.1",
     "@reduxjs/toolkit": "1.8.0",
     "@sentry/react": "7.101.1",
