@@ -133,12 +133,14 @@ type TMobileRoute =
           authWalled?: boolean;
           redirectTo?: string;
           type: "regular";
+          hideTabBar?: boolean;
       }
     | {
           path: string;
           redirectTo: string;
           exact?: boolean;
           type: "redirect";
+          hideTabBar?: boolean;
       }
     | {
           redirectTo: string;
@@ -174,6 +176,7 @@ export const mobileRoutes: TMobileRoute[] = [
         component: UserFiltersPage,
         exact: true,
         type: "regular",
+        hideTabBar: true,
     },
     {
         path: EMobileRoutePaths.Auth,
