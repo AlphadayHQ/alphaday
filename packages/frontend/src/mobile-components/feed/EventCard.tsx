@@ -3,6 +3,7 @@ import { twMerge } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
 import moment from "moment";
 import { TSuperfeedItem } from "src/api/types";
+import { typeOptions } from "src/components/calendarCategories";
 import { TagButton } from "src/mobile-components/button/buttons";
 import { imgOnError } from "src/utils/errorHandling";
 import {
@@ -59,7 +60,9 @@ export const EventCard: FC<{
     } = item;
 
     const location = item.data?.location;
-    const category = "category";
+    const category = typeOptions.find(
+        (option) => option.value === item.data?.itemType
+    );
 
     return (
         <FeedItemDisclosure onClick={onClick}>
@@ -142,13 +145,15 @@ export const EventCard: FC<{
                     </FeedItemDisclosurePanel>
                     <div className="flex justify-between my-2">
                         <div className="flex-col">
-                            <div className="flex-col">
-                                <TagButton
-                                    className="bg-[#C1DF91] text-background mt-3"
-                                    name={category}
-                                    onClick={() => {}}
-                                />
-                            </div>
+                            {category && (
+                                <div className="flex-col">
+                                    <TagButton
+                                        className="bg-[#C1DF91] text-background mt-3"
+                                        name={category?.name}
+                                        onClick={() => {}}
+                                    />
+                                </div>
+                            )}
                             {open && (
                                 <TagButtons
                                     truncated

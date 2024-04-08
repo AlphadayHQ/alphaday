@@ -62,15 +62,16 @@ const MobileApp: React.FC = () => {
                                         path={route.path}
                                         to={route.redirectTo}
                                         exact={route.exact ?? false}
+                                        push
                                     />
                                 );
                             }
                             if (route.type === "fallback") {
                                 return (
-                                    <Route
-                                        render={() => (
-                                            <Redirect to={route.redirectTo} />
-                                        )}
+                                    <Redirect
+                                        key={route.redirectTo}
+                                        to={route.redirectTo}
+                                        push
                                     />
                                 );
                             }
