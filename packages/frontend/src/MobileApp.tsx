@@ -7,7 +7,7 @@ import {
     IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, useLocation } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
@@ -49,6 +49,16 @@ const CustomNavTab: React.FC<{
 const MobileApp: React.FC = () => {
     useGetFeaturesQuery();
     const { isAuthenticated } = useAuth();
+
+    const { pathname } = window.location;
+
+    const isTabBarHidden = mobileRoutes.find(
+        (route) =>
+            route.type !== "fallback" &&
+            route.path === pathname &&
+            route?.hideTabBar
+    );
+
     return (
         <IonApp className="theme-dark">
             <IonReactRouter>
@@ -96,7 +106,10 @@ const MobileApp: React.FC = () => {
                             );
                         })}
                     </IonRouterOutlet>
-                    <IonTabBar slot="bottom">
+                    <IonTabBar
+                        className={isTabBarHidden ? "hidden" : ""}
+                        slot="bottom"
+                    >
                         <IonTabButton
                             tab="superfeed"
                             href={EMobileTabRoutePaths.Superfeed}
