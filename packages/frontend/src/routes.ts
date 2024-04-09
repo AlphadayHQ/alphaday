@@ -145,6 +145,7 @@ type TMobileRoute =
     | {
           redirectTo: string;
           type: "fallback";
+          hideTabBar?: boolean;
       };
 export const mobileRoutes: TMobileRoute[] = [
     {
@@ -170,6 +171,7 @@ export const mobileRoutes: TMobileRoute[] = [
         component: UserSettingsPage,
         exact: true,
         type: "regular",
+        hideTabBar: true,
     },
     {
         path: EMobileRoutePaths.UserFilters,
@@ -183,12 +185,14 @@ export const mobileRoutes: TMobileRoute[] = [
         component: AuthPage,
         exact: true,
         type: "regular",
+        hideTabBar: true,
     },
     {
         path: EMobileRoutePaths.AuthFallback,
         component: AuthPage,
         exact: true,
         type: "regular",
+        hideTabBar: true,
     },
     {
         path: EMobileRoutePaths.Notifications,
@@ -196,6 +200,7 @@ export const mobileRoutes: TMobileRoute[] = [
         exact: true,
         authWalled: true,
         type: "regular",
+        hideTabBar: true,
     },
     {
         path: EMobileRoutePaths.Market,
