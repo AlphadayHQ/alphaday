@@ -60,6 +60,7 @@ const MobileApp: React.FC = () => {
                                         path={route.path}
                                         to={route.redirectTo}
                                         exact={route.exact ?? false}
+                                        push
                                     />
                                 );
                             }
@@ -68,6 +69,7 @@ const MobileApp: React.FC = () => {
                                     <Redirect
                                         key={route.redirectTo}
                                         to={route.redirectTo}
+                                        push
                                     />
                                 );
                             }
