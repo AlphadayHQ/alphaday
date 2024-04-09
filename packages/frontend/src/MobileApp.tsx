@@ -12,7 +12,6 @@ import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
 import { useAuth } from "./api/hooks";
-import { useGetFeaturesQuery } from "./api/services";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import "@alphaday/ui-kit/global.scss";
@@ -47,7 +46,6 @@ const CustomNavTab: React.FC<{
  * For the MVP it's fine to nest everything within /superfeed
  */
 const MobileApp: React.FC = () => {
-    useGetFeaturesQuery();
     const { isAuthenticated } = useAuth();
     return (
         <IonApp className="theme-dark">
@@ -62,7 +60,6 @@ const MobileApp: React.FC = () => {
                                         path={route.path}
                                         to={route.redirectTo}
                                         exact={route.exact ?? false}
-                                        push
                                     />
                                 );
                             }
@@ -71,7 +68,6 @@ const MobileApp: React.FC = () => {
                                     <Redirect
                                         key={route.redirectTo}
                                         to={route.redirectTo}
-                                        push
                                     />
                                 );
                             }
