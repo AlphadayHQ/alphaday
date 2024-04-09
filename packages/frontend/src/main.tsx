@@ -1,5 +1,5 @@
 import "./polyfills";
-import { memo, Suspense } from "react";
+import { Suspense } from "react";
 import { setupIonicReact } from "@ionic/react";
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
@@ -87,14 +87,14 @@ if (CONFIG.CLARITY.ENABLE) {
     }
 }
 
-const AppSwitcher = memo(() => {
+const AppSwitcher = () => {
     const isMobileApp = useIsMobile();
     return (
         <Suspense fallback={<PreloaderPage />}>
             {isMobileApp ? <MobileApp /> : isMobileApp !== undefined && <App />}
         </Suspense>
     );
-});
+};
 
 const container = document.getElementById("root");
 if (!container) {
