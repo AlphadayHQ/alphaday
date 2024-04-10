@@ -40,6 +40,8 @@ export interface IRoute {
     component: typeof ErrorPage | typeof PreloaderPage | typeof DashboardPage;
     exact?: boolean;
     isFullsize?: boolean;
+    redirectTo?: string;
+    type: string;
 }
 
 /**
@@ -56,6 +58,7 @@ export enum EDesktopRoutePaths {
     Calendar = "/b/:slug/calendar",
     CalendarEvent = "/b/:slug/calendar/event/:eventId/:eventTitle",
     FallBack = "*",
+    Superfeed = "/superfeed",
 }
 
 /**
@@ -63,25 +66,36 @@ export enum EDesktopRoutePaths {
  */
 export const desktopRoutes: IRoute[] = [
     {
+        type: "regular",
         path: EDesktopRoutePaths.Base,
         component: DashboardPage,
         exact: true,
     },
     {
+        type: "regular",
         path: EDesktopRoutePaths.Boards,
         component: DashboardPage,
         exact: true,
     },
     {
+        type: "regular",
         path: EDesktopRoutePaths.Calendar,
         component: DashboardPage,
         isFullsize: true,
         exact: true,
     },
     {
+        type: "regular",
         path: EDesktopRoutePaths.CalendarEvent,
         component: DashboardPage,
         isFullsize: true,
+        exact: true,
+    },
+    {
+        type: "redirect",
+        path: EDesktopRoutePaths.Superfeed,
+        redirectTo: EDesktopRoutePaths.Base,
+        component: DashboardPage,
         exact: true,
     },
 ];
@@ -91,6 +105,7 @@ export const desktopRoutes: IRoute[] = [
  */
 export const errorRoutes: IRoute[] = [
     {
+        type: "regular",
         path: EDesktopRoutePaths.FallBack,
         component: ErrorPage,
     },
