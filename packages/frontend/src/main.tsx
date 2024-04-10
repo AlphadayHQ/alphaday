@@ -6,9 +6,9 @@ import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
 import { clarity } from "react-microsoft-clarity";
 import { Provider } from "react-redux";
+import { useIsMobile } from "src/api/hooks";
 import { registerSW } from "virtual:pwa-register";
 import { WagmiConfig } from "wagmi";
-import { useIsMobile } from "./api/hooks/useIsMobile";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
 import PersistProvider from "./api/store/providers/persist-provider";
 import { wagmiConfig } from "./api/store/providers/wallet-connect-provider";
@@ -89,10 +89,9 @@ if (CONFIG.CLARITY.ENABLE) {
 
 const AppSwitcher = () => {
     const isMobileApp = useIsMobile();
-    if (isMobile === undefined) return <PreloaderPage />;
     return (
         <Suspense fallback={<PreloaderPage />}>
-            {isMobileApp ? <MobileApp /> : <App />}
+            {isMobileApp ? <MobileApp /> : isMobileApp !== undefined && <App />}
         </Suspense>
     );
 };
