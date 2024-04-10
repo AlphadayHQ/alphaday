@@ -7,11 +7,11 @@ import {
     IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import { useAuth } from "./api/hooks";
+import { useAuth, useMobileRouteUpdater } from "./api/hooks";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import "@alphaday/ui-kit/global.scss";
@@ -41,14 +41,9 @@ const CustomNavTab: React.FC<{
 );
 
 const RouterChild = () => {
-    const { pathname } = useLocation();
     const { isAuthenticated } = useAuth();
-    const isTabBarHidden = !!mobileRoutes.find(
-        (route) =>
-            route.type !== "fallback" &&
-            route.path === pathname &&
-            route?.hideTabBar
-    );
+    const { isTabBarHidden } = useMobileRouteUpdater();
+
     return (
         <IonTabs>
             <IonRouterOutlet ionPage>

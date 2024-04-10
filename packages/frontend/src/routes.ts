@@ -41,7 +41,7 @@ export interface IRoute {
     exact?: boolean;
     isFullsize?: boolean;
     redirectTo?: string;
-    type: string;
+    type: "regular" | "redirect";
 }
 
 /**
@@ -125,6 +125,7 @@ export enum EMobileTabRoutePaths {
 
 export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
+    Boards = `${BASE_TABS_ROUTE}b/:slug`,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
     Search = `${BASE_TABS_ROUTE}superfeed/search/:tags`,
     UserSettings = `${BASE_TABS_ROUTE}superfeed/user-settings`,
@@ -171,6 +172,12 @@ export const mobileRoutes: TMobileRoute[] = [
     },
     {
         path: EMobileRoutePaths.Superfeed,
+        component: SuperfeedPage,
+        exact: true,
+        type: "regular",
+    },
+    {
+        path: EMobileRoutePaths.Boards,
         component: SuperfeedPage,
         exact: true,
         type: "regular",
