@@ -2,7 +2,6 @@ import "./polyfills";
 import { Suspense } from "react";
 import { setupIonicReact } from "@ionic/react";
 import * as Sentry from "@sentry/react";
-import { BrowserTracing } from "@sentry/tracing";
 import { createRoot } from "react-dom/client";
 import { clarity } from "react-microsoft-clarity";
 import { Provider } from "react-redux";
@@ -57,7 +56,7 @@ try {
         Logger.debug("initializing sentry...");
         Sentry.init({
             dsn: CONFIG.SENTRY.DSN,
-            integrations: [new BrowserTracing()],
+            integrations: [Sentry.browserTracingIntegration()],
             environment: CONFIG.ENVIRONMENT,
             // Set tracesSampleRate to 1.0 to capture 100%
             // of transactions for performance monitoring.
