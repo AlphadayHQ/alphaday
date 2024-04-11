@@ -7,12 +7,11 @@ import {
     IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, useLocation } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
 import { useAuth } from "./api/hooks";
-import { useGetFeaturesQuery } from "./api/services";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import "@alphaday/ui-kit/global.scss";
@@ -41,95 +40,106 @@ const CustomNavTab: React.FC<{
     </div>
 );
 
+const RouterChild = () => {
+    const { pathname } = useLocation();
+    const { isAuthenticated } = useAuth();
+    const isTabBarHidden = !!mobileRoutes.find(
+        (route) =>
+            route.type !== "fallback" &&
+            route.path === pathname &&
+            route?.hideTabBar
+    );
+    return (
+        <IonTabs>
+            <IonRouterOutlet ionPage>
+                {mobileRoutes.map((route) => {
+                    if (route.type === "redirect") {
+                        return (
+                            <Redirect
+                                key={route.path}
+                                path={route.path}
+                                to={route.redirectTo}
+                                exact={route.exact ?? false}
+                                push
+                            />
+                        );
+                    }
+                    if (route.type === "fallback") {
+                        return (
+                            <Redirect
+                                key={route.redirectTo}
+                                to={route.redirectTo}
+                                push
+                            />
+                        );
+                    }
+                    // if the route is authwalled, let's just redirect to superfeed page.
+                    if (route.authWalled && !isAuthenticated) {
+                        return (
+                            <Redirect
+                                key={route.path}
+                                path={route.path}
+                                to={EMobileRoutePaths.Superfeed}
+                                exact={route.exact ?? false}
+                            />
+                        );
+                    }
+                    return (
+                        <Route
+                            key={route.path}
+                            path={route.path}
+                            exact={route.exact ?? false}
+                            render={() => <route.component />}
+                        />
+                    );
+                })}
+            </IonRouterOutlet>
+            <IonTabBar
+                style={{
+                    display: isTabBarHidden ? "none" : "flex",
+                }}
+                slot="bottom"
+            >
+                <IonTabButton
+                    tab="superfeed"
+                    href={EMobileTabRoutePaths.Superfeed}
+                >
+                    <CustomNavTab label="Superfeed" Icon={SuperfeedSVG} />
+                </IonTabButton>
+                {IS_DEV && (
+                    <IonTabButton
+                        tab="market"
+                        href={EMobileTabRoutePaths.Market}
+                    >
+                        <CustomNavTab label="Market" Icon={MarketsSVG} />
+                    </IonTabButton>
+                )}
+                <IonTabButton
+                    tab="portfolio"
+                    href={EMobileTabRoutePaths.Portfolio}
+                    disabled={!IS_DEV}
+                >
+                    <CustomNavTab
+                        label="Portfolio"
+                        Icon={PortfolioSVG}
+                        disabled={!IS_DEV}
+                    />
+                </IonTabButton>
+            </IonTabBar>
+        </IonTabs>
+    );
+};
+
 /**
  * TODO: Move user-settings (and any other view that should be accessible from multiple tabs)
  * to a modal.
  * For the MVP it's fine to nest everything within /superfeed
  */
 const MobileApp: React.FC = () => {
-    useGetFeaturesQuery();
-    const { isAuthenticated } = useAuth();
     return (
         <IonApp className="theme-dark">
             <IonReactRouter>
-                <IonTabs>
-                    <IonRouterOutlet ionPage>
-                        {mobileRoutes.map((route) => {
-                            if (route.type === "redirect") {
-                                return (
-                                    <Redirect
-                                        key={route.path}
-                                        path={route.path}
-                                        to={route.redirectTo}
-                                        exact={route.exact ?? false}
-                                        push
-                                    />
-                                );
-                            }
-                            if (route.type === "fallback") {
-                                return (
-                                    <Redirect
-                                        key={route.redirectTo}
-                                        to={route.redirectTo}
-                                        push
-                                    />
-                                );
-                            }
-                            // if the route is authwalled, let's just redirect to superfeed page.
-                            if (route.authWalled && !isAuthenticated) {
-                                return (
-                                    <Redirect
-                                        key={route.path}
-                                        path={route.path}
-                                        to={EMobileRoutePaths.Superfeed}
-                                        exact={route.exact ?? false}
-                                    />
-                                );
-                            }
-                            return (
-                                <Route
-                                    key={route.path}
-                                    path={route.path}
-                                    exact={route.exact ?? false}
-                                    render={() => <route.component />}
-                                />
-                            );
-                        })}
-                    </IonRouterOutlet>
-                    <IonTabBar slot="bottom">
-                        <IonTabButton
-                            tab="superfeed"
-                            href={EMobileTabRoutePaths.Superfeed}
-                        >
-                            <CustomNavTab
-                                label="Superfeed"
-                                Icon={SuperfeedSVG}
-                            />
-                        </IonTabButton>
-                        {IS_DEV && (
-                            <IonTabButton
-                                tab="market"
-                                href={EMobileTabRoutePaths.Market}
-                            >
-                                <CustomNavTab
-                                    label="Market"
-                                    Icon={MarketsSVG}
-                                />
-                            </IonTabButton>
-                        )}
-                        <IonTabButton
-                            tab="portfolio"
-                            href={EMobileTabRoutePaths.Portfolio}
-                            disabled={!IS_DEV}
-                        >
-                            <CustomNavTab
-                                label="Portfolio"
-                                Icon={PortfolioSVG}
-                                disabled={!IS_DEV}
-                            />
-                        </IonTabButton>
-                    </IonTabBar>
-                </IonTabs>
+                <RouterChild />
             </IonReactRouter>
             <ToastContainer
                 position="bottom-center"
