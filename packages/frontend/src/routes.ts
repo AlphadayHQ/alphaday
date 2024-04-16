@@ -125,7 +125,7 @@ export enum EMobileTabRoutePaths {
 
 export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
-    Boards = `${BASE_TABS_ROUTE}b/:slug`,
+    Boards = EDesktopRoutePaths.Boards,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
     Search = `${BASE_TABS_ROUTE}superfeed/search/:tags`,
     UserSettings = `${BASE_TABS_ROUTE}superfeed/user-settings`,
