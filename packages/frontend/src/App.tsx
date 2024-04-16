@@ -21,7 +21,7 @@ import { getRtkErrorCode } from "./api/utils/errorHandling";
 import { Logger } from "./api/utils/logging";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
-import { desktopRoutes, errorRoutes } from "./routes";
+import { EDesktopRoutePaths, desktopRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
 const landingPage = CONFIG.SEO.DOMAIN;
@@ -86,7 +86,7 @@ const AppRoutes = () => {
                             key={route.path}
                             path={route.path}
                             exact={route.exact}
-                            to={route.redirectTo ?? route.path}
+                            to={route.redirectTo ?? EDesktopRoutePaths.Base}
                             push
                         />
                     );
