@@ -1,4 +1,5 @@
 import API_CONFIG from "./backend";
+import BOARDS_CONFIG from "./boards";
 import FIREBASE_CONFIG from "./firebase";
 import NUMBERS from "./numbers";
 import ROUTING_CONFIG from "./routing";
@@ -81,6 +82,7 @@ const CONFIG = {
     IS_PROD,
     LOGLEVEL,
     API: API_CONFIG,
+    BOARDS: BOARDS_CONFIG,
     ROUTING: ROUTING_CONFIG,
     UI: UI_CONFIG,
     WIDGETS: WIDGETS_CONFIG,
