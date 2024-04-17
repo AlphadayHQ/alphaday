@@ -175,15 +175,16 @@ type TMobileRoute =
     | {
           redirectTo: string;
           type: "fallback";
+          exact: true;
           hideTabBar?: boolean;
       };
 export const mobileRoutes: TMobileRoute[] = [
-    {
-        path: EMobileRoutePaths.Base,
-        redirectTo: EMobileRoutePaths.Superfeed,
-        exact: true,
-        type: "redirect",
-    },
+    // {
+    //     path: EMobileRoutePaths.Base,
+    //     redirectTo: EMobileRoutePaths.Superfeed,
+    //     exact: true,
+    //     type: "redirect",
+    // },
     {
         path: EMobileRoutePaths.Superfeed,
         component: SuperfeedPage,
@@ -281,6 +282,7 @@ export const mobileRoutes: TMobileRoute[] = [
      */
     {
         redirectTo: EMobileRoutePaths.Superfeed,
+        exact: true,
         type: "fallback",
     },
 ];
