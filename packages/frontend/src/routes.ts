@@ -35,14 +35,28 @@ const PortfolioHoldingsPage = lazyRetry(
  *
  * It defines the path and the page to be rendered.
  */
-export interface IRoute {
-    path: EDesktopRoutePaths;
-    component: typeof ErrorPage | typeof PreloaderPage | typeof DashboardPage;
-    exact?: boolean;
-    isFullsize?: boolean;
-    redirectTo?: string;
-    type: "regular" | "redirect";
-}
+export type TRoute =
+    | {
+          path: EDesktopRoutePaths;
+          component:
+              | typeof ErrorPage
+              | typeof PreloaderPage
+              | typeof DashboardPage;
+          exact?: boolean;
+          isFullsize?: boolean;
+          type: "regular";
+      }
+    | {
+          path: EDesktopRoutePaths;
+          component:
+              | typeof ErrorPage
+              | typeof PreloaderPage
+              | typeof DashboardPage;
+          exact?: boolean;
+          isFullsize?: boolean;
+          redirectTo: string;
+          type: "redirect";
+      };
 
 /**
  * Enum of all routes in the desktop app.
@@ -64,7 +78,7 @@ export enum EDesktopRoutePaths {
 /**
  * An array of all valid routes in the desktop app.
  */
-export const desktopRoutes: IRoute[] = [
+export const desktopRoutes: TRoute[] = [
     {
         type: "regular",
         path: EDesktopRoutePaths.Base,
@@ -103,7 +117,7 @@ export const desktopRoutes: IRoute[] = [
 /**
  * An array of invalid routes in the desktop app.
  */
-export const errorRoutes: IRoute[] = [
+export const errorRoutes: TRoute[] = [
     {
         type: "regular",
         path: EDesktopRoutePaths.FallBack,
