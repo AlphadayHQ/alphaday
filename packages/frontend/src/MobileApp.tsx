@@ -24,7 +24,7 @@ import {
 
 const { IS_DEV, BOARDS } = CONFIG;
 
-const BoardRoutesHandler = (
+const boardRoutesHandler = (
     pathname: string,
     callback: (path: string) => void
 ) => {
@@ -38,6 +38,8 @@ const BoardRoutesHandler = (
         if (pathname !== newRoute) {
             callback(newRoute);
         }
+    } else {
+        callback(EMobileRoutePaths.Base);
     }
 };
 
@@ -72,7 +74,7 @@ const RouterChild = () => {
 
     if (pathContainsHashOrSlug && routeInfo?.value) {
         const navigate = (str: string) => history.push(str);
-        BoardRoutesHandler(routeInfo?.value, navigate);
+        boardRoutesHandler(routeInfo?.value, navigate);
     }
 
     return (
