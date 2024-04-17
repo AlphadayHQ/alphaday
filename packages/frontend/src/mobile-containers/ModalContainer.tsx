@@ -12,12 +12,7 @@ export const ModalContainer: FC<IModal & { modalId: string }> = ({
     const { activeModal, closeModal } = useControlledModal();
     return (
         <Modal
-            size="sm"
-            showModal={
-                activeModal
-                    ? activeModal === modalId && !!showModal
-                    : !!showModal
-            }
+            showModal={activeModal ? activeModal === modalId : !!showModal}
             onClose={() => {
                 onClose?.();
                 closeModal();

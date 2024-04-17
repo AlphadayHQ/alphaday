@@ -58,7 +58,11 @@ export const Modal: FC<IModal> = ({
     };
     return (
         <Transition.Root show={showModal} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={handleClose}>
+            <Dialog
+                as="div"
+                className="relative z-10 h-full"
+                onClose={handleClose}
+            >
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

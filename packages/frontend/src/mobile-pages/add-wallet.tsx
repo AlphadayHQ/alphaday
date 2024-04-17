@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { FormInput, MiniDialog, Pager } from "@alphaday/ui-kit";
-import { usePortfolioAccount, useHistory } from "src/api/hooks";
+import {
+    usePortfolioAccount,
+    useHistory,
+    useControlledModal,
+} from "src/api/hooks";
 import { validateEthAddr } from "src/api/utils/accountUtils";
 import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
 import { EMobileRoutePaths } from "src/routes";
@@ -12,8 +16,9 @@ type TWalletInfo = {
 
 const AddWalletPage = () => {
     const history = useHistory();
+    const { closeModal } = useControlledModal();
     const [isWalletAdded, setIsWalletAdded] = useState(false);
-    const [walletInfo, setwalletInfo] = useState<TWalletInfo>({
+    const [walletInfo, setWalletInfo] = useState<TWalletInfo>({
         name: "",
         address: "",
     });
@@ -21,7 +26,7 @@ const AddWalletPage = () => {
     // const handleAddNewWallet = (w: TWalletInfo) => {};
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setwalletInfo((prev) => ({
+        setWalletInfo((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
         }));
@@ -34,10 +39,7 @@ const AddWalletPage = () => {
     };
     return (
         <>
-            <Pager
-                title="Add wallet address"
-                handleClose={history.backNavigation}
-            />
+            <Pager title="Add wallet address" handleClose={closeModal} />
             <div className="flex flex-col items-center mt-4 mx-4">
                 <FormInput
                     type="text"

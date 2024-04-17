@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { FormInput, Pager, ScrollBar } from "@alphaday/ui-kit";
 import moment from "moment";
-import { useHistory } from "src/api/hooks";
+import { useControlledModal } from "src/api/hooks";
 import { TCoin, THolding } from "src/api/types";
 
 interface IAddHolding {
@@ -17,7 +17,7 @@ const AddHolding: FC<IAddHolding> = ({
     holding,
     setHolding,
 }) => {
-    const history = useHistory();
+    const { closeModal } = useControlledModal();
 
     const defaultHolding: THolding = {
         coin: selectedCoin,
@@ -54,7 +54,7 @@ const AddHolding: FC<IAddHolding> = ({
                         {selectedCoin.name}
                     </span>
                 }
-                handleClose={history.backNavigation}
+                handleClose={closeModal}
                 handleBack={() => setSelectedCoin(undefined)}
             />
             <div className="flex flex-col items-center mt-4 mx-4">

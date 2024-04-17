@@ -1,13 +1,13 @@
 import { OutlineButton, Pager } from "@alphaday/ui-kit";
-import { useHistory } from "src/api/hooks";
+import { useControlledModal } from "src/api/hooks";
 import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
 import { ReactComponent as WalletConnectSVG } from "src/assets/icons/wallet-connect.svg";
 
 const ConnectWalletPage = () => {
-    const history = useHistory();
+    const { closeModal } = useControlledModal();
     return (
         <>
-            <Pager title="Connect wallet" handleBack={history.backNavigation} />
+            <Pager title="Connect wallet" handleBack={closeModal} />
             <div className="w-full flex px-5 mt-4 fontGroup-highlight !font-bold">
                 Select your preferred wallet provider to conect to your
                 portfolio
