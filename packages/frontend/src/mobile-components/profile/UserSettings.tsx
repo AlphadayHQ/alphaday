@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { MiniDialog, Spinner, twMerge } from "@alphaday/ui-kit";
 import md5 from "md5";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useControlledModal, usePrevious } from "src/api/hooks";
 import { usePWAInstallContext } from "src/api/store/providers/pwa-install-provider";
 import { TUserProfile } from "src/api/types";
@@ -21,26 +21,30 @@ const { IS_DEV } = CONFIG;
 
 const INSTALL_OPTION_ID = "install";
 
-const NonAuthenticatedSection = () => {
+const NonAuthenticatedSection: FC<{
+    setActiveModal: (p: string) => void;
+}> = ({ setActiveModal }) => {
     return (
         <div className="flex flex-col flex-start w-full items-start mb-4">
             <p className="mb-0 fontGroup-highlight">
                 Sign up to unlock the complete experience{" "}
             </p>
-            <Link
-                to="/superfeed/auth"
+            <button
+                type="button"
                 className="flex fontGroup-highlight !font-semibold py-3 px-4 bg-accentVariant100 hover:bg-accentVariant200 w-full mt-5 justify-center rounded-lg"
+                onClick={() => setActiveModal(EMobileModalIds.Auth)}
             >
                 Sign up
-            </Link>
+            </button>
             <p className="mt-6">
                 <span className="mt-6">Already have an account?</span>
-                <Link
-                    to="/superfeed/auth"
+                <button
+                    type="button"
                     className="ml-2 font-semibold border-b border-accentVariant100"
+                    onClick={() => setActiveModal(EMobileModalIds.Auth)}
                 >
                     Log in here
-                </Link>
+                </button>
             </p>
         </div>
     );
@@ -109,8 +113,7 @@ const UserSettings: FC<IUserSettings> = ({
     isSavingProfile,
     onLogout,
 }) => {
-    const [showProfileEditModal, setShowProfileEditModal] =
-        useState<boolean>(false);
+    const [showProfileEditModal, setShowProfileEditModal] = useState(false);
     const history = useHistory();
     const { setActiveModal } = useControlledModal();
     const [isProfileUpdated, setIsProfileUpdated] = useState(false);
@@ -209,7 +212,7 @@ const UserSettings: FC<IUserSettings> = ({
                         setActiveModal={setActiveModal}
                     />
                 ) : (
-                    <NonAuthenticatedSection />
+                    <NonAuthenticatedSection setActiveModal={setActiveModal} />
                 )}
                 <div className="mt-10 w-full">
                     {menu.map((item) => {
