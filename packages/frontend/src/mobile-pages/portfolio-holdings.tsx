@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import { Dialog, DropdownSelect } from "@alphaday/ui-kit";
-import { useHistory } from "react-router";
-import { useKeyPress } from "src/api/hooks";
+import { useControlledModal, useKeyPress } from "src/api/hooks";
 import { toggleShowBalance as toggleShowBalanceInStore } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 
@@ -178,7 +177,7 @@ const AssetsList: FC<{ assets: TPortfolio[] }> = ({ assets }) => {
 const PortfolioHoldings: React.FC = () => {
     const dispatch = useAppDispatch();
     const [showDialog, setShowDialog] = useState(false);
-    const history = useHistory();
+    const { setActiveModal } = useControlledModal();
 
     const toggleBalance = () => {
         dispatch(toggleShowBalanceInStore());
@@ -239,7 +238,7 @@ const PortfolioHoldings: React.FC = () => {
                         <WalletConnectionOptions
                             isAuthenticated
                             onClick={(path: string) => {
-                                history.push(path);
+                                setActiveModal(path);
                             }}
                         />
                     </div>
