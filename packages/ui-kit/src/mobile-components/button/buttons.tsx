@@ -34,22 +34,24 @@ export const ActionButton: FC<{
 export const TagButton: FC<{
     name: string;
     slug?: string;
-    onClick: () => void;
+    onClick?: () => void;
     className?: string;
 }> = ({ name, slug, onClick, className }) => {
     const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
         e.preventDefault();
         e.stopPropagation();
-        onClick();
+        onClick?.();
     };
     if (!slug) {
         return (
             <button
                 type="button"
                 onClick={handleClick}
+                disabled={onClick === undefined}
                 className={twMerge(
-                    "bg-backgroundBlue100 text-primary fontGroup-mini !font-semibold m-0.5 flex h-5 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
-                    className
+                    "bg-backgroundBlue100 text-primary fontGroup-mini m-0.5 flex h-5 max-w-min items-center whitespace-nowrap rounded-lg px-2 py-0.5 !capitalize leading-[18px]",
+                    className,
+                    onClick === undefined && "bg-slate-400"
                 )}
             >
                 {name}
