@@ -94,6 +94,27 @@ const RouterChild = () => {
                             />
                         );
                     }
+                    if (route.type === "regular") {
+                        // if the route is authwalled, let's just redirect to superfeed page.
+                        if (route.authWalled && !isAuthenticated) {
+                            return (
+                                <Redirect
+                                    key={route.path}
+                                    path={route.path}
+                                    to={EMobileRoutePaths.Superfeed}
+                                    exact={route.exact ?? false}
+                                />
+                            );
+                        }
+                        return (
+                            <Route
+                                key={route.path}
+                                path={route.path}
+                                exact={route.exact ?? false}
+                                render={() => <route.component />}
+                            />
+                        );
+                    }
                     if (route.type === "fallback") {
                         return (
                             <Redirect
@@ -103,25 +124,7 @@ const RouterChild = () => {
                             />
                         );
                     }
-                    // if the route is authwalled, let's just redirect to superfeed page.
-                    if (route.authWalled && !isAuthenticated) {
-                        return (
-                            <Redirect
-                                key={route.path}
-                                path={route.path}
-                                to={EMobileRoutePaths.Superfeed}
-                                exact={route.exact ?? false}
-                            />
-                        );
-                    }
-                    return (
-                        <Route
-                            key={route.path}
-                            path={route.path}
-                            exact={route.exact ?? false}
-                            render={() => <route.component />}
-                        />
-                    );
+                    return null;
                 })}
             </IonRouterOutlet>
             <IonTabBar
