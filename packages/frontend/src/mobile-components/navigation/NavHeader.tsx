@@ -18,7 +18,7 @@ export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
                 tabIndex={0}
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                 onClick={() => {
-                    setActiveModal(EMobileModalIds.UserFilters);
+                    setActiveModal(EMobileModalIds.UserSettings);
                 }}
             >
                 <span className="absolute -inset-1.5" />
