@@ -95,7 +95,7 @@ const RouterChild = () => {
                     if (route.type === "fallback") {
                         return (
                             <Redirect
-                                key={route.redirectTo}
+                                key="fallback"
                                 to={route.redirectTo}
                                 push
                             />
