@@ -74,7 +74,9 @@ const RouterChild = () => {
 
     if (pathContainsHashOrSlug && routeInfo?.value) {
         const navigate = (str: string) => history.push(str);
-        boardRoutesHandler(routeInfo?.value, navigate);
+        boardRoutesHandler(routeInfo.value, navigate);
+
+        return null;
     }
 
     return (
