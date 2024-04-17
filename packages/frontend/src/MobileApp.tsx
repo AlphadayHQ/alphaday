@@ -16,10 +16,12 @@ import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
+import { ModalContainer } from "./mobile-containers/ModalContainer";
 import {
     EMobileRoutePaths,
     EMobileTabRoutePaths,
     mobileRoutes,
+    modals,
 } from "./routes";
 
 const { IS_DEV } = CONFIG;
@@ -138,6 +140,11 @@ const RouterChild = () => {
 const MobileApp: React.FC = () => {
     return (
         <IonApp className="theme-dark">
+            {modals.map((modal) => (
+                <ModalContainer key={modal.id} modalId={modal.id}>
+                    <modal.component />
+                </ModalContainer>
+            ))}
             <IonReactRouter>
                 <RouterChild />
             </IonReactRouter>

@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { MiniDialog, Spinner, twMerge } from "@alphaday/ui-kit";
 import md5 from "md5";
 import { Link, useHistory } from "react-router-dom";
-import { usePrevious } from "src/api/hooks";
+import { useControlledModal, usePrevious } from "src/api/hooks";
 import { usePWAInstallContext } from "src/api/store/providers/pwa-install-provider";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
@@ -14,7 +14,7 @@ import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
 import { ReactComponent as Logoday } from "src/assets/svg/logo-white.svg";
 import CONFIG from "src/config";
-import { EMobileRoutePaths } from "src/routes";
+import { EMobileModalIds } from "src/routes";
 import { EditProfileModal } from "./EditProfileModal";
 
 const { IS_DEV } = CONFIG;
@@ -46,9 +46,10 @@ const NonAuthenticatedSection = () => {
     );
 };
 
-const AuthenticatedSection: FC<{ profile: TUserProfile | undefined }> = ({
-    profile,
-}) => {
+const AuthenticatedSection: FC<{
+    profile: TUserProfile | undefined;
+    setActiveModal: (p: string) => void;
+}> = ({ profile, setActiveModal }) => {
     return (
         <div className="flex flex-col flex-start w-full items-start mb-4">
             <div className="flex">
@@ -67,12 +68,15 @@ const AuthenticatedSection: FC<{ profile: TUserProfile | undefined }> = ({
                 <div className="relative flex flex-col items-center fontGroup-highlight !font-semibold py-4 px-4 bg-backgroundVariant300 w-full mt-5 justify-center rounded-lg">
                     <span className="w-1.5 h-1.5 rounded-full bg-secondaryOrangeSoda absolute top-4 right-4" />
                     <p className="block ">Some major notification here...</p>
-                    <Link
-                        to={EMobileRoutePaths.Notifications}
+                    <button
+                        type="button"
                         className="fontGroup-highlight border-b border-accentVariant100 m-0"
+                        onClick={() => {
+                            setActiveModal(EMobileModalIds.Notifications);
+                        }}
                     >
                         See all notifications
-                    </Link>
+                    </button>
                 </div>
             )}
         </div>
@@ -108,6 +112,7 @@ const UserSettings: FC<IUserSettings> = ({
     const [showProfileEditModal, setShowProfileEditModal] =
         useState<boolean>(false);
     const history = useHistory();
+    const { setActiveModal } = useControlledModal();
     const [isProfileUpdated, setIsProfileUpdated] = useState(false);
     const prevIsSavingProfile = usePrevious(isSavingProfile);
     const { handleInstall, isInstallable } = usePWAInstallContext();
@@ -199,7 +204,10 @@ const UserSettings: FC<IUserSettings> = ({
                 />
             </div> */}
                 {isAuthenticated ? (
-                    <AuthenticatedSection profile={profile} />
+                    <AuthenticatedSection
+                        profile={profile}
+                        setActiveModal={setActiveModal}
+                    />
                 ) : (
                     <NonAuthenticatedSection />
                 )}
@@ -279,7 +287,7 @@ const UserSettings: FC<IUserSettings> = ({
                 title="Profile Updated"
                 onActionClick={() => {
                     setIsProfileUpdated(false);
-                    history.push(EMobileRoutePaths.UserSettings);
+                    setActiveModal(EMobileModalIds.UserSettings);
                 }}
             >
                 <div className="text-center text-sm font-normal leading-tight tracking-tight text-slate-300">

@@ -1,19 +1,19 @@
 import { useState } from "react";
 import md5 from "md5";
-import { useParams, useHistory } from "react-router-dom";
-import { useAccount } from "src/api/hooks";
+import { useParams } from "react-router-dom";
+import { useAccount, useControlledModal } from "src/api/hooks";
 import MobileLayout from "src/layout/MobileLayout";
 import AuthPromptContainer from "src/mobile-containers/AuthPromptContainer";
 import SuperfeedContainer from "src/mobile-containers/SuperfeedContainer";
-import { EMobileRoutePaths } from "src/routes";
+import { EMobileModalIds } from "src/routes";
 
 const SuperfeedPage: React.FC = () => {
     const { tags } = useParams<{ tags?: string }>();
-    const history = useHistory();
+    const { setActiveModal } = useControlledModal();
     const { userProfile } = useAccount();
     const [showSearchBar, setShowSearchBar] = useState(false);
 
-    const toggleFeedFilters = () => history.push(EMobileRoutePaths.UserFilters);
+    const toggleFeedFilters = () => setActiveModal(EMobileModalIds.UserFilters);
 
     return (
         <MobileLayout

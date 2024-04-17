@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { useControlledModal } from "src/api/hooks";
 import { ReactComponent as SearchSVG } from "src/assets/svg/search.svg";
 import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
-import { EMobileRoutePaths } from "src/routes";
+import { EMobileModalIds } from "src/routes";
 
 interface IProps {
     avatar: string | undefined;
@@ -10,13 +10,16 @@ interface IProps {
 }
 
 export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
+    const { setActiveModal } = useControlledModal();
     return (
         <div className="w-full flex justify-between pt-2 px-5">
-            <Link
-                to={EMobileRoutePaths.UserSettings}
+            <span
                 role="button"
                 tabIndex={0}
                 className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                onClick={() => {
+                    setActiveModal(EMobileModalIds.UserFilters);
+                }}
             >
                 <span className="absolute -inset-1.5" />
                 <span className="sr-only">Open user menu</span>
@@ -31,7 +34,7 @@ export const NavHeader: FC<IProps> = ({ avatar, onSearchHandleClick }) => {
                         <UserSVG className="fill-primary h-7 w-7" />
                     </div>
                 )}
-            </Link>
+            </span>
             <button
                 type="button"
                 className="bg-backgroundVariant300 self-center rounded-lg p-2"

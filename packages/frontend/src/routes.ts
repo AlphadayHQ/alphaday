@@ -112,16 +112,8 @@ export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
     Search = `${BASE_TABS_ROUTE}superfeed/search/:tags`,
-    UserSettings = `${BASE_TABS_ROUTE}superfeed/user-settings`,
-    UserFilters = `${BASE_TABS_ROUTE}superfeed/user-filters`,
-    Notifications = `${BASE_TABS_ROUTE}superfeed/notifications`,
-    Auth = `${BASE_TABS_ROUTE}superfeed/auth`,
     AuthFallback = `${BASE_TABS_ROUTE}auth*`,
     Portfolio = `${BASE_TABS_ROUTE}portfolio`,
-    PortfolioConnectWallet = `${BASE_TABS_ROUTE}portfolio/connect-wallet`,
-    PortfolioAddWallet = `${BASE_TABS_ROUTE}portfolio/add-wallet`,
-    PortfolioAddHolding = `${BASE_TABS_ROUTE}portfolio/add-holding`,
-    PortfolioHoldings = `${BASE_TABS_ROUTE}portfolio/holdings`,
     Market = `${BASE_TABS_ROUTE}market`,
 }
 
@@ -147,6 +139,7 @@ type TMobileRoute =
           type: "fallback";
           hideTabBar?: boolean;
       };
+
 export const mobileRoutes: TMobileRoute[] = [
     {
         path: EMobileRoutePaths.Base,
@@ -167,38 +160,9 @@ export const mobileRoutes: TMobileRoute[] = [
         type: "regular",
     },
     {
-        path: EMobileRoutePaths.UserSettings,
-        component: UserSettingsPage,
-        exact: true,
-        type: "regular",
-        hideTabBar: true,
-    },
-    {
-        path: EMobileRoutePaths.UserFilters,
-        component: UserFiltersPage,
-        exact: true,
-        type: "regular",
-        hideTabBar: true,
-    },
-    {
-        path: EMobileRoutePaths.Auth,
-        component: AuthPage,
-        exact: true,
-        type: "regular",
-        hideTabBar: true,
-    },
-    {
         path: EMobileRoutePaths.AuthFallback,
         component: AuthPage,
         exact: true,
-        type: "regular",
-        hideTabBar: true,
-    },
-    {
-        path: EMobileRoutePaths.Notifications,
-        component: NotificationsPage,
-        exact: true,
-        authWalled: true,
         type: "regular",
         hideTabBar: true,
     },
@@ -214,30 +178,6 @@ export const mobileRoutes: TMobileRoute[] = [
         exact: true,
         type: "regular",
     },
-    {
-        path: EMobileRoutePaths.PortfolioConnectWallet,
-        component: ConnectWalletPage,
-        exact: true,
-        type: "regular",
-    },
-    {
-        path: EMobileRoutePaths.PortfolioAddWallet,
-        component: AddWalletPage,
-        exact: true,
-        type: "regular",
-    },
-    {
-        path: EMobileRoutePaths.PortfolioAddHolding,
-        component: AddHoldingPage,
-        exact: true,
-        type: "regular",
-    },
-    {
-        path: EMobileRoutePaths.PortfolioHoldings,
-        component: PortfolioHoldingsPage,
-        exact: true,
-        type: "regular",
-    },
     /**
      * Fallback route.
      *
@@ -246,5 +186,58 @@ export const mobileRoutes: TMobileRoute[] = [
     {
         redirectTo: EMobileRoutePaths.Superfeed,
         type: "fallback",
+    },
+];
+
+export enum EMobileModalIds {
+    UserSettings = `${BASE_TABS_ROUTE}superfeed/user-settings`,
+    UserFilters = `${BASE_TABS_ROUTE}superfeed/user-filters`,
+    Notifications = `${BASE_TABS_ROUTE}superfeed/notifications`,
+    Auth = `${BASE_TABS_ROUTE}superfeed/auth`,
+    PortfolioConnectWallet = `${BASE_TABS_ROUTE}portfolio/connect-wallet`,
+    PortfolioAddWallet = `${BASE_TABS_ROUTE}portfolio/add-wallet`,
+    PortfolioAddHolding = `${BASE_TABS_ROUTE}portfolio/add-holding`,
+    PortfolioHoldings = `${BASE_TABS_ROUTE}portfolio/holdings`,
+}
+
+type TMobileModal = {
+    id: string;
+    component: React.FC;
+    authWalled?: boolean;
+};
+
+export const modals: TMobileModal[] = [
+    {
+        id: EMobileModalIds.UserSettings,
+        component: UserSettingsPage,
+    },
+    {
+        id: EMobileModalIds.UserFilters,
+        component: UserFiltersPage,
+    },
+    {
+        id: EMobileModalIds.Auth,
+        component: AuthPage,
+    },
+    {
+        id: EMobileModalIds.Notifications,
+        component: NotificationsPage,
+        authWalled: true,
+    },
+    {
+        id: EMobileModalIds.PortfolioConnectWallet,
+        component: ConnectWalletPage,
+    },
+    {
+        id: EMobileModalIds.PortfolioAddWallet,
+        component: AddWalletPage,
+    },
+    {
+        id: EMobileModalIds.PortfolioAddHolding,
+        component: AddHoldingPage,
+    },
+    {
+        id: EMobileModalIds.PortfolioHoldings,
+        component: PortfolioHoldingsPage,
     },
 ];

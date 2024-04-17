@@ -1,13 +1,12 @@
 import { memo, useCallback, useMemo, useState } from "react";
-import { Modal } from "@alphaday/ui-kit";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "src/api/hooks";
+import { useAuth, useControlledModal } from "src/api/hooks";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as uiStore from "src/api/store/slices/ui";
 import * as userStore from "src/api/store/slices/user";
 import { EAuthMethod, EAuthState } from "src/api/types";
 import { AuthMethodSelection } from "src/components/auth/AuthModule";
-import { EMobileRoutePaths } from "src/routes";
+import { EMobileModalIds } from "src/routes";
+import { ModalContainer } from "./ModalContainer";
 
 const hasTimeElapsed = (lastAuthPromptedTs: number) => {
     const now = new Date().getTime();
@@ -18,7 +17,7 @@ const hasTimeElapsed = (lastAuthPromptedTs: number) => {
 
 const AuthPromptContainer = memo(() => {
     const dispatch = useAppDispatch();
-    const history = useHistory();
+    const { setActiveModal } = useControlledModal();
     const lastAuthPromptedTs = useAppSelector(
         (state) => state.ui.lastAuthPrompted
     );
@@ -46,14 +45,15 @@ const AuthPromptContainer = memo(() => {
                         isSignIn ? EAuthState.SigningIn : EAuthState.SigningUp
                     )
                 );
-                history.push(EMobileRoutePaths.Auth);
+                setActiveModal(EMobileModalIds.Auth);
             }
         },
-        [ssoLogin, dispatch, isSignIn, history]
+        [ssoLogin, dispatch, isSignIn, setActiveModal]
     );
 
     return (
-        <Modal
+        <ModalContainer
+            modalId="auth-prompt"
             showModal={!isAuthenticated && isAuthPromptVisible}
             className="fixed bottom-0 m-0 w-full p-8 bg-backgroundVariant300 rounded-t-[12px] rounded-b-[0px]"
             onClose={setLastAuthPrompted}
@@ -66,7 +66,7 @@ const AuthPromptContainer = memo(() => {
                 handleSSOCallback={handleSSOCallback}
                 handleLogin={() => setIsSignIn(true)}
             />
-        </Modal>
+        </ModalContainer>
     );
 });
 

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { ChatProvider } from "./chat-context";
+import ControlledModalProvider from "./controlled-modal-provider";
 import { DimensionsProvider } from "./dimensions-context";
 import { OauthProvider } from "./oauth-provider";
 import { PWAInstallProvider } from "./pwa-install-provider";
@@ -21,19 +22,16 @@ function Compose(props: Props) {
     }, children);
 }
 
+const providers = [
+    PWAInstallProvider,
+    TutorialProvider,
+    DimensionsProvider,
+    ChatProvider,
+    WalletViewProvider,
+    OauthProvider,
+    ControlledModalProvider,
+];
+
 export const AppContextProvider: FC<{ children?: React.ReactNode }> = ({
     children,
-}) => (
-    <Compose
-        providers={[
-            PWAInstallProvider,
-            TutorialProvider,
-            DimensionsProvider,
-            ChatProvider,
-            WalletViewProvider,
-            OauthProvider,
-        ]}
-    >
-        {children}
-    </Compose>
-);
+}) => <Compose providers={providers}>{children}</Compose>;
