@@ -74,7 +74,7 @@ const BOARDS_CONFIG = {
         thegraph: ["the-graph"],
         trading: ["market", "trading-video", "economic-calendar"],
         verasity: ["verasity", "verasity-source"],
-        vitalikbuterin: ["vitalki-buterin"],
+        vitalikbuterin: ["vitalik-buterin"],
         wax: ["wax"],
         zcash: [
             "zcash-newsletter",
