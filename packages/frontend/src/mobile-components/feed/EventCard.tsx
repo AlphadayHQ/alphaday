@@ -154,13 +154,7 @@ export const EventCard: FC<{
                                     />
                                 </div>
                             )}
-                            {open && (
-                                <TagButtons
-                                    truncated
-                                    tags={tags}
-                                    onClick={() => {}}
-                                />
-                            )}
+                            {open && <TagButtons truncated tags={tags} />}
                         </div>
                         <div className="flex-col min-w-max ml-2">
                             <ActionButtons
