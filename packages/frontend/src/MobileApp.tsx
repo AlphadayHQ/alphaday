@@ -7,11 +7,11 @@ import {
     IonTabs,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route, useLocation } from "react-router-dom";
+import { Redirect, Route, useHistory, useLocation } from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import { useAuth } from "./api/hooks";
+import { useAuth, useViewRoute } from "./api/hooks";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import "@alphaday/ui-kit/global.scss";
@@ -24,7 +24,26 @@ import {
     modals,
 } from "./routes";
 
-const { IS_DEV } = CONFIG;
+const { IS_DEV, BOARDS } = CONFIG;
+
+const boardRoutesHandler = (
+    pathname: string,
+    callback: (path: string) => void
+) => {
+    if (pathname in BOARDS.BOARD_SLUG_MAP) {
+        const searchSlugs =
+            BOARDS.BOARD_SLUG_MAP[
+                pathname as keyof typeof BOARDS.BOARD_SLUG_MAP
+            ];
+        const newRoute = `/superfeed/search/${[...new Set(searchSlugs)].join(",")}`;
+
+        if (pathname !== newRoute) {
+            callback(newRoute);
+        }
+    } else {
+        callback(EMobileRoutePaths.Base);
+    }
+};
 
 const CustomNavTab: React.FC<{
     label: string;
@@ -44,6 +63,9 @@ const CustomNavTab: React.FC<{
 
 const RouterChild = () => {
     const { pathname } = useLocation();
+    const history = useHistory();
+    const { pathContainsHashOrSlug, routeInfo } = useViewRoute();
+
     const { isAuthenticated } = useAuth();
     const isTabBarHidden = !!mobileRoutes.find(
         (route) =>
@@ -51,6 +73,14 @@ const RouterChild = () => {
             route.path === pathname &&
             route?.hideTabBar
     );
+
+    if (pathContainsHashOrSlug && routeInfo?.value) {
+        const navigate = (str: string) => history.push(str);
+        boardRoutesHandler(routeInfo.value, navigate);
+
+        return null;
+    }
+
     return (
         <IonTabs>
             <IonRouterOutlet ionPage>
@@ -69,7 +99,7 @@ const RouterChild = () => {
                     if (route.type === "fallback") {
                         return (
                             <Redirect
-                                key={route.redirectTo}
+                                key="fallback"
                                 to={route.redirectTo}
                                 push
                             />

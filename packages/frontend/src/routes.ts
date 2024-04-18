@@ -35,12 +35,28 @@ const PortfolioHoldingsPage = lazyRetry(
  *
  * It defines the path and the page to be rendered.
  */
-export interface IRoute {
-    path: EDesktopRoutePaths;
-    component: typeof ErrorPage | typeof PreloaderPage | typeof DashboardPage;
-    exact?: boolean;
-    isFullsize?: boolean;
-}
+export type TRoute =
+    | {
+          path: EDesktopRoutePaths;
+          component:
+              | typeof ErrorPage
+              | typeof PreloaderPage
+              | typeof DashboardPage;
+          exact?: boolean;
+          isFullsize?: boolean;
+          type: "regular";
+      }
+    | {
+          path: EDesktopRoutePaths;
+          component:
+              | typeof ErrorPage
+              | typeof PreloaderPage
+              | typeof DashboardPage;
+          exact?: boolean;
+          isFullsize?: boolean;
+          redirectTo: string;
+          type: "redirect";
+      };
 
 /**
  * Enum of all routes in the desktop app.
@@ -56,32 +72,44 @@ export enum EDesktopRoutePaths {
     Calendar = "/b/:slug/calendar",
     CalendarEvent = "/b/:slug/calendar/event/:eventId/:eventTitle",
     FallBack = "*",
+    Superfeed = "/superfeed",
 }
 
 /**
  * An array of all valid routes in the desktop app.
  */
-export const desktopRoutes: IRoute[] = [
+export const desktopRoutes: TRoute[] = [
     {
+        type: "regular",
         path: EDesktopRoutePaths.Base,
         component: DashboardPage,
         exact: true,
     },
     {
+        type: "regular",
         path: EDesktopRoutePaths.Boards,
         component: DashboardPage,
         exact: true,
     },
     {
+        type: "regular",
         path: EDesktopRoutePaths.Calendar,
         component: DashboardPage,
         isFullsize: true,
         exact: true,
     },
     {
+        type: "regular",
         path: EDesktopRoutePaths.CalendarEvent,
         component: DashboardPage,
         isFullsize: true,
+        exact: true,
+    },
+    {
+        type: "redirect",
+        path: EDesktopRoutePaths.Superfeed,
+        redirectTo: EDesktopRoutePaths.Base,
+        component: DashboardPage,
         exact: true,
     },
 ];
@@ -89,8 +117,9 @@ export const desktopRoutes: IRoute[] = [
 /**
  * An array of invalid routes in the desktop app.
  */
-export const errorRoutes: IRoute[] = [
+export const errorRoutes: TRoute[] = [
     {
+        type: "regular",
         path: EDesktopRoutePaths.FallBack,
         component: ErrorPage,
     },
@@ -110,6 +139,7 @@ export enum EMobileTabRoutePaths {
 
 export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
+    Boards = EDesktopRoutePaths.Boards,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
     Search = `${BASE_TABS_ROUTE}superfeed/search/:tags`,
     AuthFallback = `${BASE_TABS_ROUTE}auth*`,
@@ -149,6 +179,12 @@ export const mobileRoutes: TMobileRoute[] = [
     },
     {
         path: EMobileRoutePaths.Superfeed,
+        component: SuperfeedPage,
+        exact: true,
+        type: "regular",
+    },
+    {
+        path: EMobileRoutePaths.Boards,
         component: SuperfeedPage,
         exact: true,
         type: "regular",
