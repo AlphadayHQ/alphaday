@@ -66,17 +66,11 @@ export const DisclosureButtonMedia: FC<{
 
 export const TagButtons: FC<{
     tags: { name: string; slug: string }[];
-    onClick: (tag: { name: string; slug: string }) => void;
     truncated?: boolean;
-}> = ({ tags, onClick, truncated = false }) => (
+}> = ({ tags, truncated = false }) => (
     <div className="mt-2.5 flex flex-wrap">
         {tags.slice(0, truncated ? 3 : undefined).map((tag) => (
-            <TagButton
-                key={tag.slug}
-                name={tag.name}
-                slug={tag.slug}
-                onClick={() => onClick(tag)}
-            />
+            <TagButton key={tag.slug} name={tag.name} slug={tag.slug} />
         ))}
     </div>
 );
@@ -152,7 +146,9 @@ export const FeedItemDisclosureButtonImage: FC<{
 };
 
 export const CardTitle: FC<{ title: string }> = ({ title }) => (
-    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3">{title}</p>
+    <p className="mt-2 mb-0 fontGroup-highlight line-clamp-3 overflow-wrap-anywhere">
+        {title}
+    </p>
 );
 
 export const FeedItemDisclosurePanel: FC<{
@@ -167,7 +163,7 @@ export const FeedItemDisclosurePanel: FC<{
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
         >
-            <Disclosure.Panel className="pt-6 text-primaryVariant100  fontGroup-normal">
+            <Disclosure.Panel className="pt-6 text-primaryVariant100  fontGroup-normal overflow-wrap-anywhere">
                 {children}
             </Disclosure.Panel>
         </Transition>

@@ -4,7 +4,7 @@ import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { Web3Modal } from "@web3modal/react";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
 import ToastContainer from "src/containers/toasts/ToastContainer";
 import {
@@ -40,19 +40,25 @@ const AppRoutes = () => {
     });
 
     const resolvedView = useResolvedView();
-    const { pathContainsHashOrSlug, isRoot } = useViewRoute();
+    const { pathContainsHashOrSlug, isRoot, isSuperfeed } = useViewRoute();
 
     const errorCode = useMemo<number | undefined>(() => {
         /**
          * At this moment, we do not support any other routes than the root and the hash/slug routes
          * If the path does not contain a hash or slug, we show the 404 error page
          */
-        if (!pathContainsHashOrSlug && !isRoot) {
+        if (!pathContainsHashOrSlug && !isRoot && !isSuperfeed) {
             return 404;
         }
         const errorInfo = error ?? resolvedView.error;
         return errorInfo && getRtkErrorCode(errorInfo);
-    }, [error, resolvedView.error, pathContainsHashOrSlug, isRoot]);
+    }, [
+        pathContainsHashOrSlug,
+        isRoot,
+        isSuperfeed,
+        error,
+        resolvedView.error,
+    ]);
 
     const routes = useMemo(() => {
         if (error || errorCode) {
@@ -73,19 +79,32 @@ const AppRoutes = () => {
 
     return (
         <Suspense fallback={<PreloaderPage />}>
-            {routes.map((route) => (
-                <Route
-                    key={route.path}
-                    path={route.path}
-                    exact={route.exact}
-                    render={() => (
-                        <route.component
-                            isFullsize={route.isFullsize}
-                            type={errorCode}
+            {routes.map((route) => {
+                if (route.type === "redirect") {
+                    return (
+                        <Redirect
+                            key={route.path}
+                            path={route.path}
+                            exact={route.exact}
+                            to={route.redirectTo}
+                            push
                         />
-                    )}
-                />
-            ))}
+                    );
+                }
+                return (
+                    <Route
+                        key={route.path}
+                        path={route.path}
+                        exact={route.exact}
+                        render={() => (
+                            <route.component
+                                isFullsize={route.isFullsize}
+                                type={errorCode}
+                            />
+                        )}
+                    />
+                );
+            })}
         </Suspense>
     );
 };

@@ -39,6 +39,10 @@ interface IViewRouteInfo {
      * true if the current path is root path
      */
     isRoot: boolean;
+    /**
+     * true if the current path is superfeed path
+     */
+    isSuperfeed: boolean;
 }
 
 export const useViewRoute = (): IViewRouteInfo => {
@@ -117,6 +121,7 @@ export const useViewRoute = (): IViewRouteInfo => {
         isFullSize: fullSizeWidgetPath !== undefined,
         isViewHash,
         isRoot: location.pathname === "/",
+        isSuperfeed: location.pathname.includes("/superfeed"),
     };
 };
 

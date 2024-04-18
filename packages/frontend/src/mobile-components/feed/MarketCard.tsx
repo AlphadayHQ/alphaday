@@ -154,11 +154,7 @@ export const MarketCard: FC<{
                     </FeedItemDisclosurePanel>
                     <div className="flex justify-between my-2">
                         <div className="flex-col">
-                            <TagButtons
-                                truncated
-                                tags={tags}
-                                onClick={() => {}}
-                            />
+                            <TagButtons truncated tags={tags} />
                         </div>
                         <div className="flex-col min-w-max ml-2">
                             <ActionButtons
