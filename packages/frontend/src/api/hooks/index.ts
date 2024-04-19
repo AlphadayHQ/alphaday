@@ -33,4 +33,4 @@ export * from "./useValueWatcher";
 export * from "./useOnScreen";
 export * from "./usePullToRefresh";
 export * from "./useHistory";
-export * from "../store/providers/controlled-modal-provider";
+export { useControlledModal } from "../store/providers/controlled-modal-provider";
