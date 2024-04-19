@@ -1,26 +1,18 @@
-import { useCallback } from "react";
 import { useHistory as useRRDHistory } from "react-router-dom";
-import { EMobileTabRoutePaths } from "src/routes";
+import { useControlledModal } from "../store/providers/controlled-modal-provider";
 
 export const useHistory = () => {
     const history = useRRDHistory();
+    const { resetModal } = useControlledModal();
 
     /**
      * we shouldn't need this ideally, but adding a listener
      * ensures route navigation to tabs route paths which is great
      */
-    history.listen(() => {});
+    history.listen(() => {
+        // reset modal on route change
+        resetModal();
+    });
 
-    const backNavigation = useCallback(() => {
-        if (history.length > 0) {
-            history.goBack();
-        } else {
-            history.push(EMobileTabRoutePaths.Superfeed);
-        }
-    }, [history]);
-
-    return {
-        ...history,
-        backNavigation,
-    };
+    return history;
 };

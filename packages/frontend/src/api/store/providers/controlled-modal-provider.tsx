@@ -5,17 +5,20 @@ import {
     useMemo,
     useState,
 } from "react";
+import useEventListener from "src/api/hooks/useEventListener";
 
 interface Prop {
     activeModal: string | null;
     setActiveModal: (modalId: string) => void;
     closeModal: () => void;
+    resetModal: () => void;
 }
 
 export const ControlledModalContext = createContext<Prop>({
     activeModal: null,
     setActiveModal: () => {},
     closeModal: () => {},
+    resetModal: () => {},
 });
 
 export const useControlledModal = () => {
@@ -51,6 +54,18 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
         }
     };
 
+    const resetModal = () => {
+        setActiveModal(null);
+        MODAL_HISTORY.clear();
+    };
+
+    useEventListener("popstate", (e) => {
+        if (activeModal) {
+            e.preventDefault();
+            closeModal();
+        }
+    });
+
     return (
         <ControlledModalContext.Provider
             value={useMemo(
@@ -58,6 +73,7 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
                     activeModal,
                     setActiveModal: setActiveModalWithHistory,
                     closeModal,
+                    resetModal,
                 }),
                 [activeModal, closeModal]
             )}
