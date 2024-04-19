@@ -67,6 +67,7 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
         if (activeModal) {
             e.preventDefault();
             closeModal();
+            history.forward();
         }
     });
 
