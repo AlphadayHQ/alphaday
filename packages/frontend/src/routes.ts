@@ -242,7 +242,7 @@ type TMobileModal = {
     authWalled?: boolean;
 };
 
-export const modals: TMobileModal[] = [
+export const mobileModals: TMobileModal[] = [
     {
         id: EMobileModalIds.UserSettings,
         component: UserSettingsPage,

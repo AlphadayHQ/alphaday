@@ -21,7 +21,7 @@ import {
     EMobileRoutePaths,
     EMobileTabRoutePaths,
     mobileRoutes,
-    modals,
+    mobileModals,
 } from "./routes";
 
 const { IS_DEV, BOARDS } = CONFIG;
@@ -35,7 +35,9 @@ const boardRoutesHandler = (
             BOARDS.BOARD_SLUG_MAP[
                 pathname as keyof typeof BOARDS.BOARD_SLUG_MAP
             ];
-        const newRoute = `/superfeed/search/${[...new Set(searchSlugs)].join(",")}`;
+        const newRoute = `/superfeed/search/${[...new Set(searchSlugs)].join(
+            ","
+        )}`;
 
         if (pathname !== newRoute) {
             callback(newRoute);
@@ -166,7 +168,7 @@ const MobileApp: React.FC = () => {
     return (
         <IonApp className="theme-dark">
             <IonReactRouter>
-                {modals.map((modal) => (
+                {mobileModals.map((modal) => (
                     <ModalContainer
                         key={modal.id}
                         modalId={modal.id}
