@@ -60,6 +60,10 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
     };
 
     useEventListener("popstate", (e) => {
+        /**
+         * If there is an active modal,
+         * close it when the user swipes back or presses the back button
+         */
         if (activeModal) {
             e.preventDefault();
             closeModal();
