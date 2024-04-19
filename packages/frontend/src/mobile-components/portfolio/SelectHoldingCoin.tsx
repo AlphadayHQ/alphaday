@@ -22,11 +22,11 @@ const SelectHoldingCoin: FC<ISelectHoldingCoin> = ({
     coins,
     setSelectedCoin,
 }) => {
-    const { closeModal } = useControlledModal();
+    const { closeActiveModal } = useControlledModal();
 
     return (
         <ScrollBar onScroll={onScroll}>
-            <Pager title="Add Manually" handleClose={closeModal} />
+            <Pager title="Add Manually" handleClose={closeActiveModal} />
             <p className="mx-4 fontGroup-highlight">
                 Search or select the desired crypto coin that you have in your
                 portfolio.

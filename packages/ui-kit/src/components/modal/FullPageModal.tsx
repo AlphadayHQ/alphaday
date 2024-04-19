@@ -3,14 +3,22 @@ import { Dialog, Transition } from "@headlessui/react";
 
 interface IProps {
     isOpen: boolean;
-    closeModal: () => void;
+    closeActiveModal: () => void;
     children: ReactNode;
 }
 
-export const FullPageModal: FC<IProps> = ({ isOpen, closeModal, children }) => {
+export const FullPageModal: FC<IProps> = ({
+    isOpen,
+    closeActiveModal,
+    children,
+}) => {
     return (
         <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeModal}>
+            <Dialog
+                as="div"
+                className="relative z-10"
+                onClose={closeActiveModal}
+            >
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

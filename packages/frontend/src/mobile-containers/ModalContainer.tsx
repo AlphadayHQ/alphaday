@@ -9,13 +9,13 @@ export const ModalContainer: FC<IModal & { modalId: string }> = ({
     children,
     ...props
 }) => {
-    const { activeModal, closeModal } = useControlledModal();
+    const { activeModal, closeActiveModal } = useControlledModal();
     return (
         <Modal
             showModal={activeModal ? activeModal === modalId : !!showModal}
             onClose={() => {
                 onClose?.();
-                closeModal();
+                closeActiveModal();
             }}
             {...props}
         >

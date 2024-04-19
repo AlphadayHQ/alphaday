@@ -33,7 +33,7 @@ export const EditProfileModal: FC<IEditProfileModal> = ({
     };
 
     return (
-        <FullPageModal isOpen={show} closeModal={onCloseModal}>
+        <FullPageModal isOpen={show} closeActiveModal={onCloseModal}>
             <div className="p-5">
                 <div className="flex flex-start w-full items-center mb-4">
                     <ChevronSVG

@@ -4,10 +4,10 @@ import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
 import { ReactComponent as WalletConnectSVG } from "src/assets/icons/wallet-connect.svg";
 
 const ConnectWalletPage = () => {
-    const { closeModal } = useControlledModal();
+    const { closeActiveModal } = useControlledModal();
     return (
         <>
-            <Pager title="Connect wallet" handleBack={closeModal} />
+            <Pager title="Connect wallet" handleBack={closeActiveModal} />
             <div className="w-full flex px-5 mt-4 fontGroup-highlight !font-bold">
                 Select your preferred wallet provider to conect to your
                 portfolio

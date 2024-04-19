@@ -17,7 +17,7 @@ const AddHolding: FC<IAddHolding> = ({
     holding,
     setHolding,
 }) => {
-    const { closeModal } = useControlledModal();
+    const { closeActiveModal } = useControlledModal();
 
     const defaultHolding: THolding = {
         coin: selectedCoin,
@@ -54,7 +54,7 @@ const AddHolding: FC<IAddHolding> = ({
                         {selectedCoin.name}
                     </span>
                 }
-                handleClose={closeModal}
+                handleClose={closeActiveModal}
                 handleBack={() => setSelectedCoin(undefined)}
             />
             <div className="flex flex-col items-center mt-4 mx-4">

@@ -9,14 +9,14 @@ const PagedMobileLayout: FC<{
     handleClose?: () => void;
     handleBack?: () => void;
 }> = ({ children, title, onScroll, handleBack, handleClose }) => {
-    const { closeModal } = useControlledModal();
+    const { closeActiveModal } = useControlledModal();
     return (
         <ScrollBar className="h-screen flex flex-col" onScroll={onScroll}>
             <Pager
                 title={title}
                 handleBack={() => {
                     handleBack?.();
-                    closeModal();
+                    closeActiveModal();
                 }}
                 handleClose={handleClose}
             />

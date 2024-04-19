@@ -16,7 +16,7 @@ type TWalletInfo = {
 
 const AddWalletPage = () => {
     const history = useHistory();
-    const { closeModal } = useControlledModal();
+    const { closeActiveModal } = useControlledModal();
     const [isWalletAdded, setIsWalletAdded] = useState(false);
     const [walletInfo, setWalletInfo] = useState<TWalletInfo>({
         name: "",
@@ -39,7 +39,7 @@ const AddWalletPage = () => {
     };
     return (
         <>
-            <Pager title="Add wallet address" handleClose={closeModal} />
+            <Pager title="Add wallet address" handleClose={closeActiveModal} />
             <div className="flex flex-col items-center mt-4 mx-4">
                 <FormInput
                     type="text"

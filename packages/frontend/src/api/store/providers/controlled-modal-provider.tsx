@@ -10,15 +10,15 @@ import useEventListener from "src/api/hooks/useEventListener";
 interface Prop {
     activeModal: string | null;
     setActiveModal: (modalId: string) => void;
-    closeModal: () => void;
-    resetModal: () => void;
+    closeActiveModal: () => void;
+    resetModalHistory: () => void;
 }
 
 export const ControlledModalContext = createContext<Prop>({
     activeModal: null,
     setActiveModal: () => {},
-    closeModal: () => {},
-    resetModal: () => {},
+    closeActiveModal: () => {},
+    resetModalHistory: () => {},
 });
 
 export const useControlledModal = () => {
@@ -38,7 +38,7 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
 }) => {
     const [activeModal, setActiveModal] = useState<string | null>(null);
 
-    const closeModal = useCallback(() => {
+    const closeActiveModal = useCallback(() => {
         if (activeModal) {
             MODAL_HISTORY.delete(activeModal);
             // set active modal to last modal in history
@@ -54,7 +54,7 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
         }
     };
 
-    const resetModal = () => {
+    const resetModalHistory = () => {
         setActiveModal(null);
         MODAL_HISTORY.clear();
     };
@@ -67,7 +67,7 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
         if (activeModal) {
             e.preventDefault();
             history.forward();
-            closeModal();
+            closeActiveModal();
         }
     });
 
@@ -77,10 +77,10 @@ const ControlledModalProvider: React.FC<{ children?: React.ReactNode }> = ({
                 () => ({
                     activeModal,
                     setActiveModal: setActiveModalWithHistory,
-                    closeModal,
-                    resetModal,
+                    closeActiveModal,
+                    resetModalHistory,
                 }),
-                [activeModal, closeModal]
+                [activeModal, closeActiveModal]
             )}
         >
             {children}

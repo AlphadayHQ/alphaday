@@ -3,7 +3,7 @@ import { useControlledModal } from "../store/providers/controlled-modal-provider
 
 export const useHistory = () => {
     const history = useRRDHistory();
-    const { resetModal } = useControlledModal();
+    const { resetModalHistory } = useControlledModal();
 
     /**
      * we shouldn't need this ideally, but adding a listener
@@ -11,7 +11,7 @@ export const useHistory = () => {
      */
     history.listen(() => {
         // reset modal on route change
-        resetModal();
+        resetModalHistory();
     });
 
     return history;
