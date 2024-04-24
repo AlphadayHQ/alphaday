@@ -65,7 +65,7 @@ import {
 } from "./src/components/listItem/ListItem";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { FullPageModal } from "./src/components/modal/FullPageModal";
-import { Modal } from "./src/components/modal/Modal";
+import { Modal, IModal } from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { Overlay } from "./src/components/overlay/Overlay";
@@ -95,7 +95,13 @@ import { OutlineButton } from "./src/mobile-components/button/buttons";
 import { Pager } from "./src/mobile-components/pager/Pager";
 import { DropdownSelect } from "./src/mobile-components/select/DropdownSelect";
 
-export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
+export type {
+    TViewTabMenuOption,
+    DatesSetArg,
+    EventClickArg,
+    TDatePos,
+    IModal,
+};
 export * from "./src/mobile-components/form-elements/FormElements";
 export {
     ApexAreaChart,

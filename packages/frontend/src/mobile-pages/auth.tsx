@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { MiniDialog } from "@alphaday/ui-kit";
-import { useHistory } from "react-router-dom";
-import { useAuth } from "src/api/hooks";
+import { useAuth, useHistory } from "src/api/hooks";
 import { EAuthMethod } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
 import { Logger } from "src/api/utils/logging";

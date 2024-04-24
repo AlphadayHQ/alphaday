@@ -1,5 +1,5 @@
 import { FC, useCallback, useState } from "react";
-import { Button, Modal } from "@alphaday/ui-kit";
+import { Button } from "@alphaday/ui-kit";
 import { useIsMobile } from "src/api/hooks/useIsMobile";
 import { setLastInstallPromptTimestamp } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
@@ -8,6 +8,7 @@ import { isPWA } from "src/api/utils/helpers";
 import CONFIG from "src/config";
 import { ReactComponent as CloseSVG } from "../assets/icons/close3.svg";
 import { ReactComponent as LogoShadowSVG } from "../assets/icons/logo-shadow.svg";
+import { ModalContainer } from "./ModalContainer";
 
 /**
  * Check if the time has elapsed
@@ -36,7 +37,8 @@ const InstallPWAContainer: FC = () => {
     }, [dispatch]);
 
     return (
-        <Modal
+        <ModalContainer
+            modalId="install-pwa"
             size="sm"
             showModal={
                 isMobile &&
@@ -72,7 +74,7 @@ const InstallPWAContainer: FC = () => {
                     Install
                 </Button>
             </div>
-        </Modal>
+        </ModalContainer>
     );
 };
 

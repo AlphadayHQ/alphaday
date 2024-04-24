@@ -16,10 +16,12 @@ import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import "@alphaday/ui-kit/global.scss";
 import "./customIonicStyles.scss";
+import { ModalContainer } from "./mobile-containers/ModalContainer";
 import {
     EMobileRoutePaths,
     EMobileTabRoutePaths,
     mobileRoutes,
+    mobileModals,
 } from "./routes";
 
 const { IS_DEV, BOARDS } = CONFIG;
@@ -33,7 +35,9 @@ const boardRoutesHandler = (
             BOARDS.BOARD_SLUG_MAP[
                 pathname as keyof typeof BOARDS.BOARD_SLUG_MAP
             ];
-        const newRoute = `/superfeed/search/${[...new Set(searchSlugs)].join(",")}`;
+        const newRoute = `/superfeed/search/${[...new Set(searchSlugs)].join(
+            ","
+        )}`;
 
         if (pathname !== newRoute) {
             callback(newRoute);
@@ -160,15 +164,19 @@ const RouterChild = () => {
     );
 };
 
-/**
- * TODO: Move user-settings (and any other view that should be accessible from multiple tabs)
- * to a modal.
- * For the MVP it's fine to nest everything within /superfeed
- */
 const MobileApp: React.FC = () => {
     return (
         <IonApp className="theme-dark">
             <IonReactRouter>
+                {mobileModals.map((modal) => (
+                    <ModalContainer
+                        key={modal.id}
+                        modalId={modal.id}
+                        className="!max-w-full min-h-[100vh] rounded-none border-none"
+                    >
+                        <modal.component />
+                    </ModalContainer>
+                ))}
                 <RouterChild />
             </IonReactRouter>
             <ToastContainer
