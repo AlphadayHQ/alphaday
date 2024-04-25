@@ -62,14 +62,11 @@ const CustomNavTab: React.FC<{
 const RouterChild = () => {
     const { pathname } = useLocation();
     const history = useHistory();
-    const { pathContainsHashOrSlug, routeInfo } = useViewRoute();
+    const { pathContainsHashOrSlug, routeInfo, isRoot } = useViewRoute();
 
     const { isAuthenticated } = useAuth();
     const isTabBarHidden = !!mobileRoutes.find(
-        (route) =>
-            route.type !== "fallback" &&
-            route.path === pathname &&
-            route?.hideTabBar
+        (route) => route.path === pathname && route?.hideTabBar
     );
 
     if (pathContainsHashOrSlug && routeInfo?.value) {
@@ -79,50 +76,54 @@ const RouterChild = () => {
         return null;
     }
 
+    if (isRoot) {
+        return (
+            <Redirect
+                key={EMobileRoutePaths.Base}
+                path={EMobileRoutePaths.Base}
+                to={EMobileRoutePaths.Superfeed}
+                exact
+                push
+            />
+        );
+    }
+
     return (
         <IonTabs>
             <IonRouterOutlet ionPage>
                 {mobileRoutes.map((route) => {
-                    if (route.type === "redirect") {
-                        return (
-                            <Redirect
-                                key={route.path}
-                                path={route.path}
-                                to={route.redirectTo}
-                                exact={route.exact ?? false}
-                                push
-                            />
-                        );
-                    }
-                    if (route.type === "fallback") {
-                        return (
-                            <Redirect
-                                key="fallback"
-                                to={route.redirectTo}
-                                push
-                            />
-                        );
-                    }
-                    // if the route is authwalled, let's just redirect to superfeed page.
-                    if (route.authWalled && !isAuthenticated) {
-                        return (
-                            <Redirect
-                                key={route.path}
-                                path={route.path}
-                                to={EMobileRoutePaths.Superfeed}
-                                exact={route.exact ?? false}
-                            />
-                        );
-                    }
                     return (
                         <Route
                             key={route.path}
                             path={route.path}
                             exact={route.exact ?? false}
-                            render={() => <route.component />}
+                            render={() =>
+                                route.authWalled && !isAuthenticated ? (
+                                    <Redirect
+                                        key={route.path}
+                                        path={route.path}
+                                        to={EMobileRoutePaths.Superfeed}
+                                        exact={route.exact ?? false}
+                                    />
+                                ) : (
+                                    <route.component />
+                                )
+                            }
                         />
                     );
                 })}
+                <Route
+                    render={() => (
+                        <Redirect
+                            key="*"
+                            path="*"
+                            to={EMobileRoutePaths.Superfeed}
+                            exact
+                            push
+                        />
+                    )}
+                    exact
+                />
             </IonRouterOutlet>
             <IonTabBar
                 style={{

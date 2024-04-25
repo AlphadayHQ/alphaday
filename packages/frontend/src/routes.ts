@@ -155,35 +155,17 @@ export enum EMobileRoutePaths {
     Market = `${BASE_TABS_ROUTE}market`,
 }
 
-type TMobileRoute =
-    | {
-          path: string;
-          component: React.FC;
-          exact?: boolean;
-          authWalled?: boolean;
-          redirectTo?: string;
-          type: "regular";
-          hideTabBar?: boolean;
-      }
-    | {
-          path: string;
-          redirectTo: string;
-          exact?: boolean;
-          type: "redirect";
-          hideTabBar?: boolean;
-      }
-    | {
-          redirectTo: string;
-          type: "fallback";
-          hideTabBar?: boolean;
-      };
+type TMobileRoute = {
+    path: string;
+    component: React.FC;
+    exact?: boolean;
+    authWalled?: boolean;
+    redirectTo?: string;
+    type: "regular";
+    hideTabBar?: boolean;
+};
+
 export const mobileRoutes: TMobileRoute[] = [
-    {
-        path: EMobileRoutePaths.Base,
-        redirectTo: EMobileRoutePaths.Superfeed,
-        exact: true,
-        type: "redirect",
-    },
     {
         path: EMobileRoutePaths.Superfeed,
         component: SuperfeedPage,
@@ -273,14 +255,5 @@ export const mobileRoutes: TMobileRoute[] = [
         component: PortfolioHoldingsPage,
         exact: true,
         type: "regular",
-    },
-    /**
-     * Fallback route.
-     *
-     * This redirects all non-existing routes to the superfeed tab.
-     */
-    {
-        redirectTo: EMobileRoutePaths.Superfeed,
-        type: "fallback",
     },
 ];
