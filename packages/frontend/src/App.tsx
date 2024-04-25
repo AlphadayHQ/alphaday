@@ -77,7 +77,7 @@ const AppRoutes = () => {
         location.reload();
     }
 
-    if (window.location.pathname === EDesktopRoutePaths.Superfeed) {
+    if (isSuperfeed) {
         return (
             <Redirect
                 key={EDesktopRoutePaths.Superfeed}
