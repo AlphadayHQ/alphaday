@@ -166,12 +166,6 @@ type TMobileRoute = {
 };
 
 export const mobileRoutes: TMobileRoute[] = [
-    // {
-    //     path: EMobileRoutePaths.Base,
-    //     redirectTo: EMobileRoutePaths.Superfeed,
-    //     exact: true,
-    //     type: "redirect",
-    // },
     {
         path: EMobileRoutePaths.Superfeed,
         component: SuperfeedPage,
