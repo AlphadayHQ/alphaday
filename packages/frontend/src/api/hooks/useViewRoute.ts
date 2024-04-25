@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { isHash } from "src/api/utils/helpers";
 import CONFIG from "src/config/config";
+import { EMobileRoutePaths } from "src/routes";
 import { FULLSIZE_ROUTES_ARR } from "src/types";
 
 enum ERouteType {
@@ -121,7 +122,7 @@ export const useViewRoute = (): IViewRouteInfo => {
         isFullSize: fullSizeWidgetPath !== undefined,
         isViewHash,
         isRoot: location.pathname === "/",
-        isSuperfeed: location.pathname.includes("/superfeed"),
+        isSuperfeed: location.pathname.includes(EMobileRoutePaths.Superfeed),
     };
 };
 
