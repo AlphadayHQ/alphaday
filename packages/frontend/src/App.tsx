@@ -21,7 +21,7 @@ import { getRtkErrorCode } from "./api/utils/errorHandling";
 import { Logger } from "./api/utils/logging";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
-import { desktopRoutes, errorRoutes } from "./routes";
+import { EDesktopRoutePaths, desktopRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
 const landingPage = CONFIG.SEO.DOMAIN;
@@ -77,19 +77,23 @@ const AppRoutes = () => {
         location.reload();
     }
 
+    if (window.location.pathname === EDesktopRoutePaths.Superfeed) {
+        return (
+            <Redirect
+                key={EDesktopRoutePaths.Superfeed}
+                path={EDesktopRoutePaths.Superfeed}
+                exact
+                to={EDesktopRoutePaths.Base}
+                push
+            />
+        );
+    }
+
     return (
         <Suspense fallback={<PreloaderPage />}>
             {routes.map((route) => {
                 if (route.type === "redirect") {
-                    return (
-                        <Redirect
-                            key={route.path}
-                            path={route.path}
-                            exact={route.exact}
-                            to={route.redirectTo}
-                            push
-                        />
-                    );
+                    return null;
                 }
                 return (
                     <Route
