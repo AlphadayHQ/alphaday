@@ -86,7 +86,7 @@
     "@vitejs/plugin-basic-ssl": "1.1.0",
     "@vitejs/plugin-legacy": "5.3.2",
     "cordova-res": "0.15.4",
-    "cypress": "12.7.0",
+    "cypress": "12.17.4",
     "dotenv": "16.4.5",
     "happy-dom": "10.5.2",
     "react-test-renderer": "18.2.0",
