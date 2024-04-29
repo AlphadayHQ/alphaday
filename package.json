@@ -35,7 +35,7 @@
     "cypress-cucumber-preprocessor": "4.3.1",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
-    "eslint-config-airbnb-typescript": "17.0.0",
+    "eslint-config-airbnb-typescript": "17.1.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-cypress": "2.13.3",
     "eslint-plugin-import": "2.29.1",
