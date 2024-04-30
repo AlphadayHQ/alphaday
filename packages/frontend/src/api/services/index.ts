@@ -88,6 +88,8 @@ export * from "./superfeed/types";
 export * from "./alphadayApi";
 export * from "./baseTypes";
 
+export * from "./blobsApi";
+
 /**
  * third party
  */
