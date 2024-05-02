@@ -57,6 +57,8 @@ jobs:
               env:
                   VITE_ENVIRONMENT: ${{ env.ENVIRONMENT }}
 
+                  VITE_STORAGE_BUCKET_URL: ${{ secrets.DEV__FRONTEND__STORAGE_BUCKET_URL }}
+
                   VITE_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
                   VITE_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
                   VITE_ETHPLORER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHPLORER }}

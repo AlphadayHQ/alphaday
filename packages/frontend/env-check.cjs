@@ -2,16 +2,17 @@ const fs = require("fs");
 const dotenv = require("dotenv");
 
 // Load environment variables from .env file
-const envResult = dotenv.config({ path: '.env.production' });
+const envResult = dotenv.config({ path: ".env.production" });
 
 if (envResult.error) {
-    console.error('Error loading .env file:', envResult.error);
+    console.error("Error loading .env file:", envResult.error);
     process.exit(1);
 }
 
 const requiredVariables = [
     "VITE_ENVIRONMENT",
     "VITE_API_BASE_URL",
+    "VITE_STORAGE_BUCKET_URL",
     "VITE_X_APP_ID",
     "VITE_X_APP_SECRET",
     "VITE_ZAPPER_BASE_URL",
@@ -33,15 +34,20 @@ const requiredVariables = [
     "VITE_HOTJAR_SNIPPET_VERSION",
     "VITE_OAUTH_ID_GOOGLE",
     "VITE_CLARITY_PROJECT_ID",
-    "VITE_CLARITY_MOBILE_PROJECT_ID"
+    "VITE_CLARITY_MOBILE_PROJECT_ID",
 ];
 
 // Check if all required variables are set
-const missingVariables = requiredVariables.filter((variable) => !process.env[variable]);
+const missingVariables = requiredVariables.filter(
+    (variable) => !process.env[variable]
+);
 
 if (missingVariables.length > 0) {
-    console.error('Missing required environment variables:', missingVariables.join(', '));
+    console.error(
+        "Missing required environment variables:",
+        missingVariables.join(", ")
+    );
     process.exit(1);
 } else {
-    console.log('All required environment variables are set.');
+    console.log("All required environment variables are set.");
 }

@@ -1,5 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { alphadayApi, coingeckoApi, zapperApi, ipApi } from "../services";
+import {
+    alphadayApi,
+    coingeckoApi,
+    zapperApi,
+    ipApi,
+    blobsApi,
+} from "../services";
 import searchReducer from "./slices/search";
 import uiReducer from "./slices/ui";
 import userReducer from "./slices/user";
@@ -18,6 +24,7 @@ export const rootReducer = combineReducers({
     [coingeckoApi.reducerPath]: coingeckoApi.reducer,
     [zapperApi.reducerPath]: zapperApi.reducer,
     [ipApi.reducerPath]: ipApi.reducer,
+    [blobsApi.reducerPath]: blobsApi.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
