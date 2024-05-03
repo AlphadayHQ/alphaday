@@ -15,7 +15,7 @@
     "@fullcalendar/daygrid": "6.1.9",
     "@fullcalendar/interaction": "6.1.10",
     "@fullcalendar/list": "6.1.11",
-    "@fullcalendar/react": "6.1.9",
+    "@fullcalendar/react": "6.1.11",
     "@fullcalendar/timegrid": "6.1.9",
     "@headlessui/react": "1.7.17",
     "@ionic/react": "7.6.1",
