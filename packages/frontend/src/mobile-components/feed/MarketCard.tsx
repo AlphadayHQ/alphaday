@@ -41,7 +41,6 @@ export const MarketCard: FC<{
         likes,
         comments,
         image,
-        url,
         shortDescription,
         type,
         date,
