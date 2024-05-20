@@ -143,14 +143,6 @@ export const MarketCard: FC<{
                                     : [[0, 1]]
                             }
                         />
-                        <a
-                            href={url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="underline hover:underline fontGroup-supportBold mb-0 pt-2 leading-5 [text-underline-offset:_6px]"
-                        >
-                            View Details
-                        </a>
                     </FeedItemDisclosurePanel>
                     <div className="flex justify-between my-2">
                         <div className="flex-col">
