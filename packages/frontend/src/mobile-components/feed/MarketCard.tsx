@@ -4,6 +4,7 @@ import { TSuperfeedItem } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
+import CONFIG from "src/config";
 import {
     ActionButtons,
     CardTitle,
@@ -49,6 +50,10 @@ export const MarketCard: FC<{
 
     const isDown = shortDescription?.includes("down");
     const isATH = coinData?.interval === "ATH";
+
+    const coinDetailsURL = coinData?.coin?.slug
+        ? CONFIG.EXPLORERS.COINGECKO_URL(coinData.coin.slug)
+        : undefined;
 
     return (
         <FeedItemDisclosure onClick={onClick}>
@@ -142,6 +147,16 @@ export const MarketCard: FC<{
                                     : [[0, 1]]
                             }
                         />
+                        {coinDetailsURL ? (
+                            <a
+                                href={coinDetailsURL}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="underline hover:underline fontGroup-supportBold mb-0 pt-2 leading-5 [text-underline-offset:_6px]"
+                            >
+                                View Details
+                            </a>
+                        ) : null}
                     </FeedItemDisclosurePanel>
                     <div className="flex justify-between my-2">
                         <div className="flex-col">
