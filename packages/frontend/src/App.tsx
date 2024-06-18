@@ -2,7 +2,6 @@ import { Suspense, memo, useMemo } from "react";
 import { ErrorModal } from "@alphaday/ui-kit";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { Web3Modal } from "@web3modal/react";
 import { Redirect, Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
@@ -68,10 +67,10 @@ const AppRoutes = () => {
     }, [error, errorCode]);
 
     /**
-     * If the status check gives a 401 unauthorized error,
+     * If the status check or the subscribed views endpoint gives a 401 unauthorized error,
      * we need to reset the auth state and reload the app
      */
-    if ((error as FetchBaseQueryError)?.status === 401) {
+    if (errorCode === 401) {
         Logger.debug("App::AppRoutes: 401 received");
         dispatch(userStore.resetAuthState());
         location.reload();

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Theme, darkTheme } from "@uniswap/widgets";
+import { useGetTokensListQuery } from "src/api/services";
 import { setAcceptedSwapToS } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import { Logger } from "src/api/utils/logging";
@@ -22,6 +23,8 @@ const SwapContainer: FC<IModuleContainer> = () => {
         dispatch(setAcceptedSwapToS(true));
     };
 
+    const { data: tokenList } = useGetTokensListQuery();
+
     const theme: Theme = {
         ...darkTheme,
         fontFamily: "",
@@ -40,6 +43,7 @@ const SwapContainer: FC<IModuleContainer> = () => {
             showToS={!acceptedSwapToS}
             termsOfService={TermsOfService}
             onAcceptToS={acceptToS}
+            tokenList={tokenList}
         />
     );
 };

@@ -1,5 +1,7 @@
 import { FC } from "react";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import { SwapWidget, Theme, darkTheme } from "@uniswap/widgets";
+import CONFIG from "src/config";
 import ModuleDisclaimer from "../module-disclaimer/ModuleDisclaimer";
 import "./SwapModule.scss";
 
@@ -14,11 +16,14 @@ interface IProps {
     theme: Theme;
     termsOfService: string;
     showToS: boolean;
+    tokenList: string | undefined;
     /**
      * handler to call when user accepts terms of service
      */
     onAcceptToS: () => void;
 }
+
+const DEFAULT_HEIGHT = CONFIG.WIDGETS.COMMON.DEFAULT_WIDGET_HEIGHT;
 
 const SwapModule: FC<IProps> = ({
     config,
@@ -26,7 +31,9 @@ const SwapModule: FC<IProps> = ({
     showToS,
     termsOfService,
     onAcceptToS,
+    tokenList,
 }) => {
+    if (!tokenList) return <ModuleLoader $height={`${DEFAULT_HEIGHT}px`} />;
     return (
         <div className="uniswap-widget">
             <ModuleDisclaimer
@@ -39,6 +46,7 @@ const SwapModule: FC<IProps> = ({
                 width="100%"
                 convenienceFee={config.convenienceFee}
                 convenienceFeeRecipient={config.convenienceFeeRecipient}
+                tokenList={tokenList}
             />
         </div>
     );

@@ -13,6 +13,7 @@ const API_V0 = {
         RESPONSE_LIMIT: 20,
     },
     API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
+    BLOBS_URL: import.meta.env.VITE_STORAGE_BUCKET_URL,
     ROUTES: {
         ACTIVITY_LOG: {
             BASE: "activity_log",
