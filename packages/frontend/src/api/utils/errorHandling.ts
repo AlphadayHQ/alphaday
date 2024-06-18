@@ -123,10 +123,8 @@ export const parseUnknownError = (
     }
 };
 
-export const getErrorCode = (err: unknown): number | undefined => {
-    const code = parseUnknownError(err, EGenericErrorFields.Code);
-    if (code !== undefined && typeof code === "number") return code;
-    return undefined;
+export const getErrorCode = (err: unknown): number | string | undefined => {
+    return parseUnknownError(err, EGenericErrorFields.Code);
 };
 
 export const getErrorStatus = (err: unknown): number | string | undefined => {
@@ -147,9 +145,9 @@ export const getErrorMessage = (err: unknown): string | undefined => {
 };
 
 export const getRtkErrorCode = (
-    error: FetchBaseQueryError | SerializedError
-    // eslint-disable-next-line consistent-return
-): number | undefined => {
+    error: FetchBaseQueryError | SerializedError | undefined
+): number | string | undefined => {
+    if (!error) return undefined;
     // @ts-expect-error
     if (error.status !== undefined) {
         // this is a FetchBaseQueryError
@@ -161,11 +159,5 @@ export const getRtkErrorCode = (
         );
         if (typeof originalStatus === "number") return originalStatus;
     }
-    const code = getErrorCode(error);
-    if (code === undefined || typeof code === "number") return code;
-    if (code === "string") {
-        const parsedCode = parseInt(code, 10);
-        if (isNaN(parsedCode)) return undefined;
-        return parsedCode;
-    }
+    return getErrorCode(error);
 };
