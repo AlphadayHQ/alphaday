@@ -25,6 +25,7 @@ const BOARDS_CONFIG = {
         bitcoin: ["bitcoin"],
         canto: ["canto"],
         celestia: ["celestia"],
+        celo: ["celo"],
         chiliz: ["chiliz"],
         dfinity: ["dfinity", "internet-computer"],
         eigenlayer: ["eigenlayer"],
@@ -42,6 +43,7 @@ const BOARDS_CONFIG = {
         ],
         impossible: ["impossible-finance"],
         injective: ["injective"],
+        japan: ["japan"],
         kyber: ["kyber-network", "kyberswap"],
         linea: ["linea"],
         liquidstaking: [
@@ -70,6 +72,7 @@ const BOARDS_CONFIG = {
         shefi: ["shefi"],
         sia: ["siacoin"],
         solana: ["solana"],
+        sui: ["sui"],
         starknet: ["starknet"],
         thegraph: ["the-graph"],
         trading: ["market", "trading-video", "economic-calendar"],
