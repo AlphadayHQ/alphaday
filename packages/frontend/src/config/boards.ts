@@ -81,6 +81,7 @@ const BOARDS_CONFIG = {
         verasity: ["verasity", "verasity-source"],
         vitalikbuterin: ["vitalik-buterin"],
         wax: ["wax"],
+        worldcoin: ["worldcoin"],
         zcash: [
             "zcash-newsletter",
             "electric-coin",
