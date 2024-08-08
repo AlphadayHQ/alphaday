@@ -14,7 +14,7 @@ interface IProps {
 export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
     return (
         <Modal showModal={showModal} onClose={onClose}>
-            <ModalHeader className="">
+            <ModalHeader>
                 <ModalTitle>About Us</ModalTitle>
             </ModalHeader>
 
