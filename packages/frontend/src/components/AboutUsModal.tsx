@@ -12,11 +12,6 @@ interface IProps {
     onClose?: () => void;
 }
 export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
-    // const modalRef = useRef<HTMLIonModalElement>(null);
-    // const handleCloseModal = async () => {
-    //     onClose?.();
-    //     await modalRef.current?.dismiss();
-    // };
     return (
         <Modal showModal={showModal} onClose={onClose}>
             <ModalHeader className="">
