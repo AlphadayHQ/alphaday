@@ -26,6 +26,7 @@ import {
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import CONFIG from "src/config/config";
+import { AboutUsModalContainer } from "src/containers/AboutUsModalContainer";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
@@ -357,6 +358,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             <AuthContainer />
             <TutorialContainer />
             <WalletConnectionDialogContainer />
+            <AboutUsModalContainer />
         </MainLayout>
     );
 }
