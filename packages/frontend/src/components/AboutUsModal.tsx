@@ -80,7 +80,7 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                     <a
                         href="http://api.alphaday.com/"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer nofollow"
                     >
                         http://api.alphaday.com/
                     </a>
