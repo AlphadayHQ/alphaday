@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Pager } from "@alphaday/ui-kit";
 import { useAuth, useHistory } from "src/api/hooks";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
-import { ReactComponent as InfoSVG } from "src/assets/icons/Info2.svg";
+import { ReactComponent as InfoSVG } from "src/assets/icons/info2.svg";
 import WalletConnectionOptions from "src/mobile-components/portfolio/WalletConnectionOptions";
 
 const TopSection: FC<{ isAuthenticated: boolean }> = ({ isAuthenticated }) => {
