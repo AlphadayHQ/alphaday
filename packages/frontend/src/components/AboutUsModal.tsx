@@ -18,7 +18,7 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                 <ModalTitle>About Us</ModalTitle>
             </ModalHeader>
 
-            <ModalBody className="[&_a]:text-secondaryOrange">
+            <ModalBody className="[&_a]:text-secondaryOrange [&_a]:focus:outline-none">
                 <h6>Company Overview:</h6>
                 <p>
                     Registered Name: Alphabox Solutions Pte. Ltd.
@@ -74,15 +74,6 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                         rel="noreferrer"
                     >
                         alphaday.com
-                    </a>
-                    <br />
-                    API:{" "}
-                    <a
-                        href="http://api.alphaday.com/"
-                        target="_blank"
-                        rel="noreferrer nofollow"
-                    >
-                        http://api.alphaday.com/
                     </a>
                     <br />
                     Feedback:{" "}
