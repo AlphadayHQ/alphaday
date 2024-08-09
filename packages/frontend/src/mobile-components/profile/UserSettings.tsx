@@ -9,6 +9,7 @@ import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as DocSVG } from "src/assets/icons/doc.svg";
 import { ReactComponent as GreenCheckSVG } from "src/assets/icons/green-check.svg";
+import { ReactComponent as InfoSVG } from "src/assets/icons/info2.svg";
 import { ReactComponent as LogoutSVG } from "src/assets/icons/logout.svg";
 import { ReactComponent as StarSVG } from "src/assets/icons/star.svg";
 import { ReactComponent as UserSVG } from "src/assets/icons/user.svg";
@@ -97,6 +98,7 @@ interface IUserSettings {
     onSaveProfile: (req: { handle: string }) => void;
     isSavingProfile: boolean;
     onLogout: () => Promise<void>;
+    onShowAboutUsModal: () => void;
 }
 const UserSettings: FC<IUserSettings> = ({
     profile,
@@ -104,6 +106,7 @@ const UserSettings: FC<IUserSettings> = ({
     onSaveProfile,
     isSavingProfile,
     onLogout,
+    onShowAboutUsModal,
 }) => {
     const [showProfileEditModal, setShowProfileEditModal] =
         useState<boolean>(false);
@@ -153,6 +156,13 @@ const UserSettings: FC<IUserSettings> = ({
                 window.open(
                     "https://app.termly.io/document/terms-of-use-for-website/0f183823-fe52-47af-87d2-d1058b844918"
                 ),
+        },
+        {
+            id: "about",
+            icon: InfoSVG,
+            title: "About Us",
+            subtext: "Learn more about Alphaday",
+            onClick: onShowAboutUsModal,
         },
         {
             id: "rate",
