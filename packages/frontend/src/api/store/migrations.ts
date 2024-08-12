@@ -11,6 +11,7 @@ import {
 } from "../types";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
+import { IUIState } from "./slices/ui";
 import { IViewsState } from "./slices/views";
 
 type PersistedRootState = (PersistedState & RootState) | undefined;
@@ -37,7 +38,14 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV105 = PersistedRootState;
+type RootStateV106 = PersistedRootState;
+
+type RootStateV105 =
+    | (PersistedState &
+          Omit<RootState, "ui"> & {
+              ui: Omit<IUIState, "showAboutModal">;
+          })
+    | undefined;
 
 type RootStateV104 =
     | (PersistedState & Omit<RootState, "userFilters">)
@@ -102,6 +110,7 @@ type TMigrations = MigrationManifest & {
     103: (s: RootStateV102) => RootStateV103;
     104: (s: RootStateV103) => RootStateV104;
     105: (s: RootStateV104) => RootStateV105;
+    106: (s: RootStateV105) => RootStateV106;
 };
 
 /**
@@ -258,6 +267,16 @@ const migrations: TMigrations = {
                     chains: [],
                     conceptTags: [],
                 },
+            },
+        };
+    },
+    106: (s: RootStateV105): RootStateV106 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            ui: {
+                ...s.ui,
+                showAboutModal: false,
             },
         };
     },

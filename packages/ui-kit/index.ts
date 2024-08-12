@@ -65,7 +65,13 @@ import {
 } from "./src/components/listItem/ListItem";
 import { ErrorModal } from "./src/components/modal/ErrorModal";
 import { FullPageModal } from "./src/components/modal/FullPageModal";
-import { Modal } from "./src/components/modal/Modal";
+import {
+    Modal,
+    ModalHeader,
+    ModalBody,
+    ModalTitle,
+    ModalFooter,
+} from "./src/components/modal/Modal";
 import { ModulePreview } from "./src/components/module-preview/ModulePreview";
 import { ModuleLoader } from "./src/components/moduleLoader/ModuleLoader";
 import { Overlay } from "./src/components/overlay/Overlay";
@@ -143,6 +149,10 @@ export {
     Dialog,
     TextOverlay,
     Modal,
+    ModalHeader,
+    ModalBody,
+    ModalTitle,
+    ModalFooter,
     Input,
     ModuleLoader,
     ListItem,

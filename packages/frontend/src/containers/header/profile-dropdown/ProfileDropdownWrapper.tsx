@@ -21,6 +21,7 @@ interface IProps {
     isAuthenticated: boolean;
     onShowTutorial: (s: boolean) => void;
     showTutorial: boolean | undefined;
+    onShowAboutUsModal: () => void;
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>
         | undefined;
@@ -36,14 +37,15 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     onSignUpSignIn,
     onShowTutorial,
     showTutorial,
+    onShowAboutUsModal,
     isAuthenticated,
     setTutFocusElemRef,
     profile,
 }) => {
-    const [toggleState, setToggleState] = useState(false);
+    const [toggleTutorialState, setToggleTutorialState] = useState(false);
 
     const handleToggle = () => {
-        setToggleState((prev) => !prev);
+        setToggleTutorialState((prev) => !prev);
         setTimeout(() => {
             onShowTutorial(true);
         }, 500);
@@ -64,7 +66,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
           };
 
     useEffect(() => {
-        if (!showTutorial) setToggleState(false);
+        if (!showTutorial) setToggleTutorialState(false);
     }, [showTutorial]);
 
     return (
@@ -123,8 +125,14 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                                 type="checkbox"
                                 className={styles.toggle}
                                 onChange={handleToggle}
-                                checked={toggleState}
+                                checked={toggleTutorialState}
                             />
+                        </DropdownItem>
+                        <Divider />
+                        <DropdownItem onClick={onShowAboutUsModal}>
+                            <span title="Lear more about Alphaday">
+                                About Us
+                            </span>
                         </DropdownItem>
                         <Divider />
                         {CONFIG.APP.VERSION && CONFIG.APP.COMMIT && (

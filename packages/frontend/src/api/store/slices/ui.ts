@@ -10,6 +10,7 @@ export interface IUIState {
     theme: TTheme;
     showWidgetLib: boolean;
     showBalance: boolean;
+    showAboutModal: boolean;
     tutorial: ITutorialState;
     cookieChoice: ECookieChoice | undefined;
     mobile: {
@@ -24,6 +25,7 @@ export interface IUIState {
 const initialState: IUIState = {
     theme: "dark",
     showWidgetLib: false,
+    showAboutModal: false,
     showBalance: true,
     tutorial: { showTutorial: undefined, currentTutorialTip: undefined },
     cookieChoice: undefined,
@@ -52,6 +54,9 @@ const uiSlice = createSlice({
         },
         toggleShowBalance(draft) {
             draft.showBalance = !draft.showBalance;
+        },
+        toggleAboutModal(draft) {
+            draft.showAboutModal = !draft.showAboutModal;
         },
         toggleWidgetsNavOpen(draft) {
             draft.mobile.widgetsNavOpen = !draft.mobile.widgetsNavOpen;
@@ -99,6 +104,7 @@ export const {
     toggleTheme,
     toggleShowWidgetLib,
     toggleShowBalance,
+    toggleAboutModal,
     toggleWidgetsNavOpen,
     setStoreShowTutorial,
     setCurrentTutorialTip,
