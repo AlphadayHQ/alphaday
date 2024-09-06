@@ -57,7 +57,7 @@
     "react-redux": "8.0.2",
     "react-router": "5.3.4",
     "react-router-dom": "5.3.4",
-    "react-select": "5.7.0",
+    "react-select": "5.8.0",
     "react-super-seo": "1.1.9",
     "react-use-audio-player": "AlphadayHQ/useAudioPlayer",
     "redux-persist": "6.0.0",
