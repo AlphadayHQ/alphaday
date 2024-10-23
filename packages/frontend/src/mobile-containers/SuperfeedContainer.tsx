@@ -261,7 +261,10 @@ const SuperfeedContainer: FC<{
 
     const keywordOptions = useMemo(
         () => groupedKeywordsAsOptions(keywordResults),
-        [keywordResults]
+        [
+            keywordResults !== undefined,
+            keywordResults?.[ESupportedFilters.Coins],
+        ]
     );
 
     const initialSearchValues = useMemo(() => {
