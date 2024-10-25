@@ -15237,12 +15237,11 @@ tailwind-variants@0.2.1:
   dependencies:
     tailwind-merge "^2.2.0"
 
-tailwindcss-theme-swapper@0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/tailwindcss-theme-swapper/-/tailwindcss-theme-swapper-0.7.3.tgz#fcacf4bf41f7af08b84003afc25168cdf89bccbb"
-  integrity sha512-5SJfJCCRF1K8Hq9nJzWOu6b/bXhAwNQPcEpbV7L0YOLmD/x9PsLwDHTcDz2wFEFrS4uzecpjwoMEn+gjqi2wXg==
+tailwindcss-theme-swapper@0.11.1:
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/tailwindcss-theme-swapper/-/tailwindcss-theme-swapper-0.11.1.tgz#bf5a04a4ef0f2cc49d26714d4176d081bb614957"
+  integrity sha512-4v3N6thgmmIC5FY2nNYrvbRvUXBfUqHT1DlCGUGLfAvgoEzM6AXN1xvrLg/larK6BzDQ0s+R070bNAV15t2FgA==
   dependencies:
-    color "^4.2.3"
     postcss "^8.4.21"
     tailwindcss "^3.3.1"
 
