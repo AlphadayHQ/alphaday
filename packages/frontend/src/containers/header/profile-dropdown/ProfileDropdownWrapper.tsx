@@ -8,6 +8,7 @@ import {
     IconButton,
     twMerge,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
@@ -42,6 +43,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     setTutFocusElemRef,
     profile,
 }) => {
+    const { t } = useTranslation();
     const [toggleTutorialState, setToggleTutorialState] = useState(false);
 
     const handleToggle = () => {
@@ -54,13 +56,13 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     const walletMenuOption = isAuthenticated
         ? {
               handler: onSignOut,
-              menuTitle: "Sign Out",
-              title: "Sign Out",
+              menuTitle: t("navigation.menu.sign_out"),
+              title: t("navigation.menu.sign_out"),
               dataTestId: "profile-dropdown-sign-out",
           }
         : {
               handler: onSignUpSignIn,
-              menuTitle: "Sign Up / Sign In",
+              menuTitle: `${t("navigation.menu.sign_up")} / ${t("navigation.menu.sign_in")}`,
               title: globalMessages.portfolio.signUp,
               dataTestId: "profile-dropdown-sign-up",
           };
@@ -119,7 +121,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         </DropdownItem>
                         <Divider />
                         <DropdownItem onClick={handleToggle}>
-                            Tutorial{" "}
+                            {t("navigation.menu.tutorial")}{" "}
                             <input
                                 title="Toggle Tutorial"
                                 type="checkbox"
@@ -131,16 +133,18 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         <Divider />
                         <DropdownItem onClick={onShowAboutUsModal}>
                             <span title="Lear more about Alphaday">
-                                About Us
+                                {t("navigation.menu.about_us")}
                             </span>
                         </DropdownItem>
                         <Divider />
                         {CONFIG.APP.VERSION && CONFIG.APP.COMMIT && (
                             <DropdownItem className="hover:bg-background pb-0 pt-5">
                                 <div className="fontGroup-mini w-full">
-                                    Version: {CONFIG.APP.VERSION}
+                                    {t("navigation.menu.version")}:{" "}
+                                    {CONFIG.APP.VERSION}
                                     <br />
-                                    Commit: {CONFIG.APP.COMMIT}
+                                    {t("navigation.menu.commit")}:{" "}
+                                    {CONFIG.APP.COMMIT}
                                 </div>
                             </DropdownItem>
                         )}

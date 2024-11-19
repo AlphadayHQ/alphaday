@@ -8,6 +8,7 @@ import {
     SortBy,
     twMerge,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget, TWidgetMini } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
@@ -81,6 +82,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
     isLoading,
     handlePaginate,
 }) => {
+    const { t } = useTranslation();
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
         onFilter(e.target.value);
     };
@@ -168,7 +170,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                     <div className="w-full flex items-center justify-between">
                         <div>
                             <h6 className="m-0 inline-flex self-end fontGroup-highlightSemi uppercase text-primaryVariant100">
-                                Widgets Library
+                                {t("navigation.widgets_library.title")}
                             </h6>
                         </div>
                         <div className="fontGroup-normal max-w-[370px] w-[80%]">
@@ -176,7 +178,9 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 onChange={handleFilterChange}
                                 id="widgetlib-search"
                                 name="widgetlib-search"
-                                placeholder="Quick Search..."
+                                placeholder={t(
+                                    "navigation.widgets_library.searchBarPlaceholder"
+                                )}
                                 height="28px"
                                 className="outline-none border-none focus:outline-none focus:border-none bg-backgroundVariant200"
                             />
@@ -207,7 +211,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 onClick={() => handleSelectCategory(undefined)}
                             >
                                 <WidgetsSVG />
-                                All Widgets
+                                {t("navigation.widgets_library.allWidgets")}
                             </div>
                             {categories.map((cat) => {
                                 const icon = cat.slug.split(
@@ -239,7 +243,10 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                         <div className="w-full overflow-hidden h-full">
                             <div className="flex justify-between items-center px-3 pt-3 pb-2 text-primary font-normal">
                                 <div className="fontGroup-highlightSemi">
-                                    <span>{widgets.length} Widgets</span>
+                                    <span>
+                                        {widgets.length}{" "}
+                                        {t("navigation.widgets")}
+                                    </span>
                                 </div>
                                 <SortBy
                                     selected={sortByKey}
