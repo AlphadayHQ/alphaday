@@ -19,6 +19,7 @@ import { Logger } from "./api/utils/logging";
 import CONFIG from "./config";
 import SeoContainer from "./containers/seo/SeoContainer";
 import PreloaderPage from "./pages/preloader";
+import "./i18n";
 
 const MobileApp = lazyRetry(() => import("./MobileApp"));
 const App = lazyRetry(() => import("./App"));

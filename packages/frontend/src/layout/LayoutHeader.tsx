@@ -8,6 +8,7 @@ import {
     HeaderNavElement,
     HeaderNavbar,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { useWindowSize } from "src/api/hooks";
 import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
@@ -34,6 +35,8 @@ const LayoutHeader: FC<IProps> = ({
     isBoardsLibOpen,
     setIsBoardsLibOpen,
 }) => {
+    const { t } = useTranslation();
+
     const [mobileOpen, setMobileOpen] = useState(false);
     const headerRef = useRef<HTMLDivElement>(null);
 
@@ -78,9 +81,11 @@ const LayoutHeader: FC<IProps> = ({
                                             open={false}
                                             uppercase={false}
                                             onClick={toggleBoardsLib}
-                                            title="Open Boards Library"
+                                            title={t(
+                                                "navigation.openBoardsLibrary"
+                                            )}
                                         >
-                                            Boards
+                                            {t("navigation.boards")}
                                         </NavTabButton>
                                     </HeaderNavElement>
                                     <span
@@ -98,7 +103,7 @@ const LayoutHeader: FC<IProps> = ({
                                                 onClick={toggleWidgetLib}
                                                 title="Open Widget Library"
                                             >
-                                                Widgets
+                                                {t("navigation.widgets")}
                                             </NavTabButton>
                                         </HeaderNavElement>
                                     </span>
@@ -158,7 +163,7 @@ const LayoutHeader: FC<IProps> = ({
                                 </div>
 
                                 <h3 className="two-col:pl-4 two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
-                                    Boards
+                                    {t("navigation.boards")}
                                 </h3>
 
                                 <ViewsTabContainer
