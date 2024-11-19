@@ -25,7 +25,7 @@ const MainLayout: React.FC<IProps> = ({
 }) => {
     const [isBoardsLibOpen, setIsBoardsLibOpen] = useState(false);
     return (
-        <div className="relative overflow-scroll max-h-screen">
+        <div className="relative overflow-scroll max-h-screen max-w-screen">
             <Header
                 hideFeatures={!!hideFeatures}
                 toggleWidgetLib={toggleWidgetLib}
