@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge, Button, FadeIn } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import {
     ETutorialIndicatorType,
     ETutorialTipId,
@@ -19,6 +20,7 @@ const TutorialItem: FC<ITutorialItem> = ({
     closeTutorial,
     toggleNextTutorial,
 }) => {
+    const { t } = useTranslation();
     return (
         <div
             tabIndex={-1}
@@ -93,14 +95,14 @@ const TutorialItem: FC<ITutorialItem> = ({
                                             variant="secondary"
                                             className="border-none bg-primaryVariant200 p-[4px_12px_5px] h-[26px] fontGroup-normal"
                                         >
-                                            Not Now
+                                            {t("buttons.notNow")}
                                         </Button>
                                         <Button
                                             onClick={toggleNextTutorial}
                                             variant="secondary"
                                             className="bg-primaryFiltered p-[4px_12px_5px] h-[26px] fontGroup-normal"
                                         >
-                                            Next
+                                            {t("buttons.next")}
                                         </Button>
                                     </>
                                 )}

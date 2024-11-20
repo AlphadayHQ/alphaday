@@ -72,6 +72,8 @@ export const translationEN = {
         disconnect_wallet: "Disconnect_Wallet",
         enter_address: "Enter Address",
         save: "Save",
+        notNow: "Not Now",
+        next: "Next",
     },
     portfolio: {
         addAWallet: "Add a Wallet Address",
@@ -111,6 +113,25 @@ export const translationEN = {
                 content: "Oops! Something went wrong. Please try again later.",
             },
         },
+    },
+    tutorials: {
+        switchView_title: "Switch between boards",
+        switchView_text:
+            "Optimize your workflow by using different boards curated with various widgets, or create your own.",
+        walletView_title: "Create a Wallet board",
+        walletView_text:
+            "Keep track of all information on Alphaday regarding assets in your wallet.",
+        useSeachBar_title: "Search Bar",
+        useSeachBar_text:
+            "Search for your favorite tokens, projects, or topics to filter the content inside the widgets.",
+        reArrangeWidget_title: "Re-arrange widgets",
+        reArrangeWidget_text:
+            "Click and drag widgets by the top bar to change their position in the dashboard, or click once to minimize.",
+        useWidgetLib_title: "Widgets Library",
+        useWidgetLib_text:
+            "There are dozens of useful widgets available for you in the Widgets Library to pick and choose from.",
+        comeBack_text:
+            "Come back to the walk-through at any time in the user menu.",
     },
     market: {
         title: "MARKET",
@@ -193,6 +214,8 @@ export const translationJA: typeof translationEN = {
         disconnect_wallet: "ウォレットを切断",
         enter_address: "アドレスを入力",
         save: "保存",
+        notNow: "今はしない",
+        next: "次へ",
     },
     portfolio: {
         addAWallet: "ウォレットアドレスを追加",
@@ -233,6 +256,24 @@ export const translationJA: typeof translationEN = {
                     "おっと！問題が発生しました。後でもう一度お試しください。",
             },
         },
+    },
+    tutorials: {
+        switchView_title: "ボード間を切り替える",
+        switchView_text:
+            "さまざまなウィジェットを使って異なるボードを活用したり、自分で作成したりして、ワークフローを最適化しましょう。",
+        walletView_title: "ウォレットボードを作成",
+        walletView_text:
+            "ウォレット内の資産に関するすべての情報をAlphadayで追跡できます。",
+        useSeachBar_title: "検索バー",
+        useSeachBar_text:
+            "お気に入りのトークン、プロジェクト、またはトピックを検索して、ウィジェット内のコンテンツをフィルタリングできます。",
+        reArrangeWidget_title: "ウィジェットを再配置",
+        reArrangeWidget_text:
+            "上部のバーを使ってウィジェットをドラッグして位置を変更するか、1回クリックして最小化できます。",
+        useWidgetLib_title: "ウィジェットライブラリ",
+        useWidgetLib_text:
+            "ウィジェットライブラリには、選んで使える便利なウィジェットが多数用意されています。",
+        comeBack_text: "ユーザーメニューからいつでもウォークスルーに戻れます。",
     },
     market: {
         title: "マーケット",
