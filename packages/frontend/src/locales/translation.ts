@@ -48,40 +48,14 @@ export const translationEN = {
             media: "Media",
         },
     },
-
-    categories: {
-        all: "All",
-        general: "General",
-        nfts: "NFTs",
-        dao: "DAO",
-        layer2: "Layer 2",
-        defi: "DeFi",
-        trading: "Trading",
-    },
-    platforms: {
-        aave: {
-            name: "AAVE",
-            description:
-                "Earn interest, borrow assets, and build applications.",
-        },
-        ai: {
-            name: "AI",
-            description: "Top AI-themed projects",
-        },
-        alchemix: {
-            name: "ALCHEMIX",
-            description:
-                "Alchemix Finance is a future-yield-backed synthetic asset protocol and community",
-        },
-        alpha: {
-            name: "ALPHA",
-            description: "A bird's-eye view on everything happening in crypto.",
-        },
-        aptos: {
-            name: "APTOS",
-            description:
-                "Aptos is a Layer-1 blockchain with a strong focus on scalability, security, and",
-        },
+    widget: {
+        options: "Options",
+        close_options: "Close Options",
+        expand: "Expand",
+        maximize: "Maximize",
+        minimize: "Minimize",
+        screenshot: "Screenshot",
+        remove_widget: "Remove Widget",
     },
     tabs: {
         news: "NEWS",
@@ -93,9 +67,50 @@ export const translationEN = {
     },
     buttons: {
         connect_wallet: "Connect Wallet",
+        verify_wallet: "Verify Wallet",
+        add_wallet: "Add New Wallet",
+        disconnect_wallet: "Disconnect_Wallet",
         enter_address: "Enter Address",
-        sort_by: "Sort by",
-        name: "Name",
+        save: "Save",
+    },
+    portfolio: {
+        addAWallet: "Add a Wallet Address",
+        inputPlaceholder: "Enter an Ethereum or ENS address",
+        totalBalance: "Total Balance",
+        allWallets: "All Wallets",
+        asset: "Asset",
+        assets: "Assets",
+        nfts: "NFTs",
+        balance: "Balance",
+        price: "Price",
+        value: "Value",
+        modals: {
+            title: "Wallet Connect",
+            soon: "(soon)",
+            metamask: "Metamask",
+            selectingMethod: {
+                title: "Choose a Wallet Provider",
+            },
+            prompted: {
+                title: "Verify Wallet",
+                content:
+                    "Your wallet has been connected successfully. To save your customized boards, please login to Alphaday by signing a text message.",
+            },
+            connectionError: {
+                title: "Wallet Connection Error",
+                content:
+                    "An error occurred trying to connect to your wallet provider. Please make sure your wallet is correctly set up.",
+            },
+            verificationError: {
+                title: "Wallet Verification Error",
+                content:
+                    "Authentication failed. Is your wallet unlocked? Have you switched accounts?",
+            },
+            genericError: {
+                title: "Unexpected Error",
+                content: "Oops! Something went wrong. Please try again later.",
+            },
+        },
     },
     market: {
         title: "MARKET",
@@ -154,39 +169,14 @@ export const translationJA: typeof translationEN = {
             media: "メディア",
         },
     },
-    categories: {
-        all: "すべて",
-        general: "一般",
-        nfts: "NFT",
-        dao: "DAO",
-        layer2: "レイヤー2",
-        defi: "DeFi",
-        trading: "取引",
-    },
-    platforms: {
-        aave: {
-            name: "AAVE",
-            description:
-                "利息を稼ぎ、資産を借り入れ、アプリケーションを構築する。",
-        },
-        ai: {
-            name: "AI",
-            description: "主要なAI関連プロジェクト",
-        },
-        alchemix: {
-            name: "ALCHEMIX",
-            description:
-                "Alchemix Financeは、将来の収益に裏付けられた合成資産プロトコルとコミュニティです",
-        },
-        alpha: {
-            name: "ALPHA",
-            description: "暗号資産の動向を俯瞰的に把握",
-        },
-        aptos: {
-            name: "APTOS",
-            description:
-                "Aptosはスケーラビリティ、セキュリティを重視したレイヤー1ブロックチェーン",
-        },
+    widget: {
+        options: "オプション",
+        close_options: "オプションを閉じる",
+        expand: "拡大",
+        maximize: "最大化",
+        minimize: "最小化",
+        screenshot: "スクリーンショット",
+        remove_widget: "ウィジェットを削除",
     },
     tabs: {
         news: "ニュース",
@@ -198,9 +188,51 @@ export const translationJA: typeof translationEN = {
     },
     buttons: {
         connect_wallet: "ウォレットを接続",
+        verify_wallet: "ウォレットを確認",
+        add_wallet: "新しいウォレットを追加",
+        disconnect_wallet: "ウォレットを切断",
         enter_address: "アドレスを入力",
-        sort_by: "並び替え",
-        name: "名前",
+        save: "保存",
+    },
+    portfolio: {
+        addAWallet: "ウォレットアドレスを追加",
+        inputPlaceholder: "EthereumまたはENSアドレスを入力してください",
+        totalBalance: "合計残高",
+        allWallets: "すべてのウォレット",
+        asset: "資産",
+        assets: "資産",
+        nfts: "NFTs",
+        balance: "残高",
+        price: "価格",
+        value: "価値",
+        modals: {
+            title: "ウォレットコネクト",
+            soon: "（近日中）",
+            metamask: "メタマスク",
+            selectingMethod: {
+                title: "ウォレットプロバイダーを選択",
+            },
+            prompted: {
+                title: "ウォレットの確認",
+                content:
+                    "ウォレットが正常に接続されました。カスタマイズしたボードを保存するには、テキストメッセージに署名してAlphadayにログインしてください。",
+            },
+            connectionError: {
+                title: "ウォレット接続エラー",
+                content:
+                    "ウォレットプロバイダーへの接続中にエラーが発生しました。ウォレットが正しく設定されていることを確認してください。",
+            },
+            verificationError: {
+                title: "ウォレット確認エラー",
+                content:
+                    "認証に失敗しました。ウォレットがロック解除されていますか？アカウントを切り替えましたか？",
+            },
+            genericError: {
+                title: "予期しないエラー",
+                content:
+                    "おっと！問題が発生しました。後でもう一度お試しください。",
+            },
+        },
     },
     market: {
         title: "マーケット",

@@ -1,5 +1,6 @@
 import { FC, useMemo, useState } from "react";
 import { themeColors, twMerge, useLayer } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { ReactComponent as CameraSVG } from "src/assets/icons/camera.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
 import { ReactComponent as InfoSVG } from "src/assets/icons/info.svg";
@@ -84,6 +85,8 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
         onOutsideClick: () => setShowMenu(false),
     });
 
+    const { t } = useTranslation();
+
     const styledLayerProps = useMemo(
         () => ({
             ...layerProps,
@@ -152,7 +155,9 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                             className="icon"
                         />
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
-                            {isWidgetOptions ? "Close Options" : "Options"}
+                            {isWidgetOptions
+                                ? t("navigation.close_options")
+                                : t("widget.options")}
                         </div>
                     </div>
 
@@ -171,7 +176,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                             className="icon"
                         />
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
-                            Maximize
+                            {t("widget.maximize")}
                         </div>
                     </div>
 
@@ -194,7 +199,9 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                             <MinimizeSVG style={IconStyle} className="icon" />
                         )}
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
-                            {toggleExpand ? "Expand" : "Minimize"}
+                            {toggleExpand
+                                ? t("widget.expand")
+                                : t("widget.minimize")}
                         </div>
                     </div>
 
@@ -210,7 +217,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                     >
                         <CameraSVG style={IconStyle} className="icon" />
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
-                            Screenshot
+                            {t("widget.screenshot")}
                         </div>
                     </div>
                     <div
@@ -229,7 +236,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                         />
 
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
-                            Remove Widget
+                            {t("widget.remove_widget")}
                         </div>
                     </div>
                     <div className="border-borderLine m-0 h-0 w-[184px] mt-2.5 overflow-hidden border-t border-solid mx-auto" />
