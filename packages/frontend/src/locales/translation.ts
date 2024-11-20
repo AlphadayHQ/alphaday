@@ -48,6 +48,8 @@ export const translationEN = {
             media: "Media",
             chains: "Chains",
             protocols: "Protocols",
+            less: "Less",
+            more: "More",
         },
     },
     widget: {
@@ -140,6 +142,12 @@ export const translationEN = {
         line: "Line",
         candlestick: "Candlestick",
     },
+    podcasts: {
+        channels: "Channels",
+        selected_channels: "Selected Channels",
+        all_channels: "All Channels",
+        channels_input_placeholder: "Search for channels",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -192,6 +200,8 @@ export const translationJA: typeof translationEN = {
             media: "メディア",
             chains: "チェーン",
             protocols: "プロトコル",
+            less: "少なく",
+            more: "もっと",
         },
     },
     widget: {
@@ -283,5 +293,11 @@ export const translationJA: typeof translationEN = {
         title: "マーケット",
         line: "ライン",
         candlestick: "ローソク足",
+    },
+    podcasts: {
+        channels: "チャンネル",
+        selected_channels: "選択したチャンネル",
+        all_channels: "すべてのチャンネル",
+        channels_input_placeholder: "チャンネルを検索",
     },
 };
