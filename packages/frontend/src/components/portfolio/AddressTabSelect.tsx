@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { TabsBar } from "@alphaday/ui-kit";
+import i18next from "i18next";
 import { TCryptoAccount } from "src/api/types";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { TPortfolioTabAccount } from "./types";
@@ -18,7 +19,10 @@ interface IAddressTabSelect {
     onSelectAddress: (address: string) => void;
 }
 
-const DEFAULT_ACCOUNT_TAB = { label: "All wallets", value: "all-wallets" };
+const DEFAULT_ACCOUNT_TAB = {
+    label: i18next.t("portfolio.allWallets"),
+    value: "all-wallets",
+};
 
 const AddressTabSelect: FC<IAddressTabSelect> = ({
     accounts,

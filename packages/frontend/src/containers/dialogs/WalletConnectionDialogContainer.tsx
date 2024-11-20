@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
 import { Dialog, ErrorModal } from "@alphaday/ui-kit";
+import i18next from "i18next";
 import {
     useWallet,
     useAccount,
@@ -23,6 +24,10 @@ type TPropsDict = Partial<
         }
     >
 >;
+
+const translate = (key: string) => {
+    return i18next.t(`portfolio.${key}`);
+};
 
 const WalletConnectionDialogContainer: FC = memo(() => {
     const { authWallet, resetAuthState } = useAccount();
@@ -48,54 +53,52 @@ const WalletConnectionDialogContainer: FC = memo(() => {
             id: "wallet-connect",
             onClick: onConnect(EWalletConnectionMethod.WalletConnect),
             disabled: !isWalletConnectFeatureAllowed,
-            title: `Wallet Connect ${
-                isWalletConnectFeatureAllowed ? "" : "(soon)"
+            title: `${translate("modals.title")} ${
+                isWalletConnectFeatureAllowed ? "" : translate("modals.soon")
             }`,
             icon: WalletConnectSVG,
         },
         {
             id: "metamask",
             onClick: onConnect(EWalletConnectionMethod.Metamask),
-            title: `Metamask`,
+            title: translate("modals.metamask"),
             icon: MetamaskSVG,
         },
     ];
 
     const dialogPropsDict: TPropsDict = {
         [WalletConnectionState.SelectingMethod]: {
-            title: "Choose a Wallet Provider",
+            title: translate("modals.selectingMethod.title"),
             onClose: resetWalletConnection,
             content: <WalletConnectionPicker walletButtons={wallets} />,
         },
         [WalletConnectionState.Prompted]: {
-            title: "Verify Wallet",
-            saveButtonText: "Verify Wallet",
+            title: translate("modals.prompted.title"),
+            saveButtonText: translate("modals.prompted.saveButtonText"),
             onSave: verifyWallet,
             onClose: resetWalletVerification,
             buttonProps: {
                 title: globalMessages.portfolio.verifyWallet,
             },
-            content:
-                "Your wallet has been connected successfully. To save your customized boards please login to Alphaday by signing a text message.",
+            content: translate("modals.prompted.content"),
         },
     };
+
     const errorPropsDict: TPropsDict = {
         [WalletConnectionState.ConnectionError]: {
-            title: "Wallet Connection Error",
+            title: translate("modals.connectionError.title"),
             onClose: resetWalletConnection,
-            content:
-                "An error ocurred trying to connect to your wallet provider. Please make sure your wallet is correctly setup.",
+            content: translate("modals.connectionError.content"),
         },
         [WalletConnectionState.VerificationError]: {
-            title: "Wallet Verification Error",
+            title: translate("modals.verificationError.title"),
             onClose: resetWalletVerification,
-            content:
-                "Authentication failed. Is your wallet unlocked? Have you switched accounts?",
+            content: translate("modals.verificationError.content"),
         },
         [WalletConnectionState.GenericError]: {
-            title: "Unexpected Error",
+            title: translate("modals.genericError.title"),
             onClose: resetAuthState,
-            content: "Oops! Something went wrong. Please try again later.",
+            content: translate("modals.genericError.content"),
         },
     };
 

@@ -2,6 +2,7 @@ import { FC, memo } from "react";
 import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
 import { TNewsItem, EItemFeedPreference } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { translateLabels } from "src/api/utils/translationUtils";
 import NewsItemList from "./NewsItemList";
 
 interface INews {
@@ -21,15 +22,15 @@ interface INews {
  */
 const NEWS_NAV_ITEMS = [
     {
-        label: "Feed",
+        label: translateLabels("Feed"),
         value: EItemFeedPreference.Last,
     },
     {
-        label: "Trending",
+        label: translateLabels("Trending"),
         value: EItemFeedPreference.Trending,
     },
     {
-        label: "Read Later",
+        label: translateLabels("ReadLater"),
         value: EItemFeedPreference.Bookmark,
         auth: true,
     },
