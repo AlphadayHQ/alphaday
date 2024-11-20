@@ -16,9 +16,14 @@ import {
 import { TUserViewPreview, TViewMeta } from "src/api/types";
 import { validateEthAddr } from "src/api/utils/accountUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { getSortOptionsArray } from "src/api/utils/sortOptions";
+import { SORT_OPTIONS } from "src/api/utils/sortOptions";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
+import {
+    ETranslationValues,
+    translateLabels,
+    TTranslationValues,
+} from "src/api/utils/translationUtils";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 import { ReactComponent as EmptySVG } from "src/assets/icons/empty.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
@@ -203,6 +208,13 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
     const sortByKey =
         Object.keys(EItemsSortBy)[Object.values(EItemsSortBy).indexOf(sortBy)];
 
+    const selectedSortValue =
+        Object.keys(ETranslationValues).indexOf(sortByKey.toLowerCase()) !== -1
+            ? translateLabels(sortByKey.toLowerCase() as TTranslationValues, {
+                  isKey: true,
+              })
+            : sortByKey;
+
     return (
         <div
             data-testid="boards-library"
@@ -330,9 +342,10 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                 </div>
                                 <div className="pt-1">
                                     <SortBy
-                                        selected={sortByKey}
+                                        selected={selectedSortValue}
                                         onSortBy={onSortBy}
-                                        options={getSortOptionsArray()}
+                                        options={SORT_OPTIONS}
+                                        label={t("navigation.sortBy")}
                                     />
                                 </div>
                             </div>

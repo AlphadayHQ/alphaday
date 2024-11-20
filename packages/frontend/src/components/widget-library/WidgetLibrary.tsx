@@ -12,7 +12,12 @@ import { useTranslation } from "react-i18next";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget, TWidgetMini } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { getSortOptionsArray } from "src/api/utils/sortOptions";
+import { SORT_OPTIONS } from "src/api/utils/sortOptions";
+import {
+    ETranslationValues,
+    translateLabels,
+    TTranslationValues,
+} from "src/api/utils/translationUtils";
 import { ReactComponent as ChartSVG } from "src/assets/icons/chart.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as DefiSVG } from "src/assets/icons/defi.svg";
@@ -98,6 +103,13 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
 
     const sortByKey =
         Object.keys(EItemsSortBy)[Object.values(EItemsSortBy).indexOf(sortBy)];
+
+    const selectedSortValue =
+        Object.keys(ETranslationValues).indexOf(sortByKey.toLowerCase()) !== -1
+            ? translateLabels(sortByKey.toLowerCase() as TTranslationValues, {
+                  isKey: true,
+              })
+            : sortByKey;
 
     const renderModulePreview = useCallback(
         (widget: TWidgetMini) => {
@@ -249,9 +261,10 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                     </span>
                                 </div>
                                 <SortBy
-                                    selected={sortByKey}
+                                    selected={selectedSortValue}
                                     onSortBy={onSortBy}
-                                    options={getSortOptionsArray()}
+                                    options={SORT_OPTIONS}
+                                    label={t("navigation.sortBy")}
                                 />
                             </div>
                             <div className="w-full h-[550px]">
