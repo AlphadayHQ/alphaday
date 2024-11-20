@@ -46,6 +46,8 @@ export const translationEN = {
             bookmarks: "Bookmarks",
             timeRange: "Time Range",
             media: "Media",
+            chains: "Chains",
+            protocols: "Protocols",
         },
     },
     widget: {
@@ -188,6 +190,8 @@ export const translationJA: typeof translationEN = {
             bookmarks: "ブックマーク",
             timeRange: "時間帯",
             media: "メディア",
+            chains: "チェーン",
+            protocols: "プロトコル",
         },
     },
     widget: {

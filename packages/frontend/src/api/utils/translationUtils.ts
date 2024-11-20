@@ -18,10 +18,10 @@ export enum ETranslationValues {
     layer2 = "Layer2",
     defi = "DeFi",
     trading = "Trading",
+    chains = "Chains",
+    protocols = "Protocols",
 }
 
-// const allowedKeys = ["Popular", "(A-Z)", "New"] as const;
-// export type TTranslationKeys = (typeof allowedKeys)[number];
 export type TTranslationValues = `${ETranslationValues}`;
 const allowedValues: TTranslationValues[] = Object.values(ETranslationValues);
 const allowedKeys = Object.keys(ETranslationValues);
