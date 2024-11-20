@@ -8,6 +8,7 @@ import {
     TPodcastItem,
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { translateLabels } from "src/api/utils/translationUtils";
 import AudioPlayer from "src/components/podcast/AudioPlayer";
 import PodcastChannelsList from "./PodcastChannelsList";
 import PodcastItemList from "./PodcastItemList";
@@ -40,15 +41,15 @@ const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;
 
 const PODCAST_NAV_ITEMS = [
     {
-        label: "Feed",
+        label: translateLabels("Feed"),
         value: EItemFeedPreference.Last,
     },
     {
-        label: "Trending",
+        label: translateLabels("Trending"),
         value: EItemFeedPreference.Trending,
     },
     {
-        label: "Bookmarks",
+        label: translateLabels("Bookmarks"),
         value: EItemFeedPreference.Bookmark,
         auth: true,
     },

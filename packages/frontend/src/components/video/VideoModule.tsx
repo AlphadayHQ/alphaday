@@ -3,6 +3,7 @@ import { TabsBar, twMerge } from "@alphaday/ui-kit";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { EItemFeedPreference, TVideoChannel, TVideoItem } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { translateLabels } from "src/api/utils/translationUtils";
 import VideoPlayer from "src/components/video/VideoPlayer";
 import VideoChannelsList from "./VideoChannelsList";
 import VideoItemList from "./VideoItemList";
@@ -32,15 +33,15 @@ const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;
 
 const VIDEO_NAV_ITEMS = [
     {
-        label: "Feed",
+        label: translateLabels("Feed"),
         value: EItemFeedPreference.Last,
     },
     {
-        label: "Trending",
+        label: translateLabels("Trending"),
         value: EItemFeedPreference.Trending,
     },
     {
-        label: "Bookmarks",
+        label: translateLabels("Bookmarks"),
         value: EItemFeedPreference.Bookmark,
         auth: true,
     },
