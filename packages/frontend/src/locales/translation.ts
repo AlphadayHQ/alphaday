@@ -149,6 +149,12 @@ export const translationEN = {
         all_channels: "All Channels",
         channels_input_placeholder: "Search for channels",
     },
+    calendar: {
+        organizers: "Organizers",
+        speakers: "Speakers",
+        more_details: "More Details",
+        noEvents: "No upcoming events found",
+    },
     others: {
         tag_options: {
             auth: "ethereum, bitcoin, etc.",
@@ -157,6 +163,46 @@ export const translationEN = {
         change: "Change",
         name: "Name",
         tvl: "TVL",
+    },
+    messages: {
+        error: {
+            title: "Error",
+            notFound: "The requested page could not be found.",
+            generic: "An error occurred while processing your request.",
+            forbidden: "You do not have permission to access this page.",
+            unauthorized: "You are not authorized to access this page.",
+            notAuthenticated:
+                "Please connect and verify your wallet to continue",
+            maxViews: "You have created maximum allowed boards",
+            maxWidgets: "Your board has more widgets than allowed",
+            maxViewWidgets:
+                "You have exceeded the allowed count of this widget on a board",
+            requestFailed:
+                // eslint-disable-next-line no-template-curly-in-string
+                "An error occurred fetching ${term}, please try again later",
+            boardHasNoRequiredWidget:
+                // eslint-disable-next-line no-template-curly-in-string
+                "This ${boardName} board does not have the required ${SlugToWidgetNameMap[widget_template]} widget, to access this route you need to add the ${SlugToWidgetNameMap[widget_template]} widget to this board and refresh the page.",
+        },
+        success: {
+            title: "Success",
+            generic: "Your request was processed successfully.",
+        },
+        queries: {
+            noResults: "No results found",
+            // eslint-disable-next-line no-template-curly-in-string
+            noMatchFound: "No matching ${item} found.",
+        },
+        portfolio: {
+            signUp: "Sign up to save your portfolio",
+            connectWallet: "To signup, first connect your wallet.",
+            verifyWallet:
+                "Sign a fee-less message to confirm ownership and log in to Alphaday to save your configuration.",
+        },
+        callToAction: {
+            // eslint-disable-next-line no-template-curly-in-string
+            signUpToBookmark: "Sign up to bookmark this ${item}",
+        },
     },
 };
 
@@ -311,6 +357,12 @@ export const translationJA: typeof translationEN = {
         all_channels: "すべてのチャンネル",
         channels_input_placeholder: "チャンネルを検索",
     },
+    calendar: {
+        organizers: "主催者",
+        speakers: "スピーカー",
+        more_details: "詳細",
+        noEvents: "近日開催されるイベントはありませ",
+    },
     others: {
         tag_options: {
             auth: "ethereum、bitcoinなど",
@@ -319,5 +371,47 @@ export const translationJA: typeof translationEN = {
         change: "変更",
         name: "名前",
         tvl: "TVL",
+    },
+    messages: {
+        error: {
+            title: "エラー",
+            notFound: "リクエストされたページが見つかりませんでした。",
+            generic: "リクエストの処理中にエラーが発生しました。",
+            forbidden: "このページにアクセスする権限がありません。",
+            unauthorized: "このページにアクセスする権限がありません。",
+            notAuthenticated:
+                "続行するにはウォレットを接続して確認してください",
+            maxViews: "作成できるボードの最大数に達しました",
+            maxWidgets: "ボードに追加できるウィジェットの数を超えました",
+            maxViewWidgets:
+                "ボード上のこのウィジェットの許可された数を超えました",
+            requestFailed:
+                // eslint-disable-next-line no-template-curly-in-string
+                "${term}の取得中にエラーが発生しました。後で再試行してください",
+            boardHasNoRequiredWidget:
+                // eslint-disable-next-line no-template-curly-in-string
+                "この${boardName}ボードには、${SlugToWidgetNameMap[widget_template]}ウィジェットが必要です。このルートにアクセスするには、${SlugToWidgetNameMap[widget_template]}ウィジェットをこのボードに追加してページを更新する必要があります。",
+        },
+        success: {
+            title: "成功",
+            generic: "リクエストが正常に処理されました。",
+        },
+        queries: {
+            noResults: "結果が見つかりません",
+            // eslint-disable-next-line no-template-curly-in-string
+            noMatchFound: "${item}が見つかりませんでした。",
+        },
+        portfolio: {
+            signUp: "ポートフォリオを保存するにはサインアップしてください",
+            connectWallet:
+                "サインアップするには、まずウォレットを接続してください。",
+            verifyWallet:
+                "所有権を確認し、設定を保存するためにAlphadayにログインするには、手数料のないメッセージに署名してください。",
+        },
+        callToAction: {
+            signUpToBookmark:
+                // eslint-disable-next-line no-template-curly-in-string
+                "この${item}をブックマークするにはサインアップしてください",
+        },
     },
 };
