@@ -12,6 +12,7 @@ import {
 import { ReactComponent as PinSVG } from "@alphaday/ui-kit/src/assets/svg/pin.svg";
 import { ReactComponent as PinnedSVG } from "@alphaday/ui-kit/src/assets/svg/pinned.svg";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
+import { useTranslation } from "react-i18next";
 import {
     components,
     GroupBase,
@@ -199,6 +200,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
     headerRef,
     dragProps,
 }) => {
+    const { t: translate } = useTranslation();
     const { name, settings, widget } = moduleData;
     const widgetTitle = (name || widget.name).toUpperCase();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -281,7 +283,10 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                     searchResults={keywordResults}
                                     searchState={searchState}
                                     setSearchState={setSearchState}
-                                    placeholder="ethereum, bitcoin, etc."
+                                    // placeholder="ethereum, bitcoin, etc."
+                                    placeholder={translate(
+                                        "others.tag_options.auth"
+                                    )}
                                     onIncludeTag={(tag) => {
                                         const tagExists = tags.find(
                                             (t) => t.id === tag.id
@@ -320,8 +325,12 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                     setSearchState={setCoinSearch}
                                     placeholder={
                                         isAuthenticated
-                                            ? "eth, btc, etc."
-                                            : "Sign up to pin coins and more"
+                                            ? translate(
+                                                  "others.tag_options.auth"
+                                              )
+                                            : translate(
+                                                  "others.tag_options.unAuth"
+                                              )
                                     }
                                     title={
                                         isAuthenticated
@@ -384,6 +393,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
             </BaseModuleBody>
             <BaseModuleOptionsFooter
                 removeWidget={removeWidget}
+                text={translate("widget.remove_widget")}
                 ref={footerWrapRef}
             />
         </BaseModuleWrapper>
