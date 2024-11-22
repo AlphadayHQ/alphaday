@@ -365,6 +365,11 @@ export const translationEN = {
             },
         },
     },
+    wallet_view: {
+        create_wallet_board: "Create Wallet Board",
+        view_wallet_board: "View Wallet Board",
+        creating_wallet_board: "Creating Wallet Board",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -736,5 +741,10 @@ export const translationJA: typeof translationEN = {
                 textAfterLink: "をチェックしてください。",
             },
         },
+    },
+    wallet_view: {
+        create_wallet_board: "ウォレットボードを作成",
+        view_wallet_board: "ウォレットボードを表示",
+        creating_wallet_board: "ウォレットボードを作成中",
     },
 };
