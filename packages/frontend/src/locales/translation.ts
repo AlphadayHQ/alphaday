@@ -209,6 +209,8 @@ export const translationEN = {
                 "This ${boardName} board does not have the required ${SlugToWidgetNameMap[widget_template]} widget, to access this route you need to add the ${SlugToWidgetNameMap[widget_template]} widget to this board and refresh the page.",
             back_to_home: "Back to Home",
             no_nfts_found: "No NFTs found for the wallet(s) provided.",
+            no_video: "No Video Selected",
+            something_wrong: "Something went wrong.",
         },
         success: {
             title: "Success",
@@ -482,6 +484,8 @@ export const translationJA: typeof translationEN = {
             back_to_home: "ホームに戻る",
             no_nfts_found:
                 "指定されたウォレット用のNFTが見つかりませんでした。",
+            no_video: "ビデオが選択されていません",
+            something_wrong: "何かが間違っています。",
         },
         success: {
             title: "成功",
