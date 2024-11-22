@@ -242,6 +242,13 @@ export const translationEN = {
         y: "%dy",
         yy: "%dy",
     },
+    gas: {
+        title: "Gas Price",
+        fast: "Fast",
+        standard: "Standard",
+        slow: "Slow",
+        beacon_chain_data: "Beacon Chain Data",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -489,5 +496,12 @@ export const translationJA: typeof translationEN = {
         MM: "%dmo",
         y: "%dy",
         yy: "%dy",
+    },
+    gas: {
+        title: "ガス価格",
+        fast: "高速",
+        standard: "標準",
+        slow: "遅い",
+        beacon_chain_data: "ビーコンチェーンデータ",
     },
 };
