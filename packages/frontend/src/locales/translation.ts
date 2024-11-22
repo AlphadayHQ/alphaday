@@ -270,6 +270,34 @@ export const translationEN = {
             "You need to connect and verify your wallet to use this widget.",
         button: "Ask a question",
     },
+    about_us: {
+        title: "About Us",
+        company_overview: {
+            title: "Company Overview:",
+            registered_name: "Registered Name: Alphabox Solutions Pte. Ltd.",
+            registration_number: "Registration Number: 202136261C",
+            registered_office:
+                "Registered Office: 45 North Canal Road #01-01 Lew Building Singapore",
+        },
+        contact_info: {
+            title: "Contact Information:",
+            email: "Email Address: hello@alphaday.com",
+            xcom: "X.com: https://x.com/AlphadayHQ",
+        },
+        legal_info: {
+            title: "Legal Information:",
+            terms: "Terms & Conditions: https://alphaday.com/terms",
+            privacy: "Privacy Policy: https://alphaday.com/privacy",
+        },
+        additional_resources: {
+            title: "Additional Resources:",
+            faqs: "FAQs: alphaday.com",
+            feedback: "Feedback: https://forms.gle/RbrrLGdFPAeuNJhk9",
+        },
+        mission:
+            "Alphaday's mission is to bring you all the tools needed to follow your favorite projects, stay up-to-date with the latest narratives, and use your favorite dapps, all from the comfort of one easy-to-use customizable dashboard.",
+        close_button: "Close",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -546,5 +574,33 @@ export const translationJA: typeof translationEN = {
         highlight:
             "このウィジェットを使用するには、ウォレットを接続して確認する必要があります。",
         button: "質問する",
+    },
+    about_us: {
+        title: "会社概要",
+        company_overview: {
+            title: "会社情報:",
+            registered_name: "登録社名: Alphabox Solutions Pte. Ltd.",
+            registration_number: "登録番号: 202136261C",
+            registered_office:
+                "登録所在地: 45 North Canal Road #01-01 Lew Building Singapore",
+        },
+        contact_info: {
+            title: "お問い合わせ先:",
+            email: "メールアドレス: hello@alphaday.com",
+            xcom: "X.com: https://x.com/AlphadayHQ",
+        },
+        legal_info: {
+            title: "法的情報:",
+            terms: "利用規約: https://alphaday.com/terms",
+            privacy: "プライバシーポリシー: https://alphaday.com/privacy",
+        },
+        additional_resources: {
+            title: "その他のリソース:",
+            faqs: "よくある質問: alphaday.com",
+            feedback: "フィードバック: https://forms.gle/RbrrLGdFPAeuNJhk9",
+        },
+        mission:
+            "Alphadayは、お気に入りのプロジェクトをフォローし、最新の情報を常に把握し、使いやすいカスタマイズ可能なダッシュボードから好きなdappsを使用するために必要なすべてのツールを提供することを使命としています。",
+        close_button: "閉じる",
     },
 };
