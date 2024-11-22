@@ -173,6 +173,7 @@ export const translationEN = {
         no_items_found: "No Items Found",
         accept: "Accept",
         decline: "Decline",
+        briefing_for: "Briefing for",
         cookie: {
             text: "We use essential cookies to make Alphaday work. We&apos;d like to use other cookies to improve and personalize your visit and to analyze our website&apos;s performance, but only if you accept.",
             acceptAll: "Accept All",
@@ -444,6 +445,7 @@ export const translationJA: typeof translationEN = {
         no_items_found: "アイテムが見つかりません",
         accept: "受け入れる",
         decline: "辞退",
+        briefing_for: "ブリーフィング",
         cookie: {
             text: "Alphadayを動作させるために必要なクッキーを使用しています。他のクッキーを使用して、訪問を改善し、パーソナライズし、ウェブサイトのパフォーマンスを分析したいと考えていますが、それはあなたが受け入れる場合にのみです。",
             acceptAll: "すべてを受け入れる",
