@@ -317,6 +317,54 @@ export const translationEN = {
             "Alphaday's mission is to bring you all the tools needed to follow your favorite projects, stay up-to-date with the latest narratives, and use your favorite dapps, all from the comfort of one easy-to-use customizable dashboard.",
         close_button: "Close",
     },
+    error_page: {
+        offline: {
+            heading: {
+                text: "You're",
+                highlight: "offline",
+            },
+            description:
+                "Looks like you lost your connection. Please check it and try again.",
+        },
+        "503": {
+            heading: {
+                text: "System",
+                highlight: "maintenance",
+            },
+            description1: {
+                text: "We are performing some scheduled maintenance at the moment. We'll be back up shortly! Meanwhile, you can check our",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+            },
+            description2: "And make sure to check back again later.",
+        },
+        "403": {
+            heading: {
+                text: "unauthorised",
+                highlight: "403",
+            },
+            description: "You don't have permissions to access this page.",
+        },
+        "404": {
+            heading: {
+                highlight: "404",
+            },
+            description:
+                "Sorry, the page you are looking for could not be found.",
+        },
+        default: {
+            description: {
+                text: "Something went wrong, we'll be back up shortly! Meanwhile, you can check our",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+                textAfterLink: "for updates.",
+            },
+        },
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -640,5 +688,53 @@ export const translationJA: typeof translationEN = {
         mission:
             "Alphadayは、お気に入りのプロジェクトをフォローし、最新の情報を常に把握し、使いやすいカスタマイズ可能なダッシュボードから好きなdappsを使用するために必要なすべてのツールを提供することを使命としています。",
         close_button: "閉じる",
+    },
+    error_page: {
+        offline: {
+            heading: {
+                text: "オフラインです",
+                highlight: "",
+            },
+            description:
+                "接続が切れたようです。接続を確認して、もう一度お試しください。",
+        },
+        "503": {
+            heading: {
+                text: "システム",
+                highlight: "メンテナンス",
+            },
+            description1: {
+                text: "現在、定期メンテナンスを実施しています。すぐに戻ります！その間、",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+            },
+            description2: "をチェックしてください。",
+        },
+        "403": {
+            heading: {
+                text: "未承認",
+                highlight: "403",
+            },
+            description: "このページにアクセスする権限がありません。",
+        },
+        "404": {
+            heading: {
+                highlight: "404",
+            },
+            description:
+                "申し訳ありませんが、お探しのページが見つかりませんでした。",
+        },
+        default: {
+            description: {
+                text: "何かが間違ってしまいました。すぐに戻ります！その間、",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+                textAfterLink: "をチェックしてください。",
+            },
+        },
     },
 };

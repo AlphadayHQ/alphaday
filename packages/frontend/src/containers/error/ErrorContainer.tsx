@@ -1,7 +1,10 @@
 import React from "react";
+import i18next from "i18next";
 import { useGetRemoteStatusQuery } from "src/api/services";
 import { isNumber } from "src/api/utils/helpers";
 import GeneralError from "src/components/error/GeneralError";
+
+const t = i18next.t.bind(i18next);
 
 const getErrorMessage = ({
     status,
@@ -12,12 +15,13 @@ const getErrorMessage = ({
         return (
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
-                    You&apos;re{" "}
-                    <span className="text-secondaryOrange pr-1">offline</span>
+                    {t("error_page.offline.heading.text")}{" "}
+                    <span className="text-secondaryOrange pr-1">
+                        {t("error_page.offline.heading.highlight")}
+                    </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    Looks like you lost your connection. Please check it and try
-                    again.
+                    {t("error_page.offline.description")}
                 </p>
             </>
         );
@@ -27,25 +31,24 @@ const getErrorMessage = ({
         return (
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
-                    System{" "}
+                    {t("error_page.503.heading.text")}{" "}
                     <span className="text-secondaryOrange pr-1">
-                        maintenance
+                        {t("error_page.503.heading.highlight")}
                     </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    We are performing some scheduled maintenance at the moment.
-                    We&apos;ll be back up shortly! Meanwhile, you can check our{" "}
+                    {t("error_page.503.description1.text")}{" "}
                     <a
-                        href="https://twitter.com/AlphadayHQ"
+                        href={t("error_page.503.description1.link.url")}
                         target="_blank"
                         rel="noreferrer noopener"
                     >
-                        twitter
+                        {t("error_page.503.description1.link.text")}
                     </a>
                     .
                 </p>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    And make sure to check back again later.
+                    {t("error_page.503.description2")}
                 </p>
             </>
         );
@@ -55,11 +58,13 @@ const getErrorMessage = ({
         return (
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
-                    unauthorised{" "}
-                    <span className="text-secondaryOrange pr-1">403</span>
+                    {t("error_page.403.heading.text")}{" "}
+                    <span className="text-secondaryOrange pr-1">
+                        {t("error_page.403.heading.highlight")}
+                    </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    You don&apos;t have permissions to access this page.
+                    {t("error_page.403.description")}
                 </p>
             </>
         );
@@ -69,10 +74,12 @@ const getErrorMessage = ({
         return (
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
-                    <span className="text-secondaryOrange pr-1">404</span>
+                    <span className="text-secondaryOrange pr-1">
+                        {t("error_page.404.heading.highlight")}
+                    </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    Sorry, the page you are looking for could not be found.
+                    {t("error_page.404.description")}
                 </p>
             </>
         );
@@ -86,17 +93,16 @@ const getErrorMessage = ({
                 </h1>
             )}
             <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                Something went wrong, we&apos;ll be back up shortly! Meanwhile,
-                you can check our{" "}
+                {t("error_page.default.description.text")}{" "}
                 <a
                     className="twitter"
-                    href="https://twitter.com/AlphadayHQ"
+                    href={t("error_page.default.description.link.url")}
                     target="_blank"
                     rel="noreferrer noopener"
                 >
-                    twitter
+                    {t("error_page.default.description.link.text")}
                 </a>{" "}
-                for updates.
+                {t("error_page.default.description.textAfterLink")}
             </p>
         </>
     );
