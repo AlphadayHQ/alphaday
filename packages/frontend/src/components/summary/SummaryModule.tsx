@@ -2,6 +2,7 @@ import { FC } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 import { TNewsSummary } from "src/api/types";
 import CONFIG from "src/config/config";
 
@@ -53,6 +54,7 @@ const getHighLights = (summary: TNewsSummary) => {
 };
 
 const SummaryModule: FC<ISummaryModule> = ({ isLoadingSummary, summary }) => {
+    const { t } = useTranslation();
     if (isLoadingSummary || summary === undefined) {
         return (
             <ModuleLoader
@@ -65,7 +67,7 @@ const SummaryModule: FC<ISummaryModule> = ({ isLoadingSummary, summary }) => {
         <div className="h-full">
             <h6 className="px-3 pt-3 mb-0">
                 <p className="fontGroup-highlight">
-                    Briefing for{" "}
+                    {t("others.briefing_for")}{" "}
                     {moment(summary.updated_at).format("Do MMMM, YYYY")}
                 </p>
             </h6>
