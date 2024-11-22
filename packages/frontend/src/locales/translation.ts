@@ -163,6 +163,11 @@ export const translationEN = {
         change: "Change",
         name: "Name",
         tvl: "TVL",
+        cookie: {
+            text: "We use essential cookies to make Alphaday work. We&apos;d like to use other cookies to improve and personalize your visit and to analyze our website&apos;s performance, but only if you accept.",
+            acceptAll: "Accept All",
+            acceptEssential: "Accept Essential",
+        },
     },
     verasity: {
         token_name: "Token Name",
@@ -379,6 +384,11 @@ export const translationJA: typeof translationEN = {
         change: "変更",
         name: "名前",
         tvl: "TVL",
+        cookie: {
+            text: "Alphadayを動作させるために必要なクッキーを使用しています。他のクッキーを使用して、訪問を改善し、パーソナライズし、ウェブサイトのパフォーマンスを分析したいと考えていますが、それはあなたが受け入れる場合にのみです。",
+            acceptAll: "すべてを受け入れる",
+            acceptEssential: "必要なものを受け入れる",
+        },
     },
     verasity: {
         token_name: "トークン名",
