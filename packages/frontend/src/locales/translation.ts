@@ -261,6 +261,12 @@ export const translationEN = {
         slow: "Slow",
         beacon_chain_data: "Beacon Chain Data",
     },
+    qna: {
+        intro: "This widget is an interface to Alphaday&apos;s aggregated crypto data. You can query this data by simply typing arbitrary questions in natural language, like for instance &quot;what is the project with the highest tvl?&quot;",
+        highlight:
+            "You need to connect and verify your wallet to use this widget.",
+        button: "Ask a question",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -528,5 +534,11 @@ export const translationJA: typeof translationEN = {
         standard: "標準",
         slow: "遅い",
         beacon_chain_data: "ビーコンチェーンデータ",
+    },
+    qna: {
+        intro: "このウィジェットはAlphadayの集約された暗号データへのインターフェイスです。たとえば、「最高のtvlを持つプロジェクトは何ですか？」など、自然言語で任意の質問を入力してこのデータをクエリできます。",
+        highlight:
+            "このウィジェットを使用するには、ウォレットを接続して確認する必要があります。",
+        button: "質問する",
     },
 };
