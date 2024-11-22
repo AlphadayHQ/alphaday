@@ -8,6 +8,7 @@ import CookieDisclaimer, {
     TCookieChoiceProps,
 } from "src/components/cookie-disclaimer/CookieDisclaimer";
 import CONFIG from "src/config";
+import i18n from "src/i18n";
 
 const CookieDisclaimerContainer: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -44,7 +45,7 @@ const CookieDisclaimerContainer: React.FC = () => {
     const choices: Array<TCookieChoiceProps> = [
         {
             key: ECookieChoice.AcceptAll,
-            buttonText: "Accept All",
+            buttonText: i18n.t("others.cookie.acceptAll"),
             handler: () => {
                 setChoice(ECookieChoice.AcceptAll);
             },
@@ -52,7 +53,7 @@ const CookieDisclaimerContainer: React.FC = () => {
         },
         {
             key: ECookieChoice.AcceptEssential,
-            buttonText: "Accept Essential",
+            buttonText: i18n.t("others.cookie.acceptEssential"),
             handler: () => {
                 setChoice(ECookieChoice.AcceptEssential);
             },

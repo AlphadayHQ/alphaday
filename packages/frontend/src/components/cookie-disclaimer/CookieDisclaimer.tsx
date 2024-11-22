@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Button, Overlay } from "@alphaday/ui-kit";
 import CONFIG from "src/config";
+import i18n from "src/i18n";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
@@ -25,10 +26,7 @@ const CookieDisclaimer: FC<IProps> = ({ choices }) => (
     >
         <div className="p-2 flex flex-col w-full max-w-screen-three-col overflow-hidden items-center three-col:p-5 three-col:flex-row">
             <p className="text-primary mx-auto min-w-[280px] text-center three-col:text-left">
-                We use essential cookies to make Alphaday work. We&apos;d like
-                to use other cookies to improve and personalize your visit and
-                to analyze our website&apos;s performance, but only if you
-                accept.
+                {i18n.t("others.cookie.text")}
             </p>
             <div className="m-2 flex flex-row justify-end items-end transform scale-[70px] two-col:transform-none [&_*]:ml-4">
                 {choices
