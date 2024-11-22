@@ -163,6 +163,7 @@ export const translationEN = {
         change: "Change",
         name: "Name",
         tvl: "TVL",
+        no_items_found: "No Items Found",
         cookie: {
             text: "We use essential cookies to make Alphaday work. We&apos;d like to use other cookies to improve and personalize your visit and to analyze our website&apos;s performance, but only if you accept.",
             acceptAll: "Accept All",
@@ -224,6 +225,21 @@ export const translationEN = {
             minutes: "Minutes",
             seconds: "Seconds",
         },
+    },
+    datelocale: {
+        future: "in %s",
+        past: "%s ago",
+        s: "%ds",
+        m: "%dm",
+        mm: "%dm",
+        h: "%dh",
+        hh: "%dh",
+        d: "%dd",
+        dd: "%dd",
+        M: "%dmo",
+        MM: "%dmo",
+        y: "%dy",
+        yy: "%dy",
     },
 };
 
@@ -392,6 +408,7 @@ export const translationJA: typeof translationEN = {
         change: "変更",
         name: "名前",
         tvl: "TVL",
+        no_items_found: "アイテムが見つかりません",
         cookie: {
             text: "Alphadayを動作させるために必要なクッキーを使用しています。他のクッキーを使用して、訪問を改善し、パーソナライズし、ウェブサイトのパフォーマンスを分析したいと考えていますが、それはあなたが受け入れる場合にのみです。",
             acceptAll: "すべてを受け入れる",
@@ -455,5 +472,20 @@ export const translationJA: typeof translationEN = {
             minutes: "分",
             seconds: "秒",
         },
+    },
+    datelocale: {
+        future: "%s後",
+        past: "%s前",
+        s: "%ds",
+        m: "%dm",
+        mm: "%dm",
+        h: "%dh",
+        hh: "%dh",
+        d: "%dd",
+        dd: "%dd",
+        M: "%dmo",
+        MM: "%dmo",
+        y: "%dy",
+        yy: "%dy",
     },
 };

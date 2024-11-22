@@ -1,5 +1,6 @@
 import { FC, FormEvent, useRef, useState } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { useWidgetSize } from "src/api/hooks";
 import {
     TCustomLayoutEntry,
@@ -34,6 +35,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     handlePaginate,
     setWidgetHeight,
 }) => {
+    const { t } = useTranslation();
     const widgetSize = useWidgetSize([500]);
     const isCompactMode =
         widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
@@ -72,7 +74,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     if (items.length === 0) {
         return (
             <div className="flex flex-auto h-300 justify-center items-center">
-                <p>No Items Found</p>
+                <p>{t("others.no_items_found")}</p>
             </div>
         );
     }
