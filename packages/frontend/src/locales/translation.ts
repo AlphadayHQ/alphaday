@@ -217,6 +217,14 @@ export const translationEN = {
             signUpToBookmark: "Sign up to bookmark this ${item}",
         },
     },
+    countdown: {
+        labels: {
+            days: "Days",
+            hours: "Hours",
+            minutes: "Minutes",
+            seconds: "Seconds",
+        },
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -438,6 +446,14 @@ export const translationJA: typeof translationEN = {
             signUpToBookmark:
                 // eslint-disable-next-line no-template-curly-in-string
                 "この${item}をブックマークするにはサインアップしてください",
+        },
+    },
+    countdown: {
+        labels: {
+            days: "日",
+            hours: "時間",
+            minutes: "分",
+            seconds: "秒",
         },
     },
 };
