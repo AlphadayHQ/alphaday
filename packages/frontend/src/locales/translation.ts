@@ -164,6 +164,14 @@ export const translationEN = {
         name: "Name",
         tvl: "TVL",
     },
+    verasity: {
+        token_name: "Token Name",
+        token_ticker: "Token Ticker",
+        sm_address: "Smart Contract Address",
+        total_supply: "Total Supply",
+        max_circle_supply: "Max Circulating Supply",
+        circle_supply: "Circulating Supply",
+    },
     messages: {
         error: {
             title: "Error",
@@ -371,6 +379,14 @@ export const translationJA: typeof translationEN = {
         change: "変更",
         name: "名前",
         tvl: "TVL",
+    },
+    verasity: {
+        token_name: "トークン名",
+        token_ticker: "トークンティッカー",
+        sm_address: "スマートコントラクトアドレス",
+        total_supply: "総供給量",
+        max_circle_supply: "最大循環供給量",
+        circle_supply: "循環供給量",
     },
     messages: {
         error: {
