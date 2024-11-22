@@ -43,6 +43,7 @@ export const translationEN = {
             feed: "Feed",
             trending: "Trending",
             readLater: "Read Later",
+            readMore: "Read More",
             bookmarks: "Bookmarks",
             timeRange: "Time Range",
             media: "Media",
@@ -148,6 +149,15 @@ export const translationEN = {
         all_channels: "All Channels",
         channels_input_placeholder: "Search for channels",
     },
+    others: {
+        tag_options: {
+            auth: "ethereum, bitcoin, etc.",
+            unAuth: "Sign up to pin coins and more",
+        },
+        change: "Change",
+        name: "Name",
+        tvl: "TVL",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -195,6 +205,7 @@ export const translationJA: typeof translationEN = {
             feed: "フィード",
             trending: "トレンド",
             readLater: "後で読む",
+            readMore: "続きを読む",
             bookmarks: "ブックマーク",
             timeRange: "時間帯",
             media: "メディア",
@@ -299,5 +310,14 @@ export const translationJA: typeof translationEN = {
         selected_channels: "選択したチャンネル",
         all_channels: "すべてのチャンネル",
         channels_input_placeholder: "チャンネルを検索",
+    },
+    others: {
+        tag_options: {
+            auth: "ethereum、bitcoinなど",
+            unAuth: "コインをピン留めなどのためにサインアップ",
+        },
+        change: "変更",
+        name: "名前",
+        tvl: "TVL",
     },
 };

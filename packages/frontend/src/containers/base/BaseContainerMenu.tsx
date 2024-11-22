@@ -234,7 +234,6 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                             style={IconStyle}
                             className="icon text-primaryVariant200"
                         />
-
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             {t("widget.remove_widget")}
                         </div>
