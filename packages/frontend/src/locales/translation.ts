@@ -370,6 +370,17 @@ export const translationEN = {
         view_wallet_board: "View Wallet Board",
         creating_wallet_board: "Creating Wallet Board",
     },
+    terms_of_service: {
+        titleOne: "Legal Disclaimer",
+        text_one:
+            "Alphaday is not responsible for the operations or performance of third-party platforms and widgets, including Uniswap. The Uniswap Swap Widget is provided as a convenience for our users. Alphaday does not control or manage transactions made through Uniswap, and we are not responsible for any losses or damages incurred as a result of using the Uniswap Swap Widget. Users are encouraged to do their own research and exercise caution when trading cryptocurrencies. By using the Uniswap Swap Widget, you agree to Uniswap Lab's",
+        text_two: "Terms of Service",
+        text_three: "and",
+        text_four: "Privacy Policy",
+        titleTwo: "Risk Disclosure",
+        text_five:
+            "Cryptocurrency trading involves significant risk and may result in the loss of your invested capital. You should not invest more than you can afford to lose and should ensure that you fully understand the risks involved. Price volatility and the global nature of the cryptocurrency market may lead to significant losses. Alphaday does not provide any investment advice or recommendations regarding the suitability of any cryptocurrency transactions. All trading decisions are made by users and not Alphaday. Please consult with a financial advisor before making any trading decisions.",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -746,5 +757,16 @@ export const translationJA: typeof translationEN = {
         create_wallet_board: "ウォレットボードを作成",
         view_wallet_board: "ウォレットボードを表示",
         creating_wallet_board: "ウォレットボードを作成中",
+    },
+    terms_of_service: {
+        titleOne: "法的免責事項",
+        text_one:
+            "Alphadayは、Uniswapを含むサードパーティプラットフォームやウィジェットの操作やパフォーマンスについて責任を負いません。Uniswapスワップウィジェットは、ユーザーの便宜のために提供されています。AlphadayはUniswapを介した取引を制御または管理せず、Uniswap Swapウィジェットを使用することによって生じた損失や損害について責任を負いません。ユーザーは、暗号通貨の取引を行う際には自己の調査を行い、注意を払うことが推奨されます。Uniswap Swapウィジェットを使用することで、Uniswap Labの",
+        text_two: "利用規約",
+        text_three: "および",
+        text_four: "プライバシーポリシー",
+        titleTwo: "リスク開示",
+        text_five:
+            "暗号通貨の取引には大きなリスクが伴い、投資した資本を失う可能性があります。失っても支障のない範囲でのみ投資を行い、関連するリスクを十分に理解していることを確認してください。価格の変動性や暗号通貨市場のグローバルな性質により、大きな損失が発生する可能性があります。Alphadayは、暗号通貨取引の適合性に関する投資アドバイスや推奨を提供していません。すべての取引の決定はユーザーによって行われ、Alphadayは関与しません。取引の決定を行う前に、金融アドバイザーに相談してください。",
     },
 };
