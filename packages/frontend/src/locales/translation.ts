@@ -197,6 +197,7 @@ export const translationEN = {
             boardHasNoRequiredWidget:
                 // eslint-disable-next-line no-template-curly-in-string
                 "This ${boardName} board does not have the required ${SlugToWidgetNameMap[widget_template]} widget, to access this route you need to add the ${SlugToWidgetNameMap[widget_template]} widget to this board and refresh the page.",
+            back_to_home: "Back to Home",
         },
         success: {
             title: "Success",
@@ -442,6 +443,7 @@ export const translationJA: typeof translationEN = {
             boardHasNoRequiredWidget:
                 // eslint-disable-next-line no-template-curly-in-string
                 "この${boardName}ボードには、${SlugToWidgetNameMap[widget_template]}ウィジェットが必要です。このルートにアクセスするには、${SlugToWidgetNameMap[widget_template]}ウィジェットをこのボードに追加してページを更新する必要があります。",
+            back_to_home: "ホームに戻る",
         },
         success: {
             title: "成功",
