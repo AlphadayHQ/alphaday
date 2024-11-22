@@ -1,3 +1,4 @@
+import i18next from "i18next";
 import { TCoin } from "./primitives";
 
 export type TAssetPrice = {
@@ -38,14 +39,14 @@ export type TCoinMarketHistory = {
 };
 
 export const CHART_RANGE_OPTIONS = {
-    oneDay: "1D",
-    oneWeek: "1W",
-    oneMonth: "1M",
-    threeMonths: "3M",
-    yearToDate: "YTD",
-    oneYear: "1Y",
-    threeYear: "3Y",
-    all: "ALL",
+    oneDay: `1${i18next.t("datelocale.d")}`,
+    oneWeek: `1${i18next.t("datelocale.w")}`,
+    oneMonth: `1${i18next.t("datelocale.M")}`,
+    threeMonths: `3${i18next.t("datelocale.M")}`,
+    yearToDate: i18next.t("datelocale.ytd"),
+    oneYear: `1${i18next.t("datelocale.y")}`,
+    threeYear: `3${i18next.t("datelocale.y")}`,
+    all: i18next.t("navigation.general.all"),
 } as const;
 type TRangeKeys = keyof typeof CHART_RANGE_OPTIONS;
 export type TChartRange = (typeof CHART_RANGE_OPTIONS)[TRangeKeys];

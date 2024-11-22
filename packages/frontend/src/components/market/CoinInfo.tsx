@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import i18next from "i18next";
 import { TBaseEntity, TCoin } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import ItemBookmark from "src/components/listItem/ItemBookmark";
@@ -62,7 +63,7 @@ const CoinInfo: FC<{
                         }).value
                     }
                     <span className="lowercase text-primaryVariant100">
-                        / 24h
+                        / 24{i18next.t("datelocale.h")}
                     </span>
                 </h6>
             </div>

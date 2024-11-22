@@ -1,5 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { formatNumber } from "src/api/utils/format";
 import { ReactComponent as NoImageSVG } from "src/assets/icons/no-image.svg";
 
@@ -10,6 +11,7 @@ interface INft {
 }
 
 const NftCard: FC<INft> = ({ img, name, value }) => {
+    const { t } = useTranslation();
     const [imgLoadFailed, setImgLoadFailed] = useState(false);
     const [videoLoadFailed, setVideoLoadFailed] = useState(false);
 
@@ -59,7 +61,7 @@ const NftCard: FC<INft> = ({ img, name, value }) => {
                                 title="Value in Eth"
                             >
                                 <span className="leading-none fontGroup-mini whitespace-nowrap two-col:inline-block">
-                                    Est. value
+                                    {t("others.est_value")}
                                 </span>
                                 <p className="whitespace-nowrap fontGroup-highlightSemi two-col:whitespace-normal">
                                     Ξ {formatNumber({ value }).value}
