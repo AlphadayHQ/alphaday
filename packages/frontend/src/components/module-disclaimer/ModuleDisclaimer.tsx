@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Button, ScrollBar, TextOverlay } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import { REMARK_URL_REGEX, remarkRegex } from "src/api/utils/textUtils";
 import CONFIG from "src/config";
@@ -23,6 +24,7 @@ const ModuleDisclaimer: FC<IProps> = ({
     onAccept,
     onReject,
 }) => {
+    const { t } = useTranslation();
     if (!show) {
         return null;
     }
@@ -44,7 +46,7 @@ const ModuleDisclaimer: FC<IProps> = ({
                             variant="primaryXL"
                             className="ml-4"
                         >
-                            Accept
+                            {t("others.accept")}
                         </Button>
                         {onReject && (
                             <Button
@@ -52,7 +54,7 @@ const ModuleDisclaimer: FC<IProps> = ({
                                 variant="primaryXL"
                                 className="ml-4"
                             >
-                                Decline
+                                {t("others.decline")}
                             </Button>
                         )}
                     </div>

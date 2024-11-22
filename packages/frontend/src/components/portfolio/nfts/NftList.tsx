@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { ScrollBar } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TZapperNftAsset } from "src/api/services";
 import globalMessages from "src/globalMessages";
 import CONFIG from "../../../config";
@@ -30,6 +31,7 @@ const getImage = (data: TZapperNftAsset): string | undefined => {
 };
 
 const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
+    const { t } = useTranslation();
     const nftCards = nftData.items.map((item) => (
         <NftCard
             key={
@@ -50,7 +52,7 @@ const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
     const message =
         nftData.items.length === 0 ? (
             <div className="flex justify-center items-center top-[220px] z-[2] !h-[200px] text-primaryVariant100">
-                No NFTs found for the wallet(s) provided.
+                {t("messages.no_nfts_found")}
             </div>
         ) : (
             <ScrollBar>
@@ -62,7 +64,7 @@ const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
 
     const error = nftsQueryFailed && (
         <div className="flex justify-center items-center top-[220px] z-[2] !h-[200px] text-primaryVariant100">
-            {globalMessages.error.requestFailed("your nfts")}
+            {globalMessages.error.requestFailed(t("others.your_nfts"))}
         </div>
     );
 
