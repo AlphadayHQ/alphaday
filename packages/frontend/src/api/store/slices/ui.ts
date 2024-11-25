@@ -11,6 +11,7 @@ export interface IUIState {
     showWidgetLib: boolean;
     showBalance: boolean;
     showAboutModal: boolean;
+    showLanguageModal: boolean;
     tutorial: ITutorialState;
     cookieChoice: ECookieChoice | undefined;
     mobile: {
@@ -26,6 +27,7 @@ const initialState: IUIState = {
     theme: "dark",
     showWidgetLib: false,
     showAboutModal: false,
+    showLanguageModal: false,
     showBalance: true,
     tutorial: { showTutorial: undefined, currentTutorialTip: undefined },
     cookieChoice: undefined,
@@ -57,6 +59,9 @@ const uiSlice = createSlice({
         },
         toggleAboutModal(draft) {
             draft.showAboutModal = !draft.showAboutModal;
+        },
+        toggleLanguageModal(draft) {
+            draft.showLanguageModal = !draft.showLanguageModal;
         },
         toggleWidgetsNavOpen(draft) {
             draft.mobile.widgetsNavOpen = !draft.mobile.widgetsNavOpen;
@@ -105,6 +110,7 @@ export const {
     toggleShowWidgetLib,
     toggleShowBalance,
     toggleAboutModal,
+    toggleLanguageModal,
     toggleWidgetsNavOpen,
     setStoreShowTutorial,
     setCurrentTutorialTip,

@@ -38,7 +38,13 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV106 = PersistedRootState;
+type RootStateV107 = PersistedRootState;
+type RootStateV106 =
+    | (PersistedState &
+          Omit<RootState, "ui"> & {
+              ui: Omit<IUIState, "showLanguageModal">;
+          })
+    | undefined;
 
 type RootStateV105 =
     | (PersistedState &
@@ -111,6 +117,7 @@ type TMigrations = MigrationManifest & {
     104: (s: RootStateV103) => RootStateV104;
     105: (s: RootStateV104) => RootStateV105;
     106: (s: RootStateV105) => RootStateV106;
+    107: (s: RootStateV106) => RootStateV107;
 };
 
 /**
@@ -277,6 +284,16 @@ const migrations: TMigrations = {
             ui: {
                 ...s.ui,
                 showAboutModal: false,
+            },
+        };
+    },
+    107: (s: RootStateV106): RootStateV107 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            ui: {
+                ...s.ui,
+                showLanguageModal: false,
             },
         };
     },
