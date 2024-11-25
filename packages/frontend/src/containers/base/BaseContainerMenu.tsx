@@ -156,7 +156,7 @@ const BaseContainerMenu: FC<IBaseContainerMenu> = ({
                         />
                         <div className="break-word w-full px-3 py-0 fontGroup-normal">
                             {isWidgetOptions
-                                ? t("navigation.close_options")
+                                ? t("widget.close_options")
                                 : t("widget.options")}
                         </div>
                     </div>
