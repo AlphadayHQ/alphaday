@@ -9,6 +9,7 @@ import {
     TUserView,
     WalletConnectionState,
 } from "../types";
+import { EnumLanguageCode } from "../types/language";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 import { IUIState } from "./slices/ui";
@@ -42,7 +43,7 @@ type RootStateV107 = PersistedRootState;
 type RootStateV106 =
     | (PersistedState &
           Omit<RootState, "ui"> & {
-              ui: Omit<IUIState, "showLanguageModal">;
+              ui: Omit<IUIState, "showLanguageModal" | "selectedLanguageCode">;
           })
     | undefined;
 
@@ -293,6 +294,7 @@ const migrations: TMigrations = {
             ...s,
             ui: {
                 ...s.ui,
+                selectedLanguageCode: EnumLanguageCode.EN,
                 showLanguageModal: false,
             },
         };

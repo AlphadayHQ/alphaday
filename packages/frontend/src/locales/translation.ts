@@ -10,6 +10,7 @@ export const translationEN = {
             sign_out: "Sign Out",
             sign_up: "Sign Up",
             tutorial: "Tutorial",
+            language: "Language",
             about_us: "About us",
             version: "Version",
             commit: "Commit",
@@ -381,6 +382,10 @@ export const translationEN = {
         text_five:
             "Cryptocurrency trading involves significant risk and may result in the loss of your invested capital. You should not invest more than you can afford to lose and should ensure that you fully understand the risks involved. Price volatility and the global nature of the cryptocurrency market may lead to significant losses. Alphaday does not provide any investment advice or recommendations regarding the suitability of any cryptocurrency transactions. All trading decisions are made by users and not Alphaday. Please consult with a financial advisor before making any trading decisions.",
     },
+    language: {
+        title: "Select Language",
+        close_button: "Close",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -395,6 +400,7 @@ export const translationJA: typeof translationEN = {
             sign_out: "サインアウト",
             sign_up: "サインアップ",
             tutorial: "チュートリアル",
+            language: "言語",
             about_us: "私たちについて",
             version: "バージョン",
             commit: "コミット",
@@ -768,5 +774,9 @@ export const translationJA: typeof translationEN = {
         titleTwo: "リスク開示",
         text_five:
             "暗号通貨の取引には大きなリスクが伴い、投資した資本を失う可能性があります。失っても支障のない範囲でのみ投資を行い、関連するリスクを十分に理解していることを確認してください。価格の変動性や暗号通貨市場のグローバルな性質により、大きな損失が発生する可能性があります。Alphadayは、暗号通貨取引の適合性に関する投資アドバイスや推奨を提供していません。すべての取引の決定はユーザーによって行われ、Alphadayは関与しません。取引の決定を行う前に、金融アドバイザーに相談してください。",
+    },
+    language: {
+        title: "言語を選択",
+        close_button: "閉じる",
     },
 };
