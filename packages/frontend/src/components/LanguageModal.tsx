@@ -35,8 +35,8 @@ export const LanguageModal: React.FC<IProps> = ({
 }) => {
     const { t } = useTranslation();
 
-    const handleLanguageSelect = async (code: EnumLanguageCode) => {
-        await i18next
+    const handleLanguageSelect = (code: EnumLanguageCode) => {
+        i18next
             .changeLanguage(code)
             .then(() => {
                 onSetLanguageCode(code);
