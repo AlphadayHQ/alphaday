@@ -25,7 +25,7 @@ export const translationEN = {
                 "Connect and verify your wallet to create new boards and see your custom boards",
         },
         widgets_library: {
-            title: "Widgerts Library",
+            title: "Widgets Library",
             searchBarPlaceholder: "Search for widgets",
             allWidgets: "All Widgets",
         },

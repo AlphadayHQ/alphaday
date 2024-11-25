@@ -6,6 +6,7 @@ import {
     CalendarMonth as CalMonth,
     twMerge,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TEvent } from "src/api/types";
 import { getEventCategoryByType } from "src/api/utils/calendarUtils";
 import { ReactComponent as ArrowUpSVG } from "src/assets/icons/arrow-up.svg";
@@ -41,6 +42,7 @@ const CalendarMonth: FC<
     onDatesSet,
     widgetHash,
 }) => {
+    const { t } = useTranslation();
     const [isAlphaModalOpen, setisAlphaModalOpen] = useState(false);
     const [showAllLegends, setShowAllLegends] = useState(false);
 
@@ -131,7 +133,9 @@ const CalendarMonth: FC<
                             className="flex m-[3px_5.5px_3px_0] p-[0_3.5px_0.5px_1px] min-w-max items-center cursor-pointer rounded-sm hover:text-primary text-accentVariant100"
                             onClick={() => setShowAllLegends((show) => !show)}
                         >
-                            {showAllLegends ? "less" : "more"}{" "}
+                            {showAllLegends
+                                ? t("navigation.general.less")
+                                : t("navigation.general.more")}{" "}
                             <ArrowUpSVG
                                 className={showAllLegends ? "rotate-180" : ""}
                                 height="10px"
