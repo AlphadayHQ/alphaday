@@ -36,16 +36,18 @@ export const LanguageModal: React.FC<IProps> = ({
     const { t } = useTranslation();
 
     const handleLanguageSelect = async (code: EnumLanguageCode) => {
-        try {
-            await i18next.changeLanguage(code);
-            onSetLanguageCode(code);
-            onClose?.();
-        } catch (error) {
-            Logger.error(
-                "handleLanguageSelect::Error changing language::",
-                error
-            );
-        }
+        await i18next
+            .changeLanguage(code)
+            .then(() => {
+                onSetLanguageCode(code);
+                onClose?.();
+            })
+            .catch((e) => {
+                Logger.error(
+                    "handleLanguageSelect::Error changing language::",
+                    e
+                );
+            });
     };
     return (
         <Modal showModal={showModal} onClose={onClose} size="md">
