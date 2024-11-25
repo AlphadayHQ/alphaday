@@ -19,6 +19,7 @@ import styles from "./ProfileDropdownWrapper.module.scss";
 interface IProps {
     onSignOut: () => MaybeAsync<void>;
     onSignUpSignIn: () => MaybeAsync<void>;
+    onToggleLanguageModal: () => void;
     isAuthenticated: boolean;
     onShowTutorial: (s: boolean) => void;
     showTutorial: boolean | undefined;
@@ -37,6 +38,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     onSignOut,
     onSignUpSignIn,
     onShowTutorial,
+    onToggleLanguageModal,
     showTutorial,
     onShowAboutUsModal,
     isAuthenticated,
@@ -117,6 +119,12 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         >
                             <span title={walletMenuOption.title}>
                                 {walletMenuOption.menuTitle}
+                            </span>
+                        </DropdownItem>
+                        <Divider />
+                        <DropdownItem onClick={onToggleLanguageModal}>
+                            <span title="Switch Language">
+                                {t("navigation.menu.language")}
                             </span>
                         </DropdownItem>
                         <Divider />

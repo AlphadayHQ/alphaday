@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ECookieChoice, TTutorialTip } from "src/api/types";
+import { EnumLanguageCode } from "src/api/types/language";
 
 export type TTheme = "dark";
 export interface ITutorialState {
@@ -12,6 +13,7 @@ export interface IUIState {
     showBalance: boolean;
     showAboutModal: boolean;
     showLanguageModal: boolean;
+    selectedLanguageCode: EnumLanguageCode;
     tutorial: ITutorialState;
     cookieChoice: ECookieChoice | undefined;
     mobile: {
@@ -28,6 +30,7 @@ const initialState: IUIState = {
     showWidgetLib: false,
     showAboutModal: false,
     showLanguageModal: false,
+    selectedLanguageCode: EnumLanguageCode.EN,
     showBalance: true,
     tutorial: { showTutorial: undefined, currentTutorialTip: undefined },
     cookieChoice: undefined,
@@ -65,6 +68,15 @@ const uiSlice = createSlice({
         },
         toggleWidgetsNavOpen(draft) {
             draft.mobile.widgetsNavOpen = !draft.mobile.widgetsNavOpen;
+        },
+        setSelectedLanguageCode(
+            draft,
+            action: PayloadAction<{ code: EnumLanguageCode }>
+        ) {
+            const {
+                payload: { code },
+            } = action;
+            draft.selectedLanguageCode = code;
         },
         setStoreShowTutorial(draft, action: PayloadAction<{ show: boolean }>) {
             const {
@@ -112,6 +124,7 @@ export const {
     toggleAboutModal,
     toggleLanguageModal,
     toggleWidgetsNavOpen,
+    setSelectedLanguageCode,
     setStoreShowTutorial,
     setCurrentTutorialTip,
     setCookieChoice,
