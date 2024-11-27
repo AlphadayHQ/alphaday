@@ -1,6 +1,6 @@
 import { FC, memo, useState } from "react";
 import { ApexAreaChart, Spinner, themeColors } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";

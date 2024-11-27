@@ -5,6 +5,7 @@ import {
     ScrollBar,
     Switch,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { getEventCategoryByColor } from "src/api/utils/calendarUtils";
 import CONFIG from "src/config";
 import { calendarMessages } from "src/globalMessages";
@@ -29,6 +30,7 @@ const CalendarList: FC<ICalendarBaseProps> = ({
     widgetHeight,
     isFetchingEvents,
 }) => {
+    const { i18n } = useTranslation();
     const scrollRef = useRef<HTMLElement>();
 
     return (
@@ -65,6 +67,7 @@ const CalendarList: FC<ICalendarBaseProps> = ({
                 }
             >
                 <CalList
+                    locale={i18n.language}
                     eventClickHandler={(e: EventClickArg) =>
                         eventClickHandler(e, events, onClickEvent)
                     }

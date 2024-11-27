@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { TEventDetails } from "src/api/types";
 import { getEventCategoryByType } from "src/api/utils/calendarUtils";
 import { TEventCategory } from "src/components/types";

@@ -1,6 +1,6 @@
 import { useMemo, FC } from "react";
 import { ApexAreaChart, themeColors } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { TTvlHistory } from "src/api/types";
 import { minVal } from "src/api/utils/helpers";
 

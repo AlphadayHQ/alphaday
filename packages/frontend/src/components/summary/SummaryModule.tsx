@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { useTranslation } from "react-i18next";
 import { TNewsSummary } from "src/api/types";
 import CONFIG from "src/config/config";

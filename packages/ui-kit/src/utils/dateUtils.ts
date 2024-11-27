@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 /**
  *  returns a text that represents the given datetime
  *  relative to now.
@@ -6,7 +6,7 @@ import moment from "moment";
  * @returns string
  */
 export const computeDuration = (date: string | Date): string => {
-    moment.updateLocale("ja", {
+    moment.updateLocale("en", {
         relativeTime: {
             future: "in %s", // this shouldn't occur If it does there's an error.
             past: "%s ago",

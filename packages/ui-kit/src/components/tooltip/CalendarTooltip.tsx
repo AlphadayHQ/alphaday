@@ -1,5 +1,5 @@
 import { FC, RefObject } from "react";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { createPortal } from "react-dom";
 import { TDatePos, TEvent, TEventCategory } from "../calendar/event";
 import { ScrollBar } from "../scrollbar/ScrollBar";

@@ -47,6 +47,7 @@
     "ionicons": "7.3.0",
     "md5": "2.3.0",
     "moment": "2.29.4",
+    "moment-with-locales-es6": "^1.0.1",
     "query-string": "8.1.0",
     "react": "18.2.0",
     "react-beautiful-dnd": "13.1.1",

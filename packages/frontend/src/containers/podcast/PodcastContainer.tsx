@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { AudioPlayerProvider } from "react-use-audio-player";
 import { useView, usePagination, useWidgetHeight } from "src/api/hooks";
 import { TBaseTag } from "src/api/services";

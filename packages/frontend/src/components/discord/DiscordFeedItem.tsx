@@ -1,6 +1,6 @@
 import { FC, FormEvent, useState } from "react";
 import { listItemVariants, HRElement } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import { TDiscordItem } from "src/api/types";

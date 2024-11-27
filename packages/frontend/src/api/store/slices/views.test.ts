@@ -1,5 +1,5 @@
 import "src/mocks/libraryMocks";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { ETag, TCachedView, TSubscribedView } from "src/api/types";
 import { customTableModuleDataMock } from "src/mocks/tables";
 import {

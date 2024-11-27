@@ -1,6 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { KeyValueTable, Timer, twMerge } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { useTranslation } from "react-i18next";
 
 interface IProps {

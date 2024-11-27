@@ -1048,22 +1048,21 @@ export const translationES: typeof translationEN = {
     },
     datelocale: {
         future: "en %s",
-        past: " hace",
-        s: "s",
-        m: "min",
-        mm: "min",
-        h: "h",
-        hh: "h",
-        d: "d",
-        dd: "d",
-        w: "sem",
-        M: "mes",
-        MM: "mes",
-        y: "año",
-        ytd: "año hasta la fecha",
-        yy: "años",
+        past: "hace %s",
+        s: "s", // SEGUNDOS
+        m: "m", // MINUTO
+        mm: "m", // MINUTOS
+        h: "h", // HORA
+        hh: "h", // HORAS
+        d: "d", // DÍA
+        dd: "d", // DÍAS
+        w: "s", // SEMANA
+        M: "m", // MES
+        MM: "m", // MESES
+        y: "a", // AÑO
+        ytd: "aa", // AÑO A LA FECHA
+        yy: "a", // AÑOS
     },
-
     gas: {
         title: "Precio del gas",
         fast: "Rápido",
@@ -1446,20 +1445,20 @@ export const translationFR: typeof translationEN = {
     },
     datelocale: {
         future: "dans %s",
-        past: " il y a",
-        s: "s",
-        m: "min",
-        mm: "min",
-        h: "h",
-        hh: "h",
-        d: "j",
-        dd: "j",
-        w: "sem",
-        M: "mois",
-        MM: "mois",
-        y: "an",
-        ytd: "année à ce jour",
-        yy: "ans",
+        past: "il y a %s",
+        s: "s", // SECONDES
+        m: "m", // MINUTE
+        mm: "m", // MINUTES
+        h: "h", // HEURE
+        hh: "h", // HEURES
+        d: "j", // JOUR
+        dd: "j", // JOURS
+        w: "s", // SEMAINE
+        M: "mo", // MOIS
+        MM: "mo", // MOIS (PLURIEL)
+        y: "a", // ANNÉE
+        ytd: "aad", // ANNÉE À DATE
+        yy: "a", // ANNÉES
     },
     gas: {
         title: "Prix du gaz",

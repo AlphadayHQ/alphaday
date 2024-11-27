@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import chroma from "chroma-js";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { TRemoteEvent, TRemoteEventDetails } from "src/api/services";
 import { TEvent, TEventDetails } from "src/api/types";
 import {

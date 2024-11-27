@@ -1,5 +1,6 @@
 import { FC, memo } from "react";
 import { TabButton } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { CHART_RANGE_OPTIONS, TChartRange } from "src/api/types";
 import { EChartType } from "src/components/market/types";
 
@@ -14,14 +15,16 @@ const DateRangeBar: FC<Props> = memo(function DateRangeBar({
     onSelectChartRange,
     selectedChartType,
 }) {
+    const { t } = useTranslation();
     return (
         <div className="flex w-full justify-end border-none uppercase mb-2">
             {Object.values(CHART_RANGE_OPTIONS).map((option) => (
-                <span key={option} className="ml-1.5 mt-1.5">
+                <span key={option.value} className="ml-1.5 mt-1.5">
                     <TabButton
-                        open={selectedChartRange === option}
-                        onClick={() => onSelectChartRange(option)}
+                        open={selectedChartRange === option.value}
+                        onClick={() => onSelectChartRange(option.value)}
                         variant="extraSmall"
+                        className="capitalize"
                         disabled={
                             /**
                              * Disable 3Y and YTD for candlestick chart.
@@ -34,7 +37,8 @@ const DateRangeBar: FC<Props> = memo(function DateRangeBar({
                             ].find((e) => e === option)
                         }
                     >
-                        {option}
+                        {`${option.prefix}${t(option.translationKey)}`}
+                        {/* {option.value} */}
                     </TabButton>
                 </span>
             ))}
