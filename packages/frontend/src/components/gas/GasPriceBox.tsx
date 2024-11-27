@@ -1,5 +1,6 @@
 import { FC, HTMLProps } from "react";
 import { twMerge, Skeleton } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 
 const GasSkeleton = () => (
     <div className="h-10">
@@ -37,6 +38,7 @@ const GasPriceBox: FC<IGasPriceBox> = ({
     usdPrice,
     isCard,
 }) => {
+    const { t } = useTranslation();
     return (
         <div
             className={twMerge(
@@ -45,16 +47,18 @@ const GasPriceBox: FC<IGasPriceBox> = ({
             )}
         >
             {type === "fast" && (
-                <GasPriceTitle className="text-success">{type}</GasPriceTitle>
+                <GasPriceTitle className="text-success">
+                    {t("gas.fast")}
+                </GasPriceTitle>
             )}
             {type === "standard" && (
                 <GasPriceTitle className="text-primaryVariant100">
-                    {type}
+                    {t("gas.standard")}
                 </GasPriceTitle>
             )}
             {type === "slow" && (
                 <GasPriceTitle className="text-secondaryOrangeSoda">
-                    {type}
+                    {t("gas.slow")}
                 </GasPriceTitle>
             )}
             <div className="whitespace-nowrap text-center">

@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Button, Spinner, twMerge } from "@alphaday/ui-kit";
+import i18next from "i18next";
 import { EWalletViewState } from "src/api/types";
 import {
     getWalletViewStateMessages,
@@ -17,14 +18,14 @@ interface IWalletViewButton {
 const viewButtonChild: { [key in EWalletViewState]: JSX.Element } = {
     [EWalletViewState.Ready]: (
         <span className="button-text ml-[5px] text-white">
-            View wallet board
+            {i18next.t("wallet_view.view_wallet_board")}
         </span>
     ),
     [EWalletViewState.Fetching]: (
         <>
             <Spinner className="text-secondaryOrange h-[13px] w-[13px] border-[0.2em]" />
             <span className="button-text ml-[5px] text-white">
-                Creating wallet board
+                {i18next.t("wallet_view.creating_wallet_board")}
             </span>
         </>
     ),
@@ -35,7 +36,7 @@ const viewButtonChild: { [key in EWalletViewState]: JSX.Element } = {
         <>
             <WandSVG className="h-3 w-3 text-white" />
             <span className="button-text ml-[5px] text-white">
-                Create wallet board
+                {i18next.t("wallet_view.create_wallet_board")}
             </span>
         </>
     ),
@@ -43,7 +44,7 @@ const viewButtonChild: { [key in EWalletViewState]: JSX.Element } = {
         <>
             <WandSVG className="h-3 w-3 text-white" />
             <span className="button-text ml-[5px] text-white">
-                Create wallet board
+                {i18next.t("wallet_view.create_wallet_board")}
             </span>
         </>
     ),

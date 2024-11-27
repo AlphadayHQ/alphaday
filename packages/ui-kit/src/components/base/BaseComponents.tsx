@@ -59,8 +59,8 @@ export const BaseModuleHeader = forwardRef<
 
 export const BaseModuleOptionsFooter = forwardRef<
     HTMLDivElement | null,
-    { removeWidget: () => void }
->(({ removeWidget }, ref) => {
+    { text: string; removeWidget: () => void }
+>(({ removeWidget, text }, ref) => {
     return (
         <div ref={ref}>
             <div className="py-2 text-primaryVariant100 border-t-borderLine flex w-full justify-center self-end border-t-[0.8px] border-solid">
@@ -70,8 +70,7 @@ export const BaseModuleOptionsFooter = forwardRef<
                     title="Removes this widget from the current board"
                     className="hover:border-borderLine focus:border-borderLine border-borderLine"
                 >
-                    <TrashSVG className="w-4 fill-[inherit]" /> &nbsp; Remove
-                    Widget
+                    <TrashSVG className="w-4 fill-[inherit]" /> &nbsp; R {text}
                 </Button>
             </div>
         </div>

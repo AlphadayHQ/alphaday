@@ -1,25 +1,20 @@
 import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { Button, ScrollBar, IconButton, ChatForm } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TConversation } from "src/api/types";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import globalMessages from "src/globalMessages";
 import QnAGroup from "./ConversationGroup";
 
 const QnAStarter: FC<{ onClick: () => void }> = ({ onClick }) => {
+    const { t } = useTranslation();
     return (
         <div className="p-4">
-            <p>
-                This widget is an interface to Alphaday&apos;s aggregated crypto
-                data. You can query this data by simply typing arbitrary
-                questions in natural language, like for instance &quot;what is
-                the project with the highest tvl?&quot;
-            </p>
-            <p className="bold">
-                You need to connect and verify your wallet to use this widget.
-            </p>
+            <p>{t("qna.intro")}</p>
+            <p className="bold">{t("qna.highlight")}</p>
             <div className="ask-button-wrap">
                 <Button onClick={onClick} variant="primary">
-                    Ask a question
+                    {t("qna.button")}
                 </Button>
             </div>
         </div>

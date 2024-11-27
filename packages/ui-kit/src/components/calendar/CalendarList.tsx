@@ -5,7 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { Spinner } from "../spinner/Spinner";
 import {
     ICalendarBaseProps,
@@ -41,6 +41,7 @@ const getValidCalendarDateRange = () => {
 };
 
 interface ICalendarList extends ICalendarBaseProps {
+    locale: string;
     eventClickHandler: (e: EventClickArg) => void;
     handleHeaderTooltips: (
         info: DatesSetArg,
@@ -56,6 +57,7 @@ interface ICalendarList extends ICalendarBaseProps {
 }
 
 export const CalendarList: FC<ICalendarList> = ({
+    locale,
     events,
     selectedEventDetails,
     onDatesSet,
@@ -275,6 +277,7 @@ export const CalendarList: FC<ICalendarList> = ({
     return (
         <div className={`${showFullSize && "full-size"} calendar-list`}>
             <FullCalendar
+                locale={locale}
                 initialDate={selectedDate}
                 plugins={[
                     dayGridPlugin,

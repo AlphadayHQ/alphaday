@@ -1,29 +1,26 @@
 import { EItemsSortBy } from "../services";
+import { translateLabels } from "./translationUtils";
 
-const SORT_OPTIONS: {
+export const SORT_OPTIONS: {
     label: string;
     value: EItemsSortBy;
 }[] = [
     {
-        label: "(A-Z)",
         value: EItemsSortBy.Name,
+        label: translateLabels("(A-Z)"),
     },
     {
-        label: "Popular",
         value: EItemsSortBy.Popular,
+        label: translateLabels("Popular"),
     },
     {
-        label: "New",
         value: EItemsSortBy.New,
+        label: translateLabels("New"),
     },
 ];
 
-export const getSortOptionsArray = (): string[] => {
-    return SORT_OPTIONS.map((option) => option.label);
-};
-
-export const getSortOptionValue = (label: string): EItemsSortBy | null => {
-    const option = SORT_OPTIONS.find((op) => op.label === label);
+export const getSortOptionValue = (value: string): EItemsSortBy | null => {
+    const option = SORT_OPTIONS.find((op) => op.value === value);
     if (!option) {
         return null;
     }

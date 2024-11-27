@@ -185,8 +185,8 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         setFilter(normalizedValue);
     }, 300);
 
-    const handleSortBy = (sortLabel: string): void => {
-        const sort = getSortOptionValue(sortLabel);
+    const handleSortBy = (sortValue: string): void => {
+        const sort = getSortOptionValue(sortValue);
         if (isFetching || sort === null || sortBy === sort) return;
         if (widgets.length > 0) setWidgets([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);

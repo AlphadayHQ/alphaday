@@ -31,6 +31,7 @@ import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
+import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
@@ -359,6 +360,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             <TutorialContainer />
             <WalletConnectionDialogContainer />
             <AboutUsModalContainer />
+            <LanguageModalContainer />
         </MainLayout>
     );
 }

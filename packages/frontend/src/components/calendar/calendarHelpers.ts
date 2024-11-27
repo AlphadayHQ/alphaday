@@ -1,5 +1,5 @@
 import { DatesSetArg, EventClickArg } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import ReactGA from "react-ga4";
 import { TEvent } from "src/api/types";
 import { slugify } from "src/api/utils/textUtils";

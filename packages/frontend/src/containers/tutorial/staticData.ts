@@ -3,61 +3,52 @@ import {
     ETutorialIndicatorType,
     ETutorialTipId,
 } from "src/api/types";
+import i18n from "src/i18n";
+
+const translate = (key: string) => {
+    return i18n.t(`tutorials.${key}`);
+};
 
 export const tutorials = [
     {
         id: ETutorialTipId.SwitchView,
-        title: "Switch between boards",
-        text: "Optimize your workflow by using different boards curated with various widgets, or create your own.",
+        title: translate("switchView_title"),
+        text: translate("switchView_text"),
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.WalletView,
-        title: "Create a Wallet board",
-        text: "Keep track of all information on alphaday regarding assets in your wallet.",
+        title: translate("walletView_title"),
+        text: translate("walletView_text"),
         align: ETutorialTipAlign.Left,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.UseSeachBar,
-        title: "Search Bar",
-        text: "Search for your favorite tokens, projects, or topics to filter the content inside the widgets.",
+        title: translate("useSeachBar_title"),
+        text: translate("useSeachBar_text"),
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.ReArrangeWidget,
-        title: "Re-arrange widgets",
-        text: "Click and drag widgets by the top bar to change their position in the dashboard, or click once to minimize.",
+        title: translate("reArrangeWidget_title"),
+        text: translate("reArrangeWidget_text"),
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
     },
-    // {
-    //     id: ETutorialTipId.ResizeWidget,
-    //     title: "Widget resizing",
-    //     text:
-    //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    //     align: ETutorialTipAlign.Center,indicatorType: ETutorialIndicatorType.Ring,
-    // },
-    // {
-    //     id: ETutorialTipId.MaximizeWidget,
-    //     title: "Maximize widgets",
-    //     text:
-    //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    //     align: ETutorialTipAlign.Center,indicatorType: ETutorialIndicatorType.Ring,
-    // },
     {
         id: ETutorialTipId.UseWidgetLib,
-        title: "Widgets Library",
-        text: "There are dozens of useful widgets available for you in the Widgets Library to pick and choose from.",
+        title: translate("useWidgetLib_title"),
+        text: translate("useWidgetLib_text"),
         align: ETutorialTipAlign.Right,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.ComeBack,
         title: undefined,
-        text: "Come back to the walk-through at any time in the user menu.",
+        text: translate("comeBack_text"),
         align: ETutorialTipAlign.Right,
         indicatorType: ETutorialIndicatorType.Ring,
     },

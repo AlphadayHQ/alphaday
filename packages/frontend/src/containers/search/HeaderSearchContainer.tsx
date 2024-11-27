@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { ActionMeta } from "react-select";
 import { useGlobalSearch, useActivityLogger } from "src/api/hooks";
 import { useKeywordSearch } from "src/api/hooks/useKeywordSearch";
@@ -24,6 +25,7 @@ type TOption = {
 type TOptions = ReadonlyArray<TOption>;
 
 const HeaderSearchContainer: FC = () => {
+    const { t: translate } = useTranslation();
     const {
         keywordSearchList,
         setKeywordSearchList,
@@ -185,7 +187,7 @@ const HeaderSearchContainer: FC = () => {
                     onInputChange={debounce((e: string) => {
                         setSearchState(e);
                     }, 500)}
-                    placeholder="Search for assets, projects, events, etc."
+                    placeholder={translate("navigation.searchBarPlaceholder")}
                     initialSearchValues={
                         keywordSearchList === undefined
                             ? []

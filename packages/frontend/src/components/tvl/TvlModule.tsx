@@ -4,6 +4,7 @@ import useElementSize from "src/api/hooks/useElementSize";
 import { TProjectTvlHistory, TProjectData, TProjectType } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import { Logger } from "src/api/utils/logging";
+import { translateLabels } from "src/api/utils/translationUtils";
 import globalMessages from "src/globalMessages";
 import { ProtocolTvlItem, ChainTvlItem, TvlItemsHeader } from "./TvlItem";
 
@@ -23,11 +24,11 @@ interface ITvl {
 
 const TVL_NAV_ITEMS = [
     {
-        label: "Chains",
+        label: translateLabels("Chains"),
         value: ETVLItemPreference.Chain,
     },
     {
-        label: "Protocols",
+        label: translateLabels("Protocols"),
         value: ETVLItemPreference.Protocol,
     },
 ];

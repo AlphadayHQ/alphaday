@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useAccount } from "src/api/hooks";
 import { useAuth } from "src/api/hooks/useAuth";
 import { useTutorial } from "src/api/hooks/useTutorial";
-import { toggleAboutModal } from "src/api/store";
+import { toggleAboutModal, toggleLanguageModal } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 import { ETutorialTipId } from "src/api/types";
 import ProfileDropdownWrapper from "./ProfileDropdownWrapper";
@@ -19,11 +19,13 @@ const ProfileDropdownContainer: FC = () => {
     } = useTutorial();
 
     const toggleAboutUsModal = () => dispatch(toggleAboutModal());
+    const onToggleLanguageModal = () => dispatch(toggleLanguageModal());
 
     return (
         <ProfileDropdownWrapper
             onSignOut={logout}
             onSignUpSignIn={openAuthModal}
+            onToggleLanguageModal={onToggleLanguageModal}
             isAuthenticated={isAuthenticated}
             onShowTutorial={toggleShowTutorial}
             onShowAboutUsModal={toggleAboutUsModal}

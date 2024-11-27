@@ -1,4 +1,5 @@
 import { useEffect, useState, FC, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useHover, useLayer, useMousePositionAsTrigger } from "react-laag";
 import { toast } from "src/api/utils/toastUtils";
 import CONFIG from "src/config";
@@ -39,6 +40,7 @@ export interface IPieChart {
 }
 
 const PieChartModule: FC<IPieChart> = ({ data }) => {
+    const { t } = useTranslation();
     const {
         name,
         ticker,
@@ -223,19 +225,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                     <div className="fontGroup-normal">
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                Token Name:
+                                {t("verasity.token_name")}:
                             </span>{" "}
                             {name}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                Token Ticker:
+                                {t("verasity.token_ticker")}:
                             </span>{" "}
                             ${ticker}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                Smart contract address:
+                                {t("verasity.sm_address")}:
                             </span>{" "}
                             <span
                                 role="button"
@@ -259,19 +261,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                Total supply:
+                                {t("verasity.total_supply")}:
                             </span>{" "}
                             {totalSupply}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                Max. Circulating supply:
+                                {t("verasity.max_circle_supply")}:
                             </span>{" "}
                             {maxSupply}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                Circulating supply:
+                                {t("verasity.circle_supply")}:
                             </span>{" "}
                             {supply}
                         </div>
