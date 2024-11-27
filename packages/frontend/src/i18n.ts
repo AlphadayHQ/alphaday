@@ -2,7 +2,12 @@ import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import { Logger } from "./api/utils/logging";
-import { translationEN, translationJA } from "./locales/translation";
+import {
+    translationEN,
+    translationES,
+    translationFR,
+    translationJA,
+} from "./locales/translation";
 
 const resources = {
     en: {
@@ -11,6 +16,12 @@ const resources = {
     ja: {
         translation: translationJA,
     },
+    es: {
+        translation: translationES,
+    },
+    fr: {
+        translation: translationFR,
+    }
 };
 
 i18n.use(LanguageDetector)

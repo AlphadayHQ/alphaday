@@ -780,3 +780,796 @@ export const translationJA: typeof translationEN = {
         close_button: "閉じる",
     },
 };
+
+export const translationES: typeof translationEN = {
+    navigation: {
+        searchBarPlaceholder: "Buscar activos, proyectos, eventos, etc.",
+        boards: "Tableros",
+        openBoardsLibrary: "Abrir biblioteca de tableros",
+        widgets: "Widgets",
+        sortBy: "Ordenar por",
+        menu: {
+            sign_in: "Iniciar sesión",
+            sign_out: "Cerrar sesión",
+            sign_up: "Registrarse",
+            tutorial: "Tutorial",
+            language: "Idioma",
+            about_us: "Sobre nosotros",
+            version: "Versión",
+            commit: "Commit",
+        },
+        boards_library: {
+            title: "Biblioteca de tableros",
+            description:
+                "Cambia entre tableros para optimizar tu flujo de trabajo y ancla los más utilizados.",
+            custom_boards_title: "Tableros personalizados",
+            custom_boards_description_with_auth:
+                "Crea un tablero en blanco y agrega widgets",
+            custom_boards_description:
+                "Conecta tu cartera para autenticarte y crear nuevos tableros personalizados",
+        },
+        widgets_library: {
+            title: "Biblioteca de widgets",
+            searchBarPlaceholder: "Buscar widgets",
+            allWidgets: "Todos los widgets",
+        },
+        general: {
+            all: "Todos",
+            general: "General",
+            nfts: "NFT",
+            daos: "DAO",
+            layer2: "Capa 2",
+            defi: "DeFi",
+            trading: "Trading",
+            popular: "Popular",
+            name: "Nombre",
+            new: "Nuevo",
+            feed: "Feed",
+            trending: "Tendencias",
+            readLater: "Leer después",
+            readMore: "Leer más",
+            bookmarks: "Marcadores",
+            timeRange: "Rango de tiempo",
+            media: "Medios",
+            chains: "Cadenas",
+            protocols: "Protocolos",
+            less: "Menos",
+            more: "Más",
+        },
+    },
+    widget: {
+        options: "Opciones",
+        close_options: "Cerrar opciones",
+        expand: "Expandir",
+        maximize: "Maximizar",
+        minimize: "Minimizar",
+        screenshot: "Captura de pantalla",
+        remove_widget: "Eliminar widget",
+    },
+    tabs: {
+        news: "Noticias",
+        portfolio: "Portafolio",
+        calendar: "Calendario",
+        feed: "Feed",
+        trending: "Tendencias",
+        read_later: "Leer después",
+    },
+    buttons: {
+        connect_wallet: "Conectar cartera",
+        verify_wallet: "Verificar cartera",
+        add_wallet: "Añadir nueva cartera",
+        disconnect_wallet: "Desconectar cartera",
+        enter_address: "Introducir dirección",
+        save: "Guardar",
+        notNow: "Ahora no",
+        next: "Siguiente",
+    },
+    portfolio: {
+        addAWallet: "Añadir dirección de cartera",
+        inputPlaceholder: "Introduce una dirección de Ethereum o ENS",
+        totalBalance: "Saldo total",
+        allWallets: "Todas las carteras",
+        asset: "Activo",
+        assets: "Activos",
+        nfts: "NFTs",
+        balance: "Saldo",
+        price: "Precio",
+        value: "Valor",
+        modals: {
+            title: "Conectar cartera",
+            soon: "(próximamente)",
+            metamask: "MetaMask",
+            selectingMethod: {
+                title: "Seleccionar proveedor de cartera",
+            },
+            prompted: {
+                title: "Verificar cartera",
+                content:
+                    "Cartera conectada con éxito. Para guardar tableros personalizados, firma un mensaje de texto e inicia sesión en Alphaday.",
+            },
+            connectionError: {
+                title: "Error de conexión de cartera",
+                content:
+                    "Hubo un error al conectarse al proveedor de la cartera. Asegúrate de que tu cartera esté configurada correctamente.",
+            },
+            verificationError: {
+                title: "Error de verificación de cartera",
+                content:
+                    "La autenticación ha fallado. ¿La cartera está desbloqueada? ¿Has cambiado de cuenta?",
+            },
+            genericError: {
+                title: "Error inesperado",
+                content:
+                    "Ups! Ha habido un problema. Por favor, inténtalo de nuevo más tarde.",
+            },
+        },
+    },
+    tutorials: {
+        switchView_title: "Cambiar entre tableros",
+        switchView_text:
+            "Optimiza tu flujo de trabajo utilizando diferentes tableros con varios widgets o creando los tuyos propios.",
+        walletView_title: "Crear tablero de cartera",
+        walletView_text:
+            "Rastrea toda la información sobre los activos de tu cartera en Alphaday.",
+        useSeachBar_title: "Barra de búsqueda",
+        useSeachBar_text:
+            "Busca tus tokens, proyectos o temas favoritos para filtrar el contenido dentro de los widgets.",
+        reArrangeWidget_title: "Reorganizar widgets",
+        reArrangeWidget_text:
+            "Arrastra los widgets usando la barra superior para cambiar su posición o haz clic una vez para minimizarlos.",
+        useWidgetLib_title: "Biblioteca de widgets",
+        useWidgetLib_text:
+            "La biblioteca de widgets tiene una gran variedad de widgets útiles para que elijas.",
+        comeBack_text:
+            "Puedes volver al tutorial en cualquier momento desde el menú de usuario.",
+    },
+    market: {
+        title: "Mercado",
+        line: "Línea",
+        candlestick: "Velas",
+        no_coins_selected: "No hay monedas seleccionadas para este tag",
+        // eslint-disable-next-line no-template-curly-in-string
+        history_error: "Historial de ${selectedChartRange} de esta moneda",
+        market_cap: "Capitalización de mercado",
+        volume_24h: "Volumen en 24h",
+    },
+    podcasts: {
+        channels: "Canales",
+        selected_channels: "Canales seleccionados",
+        all_channels: "Todos los canales",
+        channels_input_placeholder: "Buscar canales",
+    },
+    calendar: {
+        organizers: "Organizadores",
+        speakers: "Ponentes",
+        more_details: "Más detalles",
+        noEvents: "No hay eventos próximos",
+        event_types: {
+            conferences: "Conferencias",
+            meetups: "Encuentros",
+            hackathons: "Hackathones",
+            product_releases: "Lanzamientos de productos",
+            dev_calls: "Llamadas de desarrolladores",
+            ico: "Oferta inicial de criptomonedas",
+            ido: "Oferta inicial descentralizada",
+            dao_votes: "Votaciones de DAO",
+            economic_events: "Eventos económicos",
+            community_calls: "Llamadas comunitarias",
+            soft_forks: "Soft forks",
+            hard_forks: "Hard forks",
+            education: "Educación",
+            interviews: "Entrevistas",
+            parties: "Fiestas",
+            workshops: "Talleres",
+            unfiltered: "Sin filtrar",
+        },
+    },
+    others: {
+        tag_options: {
+            auth: "ethereum, bitcoin, etc.",
+            unAuth: "Inicia sesión para anclar monedas, etc.",
+        },
+        change: "Cambio",
+        name: "Nombre",
+        your_nfts: "Tus NFTs",
+        est_value: "Valor estimado",
+        tvl: "TVL",
+        no_items_found: "No se encontraron elementos",
+        accept: "Aceptar",
+        decline: "Rechazar",
+        briefing_for: "Resumen para",
+        cookie: {
+            text: "Utilizamos cookies necesarias para el funcionamiento de Alphaday. Nos gustaría usar otras cookies para mejorar tu visita, personalizarla y analizar el rendimiento del sitio web, pero solo si las aceptas.",
+            acceptAll: "Aceptar todo",
+            acceptEssential: "Aceptar solo esenciales",
+        },
+    },
+    verasity: {
+        token_name: "Nombre del token",
+        token_ticker: "Ticker del token",
+        sm_address: "Dirección del contrato inteligente",
+        total_supply: "Suministro total",
+        max_circle_supply: "Suministro máximo en circulación",
+        circle_supply: "Suministro en circulación",
+    },
+    messages: {
+        error: {
+            title: "Error",
+            notFound: "La página solicitada no se ha encontrado.",
+            generic: "Ha ocurrido un error procesando tu solicitud.",
+            forbidden: "No tienes permiso para acceder a esta página.",
+            unauthorized: "No tienes permiso para acceder a esta página.",
+            notAuthenticated:
+                "Por favor, conecta y verifica tu cartera para continuar",
+            maxViews: "Has alcanzado el número máximo de tableros creados",
+            maxWidgets:
+                "Has superado el número de widgets que se pueden añadir a un tablero",
+            maxViewWidgets:
+                "Has superado el número permitido de este widget en el tablero",
+            requestFailed:
+                // eslint-disable-next-line no-template-curly-in-string
+                "Error al obtener ${term}. Inténtalo de nuevo más tarde",
+            boardHasNoRequiredWidget:
+                // eslint-disable-next-line no-template-curly-in-string
+                "Este tablero ${boardName} requiere el widget ${SlugToWidgetNameMap[widget_template]}. Debes añadir el widget ${SlugToWidgetNameMap[widget_template]} a este tablero y actualizar la página para acceder a esta ruta.",
+            back_to_home: "Volver al inicio",
+            no_nfts_found:
+                "No se encontraron NFTs para la cartera especificada.",
+            no_video: "No se ha seleccionado ningún video",
+            something_wrong: "Algo ha salido mal.",
+        },
+        success: {
+            title: "Éxito",
+            generic: "Tu solicitud se ha procesado correctamente.",
+        },
+        queries: {
+            noResults: "No se encontraron resultados",
+            // eslint-disable-next-line no-template-curly-in-string
+            noMatchFound: "No se encontró ${item}",
+        },
+        portfolio: {
+            signUp: "Regístrate para guardar tu portafolio",
+            connectWallet: "Conecta primero tu cartera para registrarte",
+            verifyWallet:
+                "Firma un mensaje sin comisiones para iniciar sesión en Alphaday y confirmar la propiedad y guardar la configuración.",
+        },
+        callToAction: {
+            // eslint-disable-next-line no-template-curly-in-string
+            signUpToBookmark: "Regístrate para marcar este ${item}",
+        },
+    },
+    countdown: {
+        labels: {
+            days: "días",
+            hours: "horas",
+            minutes: "minutos",
+            seconds: "segundos",
+        },
+    },
+    datelocale: {
+        future: "después",
+        past: "antes",
+        s: "segundo",
+        m: "minuto",
+        mm: "minutos",
+        h: "hora",
+        hh: "horas",
+        d: "día",
+        dd: "días",
+        w: "semana",
+        M: "mes",
+        MM: "meses",
+        y: "año",
+        yy: "años",
+        ytd: "año hasta la fecha",
+    },
+    gas: {
+        title: "Precio del gas",
+        fast: "Rápido",
+        standard: "Estándar",
+        slow: "Lento",
+        beacon_chain_data: "Datos de cadena de señalización",
+    },
+    qna: {
+        intro: "Este widget es una interfaz para los datos agregados de criptomonedas de Alphaday. Puedes introducir cualquier consulta en lenguaje natural, como '¿Qué proyecto tiene el mayor TVL?'",
+        highlight:
+            "Para usar este widget, necesitas conectar y verificar tu cartera.",
+        button: "Hacer pregunta",
+    },
+    about_us: {
+        title: "Sobre nosotros",
+        company_overview: {
+            title: "Información de la empresa:",
+            registered_name: "Nombre registrado: Alphabox Solutions Pte. Ltd.",
+            registration_number: "Número de registro: 202136261C",
+            registered_office:
+                "Domicilio social: 45 North Canal Road #01-01 Lew Building Singapore",
+        },
+        contact_info: {
+            title: "Información de contacto:",
+            email: "Correo electrónico: hello@alphaday.com",
+            xcom: "X.com: https://x.com/AlphadayHQ",
+        },
+        legal_info: {
+            title: "Información legal:",
+            terms: "Términos de servicio: https://alphaday.com/terms",
+            privacy: "Política de privacidad: https://alphaday.com/privacy",
+        },
+        additional_resources: {
+            title: "Recursos adicionales:",
+            faqs: "Preguntas frecuentes: alphaday.com",
+            feedback: "Feedback: https://forms.gle/RbrrLGdFPAeuNJhk9",
+        },
+        mission:
+            "La misión de Alphaday es proporcionar todas las herramientas necesarias para seguir tus proyectos favoritos, mantenerte al día con la información más reciente y utilizar tus dapps favoritas desde un panel de control personalizable y fácil de usar.",
+        close_button: "Cerrar",
+    },
+    error_page: {
+        offline: {
+            heading: {
+                text: "Estás",
+                highlight: "desconectado",
+            },
+            description:
+                "Parece que has perdido tu conexión. Por favor, revísala e inténtalo de nuevo.",
+        },
+        "503": {
+            heading: {
+                text: "Sistema en",
+                highlight: "mantenimiento",
+            },
+            description1: {
+                text: "Estamos realizando un mantenimiento programado. ¡Volveremos pronto! Mientras tanto, puedes revisar nuestro",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+            },
+            description2: "Asegúrate de volver a comprobar más tarde.",
+        },
+        "403": {
+            heading: {
+                text: "No autorizado",
+                highlight: "403",
+            },
+            description: "No tienes permiso para acceder a esta página.",
+        },
+        "404": {
+            heading: {
+                highlight: "404",
+            },
+            description:
+                "Lo sentimos, la página que buscas no se pudo encontrar.",
+        },
+        default: {
+            description: {
+                text: "Algo salió mal, ¡volveremos pronto! Mientras tanto, puedes revisar nuestro",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+                textAfterLink: "para actualizaciones.",
+            },
+        },
+    },
+
+    wallet_view: {
+        create_wallet_board: "Crear Tablero de Billetera",
+        view_wallet_board: "Ver Tablero de Billetera",
+        creating_wallet_board: "Creando Tablero de Billetera",
+    },
+    terms_of_service: {
+        titleOne: "Aviso Legal",
+        text_one:
+            "Alphaday no es responsable de las operaciones o el rendimiento de plataformas y widgets de terceros, incluido Uniswap. El Widget de Intercambio de Uniswap se proporciona como una conveniencia para nuestros usuarios. Alphaday no controla ni gestiona las transacciones realizadas a través de Uniswap, y no somos responsables de ninguna pérdida o daño incurrido como resultado del uso del Widget de Intercambio de Uniswap. Se alienta a los usuarios a realizar su propia investigación y ejercer precaución al comerciar con criptomonedas. Al usar el Widget de Intercambio de Uniswap, usted acepta los",
+        text_two: "Términos de Servicio",
+        text_three: "y",
+        text_four: "Política de Privacidad",
+        titleTwo: "Divulgación de Riesgos",
+        text_five:
+            "El comercio de criptomonedas implica un riesgo significativo y puede resultar en la pérdida de su capital invertido. No debe invertir más de lo que puede permitirse perder y debe asegurarse de comprender completamente los riesgos involucrados. La volatilidad de los precios y la naturaleza global del mercado de criptomonedas pueden conducir a pérdidas significativas. Alphaday no proporciona ningún consejo de inversión o recomendaciones sobre la idoneidad de cualquier transacción de criptomonedas. Todas las decisiones comerciales son tomadas por los usuarios y no por Alphaday. Por favor, consulte con un asesor financiero antes de tomar cualquier decisión comercial.",
+    },
+    language: {
+        title: "Seleccionar Idioma",
+        close_button: "Cerrar",
+    },
+};
+
+export const translationFR: typeof translationEN = {
+    navigation: {
+        searchBarPlaceholder:
+            "Rechercher des actifs, projets, événements, etc.",
+        boards: "Tableaux",
+        openBoardsLibrary: "Ouvrir la bibliothèque de tableaux",
+        widgets: "Widgets",
+        sortBy: "Trier par",
+        menu: {
+            sign_in: "Se connecter",
+            sign_out: "Se déconnecter",
+            sign_up: "S'inscrire",
+            tutorial: "Tutoriel",
+            language: "Langue",
+            about_us: "À propos de nous",
+            version: "Version",
+            commit: "Commit",
+        },
+        boards_library: {
+            title: "BIBLIOTHÈQUE DE TABLEAUX",
+            description:
+                "Basculez entre les tableaux pour optimiser votre flux de travail et épinglez ceux que vous utilisez le plus souvent.",
+            custom_boards_title: "Tableaux personnalisés",
+            custom_boards_description_with_auth:
+                "Créez un tableau vide et ajoutez des widgets",
+            custom_boards_description:
+                "Connectez et vérifiez votre portefeuille pour créer de nouveaux tableaux et voir vos tableaux personnalisés",
+        },
+        widgets_library: {
+            title: "Bibliothèque de Widgets",
+            searchBarPlaceholder: "Rechercher des widgets",
+            allWidgets: "Tous les Widgets",
+        },
+        general: {
+            all: "Tous",
+            general: "Général",
+            nfts: "NFTs",
+            daos: "DAOs",
+            layer2: "Layer 2",
+            defi: "DeFi",
+            trading: "Trading",
+            popular: "Populaire",
+            name: "(A-Z)",
+            new: "Nouveau",
+            feed: "Fil d'actualité",
+            trending: "Tendance",
+            readLater: "Lire plus tard",
+            readMore: "Lire plus",
+            bookmarks: "Favoris",
+            timeRange: "Plage de temps",
+            media: "Médias",
+            chains: "Chaînes",
+            protocols: "Protocoles",
+            less: "Moins",
+            more: "Plus",
+        },
+    },
+    widget: {
+        options: "Options",
+        close_options: "Fermer les options",
+        expand: "Étendre",
+        maximize: "Maximiser",
+        minimize: "Minimiser",
+        screenshot: "Capture d'écran",
+        remove_widget: "Supprimer le widget",
+    },
+    tabs: {
+        news: "ACTUALITÉS",
+        portfolio: "PORTFOLIO",
+        calendar: "CALENDRIER",
+        feed: "Fil d'actualité",
+        trending: "Tendance",
+        read_later: "Lire plus tard",
+    },
+    buttons: {
+        connect_wallet: "Connecter le portefeuille",
+        verify_wallet: "Vérifier le portefeuille",
+        add_wallet: "Ajouter un nouveau portefeuille",
+        disconnect_wallet: "Déconnecter le portefeuille",
+        enter_address: "Entrer une adresse",
+        save: "Enregistrer",
+        notNow: "Pas maintenant",
+        next: "Suivant",
+    },
+    portfolio: {
+        addAWallet: "Ajouter une adresse de portefeuille",
+        inputPlaceholder: "Entrer une adresse Ethereum ou ENS",
+        totalBalance: "Solde total",
+        allWallets: "Tous les portefeuilles",
+        asset: "Actif",
+        assets: "Actifs",
+        nfts: "NFTs",
+        balance: "Solde",
+        price: "Prix",
+        value: "Valeur",
+        modals: {
+            title: "Connexion au portefeuille",
+            soon: "(bientôt)",
+            metamask: "Metamask",
+            selectingMethod: {
+                title: "Choisissez un fournisseur de portefeuille",
+            },
+            prompted: {
+                title: "Vérifier le portefeuille",
+                content:
+                    "Votre portefeuille a été connecté avec succès. Pour enregistrer vos tableaux personnalisés, veuillez vous connecter à Alphaday en signant un message texte.",
+            },
+            connectionError: {
+                title: "Erreur de connexion au portefeuille",
+                content:
+                    "Une erreur s'est produite lors de la tentative de connexion à votre fournisseur de portefeuille. Assurez-vous que votre portefeuille est correctement configuré.",
+            },
+            verificationError: {
+                title: "Erreur de vérification du portefeuille",
+                content:
+                    "L'authentification a échoué. Votre portefeuille est-il déverrouillé ? Avez-vous changé de compte ?",
+            },
+            genericError: {
+                title: "Erreur inattendue",
+                content:
+                    "Oups ! Une erreur s'est produite. Veuillez réessayer plus tard.",
+            },
+        },
+    },
+    tutorials: {
+        switchView_title: "Changer de tableau",
+        switchView_text:
+            "Optimisez votre flux de travail en utilisant différents tableaux organisés avec divers widgets, ou créez le vôtre.",
+        walletView_title: "Créer un tableau de portefeuille",
+        walletView_text:
+            "Suivez toutes les informations sur Alphaday concernant les actifs de votre portefeuille.",
+        useSeachBar_title: "Barre de recherche",
+        useSeachBar_text:
+            "Recherchez vos jetons, projets ou sujets préférés pour filtrer le contenu des widgets.",
+        reArrangeWidget_title: "Réorganiser les widgets",
+        reArrangeWidget_text:
+            "Cliquez et faites glisser les widgets par la barre supérieure pour changer leur position dans le tableau de bord, ou cliquez une fois pour les réduire.",
+        useWidgetLib_title: "Bibliothèque de widgets",
+        useWidgetLib_text:
+            "Il y a des dizaines de widgets utiles disponibles pour vous dans la bibliothèque de widgets à choisir.",
+        comeBack_text:
+            "Revenez à l'introduction à tout moment dans le menu utilisateur.",
+    },
+    market: {
+        title: "Marché",
+        line: "Ligne",
+        candlestick: "Bougies",
+        no_coins_selected: "Aucune monnaie sélectionnée pour ce tag",
+        // eslint-disable-next-line no-template-curly-in-string
+        history_error: "Historique de ${selectedChartRange} de cette monnaie",
+        market_cap: "Capitalisation boursière",
+        volume_24h: "Volume sur 24h",
+    },
+    podcasts: {
+        channels: "Canaux",
+        selected_channels: "Canaux sélectionnés",
+        all_channels: "Tous les canaux",
+        channels_input_placeholder: "Rechercher des canaux",
+    },
+    calendar: {
+        organizers: "Organisateurs",
+        speakers: "Intervenants",
+        more_details: "Plus de détails",
+        noEvents: "Aucun événement à venir",
+        event_types: {
+            conferences: "Conférences",
+            meetups: "Rencontres",
+            hackathons: "Hackathons",
+            product_releases: "Lancements de produits",
+            dev_calls: "Appels de développeurs",
+            ico: "Offre initiale de pièces",
+            ido: "Offre initiale décentralisée",
+            dao_votes: "Votes de DAO",
+            economic_events: "Événements économiques",
+            community_calls: "Appels communautaires",
+            soft_forks: "Soft forks",
+            hard_forks: "Hard forks",
+            education: "Éducation",
+            interviews: "Interviews",
+            parties: "Fêtes",
+            workshops: "Ateliers",
+            unfiltered: "Non filtré",
+        },
+    },
+    others: {
+        tag_options: {
+            auth: "ethereum, bitcoin, etc.",
+            unAuth: "Connectez-vous pour épingler des monnaies, etc.",
+        },
+        change: "Modifier",
+        name: "Nom",
+        your_nfts: "Vos NFTs",
+        est_value: "Valeur estimée",
+        tvl: "TVL",
+        no_items_found: "Aucun élément trouvé",
+        accept: "Accepter",
+        decline: "Refuser",
+        briefing_for: "Résumé pour",
+        cookie: {
+            text: "Nous utilisons des cookies nécessaires pour le fonctionnement d'Alphaday. Nous aimerions utiliser d'autres cookies pour améliorer votre visite, la personnaliser et analyser la performance du site web, mais uniquement si vous les acceptez.",
+            acceptAll: "Tout accepter",
+            acceptEssential: "Accepter uniquement l'essentiel",
+        },
+    },
+    verasity: {
+        token_name: "Nom du jeton",
+        token_ticker: "Symbole du jeton",
+        sm_address: "Adresse du contrat intelligent",
+        total_supply: "Offre totale",
+        max_circle_supply: "Offre maximale en circulation",
+        circle_supply: "Offre en circulation",
+    },
+    messages: {
+        error: {
+            title: "Erreur",
+            notFound: "La page demandée est introuvable.",
+            generic:
+                "Une erreur est survenue lors du traitement de votre demande.",
+            forbidden: "Vous n'avez pas la permission d'accéder à cette page.",
+            unauthorized: "Vous n'êtes pas autorisé à accéder à cette page.",
+            notAuthenticated:
+                "Veuillez connecter et vérifier votre portefeuille pour continuer",
+            maxViews: "Vous avez atteint le nombre maximal de tableaux créés",
+            maxWidgets:
+                "Vous avez dépassé le nombre de widgets pouvant être ajoutés à un tableau",
+            maxViewWidgets:
+                "Vous avez dépassé le nombre autorisé de ce widget sur le tableau",
+            requestFailed:
+                // eslint-disable-next-line no-template-curly-in-string
+                "Erreur lors de la récupération de ${term}. Veuillez réessayer plus tard",
+            boardHasNoRequiredWidget:
+                // eslint-disable-next-line no-template-curly-in-string
+                "Ce tableau ${boardName} nécessite le widget ${SlugToWidgetNameMap[widget_template]}. Vous devez ajouter le widget ${SlugToWidgetNameMap[widget_template]} à ce tableau et actualiser la page pour accéder à cette route.",
+            back_to_home: "Retour à l'accueil",
+            no_nfts_found: "Aucun NFT trouvé pour le portefeuille spécifié.",
+            no_video: "Aucune vidéo sélectionnée",
+            something_wrong: "Quelque chose s'est mal passé.",
+        },
+        success: {
+            title: "Succès",
+            generic: "Votre demande a été traitée avec succès.",
+        },
+        queries: {
+            noResults: "Aucun résultat trouvé",
+            // eslint-disable-next-line no-template-curly-in-string
+            noMatchFound: "Aucun ${item} correspondant trouvé.",
+        },
+        portfolio: {
+            signUp: "Inscrivez-vous pour sauvegarder votre portefeuille",
+            connectWallet:
+                "Connectez d'abord votre portefeuille pour vous inscrire",
+            verifyWallet:
+                "Signez un message sans frais pour vous connecter à Alphaday, confirmer la propriété et sauvegarder la configuration.",
+        },
+        callToAction: {
+            signUpToBookmark:
+                // eslint-disable-next-line no-template-curly-in-string
+                "Inscrivez-vous pour ajouter ce ${item} aux favoris",
+        },
+    },
+    countdown: {
+        labels: {
+            days: "jours",
+            hours: "heures",
+            minutes: "minutes",
+            seconds: "secondes",
+        },
+    },
+    datelocale: {
+        future: "après",
+        past: "avant",
+        s: "seconde",
+        m: "minute",
+        mm: "minutes",
+        h: "heure",
+        hh: "heures",
+        d: "jour",
+        dd: "jours",
+        w: "semaine",
+        M: "mois",
+        MM: "mois",
+        y: "an",
+        yy: "ans",
+        ytd: "année à ce jour",
+    },
+    gas: {
+        title: "Prix du gaz",
+        fast: "Rapide",
+        standard: "Standard",
+        slow: "Lent",
+        beacon_chain_data: "Données de la chaîne de balises",
+    },
+    qna: {
+        intro: "Ce widget est une interface pour les données agrégées sur les crypto-monnaies d'Alphaday. Vous pouvez poser n'importe quelle question en langage naturel, comme 'Quel projet a le plus grand TVL ?'",
+        highlight:
+            "Pour utiliser ce widget, vous devez connecter et vérifier votre portefeuille.",
+        button: "Poser une question",
+    },
+    about_us: {
+        title: "À propos de nous",
+        company_overview: {
+            title: "Informations sur l'entreprise :",
+            registered_name: "Nom enregistré : Alphabox Solutions Pte. Ltd.",
+            registration_number: "Numéro d'enregistrement : 202136261C",
+            registered_office:
+                "Siège social : 45 North Canal Road #01-01 Lew Building Singapour",
+        },
+        contact_info: {
+            title: "Informations de contact :",
+            email: "E-mail : hello@alphaday.com",
+            xcom: "X.com : https://x.com/AlphadayHQ",
+        },
+        legal_info: {
+            title: "Informations juridiques :",
+            terms: "Conditions d'utilisation : https://alphaday.com/terms",
+            privacy:
+                "Politique de confidentialité : https://alphaday.com/privacy",
+        },
+        additional_resources: {
+            title: "Ressources supplémentaires :",
+            faqs: "FAQ : alphaday.com",
+            feedback:
+                "Retour d'expérience : https://forms.gle/RbrrLGdFPAeuNJhk9",
+        },
+        mission:
+            "La mission d'Alphaday est de fournir tous les outils nécessaires pour suivre vos projets préférés, rester à jour avec les dernières informations et utiliser vos dapps préférées depuis un tableau de bord personnalisable et facile à utiliser.",
+        close_button: "Fermer",
+    },
+    error_page: {
+        offline: {
+            heading: {
+                text: "Vous êtes",
+                highlight: "hors ligne",
+            },
+            description:
+                "Il semble que vous ayez perdu votre connexion. Veuillez la vérifier et réessayer.",
+        },
+        "503": {
+            heading: {
+                text: "Système en",
+                highlight: "maintenance",
+            },
+            description1: {
+                text: "Nous effectuons actuellement une maintenance programmée. Nous serons de retour sous peu ! En attendant, vous pouvez consulter notre",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+            },
+            description2: "Et assurez-vous de revenir vérifier plus tard.",
+        },
+        "403": {
+            heading: {
+                text: "Non autorisé",
+                highlight: "403",
+            },
+            description:
+                "Vous n'avez pas les autorisations pour accéder à cette page.",
+        },
+        "404": {
+            heading: {
+                highlight: "404",
+            },
+            description: "Désolé, la page que vous recherchez est introuvable.",
+        },
+        default: {
+            description: {
+                text: "Quelque chose s'est mal passé, nous serons de retour sous peu ! En attendant, vous pouvez consulter notre",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+                textAfterLink: "pour les mises à jour.",
+            },
+        },
+    },
+
+    wallet_view: {
+        create_wallet_board: "Créer un Tableau de Portefeuille",
+        view_wallet_board: "Voir le Tableau de Portefeuille",
+        creating_wallet_board: "Création du Tableau de Portefeuille",
+    },
+    terms_of_service: {
+        titleOne: "Avis Juridique",
+        text_one:
+            "Alphaday n'est pas responsable des opérations ou des performances des plateformes et widgets tiers, y compris Uniswap. Le Widget d'Échange Uniswap est fourni pour la commodité de nos utilisateurs. Alphaday ne contrôle ni ne gère les transactions effectuées via Uniswap, et nous ne sommes pas responsables des pertes ou dommages encourus suite à l'utilisation du Widget d'Échange Uniswap. Les utilisateurs sont encouragés à faire leurs propres recherches et à faire preuve de prudence lors des échanges de cryptomonnaies. En utilisant le Widget d'Échange Uniswap, vous acceptez les",
+        text_two: "Conditions d'Utilisation",
+        text_three: "et la",
+        text_four: "Politique de Confidentialité",
+        titleTwo: "Divulgation des Risques",
+        text_five:
+            "Le trading de cryptomonnaies comporte des risques importants et peut entraîner la perte de votre capital investi. Vous ne devez pas investir plus que ce que vous pouvez vous permettre de perdre et vous devez vous assurer de bien comprendre les risques encourus. La volatilité des prix et la nature mondiale du marché des cryptomonnaies peuvent entraîner des pertes importantes. Alphaday ne fournit aucun conseil d'investissement ni recommandation concernant la pertinence des transactions de cryptomonnaies. Toutes les décisions de trading sont prises par les utilisateurs et non par Alphaday. Veuillez consulter un conseiller financier avant de prendre toute décision de trading.",
+    },
+    language: {
+        title: "Sélectionner la Langue",
+        close_button: "Fermer",
+    },
+};
