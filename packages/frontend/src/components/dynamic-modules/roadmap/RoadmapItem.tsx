@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { CollapseListItem } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { useWidgetSize } from "src/api/hooks";
 import { Logger } from "src/api/utils/logging";
 import { REMARK_URL_REGEX, remarkRegex } from "src/api/utils/textUtils";

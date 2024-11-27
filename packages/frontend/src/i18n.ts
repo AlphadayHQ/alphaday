@@ -21,7 +21,7 @@ const resources = {
     },
     fr: {
         translation: translationFR,
-    }
+    },
 };
 
 i18n.use(LanguageDetector)

@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { ApexAreaChart } from "src/components/charts/apexchart";
 import { Spinner } from "src/components/spinner/Spinner";
 import { darkColors } from "src/globalStyles/colors";

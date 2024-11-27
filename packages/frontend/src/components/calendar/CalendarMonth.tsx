@@ -42,7 +42,7 @@ const CalendarMonth: FC<
     onDatesSet,
     widgetHash,
 }) => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [isAlphaModalOpen, setisAlphaModalOpen] = useState(false);
     const [showAllLegends, setShowAllLegends] = useState(false);
 
@@ -90,6 +90,7 @@ const CalendarMonth: FC<
                     </div>
                 )}
                 <CalMonth
+                    locale={i18n.language}
                     events={events}
                     onDatesSet={onDatesSet}
                     selectedEventDetails={selectedEventDetails}

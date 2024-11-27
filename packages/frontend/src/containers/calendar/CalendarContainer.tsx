@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo, useState, useEffect } from "react";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { useHistory, useParams } from "react-router-dom";
 import { useWidgetHeight } from "src/api/hooks";
 import { useSelectedDate } from "src/api/hooks/useSelectedDate";

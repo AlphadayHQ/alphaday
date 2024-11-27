@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { TCounterData } from "src/api/types";
 import assert from "src/api/utils/assert";
 import { Logger } from "src/api/utils/logging";

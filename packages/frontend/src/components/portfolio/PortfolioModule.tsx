@@ -179,6 +179,7 @@ const Portfolio: FC<IPortfolio> = ({
                                         variant="primaryXL"
                                         title="Connect your Wallet"
                                         onClick={onConnectWallet}
+                                        className=" max-w-[49%]"
                                     >
                                         {t("buttons.connect_wallet")}
                                     </Button>
@@ -186,6 +187,7 @@ const Portfolio: FC<IPortfolio> = ({
                                         variant="secondaryXL"
                                         title="Enter a wallet address"
                                         onClick={handleShowEnterAddress}
+                                        className=" max-w-[49%]"
                                     >
                                         {t("buttons.enter_address")}
                                     </Button>
