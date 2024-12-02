@@ -21,7 +21,7 @@ interface IProps {
 }
 
 const languages = [
-    { code: EnumLanguageCode.EN, name: "English", icon: "🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+    { code: EnumLanguageCode.EN, name: "English", icon: "🇬🇧" },
     { code: EnumLanguageCode.FR, name: "Français", icon: "🇫🇷" },
     { code: EnumLanguageCode.ES, name: "Español", icon: "🇪🇸" },
     { code: EnumLanguageCode.JA, name: "日本語", icon: "🇯🇵" },
