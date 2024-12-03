@@ -25,6 +25,7 @@ const languages = [
     { code: EnumLanguageCode.FR, name: "Français", icon: "🇫🇷" },
     { code: EnumLanguageCode.ES, name: "Español", icon: "🇪🇸" },
     { code: EnumLanguageCode.JA, name: "日本語", icon: "🇯🇵" },
+    { code: EnumLanguageCode.TR, name: "Turkish", icon: "🇹🇷" },
 ];
 
 export const LanguageModal: React.FC<IProps> = ({
