@@ -3,4 +3,5 @@ export enum EnumLanguageCode {
     FR = "fr",
     ES = "es",
     JA = "ja",
+    TR = "tr",
 }

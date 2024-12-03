@@ -1,15 +1,17 @@
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
+import { EnumLanguageCode } from "./api/types/language";
 import { Logger } from "./api/utils/logging";
 import {
     translationEN,
     translationES,
     translationFR,
     translationJA,
+    translationTR,
 } from "./locales/translation";
 
-const resources = {
+const resources: Record<EnumLanguageCode, { translation: JSONObject }> = {
     en: {
         translation: translationEN,
     },
@@ -21,6 +23,9 @@ const resources = {
     },
     fr: {
         translation: translationFR,
+    },
+    tr: {
+        translation: translationTR,
     },
 };
 

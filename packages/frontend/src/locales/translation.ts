@@ -1573,3 +1573,397 @@ export const translationFR: typeof translationEN = {
         close_button: "Fermer",
     },
 };
+
+export const translationTR = {
+    navigation: {
+        searchBarPlaceholder: "Varlıklar, projeler, etkinlikler vb. için ara",
+        boards: "Panolar",
+        openBoardsLibrary: "Pano Kütüphanesini Aç",
+        widgets: "Araçlar",
+        sortBy: "Sırala",
+        menu: {
+            sign_in: "Giriş Yap",
+            sign_out: "Çıkış Yap",
+            sign_up: "Kaydol",
+            tutorial: "Eğitim",
+            language: "Dil",
+            about_us: "Hakkımızda",
+            version: "Sürüm",
+            commit: "Bağlantı",
+        },
+        boards_library: {
+            title: "PANO KÜTÜPHANESİ",
+            description:
+                "İş akışınızı optimize etmek için panolar arasında geçiş yapın ve en sık kullandığınız panoları sabitleyin.",
+            custom_boards_title: "Özel Panolar",
+            custom_boards_description_with_auth:
+                "Boş bir pano oluşturun ve araçlar ekleyin",
+            custom_boards_description:
+                "Yeni panolar oluşturmak ve özel panolarınızı görmek için cüzdanınızı bağlayın ve doğrulayın",
+        },
+        widgets_library: {
+            title: "Araç Kütüphanesi",
+            searchBarPlaceholder: "Araçları arayın",
+            allWidgets: "Tüm Araçlar",
+        },
+        general: {
+            all: "Tümü",
+            general: "Genel",
+            nfts: "NFT'ler",
+            daos: "DAO'lar",
+            layer2: "Katman 2",
+            defi: "DeFi",
+            trading: "Ticaret",
+            popular: "Popüler",
+            name: "(A-Z)",
+            new: "Yeni",
+            feed: "Akış",
+            trending: "Trend",
+            readLater: "Daha Sonra Oku",
+            readMore: "Daha Fazla Oku",
+            bookmarks: "Yer İmleri",
+            timeRange: "Zaman Aralığı",
+            media: "Medya",
+            chains: "Zincirler",
+            protocols: "Protokoller",
+            less: "Daha Az",
+            more: "Daha Fazla",
+        },
+    },
+    widget: {
+        options: "Seçenekler",
+        close_options: "Seçenekleri Kapat",
+        expand: "Genişlet",
+        maximize: "Maksimize Et",
+        minimize: "Küçült",
+        screenshot: "Ekran Görüntüsü",
+        remove_widget: "Aracı Kaldır",
+    },
+    tabs: {
+        news: "HABERLER",
+        portfolio: "PORTFÖY",
+        calendar: "TAKVİM",
+        feed: "Akış",
+        trending: "Trend",
+        read_later: "Daha Sonra Oku",
+    },
+    buttons: {
+        connect_wallet: "Cüzdanı Bağla",
+        verify_wallet: "Cüzdanı Doğrula",
+        add_wallet: "Yeni Cüzdan Ekle",
+        disconnect_wallet: "Cüzdanı Bağlantıdan Kaldır",
+        enter_address: "Adres Girin",
+        save: "Kaydet",
+        notNow: "Şimdi Değil",
+        next: "İleri",
+    },
+    portfolio: {
+        addAWallet: "Bir Cüzdan Adresi Ekle",
+        inputPlaceholder: "Bir Ethereum veya ENS adresi girin",
+        totalBalance: "Toplam Bakiye",
+        allWallets: "Tüm Cüzdanlar",
+        asset: "Varlık",
+        assets: "Varlıklar",
+        nfts: "NFT'ler",
+        balance: "Bakiye",
+        price: "Fiyat",
+        value: "Değer",
+        modals: {
+            title: "Cüzdan Bağlantısı",
+            soon: "(yakında)",
+            metamask: "Metamask",
+            selectingMethod: {
+                title: "Bir Cüzdan Sağlayıcı Seçin",
+            },
+            prompted: {
+                title: "Cüzdanı Doğrula",
+                content:
+                    "Cüzdanınız başarıyla bağlandı. Özelleştirilmiş panolarınızı kaydetmek için bir metin mesajı imzalayarak Alphaday'e giriş yapın.",
+            },
+            connectionError: {
+                title: "Cüzdan Bağlantı Hatası",
+                content:
+                    "Cüzdan sağlayıcınıza bağlanmaya çalışırken bir hata oluştu. Cüzdanınızın doğru şekilde ayarlandığından emin olun.",
+            },
+            verificationError: {
+                title: "Cüzdan Doğrulama Hatası",
+                content:
+                    "Kimlik doğrulama başarısız oldu. Cüzdanınız kilitli mi? Hesap değiştirdiniz mi?",
+            },
+            genericError: {
+                title: "Beklenmeyen Hata",
+                content:
+                    "Ups! Bir şeyler yanlış gitti. Lütfen daha sonra tekrar deneyin.",
+            },
+        },
+    },
+    tutorials: {
+        switchView_title: "Panolar Arasında Geçiş Yap",
+        switchView_text:
+            "Farklı araçlarla düzenlenmiş panolar kullanarak iş akışınızı optimize edin veya kendi panonuzu oluşturun.",
+        walletView_title: "Bir Cüzdan Panosu Oluşturun",
+        walletView_text:
+            "Cüzdanınızdaki varlıklarla ilgili tüm bilgileri Alphaday üzerinde takip edin.",
+        useSeachBar_title: "Arama Çubuğu",
+        useSeachBar_text:
+            "Araçların içeriğini filtrelemek için favori tokenlarınızı, projelerinizi veya konularınızı arayın.",
+        reArrangeWidget_title: "Araçları Yeniden Düzenleyin",
+        reArrangeWidget_text:
+            "Araçları, kontrol panelinde konumlarını değiştirmek için üst çubuktan sürükleyip bırakın veya küçültmek için bir kez tıklayın.",
+        useWidgetLib_title: "Araç Kütüphanesi",
+        useWidgetLib_text:
+            "Araç Kütüphanesi'nde sizin için seçilebilecek onlarca faydalı araç bulunmaktadır.",
+        comeBack_text:
+            "Kullanıcı menüsünden istediğiniz zaman yeniden rehbere dönebilirsiniz.",
+    },
+    market: {
+        title: "PİYASA",
+        line: "Çizgi",
+        candlestick: "Mum Grafiği",
+        no_coins_selected: "Seçilen etiketlere uygun coin bulunamadı",
+        history_error:
+            // eslint-disable-next-line no-template-curly-in-string
+            "${selectedChartRange} geçmişi bu coin için mevcut değil",
+        market_cap: "Piyasa Değeri",
+        volume_24h: "24 Saatlik Hacim",
+    },
+    podcasts: {
+        channels: "Kanallar",
+        selected_channels: "Seçilen Kanallar",
+        all_channels: "Tüm Kanallar",
+        channels_input_placeholder: "Kanalları arayın",
+    },
+    calendar: {
+        organizers: "Organizatörler",
+        speakers: "Konuşmacılar",
+        more_details: "Daha Fazla Detay",
+        noEvents: "Yaklaşan etkinlik bulunamadı",
+        event_types: {
+            conferences: "Konferanslar",
+            meetups: "Buluşmalar",
+            hackathons: "Hackathonlar",
+            product_releases: "Ürün Lansmanları",
+            dev_calls: "Geliştirici Çağrıları",
+            ico: "İlk Coin Teklifleri",
+            ido: "İlk Dex Teklifleri",
+            dao_votes: "DAO Oylamaları",
+            economic_events: "Ekonomik Etkinlikler",
+            community_calls: "Topluluk Çağrıları",
+            soft_forks: "Soft Forklar",
+            hard_forks: "Hard Forklar",
+            education: "Eğitim & Öğrenme",
+            interviews: "Röportajlar",
+            parties: "Partiler",
+            workshops: "Atölyeler",
+            unfiltered: "Filtresiz",
+        },
+    },
+    others: {
+        tag_options: {
+            auth: "ethereum, bitcoin, vb.",
+            unAuth: "Coinleri sabitlemek ve daha fazlası için kaydolun",
+        },
+        change: "Değiştir",
+        name: "Ad",
+        your_nfts: "NFT'leriniz",
+        est_value: "Tahmini Değer",
+        tvl: "Toplam Kilitli Değer",
+        no_items_found: "Hiçbir öğe bulunamadı",
+        accept: "Kabul Et",
+        decline: "Reddet",
+        briefing_for: "Brifing için",
+        cookie: {
+            text: "Alphaday'in çalışması için temel çerezleri kullanıyoruz. Ziyaretinizi geliştirmek ve kişiselleştirmek ve web sitemizin performansını analiz etmek için diğer çerezleri kullanmak isteriz, ancak yalnızca kabul ederseniz.",
+            acceptAll: "Hepsini Kabul Et",
+            acceptEssential: "Sadece Gerekli Olanları Kabul Et",
+        },
+    },
+    verasity: {
+        token_name: "Token Adı",
+        token_ticker: "Token Simgesi",
+        sm_address: "Akıllı Sözleşme Adresi",
+        total_supply: "Toplam Arz",
+        max_circle_supply: "Maksimum Dolaşımdaki Arz",
+        circle_supply: "Dolaşımdaki Arz",
+    },
+    messages: {
+        error: {
+            title: "Hata",
+            notFound: "Talep edilen sayfa bulunamadı.",
+            generic: "Talebiniz işlenirken bir hata oluştu.",
+            forbidden: "Bu sayfaya erişim izniniz yok.",
+            unauthorized: "Bu sayfaya erişim yetkiniz yok.",
+            notAuthenticated:
+                "Devam etmek için cüzdanınızı bağlayın ve doğrulayın.",
+            maxViews: "Maksimum izin verilen pano sayısını oluşturdunuz.",
+            maxWidgets:
+                "Panonuz izin verilen araç sayısından fazlasını içeriyor.",
+            maxViewWidgets:
+                "Bu panodaki bu araç türü için izin verilen sayıyı aştınız.",
+            requestFailed:
+                // eslint-disable-next-line no-template-curly-in-string
+                "${term} alınırken bir hata oluştu, lütfen daha sonra tekrar deneyin.",
+            boardHasNoRequiredWidget:
+                // eslint-disable-next-line no-template-curly-in-string
+                "${boardName} panosu, bu rota için gerekli olan ${SlugToWidgetNameMap[widget_template]} aracını içermiyor. Bu panoya ${SlugToWidgetNameMap[widget_template]} aracını ekleyin ve sayfayı yenileyin.",
+            back_to_home: "Ana Sayfaya Dön",
+            no_nfts_found: "Sağlanan cüzdan(lar) için NFT bulunamadı.",
+            no_video: "Seçili Video Yok",
+            something_wrong: "Bir şeyler yanlış gitti.",
+        },
+        success: {
+            title: "Başarılı",
+            generic: "Talebiniz başarıyla işlendi.",
+        },
+        queries: {
+            noResults: "Sonuç bulunamadı",
+            // eslint-disable-next-line no-template-curly-in-string
+            noMatchFound: "${item} eşleşmesi bulunamadı.",
+        },
+        portfolio: {
+            signUp: "Portföyünüzü kaydetmek için kaydolun.",
+            connectWallet: "Kaydolmak için önce cüzdanınızı bağlayın.",
+            verifyWallet:
+                "Sahipliği doğrulamak ve yapılandırmanızı kaydetmek için ücretsiz bir mesaj imzalayın.",
+        },
+        callToAction: {
+            signUpToBookmark:
+                // eslint-disable-next-line no-template-curly-in-string
+                "${item} öğesini yer imi olarak kaydetmek için kaydolun.",
+        },
+    },
+    countdown: {
+        labels: {
+            days: "Gün",
+            hours: "Saat",
+            minutes: "Dakika",
+            seconds: "Saniye",
+        },
+    },
+    datelocale: {
+        future: "%s içinde",
+        past: "%s önce",
+        s: "sn",
+        m: "dk",
+        mm: "dk",
+        h: "sa",
+        hh: "sa",
+        d: "g",
+        dd: "g",
+        w: "h",
+        M: "ay",
+        MM: "ay",
+        y: "y",
+        ytd: "yt",
+        yy: "y",
+    },
+    gas: {
+        title: "Gas Fiyatı",
+        fast: "Hızlı",
+        standard: "Standart",
+        slow: "Yavaş",
+        beacon_chain_data: "Beacon Zinciri Verileri",
+    },
+    qna: {
+        intro: "Bu araç, Alphaday'in topladığı kripto verilerine erişim arayüzüdür. Doğal dilde örneğin &quot;en yüksek tvl'ye sahip proje hangisi?&quot; gibi sorular yazarak bu verilere ulaşabilirsiniz.",
+        highlight:
+            "Bu aracı kullanmak için cüzdanınızı bağlayın ve doğrulayın.",
+        button: "Bir soru sorun",
+    },
+    about_us: {
+        title: "Hakkımızda",
+        company_overview: {
+            title: "Şirket Hakkında:",
+            registered_name: "Kayıtlı Ad: Alphabox Solutions Pte. Ltd.",
+            registration_number: "Kayıt Numarası: 202136261C",
+            registered_office:
+                "Kayıtlı Ofis: 45 North Canal Road #01-01 Lew Building Singapur",
+        },
+        contact_info: {
+            title: "İletişim Bilgileri:",
+            email: "E-posta Adresi: hello@alphaday.com",
+            xcom: "X.com: https://x.com/AlphadayHQ",
+        },
+        legal_info: {
+            title: "Hukuki Bilgiler:",
+            terms: "Şartlar ve Koşullar: https://alphaday.com/terms",
+            privacy: "Gizlilik Politikası: https://alphaday.com/privacy",
+        },
+        additional_resources: {
+            title: "Ek Kaynaklar:",
+            faqs: "SSS: alphaday.com",
+            feedback: "Geri Bildirim: https://forms.gle/RbrrLGdFPAeuNJhk9",
+        },
+        mission:
+            "Alphaday'in misyonu, favori projelerinizi takip etmenizi, en son gelişmelerden haberdar olmanızı ve favori dApp'lerinizi kullanmanızı sağlamak için gerekli tüm araçları kolay kullanımlı, özelleştirilebilir bir panodan sunmaktır.",
+        close_button: "Kapat",
+    },
+    error_page: {
+        offline: {
+            heading: {
+                text: "Şu an",
+                highlight: "çevrimdışısınız",
+            },
+            description:
+                "Bağlantınızı kaybetmiş gibi görünüyorsunuz. Lütfen kontrol edip tekrar deneyin.",
+        },
+        "503": {
+            heading: {
+                text: "Sistem",
+                highlight: "bakımı",
+            },
+            description1: {
+                text: "Şu anda planlı bir bakım çalışması yapıyoruz. Kısa süre içinde geri döneceğiz! Bu arada, bizi",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+            },
+            description2:
+                "kontrol edebilirsiniz. Daha sonra tekrar kontrol etmeyi unutmayın.",
+        },
+        "403": {
+            heading: {
+                text: "Yetkisiz",
+                highlight: "403",
+            },
+            description: "Bu sayfaya erişim izniniz yok.",
+        },
+        "404": {
+            heading: {
+                highlight: "404",
+            },
+            description: "Üzgünüz, aradığınız sayfa bulunamadı.",
+        },
+        default: {
+            description: {
+                text: "Bir şeyler yanlış gitti, kısa süre içinde geri döneceğiz! Bu arada, bizi",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+                textAfterLink: "üzerinden takip edebilirsiniz.",
+            },
+        },
+    },
+    wallet_view: {
+        create_wallet_board: "Cüzdan Panosu Oluştur",
+        view_wallet_board: "Cüzdan Panosunu Görüntüle",
+        creating_wallet_board: "Cüzdan Panosu Oluşturuluyor",
+    },
+    terms_of_service: {
+        titleOne: "Yasal Uyarı",
+        text_one:
+            "Alphaday, Uniswap dahil olmak üzere üçüncü taraf platformların ve araçların işleyişinden veya performansından sorumlu değildir. Uniswap Swap Aracı, kullanıcılarımız için bir kolaylık olarak sağlanmıştır. Alphaday, Uniswap üzerinden yapılan işlemleri kontrol etmez veya yönetmez ve Uniswap Swap Aracı'nın kullanılması sonucunda oluşabilecek herhangi bir kayıp veya hasardan sorumlu değildir. Kullanıcılar kendi araştırmalarını yapmalı ve kripto para ticareti yaparken dikkatli olmalıdır. Uniswap Swap Aracı'nı kullanarak, Uniswap Lab'ın",
+        text_two: "Hizmet Şartlarını",
+        text_three: "ve",
+        text_four: "Gizlilik Politikasını",
+        titleTwo: "Risk Açıklaması",
+        text_five:
+            "Kripto para ticareti, önemli riskler içerir ve yatırılan sermayenizin kaybına yol açabilir. Kaybetmeyi göze alabileceğinizden daha fazla yatırım yapmamalısınız ve dahil olunan riskleri tam olarak anladığınızdan emin olmalısınız. Fiyat dalgalanmaları ve kripto para piyasasının küresel doğası önemli kayıplara yol açabilir. Alphaday, herhangi bir yatırım tavsiyesi veya herhangi bir kripto para işleminin uygunluğuna dair önerilerde bulunmamaktadır. Tüm ticaret kararları kullanıcılar tarafından alınır ve Alphaday tarafından yönlendirilmez. Ticaret kararları almadan önce bir finansal danışmana danışın.",
+    },
+    language: {
+        title: "Dil Seçin",
+        close_button: "Kapat",
+    },
+};
