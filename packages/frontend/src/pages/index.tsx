@@ -12,6 +12,7 @@ import useMousePosition from "src/api/hooks/useMousePosition";
 import {
     removeWidgetFromView,
     removeWidgetStateFromCache,
+    toggleLanguageModal,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
@@ -57,6 +58,8 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         },
         [dispatch]
     );
+
+    const onToggleLanguageModal = () => dispatch(toggleLanguageModal());
 
     const { toggleWidgetLib } = useWidgetLib();
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
@@ -283,6 +286,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         return (
             <MainLayout
                 toggleWidgetLib={toggleWidgetLib}
+                toggleLanguageModal={onToggleLanguageModal}
                 hideFooter
                 setTutFocusElemRef={
                     currentTutorial.tip?.id === ETutorialTipId.UseWidgetLib
@@ -299,6 +303,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     return (
         <MainLayout
             toggleWidgetLib={toggleWidgetLib}
+            toggleLanguageModal={onToggleLanguageModal}
             layoutState={layoutState}
             hideFooter={
                 (showTutorial && !!availableViews?.length) || // do not show the tutorial if there are no views
