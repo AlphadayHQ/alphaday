@@ -122,7 +122,10 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                             </span>
                         </DropdownItem>
                         <Divider />
-                        <DropdownItem onClick={onToggleLanguageModal}>
+                        <DropdownItem
+                            className="flex three-col:hidden"
+                            onClick={onToggleLanguageModal}
+                        >
                             <span title="Switch Language">
                                 {t("navigation.menu.language")}
                             </span>

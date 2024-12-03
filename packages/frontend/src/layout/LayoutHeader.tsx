@@ -21,6 +21,7 @@ import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
 interface IProps {
     hideFeatures: boolean;
     toggleWidgetLib: (() => void) | undefined;
+    toggleLanguageModal: (() => void) | undefined;
     isBoardsLibOpen: boolean;
     setIsBoardsLibOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setTutFocusElemRef?:
@@ -31,6 +32,7 @@ interface IProps {
 const LayoutHeader: FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
+    toggleLanguageModal,
     setTutFocusElemRef,
     isBoardsLibOpen,
     setIsBoardsLibOpen,
@@ -74,6 +76,19 @@ const LayoutHeader: FC<IProps> = ({
                                 <HeaderNavRight className="p-0">
                                     <HeaderNavElement className="mr-3">
                                         <SyncIndicatorContainer />
+                                    </HeaderNavElement>
+                                    <HeaderNavElement className="mr-3 [&_svg]:fill-none hidden three-col:block">
+                                        <NavTabButton
+                                            variant="language"
+                                            open={false}
+                                            uppercase={false}
+                                            onClick={toggleLanguageModal}
+                                            title={t(
+                                                "navigation.menu.language"
+                                            )}
+                                        >
+                                            {t("navigation.menu.language")}
+                                        </NavTabButton>
                                     </HeaderNavElement>
                                     <HeaderNavElement className="mr-1">
                                         <NavTabButton
