@@ -232,6 +232,10 @@
         background-color: theme("colors.background");
     }
 
+    [color="container"]:empty {
+        display: none;
+    }
+
     /** Swap warning */
     [class*="ErrorView__ExpandoContent"] {
         @apply fontGroup-supportBold;
