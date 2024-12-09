@@ -259,10 +259,19 @@ const SuperfeedContainer: FC<{
         }
     }, [tagsFromSearch, setSearchState]);
 
-    const keywordOptions = useMemo(
-        () => groupedKeywordsAsOptions(keywordResults),
-        [keywordResults]
-    );
+    /**
+     * It's safe to check only coins and chains since the results would mostly be coins and chains
+     */
+    const hasSufficientResults =
+        (keywordResults?.[ESupportedFilters.Coins] ??
+            keywordResults?.[ESupportedFilters.Chains]) !== undefined;
+
+    const keywordOptions = useMemo(() => {
+        if (keywordResults !== undefined && hasSufficientResults) {
+            return groupedKeywordsAsOptions(keywordResults);
+        }
+        return [];
+    }, [keywordResults, hasSufficientResults]);
 
     const initialSearchValues = useMemo(() => {
         if (!tagsFromSearch) return undefined;
