@@ -33,7 +33,7 @@ export const SortBy: FC<ISortBy> = ({ selected, onSortBy, options }) => {
             >
                 <Menu.Items className="absolute fontGroup-highlightSemi top-[27px] right-0 z-10 w-40 py-2 origin-top-right bg-backgroundVariant100 rounded-lg border border-borderLine focus:outline-none">
                     {options.map((option, index) => (
-                        <Menu.Item>
+                        <Menu.Item key={option}>
                             <span
                                 className={twMerge(
                                     "block hover:bg-backgroundVariant200 py-2 px-2 border-b mx-2 border-borderLine text-primary cursor-pointer",
