@@ -1,23 +1,5 @@
-import { SUPPORTED_EVM_NETWORKS } from "src/config/thirdparty";
 import { TPortfolio } from "../types";
 import { getAssetPrefix } from "./portfolioUtils";
-
-// // Mock the config import
-// jest.mock("src/config/thirdparty", () => ({
-//     SUPPORTED_EVM_NETWORKS: {
-//         polygon: { abbrev: "MATIC" },
-//         arbitrum: { abbrev: "ARB" },
-//         optimism: { abbrev: "OP" },
-//         // Add other networks as needed
-//     },
-// }));
-
-// Mock the logger
-// jest.mock("./logging", () => ({
-//     Logger: {
-//         warn: jest.fn(),
-//     },
-// }));
 
 describe("getAssetPrefix", () => {
     it("should return empty string for ethereum network", () => {
