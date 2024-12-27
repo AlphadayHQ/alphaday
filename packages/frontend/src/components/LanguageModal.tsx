@@ -7,17 +7,15 @@ import {
     ModalTitle,
     twMerge,
 } from "@alphaday/ui-kit";
-import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { EnumLanguageCode } from "src/api/types/language";
-import { Logger } from "src/api/utils/logging";
 import { ReactComponent as CheckedSVG } from "src/assets/icons/checkmark.svg";
 
 interface IProps {
     onSetLanguageCode: (code: EnumLanguageCode) => void;
     selectedCode: string;
     showModal: boolean;
-    onClose?: () => void;
+    onClose: () => void;
 }
 
 const languages = [
@@ -37,18 +35,8 @@ export const LanguageModal: React.FC<IProps> = ({
     const { t } = useTranslation();
 
     const handleLanguageSelect = (code: EnumLanguageCode) => {
-        i18next
-            .changeLanguage(code)
-            .then(() => {
-                onSetLanguageCode(code);
-                onClose?.();
-            })
-            .catch((e) => {
-                Logger.error(
-                    "handleLanguageSelect::Error changing language::",
-                    e
-                );
-            });
+        onSetLanguageCode(code);
+        onClose();
     };
     return (
         <Modal showModal={showModal} onClose={onClose} size="md">
