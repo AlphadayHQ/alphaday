@@ -31,7 +31,7 @@ const SWITCH_HEIGHT = 38;
 const CHANNELS_LIST_HEIGHT = 149;
 const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;
 
-const VIDEO_NAV_ITEMS = [
+const translateNavItems = () => [
     {
         label: translateLabels("Feed"),
         value: EItemFeedPreference.Last,
@@ -65,6 +65,8 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
     preferredChannelIds,
     setPreferredChannelIds,
 }) {
+    const videoNavItems = translateNavItems();
+
     const {
         squareRef,
         headerRef,
@@ -104,11 +106,11 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
     };
 
     const NavItemPreference =
-        VIDEO_NAV_ITEMS.find((item) => item.value === feedPreference) ||
-        VIDEO_NAV_ITEMS[0];
+        videoNavItems.find((item) => item.value === feedPreference) ||
+        videoNavItems[0];
 
     const onTabOptionChange = (value: string) => {
-        const optionItem = VIDEO_NAV_ITEMS.find((item) => item.value === value);
+        const optionItem = videoNavItems.find((item) => item.value === value);
         if (optionItem === undefined) {
             Logger.debug("VideoModule::Nav option item not found");
             return;
@@ -146,7 +148,7 @@ const VideoModule: FC<IVideoModule> = memo(function VideoModule({
                         style={{ height: SWITCH_HEIGHT }}
                     >
                         <TabsBar
-                            options={VIDEO_NAV_ITEMS}
+                            options={videoNavItems}
                             onChange={onTabOptionChange}
                             selectedOption={NavItemPreference}
                         />

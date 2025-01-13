@@ -22,7 +22,7 @@ interface ITvl {
     onChangeProjectType: (type: ETVLItemPreference) => void;
 }
 
-const TVL_NAV_ITEMS = [
+const translateNavItems = () => [
     {
         label: translateLabels("Chains"),
         value: ETVLItemPreference.Chain,
@@ -42,6 +42,8 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
     selectedProjectType,
     onChangeProjectType,
 }) {
+    const tvlNavItems = translateNavItems();
+
     const [squareRef, { width }] = useElementSize();
 
     const THRESHOLD = 475;
@@ -62,11 +64,11 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
     };
 
     const selectedProjectOption =
-        TVL_NAV_ITEMS.find((item) => item.value === selectedProjectType) ||
-        TVL_NAV_ITEMS[0];
+        tvlNavItems.find((item) => item.value === selectedProjectType) ||
+        tvlNavItems[0];
 
     const onTabOptionChange = (value: string) => {
-        const optionItem = TVL_NAV_ITEMS.find((item) => item.value === value);
+        const optionItem = tvlNavItems.find((item) => item.value === value);
         if (optionItem === undefined) {
             Logger.debug(
                 "TvlModule::onTabOptionsChange: Nav option item not found"
@@ -85,7 +87,7 @@ const TvlModule: FC<ITvl> = memo(function TvlModule({
             <div className="relative p-0">
                 <div className="px-2">
                     <TabsBar
-                        options={TVL_NAV_ITEMS}
+                        options={tvlNavItems}
                         onChange={onTabOptionChange}
                         selectedOption={selectedProjectOption}
                     />
