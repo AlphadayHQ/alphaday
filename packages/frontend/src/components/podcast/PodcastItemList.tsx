@@ -1,6 +1,7 @@
 import { FC, FormEvent } from "react";
 import { ItemSkeleton, ListItem, ScrollBar } from "@alphaday/ui-kit";
 import { TPodcastItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 
@@ -45,7 +46,7 @@ const PodcastItemList: FC<IPodcastItemList> = ({
                             key={item.id}
                             variant="podcast"
                             title={item.title}
-                            date={item.publishedAt}
+                            duration={computeDuration(item.publishedAt)}
                             tag={item.sourceName}
                             tagImg={item.sourceIcon}
                             mediaLength={item.duration}

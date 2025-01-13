@@ -6,6 +6,7 @@ import {
     ScrollBar,
 } from "@alphaday/ui-kit";
 import { TNewsItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 
@@ -45,7 +46,7 @@ const NewsItemList: FC<INewsItemList> = ({
                             variant="news"
                             title={item.title}
                             path={item.url}
-                            date={item.publishedAt}
+                            duration={computeDuration(item.publishedAt)}
                             tag={item.sourceName}
                             tagImg={item.sourceIcon}
                             source={item.author}

@@ -1,12 +1,12 @@
 import { FC } from "react";
 import logoDay from "@alphaday/ui-kit/src/assets/svg/logo-white.svg";
 import { TSuperfeedItem, TTVLFeedDataItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import {
     PROJECTS_LOGO_KEYS,
     PROJECTS_LOGO_MAPPING,
 } from "src/components/tvl/common";
-import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,

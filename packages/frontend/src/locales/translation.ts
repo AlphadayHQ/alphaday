@@ -262,7 +262,7 @@ export const translationEN = {
     },
     datelocale: {
         future: "in %s",
-        past: " ago",
+        past: "%s ago",
         s: "s",
         m: "m",
         mm: "m",
@@ -654,8 +654,8 @@ export const translationJA: typeof translationEN = {
         },
     },
     datelocale: {
-        future: "後",
-        past: "前",
+        future: "%s後",
+        past: "%s前",
         s: "秒",
         m: "分",
         mm: "分",
@@ -1446,19 +1446,19 @@ export const translationFR: typeof translationEN = {
     datelocale: {
         future: "dans %s",
         past: "il y a %s",
-        s: "s", // SECONDES
-        m: "m", // MINUTE
-        mm: "m", // MINUTES
-        h: "h", // HEURE
-        hh: "h", // HEURES
-        d: "j", // JOUR
-        dd: "j", // JOURS
-        w: "s", // SEMAINE
-        M: "mo", // MOIS
-        MM: "mo", // MOIS (PLURIEL)
-        y: "a", // ANNÉE
-        ytd: "aad", // ANNÉE À DATE
-        yy: "a", // ANNÉES
+        s: "s",
+        m: "m",
+        mm: "m",
+        h: "h",
+        hh: "h",
+        d: "j",
+        dd: "j",
+        w: "s",
+        M: "mo",
+        MM: "mo",
+        y: "a",
+        ytd: "aad",
+        yy: "a",
     },
     gas: {
         title: "Prix du gaz",

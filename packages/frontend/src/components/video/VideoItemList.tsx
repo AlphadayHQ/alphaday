@@ -1,6 +1,7 @@
 import { FC, FormEvent } from "react";
 import { ItemSkeleton, ListItem, ScrollBar } from "@alphaday/ui-kit";
 import { TVideoItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 
@@ -45,7 +46,7 @@ const VideoItemList: FC<IVideoItemList> = ({
                             key={item.id}
                             variant="video"
                             title={item.title}
-                            date={item.publishedAt}
+                            duration={computeDuration(item.publishedAt)}
                             tag={item.sourceName}
                             tagImg={item.sourceIcon}
                             description={item.shortDescription}
