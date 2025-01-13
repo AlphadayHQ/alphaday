@@ -46,7 +46,10 @@ export const LanguageModal: React.FC<IProps> = ({
 
             <ModalBody className="flex w-full justify-around">
                 {languages.map(({ code, name, icon }) => (
-                    <div className="flex flex-col items-center gap-3">
+                    <div
+                        key={name}
+                        className="flex flex-col items-center gap-3"
+                    >
                         <Button
                             key={code}
                             variant="secondary"
