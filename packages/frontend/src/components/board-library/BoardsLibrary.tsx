@@ -16,7 +16,7 @@ import {
 import { TUserViewPreview, TViewMeta } from "src/api/types";
 import { validateEthAddr } from "src/api/utils/accountUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { SORT_OPTIONS } from "src/api/utils/sortOptions";
+import { generateSortOptions } from "src/api/utils/sortOptions";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import {
@@ -153,6 +153,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
     subscribedViews,
     onEditView,
 }) => {
+    const sortOptions = generateSortOptions();
     const { t } = useTranslation();
     const customBoards = subscribedViews
         ?.filter((board) => !board.is_system_view)
@@ -344,7 +345,7 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                     <SortBy
                                         selected={selectedSortValue}
                                         onSortBy={onSortBy}
-                                        options={SORT_OPTIONS}
+                                        options={sortOptions}
                                         label={t("navigation.sortBy")}
                                     />
                                 </div>

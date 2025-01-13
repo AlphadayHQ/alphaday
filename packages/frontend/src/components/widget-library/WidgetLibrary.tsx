@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget, TWidgetMini } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { SORT_OPTIONS } from "src/api/utils/sortOptions";
+import { generateSortOptions } from "src/api/utils/sortOptions";
 import {
     ETranslationValues,
     translateLabels,
@@ -88,6 +88,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
     handlePaginate,
 }) => {
     const { t } = useTranslation();
+    const sortOptions = generateSortOptions();
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
         onFilter(e.target.value);
     };
@@ -263,7 +264,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 <SortBy
                                     selected={selectedSortValue}
                                     onSortBy={onSortBy}
-                                    options={SORT_OPTIONS}
+                                    options={sortOptions}
                                     label={t("navigation.sortBy")}
                                 />
                             </div>
