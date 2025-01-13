@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import i18next from "i18next";
 import { TUserAuth } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../config/config";
@@ -22,6 +23,7 @@ export const alphadayApi = createApi({
             headers.set("Version", CONFIG.APP.VERSION);
             headers.set("X-App-Id", CONFIG.APP.X_APP_ID);
             headers.set("X-App-Secret", CONFIG.APP.X_APP_SECRET);
+            headers.set("Accept-Language", i18next.language);
             // @ts-expect-error
             const authState = getState().user.auth as TUserAuth | null;
             if (authState != null && authState?.token !== undefined) {
