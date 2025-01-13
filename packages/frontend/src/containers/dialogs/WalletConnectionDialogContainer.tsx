@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { Dialog, ErrorModal } from "@alphaday/ui-kit";
-import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 import {
     useWallet,
     useAccount,
@@ -25,11 +25,9 @@ type TPropsDict = Partial<
     >
 >;
 
-const translate = (key: string) => {
-    return i18next.t(`portfolio.${key}`);
-};
-
 const WalletConnectionDialogContainer: FC = memo(() => {
+    const { t } = useTranslation();
+
     const { authWallet, resetAuthState } = useAccount();
     const { enabled: isWalletConnectFeatureAllowed } = useFeatureFlags(
         EFeaturesRegistry.WalletConnect
@@ -46,6 +44,9 @@ const WalletConnectionDialogContainer: FC = memo(() => {
     const onConnect = (method: EWalletConnectionMethod) => () => {
         logWalletConnection(method);
         return connectWallet(method);
+    };
+    const translate = (key: string) => {
+        return t(`portfolio.${key}`);
     };
 
     const wallets = [

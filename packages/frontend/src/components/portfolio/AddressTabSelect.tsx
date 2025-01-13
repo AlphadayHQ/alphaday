@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { TabsBar } from "@alphaday/ui-kit";
-import i18next from "i18next";
+import { useTranslation } from "react-i18next";
 import { TCryptoAccount } from "src/api/types";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { TPortfolioTabAccount } from "./types";
@@ -19,11 +19,6 @@ interface IAddressTabSelect {
     onSelectAddress: (address: string) => void;
 }
 
-const DEFAULT_ACCOUNT_TAB = {
-    label: i18next.t("portfolio.allWallets"),
-    value: "all-wallets",
-};
-
 const AddressTabSelect: FC<IAddressTabSelect> = ({
     accounts,
     setHeaderRef,
@@ -37,8 +32,15 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
     onSelectAddress,
     authAccount,
 }) => {
+    const { t } = useTranslation();
+
+    const defaultAccountTab = {
+        label: t("portfolio.allWallets"),
+        value: "all-wallets",
+    };
+
     const accountTabs = [
-        DEFAULT_ACCOUNT_TAB,
+        defaultAccountTab,
         ...accounts.map((acct) => ({
             label: acct.ens || truncateWithEllipsis(acct.address, 10),
             value: acct.address,
@@ -47,12 +49,12 @@ const AddressTabSelect: FC<IAddressTabSelect> = ({
     ];
 
     const selectedTab = showAllAssets
-        ? DEFAULT_ACCOUNT_TAB
+        ? defaultAccountTab
         : accountTabs.find((tab) => tab.value === selectedAddress) ||
-          DEFAULT_ACCOUNT_TAB;
+          defaultAccountTab;
 
     const handleTabChange = (value: string) => {
-        if (value === DEFAULT_ACCOUNT_TAB.value) {
+        if (value === defaultAccountTab.value) {
             toggleShowAllAssets();
         } else {
             onSelectAddress(value);

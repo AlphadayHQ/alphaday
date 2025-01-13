@@ -1,15 +1,16 @@
 import React from "react";
-import i18next from "i18next";
+import { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 import { useGetRemoteStatusQuery } from "src/api/services";
 import { isNumber } from "src/api/utils/helpers";
 import GeneralError from "src/components/error/GeneralError";
 
-const t = i18next.t.bind(i18next);
-
 const getErrorMessage = ({
     status,
+    t,
 }: {
     status: number | undefined | string;
+    t: TFunction<"translation", undefined>;
 }): React.ReactNode => {
     if (status === "offline") {
         return (
@@ -109,6 +110,7 @@ const getErrorMessage = ({
 };
 
 const ErrorContainer: React.FC<{ type?: number }> = ({ type }) => {
+    const { t } = useTranslation();
     const { error } = useGetRemoteStatusQuery();
     // @ts-expect-error
     const rawStatusCode = error?.data?.status_code;
@@ -126,7 +128,7 @@ const ErrorContainer: React.FC<{ type?: number }> = ({ type }) => {
                 : undefined
             : "offline");
 
-    const errorContent = getErrorMessage({ status });
+    const errorContent = getErrorMessage({ status, t });
 
     return <GeneralError>{errorContent}</GeneralError>;
 };
