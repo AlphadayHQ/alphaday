@@ -58,13 +58,13 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     const walletMenuOption = isAuthenticated
         ? {
               handler: onSignOut,
-              menuTitle: t("navigation.menu.sign_out"),
-              title: t("navigation.menu.sign_out"),
+              menuTitle: t("navigation.menu.signOut"),
+              title: t("navigation.menu.signOut"),
               dataTestId: "profile-dropdown-sign-out",
           }
         : {
               handler: onSignUpSignIn,
-              menuTitle: `${t("navigation.menu.sign_up")} / ${t("navigation.menu.sign_in")}`,
+              menuTitle: `${t("navigation.menu.signUp")} / ${t("navigation.menu.signIn")}`,
               title: globalMessages.portfolio.signUp,
               dataTestId: "profile-dropdown-sign-up",
           };
@@ -144,7 +144,7 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         <Divider />
                         <DropdownItem onClick={onShowAboutUsModal}>
                             <span title="Lear more about Alphaday">
-                                {t("navigation.menu.about_us")}
+                                {t("navigation.menu.aboutUs")}
                             </span>
                         </DropdownItem>
                         <Divider />

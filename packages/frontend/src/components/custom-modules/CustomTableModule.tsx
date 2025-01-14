@@ -74,7 +74,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     if (items.length === 0) {
         return (
             <div className="flex flex-auto h-300 justify-center items-center">
-                <p>{t("others.no_items_found")}</p>
+                <p>{t("others.noItemsFound")}</p>
             </div>
         );
     }

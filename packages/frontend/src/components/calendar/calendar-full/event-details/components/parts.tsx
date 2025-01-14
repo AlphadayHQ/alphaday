@@ -55,7 +55,7 @@ export const EventLink: FC<{ event: TEventDetails }> = ({ event }) => {
                     <ExternalLinkSVG className="w-3.5 h-3.5 pt-[1px] text-primaryVariant100 stroke-3" />
                 </span>
                 <span className="pt-0.5 min-w-full whitespace-nowrap">
-                    {t("calendar.more_details")}
+                    {t("calendar.moreDetails")}
                 </span>
             </Button>
         </a>

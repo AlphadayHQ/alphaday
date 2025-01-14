@@ -44,7 +44,7 @@ const TopBar: FC<ITopBarProps> = ({
                             marginRight: "5px",
                         }}
                     />{" "}
-                    {t("buttons.add_wallet")}
+                    {t("buttons.addWallet")}
                 </TabButton>
                 {(selectedIsAuthWallet || !isWalletConnected) && (
                     <TabButton
@@ -59,8 +59,8 @@ const TopBar: FC<ITopBarProps> = ({
                         className="portfolio-addWallet border border-borderLine text-primary"
                     >
                         {isWalletConnected
-                            ? t("buttons.disconnect_wallet")
-                            : t("buttons.connect_wallet")}
+                            ? t("buttons.disconnectWallet")
+                            : t("buttons.connectWallet")}
                     </TabButton>
                 )}
             </span>

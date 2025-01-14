@@ -61,7 +61,7 @@ const NftCard: FC<INft> = ({ img, name, value }) => {
                                 title="Value in Eth"
                             >
                                 <span className="leading-none fontGroup-mini whitespace-nowrap two-col:inline-block">
-                                    {t("others.est_value")}
+                                    {t("others.estValue")}
                                 </span>
                                 <p className="whitespace-nowrap fontGroup-highlightSemi two-col:whitespace-normal">
                                     Ξ {formatNumber({ value }).value}

@@ -16,13 +16,13 @@ const getErrorMessage = ({
         return (
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
-                    {t("error_page.offline.heading.text")}{" "}
+                    {t("errorPage.offline.heading.text")}{" "}
                     <span className="text-secondaryOrange pr-1">
-                        {t("error_page.offline.heading.highlight")}
+                        {t("errorPage.offline.heading.highlight")}
                     </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    {t("error_page.offline.description")}
+                    {t("errorPage.offline.description")}
                 </p>
             </>
         );
@@ -32,24 +32,24 @@ const getErrorMessage = ({
         return (
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
-                    {t("error_page.503.heading.text")}{" "}
+                    {t("errorPage.503.heading.text")}{" "}
                     <span className="text-secondaryOrange pr-1">
-                        {t("error_page.503.heading.highlight")}
+                        {t("errorPage.503.heading.highlight")}
                     </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    {t("error_page.503.description1.text")}{" "}
+                    {t("errorPage.503.description1.text")}{" "}
                     <a
-                        href={t("error_page.503.description1.link.url")}
+                        href={t("errorPage.503.description1.link.url")}
                         target="_blank"
                         rel="noreferrer noopener"
                     >
-                        {t("error_page.503.description1.link.text")}
+                        {t("errorPage.503.description1.link.text")}
                     </a>
                     .
                 </p>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    {t("error_page.503.description2")}
+                    {t("errorPage.503.description2")}
                 </p>
             </>
         );
@@ -59,13 +59,13 @@ const getErrorMessage = ({
         return (
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
-                    {t("error_page.403.heading.text")}{" "}
+                    {t("errorPage.403.heading.text")}{" "}
                     <span className="text-secondaryOrange pr-1">
-                        {t("error_page.403.heading.highlight")}
+                        {t("errorPage.403.heading.highlight")}
                     </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    {t("error_page.403.description")}
+                    {t("errorPage.403.description")}
                 </p>
             </>
         );
@@ -76,11 +76,11 @@ const getErrorMessage = ({
             <>
                 <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
                     <span className="text-secondaryOrange pr-1">
-                        {t("error_page.404.heading.highlight")}
+                        {t("errorPage.404.heading.highlight")}
                     </span>
                 </h1>
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                    {t("error_page.404.description")}
+                    {t("errorPage.404.description")}
                 </p>
             </>
         );
@@ -94,16 +94,16 @@ const getErrorMessage = ({
                 </h1>
             )}
             <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
-                {t("error_page.default.description.text")}{" "}
+                {t("errorPage.default.description.text")}{" "}
                 <a
                     className="twitter"
-                    href={t("error_page.default.description.link.url")}
+                    href={t("errorPage.default.description.link.url")}
                     target="_blank"
                     rel="noreferrer noopener"
                 >
-                    {t("error_page.default.description.link.text")}
+                    {t("errorPage.default.description.link.text")}
                 </a>{" "}
-                {t("error_page.default.description.textAfterLink")}
+                {t("errorPage.default.description.textAfterLink")}
             </p>
         </>
     );

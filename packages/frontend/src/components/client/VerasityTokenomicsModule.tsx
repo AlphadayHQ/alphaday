@@ -225,19 +225,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                     <div className="fontGroup-normal">
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                {t("verasity.token_name")}:
+                                {t("verasity.tokenName")}:
                             </span>{" "}
                             {name}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                {t("verasity.token_ticker")}:
+                                {t("verasity.tokenTicker")}:
                             </span>{" "}
                             ${ticker}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                {t("verasity.sm_address")}:
+                                {t("verasity.smAddress")}:
                             </span>{" "}
                             <span
                                 role="button"
@@ -261,19 +261,19 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                {t("verasity.total_supply")}:
+                                {t("verasity.totalSupply")}:
                             </span>{" "}
                             {totalSupply}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                {t("verasity.max_circle_supply")}:
+                                {t("verasity.max_circleSupply")}:
                             </span>{" "}
                             {maxSupply}
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                {t("verasity.circle_supply")}:
+                                {t("verasity.circleSupply")}:
                             </span>{" "}
                             {supply}
                         </div>

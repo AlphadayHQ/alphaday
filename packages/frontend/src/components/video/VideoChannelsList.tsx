@@ -114,7 +114,7 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
                 >
                     <span className="fontGroup-highlightSemi uppercase text-primary m-0 transition-all duration-[400]">
                         {showAllChannels
-                            ? t("podcasts.selected_channels")
+                            ? t("podcasts.selectedChannels")
                             : t("podcasts.channels")}
                     </span>
                     <div className="flex items-center h-[17.5px]">
@@ -215,15 +215,13 @@ const VideoChannelsList: FC<IVideoChannelsList> = ({
             {!isLoadingChannels && (
                 <div className="h-[436px] p-4 mt-3.5 m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-borderLine">
                     <p className="fontGroup-highlightSemi uppercase text-primary m-0 mb-[10px]">
-                        {t("podcasts.all_channels")}
+                        {t("podcasts.allChannels")}
                     </p>{" "}
                     <div className="mb-5 w-full">
                         <Input
                             value={searchState}
                             onChange={(e) => setSearchState(e.target.value)}
-                            placeholder={t(
-                                "podcasts.channels_input_placeholder"
-                            )}
+                            placeholder={t("podcasts.channelsInputPlaceholder")}
                             id="search-video-channels"
                             name="search video channels"
                         />

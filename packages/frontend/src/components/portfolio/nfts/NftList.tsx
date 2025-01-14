@@ -52,7 +52,7 @@ const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
     const message =
         nftData.items.length === 0 ? (
             <div className="flex justify-center items-center top-[220px] z-[2] !h-[200px] text-primaryVariant100">
-                {t("messages.no_nfts_found")}
+                {t("messages.noNftsFound")}
             </div>
         ) : (
             <ScrollBar>
@@ -64,7 +64,7 @@ const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
 
     const error = nftsQueryFailed && (
         <div className="flex justify-center items-center top-[220px] z-[2] !h-[200px] text-primaryVariant100">
-            {globalMessages.error.requestFailed(t("others.your_nfts"))}
+            {globalMessages.error.requestFailed(t("others.yourNfts"))}
         </div>
     );
 

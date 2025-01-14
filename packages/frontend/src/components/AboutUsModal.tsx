@@ -18,25 +18,25 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
     return (
         <Modal showModal={showModal} onClose={onClose} size="md">
             <ModalHeader>
-                <ModalTitle>{t("about_us.title")}</ModalTitle>
+                <ModalTitle>{t("aboutUs.title")}</ModalTitle>
             </ModalHeader>
 
             <ModalBody className="[&_a]:text-secondaryOrange [&_a]:focus:outline-none">
-                <h6>{t("about_us.company_overview.title")}</h6>
+                <h6>{t("aboutUs.companyOverview.title")}</h6>
                 <p>
-                    {t("about_us.company_overview.registered_name")}
+                    {t("aboutUs.companyOverview.registeredName")}
                     <br />
-                    {t("about_us.company_overview.registration_number")}
+                    {t("aboutUs.companyOverview.registrationNumber")}
                     <br />
-                    {t("about_us.company_overview.registered_office")}
+                    {t("aboutUs.companyOverview.registeredOffice")}
                 </p>
 
-                <h6>{t("about_us.contact_info.title")}</h6>
+                <h6>{t("aboutUs.contactInfo.title")}</h6>
                 <p>
-                    {t("about_us.contact_info.email")}{" "}
+                    {t("aboutUs.contactInfo.email")}{" "}
                     <a href="mailto:hello@alphaday.com">hello@alphaday.com</a>
                     <br />
-                    {t("about_us.contact_info.xcom")}{" "}
+                    {t("aboutUs.contactInfo.xcom")}{" "}
                     <a
                         href="https://x.com/AlphadayHQ"
                         target="_blank"
@@ -46,9 +46,9 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                     </a>
                 </p>
 
-                <h6>{t("about_us.legal_info.title")}</h6>
+                <h6>{t("aboutUs.legalInfo.title")}</h6>
                 <p>
-                    {t("about_us.legal_info.terms")}{" "}
+                    {t("aboutUs.legalInfo.terms")}{" "}
                     <a
                         href="https://alphaday.com/terms"
                         target="_blank"
@@ -57,7 +57,7 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                         https://alphaday.com/terms
                     </a>
                     <br />
-                    {t("about_us.legal_info.privacy")}{" "}
+                    {t("aboutUs.legalInfo.privacy")}{" "}
                     <a
                         href="https://alphaday.com/privacy"
                         target="_blank"
@@ -67,9 +67,9 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                     </a>
                 </p>
 
-                <h6>{t("about_us.additional_resources.title")}</h6>
+                <h6>{t("aboutUs.additionalResources.title")}</h6>
                 <p>
-                    {t("about_us.additional_resources.faqs")}{" "}
+                    {t("aboutUs.additionalResources.faqs")}{" "}
                     <a
                         href="https://alphaday.com/"
                         target="_blank"
@@ -78,7 +78,7 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                         alphaday.com
                     </a>
                     <br />
-                    {t("about_us.additional_resources.feedback")}{" "}
+                    {t("aboutUs.additionalResources.feedback")}{" "}
                     <a
                         href="https://forms.gle/RbrrLGdFPAeuNJhk9"
                         target="_blank"
@@ -87,11 +87,11 @@ export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
                         https://forms.gle/RbrrLGdFPAeuNJhk9
                     </a>
                 </p>
-                <p>{t("about_us.mission")}</p>
+                <p>{t("aboutUs.mission")}</p>
             </ModalBody>
             <ModalFooter>
                 <Button className="pt-1.5" onClick={onClose}>
-                    {t("about_us.close_button")}
+                    {t("aboutUs.closeButton")}
                 </Button>
             </ModalFooter>
         </Modal>

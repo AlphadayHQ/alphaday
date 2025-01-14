@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { setCurrentTutorialTip, setStoreShowTutorial } from "src/api/store";
 import { useAppSelector, useAppDispatch } from "src/api/store/hooks";
 import { tutorials } from "src/containers/tutorial/staticData";
@@ -20,6 +21,7 @@ interface ITutorial {
 }
 
 export const useTutorial: () => ITutorial = () => {
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const { tutFocusElemRef, setTutFocusElemRef } = useTutorialContext();
     const { isFullSize } = useViewRoute();
@@ -27,9 +29,20 @@ export const useTutorial: () => ITutorial = () => {
         EFeaturesRegistry.WalletBoard
     );
 
+    const translate = useCallback(
+        (key: string) => {
+            return t(`tutorials.${key}`);
+        },
+        [t]
+    );
+    const translatedTutorials = useMemo(
+        () => tutorials(translate),
+        [translate]
+    );
+
     const allowedTutorials = isWalletBoardAllowed
-        ? tutorials
-        : tutorials.filter(
+        ? translatedTutorials
+        : translatedTutorials.filter(
               (tutorial) => tutorial.id !== ETutorialTipId.WalletView
           );
 

@@ -62,7 +62,7 @@ const GasPriceTable: FC<TGasPriceTable> = ({
     return (
         <>
             <div className="w-full text-uppercase text-primary mb-5 mt-4">
-                {t("gas.beacon_chain_data")}
+                {t("gas.beaconChainData")}
             </div>
             <KeyValueTable items={items} />
         </>

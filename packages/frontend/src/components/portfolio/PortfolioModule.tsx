@@ -181,7 +181,7 @@ const Portfolio: FC<IPortfolio> = ({
                                         onClick={onConnectWallet}
                                         className=" max-w-[49%]"
                                     >
-                                        {t("buttons.connect_wallet")}
+                                        {t("buttons.connectWallet")}
                                     </Button>
                                     <Button
                                         variant="secondaryXL"

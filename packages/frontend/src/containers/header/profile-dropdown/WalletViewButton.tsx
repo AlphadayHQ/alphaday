@@ -20,14 +20,14 @@ const viewButtonChild = (t: TFunction<"translation", undefined>) => {
     const child: { [key in EWalletViewState]: JSX.Element } = {
         [EWalletViewState.Ready]: (
             <span className="button-text ml-[5px] text-white">
-                {t("wallet_view.view_wallet_board")}
+                {t("walletView.viewWalletBoard")}
             </span>
         ),
         [EWalletViewState.Fetching]: (
             <>
                 <Spinner className="text-secondaryOrange h-[13px] w-[13px] border-[0.2em]" />
                 <span className="button-text ml-[5px] text-white">
-                    {t("wallet_view.creating_wallet_board")}
+                    {t("walletView.creatingWalletBoard")}
                 </span>
             </>
         ),
@@ -40,7 +40,7 @@ const viewButtonChild = (t: TFunction<"translation", undefined>) => {
             <>
                 <WandSVG className="h-3 w-3 text-white" />
                 <span className="button-text ml-[5px] text-white">
-                    {t("wallet_view.create_wallet_board")}
+                    {t("walletView.createWalletBoard")}
                 </span>
             </>
         ),
@@ -48,7 +48,7 @@ const viewButtonChild = (t: TFunction<"translation", undefined>) => {
             <>
                 <WandSVG className="h-3 w-3 text-white" />
                 <span className="button-text ml-[5px] text-white">
-                    {t("wallet_view.create_wallet_board")}
+                    {t("walletView.createWalletBoard")}
                 </span>
             </>
         ),

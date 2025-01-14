@@ -254,16 +254,16 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                 <span className="flex flex-col">
                                     <span className="fontGroup-highlightSemi">
                                         {t(
-                                            "navigation.boards_library.custom_boards_title"
+                                            "navigation.boards_library.customBoardsTitle"
                                         )}
                                     </span>
                                     <span className="text-primaryVariant100">
                                         {isAuthenticated
                                             ? t(
-                                                  "navigation.boards_library.custom_boards_description_with_auth"
+                                                  "navigation.boards_library.customBoardsDescriptionWithAuth"
                                               )
                                             : t(
-                                                  "navigation.boards_library.custom_boards_description"
+                                                  "navigation.boards_library.customBoardsDescription"
                                               )}
                                     </span>
                                 </span>

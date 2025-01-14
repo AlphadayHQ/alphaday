@@ -285,7 +285,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                     setSearchState={setSearchState}
                                     // placeholder="ethereum, bitcoin, etc."
                                     placeholder={translate(
-                                        "others.tag_options.auth"
+                                        "others.tagOptions.auth"
                                     )}
                                     onIncludeTag={(tag) => {
                                         const tagExists = tags.find(
@@ -326,10 +326,10 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                                     placeholder={
                                         isAuthenticated
                                             ? translate(
-                                                  "others.tag_options.auth"
+                                                  "others.tagOptions.auth"
                                               )
                                             : translate(
-                                                  "others.tag_options.unAuth"
+                                                  "others.tagOptions.unAuth"
                                               )
                                     }
                                     title={

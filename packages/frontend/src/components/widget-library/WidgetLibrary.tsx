@@ -183,7 +183,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                     <div className="w-full flex items-center justify-between">
                         <div>
                             <h6 className="m-0 inline-flex self-end fontGroup-highlightSemi uppercase text-primaryVariant100">
-                                {t("navigation.widgets_library.title")}
+                                {t("navigation.widgetsLibrary.title")}
                             </h6>
                         </div>
                         <div className="fontGroup-normal max-w-[370px] w-[80%]">
@@ -192,7 +192,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 id="widgetlib-search"
                                 name="widgetlib-search"
                                 placeholder={t(
-                                    "navigation.widgets_library.searchBarPlaceholder"
+                                    "navigation.widgetsLibrary.searchBarPlaceholder"
                                 )}
                                 height="28px"
                                 className="outline-none border-none focus:outline-none focus:border-none bg-backgroundVariant200"
@@ -224,7 +224,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 onClick={() => handleSelectCategory(undefined)}
                             >
                                 <WidgetsSVG />
-                                {t("navigation.widgets_library.allWidgets")}
+                                {t("navigation.widgetsLibrary.allWidgets")}
                             </div>
                             {categories.map((cat) => {
                                 const icon = cat.slug.split(

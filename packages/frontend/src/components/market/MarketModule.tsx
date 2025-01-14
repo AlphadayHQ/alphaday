@@ -71,14 +71,14 @@ const MarketModule: FC<IMarketModule> = ({
     if (selectedMarket === undefined) {
         chartComponent = (
             <div className="flex items-center justify-center top-[220px] h-[200px] text-primaryVariant100">
-                {t("market.no_coins_selected")}
+                {t("market.noCoinSelected")}
             </div>
         );
     } else if (priceHistoryData === undefined && !isLoadingHistory) {
         chartComponent = (
             <div className="flex items-center justify-center top-[220px] h-[200px] text-primaryVariant100">
                 {globalMessages.error.requestFailed(
-                    evaluateTemplate(t("market.history_error"), {
+                    evaluateTemplate(t("market.historyError"), {
                         selectedChartRange,
                     })
                 )}
@@ -175,7 +175,7 @@ const MarketModule: FC<IMarketModule> = ({
                     >
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
-                                {t("market.market_cap")}
+                                {t("market.marketCap")}
                             </span>
                             <span className="value">
                                 <span>
@@ -191,7 +191,7 @@ const MarketModule: FC<IMarketModule> = ({
                         </div>
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
-                                {t("market.volume_24h")}
+                                {t("market.volume24h")}
                             </span>
                             <span className="value">
                                 <span>

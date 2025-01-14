@@ -3,52 +3,47 @@ import {
     ETutorialIndicatorType,
     ETutorialTipId,
 } from "src/api/types";
-import i18n from "src/i18n";
 
-const translate = (key: string) => {
-    return i18n.t(`tutorials.${key}`);
-};
-
-export const tutorials = [
+export const tutorials = (translate: (key: string) => string) => [
     {
         id: ETutorialTipId.SwitchView,
-        title: translate("switchView_title"),
-        text: translate("switchView_text"),
+        title: translate("switchViewTitle"),
+        text: translate("switchViewText"),
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.WalletView,
-        title: translate("walletView_title"),
-        text: translate("walletView_text"),
+        title: translate("walletViewTitle"),
+        text: translate("walletViewText"),
         align: ETutorialTipAlign.Left,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.UseSeachBar,
-        title: translate("useSeachBar_title"),
-        text: translate("useSeachBar_text"),
+        title: translate("useSeachBarTitle"),
+        text: translate("useSeachBarText"),
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.ReArrangeWidget,
-        title: translate("reArrangeWidget_title"),
-        text: translate("reArrangeWidget_text"),
+        title: translate("reArrangeWidgetTitle"),
+        text: translate("reArrangeWidgetText"),
         align: ETutorialTipAlign.Center,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.UseWidgetLib,
-        title: translate("useWidgetLib_title"),
-        text: translate("useWidgetLib_text"),
+        title: translate("useWidgetLibTitle"),
+        text: translate("useWidgetLibText"),
         align: ETutorialTipAlign.Right,
         indicatorType: ETutorialIndicatorType.Rect,
     },
     {
         id: ETutorialTipId.ComeBack,
         title: undefined,
-        text: translate("comeBack_text"),
+        text: translate("comeBackText"),
         align: ETutorialTipAlign.Right,
         indicatorType: ETutorialIndicatorType.Ring,
     },

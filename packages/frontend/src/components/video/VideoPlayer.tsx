@@ -51,7 +51,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
     if (video === null) {
         return (
             <div className="w-full flex justify-center items-center bg-background">
-                {t("messages.error.no_video")}
+                {t("messages.error.noVideo")}
             </div>
         );
     }
@@ -59,7 +59,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
     if (!video) {
         return (
             <div className="w-full flex justify-center items-center bg-background">
-                {t("messages.error.something_wrong")}
+                {t("messages.error.somethingWrong")}
             </div>
         );
     }

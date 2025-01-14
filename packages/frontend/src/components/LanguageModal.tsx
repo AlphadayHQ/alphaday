@@ -81,7 +81,7 @@ export const LanguageModal: React.FC<IProps> = ({
             </ModalBody>
             <ModalFooter>
                 <Button className="pt-1.5" onClick={onClose}>
-                    {t("language.close_button")}
+                    {t("language.closeButton")}
                 </Button>
             </ModalFooter>
         </Modal>
