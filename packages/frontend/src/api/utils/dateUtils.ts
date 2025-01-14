@@ -8,7 +8,7 @@ import moment from "moment-with-locales-es6";
  */
 
 export const computeDuration = (date: string | Date): string => {
-    moment.updateLocale("en", {
+    moment.updateLocale(i18next.language, {
         relativeTime: {
             future: `${i18next.t("datelocale.future")}`, // this shouldn't occur If it does there's an error.
             past: `${i18next.t("datelocale.past")}`,
