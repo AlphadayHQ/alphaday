@@ -7,7 +7,7 @@
 
 ## Node Setup
 
-* First install NVM or Volta
+* First install [NVM](https://github.com/nvm-sh/nvm), [FNM](https://github.com/Schniz/fnm) or [Volta](https://volta.sh/)
 * Then run `nvm use` or `volta pin node@20.11.0`
 * Then run `npm install -g yarn`
 
@@ -15,10 +15,9 @@
 Set locally up with these steps:
 
 1. `yarn` to install dependencies
-1. `yarn dev:frontend` to start the development server
-1. `yarn build:frontend` to create/update the build folder
+2. `yarn dev:frontend` to start the development server
+3. `yarn build:frontend` to create/update the build folder
 
-## Next steps
-
-* [Backend API docs](api.alphaday.com/docs)
-* [Backend Admin UI](api.alphaday.com/admin)
+## Next Steps
+* [Backend Docs](https://api.alphaday.com/docs)
+* [Backend Admin](https://api.alphaday.com/admin)
