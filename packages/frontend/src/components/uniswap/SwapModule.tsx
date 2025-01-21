@@ -46,7 +46,7 @@ const SwapModule: FC<IProps> = ({
                 width="100%"
                 convenienceFee={config.convenienceFee}
                 convenienceFeeRecipient={config.convenienceFeeRecipient}
-                tokenList={tokenList}
+                tokenList={`${CONFIG.API.DEFAULT.BLOBS_URL}tokens-uniswap.json`}
             />
         </div>
     );
