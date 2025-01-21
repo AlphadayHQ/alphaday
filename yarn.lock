@@ -5121,10 +5121,10 @@
     sharp-ico "^0.1.5"
     unconfig "^0.3.11"
 
-"@vitejs/plugin-basic-ssl@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-1.1.0.tgz#8b840305a6b48e8764803435ec0c716fa27d3802"
-  integrity sha512-wO4Dk/rm8u7RNhOf95ZzcEmC9rYOncYgvq4z3duaJrCgjN8BxAnDVyndanfcJZ0O6XZzHz6Q0hTimxTg8Y9g/A==
+"@vitejs/plugin-basic-ssl@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-basic-ssl/-/plugin-basic-ssl-1.2.0.tgz#9490fe15b8833351982fbe0963987f69f40f5019"
+  integrity sha512-mkQnxTkcldAzIsomk1UuLfAu9n+kpQ3JbHcpCp7d2Oo6ITtji8pHS3QToOWjhPFvNQSnhlkAjmGbhv2QvwO/7Q==
 
 "@vitejs/plugin-legacy@5.3.2":
   version "5.3.2"
