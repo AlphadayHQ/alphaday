@@ -1,20 +1,27 @@
+import i18next from "i18next";
+import { evaluateTranslationTemplate } from "./api/utils/textUtils";
+
 const SlugToWidgetNameMap: Record<string, string> = {
     calendar_template: "Calendar",
 };
 const globalMessages = {
     error: {
-        title: "Error",
-        notFound: "The requested page could not be found.",
-        generic: "An error occurred while processing your request.",
-        forbidden: "You do not have permission to access this page.",
-        unauthorized: "You are not authorized to access this page.",
-        notAuthenticated: "Please connect and verify your wallet to continue",
-        maxViews: "You have created maximum allowed boards",
-        maxWidgets: "Your board has more widgets than allowed",
-        maxViewWidgets:
-            "You have exceeded the allowed count of this widget on a board",
+        title: i18next.t("messages.error.title"),
+        notFound: i18next.t("messages.error.notFound"),
+        generic: i18next.t("messages.error.generic"),
+        forbidden: i18next.t("messages.error.forbidden"),
+        unauthorized: i18next.t("messages.error.unauthorized"),
+        notAuthenticated: i18next.t("messages.error.notAuthenticated"),
+        maxViews: i18next.t("messages.error.maxViews"),
+        maxWidgets: i18next.t("messages.error.maxWidgets"),
+        maxViewWidgets: i18next.t("messages.error.maxViewWidgets"),
         requestFailed(term = "the data"): string {
-            return `An error occurred fetching ${term}, please try again later`;
+            return evaluateTranslationTemplate(
+                i18next.t("messages.error.requestFailed"),
+                {
+                    term,
+                }
+            );
         },
         boardHasNoRequiredWidget(
             widget_template: string | undefined,
@@ -25,39 +32,49 @@ const globalMessages = {
                 widget_template &&
                 widget_template in SlugToWidgetNameMap
             ) {
-                return `This ${
-                    boardName || ""
-                } board does not have the required ${
-                    SlugToWidgetNameMap[widget_template]
-                } widget, to access this route you need to add the ${
-                    SlugToWidgetNameMap[widget_template]
-                } widget to this board and refresh the page.`;
+                return evaluateTranslationTemplate(
+                    i18next.t("messages.error.boardHasNoRequiredWidget"),
+                    {
+                        boardName: boardName || "",
+                        widgetName: SlugToWidgetNameMap[widget_template],
+                    }
+                );
             }
             return "";
         },
     },
     success: {
-        title: "Success",
-        generic: "Your request was processed successfully.",
+        title: i18next.t("messages.success.title"),
+        generic: i18next.t("messages.success.generic"),
     },
     queries: {
-        noResults: "No results found",
-        noMatchFound: (item: string): string => `No matching ${item} found.`,
+        noResults: i18next.t("messages.queries.noResults"),
+        noMatchFound: (item: string): string =>
+            evaluateTranslationTemplate(
+                i18next.t("messages.queries.noMatchFound"),
+                {
+                    item,
+                }
+            ),
     },
     portfolio: {
-        signUp: "Sign up to save your portfolio",
-        connectWallet: "To signup, first connect your wallet.",
-        verifyWallet:
-            "Sign a fee-less message to confirm ownership and log in to Alphaday to save your configuration.",
+        signUp: i18next.t("messages.portfolio.signUp"),
+        connectWallet: i18next.t("messages.portfolio.connectWallet"),
+        verifyWallet: i18next.t("messages.portfolio.verifyWallet"),
     },
     callToAction: {
         signUpToBookmark: (item?: string) =>
-            `Sign up to bookmark ${item ?? ""} and unlock more features`,
+            evaluateTranslationTemplate(
+                i18next.t("messages.callToAction.signUpToBookmark"),
+                {
+                    item: item || "",
+                }
+            ),
     },
 };
 
 export const calendarMessages = {
-    noEvents: "No upcoming events found",
+    noEvents: i18next.t("calendar.no_events"),
 };
 
 export default globalMessages;

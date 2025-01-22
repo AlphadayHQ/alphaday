@@ -12,6 +12,7 @@ import {
     useViewRoute,
     useGaTracker,
 } from "./api/hooks";
+import { usePreferredLanguage } from "./api/hooks/usePreferredLanguage";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
 import walletConnectProvider from "./api/store/providers/wallet-connect-provider";
@@ -31,6 +32,7 @@ const goToLandingPage = () => {
 
 const AppRoutes = () => {
     useGaTracker();
+    usePreferredLanguage();
 
     const dispatch = useAppDispatch();
     const { error } = useGetRemoteStatusQuery(undefined, {

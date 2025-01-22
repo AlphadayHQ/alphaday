@@ -8,6 +8,7 @@ import {
     TPodcastItem,
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { translateLabels } from "src/api/utils/translationUtils";
 import AudioPlayer from "src/components/podcast/AudioPlayer";
 import PodcastChannelsList from "./PodcastChannelsList";
 import PodcastItemList from "./PodcastItemList";
@@ -38,17 +39,17 @@ const AUDIO_PLAYER_HEIGHT = 52;
 const CHANNELS_LIST_HEIGHT = 157;
 const CHANNELS_LIST_HEIGHT_COLLAPSED = 36;
 
-const PODCAST_NAV_ITEMS = [
+const translateNavItems = () => [
     {
-        label: "Feed",
+        label: translateLabels("Feed"),
         value: EItemFeedPreference.Last,
     },
     {
-        label: "Trending",
+        label: translateLabels("Trending"),
         value: EItemFeedPreference.Trending,
     },
     {
-        label: "Bookmarks",
+        label: translateLabels("Bookmarks"),
         value: EItemFeedPreference.Bookmark,
         auth: true,
     },
@@ -72,6 +73,8 @@ const PodcastModule: FC<IPodcastModule> = ({
     preferredChannelIds,
     setPreferredChannelIds,
 }) => {
+    const podcastNavItems = translateNavItems();
+
     const {
         squareRef,
         headerRef,
@@ -114,13 +117,11 @@ const PodcastModule: FC<IPodcastModule> = ({
     );
 
     const NavItemPreference =
-        PODCAST_NAV_ITEMS.find((item) => item.value === feedPreference) ||
-        PODCAST_NAV_ITEMS[0];
+        podcastNavItems.find((item) => item.value === feedPreference) ||
+        podcastNavItems[0];
 
     const onTabOptionChange = (value: string) => {
-        const optionItem = PODCAST_NAV_ITEMS.find(
-            (item) => item.value === value
-        );
+        const optionItem = podcastNavItems.find((item) => item.value === value);
         if (optionItem === undefined) {
             Logger.debug("PodcastModule::Nav option item not found");
             return;
@@ -138,7 +139,7 @@ const PodcastModule: FC<IPodcastModule> = ({
                     style={{ height: SWITCH_HEIGHT }}
                 >
                     <TabsBar
-                        options={PODCAST_NAV_ITEMS}
+                        options={podcastNavItems}
                         onChange={onTabOptionChange}
                         selectedOption={NavItemPreference}
                     />

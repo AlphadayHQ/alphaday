@@ -6,6 +6,7 @@ import {
     ScrollBar,
 } from "@alphaday/ui-kit";
 import { TDaoItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 
@@ -36,7 +37,7 @@ const DaoItemList: FC<IDaoItemList> = ({ items, handlePaginate }) => {
                             variant="dao"
                             title={item.title}
                             path={item.url}
-                            date={item.startsAt}
+                            duration={computeDuration(item.startsAt)}
                             tag={item.sourceName}
                             tagImg={item.sourceIcon}
                         />

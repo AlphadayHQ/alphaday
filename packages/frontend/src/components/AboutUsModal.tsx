@@ -6,95 +6,92 @@ import {
     ModalHeader,
     ModalTitle,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
     showModal: boolean;
     onClose?: () => void;
 }
+
 export const AboutUsModal: React.FC<IProps> = ({ showModal, onClose }) => {
+    const { t } = useTranslation();
     return (
         <Modal showModal={showModal} onClose={onClose} size="md">
             <ModalHeader>
-                <ModalTitle>About Us</ModalTitle>
+                <ModalTitle>{t("aboutUs.title")}</ModalTitle>
             </ModalHeader>
 
             <ModalBody className="[&_a]:text-secondaryOrange [&_a]:focus:outline-none">
-                <h6>Company Overview:</h6>
+                <h6>{t("aboutUs.companyOverview.title")}</h6>
                 <p>
-                    Registered Name: Alphabox Solutions Pte. Ltd.
+                    {t("aboutUs.companyOverview.registeredName")}
                     <br />
-                    Registration Number: <code>202136261C</code>
+                    {t("aboutUs.companyOverview.registrationNumber")}
                     <br />
-                    Registered Office: 45 North Canal Road #01-01 Lew Building
-                    Singapore
+                    {t("aboutUs.companyOverview.registeredOffice")}
                 </p>
 
-                <h6>Contact Information:</h6>
+                <h6>{t("aboutUs.contactInfo.title")}</h6>
                 <p>
-                    Email Address:{" "}
+                    {t("aboutUs.contactInfo.email")}{" "}
                     <a href="mailto:hello@alphaday.com">hello@alphaday.com</a>
                     <br />
-                    X.com:{" "}
+                    {t("aboutUs.contactInfo.xcom")}{" "}
                     <a
                         href="https://x.com/AlphadayHQ"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer noopener"
                     >
                         https://x.com/AlphadayHQ
                     </a>
                 </p>
 
-                <h6>Legal Information:</h6>
+                <h6>{t("aboutUs.legalInfo.title")}</h6>
                 <p>
-                    Terms & Conditions:{" "}
+                    {t("aboutUs.legalInfo.terms")}{" "}
                     <a
                         href="https://alphaday.com/terms"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer noopener"
                     >
                         https://alphaday.com/terms
                     </a>
                     <br />
-                    Privacy Policy:{" "}
+                    {t("aboutUs.legalInfo.privacy")}{" "}
                     <a
                         href="https://alphaday.com/privacy"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer noopener"
                     >
                         https://alphaday.com/privacy
                     </a>
                 </p>
 
-                <h6>Additional Resources:</h6>
+                <h6>{t("aboutUs.additionalResources.title")}</h6>
                 <p>
-                    FAQs:{" "}
+                    {t("aboutUs.additionalResources.faqs")}{" "}
                     <a
                         href="https://alphaday.com/"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer noopener"
                     >
                         alphaday.com
                     </a>
                     <br />
-                    Feedback:{" "}
+                    {t("aboutUs.additionalResources.feedback")}{" "}
                     <a
                         href="https://forms.gle/RbrrLGdFPAeuNJhk9"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noreferrer noopener"
                     >
                         https://forms.gle/RbrrLGdFPAeuNJhk9
                     </a>
                 </p>
-                <p>
-                    Alphaday&apos;s mission is to bring you all the tools needed
-                    to follow your favorite projects, stay up-to-date with the
-                    latest narratives, and use your favorite dapps, all from the
-                    comfort of one easy-to-use customizable dashboard.
-                </p>
+                <p>{t("aboutUs.mission")}</p>
             </ModalBody>
             <ModalFooter>
                 <Button className="pt-1.5" onClick={onClose}>
-                    Close
+                    {t("aboutUs.closeButton")}
                 </Button>
             </ModalFooter>
         </Modal>

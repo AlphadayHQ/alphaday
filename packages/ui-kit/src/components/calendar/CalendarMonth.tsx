@@ -3,7 +3,7 @@ import { ViewContentArg, DatesSetArg, EventMountArg } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import {
     ICalendarBaseProps,
     TElemCoords,
@@ -93,6 +93,7 @@ const eventRender = (info: EventMountArg, widgetHash: string) => {
 };
 
 interface ICalendarMonth extends ICalendarBaseProps {
+    locale: string;
     handleHeaderTooltips: (
         info: DatesSetArg,
         widgetHash: string,
@@ -116,6 +117,7 @@ interface ICalendarMonth extends ICalendarBaseProps {
 }
 
 export const CalendarMonth: FC<ICalendarMonth> = ({
+    locale,
     events,
     onDatesSet,
     showFullSize,
@@ -351,6 +353,7 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
     return (
         <FullCalendar
             initialDate={selectedDate}
+            locale={locale}
             key={key}
             plugins={[dayGridPlugin, interactionPlugin]}
             headerToolbar={{

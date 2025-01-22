@@ -1,5 +1,6 @@
 import { FC, useMemo } from "react";
 import { Button } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import useElementSize from "src/api/hooks/useElementSize";
 import { TVideoItem } from "src/api/types";
 import { computeDuration } from "src/api/utils/dateUtils";
@@ -23,6 +24,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
     isAuthenticated,
     isFullSize,
 }) => {
+    const { t } = useTranslation();
     const [
         setVideoPlayerWrapRef,
         { width: videoPlayerWrapWidth, height: videoPlayerWrapHeight },
@@ -49,7 +51,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
     if (video === null) {
         return (
             <div className="w-full flex justify-center items-center bg-background">
-                No Video Selected
+                {t("messages.error.noVideo")}
             </div>
         );
     }
@@ -57,7 +59,7 @@ const VideoPlayer: FC<IVideoPlayer> = ({
     if (!video) {
         return (
             <div className="w-full flex justify-center items-center bg-background">
-                Something went wrong.
+                {t("messages.error.somethingWrong")}
             </div>
         );
     }

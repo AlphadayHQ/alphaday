@@ -8,10 +8,16 @@ import {
     SortBy,
     twMerge,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget, TWidgetMini } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { getSortOptionsArray } from "src/api/utils/sortOptions";
+import { generateSortOptions } from "src/api/utils/sortOptions";
+import {
+    ETranslationValues,
+    translateLabels,
+    TTranslationValues,
+} from "src/api/utils/translationUtils";
 import { ReactComponent as ChartSVG } from "src/assets/icons/chart.svg";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as DefiSVG } from "src/assets/icons/defi.svg";
@@ -81,6 +87,8 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
     isLoading,
     handlePaginate,
 }) => {
+    const { t } = useTranslation();
+    const sortOptions = generateSortOptions();
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
         onFilter(e.target.value);
     };
@@ -96,6 +104,13 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
 
     const sortByKey =
         Object.keys(EItemsSortBy)[Object.values(EItemsSortBy).indexOf(sortBy)];
+
+    const selectedSortValue =
+        Object.keys(ETranslationValues).indexOf(sortByKey.toLowerCase()) !== -1
+            ? translateLabels(sortByKey.toLowerCase() as TTranslationValues, {
+                  isKey: true,
+              })
+            : sortByKey;
 
     const renderModulePreview = useCallback(
         (widget: TWidgetMini) => {
@@ -168,7 +183,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                     <div className="w-full flex items-center justify-between">
                         <div>
                             <h6 className="m-0 inline-flex self-end fontGroup-highlightSemi uppercase text-primaryVariant100">
-                                Widgets Library
+                                {t("navigation.widgetsLibrary.title")}
                             </h6>
                         </div>
                         <div className="fontGroup-normal max-w-[370px] w-[80%]">
@@ -176,7 +191,9 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 onChange={handleFilterChange}
                                 id="widgetlib-search"
                                 name="widgetlib-search"
-                                placeholder="Quick Search..."
+                                placeholder={t(
+                                    "navigation.widgetsLibrary.searchBarPlaceholder"
+                                )}
                                 height="28px"
                                 className="outline-none border-none focus:outline-none focus:border-none bg-backgroundVariant200"
                             />
@@ -207,7 +224,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                                 onClick={() => handleSelectCategory(undefined)}
                             >
                                 <WidgetsSVG />
-                                All Widgets
+                                {t("navigation.widgetsLibrary.allWidgets")}
                             </div>
                             {categories.map((cat) => {
                                 const icon = cat.slug.split(
@@ -239,12 +256,16 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
                         <div className="w-full overflow-hidden h-full">
                             <div className="flex justify-between items-center px-3 pt-3 pb-2 text-primary font-normal">
                                 <div className="fontGroup-highlightSemi">
-                                    <span>{widgets.length} Widgets</span>
+                                    <span>
+                                        {widgets.length}{" "}
+                                        {t("navigation.widgets")}
+                                    </span>
                                 </div>
                                 <SortBy
-                                    selected={sortByKey}
+                                    selected={selectedSortValue}
                                     onSortBy={onSortBy}
-                                    options={getSortOptionsArray()}
+                                    options={sortOptions}
+                                    label={t("navigation.sortBy")}
                                 />
                             </div>
                             <div className="w-full h-[550px]">

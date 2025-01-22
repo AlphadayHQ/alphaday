@@ -7,7 +7,7 @@ import {
 import { TCustomItem, TCustomLayoutEntry } from "src/api/types";
 import {
     formatCustomDataField,
-    evaluateTemplate,
+    evaluateTranslationTemplate,
     getColumnJustification,
 } from "src/api/utils/customDataUtils";
 import { handleTableImgError } from "src/api/utils/errorHandling";
@@ -16,7 +16,7 @@ import { ReactComponent as LinkSVG } from "src/assets/icons/external-link.svg";
 const getFieldDetails = (field: TCustomLayoutEntry, item: TCustomItem) => {
     const rawField =
         field.template !== undefined
-            ? evaluateTemplate(field.template, item)
+            ? evaluateTranslationTemplate(field.template, item)
             : "Error: Missing template";
     const formattedField = formatCustomDataField({
         rawField,
@@ -137,7 +137,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
                 if (column.hidden) return null;
                 const rawValue =
                     column.template !== undefined
-                        ? evaluateTemplate(column.template, rowData)
+                        ? evaluateTranslationTemplate(column.template, rowData)
                         : undefined;
                 const formattedValue =
                     rawValue !== undefined
@@ -253,7 +253,10 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                     if (column.hidden) return null;
                     const rawValue =
                         column.template !== undefined
-                            ? evaluateTemplate(column.template, rowData)
+                            ? evaluateTranslationTemplate(
+                                  column.template,
+                                  rowData
+                              )
                             : undefined;
                     const formattedValue =
                         rawValue !== undefined

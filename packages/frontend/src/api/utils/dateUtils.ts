@@ -1,26 +1,28 @@
-import moment from "moment";
+import i18next from "i18next";
+import moment from "moment-with-locales-es6";
 /**
  *  returns a text that represents the given datetime
  *  relative to now.
  * @param date | date-string
  * @returns string
  */
+
 export const computeDuration = (date: string | Date): string => {
-    moment.updateLocale("en", {
+    moment.updateLocale(i18next.language, {
         relativeTime: {
-            future: "in %s", // this shouldn't occur If it does there's an error.
-            past: "%s ago",
-            s: "%ds",
-            m: "%dm",
-            mm: "%dm",
-            h: "%dh",
-            hh: "%dh",
-            d: "%dd",
-            dd: "%dd",
-            M: "%dmo",
-            MM: "%dmo",
-            y: "%dy",
-            yy: "%dy",
+            future: `${i18next.t("datelocale.future")}`, // this shouldn't occur If it does there's an error.
+            past: `${i18next.t("datelocale.past")}`,
+            s: `%d${i18next.t("datelocale.s")}`,
+            m: `%d${i18next.t("datelocale.m")}`,
+            mm: `%d${i18next.t("datelocale.mm")}`,
+            h: `%d${i18next.t("datelocale.h")}`,
+            hh: `%d${i18next.t("datelocale.hh")}`,
+            d: `%d${i18next.t("datelocale.d")}`,
+            dd: `%d${i18next.t("datelocale.dd")}`,
+            M: `%d${i18next.t("datelocale.M")}`,
+            MM: `%d${i18next.t("datelocale.MM")}`,
+            y: `%d${i18next.t("datelocale.y")}`,
+            yy: `%d${i18next.t("datelocale.yy")}`,
         },
     });
 

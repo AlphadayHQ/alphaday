@@ -1,11 +1,12 @@
 import { FC } from "react";
 import { ReactComponent as CloseSVG } from "../../assets/svg/close.svg";
+import { ReactComponent as LanguageSVG } from "../../assets/svg/language.svg";
 import { ReactComponent as ViewsSVG } from "../../assets/svg/views.svg";
 import { ReactComponent as WidgetsSVG } from "../../assets/svg/widgets.svg";
 import { TabButton } from "./TabButton";
 
 interface ButtonProps {
-    variant: "views" | "modules";
+    variant: "views" | "modules" | "language";
     open: boolean;
     disabled?: boolean;
     uppercase?: boolean;
@@ -33,6 +34,12 @@ export const NavTabButton: FC<ButtonProps> = ({
             className="fontGroup-supportBold bg-transparent border-none hover:bg-backgroundVariant200 px-4"
             {...restProps}
         >
+            {variant === "language" &&
+                (open ? (
+                    <CloseSVG className="fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
+                ) : (
+                    <LanguageSVG className="widgets fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
+                ))}
             {variant === "modules" &&
                 (open ? (
                     <CloseSVG className="fill-primary mr-1.5 h-3.5 w-3.5 self-center" />

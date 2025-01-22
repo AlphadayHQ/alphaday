@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Switch, TabButton } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
 import { EPortfolioType } from "./types";
 
@@ -22,10 +23,11 @@ const TopBar: FC<ITopBarProps> = ({
     selectedIsAuthWallet,
     isWalletConnected,
 }) => {
+    const { t } = useTranslation();
     return (
         <div className="m-0 mx-2 flex justify-between pt-4 h-[42px]">
             <Switch
-                options={["Assets", "NFTs"]}
+                options={[t("portfolio.assets"), "NFTs"]}
                 onChange={switchPortfolioType}
                 checked={portfolioType === EPortfolioType.Nft}
             />
@@ -42,7 +44,7 @@ const TopBar: FC<ITopBarProps> = ({
                             marginRight: "5px",
                         }}
                     />{" "}
-                    Add New Wallet
+                    {t("buttons.addWallet")}
                 </TabButton>
                 {(selectedIsAuthWallet || !isWalletConnected) && (
                     <TabButton
@@ -57,8 +59,8 @@ const TopBar: FC<ITopBarProps> = ({
                         className="portfolio-addWallet border border-borderLine text-primary"
                     >
                         {isWalletConnected
-                            ? "Disconnect wallet"
-                            : "Connect wallet"}
+                            ? t("buttons.disconnectWallet")
+                            : t("buttons.connectWallet")}
                     </TabButton>
                 )}
             </span>

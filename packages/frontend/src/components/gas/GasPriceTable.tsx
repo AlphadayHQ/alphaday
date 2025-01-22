@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { KeyValueTable } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 
 const formatNumber = (value: number) =>
     new Intl.NumberFormat("en-US", {
@@ -24,6 +25,8 @@ const GasPriceTable: FC<TGasPriceTable> = ({
     finalizedEpoch,
     finalizedSlot,
 }) => {
+    const { t } = useTranslation();
+
     const items = [
         [
             {
@@ -59,7 +62,7 @@ const GasPriceTable: FC<TGasPriceTable> = ({
     return (
         <>
             <div className="w-full text-uppercase text-primary mb-5 mt-4">
-                Beacon Chain Data
+                {t("gas.beaconChainData")}
             </div>
             <KeyValueTable items={items} />
         </>

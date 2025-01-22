@@ -18,9 +18,15 @@ const TimeBlock: FC<{ count: string; label: string }> = ({ count, label }) => (
 
 interface IProps {
     secondsToDate: number;
+    labels: {
+        days: string;
+        hours: string;
+        minutes: string;
+        seconds: string;
+    };
 }
 
-export const Timer: FC<IProps> = ({ secondsToDate }) => {
+export const Timer: FC<IProps> = ({ secondsToDate, labels }) => {
     // make sure we don't display negative values
     const nonNegativeSecondsToDate = secondsToDate >= 0 ? secondsToDate : 0;
 
@@ -32,22 +38,22 @@ export const Timer: FC<IProps> = ({ secondsToDate }) => {
                 count={leftPadDate(
                     Math.floor(nonNegativeSecondsToDate / (24 * 3600))
                 )}
-                label="Days"
+                label={labels.days}
             />
             <TimeBlock count=":" label="" />
             <TimeBlock
                 count={leftPadDate(secondsToDateAsDate.getUTCHours())}
-                label="Hours"
+                label={labels.hours}
             />
             <TimeBlock count=":" label="" />
             <TimeBlock
                 count={leftPadDate(secondsToDateAsDate.getUTCMinutes())}
-                label="Minutes"
+                label={labels.minutes}
             />
             <TimeBlock count=":" label="" />
             <TimeBlock
                 count={leftPadDate(secondsToDateAsDate.getUTCSeconds())}
-                label="Seconds"
+                label={labels.seconds}
             />
         </div>
     );

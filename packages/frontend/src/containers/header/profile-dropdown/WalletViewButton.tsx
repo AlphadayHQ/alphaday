@@ -1,5 +1,7 @@
 import { FC } from "react";
 import { Button, Spinner, twMerge } from "@alphaday/ui-kit";
+import { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 import { EWalletViewState } from "src/api/types";
 import {
     getWalletViewStateMessages,
@@ -14,45 +16,52 @@ interface IWalletViewButton {
     onClick: () => void;
 }
 
-const viewButtonChild: { [key in EWalletViewState]: JSX.Element } = {
-    [EWalletViewState.Ready]: (
-        <span className="button-text ml-[5px] text-white">
-            View wallet board
-        </span>
-    ),
-    [EWalletViewState.Fetching]: (
-        <>
-            <Spinner className="text-secondaryOrange h-[13px] w-[13px] border-[0.2em]" />
+const viewButtonChild = (t: TFunction<"translation", undefined>) => {
+    const child: { [key in EWalletViewState]: JSX.Element } = {
+        [EWalletViewState.Ready]: (
             <span className="button-text ml-[5px] text-white">
-                Creating wallet board
+                {t("walletView.viewWalletBoard")}
             </span>
-        </>
-    ),
-    [EWalletViewState.NoTags]: (
-        <span className="button-text ml-[5px] text-white">Empty wallet</span>
-    ),
-    [EWalletViewState.Authenticated]: (
-        <>
-            <WandSVG className="h-3 w-3 text-white" />
+        ),
+        [EWalletViewState.Fetching]: (
+            <>
+                <Spinner className="text-secondaryOrange h-[13px] w-[13px] border-[0.2em]" />
+                <span className="button-text ml-[5px] text-white">
+                    {t("walletView.creatingWalletBoard")}
+                </span>
+            </>
+        ),
+        [EWalletViewState.NoTags]: (
             <span className="button-text ml-[5px] text-white">
-                Create wallet board
+                Empty wallet
             </span>
-        </>
-    ),
-    [EWalletViewState.Disabled]: (
-        <>
-            <WandSVG className="h-3 w-3 text-white" />
-            <span className="button-text ml-[5px] text-white">
-                Create wallet board
-            </span>
-        </>
-    ),
+        ),
+        [EWalletViewState.Authenticated]: (
+            <>
+                <WandSVG className="h-3 w-3 text-white" />
+                <span className="button-text ml-[5px] text-white">
+                    {t("walletView.createWalletBoard")}
+                </span>
+            </>
+        ),
+        [EWalletViewState.Disabled]: (
+            <>
+                <WandSVG className="h-3 w-3 text-white" />
+                <span className="button-text ml-[5px] text-white">
+                    {t("walletView.createWalletBoard")}
+                </span>
+            </>
+        ),
+    };
+    return child;
 };
 
 const WalletViewButton: FC<IWalletViewButton> = ({
     walletViewState,
     onClick,
 }) => {
+    const { t } = useTranslation();
+
     const isFetchingWalletView = walletViewState === EWalletViewState.Fetching;
     const noTags = walletViewState === EWalletViewState.NoTags;
 
@@ -69,7 +78,7 @@ const WalletViewButton: FC<IWalletViewButton> = ({
                 disabled={isFetchingWalletView}
                 title={getWalletViewStateMessages(walletViewState)}
             >
-                {viewButtonChild[walletViewState]}
+                {viewButtonChild(t)[walletViewState]}
             </Button>
         </div>
     );

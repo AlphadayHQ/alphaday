@@ -2,6 +2,7 @@ import { FC, memo } from "react";
 import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
 import { TNewsItem, EItemFeedPreference } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { translateLabels } from "src/api/utils/translationUtils";
 import NewsItemList from "./NewsItemList";
 
 interface INews {
@@ -19,17 +20,17 @@ interface INews {
  * This should ease adding new preference based buttons
  * auth can be set to true for buttons which require the user to be auth
  */
-const NEWS_NAV_ITEMS = [
+const translateNavItems = () => [
     {
-        label: "Feed",
+        label: translateLabels("Feed"),
         value: EItemFeedPreference.Last,
     },
     {
-        label: "Trending",
+        label: translateLabels("Trending"),
         value: EItemFeedPreference.Trending,
     },
     {
-        label: "Read Later",
+        label: translateLabels("ReadLater"),
         value: EItemFeedPreference.Bookmark,
         auth: true,
     },
@@ -46,12 +47,13 @@ const NewsModule: FC<INews> = memo(function NewsModule({
     onBookmark,
     isAuthenticated,
 }) {
+    const newsNavItems = translateNavItems();
     const NavItemPreference =
-        NEWS_NAV_ITEMS.find((item) => item.value === feedPreference) ||
-        NEWS_NAV_ITEMS[0];
+        newsNavItems.find((item) => item.value === feedPreference) ||
+        newsNavItems[0];
 
     const onTabOptionChange = (value: string) => {
-        const optionItem = NEWS_NAV_ITEMS.find((item) => item.value === value);
+        const optionItem = newsNavItems.find((item) => item.value === value);
         if (optionItem === undefined) {
             Logger.debug("NewsModule::Nav option item not found");
             return;
@@ -63,7 +65,7 @@ const NewsModule: FC<INews> = memo(function NewsModule({
         <>
             <div className="mx-2">
                 <TabsBar
-                    options={NEWS_NAV_ITEMS}
+                    options={newsNavItems}
                     onChange={onTabOptionChange}
                     selectedOption={NavItemPreference}
                 />

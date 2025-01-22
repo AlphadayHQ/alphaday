@@ -69,6 +69,7 @@ export const TabsBar: FC<{
                                     onClick={() => onChange(tab.value)}
                                     role="button"
                                     tabIndex={0}
+                                    key={tab.label}
                                 >
                                     {tab.icon && (
                                         <img
