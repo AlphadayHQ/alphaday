@@ -226,8 +226,8 @@ const BoardsLibraryContainer: FC<IProps> = ({
         ]
     );
 
-    const handleSortBy = (sortvalue: string): void => {
-        const sort = getSortOptionValue(sortvalue);
+    const handleSortBy = (sortValue: string): void => {
+        const sort = getSortOptionValue(sortValue);
         if (isFetching || sort === null || sortBy === sort) return;
         if (allViews.length > 0) setAllViews([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);
