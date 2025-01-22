@@ -1,5 +1,5 @@
 import i18next from "i18next";
-import { evaluateTemplate } from "./api/utils/textUtils";
+import { evaluateTranslationTemplate } from "./api/utils/textUtils";
 
 const SlugToWidgetNameMap: Record<string, string> = {
     calendar_template: "Calendar",
@@ -16,9 +16,12 @@ const globalMessages = {
         maxWidgets: i18next.t("messages.error.maxWidgets"),
         maxViewWidgets: i18next.t("messages.error.maxViewWidgets"),
         requestFailed(term = "the data"): string {
-            return evaluateTemplate(i18next.t("messages.error.requestFailed"), {
-                term,
-            });
+            return evaluateTranslationTemplate(
+                i18next.t("messages.error.requestFailed"),
+                {
+                    term,
+                }
+            );
         },
         boardHasNoRequiredWidget(
             widget_template: string | undefined,
@@ -29,7 +32,7 @@ const globalMessages = {
                 widget_template &&
                 widget_template in SlugToWidgetNameMap
             ) {
-                return evaluateTemplate(
+                return evaluateTranslationTemplate(
                     i18next.t("messages.error.boardHasNoRequiredWidget"),
                     {
                         boardName: boardName || "",
@@ -47,9 +50,12 @@ const globalMessages = {
     queries: {
         noResults: i18next.t("messages.queries.noResults"),
         noMatchFound: (item: string): string =>
-            evaluateTemplate(i18next.t("messages.queries.noMatchFound"), {
-                item,
-            }),
+            evaluateTranslationTemplate(
+                i18next.t("messages.queries.noMatchFound"),
+                {
+                    item,
+                }
+            ),
     },
     portfolio: {
         signUp: i18next.t("messages.portfolio.signUp"),
@@ -58,7 +64,7 @@ const globalMessages = {
     },
     callToAction: {
         signUpToBookmark: (item?: string) =>
-            evaluateTemplate(
+            evaluateTranslationTemplate(
                 i18next.t("messages.callToAction.signUpToBookmark"),
                 {
                     item: item || "",

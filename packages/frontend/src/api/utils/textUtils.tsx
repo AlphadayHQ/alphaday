@@ -211,7 +211,7 @@ export const renderToString = (node: JSX.Element): string => {
 };
 
 // Function to evaluate the template literal
-export const evaluateTemplate = (
+export const evaluateTranslationTemplate = (
     templateString: string,
     data: Record<string, string>
 ) => {

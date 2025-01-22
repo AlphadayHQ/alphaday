@@ -211,7 +211,7 @@ export const validateCustomMeta: (
 };
 
 // TODO: in case of parsing error, consider returning an error message instead
-export const evaluateTemplate: (
+export const evaluateTranslationTemplate: (
     template: string,
     data: TCustomItem
 ) => string = (template, data) => {
@@ -219,7 +219,9 @@ export const evaluateTemplate: (
     if (!TEMPLATE_REGEX.test(template)) {
         const value = getValueByPath(data, template);
         if (value === undefined) {
-            Logger.warn(`evaluateTemplate: template "${template}" is invalid`);
+            Logger.warn(
+                `evaluateTranslationTemplate: template "${template}" is invalid`
+            );
             return template;
         }
         return String(value);
@@ -232,7 +234,7 @@ export const evaluateTemplate: (
         const dataKey = matches[1];
         if (getValueByPath(data, dataKey) == null) {
             Logger.warn(
-                `evaluateTemplate: template "${template}" refers to non-existing or null data. Data:`,
+                `evaluateTranslationTemplate: template "${template}" refers to non-existing or null data. Data:`,
                 data
             );
             return template;
@@ -489,7 +491,7 @@ export const customDataAsCardData: (
         }
         const cardMeta = meta.layout?.columns[0];
         let rawValue = cardMeta.template
-            ? evaluateTemplate(cardMeta.template, rawData)
+            ? evaluateTranslationTemplate(cardMeta.template, rawData)
             : optimisticData.value;
         if (cardMeta.prefix) rawValue = `${cardMeta.prefix} ${rawValue}`;
         if (cardMeta.suffix) rawValue = `${rawValue} ${cardMeta.suffix}`;

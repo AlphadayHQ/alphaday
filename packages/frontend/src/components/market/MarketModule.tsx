@@ -9,7 +9,7 @@ import {
     TBaseEntity,
 } from "src/api/types";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
-import { evaluateTemplate } from "src/api/utils/textUtils";
+import { evaluateTranslationTemplate } from "src/api/utils/textUtils";
 import globalMessages from "src/globalMessages";
 import CandlestickChart from "./CandlestickChart";
 import CoinInfo from "./CoinInfo";
@@ -78,7 +78,7 @@ const MarketModule: FC<IMarketModule> = ({
         chartComponent = (
             <div className="flex items-center justify-center top-[220px] h-[200px] text-primaryVariant100">
                 {globalMessages.error.requestFailed(
-                    evaluateTemplate(t("market.historyError"), {
+                    evaluateTranslationTemplate(t("market.historyError"), {
                         selectedChartRange,
                     })
                 )}
