@@ -70,6 +70,7 @@ describe("useActivityLogger", () => {
         vi.clearAllMocks();
         mockUnwrap.mockResolvedValue({ success: true });
         mockSendActivityLog.mockReturnValue({ unwrap: () => mockUnwrap() });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (useSendActivityLogMutation as any).mockReturnValue([
             mockSendActivityLog,
         ]);
