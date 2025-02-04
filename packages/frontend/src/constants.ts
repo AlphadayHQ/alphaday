@@ -34,6 +34,10 @@ export enum EFeaturesRegistry {
     Notifications = "notification",
     MobileApp = "mobile_app",
     Translations = "translations",
+    TranslationFr = "translationFr",
+    TranslationEs = "translationFr",
+    TranslationTr = "translationFr",
+    TranslationJa = "translationFr",
 }
 
 /**
