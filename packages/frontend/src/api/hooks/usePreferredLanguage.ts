@@ -3,7 +3,6 @@ import i18next from "i18next";
 import moment from "moment-with-locales-es6";
 import { initReactI18next } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { EFeaturesRegistry } from "src/constants";
 import {
     translationEN,
     translationES,
@@ -15,7 +14,7 @@ import { alphadayApi } from "../services";
 import { useAppSelector } from "../store/hooks";
 import { EnumLanguageCode } from "../types/language";
 import { Logger } from "../utils/logging";
-import { useFeatureFlags } from "./useFeatureFlags";
+import { useAllowedTranslations } from "./useAllowedTranslations";
 
 const resources: Record<EnumLanguageCode, { translation: JSONObject }> = {
     en: {
@@ -37,9 +36,7 @@ const resources: Record<EnumLanguageCode, { translation: JSONObject }> = {
 
 export const usePreferredLanguage = () => {
     const dispatch = useDispatch();
-    const { enabled: isTranslationsAllowed } = useFeatureFlags(
-        EFeaturesRegistry.Translations
-    );
+    const { isTranslationsAllowed, languages } = useAllowedTranslations();
     const selectedLangCode = useAppSelector(
         (state) => state.ui.selectedLanguageCode
     );
@@ -81,6 +78,8 @@ export const usePreferredLanguage = () => {
         i18nInitRef.current = true;
     }, [isTranslationsAllowed, selectedLangCode]);
 
+    const isLangAllowed = languages[selectedLangCode];
+
     useEffect(() => {
         if (
             !isTranslationsAllowed ||
@@ -89,12 +88,16 @@ export const usePreferredLanguage = () => {
         ) {
             return;
         }
-        moment.locale(selectedLangCode);
+        const allowedLang = isLangAllowed
+            ? selectedLangCode
+            : EnumLanguageCode.EN;
+
+        moment.locale(allowedLang);
         i18next
-            .changeLanguage(selectedLangCode)
+            .changeLanguage(allowedLang)
             .then(() => {
-                if (selectedLangCode !== prevLangCodeRef.current) {
-                    prevLangCodeRef.current = selectedLangCode;
+                if (allowedLang !== prevLangCodeRef.current) {
+                    prevLangCodeRef.current = allowedLang;
                     // Reset all queries
                     dispatch(alphadayApi.util.resetApiState());
                     // A way to reload all local state resetApiState is not enough
@@ -108,5 +111,5 @@ export const usePreferredLanguage = () => {
                     e
                 );
             });
-    }, [selectedLangCode, dispatch, isTranslationsAllowed]);
+    }, [selectedLangCode, dispatch, isTranslationsAllowed, isLangAllowed]);
 };
