@@ -36,7 +36,7 @@ const resources: Record<EnumLanguageCode, { translation: JSONObject }> = {
 
 export const usePreferredLanguage = () => {
     const dispatch = useDispatch();
-    const { isTranslationsAllowed, languages } = useAllowedTranslations();
+    const languages = useAllowedTranslations();
     const selectedLangCode = useAppSelector(
         (state) => state.ui.selectedLanguageCode
     );
@@ -81,11 +81,7 @@ export const usePreferredLanguage = () => {
     const isLangAllowed = languages[selectedLangCode];
 
     useEffect(() => {
-        if (
-            !isTranslationsAllowed ||
-            !selectedLangCode ||
-            i18next.language === selectedLangCode
-        ) {
+        if (!selectedLangCode || i18next.language === selectedLangCode) {
             return;
         }
         const allowedLang = isLangAllowed
@@ -111,5 +107,5 @@ export const usePreferredLanguage = () => {
                     e
                 );
             });
-    }, [selectedLangCode, dispatch, isTranslationsAllowed, isLangAllowed]);
+    }, [selectedLangCode, dispatch, isLangAllowed]);
 };

@@ -3,9 +3,6 @@ import { EnumLanguageCode } from "../types/language";
 import { useFeatureFlags } from "./useFeatureFlags";
 
 export const useAllowedTranslations = () => {
-    const { enabled: isTranslationsAllowed } = useFeatureFlags(
-        EFeaturesRegistry.Translations
-    );
     const { enabled: isTranslationsAllowedEs } = useFeatureFlags(
         EFeaturesRegistry.TranslationEs
     );
@@ -20,13 +17,10 @@ export const useAllowedTranslations = () => {
     );
 
     return {
-        isTranslationsAllowed,
-        languages: {
-            [EnumLanguageCode.EN]: true,
-            [EnumLanguageCode.ES]: isTranslationsAllowedEs,
-            [EnumLanguageCode.TR]: isTranslationsAllowedTr,
-            [EnumLanguageCode.FR]: isTranslationsAllowedFr,
-            [EnumLanguageCode.JA]: isTranslationsAllowedJa,
-        },
+        [EnumLanguageCode.EN]: true,
+        [EnumLanguageCode.ES]: isTranslationsAllowedEs,
+        [EnumLanguageCode.TR]: isTranslationsAllowedTr,
+        [EnumLanguageCode.FR]: isTranslationsAllowedFr,
+        [EnumLanguageCode.JA]: isTranslationsAllowedJa,
     };
 };
