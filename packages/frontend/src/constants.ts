@@ -33,10 +33,10 @@ export enum EFeaturesRegistry {
     WalletBoard = "wallet_board",
     Notifications = "notification",
     MobileApp = "mobile_app",
-    TranslationFr = "translationFr",
-    TranslationEs = "translationFr",
-    TranslationTr = "translationFr",
-    TranslationJa = "translationFr",
+    TranslationFr = "translation_fr",
+    TranslationEs = "translation_es",
+    TranslationTr = "translation_tr",
+    TranslationJa = "translation_ja",
 }
 
 /**
