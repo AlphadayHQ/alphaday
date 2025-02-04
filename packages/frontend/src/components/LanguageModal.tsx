@@ -46,7 +46,11 @@ export const LanguageModal: React.FC<IProps> = ({
         onClose();
     };
     return (
-        <Modal showModal={showModal} onClose={onClose} size="md">
+        <Modal
+            showModal={showModal}
+            onClose={onClose}
+            size={allowedLanguages.length >= 3 ? "md" : "sm"}
+        >
             <ModalHeader>
                 <ModalTitle>{t("language.title")}</ModalTitle>
             </ModalHeader>
