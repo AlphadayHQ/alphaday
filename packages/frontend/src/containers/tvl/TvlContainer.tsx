@@ -5,7 +5,10 @@ import { selectTvlProjectType, setSelectedTvlProjectType } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TProjectData, TProjectTvlHistory } from "src/api/types";
 import { filteringListToStr } from "src/api/utils/filterUtils";
-import { itemListsAreEqual } from "src/api/utils/itemUtils";
+import {
+    buildUniqueItemList,
+    itemListsAreEqual,
+} from "src/api/utils/itemUtils";
 import TvlModule, { ETVLItemPreference } from "src/components/tvl/TvlModule";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
@@ -119,7 +122,7 @@ const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     return (
         <TvlModule
-            projectsTvlData={tvlData}
+            projectsTvlData={buildUniqueItemList(tvlData)}
             projectsTvlHistory={tvlHistory}
             isLoading={isLoading}
             widgetHeight={widgetHeight}
