@@ -97,6 +97,8 @@ export const usePreferredLanguage = () => {
                     prevLangCodeRef.current = selectedLangCode;
                     // Reset all queries
                     dispatch(alphadayApi.util.resetApiState());
+                    // A way to reload all local state resetApiState is not enough
+                    //  https://redux-toolkit.js.org/rtk-query/api/created-api/api-slice-utils#resetapistate:~:text=Note%20that%20hooks%20also%20track%20state%20in%20local%20component%20state%20and%20might%20not%20fully%20be%20reset%20by%20resetApiState.
                     setTimeout(() => window.location.reload(), 5);
                 }
             })
