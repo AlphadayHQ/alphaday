@@ -45,7 +45,6 @@ export const usePreferredLanguage = () => {
 
     useEffect(() => {
         if (
-            !isTranslationsAllowed &&
             i18next.language === selectedLangCode &&
             i18nInitRef.current === true
         ) {
@@ -76,7 +75,7 @@ export const usePreferredLanguage = () => {
                 );
             });
         i18nInitRef.current = true;
-    }, [isTranslationsAllowed, selectedLangCode]);
+    }, [selectedLangCode]);
 
     const isLangAllowed = languages[selectedLangCode];
 
