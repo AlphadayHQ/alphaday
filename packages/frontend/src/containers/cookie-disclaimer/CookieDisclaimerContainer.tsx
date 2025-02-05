@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useTutorial, useActivityLogger } from "src/api/hooks";
 import { useGetIpMetadataQuery } from "src/api/services";
 import { setCookieChoice } from "src/api/store";
@@ -8,11 +9,11 @@ import CookieDisclaimer, {
     TCookieChoiceProps,
 } from "src/components/cookie-disclaimer/CookieDisclaimer";
 import CONFIG from "src/config";
-import i18n from "src/i18n";
 
 const CookieDisclaimerContainer: React.FC = () => {
     const dispatch = useAppDispatch();
     const cookieChoice = useAppSelector((state) => state.ui.cookieChoice);
+    const { t } = useTranslation();
 
     const { logCookieChoice } = useActivityLogger();
 
@@ -45,7 +46,7 @@ const CookieDisclaimerContainer: React.FC = () => {
     const choices: Array<TCookieChoiceProps> = [
         {
             key: ECookieChoice.AcceptAll,
-            buttonText: i18n.t("others.cookie.acceptAll"),
+            buttonText: t("others.cookie.acceptAll"),
             handler: () => {
                 setChoice(ECookieChoice.AcceptAll);
             },
@@ -53,7 +54,7 @@ const CookieDisclaimerContainer: React.FC = () => {
         },
         {
             key: ECookieChoice.AcceptEssential,
-            buttonText: i18n.t("others.cookie.acceptEssential"),
+            buttonText: t("others.cookie.acceptEssential"),
             handler: () => {
                 setChoice(ECookieChoice.AcceptEssential);
             },
