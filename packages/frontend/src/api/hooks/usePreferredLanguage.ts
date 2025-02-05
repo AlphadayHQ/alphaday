@@ -97,6 +97,7 @@ export const usePreferredLanguage = () => {
                     prevLangCodeRef.current = selectedLangCode;
                     // Reset all queries
                     dispatch(alphadayApi.util.resetApiState());
+                    setTimeout(() => window.location.reload(), 5);
                 }
             })
             .catch((e) => {
