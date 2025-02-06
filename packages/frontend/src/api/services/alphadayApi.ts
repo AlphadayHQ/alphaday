@@ -19,11 +19,15 @@ export const alphadayApi = createApi({
     ],
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,
-        prepareHeaders: (headers: Headers, { getState }): Headers => {
+        prepareHeaders: (headers: Headers, { getState }) => {
+            const langCode =
+                // @ts-expect-error
+                getState().ui.selectedLanguageCode || i18next.language;
+
             headers.set("Version", CONFIG.APP.VERSION);
             headers.set("X-App-Id", CONFIG.APP.X_APP_ID);
             headers.set("X-App-Secret", CONFIG.APP.X_APP_SECRET);
-            headers.set("Accept-Language", i18next.language);
+            headers.set("Accept-Language", langCode);
             // @ts-expect-error
             const authState = getState().user.auth as TUserAuth | null;
             if (authState != null && authState?.token !== undefined) {
