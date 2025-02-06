@@ -227,7 +227,7 @@ export const translationEN = {
             boardHasNoRequiredWidget:
                 // eslint-disable-next-line no-template-curly-in-string
                 "This ${boardName} board does not have the required ${SlugToWidgetNameMap[widget_template]} widget, to access this route you need to add the ${SlugToWidgetNameMap[widget_template]} widget to this board and refresh the page.",
-            backTo_home: "Back to Home",
+            back_to_home: "Back to Home",
             noNftsFound: "No NFTs found for the wallet(s) provided.",
             noVideo: "No Video Selected",
             somethingWrong: "Something went wrong.",
@@ -617,7 +617,7 @@ export const translationJA: typeof translationEN = {
             boardHasNoRequiredWidget:
                 // eslint-disable-next-line no-template-curly-in-string
                 "この${boardName}ボードには、${SlugToWidgetNameMap[widget_template]}ウィジェットが必要です。このルートにアクセスするには、${SlugToWidgetNameMap[widget_template]}ウィジェットをこのボードに追加してページを更新する必要があります。",
-            backTo_home: "ホームに戻る",
+            back_to_home: "ホームに戻る",
             noNftsFound: "指定されたウォレット用のNFTが見つかりませんでした。",
             noVideo: "ビデオが選択されていません",
             somethingWrong: "何かが間違っています。",
@@ -1011,7 +1011,7 @@ export const translationES: typeof translationEN = {
             boardHasNoRequiredWidget:
                 // eslint-disable-next-line no-template-curly-in-string
                 "Este tablero ${boardName} requiere el widget ${SlugToWidgetNameMap[widget_template]}. Debes añadir el widget ${SlugToWidgetNameMap[widget_template]} a este tablero y actualizar la página para acceder a esta ruta.",
-            backTo_home: "Volver al inicio",
+            back_to_home: "Volver al inicio",
             noNftsFound: "No se encontraron NFTs para la cartera especificada.",
             noVideo: "No se ha seleccionado ningún video",
             somethingWrong: "Algo ha salido mal.",
@@ -1406,7 +1406,7 @@ export const translationFR: typeof translationEN = {
             boardHasNoRequiredWidget:
                 // eslint-disable-next-line no-template-curly-in-string
                 "Ce tableau ${boardName} nécessite le widget ${SlugToWidgetNameMap[widget_template]}. Vous devez ajouter le widget ${SlugToWidgetNameMap[widget_template]} à ce tableau et actualiser la page pour accéder à cette route.",
-            backTo_home: "Retour à l'accueil",
+            back_to_home: "Retour à l'accueil",
             noNftsFound: "Aucun NFT trouvé pour le portefeuille spécifié.",
             noVideo: "Aucune vidéo sélectionnée",
             somethingWrong: "Quelque chose s'est mal passé.",
@@ -1804,7 +1804,7 @@ export const translationTR = {
             boardHasNoRequiredWidget:
                 // eslint-disable-next-line no-template-curly-in-string
                 "${boardName} panosu, bu rota için gerekli olan ${SlugToWidgetNameMap[widget_template]} aracını içermiyor. Bu panoya ${SlugToWidgetNameMap[widget_template]} aracını ekleyin ve sayfayı yenileyin.",
-            backTo_home: "Ana Sayfaya Dön",
+            back_to_home: "Ana Sayfaya Dön",
             noNftsFound: "Sağlanan cüzdan(lar) için NFT bulunamadı.",
             noVideo: "Seçili Video Yok",
             somethingWrong: "Bir şeyler yanlış gitti.",
