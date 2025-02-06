@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { TAssetValue, TGasPrices } from "src/api/types";
 import CONFIG from "src/config";
 import GasPriceBox from "./GasPriceBox";
@@ -11,10 +12,12 @@ interface IProps {
 const { ETH_TRANSFER_COST, GWEI_PER_ETH } = CONFIG.NUMBERS;
 
 const GasHeadingInfo: FC<IProps> = ({ data, ethPrice }) => {
+    const { t } = useTranslation();
+
     return (
         <div className="flex flex-col flex-wrap">
             <div className="w-full capitalize text-primary mb-1.5 fontGroup-highlight">
-                Latest Gas price{" "}
+                Latest Gas price{t("gas.latestGasPrice")}{" "}
                 <span className="fontGroup-normal text-primaryVariant100 lowercase">
                     (Gwei)
                 </span>

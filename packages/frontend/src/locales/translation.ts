@@ -280,6 +280,7 @@ export const translationEN = {
     },
     gas: {
         title: "Gas Price",
+        latestGasPrice: "Latest Gas price",
         fast: "Fast",
         standard: "Standard",
         slow: "Slow",
@@ -673,6 +674,7 @@ export const translationJA: typeof translationEN = {
     },
     gas: {
         title: "ガス価格",
+        latestGasPrice: "最新のガス価格",
         fast: "高速",
         standard: "標準",
         slow: "遅い",
@@ -1066,6 +1068,7 @@ export const translationES: typeof translationEN = {
     },
     gas: {
         title: "Precio del gas",
+        latestGasPrice: "Último precio de la gasolina",
         fast: "Rápido",
         standard: "Estándar",
         slow: "Lento",
@@ -1464,6 +1467,7 @@ export const translationFR: typeof translationEN = {
     },
     gas: {
         title: "Prix du gaz",
+        latestGasPrice: "Dernier prix du gaz",
         fast: "Rapide",
         standard: "Standard",
         slow: "Lent",
@@ -1862,6 +1866,7 @@ export const translationTR: typeof translationEN = {
     },
     gas: {
         title: "Gas Fiyatı",
+        latestGasPrice: "Son Gaz Fiyatı",
         fast: "Hızlı",
         standard: "Standart",
         slow: "Yavaş",

@@ -8,6 +8,7 @@ import {
     twMerge,
 } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
+import { useAllowedTranslations } from "src/api/hooks/useAllowedTranslations";
 import { EnumLanguageCode } from "src/api/types/language";
 import { ReactComponent as CheckedSVG } from "src/assets/icons/checkmark.svg";
 
@@ -34,18 +35,28 @@ export const LanguageModal: React.FC<IProps> = ({
 }) => {
     const { t } = useTranslation();
 
+    const allowedLangs = useAllowedTranslations();
+
+    const allowedLanguages = languages.filter(
+        (lang) => allowedLangs[lang.code]
+    );
+
     const handleLanguageSelect = (code: EnumLanguageCode) => {
         onSetLanguageCode(code);
         onClose();
     };
     return (
-        <Modal showModal={showModal} onClose={onClose} size="md">
+        <Modal
+            showModal={showModal}
+            onClose={onClose}
+            size={allowedLanguages.length >= 3 ? "md" : "sm"}
+        >
             <ModalHeader>
                 <ModalTitle>{t("language.title")}</ModalTitle>
             </ModalHeader>
 
             <ModalBody className="flex w-full justify-around">
-                {languages.map(({ code, name, icon }) => (
+                {allowedLanguages.map(({ code, name, icon }) => (
                     <div
                         key={name}
                         className="flex flex-col items-center gap-3"
