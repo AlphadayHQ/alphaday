@@ -101,6 +101,7 @@ export const translationEN = {
             },
             prompted: {
                 title: "Verify Wallet",
+                saveButtonText: "Verify Wallet",
                 content:
                     "Your wallet has been connected successfully. To save your customized boards, please login to Alphaday by signing a text message.",
             },
@@ -491,6 +492,7 @@ export const translationJA: typeof translationEN = {
             },
             prompted: {
                 title: "ウォレットの確認",
+                saveButtonText: "ウォレットの確認",
                 content:
                     "ウォレットが正常に接続されました。カスタマイズしたボードを保存するには、テキストメッセージに署名してAlphadayにログインしてください。",
             },
@@ -883,6 +885,7 @@ export const translationES: typeof translationEN = {
             },
             prompted: {
                 title: "Verificar cartera",
+                saveButtonText: "Verificar cartera",
                 content:
                     "Cartera conectada con éxito. Para guardar tableros personalizados, firma un mensaje de texto e inicia sesión en Alphaday.",
             },
@@ -1277,6 +1280,7 @@ export const translationFR: typeof translationEN = {
             },
             prompted: {
                 title: "Vérifier le portefeuille",
+                saveButtonText: "Vérifier le portefeuille",
                 content:
                     "Votre portefeuille a été connecté avec succès. Pour enregistrer vos tableaux personnalisés, veuillez vous connecter à Alphaday en signant un message texte.",
             },
@@ -1572,7 +1576,7 @@ export const translationFR: typeof translationEN = {
     },
 };
 
-export const translationTR = {
+export const translationTR: typeof translationEN = {
     navigation: {
         searchBarPlaceholder: "Varlıklar, projeler, etkinlikler vb. için ara",
         boards: "Panolar",
@@ -1675,6 +1679,7 @@ export const translationTR = {
             },
             prompted: {
                 title: "Cüzdanı Doğrula",
+                saveButtonText: "Cüzdanı Doğrula",
                 content:
                     "Cüzdanınız başarıyla bağlandı. Özelleştirilmiş panolarınızı kaydetmek için bir metin mesajı imzalayarak Alphaday'e giriş yapın.",
             },
