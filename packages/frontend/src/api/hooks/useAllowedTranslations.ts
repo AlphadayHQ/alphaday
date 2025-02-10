@@ -3,24 +3,26 @@ import { EnumLanguageCode } from "../types/language";
 import { useFeatureFlags } from "./useFeatureFlags";
 
 export const useAllowedTranslations = () => {
-    const { enabled: isTranslationsAllowedEs } = useFeatureFlags(
-        EFeaturesRegistry.TranslationEs
-    );
-    const { enabled: isTranslationsAllowedFr } = useFeatureFlags(
-        EFeaturesRegistry.TranslationFr
-    );
-    const { enabled: isTranslationsAllowedJa } = useFeatureFlags(
-        EFeaturesRegistry.TranslationJa
-    );
-    const { enabled: isTranslationsAllowedTr } = useFeatureFlags(
-        EFeaturesRegistry.TranslationTr
-    );
+    const { isLoading: isLoadingEs, enabled: isTranslationsAllowedEs } =
+        useFeatureFlags(EFeaturesRegistry.TranslationEs);
+
+    const { isLoading: isLoadingFr, enabled: isTranslationsAllowedFr } =
+        useFeatureFlags(EFeaturesRegistry.TranslationFr);
+
+    const { isLoading: isLoadingJa, enabled: isTranslationsAllowedJa } =
+        useFeatureFlags(EFeaturesRegistry.TranslationJa);
+
+    const { isLoading: isLoadingTr, enabled: isTranslationsAllowedTr } =
+        useFeatureFlags(EFeaturesRegistry.TranslationTr);
 
     return {
-        [EnumLanguageCode.EN]: true,
-        [EnumLanguageCode.ES]: isTranslationsAllowedEs,
-        [EnumLanguageCode.TR]: isTranslationsAllowedTr,
-        [EnumLanguageCode.FR]: isTranslationsAllowedFr,
-        [EnumLanguageCode.JA]: isTranslationsAllowedJa,
+        languages: {
+            [EnumLanguageCode.EN]: true,
+            [EnumLanguageCode.ES]: isTranslationsAllowedEs,
+            [EnumLanguageCode.TR]: isTranslationsAllowedTr,
+            [EnumLanguageCode.FR]: isTranslationsAllowedFr,
+            [EnumLanguageCode.JA]: isTranslationsAllowedJa,
+        },
+        isLoading: isLoadingEs || isLoadingFr || isLoadingJa || isLoadingTr,
     };
 };

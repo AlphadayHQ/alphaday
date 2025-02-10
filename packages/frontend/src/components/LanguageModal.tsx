@@ -35,7 +35,7 @@ export const LanguageModal: React.FC<IProps> = ({
 }) => {
     const { t } = useTranslation();
 
-    const allowedLangs = useAllowedTranslations();
+    const { languages: allowedLangs } = useAllowedTranslations();
 
     const allowedLanguages = languages.filter(
         (lang) => allowedLangs[lang.code]
