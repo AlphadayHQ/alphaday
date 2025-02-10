@@ -368,7 +368,8 @@ export type TViewsRequest = {
     limit?: number;
     page?: number;
     sortBy?: EItemsSortBy;
-    // needed to add lang to rtk key
+    // Needed to add language to rtk key
+    // (so that cache is invalidated as soon as language changes)
     lang: ELanguageCode;
 } | void;
 export type TViewsRawResponse = TPagination & {
@@ -377,7 +378,8 @@ export type TViewsRawResponse = TPagination & {
 export type TViewsResponse = TViewsRawResponse;
 
 export type TSubscribedViewsRequest = {
-    // needed to add lang to rtk key
+    // Needed to add language to rtk key
+    // (so that cache is invalidated as soon as language changes)
     lang: ELanguageCode;
 };
 export type TSubscribedViewsRawResponse = ReadonlyArray<TRemoteUserViewPreview>;
