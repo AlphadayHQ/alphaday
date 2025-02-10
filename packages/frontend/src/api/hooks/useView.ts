@@ -140,12 +140,15 @@ interface IView {
 export const useView: () => IView = () => {
     const navigate = useHistory();
     const dispatch = useAppDispatch();
+    const selectedLangCode = useAppSelector(
+        (state) => state.ui.selectedLanguageCode
+    );
 
     const { routeInfo, pathContainsHashOrSlug } = useViewRoute();
     const {
         currentData: remoteSubscribedViews,
         isFetching: isFetchingSubscribedViews,
-    } = useGetSubscribedViewsQuery();
+    } = useGetSubscribedViewsQuery({ lang: selectedLangCode });
 
     const selectedViewId = useAppSelector(
         (state) => state.views.selectedViewId

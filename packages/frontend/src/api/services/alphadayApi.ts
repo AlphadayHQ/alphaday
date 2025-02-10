@@ -16,6 +16,7 @@ export const alphadayApi = createApi({
         "AccountPortfolio", // account portfolio
         "PinnedCoins",
         "Superfeed",
+        "Lang",
     ],
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,
