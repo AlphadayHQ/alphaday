@@ -1,5 +1,5 @@
 import { EFeaturesRegistry } from "src/constants";
-import { EnumLanguageCode } from "../types/language";
+import { ELanguageCode } from "../types/language";
 import { useFeatureFlags } from "./useFeatureFlags";
 
 export const useAllowedTranslations = () => {
@@ -17,11 +17,11 @@ export const useAllowedTranslations = () => {
 
     return {
         languages: {
-            [EnumLanguageCode.EN]: true,
-            [EnumLanguageCode.ES]: isTranslationsAllowedEs,
-            [EnumLanguageCode.TR]: isTranslationsAllowedTr,
-            [EnumLanguageCode.FR]: isTranslationsAllowedFr,
-            [EnumLanguageCode.JA]: isTranslationsAllowedJa,
+            [ELanguageCode.EN]: true,
+            [ELanguageCode.ES]: isTranslationsAllowedEs,
+            [ELanguageCode.TR]: isTranslationsAllowedTr,
+            [ELanguageCode.FR]: isTranslationsAllowedFr,
+            [ELanguageCode.JA]: isTranslationsAllowedJa,
         },
         isLoading: isLoadingEs || isLoadingFr || isLoadingJa || isLoadingTr,
     };

@@ -1,4 +1,4 @@
-import { EnumLanguageCode } from "src/api/types/language";
+import { ELanguageCode } from "src/api/types/language";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { TWidgetSlug, TTemplateSlug } from "src/types";
 import { TPagination, TRemoteTagReadOnly, EItemsSortBy } from "../baseTypes";
@@ -369,7 +369,7 @@ export type TViewsRequest = {
     page?: number;
     sortBy?: EItemsSortBy;
     // needed to add lang to rtk key
-    lang: EnumLanguageCode;
+    lang: ELanguageCode;
 } | void;
 export type TViewsRawResponse = TPagination & {
     results: ReadonlyArray<TRemoteUserViewPreview>;
@@ -378,7 +378,7 @@ export type TViewsResponse = TViewsRawResponse;
 
 export type TSubscribedViewsRequest = {
     // needed to add lang to rtk key
-    lang: EnumLanguageCode;
+    lang: ELanguageCode;
 };
 export type TSubscribedViewsRawResponse = ReadonlyArray<TRemoteUserViewPreview>;
 export type TSubscribedViewsResponse = TSubscribedViewsRawResponse;

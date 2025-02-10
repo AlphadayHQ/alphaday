@@ -12,11 +12,11 @@ import {
 } from "../../locales/translation";
 import { alphadayApi } from "../services";
 import { useAppSelector } from "../store/hooks";
-import { EnumLanguageCode } from "../types/language";
+import { ELanguageCode } from "../types/language";
 import { Logger } from "../utils/logging";
 import { useAllowedTranslations } from "./useAllowedTranslations";
 
-const resources: Record<EnumLanguageCode, { translation: JSONObject }> = {
+const resources: Record<ELanguageCode, { translation: JSONObject }> = {
     en: {
         translation: translationEN,
     },
@@ -34,7 +34,7 @@ const resources: Record<EnumLanguageCode, { translation: JSONObject }> = {
     },
 };
 
-const i18nInit = (selectedLangCode: EnumLanguageCode) => {
+const i18nInit = (selectedLangCode: ELanguageCode) => {
     i18next
         .use(initReactI18next)
         .init({
@@ -76,9 +76,7 @@ export const usePreferredLanguage = () => {
         ) {
             return;
         }
-        const allowedLang = isLangAllowed
-            ? selectedLangCode
-            : EnumLanguageCode.EN;
+        const allowedLang = isLangAllowed ? selectedLangCode : ELanguageCode.EN;
 
         moment.locale(allowedLang);
         i18next

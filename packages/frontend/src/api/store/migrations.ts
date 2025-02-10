@@ -9,7 +9,7 @@ import {
     TUserView,
     WalletConnectionState,
 } from "../types";
-import { EnumLanguageCode } from "../types/language";
+import { ELanguageCode } from "../types/language";
 import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 import { IUIState } from "./slices/ui";
@@ -294,7 +294,7 @@ const migrations: TMigrations = {
             ...s,
             ui: {
                 ...s.ui,
-                selectedLanguageCode: EnumLanguageCode.EN,
+                selectedLanguageCode: ELanguageCode.EN,
                 showLanguageModal: false,
             },
         };
