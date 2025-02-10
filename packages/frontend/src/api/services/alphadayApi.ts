@@ -21,16 +21,17 @@ export const alphadayApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,
         prepareHeaders: (headers: Headers, { getState }) => {
-            const langCode =
-                // @ts-expect-error
-                getState().ui.selectedLanguageCode || i18next.language;
+            // getState() is not typed https://redux-toolkit.js.org/rtk-query/api/fetchBaseQuery#setting-default-headers-on-requests
+            // And we cannot cast to RootState from the store. It would create a dependency cycle
+            // @ts-expect-error
+            const langCode = getState().ui.selectedLanguageCode;
+            // @ts-expect-error
+            const authState = getState().user.auth as TUserAuth | null;
 
             headers.set("Version", CONFIG.APP.VERSION);
             headers.set("X-App-Id", CONFIG.APP.X_APP_ID);
             headers.set("X-App-Secret", CONFIG.APP.X_APP_SECRET);
             headers.set("Accept-Language", langCode);
-            // @ts-expect-error
-            const authState = getState().user.auth as TUserAuth | null;
             if (authState != null && authState?.token !== undefined) {
                 const token = authState.token.value;
                 if (token != null) {
