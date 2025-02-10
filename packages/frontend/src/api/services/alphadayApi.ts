@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import i18next from "i18next";
 import { TUserAuth } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../config/config";
