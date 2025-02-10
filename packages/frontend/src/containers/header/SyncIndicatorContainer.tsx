@@ -7,14 +7,21 @@ import {
     useSaveViewAsMutation,
     useDeleteViewMutation,
 } from "src/api/services";
+import { useAppSelector } from "src/api/store/hooks";
 
 const SyncIndicatorContainer: FC = () => {
+    const selectedLangCode = useAppSelector(
+        (state) => state.ui.selectedLanguageCode
+    );
     const {
         isFetching: isFetchingSubscribedViews,
         isError: isErrorSubscribedViewsRequest,
-    } = useGetSubscribedViewsQuery(undefined, {
-        skip: !navigator.onLine,
-    });
+    } = useGetSubscribedViewsQuery(
+        { lang: selectedLangCode },
+        {
+            skip: !navigator.onLine,
+        }
+    );
 
     const [, { isLoading: isLoadingSaveView, isError: isErrorSaveView }] =
         useSaveViewMutation({
