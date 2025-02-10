@@ -113,12 +113,13 @@ const viewsApi = alphadayApi.injectEndpoints({
             TSubscribedViewsResponse,
             TSubscribedViewsRequest
         >({
-            query: () => {
+            query: (req) => {
+                const params = queryString.stringify(req);
                 Logger.debug(
                     "getSubscribedViews: querying",
-                    `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}`
+                    `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}?${params}`
                 );
-                return `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}`;
+                return `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}?${params}`;
             },
             providesTags: ["SubscribedViews", "Lang"],
         }),
