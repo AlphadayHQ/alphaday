@@ -28,7 +28,7 @@ const GeneralError: FC<{ children?: React.ReactNode }> = ({ children }) => {
                             alt="alphaday logo"
                             className="m-0 mr-2 h-5"
                         />{" "}
-                        {t("backTo_home")}
+                        {t("messages.error.back_to_home")}
                     </a>
                 )}
             </div>

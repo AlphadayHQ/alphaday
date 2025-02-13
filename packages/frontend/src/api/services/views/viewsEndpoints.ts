@@ -107,20 +107,21 @@ const viewsApi = alphadayApi.injectEndpoints({
                 );
                 return `${VIEWS.BASE}${VIEWS.AVAILABLE_VIEWS}?${params}`;
             },
-            providesTags: ["Views"],
+            providesTags: ["Views", "Lang"],
         }),
         getSubscribedViews: builder.query<
             TSubscribedViewsResponse,
             TSubscribedViewsRequest
         >({
-            query: () => {
+            query: (req) => {
+                const params = queryString.stringify(req);
                 Logger.debug(
                     "getSubscribedViews: querying",
-                    `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}`
+                    `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}?${params}`
                 );
-                return `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}`;
+                return `${VIEWS.BASE}${VIEWS.SUBSCRIBED_VIEWS}?${params}`;
             },
-            providesTags: ["SubscribedViews"],
+            providesTags: ["SubscribedViews", "Lang"],
         }),
         getViewById: builder.query<TViewByIdResponse, TViewByIdRequest>({
             query: (req) => {
@@ -128,6 +129,7 @@ const viewsApi = alphadayApi.injectEndpoints({
                 Logger.debug("getViewById: querying", path);
                 return path;
             },
+            providesTags: ["Lang"],
             transformResponse: (r: TViewByIdRawResponse): TViewByIdResponse =>
                 viewCheck(r),
         }),
@@ -144,7 +146,7 @@ const viewsApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 r: TViewByHashOrSlugRawResponse
             ): TViewByHashOrSlugResponse => viewCheck(r),
-            providesTags: ["CurrentView"],
+            providesTags: ["CurrentView", "Lang"],
         }),
         getViewForWallet: builder.query<
             TViewForWalletResponse,
@@ -158,7 +160,7 @@ const viewsApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 r: TViewForWalletRawResponse
             ): TViewForWalletResponse => viewCheck(r),
-            providesTags: ["CurrentView"],
+            providesTags: ["CurrentView", "Lang"],
         }),
         getViewCategories: builder.query<
             TViewCategoriesResponse,
@@ -169,6 +171,7 @@ const viewsApi = alphadayApi.injectEndpoints({
                 Logger.debug("getViewCategories: querying", path);
                 return path;
             },
+            providesTags: ["Lang"],
         }),
         subscribeView: builder.mutation<
             TSubscribeViewResponse,

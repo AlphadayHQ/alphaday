@@ -1,6 +1,6 @@
 import { setSelectedLanguageCode, toggleLanguageModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { EnumLanguageCode } from "src/api/types/language";
+import { ELanguageCode } from "src/api/types/language";
 import { LanguageModal } from "src/components/LanguageModal";
 
 export const LanguageModalContainer = () => {
@@ -10,7 +10,7 @@ export const LanguageModalContainer = () => {
         (state) => state.ui.selectedLanguageCode
     );
     const toggleModal = () => dispatch(toggleLanguageModal());
-    const handleSetLanguageCode = (code: EnumLanguageCode) => {
+    const handleSetLanguageCode = (code: ELanguageCode) => {
         dispatch(setSelectedLanguageCode({ code }));
     };
 

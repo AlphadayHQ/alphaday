@@ -9,22 +9,22 @@ import {
 } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { useAllowedTranslations } from "src/api/hooks/useAllowedTranslations";
-import { EnumLanguageCode } from "src/api/types/language";
+import { ELanguageCode } from "src/api/types/language";
 import { ReactComponent as CheckedSVG } from "src/assets/icons/checkmark.svg";
 
 interface IProps {
-    onSetLanguageCode: (code: EnumLanguageCode) => void;
+    onSetLanguageCode: (code: ELanguageCode) => void;
     selectedCode: string;
     showModal: boolean;
     onClose: () => void;
 }
 
 const languages = [
-    { code: EnumLanguageCode.EN, name: "English", icon: "🇬🇧" },
-    { code: EnumLanguageCode.FR, name: "Français", icon: "🇫🇷" },
-    { code: EnumLanguageCode.ES, name: "Español", icon: "🇪🇸" },
-    { code: EnumLanguageCode.JA, name: "日本語", icon: "🇯🇵" },
-    { code: EnumLanguageCode.TR, name: "Turkish", icon: "🇹🇷" },
+    { code: ELanguageCode.EN, name: "English", icon: "🇬🇧" },
+    { code: ELanguageCode.FR, name: "Français", icon: "🇫🇷" },
+    { code: ELanguageCode.ES, name: "Español", icon: "🇪🇸" },
+    { code: ELanguageCode.JA, name: "日本語", icon: "🇯🇵" },
+    { code: ELanguageCode.TR, name: "Turkish", icon: "🇹🇷" },
 ];
 
 export const LanguageModal: React.FC<IProps> = ({
@@ -35,13 +35,13 @@ export const LanguageModal: React.FC<IProps> = ({
 }) => {
     const { t } = useTranslation();
 
-    const allowedLangs = useAllowedTranslations();
+    const { languages: allowedLangs } = useAllowedTranslations();
 
     const allowedLanguages = languages.filter(
         (lang) => allowedLangs[lang.code]
     );
 
-    const handleLanguageSelect = (code: EnumLanguageCode) => {
+    const handleLanguageSelect = (code: ELanguageCode) => {
         onSetLanguageCode(code);
         onClose();
     };

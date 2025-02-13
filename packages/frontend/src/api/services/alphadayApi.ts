@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import i18next from "i18next";
 import { TUserAuth } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../config/config";
@@ -16,16 +15,22 @@ export const alphadayApi = createApi({
         "AccountPortfolio", // account portfolio
         "PinnedCoins",
         "Superfeed",
+        "Lang",
     ],
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,
-        prepareHeaders: (headers: Headers, { getState }): Headers => {
+        prepareHeaders: (headers: Headers, { getState }) => {
+            // getState() is not typed https://redux-toolkit.js.org/rtk-query/api/fetchBaseQuery#setting-default-headers-on-requests
+            // And we cannot cast to RootState from the store. It would create a dependency cycle
+            // @ts-expect-error
+            const langCode = getState().ui.selectedLanguageCode;
+            // @ts-expect-error
+            const authState = getState().user.auth as TUserAuth | null;
+
             headers.set("Version", CONFIG.APP.VERSION);
             headers.set("X-App-Id", CONFIG.APP.X_APP_ID);
             headers.set("X-App-Secret", CONFIG.APP.X_APP_SECRET);
-            headers.set("Accept-Language", i18next.language);
-            // @ts-expect-error
-            const authState = getState().user.auth as TUserAuth | null;
+            headers.set("Accept-Language", langCode);
             if (authState != null && authState?.token !== undefined) {
                 const token = authState.token.value;
                 if (token != null) {

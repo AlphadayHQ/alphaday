@@ -26,6 +26,9 @@ import { useWalletView } from "./useWalletView";
 export const useViewUpdater: () => void = () => {
     const dispatch = useAppDispatch();
     const navigate = useHistory();
+    const selectedLangCode = useAppSelector(
+        (state) => state.ui.selectedLanguageCode
+    );
 
     const saveDebounceTimeout = useRef<NodeJS.Timeout>();
 
@@ -47,9 +50,12 @@ export const useViewUpdater: () => void = () => {
     const {
         currentData: remoteSubscribedViews,
         isFetching: isFetchingSubscribedViews,
-    } = useGetSubscribedViewsQuery(undefined, {
-        refetchOnMountOrArgChange: true,
-    });
+    } = useGetSubscribedViewsQuery(
+        { lang: selectedLangCode },
+        {
+            refetchOnMountOrArgChange: true,
+        }
+    );
 
     const [, { isLoading: isLoadingSaveView }] = useSaveViewMutation({
         fixedCacheKey: RTK_VIEW_CACHE_KEYS.SAVE_VIEW,
