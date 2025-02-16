@@ -8,18 +8,24 @@ import {
     useGetSubscribedViewsQuery,
 } from "src/api/services";
 import * as userStore from "src/api/store/slices/user";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getRtkErrorCode } from "../utils/errorHandling";
 import { Logger } from "../utils/logging";
+import { usePreferredLanguage } from "./usePreferredLanguage";
 
-export const useAppInit: () => void = () => {
+export const useAppInit = () => {
+    const dispatch = useAppDispatch();
+    usePreferredLanguage();
+    const selectedLangCode = useAppSelector(
+        (state) => state.ui.selectedLanguageCode
+    );
+
     /**
      * Fetch the features on app load, then we rely on redux cache to
      * ensure subsequent calls are cached.
      */
-    const dispatch = useAppDispatch();
     const { error } = useGetFeaturesQuery();
-    useGetSubscribedViewsQuery();
+    useGetSubscribedViewsQuery({ lang: selectedLangCode });
 
     if (getRtkErrorCode(error) === 401) {
         /**
