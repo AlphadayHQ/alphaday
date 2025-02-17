@@ -198,6 +198,11 @@ const WIDGETS_CONFIG = {
     [ETemplateNameRegistry.Uniswap]: {
         ADJUSTABLE: false,
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
+        JSON_RPC_URL_MAP: {
+            "1": "https://rpc.ankr.com/eth",
+            "56": "https://rpc.ankr.com/bsc",
+            "42161": "https://rpc.ankr.com/arbitrum",
+        },
     },
     [ETemplateNameRegistry.VerasityTokenomics]: {
         ADJUSTABLE: false,
