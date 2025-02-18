@@ -200,8 +200,12 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
         JSON_RPC_URL_MAP: {
             "1": "https://rpc.ankr.com/eth",
+            "10": "https://optimism.publicnode.com",
             "56": "https://rpc.ankr.com/bsc",
+            "8453": "https://base-rpc.publicnode.com",
             "42161": "https://rpc.ankr.com/arbitrum",
+            "43114": "https://avalanche.publicnode.com",
+            "59144": "https://linea.publicnode.com/",
         },
     },
     [ETemplateNameRegistry.VerasityTokenomics]: {
