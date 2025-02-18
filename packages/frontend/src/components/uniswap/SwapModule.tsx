@@ -1,6 +1,6 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { SwapWidget, Theme, darkTheme } from "@uniswap/widgets";
+import { SwapWidget, type Theme, darkTheme } from "@uniswap/widgets";
 import CONFIG from "src/config";
 import ModuleDisclaimer from "../module-disclaimer/ModuleDisclaimer";
 import "./SwapModule.scss";
@@ -47,6 +47,7 @@ const SwapModule: FC<IProps> = ({
                 convenienceFee={config.convenienceFee}
                 convenienceFeeRecipient={config.convenienceFeeRecipient}
                 tokenList={`${CONFIG.API.DEFAULT.BLOBS_URL}tokens-uniswap.json`}
+                jsonRpcUrlMap={CONFIG.WIDGETS.UNISWAP.JSON_RPC_URL_MAP}
             />
         </div>
     );
