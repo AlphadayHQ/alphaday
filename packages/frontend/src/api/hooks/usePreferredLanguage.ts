@@ -64,9 +64,13 @@ export const usePreferredLanguage = () => {
     );
     const prevLangCodeRef = useRef(selectedLangCode);
 
-    i18nInit(selectedLangCode);
-
     const isLangAllowed = languages[selectedLangCode];
+
+    useEffect(() => {
+        i18nInit(selectedLangCode);
+        // this should only run once
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (
