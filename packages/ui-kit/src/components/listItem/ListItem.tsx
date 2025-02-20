@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play2.svg";
-import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
 import ItemBookmark from "./ItemBookmark";
@@ -14,7 +13,7 @@ export const HRElement = () => (
 interface IList {
     variant: "news" | "dao" | "podcast" | "video" | "reports" | "discord";
     path?: string;
-    date: string | Date;
+    duration: string;
     title: string;
     description?: string;
     source?: string;
@@ -100,7 +99,7 @@ export const listItemVariants = (variant: IList["variant"]) => {
 export const ListItem: FC<IList> = ({
     variant,
     path,
-    date,
+    duration,
     title,
     source,
     tag,
@@ -114,8 +113,6 @@ export const ListItem: FC<IList> = ({
     isPlaying,
     image,
 }) => {
-    const duration = computeDuration(date);
-
     if (variant === "news") {
         const variantStyle = listItemVariants("news");
 

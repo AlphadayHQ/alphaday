@@ -57,9 +57,14 @@ const BoardsLibraryContainer: FC<IProps> = ({
     const { setAllowFetchWalletView } = useWalletViewContext();
 
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
+    const selectedLangCode = useAppSelector(
+        (state) => state.ui.selectedLanguageCode
+    );
 
     const { data: categories } = useGetViewCategoriesQuery();
-    const { currentData: remoteSubscribedViews } = useGetSubscribedViewsQuery();
+    const { currentData: remoteSubscribedViews } = useGetSubscribedViewsQuery({
+        lang: selectedLangCode,
+    });
 
     const {
         data: viewsDataResponse,
@@ -70,6 +75,7 @@ const BoardsLibraryContainer: FC<IProps> = ({
         page: currentPage,
         sortBy,
         category: selectedCategory === "all" ? undefined : selectedCategory,
+        lang: selectedLangCode,
     });
 
     const [allViews, setAllViews] = useState<TRemoteUserViewPreview[]>([]);
@@ -226,8 +232,8 @@ const BoardsLibraryContainer: FC<IProps> = ({
         ]
     );
 
-    const handleSortBy = (sortLabel: string): void => {
-        const sort = getSortOptionValue(sortLabel);
+    const handleSortBy = (sortValue: string): void => {
+        const sort = getSortOptionValue(sortValue);
         if (isFetching || sort === null || sortBy === sort) return;
         if (allViews.length > 0) setAllViews([]);
         if (currentPage !== INITIAL_PAGE) setCurrentPage(INITIAL_PAGE);

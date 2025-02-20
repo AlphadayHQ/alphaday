@@ -6,6 +6,7 @@ import {
     themeColors,
     twMerge,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { useWidgetSize } from "src/api/hooks";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import { makeRepeated } from "src/api/utils/itemUtils";
@@ -56,6 +57,8 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 }) => {
     const LegendWrapRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<HTMLDivElement>(null);
+
+    const { t } = useTranslation();
 
     const widgetSize = useWidgetSize([450, 330]);
 
@@ -194,10 +197,10 @@ const PortfolioStats: FC<IPortfolioStats> = ({
             ) : (
                 <>
                     <div ref={chartRef}>
-                        <div className="flex flex-wrap justify-between pb-1 pr-3">
+                        <div className="flex flex-wrap justify-between pb-1">
                             <div className="pt-6 mr-[45px] self-start max-w-[130px]">
                                 <p className="mb-0.5 capitalize tracking-[0.5px] fontGroup-mini text-primaryVariant100 flex items-center">
-                                    Total Balance{" "}
+                                    {t("portfolio.totalBalance")}{" "}
                                     <ShowSVG
                                         onClick={toggleBalance}
                                         className="cursor-pointer ml-0.5 p-[1px] text-primaryVariant100"
@@ -270,22 +273,22 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                             <div className="items-center justify-between flex flex-1">
                                 <div className="flex flex-[2_1_0%] justify-start">
                                     <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
-                                        Asset
+                                        {t("portfolio.asset")}
                                     </p>
                                 </div>
                                 <div className="flex flex-1 flex-end">
                                     <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
-                                        Balance
+                                        {t("portfolio.balance")}
                                     </p>
                                 </div>
                                 <div className="flex flex-1 flex-end">
                                     <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
-                                        Price
+                                        {t("portfolio.price")}
                                     </p>
                                 </div>
                                 <div className="flex flex-1 flex-end">
                                     <p className="capitalize text-end tracking-[0.5px] fontGroup-mini text-primaryVariant100 mb-0">
-                                        Value
+                                        {t("portfolio.value")}
                                     </p>
                                 </div>
                             </div>

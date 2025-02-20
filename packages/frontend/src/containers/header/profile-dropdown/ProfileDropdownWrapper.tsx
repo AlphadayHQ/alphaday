@@ -8,6 +8,7 @@ import {
     IconButton,
     twMerge,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
@@ -18,6 +19,7 @@ import styles from "./ProfileDropdownWrapper.module.scss";
 interface IProps {
     onSignOut: () => MaybeAsync<void>;
     onSignUpSignIn: () => MaybeAsync<void>;
+    onToggleLanguageModal: () => void;
     isAuthenticated: boolean;
     onShowTutorial: (s: boolean) => void;
     showTutorial: boolean | undefined;
@@ -36,12 +38,14 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     onSignOut,
     onSignUpSignIn,
     onShowTutorial,
+    onToggleLanguageModal,
     showTutorial,
     onShowAboutUsModal,
     isAuthenticated,
     setTutFocusElemRef,
     profile,
 }) => {
+    const { t } = useTranslation();
     const [toggleTutorialState, setToggleTutorialState] = useState(false);
 
     const handleToggle = () => {
@@ -54,13 +58,13 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
     const walletMenuOption = isAuthenticated
         ? {
               handler: onSignOut,
-              menuTitle: "Sign Out",
-              title: "Sign Out",
+              menuTitle: t("navigation.menu.signOut"),
+              title: t("navigation.menu.signOut"),
               dataTestId: "profile-dropdown-sign-out",
           }
         : {
               handler: onSignUpSignIn,
-              menuTitle: "Sign Up / Sign In",
+              menuTitle: `${t("navigation.menu.signUp")} / ${t("navigation.menu.signIn")}`,
               title: globalMessages.portfolio.signUp,
               dataTestId: "profile-dropdown-sign-up",
           };
@@ -118,8 +122,17 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                             </span>
                         </DropdownItem>
                         <Divider />
+                        <DropdownItem
+                            className="flex three-col:hidden"
+                            onClick={onToggleLanguageModal}
+                        >
+                            <span title="Switch Language">
+                                {t("navigation.menu.language")}
+                            </span>
+                        </DropdownItem>
+                        <Divider />
                         <DropdownItem onClick={handleToggle}>
-                            Tutorial{" "}
+                            {t("navigation.menu.tutorial")}{" "}
                             <input
                                 title="Toggle Tutorial"
                                 type="checkbox"
@@ -131,16 +144,18 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                         <Divider />
                         <DropdownItem onClick={onShowAboutUsModal}>
                             <span title="Lear more about Alphaday">
-                                About Us
+                                {t("navigation.menu.aboutUs")}
                             </span>
                         </DropdownItem>
                         <Divider />
                         {CONFIG.APP.VERSION && CONFIG.APP.COMMIT && (
                             <DropdownItem className="hover:bg-background pb-0 pt-5">
                                 <div className="fontGroup-mini w-full">
-                                    Version: {CONFIG.APP.VERSION}
+                                    {t("navigation.menu.version")}:{" "}
+                                    {CONFIG.APP.VERSION}
                                     <br />
-                                    Commit: {CONFIG.APP.COMMIT}
+                                    {t("navigation.menu.commit")}:{" "}
+                                    {CONFIG.APP.COMMIT}
                                 </div>
                             </DropdownItem>
                         )}

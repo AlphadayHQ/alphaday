@@ -1,8 +1,10 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import logoDay from "src/assets/svg/logo-white.svg";
 import CONFIG from "src/config";
 
 const GeneralError: FC<{ children?: React.ReactNode }> = ({ children }) => {
+    const { t } = useTranslation();
     const isHome = window.location.pathname === "/";
     return (
         <div className="bg-background">
@@ -26,7 +28,7 @@ const GeneralError: FC<{ children?: React.ReactNode }> = ({ children }) => {
                             alt="alphaday logo"
                             className="m-0 mr-2 h-5"
                         />{" "}
-                        Back to Home
+                        {t("messages.error.back_to_home")}
                     </a>
                 )}
             </div>

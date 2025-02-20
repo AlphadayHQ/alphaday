@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { Dialog, Input } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { useKeyPress } from "src/api/hooks";
 
 interface IAddressInput {
@@ -17,14 +18,15 @@ const AddressInput: FC<IAddressInput> = ({
     onClose,
     disabled,
 }) => {
+    const { t } = useTranslation();
     const [value, setValue] = useState("");
 
     return (
         <Dialog
-            title="Add a Wallet Address"
+            title={t("portfolio.addAWallet")}
             showDialog={show}
             onClose={onClose}
-            saveButtonText="Save"
+            saveButtonText={t("buttons.save")}
             showXButton
             onSave={() => {
                 onAddAddress(value);
@@ -44,7 +46,7 @@ const AddressInput: FC<IAddressInput> = ({
                     }}
                     id="wallet-input"
                     name="walletInput"
-                    placeholder="Enter an Ethereum or ENS address"
+                    placeholder={t("portfolio.inputPlaceholder")}
                 />
             </div>
         </Dialog>

@@ -1,5 +1,6 @@
 import { FC, useState, useMemo } from "react";
 import { Button, ModuleLoader } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { TCryptoAccount } from "src/api/types";
 import { validateHexOrEnsAddr } from "src/api/utils/accountUtils";
@@ -76,6 +77,8 @@ const Portfolio: FC<IPortfolio> = ({
     const [showEnterAddress, setShowEnterAddress] = useState(false);
     const [disableAddAddressInput, setDisableAddAddressInput] = useState(true);
 
+    const { t } = useTranslation();
+
     const portfolioData = useMemo(
         () =>
             !showAllAssets
@@ -117,7 +120,7 @@ const Portfolio: FC<IPortfolio> = ({
                                                     .verifyWallet
                                             }
                                         >
-                                            Verify Wallet
+                                            {t("buttons.verifyWallet")}
                                         </Button>
                                     </div>
                                 )}
@@ -176,15 +179,17 @@ const Portfolio: FC<IPortfolio> = ({
                                         variant="primaryXL"
                                         title="Connect your Wallet"
                                         onClick={onConnectWallet}
+                                        className=" max-w-[49%]"
                                     >
-                                        Connect Wallet
+                                        {t("buttons.connectWallet")}
                                     </Button>
                                     <Button
                                         variant="secondaryXL"
                                         title="Enter a wallet address"
                                         onClick={handleShowEnterAddress}
+                                        className=" max-w-[49%]"
                                     >
-                                        Enter Address
+                                        {t("buttons.enter_address")}
                                     </Button>
                                 </div>
                             </div>

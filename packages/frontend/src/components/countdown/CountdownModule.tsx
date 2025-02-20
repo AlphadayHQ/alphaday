@@ -1,6 +1,7 @@
 import { FC, ReactNode, useEffect, useState } from "react";
 import { KeyValueTable, Timer, twMerge } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
     targetDate: number; // unix timestamp in s
@@ -18,6 +19,7 @@ const CountdownModule: FC<IProps> = ({
     children,
     items,
 }) => {
+    const { t } = useTranslation();
     const [secondsToDate, setSecondsToDate] = useState<number>(
         targetDate - moment().unix()
     );
@@ -37,7 +39,15 @@ const CountdownModule: FC<IProps> = ({
     return (
         <div className="flex flex-col flex-1">
             <div className="items-center justify-center flex mt-4 mx-auto mb-6 tiny:m-[5px]">
-                <Timer secondsToDate={secondsToDate} />
+                <Timer
+                    secondsToDate={secondsToDate}
+                    labels={{
+                        days: t("countdown.labels.days"),
+                        hours: t("countdown.labels.hours"),
+                        minutes: t("countdown.labels.minutes"),
+                        seconds: t("countdown.labels.seconds"),
+                    }}
+                />
             </div>
             <div
                 className={twMerge(

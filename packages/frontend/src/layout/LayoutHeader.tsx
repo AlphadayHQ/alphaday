@@ -8,6 +8,7 @@ import {
     HeaderNavElement,
     HeaderNavbar,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { useWindowSize } from "src/api/hooks";
 import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
@@ -20,6 +21,7 @@ import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
 interface IProps {
     hideFeatures: boolean;
     toggleWidgetLib: (() => void) | undefined;
+    toggleLanguageModal: (() => void) | undefined;
     isBoardsLibOpen: boolean;
     setIsBoardsLibOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setTutFocusElemRef?:
@@ -30,10 +32,13 @@ interface IProps {
 const LayoutHeader: FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
+    toggleLanguageModal,
     setTutFocusElemRef,
     isBoardsLibOpen,
     setIsBoardsLibOpen,
 }) => {
+    const { t } = useTranslation();
+
     const [mobileOpen, setMobileOpen] = useState(false);
     const headerRef = useRef<HTMLDivElement>(null);
 
@@ -72,15 +77,30 @@ const LayoutHeader: FC<IProps> = ({
                                     <HeaderNavElement className="mr-3">
                                         <SyncIndicatorContainer />
                                     </HeaderNavElement>
+                                    <HeaderNavElement className="mr-3 [&_svg]:fill-none hidden three-col:block">
+                                        <NavTabButton
+                                            variant="language"
+                                            open={false}
+                                            uppercase={false}
+                                            onClick={toggleLanguageModal}
+                                            title={t(
+                                                "navigation.menu.language"
+                                            )}
+                                        >
+                                            {t("navigation.menu.language")}
+                                        </NavTabButton>
+                                    </HeaderNavElement>
                                     <HeaderNavElement className="mr-1">
                                         <NavTabButton
                                             variant="views"
                                             open={false}
                                             uppercase={false}
                                             onClick={toggleBoardsLib}
-                                            title="Open Boards Library"
+                                            title={t(
+                                                "navigation.openBoardsLibrary"
+                                            )}
                                         >
-                                            Boards
+                                            {t("navigation.boards")}
                                         </NavTabButton>
                                     </HeaderNavElement>
                                     <span
@@ -98,7 +118,7 @@ const LayoutHeader: FC<IProps> = ({
                                                 onClick={toggleWidgetLib}
                                                 title="Open Widget Library"
                                             >
-                                                Widgets
+                                                {t("navigation.widgets")}
                                             </NavTabButton>
                                         </HeaderNavElement>
                                     </span>
@@ -158,7 +178,7 @@ const LayoutHeader: FC<IProps> = ({
                                 </div>
 
                                 <h3 className="two-col:pl-4 two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
-                                    Boards
+                                    {t("navigation.boards")}
                                 </h3>
 
                                 <ViewsTabContainer

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { ChannelSkeleton, IconButton, Input, twMerge } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TPodcastChannel } from "src/api/types";
 import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 
@@ -39,6 +40,7 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
     preferredChannelIds,
     setPreferredChannelIds,
 }) => {
+    const { t } = useTranslation();
     const [searchState, setSearchState] = useState<string>("");
     const preferredChannelIdsCountRef = useRef<number | undefined>(
         preferredChannelIds?.length
@@ -111,7 +113,9 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                     className="min-w-max flex"
                 >
                     <span className="fontGroup-highlightSemi uppercase text-primary m-0 transition-all duration-[400]">
-                        {showAllChannels ? "Selected Channels" : "Channels"}
+                        {showAllChannels
+                            ? t("podcasts.selectedChannels")
+                            : t("podcasts.channels")}
                     </span>
                     <div className="flex items-center h-[17.5px]">
                         {!showAllChannels && (
@@ -138,7 +142,9 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
                                 : "text-primary"
                         )}
                     >
-                        {showAllChannels ? "less" : "more"}
+                        {showAllChannels
+                            ? t("navigation.general.less")
+                            : t("navigation.general.more")}
                     </span>
                 </div>
             </div>
@@ -209,13 +215,13 @@ const PodcastChannelsList: FC<IPodcastChannelsList> = ({
             {!isLoadingChannels && (
                 <div className="h-[436px] p-4 mt-2 m-0 overflow-y-scroll overflow-x-hidden border-t border-solid border-borderLine">
                     <p className="fontGroup-highlightSemi uppercase text-primary m-0 mb-[10px]">
-                        All Channels
+                        {t("podcasts.allChannels")}
                     </p>
                     <div className="mb-5 w-full">
                         <Input
                             value={searchState}
                             onChange={(e) => setSearchState(e.target.value)}
-                            placeholder="Filter channels..."
+                            placeholder={t("podcasts.channelsInputPlaceholder")}
                             id="search-podcast-channels"
                             name="search podcast channels"
                         />

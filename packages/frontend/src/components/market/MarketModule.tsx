@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { ModuleLoader, Switch, twMerge } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
     TChartRange,
@@ -8,6 +9,7 @@ import {
     TBaseEntity,
 } from "src/api/types";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
+import { evaluateTranslationTemplate } from "src/api/utils/textUtils";
 import globalMessages from "src/globalMessages";
 import CandlestickChart from "./CandlestickChart";
 import CoinInfo from "./CoinInfo";
@@ -49,6 +51,7 @@ const MarketModule: FC<IMarketModule> = ({
     onTogglePin,
     pinnedCoins,
 }) => {
+    const { t } = useTranslation();
     const {
         width,
         squareRef,
@@ -68,14 +71,16 @@ const MarketModule: FC<IMarketModule> = ({
     if (selectedMarket === undefined) {
         chartComponent = (
             <div className="flex items-center justify-center top-[220px] h-[200px] text-primaryVariant100">
-                No coins with selected tags
+                {t("market.noCoinSelected")}
             </div>
         );
     } else if (priceHistoryData === undefined && !isLoadingHistory) {
         chartComponent = (
             <div className="flex items-center justify-center top-[220px] h-[200px] text-primaryVariant100">
                 {globalMessages.error.requestFailed(
-                    `the ${selectedChartRange} history for this coin`
+                    evaluateTranslationTemplate(t("market.historyError"), {
+                        selectedChartRange,
+                    })
                 )}
             </div>
         );
@@ -170,7 +175,7 @@ const MarketModule: FC<IMarketModule> = ({
                     >
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
-                                Market Cap
+                                {t("market.marketCap")}
                             </span>
                             <span className="value">
                                 <span>
@@ -186,7 +191,7 @@ const MarketModule: FC<IMarketModule> = ({
                         </div>
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
-                                24 hours volume
+                                {t("market.volume24h")}
                             </span>
                             <span className="value">
                                 <span>

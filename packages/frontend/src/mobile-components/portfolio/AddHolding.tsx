@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormInput, Pager, ScrollBar } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { useHistory } from "src/api/hooks";
 import { TCoin, THolding } from "src/api/types";
 

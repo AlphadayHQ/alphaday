@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler, useEffect, useRef } from "react";
 import { TSuperfeedItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play-video.svg";
-import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,

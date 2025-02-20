@@ -1,5 +1,6 @@
-import { FC, FormEvent, useRef, useState } from "react";
+import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { useWidgetSize } from "src/api/hooks";
 import {
     TCustomLayoutEntry,
@@ -34,28 +35,31 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     handlePaginate,
     setWidgetHeight,
 }) => {
+    const { t } = useTranslation();
     const widgetSize = useWidgetSize([500]);
     const isCompactMode =
         widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const prevScrollRef = useRef<HTMLElement | undefined>();
 
-    if (scrollRef !== prevScrollRef.current) {
-        if (scrollRef) {
-            const height =
-                Array.from(scrollRef.children).reduce(
-                    (partialSum, child) => partialSum + child.clientHeight,
-                    0
-                ) + HEADER_HEIGHT;
-            // there seems to be a weird case where the scrollRef is valid,
-            // but the height of the items is 0, so we end up with
-            // height = HEADER_HEIGHT;
-            if (height > HEADER_HEIGHT) {
-                setWidgetHeight(Math.min(height, DEFAULT_WIDGET_HEIGHT));
+    useEffect(() => {
+        if (scrollRef !== prevScrollRef.current) {
+            if (scrollRef) {
+                const height =
+                    Array.from(scrollRef.children).reduce(
+                        (partialSum, child) => partialSum + child.clientHeight,
+                        0
+                    ) + HEADER_HEIGHT;
+                // there seems to be a weird case where the scrollRef is valid,
+                // but the height of the items is 0, so we end up with
+                // height = HEADER_HEIGHT;
+                if (height > HEADER_HEIGHT) {
+                    setWidgetHeight(Math.min(height, DEFAULT_WIDGET_HEIGHT));
+                }
             }
+            prevScrollRef.current = scrollRef;
         }
-        prevScrollRef.current = scrollRef;
-    }
+    }, [scrollRef, prevScrollRef, setWidgetHeight]);
 
     const handleScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
         if (shouldFetchMoreItems(currentTarget)) {
@@ -72,7 +76,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     if (items.length === 0) {
         return (
             <div className="flex flex-auto h-300 justify-center items-center">
-                <p>No Items Found</p>
+                <p>{t("others.noItemsFound")}</p>
             </div>
         );
     }

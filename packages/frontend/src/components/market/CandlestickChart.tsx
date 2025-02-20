@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { ApexCandleChart, Spinner, themeColors } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
 import { renderToString } from "src/api/utils/textUtils";

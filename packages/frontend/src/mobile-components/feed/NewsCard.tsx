@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { TSuperfeedItem } from "src/api/types";
-import { computeDuration } from "src/utils/dateUtils";
+import { computeDuration } from "src/api/utils/dateUtils";
 import {
     ActionButtons,
     CardTitle,

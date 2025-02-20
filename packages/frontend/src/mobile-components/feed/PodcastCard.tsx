@@ -2,11 +2,11 @@ import { FC } from "react";
 import { Spinner, twMerge } from "@alphaday/ui-kit";
 import { useAudioPlayer, useAudioPosition } from "react-use-audio-player";
 import { TSuperfeedItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause2.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play-audio.svg";
 import { ReactComponent as SkipBackwardSVG } from "src/assets/svg/skip-backward.svg";
 import { ReactComponent as SkipForwardSVG } from "src/assets/svg/skip-forward.svg";
-import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,

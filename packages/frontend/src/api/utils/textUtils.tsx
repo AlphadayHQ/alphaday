@@ -209,3 +209,13 @@ export const renderToString = (node: JSX.Element): string => {
     flushSync(() => root.render(node));
     return wrapper.innerHTML;
 };
+
+// Function to evaluate the template literal
+export const evaluateTranslationTemplate = (
+    templateString: string,
+    data: Record<string, string>
+) => {
+    return templateString.replace(/\${(\w+)}/g, (match, key) => {
+        return data[key] || match;
+    });
+};

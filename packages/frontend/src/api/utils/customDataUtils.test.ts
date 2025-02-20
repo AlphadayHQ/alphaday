@@ -1,6 +1,9 @@
 import "src/mocks/libraryMocks";
 import { TCustomItem } from "src/api/types";
-import { validateCustomData, evaluateTemplate } from "./customDataUtils";
+import {
+    validateCustomData,
+    evaluateTranslationTemplate,
+} from "./customDataUtils";
 
 export const validCustomData: JSONValue = [
     null,
@@ -76,7 +79,7 @@ describe("Tests for custom data utilities", () => {
         });
     });
 
-    test("evaluateTemplate", () => {
+    test("evaluateTranslationTemplate", () => {
         [...validTemplates, ...invalidTemplates].forEach((template) => {
             const data: TCustomItem = {
                 id: 0,
@@ -85,7 +88,7 @@ describe("Tests for custom data utilities", () => {
                 exchange_url: "http://coinbase.com/",
                 exchange_name: "Coinbase",
             };
-            expect(evaluateTemplate(template.input, data)).toEqual(
+            expect(evaluateTranslationTemplate(template.input, data)).toEqual(
                 template.output
             );
         });

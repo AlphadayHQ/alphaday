@@ -7,6 +7,7 @@ import {
     TabsBar,
     twMerge,
 } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import {
     EItemsSortBy,
     TRemoteUserViewPreview,
@@ -15,9 +16,14 @@ import {
 import { TUserViewPreview, TViewMeta } from "src/api/types";
 import { validateEthAddr } from "src/api/utils/accountUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { getSortOptionsArray } from "src/api/utils/sortOptions";
+import { generateSortOptions } from "src/api/utils/sortOptions";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
+import {
+    ETranslationValues,
+    translateLabels,
+    TTranslationValues,
+} from "src/api/utils/translationUtils";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
 import { ReactComponent as EmptySVG } from "src/assets/icons/empty.svg";
 import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
@@ -147,6 +153,8 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
     subscribedViews,
     onEditView,
 }) => {
+    const sortOptions = generateSortOptions();
+    const { t } = useTranslation();
     const customBoards = subscribedViews
         ?.filter((board) => !board.is_system_view)
         .sort((a, b) => a.sort_order - b.sort_order);
@@ -201,6 +209,13 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
     const sortByKey =
         Object.keys(EItemsSortBy)[Object.values(EItemsSortBy).indexOf(sortBy)];
 
+    const selectedSortValue =
+        Object.keys(ETranslationValues).indexOf(sortByKey.toLowerCase()) !== -1
+            ? translateLabels(sortByKey.toLowerCase() as TTranslationValues, {
+                  isKey: true,
+              })
+            : sortByKey;
+
     return (
         <div
             data-testid="boards-library"
@@ -212,10 +227,11 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
         >
             <div className="flex justify-between items-center p-4 pb-0">
                 <div className="meta">
-                    <div className="uppercase">Boards Library</div>
+                    <div className="uppercase">
+                        {t("navigation.boards_library.title")}
+                    </div>
                     <div className="text-primaryVariant100">
-                        Switch between boards to optimize your workflow, and pin
-                        the ones you use most often.
+                        {t("navigation.boards_library.description")}
                     </div>
                 </div>
                 <div
@@ -237,12 +253,18 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                             <div className="flex justify-between text-primary">
                                 <span className="flex flex-col">
                                     <span className="fontGroup-highlightSemi">
-                                        Custom Boards
+                                        {t(
+                                            "navigation.boards_library.customBoardsTitle"
+                                        )}
                                     </span>
                                     <span className="text-primaryVariant100">
                                         {isAuthenticated
-                                            ? "Create an empty board and add widgets"
-                                            : "Connect and verify your wallet to create new boards and see your custom boards"}
+                                            ? t(
+                                                  "navigation.boards_library.customBoardsDescriptionWithAuth"
+                                              )
+                                            : t(
+                                                  "navigation.boards_library.customBoardsDescription"
+                                              )}
                                     </span>
                                 </span>
                                 <span
@@ -321,9 +343,10 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                 </div>
                                 <div className="pt-1">
                                     <SortBy
-                                        selected={sortByKey}
+                                        selected={selectedSortValue}
                                         onSortBy={onSortBy}
-                                        options={getSortOptionsArray()}
+                                        options={sortOptions}
+                                        label={t("navigation.sortBy")}
                                     />
                                 </div>
                             </div>

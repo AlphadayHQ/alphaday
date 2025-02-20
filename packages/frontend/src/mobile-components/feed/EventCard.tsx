@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import { TSuperfeedItem } from "src/api/types";
 import { typeOptions } from "src/components/calendarCategories";
 import { TagButton } from "src/mobile-components/button/buttons";

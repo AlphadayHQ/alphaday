@@ -2,7 +2,7 @@ import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
 import { TSuperfeedItem } from "src/api/types";
-import { computeDuration } from "src/utils/dateUtils";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,

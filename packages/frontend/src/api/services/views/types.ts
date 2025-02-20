@@ -1,3 +1,4 @@
+import { ELanguageCode } from "src/api/types/language";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { TWidgetSlug, TTemplateSlug } from "src/types";
 import { TPagination, TRemoteTagReadOnly, EItemsSortBy } from "../baseTypes";
@@ -367,13 +368,20 @@ export type TViewsRequest = {
     limit?: number;
     page?: number;
     sortBy?: EItemsSortBy;
+    // Needed to add language to rtk key
+    // (so that cache is invalidated as soon as language changes)
+    lang: ELanguageCode;
 } | void;
 export type TViewsRawResponse = TPagination & {
     results: ReadonlyArray<TRemoteUserViewPreview>;
 };
 export type TViewsResponse = TViewsRawResponse;
 
-export type TSubscribedViewsRequest = void;
+export type TSubscribedViewsRequest = {
+    // Needed to add language to rtk key
+    // (so that cache is invalidated as soon as language changes)
+    lang: ELanguageCode;
+};
 export type TSubscribedViewsRawResponse = ReadonlyArray<TRemoteUserViewPreview>;
 export type TSubscribedViewsResponse = TSubscribedViewsRawResponse;
 

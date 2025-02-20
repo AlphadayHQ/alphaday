@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-with-locales-es6";
 import queryString from "query-string";
 import { TProjectTvlHistory, TTvlHistory } from "src/api/types";
 import { isEmptyObj } from "src/api/utils/helpers";

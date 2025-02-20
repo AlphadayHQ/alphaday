@@ -1,6 +1,7 @@
 import { FC, FormEvent, useState } from "react";
 import { listItemVariants, HRElement } from "@alphaday/ui-kit";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
+import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import { TDiscordItem } from "src/api/types";
 import { imgOnError, wideImgOnError } from "src/api/utils/errorHandling";
@@ -47,6 +48,7 @@ const MIN_CONTENT_LENGTH = 200;
 const discordStyle = listItemVariants("discord");
 
 const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
+    const { t } = useTranslation();
     const [isExpanded, setIsExpanded] = useState(false);
     const contentPreview =
         item.content.slice(0, MIN_CONTENT_LENGTH) +
@@ -149,7 +151,9 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
                                 setIsExpanded((prev) => !prev);
                             }}
                         >
-                            {isExpanded ? "Less" : "Read More"}
+                            {isExpanded
+                                ? t("navigation.general.less")
+                                : t("navigation.general.readMore")}
                         </span>
                     </div>
                 </div>

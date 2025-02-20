@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Arrow } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TProjectData, TProjectTvlHistory, TProjectType } from "src/api/types";
 import { imgOnError } from "src/api/utils/errorHandling";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
@@ -26,6 +27,7 @@ const handleOnClick = (projectData: TProjectData) => () => {
 export const TvlItemsHeader: FC<{ projectType: TProjectType }> = ({
     projectType,
 }) => {
+    const { t } = useTranslation();
     return (
         <div className="flex flex-row flex-[1_auto] py-[10px] px-6 pb-[3px]">
             <div
@@ -68,7 +70,7 @@ export const TvlItemsHeader: FC<{ projectType: TProjectType }> = ({
                                 justifyContent: "right",
                             }}
                         >
-                            1D Change
+                            1D {t("others.change")}
                         </div>
                     </div>
                     <div
@@ -83,7 +85,7 @@ export const TvlItemsHeader: FC<{ projectType: TProjectType }> = ({
                                 justifyContent: "right",
                             }}
                         >
-                            7D Change
+                            7D {t("others.change")}
                         </div>
                     </div>
                     <div
@@ -111,6 +113,8 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
     index,
     twoRowCellLayout,
 }) => {
+    const { t } = useTranslation();
+
     const history7d = projectHistory?.history;
 
     const { tvl } = projectData;
@@ -208,7 +212,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                         <div className="flex flex-row flex-1 items-center justify-center">
                             <div className="flex flex-col items-start">
                                 <span className="fontGroup-supportBold text-primaryVariant100">
-                                    1d change
+                                    1d {t("others.change")}
                                 </span>
                                 <span>
                                     {(percentChange1d / 100).toLocaleString(
@@ -230,7 +234,7 @@ export const ProtocolTvlItem: FC<IProtocolTvlProps> = ({
                         <div className="flex flex-row flex-1 items-center justify-end">
                             <div className="flex flex-col items-start">
                                 <span className="fontGroup-supportBold text-primaryVariant100">
-                                    7d change
+                                    7d {t("others.change")}
                                 </span>
                                 <span>
                                     {(percentChange7d / 100).toLocaleString(
@@ -382,7 +386,7 @@ interface IChainlTvlProps {
 }
 
 /**
- * Chains, as oppose to protocols, do not include 1d/7d percentage change,
+ * Chains, as oppose to protocols, do not include 1d/7d percentage {t("others.change")}")},
  * nor history data.
  */
 export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {

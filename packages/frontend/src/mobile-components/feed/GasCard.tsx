@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Arrow, twMerge } from "@alphaday/ui-kit";
 import { TSuperfeedItem } from "src/api/types";
+import { computeDuration } from "src/api/utils/dateUtils";
 import GasPriceBox from "src/components/gas/GasPriceBox";
-import { computeDuration } from "src/utils/dateUtils";
 import { imgOnError } from "src/utils/errorHandling";
 import {
     ActionButtons,

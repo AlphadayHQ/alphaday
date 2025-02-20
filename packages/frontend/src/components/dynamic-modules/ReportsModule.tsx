@@ -5,6 +5,7 @@ import {
     ListItem,
     CenteredBlock,
 } from "@alphaday/ui-kit";
+import { computeDuration } from "src/api/utils/dateUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 import { IReports } from "./types";
@@ -38,7 +39,7 @@ const ReportsModule: FC<IReports> = ({
                         key={item.id}
                         variant="reports"
                         path={item.url}
-                        date={item.reported_at}
+                        duration={computeDuration(item.reported_at)}
                         title={item.name}
                         source={item.source_name}
                         tag={item.topic}
