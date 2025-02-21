@@ -75,7 +75,7 @@
     "web3-eth-accounts": "1.9.0"
   },
   "devDependencies": {
-    "@capacitor/cli": "5.4.1",
+    "@capacitor/cli": "7.0.1",
     "@ionic/cli": "7.2.0",
     "@testing-library/react": "15.0.7",
     "@testing-library/react-hooks": "8.0.1",
