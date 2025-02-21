@@ -77,6 +77,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     lens_template: lazyRetry(
         () => import("./containers/lens-feed/LensFeedContainer")
     ),
+    twitter_template: lazyRetry(
+        () => import("./containers/x-feed/XFeedContainer")
+    ),
     map_template: lazyRetry(() => import("./containers/maps/MapContainer")),
     market_template: lazyRetry(
         () => import("./containers/market/MarketContainer")
