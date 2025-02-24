@@ -1,6 +1,7 @@
 import { FC } from "react";
 import moment from "moment-with-locales-es6";
 import ReactMarkdown from "react-markdown";
+import { TSocialItem } from "src/api/services";
 import { TTweets } from "src/api/types";
 import {
     URL_GLOBAL_REGEX,
@@ -14,7 +15,6 @@ import {
     AuthorName,
     TweetContent,
 } from "./FeedComponents";
-import { TSocialItem } from "src/api/services";
 
 const X_MENTION_REGEX = /(@\w+)/g;
 const URL_REGEX = /([a-z\d-]+\.)+[a-z\d]{2,}[\w/?&=#%]*/g;
@@ -32,7 +32,11 @@ const PLUGINS = [
     remarkRegex(URL_REGEX, (url: string) => [`https://${url}`, url]),
 ];
 
-const XFeedItem: FC<TSocialItem<TTweets>> = ({ tweet, url, social_account }) => {
+const XFeedItem: FC<TSocialItem<TTweets>> = ({
+    tweet,
+    url,
+    social_account,
+}) => {
     const profileUrl = `https://x.com/${social_account.username}`;
 
     return (

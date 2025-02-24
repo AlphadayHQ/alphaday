@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { ModuleLoader, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
+import { TSocialItem } from "src/api/services";
 import { TTweets } from "src/api/types";
 import globalMessages from "src/globalMessages";
 import XFeedItem from "./XFeedItem";
-import { TSocialItem } from "src/api/services";
 
 interface IPosts {
     posts: TSocialItem<TTweets>[];

@@ -28,7 +28,10 @@ const twitterApi = alphadayApi.injectEndpoints({
                 r: TGetTweetsRawResponse
             ): TGetTweetsResponse => ({
                 ...r,
-                results: r.results.map((t) => ({...t, tweet:parseAsTweet(t.tweet)})),
+                results: r.results.map((t) => ({
+                    ...t,
+                    tweet: parseAsTweet(t.tweet),
+                })),
             }),
         }),
     }),
