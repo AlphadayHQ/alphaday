@@ -37,6 +37,10 @@ export type TRemoteColumnData = {
     name: string;
 };
 
+export type TLangData = {
+    lang: ELanguageCode;
+};
+
 /**
  * @deprecated
  * This field has been deprecated in favor of `custom_data` and `custom_meta`.
@@ -363,25 +367,20 @@ export type TRemoteUserViewDraft = TRemoteBaseUserView & {
  * Query types
  */
 
-export type TViewsRequest = {
-    category?: string;
-    limit?: number;
-    page?: number;
-    sortBy?: EItemsSortBy;
-    // Needed to add language to rtk key
-    // (so that cache is invalidated as soon as language changes)
-    lang: ELanguageCode;
-} | void;
+export type TViewsRequest =
+    | (TLangData & {
+          category?: string;
+          limit?: number;
+          page?: number;
+          sortBy?: EItemsSortBy;
+      })
+    | void;
 export type TViewsRawResponse = TPagination & {
     results: ReadonlyArray<TRemoteUserViewPreview>;
 };
 export type TViewsResponse = TViewsRawResponse;
 
-export type TSubscribedViewsRequest = {
-    // Needed to add language to rtk key
-    // (so that cache is invalidated as soon as language changes)
-    lang: ELanguageCode;
-};
+export type TSubscribedViewsRequest = TLangData;
 export type TSubscribedViewsRawResponse = ReadonlyArray<TRemoteUserViewPreview>;
 export type TSubscribedViewsResponse = TSubscribedViewsRawResponse;
 
@@ -389,11 +388,14 @@ export type TViewCategoriesRequest = void;
 export type TViewCategoriesRawResponse = ReadonlyArray<TRemoteViewCategory>;
 export type TViewCategoriesResponse = TViewCategoriesRawResponse;
 
-export type TViewByIdRequest = { id: number };
+export type TViewByIdRequest = TLangData & {
+    id: number;
+};
 export type TViewByIdRawResponse = Readonly<TRemoteRawUserView>;
 export type TViewByIdResponse = Readonly<TRemoteUserView>;
 
-export type TViewByHashOrSlugRequest = { hash?: string } | { slug?: string };
+export type TViewByHashOrSlugRequest = TLangData &
+    ({ hash?: string } | { slug?: string });
 export type TViewByHashOrSlugRawResponse = Readonly<TRemoteRawUserView>;
 export type TViewByHashOrSlugResponse = Readonly<TRemoteUserView>;
 

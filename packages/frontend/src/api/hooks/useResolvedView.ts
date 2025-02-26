@@ -17,6 +17,9 @@ export const useResolvedView = (): ReturnType<typeof useGetViewByHashQuery> => {
     const selectedView = availableViews?.find(
         (v) => v.data.id === selectedViewId
     );
+    const selectedLangCode = useAppSelector(
+        (state) => state.ui.selectedLanguageCode
+    );
 
     // if the current view hash/slug is already in the views cache, avoid fetching this view data
     const skipViewFetch = useMemo(() => {
@@ -42,6 +45,7 @@ export const useResolvedView = (): ReturnType<typeof useGetViewByHashQuery> => {
 
     return useGetViewByHashQuery(
         {
+            lang: selectedLangCode,
             ...(isViewHash
                 ? { hash: routeInfo?.value }
                 : // if the route is not a hash, it's a slug.
