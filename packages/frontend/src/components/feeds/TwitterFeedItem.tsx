@@ -32,7 +32,7 @@ const PLUGINS = [
     remarkRegex(URL_REGEX, (url: string) => [`https://${url}`, url]),
 ];
 
-const XFeedItem: FC<TSocialItem<TTweets>> = ({
+const TwitterFeedItem: FC<TSocialItem<TTweets>> = ({
     tweet,
     url,
     social_account,
@@ -79,4 +79,4 @@ const XFeedItem: FC<TSocialItem<TTweets>> = ({
     );
 };
 
-export default XFeedItem;
+export default TwitterFeedItem;

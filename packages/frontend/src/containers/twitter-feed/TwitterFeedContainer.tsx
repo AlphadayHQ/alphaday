@@ -7,11 +7,11 @@ import {
     buildUniqueItemList,
     itemListsAreEqual,
 } from "src/api/utils/itemUtils";
-import XFeedModule from "src/components/feeds/XFeedModule";
+import TwitterFeedModule from "src/components/feeds/TwitterFeedModule";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
 
-const XFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const TwitterFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [posts, setItems] = useState<TSocialItem<TTweets>[] | undefined>();
     const widgetHeight = useWidgetHeight(moduleData);
 
@@ -79,7 +79,7 @@ const XFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [data?.results]);
 
     return (
-        <XFeedModule
+        <TwitterFeedModule
             posts={posts || []}
             isLoading={isLoading}
             handlePaginate={handlePaginate}
@@ -88,4 +88,4 @@ const XFeedContainer: FC<IModuleContainer> = ({ moduleData }) => {
     );
 };
 
-export default XFeedContainer;
+export default TwitterFeedContainer;

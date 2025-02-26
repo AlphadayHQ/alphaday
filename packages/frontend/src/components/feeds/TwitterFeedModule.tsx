@@ -3,7 +3,7 @@ import { ModuleLoader, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import { TSocialItem } from "src/api/services";
 import { TTweets } from "src/api/types";
 import globalMessages from "src/globalMessages";
-import XFeedItem from "./XFeedItem";
+import TwitterFeedItem from "./TwitterFeedItem";
 
 interface IPosts {
     posts: TSocialItem<TTweets>[];
@@ -12,7 +12,7 @@ interface IPosts {
     widgetHeight: number;
 }
 
-const XFeedModule: FC<IPosts> = ({
+const TwitterFeedModule: FC<IPosts> = ({
     posts,
     handlePaginate,
     isLoading,
@@ -33,10 +33,10 @@ const XFeedModule: FC<IPosts> = ({
     return (
         <ScrollBar onScroll={handlePaginate}>
             {posts.map((post) => (
-                <XFeedItem key={post.id} {...post} />
+                <TwitterFeedItem key={post.id} {...post} />
             ))}
         </ScrollBar>
     );
 };
 
-export default XFeedModule;
+export default TwitterFeedModule;
