@@ -394,8 +394,7 @@ export type TViewByIdRequest = TLangData & {
 export type TViewByIdRawResponse = Readonly<TRemoteRawUserView>;
 export type TViewByIdResponse = Readonly<TRemoteUserView>;
 
-export type TViewByHashOrSlugRequest = TLangData &
-    ({ hash?: string } | { slug?: string });
+export type TViewByHashOrSlugRequest = { hash?: string } | { slug?: string };
 export type TViewByHashOrSlugRawResponse = Readonly<TRemoteRawUserView>;
 export type TViewByHashOrSlugResponse = Readonly<TRemoteUserView>;
 
