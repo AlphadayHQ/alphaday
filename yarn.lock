@@ -15681,10 +15681,10 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tw-colors@1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/tw-colors/-/tw-colors-1.2.6.tgz#9e54564ebab3487bb616d74045d081f9c7842a00"
-  integrity sha512-/HI70siD+7/xNd52YuVtKN77As/ERrm/db6P6DJpdioZ06andLRbaMBWowHO6XagdVjZ9dBQRoQlqAENzCe8UA==
+tw-colors@3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/tw-colors/-/tw-colors-3.3.2.tgz#ddf32c6bf53632152b0809775f24514b66e51ace"
+  integrity sha512-TosYI43Jec/KO4NPzDoBlccPPtPMYholoRUSVYGmzCGa1Zek9exDQIQ+6UViHqqK6Nti/4wBzEGyRTxMSNnSXQ==
   dependencies:
     color "^4.2.3"
     flat "^5.0.2"
