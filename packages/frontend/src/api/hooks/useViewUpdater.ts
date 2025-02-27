@@ -17,6 +17,7 @@ import * as viewsStore from "src/api/store/slices/views";
 import { Logger } from "src/api/utils/logging";
 import {
     buildViewPathFromHashOrSlug,
+    isViewLangModified,
     isViewStale,
 } from "src/api/utils/viewUtils";
 import CONFIG from "src/config/config";
@@ -129,18 +130,31 @@ export const useViewUpdater: () => void = () => {
         }
     });
 
-    /**
-     * Handle newly resolved views
-     * If the resolved view is not in the cache, add it.
-     */
-    if (
-        !isViewModified &&
-        resolvedView.currentData &&
-        !isFetchingSubscribedViews &&
-        availableViews?.find(
-            (v) => v.data.hash === resolvedView?.data?.hash
-        ) === undefined
-    ) {
+    const shouldAddToCache = useMemo(() => {
+        if (!resolvedView.currentData) return false;
+
+        const isLangChanged = isViewLangModified(
+            selectedView,
+            resolvedView.currentData
+        );
+        const isNewView =
+            !isViewModified &&
+            !isFetchingSubscribedViews &&
+            !availableViews?.find(
+                (v) => v.data.hash === resolvedView.data?.hash
+            );
+
+        return isLangChanged || isNewView;
+    }, [
+        resolvedView.currentData,
+        resolvedView.data?.hash,
+        selectedView,
+        isViewModified,
+        isFetchingSubscribedViews,
+        availableViews,
+    ]);
+
+    if (shouldAddToCache && resolvedView.currentData) {
         Logger.debug(
             "useViewUpdater: adding view to cache",
             resolvedView.currentData.name
