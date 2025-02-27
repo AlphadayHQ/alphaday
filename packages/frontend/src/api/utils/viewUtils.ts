@@ -28,6 +28,20 @@ export const isViewModified = (view: TCachedViewMeta): boolean => {
     return lastModified.isAfter(lastSaved);
 };
 
+export const isViewLangModified = (
+    cachedView: TCachedViewMeta | undefined,
+    resolvedView: TRemoteUserView
+): boolean => {
+    if (cachedView === undefined || resolvedView === undefined) return false;
+    if (cachedView.data.description !== resolvedView.description) {
+        return true;
+    }
+    if (cachedView.data.name !== resolvedView.name) {
+        return true;
+    }
+    return false;
+};
+
 /**
  * @param cachedView A view in local cache
  * @param remoteViewMeta Metadata for the same view given by the BE
