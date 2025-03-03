@@ -129,35 +129,12 @@ export type TGetTweetsRequest = {
     tags?: string;
 };
 
-export type TGetTweetsRequestV1 = {
-    listId: string | undefined;
-    token: string | undefined;
-};
-
 export type TBaseRemoteTweet = TSocialItem<TRemoteTweet>;
 
 export type TGetTweetsRawResponse = TPagination & {
     results: TBaseRemoteTweet[];
 };
 
-export type TRemoteTweetV1 = Omit<
-    TRemoteTweet,
-    "author" | "edit_history_tweet_ids"
->;
-
-export type TGetTweetsRawResponseV1 = {
-    data: TRemoteTweetV1[];
-    includes: {
-        users: TRemoteTweetUser[];
-        media: TRemoteTweetMedia[];
-        tweets: TRemoteTweetV1[];
-    };
-    meta: {
-        result_count: number;
-        next_token: string;
-    };
-};
-
 export type TGetTweetsResponse = TPagination & {
-    results: TTweets[];
+    results: TSocialItem<TTweets>[];
 };
