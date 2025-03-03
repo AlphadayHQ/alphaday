@@ -49,7 +49,7 @@ const TwitterFeedItem: FC<TSocialItem<TTweets>> = ({
         >
             <TweetColumn className="pt-1 w-[68px] items-center justify-start">
                 <a href={profileUrl} target="_blank" rel="noopener noreferrer">
-                    <AuthorImage src={tweet.author.photoUrl} />
+                    <AuthorImage src={social_account.image ?? tweet.author.photoUrl} />
                 </a>
             </TweetColumn>
             <TweetColumn className="w-[80%]">
