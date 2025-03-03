@@ -35,7 +35,7 @@ export const alphadayApi = createApi({
                 const token = authState.token.value;
                 if (token != null) {
                     // eslint-disable-next-line
-                    headers.set("Authorization", `Token ${token}`);
+					headers.set("Authorization", `Token ${token}`);
                 } else {
                     Logger.debug(
                         "alphadayApi::prepareHeaders: no session token"
@@ -43,6 +43,16 @@ export const alphadayApi = createApi({
                 }
             }
             return headers;
+        },
+        isJsonContentType(headers) {
+            localStorage.setItem(
+                "language",
+                headers.get("Accept-Language") ?? "en"
+            );
+            return (
+                headers.get("content-type")?.includes("application/json") ??
+                false
+            );
         },
     }),
     endpoints: () => ({}),
