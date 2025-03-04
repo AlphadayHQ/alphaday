@@ -304,9 +304,7 @@ const SuperfeedContainer: FC<{
                                 return;
                             }
                             history.push(
-                                `/superfeed/search/${t
-                                    .map((tag) => tag.slug)
-                                    .join(",")}`
+                                `/superfeed/search/${t.map((tag) => tag.slug).join(",")}`
                             );
                         }}
                         initialSearchValues={initialSearchValues}
@@ -314,7 +312,19 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <PullToRefreshContainer handleRefresh={refetch}>
+            <PullToRefreshContainer
+                handleRefresh={() => {
+                    refetch()
+                        .then(() => {
+                            setFeedData(undefined);
+                            setIsEmptyFeedResult(false);
+                            reset();
+                        })
+                        .catch(() => {
+                            Logger.error("Error refreshing feed");
+                        });
+                }}
+            >
                 <SuperfeedModule
                     isLoading={isLoading}
                     isAuthenticated={isAuthenticated}
