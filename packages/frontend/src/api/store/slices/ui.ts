@@ -13,7 +13,10 @@ export interface IUIState {
     showBalance: boolean;
     showAboutModal: boolean;
     showLanguageModal: boolean;
+    // persisted choice language of user
     selectedLanguageCode: ELanguageCode;
+    // language of the current session from BE
+    currentLanguageCode: ELanguageCode;
     tutorial: ITutorialState;
     cookieChoice: ECookieChoice | undefined;
     mobile: {
@@ -31,6 +34,7 @@ const initialState: IUIState = {
     showAboutModal: false,
     showLanguageModal: false,
     selectedLanguageCode: ELanguageCode.EN,
+    currentLanguageCode: ELanguageCode.EN,
     showBalance: true,
     tutorial: { showTutorial: undefined, currentTutorialTip: undefined },
     cookieChoice: undefined,
@@ -77,6 +81,12 @@ const uiSlice = createSlice({
                 payload: { code },
             } = action;
             draft.selectedLanguageCode = code;
+        },
+        setCurrentLanguageCode(
+            draft,
+            action: PayloadAction<{ code: ELanguageCode }>
+        ) {
+            draft.currentLanguageCode = action.payload.code;
         },
         setStoreShowTutorial(draft, action: PayloadAction<{ show: boolean }>) {
             const {
@@ -125,6 +135,7 @@ export const {
     toggleLanguageModal,
     toggleWidgetsNavOpen,
     setSelectedLanguageCode,
+    setCurrentLanguageCode,
     setStoreShowTutorial,
     setCurrentTutorialTip,
     setCookieChoice,

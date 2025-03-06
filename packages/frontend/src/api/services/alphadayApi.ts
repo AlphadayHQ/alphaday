@@ -2,9 +2,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { TUserAuth } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../config/config";
-import { setSelectedLanguageCode } from "../store";
-import { store } from "../store/store";
-import type { ELanguageCode } from "../types/language";
 
 const { API_BASE_URL } = CONFIG.API.DEFAULT;
 
@@ -46,18 +43,6 @@ export const alphadayApi = createApi({
                 }
             }
             return headers;
-        },
-        isJsonContentType(headers) {
-            const language = headers.get("Accept-Language");
-            if (language) {
-                store.dispatch(
-                    setSelectedLanguageCode({ code: language as ELanguageCode })
-                );
-            }
-            return (
-                headers.get("content-type")?.includes("application/json") ??
-                false
-            );
         },
     }),
     endpoints: () => ({}),
