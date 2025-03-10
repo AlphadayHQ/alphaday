@@ -16,6 +16,14 @@
         background-color: transparent !important;
         border: none !important;
 
+        .apexcharts-tooltip-title {
+            @apply text-backgroundVariant400;
+        }
+
+        .apexcharts-tooltip-text {
+            @apply text-backgroundVariant400;
+        }
+
         @apply ring-[0.5px] ring-borderLine;
     }
 
@@ -71,6 +79,20 @@
                 .apexcharts-text.apexcharts-xaxis-label:nth-of-type(1) {
                     display: none;
                 }
+            }
+            .apexcharts-xaxis-annotations > rect {
+                stroke: #775dd0;
+            }
+
+            .apexcharts-point-annotation-marker {
+                fill: rgba(173, 158, 224, 0.7);
+
+                filter: drop-shadow(-1px -1px 0px rgba(119, 93, 208, 0.8))
+                    drop-shadow(1px -1px 0px rgba(119, 93, 208, 0.8))
+                    drop-shadow(-1px 1px 0px rgba(119, 93, 208, 0.8))
+                    drop-shadow(1px 1px 0px rgba(119, 93, 208, 0.8));
+
+                @apply stroke-[2px] stroke-background;
             }
         }
     }
