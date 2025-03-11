@@ -1,5 +1,4 @@
 import { createListenerMiddleware, isAnyOf } from "@reduxjs/toolkit";
-import { setCurrentLanguageCode } from "src/api/store/slices/ui";
 import { ELanguageCode } from "src/api/types/language";
 import type { RootState } from "../store";
 
@@ -32,18 +31,35 @@ languageMiddleware.startListening({
         )?.meta?.baseQueryMeta?.response?.headers;
         if (!headers) return;
 
-        const currentLanguage = (getState() as RootState).ui
-            .selectedLanguageCode;
+        const state = getState() as RootState;
         const contentLanguage = headers.get(
             "Content-Language"
         ) as ELanguageCode;
 
         if (
             contentLanguage &&
-            Object.values(ELanguageCode).includes(contentLanguage) &&
-            currentLanguage !== contentLanguage
+            Object.values(ELanguageCode).includes(contentLanguage)
         ) {
-            dispatch(setCurrentLanguageCode({ code: contentLanguage }));
+            // Update the last request's response, add lang field to it
+            // eslint-disable-next-line no-restricted-syntax
+            for (const key in state.alphadayApi.queries) {
+                if (
+                    state.alphadayApi.queries[key] &&
+                    state.alphadayApi.queries[key]?.endpointName ===
+                        "getViewByHash"
+                ) {
+                    state.alphadayApi.queries[key].data = {
+                        // @ts-expect-error - no types
+                        ...state.alphadayApi.queries[key].data,
+                        lang: contentLanguage,
+                    };
+                }
+            }
+
+            dispatch({
+                type: "alphadayApi/util/resetApiState",
+                payload: state,
+            });
         }
     },
 });
