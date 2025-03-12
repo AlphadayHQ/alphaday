@@ -48,6 +48,7 @@ languageMiddleware.startListening({
                     state.alphadayApi.queries[key]?.endpointName ===
                         "getViewByHash"
                 ) {
+                    // @ts-expect-error - no types
                     state.alphadayApi.queries[key].data = {
                         // @ts-expect-error - no types
                         ...state.alphadayApi.queries[key].data,

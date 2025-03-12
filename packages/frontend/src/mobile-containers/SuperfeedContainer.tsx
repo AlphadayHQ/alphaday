@@ -312,19 +312,7 @@ const SuperfeedContainer: FC<{
                     />
                 </div>
             )}
-            <PullToRefreshContainer
-                handleRefresh={() => {
-                    refetch()
-                        .then(() => {
-                            setFeedData(undefined);
-                            setIsEmptyFeedResult(false);
-                            reset();
-                        })
-                        .catch(() => {
-                            Logger.error("Error refreshing feed");
-                        });
-                }}
-            >
+            <PullToRefreshContainer handleRefresh={refetch}>
                 <SuperfeedModule
                     isLoading={isLoading}
                     isAuthenticated={isAuthenticated}
