@@ -79,7 +79,7 @@ export const parseRemoteMetrics = ({
     reply_count,
     like_count,
     quote_count,
-}: TRemoteTweetMetrics): TTweetMetric => ({
+}: TRemoteTweetMetrics = {}): TTweetMetric => ({
     retweets: retweet_count,
     replies: reply_count,
     likes: like_count,
