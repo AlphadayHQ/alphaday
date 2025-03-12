@@ -393,7 +393,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
             </BaseModuleBody>
             <BaseModuleOptionsFooter
                 removeWidget={removeWidget}
-                text={translate("widget.remove_widget")}
+                text={translate("widget.removeWidget")}
                 ref={footerWrapRef}
             />
         </BaseModuleWrapper>
