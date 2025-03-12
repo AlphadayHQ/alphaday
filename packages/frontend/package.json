@@ -30,7 +30,7 @@
     "@ionic/react": "7.8.1",
     "@ionic/react-router": "7.8.1",
     "@react-oauth/google": "0.12.1",
-    "@reduxjs/toolkit": "2.6.0",
+    "@reduxjs/toolkit": "1.8.0",
     "@sentry/react": "7.109.0",
     "@types/dompurify": "3.0.5",
     "@uniswap/widgets": "2.59.0",
