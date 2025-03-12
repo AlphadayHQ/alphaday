@@ -25,7 +25,7 @@ const TwitterFeedModule: FC<IPosts> = ({
     if (posts.length === 0) {
         return (
             <CenteredBlock>
-                <p>{globalMessages.queries.noMatchFound("X posts")}</p>
+                <p>{globalMessages.queries.noMatchFound("twitter posts")}</p>
             </CenteredBlock>
         );
     }

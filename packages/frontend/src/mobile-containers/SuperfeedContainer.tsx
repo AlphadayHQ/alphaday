@@ -304,9 +304,7 @@ const SuperfeedContainer: FC<{
                                 return;
                             }
                             history.push(
-                                `/superfeed/search/${t
-                                    .map((tag) => tag.slug)
-                                    .join(",")}`
+                                `/superfeed/search/${t.map((tag) => tag.slug).join(",")}`
                             );
                         }}
                         initialSearchValues={initialSearchValues}

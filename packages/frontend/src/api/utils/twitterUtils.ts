@@ -1,4 +1,4 @@
-import {
+import type {
     TRemoteTweet,
     TRemoteTweetEntities,
     TRemoteTweetMedia,
@@ -6,7 +6,7 @@ import {
     TRemoteTweetUrl,
     TRemoteTweetUser,
 } from "../services";
-import {
+import type {
     TTweets,
     TTweetAttachment,
     TTweetAuthor,
@@ -107,7 +107,6 @@ export const parseAsTweet = (remoteTweet: TRemoteTweet): TTweets => {
             remoteTweet?.attachments?.attachments.map(parseRemoteMedia),
         referencedTweets: remoteTweet.referenced_tweets,
         retweet: referencedTweets?.[0].tweet,
-        metrics: parseRemoteMetrics(remoteTweet.public_metrics),
         createdAt: remoteTweet.created_at,
         lang: remoteTweet.lang,
     };

@@ -43,7 +43,7 @@ const ENVIRONMENT = (() => {
 
 const LOGLEVEL =
     import.meta.env.VITE_LOGLEVEL != null
-        ? parseInt(import.meta.env.VITE_LOGLEVEL, 10)
+        ? Number.parseInt(import.meta.env.VITE_LOGLEVEL, 10)
         : 0;
 
 const SENTRY = {
