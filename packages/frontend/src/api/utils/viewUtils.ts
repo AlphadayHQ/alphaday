@@ -1,10 +1,10 @@
 import moment from "moment-with-locales-es6";
-import {
+import type {
     TRemoteUserView,
     TRemoteUserViewMeta,
     TRemoteUserViewDraft,
 } from "src/api/services";
-import {
+import type {
     TCachedView,
     TCachedViewMeta,
     TUserView,
@@ -12,7 +12,7 @@ import {
 } from "src/api/types";
 import CONFIG from "src/config/config";
 import { ETemplateNameRegistry } from "src/constants";
-import { TTemplateSlug } from "src/types";
+import type { TTemplateSlug } from "src/types";
 import { isHash } from "./helpers";
 import { Logger } from "./logging";
 
@@ -36,7 +36,7 @@ export const isViewLangModified = (
     if (cachedView.data.description !== resolvedView.description) {
         return true;
     }
-    if (cachedView.data.name !== resolvedView.name) {
+    if (cachedView.data.lang !== resolvedView.lang) {
         return true;
     }
     return false;
