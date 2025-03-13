@@ -1,103 +1,125 @@
-import { FC } from "react";
+import { FC, useEffect, useMemo, useCallback } from "react";
+import { useGlobalSearch } from "src/api/hooks";
 import {
-    useGetMarketDataQuery,
-    useGetMultiKeyValueQuery,
+    useGetCoinsQuery,
+    useGetMarketHistoryQuery,
+    useGetPinnedCoinsQuery,
 } from "src/api/services";
-import { TGasPrices } from "src/api/types";
-import { buildMultiValue } from "src/api/utils/itemUtils";
-import GasModule from "src/components/gas/GasModule";
-import { TGasPriceTable } from "src/components/gas/GasPriceTable";
+import { setSelectedMarket } from "src/api/store";
+import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
+import { TCoin } from "src/api/types";
+import { filteringListToStr } from "src/api/utils/filterUtils";
+
+import KasandraModule from "src/components/kasandra/KasandraModule";
+import { TMarketMeta } from "src/components/kasandra/types";
 import CONFIG from "src/config";
+import { EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
-import { AVG_GAS_USED } from "./staticData";
-
-const BEACON_CHAIN_DATA = {
-    BEACON_CURRENT_EPOCH: "currentEpoch",
-    BEACON_CURRENT_SLOT: "currentSlot",
-    BEACON_ACTIVE_VALIDATORS: "activeValidators",
-    BEACON_AVG_VALIDATORS_BALANCE: "avgValidatorBalance",
-    BEACON_FINALIZED_EPOCH: "finalizedEpoch",
-    BEACON_FINALIZED_SLOT: "finalizedSlot",
-    BEACON_REWARDS_APR: "rewardsApr",
-};
-
-const GAS_PRICE_DATA = {
-    GAS_SLOW: "slow",
-    GAS_STANDARD: "standard",
-    GAS_FAST: "fast",
-};
 
 const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
-    const { template } = moduleData.widget;
-    const isBeaconWidget = template?.slug === "network_template";
+    const dispatch = useAppDispatch();
+    const prevSelectedMarketData = useAppSelector(
+        (state) => state.widgets.market?.[moduleData.hash]
+    );
+    const selectedChartRange = useMemo(
+        () =>
+            prevSelectedMarketData?.selectedChartRange ||
+            CONFIG.WIDGETS.MARKET.DEFAULT_INTERVAL,
+        [prevSelectedMarketData?.selectedChartRange]
+    );
+
+    const { lastSelectedKeyword } = useGlobalSearch();
+
+    const { data: pinnedCoinsData } = useGetPinnedCoinsQuery();
+    const pinnedCoins = useMemo(
+        () => pinnedCoinsData?.results || [],
+        [pinnedCoinsData]
+    );
+
+    const tagsSettings = moduleData.settings.filter(
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
+    );
+    const tags =
+        tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
-            CONFIG.WIDGETS.NETWORK.POLLING_INTERVAL) * 1000;
+            CONFIG.WIDGETS.MARKET.COIN_POLLING_INTERVAL) * 1000;
 
-    const { data: gasData, isLoading: isLoadingGasData } =
-        useGetMultiKeyValueQuery(
+    const { data: coinsDataResponse, isLoading: isLoadingCoinsData } =
+        useGetCoinsQuery(
             {
-                keys: Object.keys(GAS_PRICE_DATA),
-            },
-            { pollingInterval }
-        );
-
-    const { data: ethPriceResponse, isLoading: isLoadingEthPrice } =
-        useGetMarketDataQuery(
-            {
-                tags: "ethereum",
-                limit: 1,
+                tags: tags ? filteringListToStr(tags) : undefined,
+                limit: CONFIG.WIDGETS.MARKET.QUERY_HARD_LIMIT,
             },
             {
                 pollingInterval,
             }
         );
 
-    const { data: beaconData, isLoading: isLoadingBeaconChain } =
-        useGetMultiKeyValueQuery(
+    const coinsData = useMemo(
+        () => coinsDataResponse?.results ?? [],
+        [coinsDataResponse]
+    );
+
+    const selectedMarket: TCoin | undefined = useMemo(() => {
+        const storedMarket = [...pinnedCoins, ...coinsData].find(
+            (c) => c.id === prevSelectedMarketData?.selectedMarket?.id
+        );
+        return storedMarket ?? pinnedCoins[0] ?? coinsData[0] ?? undefined;
+    }, [prevSelectedMarketData?.selectedMarket, coinsData, pinnedCoins]);
+
+    const { currentData: marketHistory, isFetching: isLoadingHistory } =
+        useGetMarketHistoryQuery(
             {
-                keys: Object.keys(BEACON_CHAIN_DATA),
+                coin: selectedMarket?.slug,
+                interval: selectedChartRange,
             },
             {
-                pollingInterval,
-                skip: !isBeaconWidget,
+                pollingInterval:
+                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+                skip: selectedMarket === undefined,
             }
         );
 
-    const ethPrice =
-        ethPriceResponse?.results[0]?.price !== undefined
-            ? {
-                  value: ethPriceResponse?.results[0]?.price,
-                  denomination: "usd",
-              }
-            : undefined;
+    const handleSelectedMarket = useCallback(
+        (market: TMarketMeta) => {
+            dispatch(
+                setSelectedMarket({ widgetHash: moduleData.hash, market })
+            );
+        },
 
-    const chainData = buildMultiValue<TGasPriceTable>(
-        beaconData?.results || [],
-        BEACON_CHAIN_DATA
+        [dispatch, moduleData.hash]
     );
 
-    const gasPrices = buildMultiValue<TGasPrices>(
-        gasData?.results || [],
-        GAS_PRICE_DATA
-    );
+    /**
+     * if user searches for some keyword and tags are included, automatically set the selected market
+     * to some market that matches this new keyword, if any.
+     * recall: currently market data should include a single tag per coin
+     */
+    useEffect(() => {
+        if (
+            lastSelectedKeyword &&
+            tags?.find((t) => t.id === lastSelectedKeyword.tag.id)
+        ) {
+            const newMarketFromSearch = coinsData.find((marketMeta) => {
+                // marketMeta.tags can be [] (an empty array)
+                return marketMeta.tags?.[0]?.id === lastSelectedKeyword.tag.id;
+            });
+            if (newMarketFromSearch) {
+                handleSelectedMarket(newMarketFromSearch);
+            }
+        }
+    }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
     return (
-        <GasModule
-            gasPrices={
-                gasData?.results && {
-                    fast: Number(gasPrices.fast),
-                    standard: Number(gasPrices.standard),
-                    slow: Number(gasPrices.slow),
-                }
-            }
-            ethPrice={ethPrice}
-            loading={
-                isLoadingGasData || isLoadingEthPrice || isLoadingBeaconChain
-            }
-            gasConstants={AVG_GAS_USED}
-            beaconChain={isBeaconWidget ? chainData : undefined}
+        <KasandraModule
+            isLoading={isLoadingCoinsData}
+            isLoadingHistory={isLoadingHistory}
+            selectedMarketHistory={marketHistory}
+            selectedChartRange={selectedChartRange}
         />
     );
 };
