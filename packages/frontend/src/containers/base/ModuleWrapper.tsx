@@ -60,10 +60,17 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
      * The assertion below is needed to render the widgets as we do not know the types
      * the module containers expect. Only the container is aware of its data types.
      */
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    const ModuleContainer = TEMPLATES_DICT[templateSlug] as
+    // TODO (xavier-charles): remove the code below once backend is ready
+    const slug =
+        templateSlug === "news_template" ? "kasandra_template" : templateSlug;
+    const ModuleContainer = TEMPLATES_DICT[slug] as
         | FC<IModuleContainer>
         | undefined;
+    // TODO (xavier-charles): remove the code above once backend is ready
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    // const ModuleContainer = TEMPLATES_DICT[templateSlug] as
+    //     | FC<IModuleContainer>
+    //     | undefined;
 
     // if we do not yet support this template, then we should gracefully exit
     if (ModuleContainer === undefined) {
