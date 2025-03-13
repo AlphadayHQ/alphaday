@@ -229,9 +229,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
         );
     }
 
-    console.log("options", options);
-    console.log("chartSeries", chartSeries);
-
     return (
         <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">
             <ApexAreaChart
