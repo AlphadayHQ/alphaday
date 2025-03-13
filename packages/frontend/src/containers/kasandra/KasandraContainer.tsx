@@ -118,15 +118,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         }
     }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
-    // return (
-    //     <KasandraModule
-    //         isLoading={isLoadingCoinsData}
-    //         isLoadingHistory={isLoadingHistory}
-    //         selectedMarketHistory={marketHistory}
-    //         selectedChartRange={selectedChartRange}
-    //     />
-    // );
-
     return (
         <BaseContainer
             uiProps={{
