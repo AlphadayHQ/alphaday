@@ -110,9 +110,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/dynamic/AgendaContainer")
     ),
     tvl_template: lazyRetry(() => import("./containers/tvl/TvlContainer")),
-    uniswap_template: lazyRetry(
-        () => import("./containers/uniswap/SwapContainer")
-    ),
+    // uniswap_template: lazyRetry(
+    //     () => import("./containers/uniswap/SwapContainer")
+    // ),
     venue_template: lazyRetry(
         () => import("./containers/maps/VenueMapContainer")
     ),
