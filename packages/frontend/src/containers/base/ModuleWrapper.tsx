@@ -42,13 +42,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
 
     const templateSlug = moduleData.widget?.template.slug;
-    // TODO (xavier-charles): revert the code below once backend is ready
-    const isKasandra =
-        templateSlug === "kasandra_template" ||
-        templateSlug === "news_template";
-    const slug = isKasandra ? "kasandra_template" : templateSlug;
-    const widgetName = getWidgetName(slug);
-    // TODO (xavier-charles): revert the code below once backend is ready
+    const widgetName = getWidgetName(templateSlug);
 
     const { ADJUSTABLE = true } = widgetName ? CONFIG.WIDGETS[widgetName] : {};
     const [isAdjustable, setIsAdjustable] = useState(ADJUSTABLE);
@@ -66,15 +60,10 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
      * The assertion below is needed to render the widgets as we do not know the types
      * the module containers expect. Only the container is aware of its data types.
      */
-    // TODO (xavier-charles): remove the code below once backend is ready
-    const ModuleContainer = TEMPLATES_DICT[slug] as
+
+    const ModuleContainer = TEMPLATES_DICT[templateSlug] as
         | FC<IModuleContainer>
         | undefined;
-    // TODO (xavier-charles): remove the code above once backend is ready
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    // const ModuleContainer = TEMPLATES_DICT[templateSlug] as
-    //     | FC<IModuleContainer>
-    //     | undefined;
 
     // if we do not yet support this template, then we should gracefully exit
     if (ModuleContainer === undefined) {
@@ -147,17 +136,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                                     ? setTutFocusElemRef
                                     : undefined,
                         }}
-                        // TODO (xavier-charles): revert the code below once backend is ready
-                        moduleData={{
-                            ...moduleData,
-                            name: isKasandra ? "Kasandra" : moduleData.name,
-                            widget: {
-                                ...moduleData.widget,
-                                name: isKasandra
-                                    ? "Kasandra"
-                                    : moduleData.widget.name,
-                            },
-                        }}
+                        moduleData={moduleData}
                         adjustable={isAdjustable}
                     >
                         <Suspense

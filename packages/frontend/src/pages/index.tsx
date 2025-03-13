@@ -32,6 +32,7 @@ import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
+import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
@@ -278,6 +279,13 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
 
     useViewUpdater();
 
+    const kasandraModuleData = useMemo(() => {
+        return selectedView?.data.widgets.find(
+            // (w) => w.widget.template.slug === "kasandra_template"
+            (w) => w.widget.template.slug === "news_template"
+        );
+    }, [selectedView?.data.widgets]);
+
     if (
         subscribedViews.length === 0 &&
         isAuthenticated &&
@@ -328,11 +336,17 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                        <div className="col-span-2 bg-blue-500 p-4 rounded shadow h-32 flex items-center justify-center text-white font-bold">
-                            Element 1 (2 columns wide)
+                    {kasandraModuleData && (
+                        <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                            <div className="col-span-2 bg-blue-500 p-4 rounded shadow h-32 flex items-center justify-center text-white font-bold">
+                                Element 1 (2 columns wide)
+                            </div>
+                            {/* <KasandraContainer
+                                moduleData={kasandraModuleData}
+                                toggleAdjustable={() => {}}
+                            /> */}
                         </div>
-                    </div>
+                    )}
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -343,14 +357,11 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
-                                    className={
-                                        colIndex === 2 ? "" : "mt-[450px]"
-                                    }
                                     style={{
                                         marginTop:
-                                            colIndex === 2
-                                                ? "0px"
-                                                : `${WIDGETS.KASANDRA}px`,
+                                            kasandraModuleData && colIndex !== 2
+                                                ? `${WIDGETS.KASANDRA.WIDGET_HEIGHT}px`
+                                                : "0px",
                                     }}
                                 >
                                     {widgets.map((widget, rowIndex) => (
