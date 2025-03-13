@@ -280,10 +280,26 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     useViewUpdater();
 
     const kasandraModuleData = useMemo(() => {
-        return selectedView?.data.widgets.find(
-            // (w) => w.widget.template.slug === "kasandra_template"
+        const widgetData = selectedView?.data.widgets.find(
+            // TODO (xavier-charles): remove the code below once backend is ready
             (w) => w.widget.template.slug === "news_template"
+            // (w) => w.widget.template.slug === "kasandra_template"
         );
+        if (widgetData) {
+            return {
+                ...widgetData,
+                name: "Kasandra",
+                widget: {
+                    ...widgetData.widget,
+                    name: "Kasandra",
+                    template: {
+                        ...widgetData.widget.template,
+                        slug: "kasandra_template" as TTemplateSlug,
+                    },
+                },
+            };
+        }
+        return undefined;
     }, [selectedView?.data.widgets]);
 
     if (
@@ -338,13 +354,15 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
                     {kasandraModuleData && (
                         <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                            <div className="col-span-2 bg-blue-500 p-4 rounded shadow h-32 flex items-center justify-center text-white font-bold">
+                            {/* <div className="col-span-2 bg-blue-500 p-4 rounded shadow h-32 flex items-center justify-center text-white font-bold">
                                 Element 1 (2 columns wide)
+                            </div> */}
+                            <div className="col-span-2">
+                                <KasandraContainer
+                                    moduleData={kasandraModuleData}
+                                    toggleAdjustable={() => {}}
+                                />
                             </div>
-                            {/* <KasandraContainer
-                                moduleData={kasandraModuleData}
-                                toggleAdjustable={() => {}}
-                            /> */}
                         </div>
                     )}
                     {layoutState?.map((widgets, colIndex) => (
