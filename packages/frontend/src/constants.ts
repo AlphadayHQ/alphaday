@@ -61,6 +61,7 @@ export enum ETemplateNameRegistry {
     FAQ = "FAQ",
     Forum = "FORUM",
     Gas = "GAS",
+    Kasandra = "KASANDRA",
     LatestVideo = "LATEST_VIDEO",
     Lens = "LENS",
     Map = "MAP",
