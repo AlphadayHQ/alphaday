@@ -196,7 +196,6 @@ const PortfolioHoldings: React.FC = () => {
     ];
     return (
         <PagedMobileLayout title="Portfolio">
-            {/* // TODO (xavier-charles) update classname */}
             <div className="portfolio-widget w-full mb-20">
                 <UserWalletsInfo toggleBalance={toggleBalance} />
                 <WalletsList

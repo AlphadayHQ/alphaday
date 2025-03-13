@@ -38,10 +38,7 @@ const ItemBookmark: FC<IBookmark> = ({
                     };
                     handler().catch(() => ({}));
                 }}
-                title={
-                    isAuthenticated ? "Bookmark this item" : ""
-                    // TODO (xavier-charles): : globalMessages.callToAction.signUpToBookmark("items")
-                }
+                title={isAuthenticated ? "Bookmark this item" : ""}
             >
                 {bookmarked ? (
                     <BookmarkedSVG className={className} />
