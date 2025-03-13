@@ -41,6 +41,10 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Kasandra]: {
+        WIDGET_HEIGHT: 550,
+        ADJUSTABLE: false,
+    },
     [ETemplateNameRegistry.Lens]: {
         WIDGET_HEIGHT: 570,
         ADJUSTABLE: true,

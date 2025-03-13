@@ -1,10 +1,7 @@
 import { FC, memo, useState } from "react";
 import { ApexAreaChart, Spinner, themeColors } from "@alphaday/ui-kit";
-import moment from "moment-with-locales-es6";
 import { TChartRange } from "src/api/types";
-import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
-import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
 
 type IProps = {
@@ -13,19 +10,19 @@ type IProps = {
     isLoading?: boolean;
 };
 
-type TApexChartWindow = {
-    globals: {
-        seriesNames: string[];
-    };
-};
+// type TApexChartWindow = {
+//     globals: {
+//         seriesNames: string[];
+//     };
+// };
 
 // see https://apexcharts.com/docs/options/tooltip/
-type TCustomTooltip = {
-    series: number[][];
-    seriesIndex: number;
-    dataPointIndex: number;
-    w: TApexChartWindow;
-};
+// type TCustomTooltip = {
+//     series: number[][];
+//     seriesIndex: number;
+//     dataPointIndex: number;
+//     w: TApexChartWindow;
+// };
 
 const LineChart: FC<IProps> = memo(function LineChart({
     data,
@@ -47,23 +44,19 @@ const LineChart: FC<IProps> = memo(function LineChart({
     const options = {
         chart: {
             type: "area",
-            stacked: true,
-            events: {
-                zoomed: () => {
-                    setShowResetZoom(true);
-                },
-            },
+            stacked: false,
+            events: {},
             zoom: {
                 enabled: true,
                 type: "x",
                 autoScaleYaxis: false,
                 zoomedArea: {
                     fill: {
-                        color: themeColors.accentVariant200,
+                        color: "var(--alpha-light-blue-100)",
                         opacity: 0.4,
                     },
                     stroke: {
-                        color: themeColors.backgroundBlue,
+                        color: "var(--alpha-dark-blue)",
                         opacity: 0.4,
                         width: 1,
                     },
@@ -72,23 +65,33 @@ const LineChart: FC<IProps> = memo(function LineChart({
             toolbar: {
                 show: false,
             },
+            animations: {
+                enabled: false,
+            },
             redrawOnParentResize: true,
         },
-        colors: [chartColor, chartColor],
+        // color selection should match the case
+        colors: [
+            "var(--alpha-green)",
+            "var(--alpha-bullish)",
+            "var(--alpha-base)",
+            "var(--alpha-bearish)",
+        ],
         dataLabels: {
             enabled: false,
         },
         stroke: {
             curve: "smooth",
-            width: 1.5,
+            width: [1.5, 1, 1, 1],
+            dashArray: [0, 3, 3, 3],
         },
         fill: {
             type: "gradient",
             gradient: {
                 type: "vertical",
                 gradientToColors: [
-                    themeColors.background,
-                    themeColors.background,
+                    "var(--alpha-dark-base)",
+                    "var(--alpha-dark-base)",
                 ],
                 shadeIntensity: 0.01,
                 opacityFrom: 0.5,
@@ -98,6 +101,68 @@ const LineChart: FC<IProps> = memo(function LineChart({
         },
         legend: {
             show: false,
+        },
+        annotations: {
+            xaxis: [
+                {
+                    x: 1741206976945, // TODO use Now date
+                    borderColor: "#775DD0",
+                    borderWidth: 1.5,
+                    strokeDashArray: 4,
+                    label: {
+                        style: {
+                            background: "var(--alpha-base-400)",
+                            color: "var(--alpha-primary)",
+                            fontSize: "11px",
+                            fontFamily: "'Open sans', sans-serif",
+                            fontWeight: 500,
+                            letterSpacing: "1px !important",
+                        },
+                        text: "Predictions",
+                        offsetX: 17.5,
+                        offsetY: -10,
+                    },
+                },
+                {
+                    x: 1741189586118,
+                    x2: 1741195875967,
+                    fillColor: "#B3F7CA",
+                    label: {
+                        text: "Trump Election",
+                        orientation: "horizontal",
+                        offsetX: 45,
+                        offsetY: 10,
+                        style: {
+                            background: "var(--alpha-base-400)",
+                            color: "var(--alpha-primary)",
+                        },
+                    },
+                },
+            ],
+            points: [
+                {
+                    x: 1741178438708, // TODO use Now date
+                    y: 90642.95015625951,
+                    mouseEnter: () => {
+                        console.log("onMouseEnter");
+                    },
+                    marker: {
+                        size: 4,
+                        css: {
+                            filter: "drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25))",
+                        },
+                        offsetY: 3,
+                    },
+                    label: {
+                        borderColor: "#775DD0",
+                        text: "SEC clears Uniswap",
+                        style: {
+                            background: "var(--alpha-base-400)",
+                            color: "var(--alpha-primary)",
+                        },
+                    },
+                },
+            ],
         },
         xaxis: {
             type: "datetime",
@@ -111,31 +176,27 @@ const LineChart: FC<IProps> = memo(function LineChart({
             tickAmount: 8,
             labels: {
                 datetimeUTC: false,
-                formatter(_val: string, timestamp: number) {
-                    return moment(timestamp).format(
-                        selectedChartRange === "1D" ? "HH:mm" : "DD MMM"
-                    );
-                },
                 style: {
-                    colors: themeColors.borderLine,
+                    colors: "var(--alpha-border)",
                     fontSize: "10px",
                     fontFamily: "Arial, sans-serif",
                     fontWeight: 700,
                     cssClass: "apexcharts-xaxis-label",
                 },
             },
+            convertedCatToNumeric: false,
         },
         yaxis: {
             show: false,
             tickAmount: 3,
-            min: minValue * 0.98,
-            max: (max: number) => {
-                return max * 1.001;
-            },
+            min: 83328.69486633895,
+            max:
+                97577.94333367079 +
+                (97577.94333367079 - 83328.69486633895) * 0.15, // TODO (max) + size of the future annotation in percentage ~= 15%
             decimalsInFloat: false,
         },
         grid: {
-            borderColor: themeColors.borderLine,
+            borderColor: "var(--alpha-border)",
             strokeDashArray: 5,
             xaxis: {
                 lines: {
@@ -148,50 +209,15 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 },
             },
             column: {
-                colors: themeColors.borderLine,
+                colors: "var(--alpha-border)",
                 opacity: 1,
             },
         },
         tooltip: {
-            fillSeriesColor: themeColors.white,
-            title: {
-                formatter: (seriesName: string) => `$${seriesName}`,
-            },
+            shared: true,
+            fillSeriesColor: "#121212",
             y: {
                 formatter: undefined,
-                title: {
-                    formatter: (val: string) => {
-                        return renderToString(
-                            <span className="text-white">${val}:</span>
-                        );
-                    },
-                },
-            },
-            custom: ({
-                series,
-                seriesIndex,
-                dataPointIndex,
-                w,
-            }: TCustomTooltip) => {
-                return renderToString(
-                    <div className="px-3 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant300 border border-borderLine fontGroup-support text-primary">
-                        <span className="fontGroup-supportBold [&_span]:fontGroup-support">
-                            {w.globals.seriesNames[0]}: {}
-                            {
-                                formatNumber({
-                                    value: series[seriesIndex][dataPointIndex],
-                                    style: ENumberStyle.Currency,
-                                    currency: "USD",
-                                }).value
-                            }
-                        </span>
-                        <span className="pt-[1px]">
-                            {moment(data[dataPointIndex][0]).format(
-                                "YYYY-MM-DD  HH:mm"
-                            )}
-                        </span>
-                    </div>
-                );
             },
         },
         responsive: [
