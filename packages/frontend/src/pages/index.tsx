@@ -109,7 +109,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         () =>
             isFullsize
                 ? {
-                      slug: "calendar_template", // TODO (xavier-charles) replace hardcoded slug with a dynamic one
+                      slug: "calendar_template",
                       // we should not check the hash if `fullSizeWidgetSlug` is undefined.
                       hash: selectedView?.data.widgets.find(
                           (w) => w.widget.template.slug === "calendar_template"
