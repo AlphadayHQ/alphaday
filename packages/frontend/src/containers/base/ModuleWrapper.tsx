@@ -42,7 +42,13 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
 
     const templateSlug = moduleData.widget?.template.slug;
-    const widgetName = getWidgetName(templateSlug);
+    // TODO (xavier-charles): revert the code below once backend is ready
+    const isKasandra =
+        templateSlug === "kasandra_template" ||
+        templateSlug === "news_template";
+    const slug = isKasandra ? "kasandra_template" : templateSlug;
+    const widgetName = getWidgetName(slug);
+    // TODO (xavier-charles): revert the code below once backend is ready
 
     const { ADJUSTABLE = true } = widgetName ? CONFIG.WIDGETS[widgetName] : {};
     const [isAdjustable, setIsAdjustable] = useState(ADJUSTABLE);
@@ -61,8 +67,6 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
      * the module containers expect. Only the container is aware of its data types.
      */
     // TODO (xavier-charles): remove the code below once backend is ready
-    const slug =
-        templateSlug === "news_template" ? "kasandra_template" : templateSlug;
     const ModuleContainer = TEMPLATES_DICT[slug] as
         | FC<IModuleContainer>
         | undefined;
@@ -143,7 +147,17 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                                     ? setTutFocusElemRef
                                     : undefined,
                         }}
-                        moduleData={moduleData}
+                        // TODO (xavier-charles): revert the code below once backend is ready
+                        moduleData={{
+                            ...moduleData,
+                            name: isKasandra ? "Kasandra" : moduleData.name,
+                            widget: {
+                                ...moduleData.widget,
+                                name: isKasandra
+                                    ? "Kasandra"
+                                    : moduleData.widget.name,
+                            },
+                        }}
                         adjustable={isAdjustable}
                     >
                         <Suspense
