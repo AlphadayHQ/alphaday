@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo, useCallback } from "react";
-import { useGlobalSearch } from "src/api/hooks";
+import { FC, useEffect, useMemo, useCallback, Suspense } from "react";
+import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
 import {
     useGetCoinsQuery,
     useGetMarketHistoryQuery,
@@ -12,15 +12,19 @@ import { filteringListToStr } from "src/api/utils/filterUtils";
 
 import KasandraModule from "src/components/kasandra/KasandraModule";
 import { TMarketMeta } from "src/components/kasandra/types";
+import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
+import BaseContainer from "../base/BaseContainer";
 
 const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const prevSelectedMarketData = useAppSelector(
         (state) => state.widgets.market?.[moduleData.hash]
     );
+    const WIDGET_HEIGHT = useWidgetHeight(moduleData);
+
     const selectedChartRange = useMemo(
         () =>
             prevSelectedMarketData?.selectedChartRange ||
@@ -114,13 +118,47 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         }
     }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
+    // return (
+    //     <KasandraModule
+    //         isLoading={isLoadingCoinsData}
+    //         isLoadingHistory={isLoadingHistory}
+    //         selectedMarketHistory={marketHistory}
+    //         selectedChartRange={selectedChartRange}
+    //     />
+    // );
+
     return (
-        <KasandraModule
-            isLoading={isLoadingCoinsData}
-            isLoadingHistory={isLoadingHistory}
-            selectedMarketHistory={marketHistory}
-            selectedChartRange={selectedChartRange}
-        />
+        <BaseContainer
+            uiProps={{
+                dragProps: undefined,
+                isDragging: false,
+                onToggleShowFullSize: undefined,
+                allowFullSize: false,
+                showFullSize: false,
+                setTutFocusElemRef: undefined,
+            }}
+            // TODO (xavier-charles): revert the code below once backend is ready
+            moduleData={{
+                ...moduleData,
+                name: moduleData.name,
+                widget: {
+                    ...moduleData.widget,
+                    name: moduleData.widget.name,
+                },
+            }}
+            adjustable={false}
+        >
+            <Suspense
+                fallback={<ModuleLoader $height={`${WIDGET_HEIGHT}px`} />}
+            >
+                <KasandraModule
+                    isLoading={isLoadingCoinsData}
+                    isLoadingHistory={isLoadingHistory}
+                    selectedMarketHistory={marketHistory}
+                    selectedChartRange={selectedChartRange}
+                />
+            </Suspense>
+        </BaseContainer>
     );
 };
 

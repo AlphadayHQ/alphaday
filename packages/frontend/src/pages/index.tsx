@@ -37,7 +37,7 @@ import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS } = CONFIG;
+const { UI, VIEWS, WIDGETS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -327,7 +327,12 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                     }
                 }}
             >
-                <div className="two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                    <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                        <div className="col-span-2 bg-blue-500 p-4 rounded shadow h-32 flex items-center justify-center text-white font-bold">
+                            Element 1 (2 columns wide)
+                        </div>
+                    </div>
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -338,6 +343,15 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
+                                    className={
+                                        colIndex === 2 ? "" : "mt-[450px]"
+                                    }
+                                    style={{
+                                        marginTop:
+                                            colIndex === 2
+                                                ? "0px"
+                                                : `${WIDGETS.KASANDRA}px`,
+                                    }}
                                 >
                                     {widgets.map((widget, rowIndex) => (
                                         <ModuleWrapper
