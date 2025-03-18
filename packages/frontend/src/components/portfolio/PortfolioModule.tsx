@@ -189,7 +189,7 @@ const Portfolio: FC<IPortfolio> = ({
                                         onClick={handleShowEnterAddress}
                                         className=" max-w-[49%]"
                                     >
-                                        {t("buttons.enter_address")}
+                                        {t("buttons.enterAddress")}
                                     </Button>
                                 </div>
                             </div>

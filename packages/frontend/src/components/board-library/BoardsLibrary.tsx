@@ -228,10 +228,10 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
             <div className="flex justify-between items-center p-4 pb-0">
                 <div className="meta">
                     <div className="uppercase">
-                        {t("navigation.boards_library.title")}
+                        {t("navigation.boardsLibrary.title")}
                     </div>
                     <div className="text-primaryVariant100">
-                        {t("navigation.boards_library.description")}
+                        {t("navigation.boardsLibrary.description")}
                     </div>
                 </div>
                 <div
@@ -254,16 +254,16 @@ const BoardsLibrary: FC<IBoardsLibrary> = ({
                                 <span className="flex flex-col">
                                     <span className="fontGroup-highlightSemi">
                                         {t(
-                                            "navigation.boards_library.customBoardsTitle"
+                                            "navigation.boardsLibrary.customBoardsTitle"
                                         )}
                                     </span>
                                     <span className="text-primaryVariant100">
                                         {isAuthenticated
                                             ? t(
-                                                  "navigation.boards_library.customBoardsDescriptionWithAuth"
+                                                  "navigation.boardsLibrary.customBoardsDescriptionWithAuth"
                                               )
                                             : t(
-                                                  "navigation.boards_library.customBoardsDescription"
+                                                  "navigation.boardsLibrary.customBoardsDescription"
                                               )}
                                     </span>
                                 </span>

@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ECookieChoice, TTutorialTip } from "src/api/types";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { ECookieChoice, TTutorialTip } from "src/api/types";
 import { ELanguageCode } from "src/api/types/language";
 
 export type TTheme = "dark";
@@ -13,6 +13,7 @@ export interface IUIState {
     showBalance: boolean;
     showAboutModal: boolean;
     showLanguageModal: boolean;
+    // persisted choice language of user
     selectedLanguageCode: ELanguageCode;
     tutorial: ITutorialState;
     cookieChoice: ECookieChoice | undefined;

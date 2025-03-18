@@ -20,8 +20,9 @@ import {
     ipApi,
     blobsApi,
 } from "../services";
+import { languageMiddleware } from "./middlewares/language";
 import migrations from "./migrations";
-import { rootReducer, RootState as ReducerState } from "./reducer";
+import { rootReducer, type RootState as ReducerState } from "./reducer";
 
 const persistConfig = {
     key: CONFIG.APP.STORAGE_KEY,
@@ -65,7 +66,8 @@ export const store = configureStore({
             .concat(coingeckoApi.middleware)
             .concat(zapperApi.middleware)
             .concat(ipApi.middleware)
-            .concat(blobsApi.middleware),
+            .concat(blobsApi.middleware)
+            .concat(languageMiddleware.middleware),
 });
 
 export const persistor = persistStore(store);
