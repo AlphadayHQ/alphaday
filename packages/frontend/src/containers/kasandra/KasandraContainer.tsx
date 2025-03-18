@@ -4,17 +4,25 @@ import {
     useGetCoinsQuery,
     useGetMarketHistoryQuery,
     useGetPinnedCoinsQuery,
+    useTogglePinnedCoinMutation,
 } from "src/api/services";
-import { setSelectedMarket } from "src/api/store";
+import {
+    selectIsAuthenticated,
+    setSelectedChartRange,
+    setSelectedMarket,
+} from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { TCoin } from "src/api/types";
+import { TBaseEntity, TChartRange, TCoin } from "src/api/types";
 import { filteringListToStr } from "src/api/utils/filterUtils";
 
+import { Logger } from "src/api/utils/logging";
+import { EToastRole, toast } from "src/api/utils/toastUtils";
 import KasandraModule from "src/components/kasandra/KasandraModule";
 import { TMarketMeta } from "src/components/kasandra/types";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
+import globalMessages from "src/globalMessages";
 import { IModuleContainer } from "src/types";
 import BaseContainer from "../base/BaseContainer";
 
@@ -24,6 +32,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (state) => state.widgets.market?.[moduleData.hash]
     );
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
+
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
     const selectedChartRange = useMemo(
         () =>
@@ -39,6 +49,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         () => pinnedCoinsData?.results || [],
         [pinnedCoinsData]
     );
+
+    const [togglePinMut] = useTogglePinnedCoinMutation();
 
     const tagsSettings = moduleData.settings.filter(
         (s) =>
@@ -98,6 +110,47 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [dispatch, moduleData.hash]
     );
 
+    const handleSelectedChartRange = useCallback(
+        (chartRange: TChartRange) => {
+            dispatch(
+                setSelectedChartRange({
+                    widgetHash: moduleData.hash,
+                    chartRange,
+                })
+            );
+        },
+
+        [dispatch, moduleData.hash]
+    );
+
+    const handleTogglePin = useCallback(
+        async (coin: TBaseEntity) => {
+            try {
+                if (!isAuthenticated) {
+                    toast(
+                        globalMessages.callToAction.signUpToBookmark("coins")
+                    );
+                    return;
+                }
+                const isPreviouslyPinned = !!pinnedCoins.find(
+                    (c) => c.id === coin.id
+                );
+                await togglePinMut({ coinId: coin.id }).unwrap();
+                toast(
+                    `${coin.name} has been ${
+                        isPreviouslyPinned ? "unpinned" : "pinned"
+                    } successfully`
+                );
+            } catch (e) {
+                Logger.error("MarketContainer::onTogglePin", e);
+                toast("Something went wrong, please try again later", {
+                    type: EToastRole.Error,
+                });
+            }
+        },
+        [isAuthenticated, pinnedCoins, togglePinMut]
+    );
+
     /**
      * if user searches for some keyword and tags are included, automatically set the selected market
      * to some market that matches this new keyword, if any.
@@ -147,6 +200,13 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     isLoadingHistory={isLoadingHistory}
                     selectedMarketHistory={marketHistory}
                     selectedChartRange={selectedChartRange}
+                    onSelectChartRange={handleSelectedChartRange}
+                    selectedMarket={selectedMarket}
+                    isAuthenticated={isAuthenticated}
+                    onTogglePin={handleTogglePin}
+                    pinnedCoins={pinnedCoins}
+                    availableMarkets={coinsData}
+                    onSelectMarket={handleSelectedMarket}
                 />
             </Suspense>
         </BaseContainer>
