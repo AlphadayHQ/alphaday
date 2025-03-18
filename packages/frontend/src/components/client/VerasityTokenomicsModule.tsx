@@ -267,7 +267,7 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                         </div>
                         <div className="mx-4 my-1">
                             <span className="text-primaryVariant100 capitalize">
-                                {t("verasity.max_circleSupply")}:
+                                {t("verasity.maxCircleSupply")}:
                             </span>{" "}
                             {maxSupply}
                         </div>
