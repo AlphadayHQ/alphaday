@@ -193,7 +193,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             adjustable={false}
         >
             <Suspense
-                fallback={<ModuleLoader $height={`${WIDGET_HEIGHT}px`} />}
+                fallback={<ModuleLoader $height={`${WIDGET_HEIGHT - 40}px`} />} // 40px is the height of the header
             >
                 <KasandraModule
                     isLoading={isLoadingCoinsData}

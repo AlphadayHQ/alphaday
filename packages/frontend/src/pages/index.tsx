@@ -348,6 +348,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             return {
                 ...widgetData,
                 name: "Kasandra",
+                hash: widgetData.hash.replace("0", "x"),
                 widget: {
                     ...widgetData.widget,
                     name: "Kasandra",

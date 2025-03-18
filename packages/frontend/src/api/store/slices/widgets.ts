@@ -32,6 +32,9 @@ export interface INewsWidgetState {
 export interface IBlogWidgetState {
     feedPreference: EItemFeedPreference;
 }
+export interface IKasandraWidgetState {
+    feedPreference: EItemFeedPreference;
+}
 export interface IPodcastsWidgetState {
     feedPreference: EItemFeedPreference;
     preferredChannelIds: number[];
@@ -55,6 +58,7 @@ export interface IWidgetsState {
     podcast: Record<string, IPodcastsWidgetState>;
     video: Record<string, IVideosWidgetState>;
     tvl: Record<string, ITvlWidgetState>;
+    kasandra: Record<string, IKasandraWidgetState>;
 }
 
 const initialState: IWidgetsState = {
@@ -67,6 +71,7 @@ const initialState: IWidgetsState = {
     video: {},
     blog: {},
     tvl: {},
+    kasandra: {},
 };
 
 const widgetsSlice = createSlice({
@@ -119,6 +124,21 @@ const widgetsSlice = createSlice({
             } = action;
             draft.blog[widgetHash] = {
                 ...draft.blog[widgetHash],
+                feedPreference: preference,
+            };
+        },
+        setKasandraFeedPreference(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                preference: EItemFeedPreference;
+            }>
+        ) {
+            const {
+                payload: { widgetHash, preference },
+            } = action;
+            draft.kasandra[widgetHash] = {
+                ...draft.kasandra[widgetHash],
                 feedPreference: preference,
             };
         },
@@ -349,6 +369,7 @@ export const {
     setSelectedMarket,
     setNewsFeedPreference,
     setBlogFeedPreference,
+    setKasandraFeedPreference,
     setPodcastFeedPreference,
     setPodcastPreferredChannelIds,
     setVideoFeedPreference,
@@ -384,6 +405,11 @@ export const selectPodcastPreferredChannelIds =
     (widgetHash: string) =>
     (state: RootState): number[] | undefined =>
         state.widgets.podcast[widgetHash]?.preferredChannelIds;
+
+export const selectKasandraFeedPreference =
+    (widgetHash: string) =>
+    (state: RootState): EItemFeedPreference | undefined =>
+        state.widgets.kasandra[widgetHash]?.feedPreference;
 
 export const selectBlogFeedPreference =
     (widgetHash: string) =>

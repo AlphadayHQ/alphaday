@@ -47,11 +47,17 @@ const WIDGETS_CONFIG = {
     },
     [ETemplateNameRegistry.KasandraTimeline]: {
         WIDGET_HEIGHT: 550,
-        ADJUSTABLE: false,
+        ADJUSTABLE: true,
+        DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
+        POLLING_INTERVAL: 8 * 60, // 8 min
+        MAX_PAGE_NUMBER: 10,
     },
     [ETemplateNameRegistry.KasandraPredictions]: {
         WIDGET_HEIGHT: 550,
-        ADJUSTABLE: false,
+        ADJUSTABLE: true,
+        DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
+        POLLING_INTERVAL: 8 * 60, // 8 min
+        MAX_PAGE_NUMBER: 10,
     },
     [ETemplateNameRegistry.Lens]: {
         WIDGET_HEIGHT: 570,

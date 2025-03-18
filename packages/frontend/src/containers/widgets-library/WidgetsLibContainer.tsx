@@ -60,9 +60,6 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     );
     const { data: widgetsCategory } = useGetWidgetsCategoryQuery();
 
-    console.log("currentWidgetsData", currentWidgetsData);
-    
-
     const { currentData: resolvedWidget } = useGetWidgetByIdQuery(
         { id: selectedWidget?.id ?? 0 },
         {
