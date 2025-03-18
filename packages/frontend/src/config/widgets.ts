@@ -45,6 +45,14 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: false,
     },
+    [ETemplateNameRegistry.KasandraTimeline]: {
+        WIDGET_HEIGHT: 550,
+        ADJUSTABLE: false,
+    },
+    [ETemplateNameRegistry.KasandraPredictions]: {
+        WIDGET_HEIGHT: 550,
+        ADJUSTABLE: false,
+    },
     [ETemplateNameRegistry.Lens]: {
         WIDGET_HEIGHT: 570,
         ADJUSTABLE: true,
