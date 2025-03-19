@@ -1,7 +1,10 @@
 import { FC, memo, useState } from "react";
 import { ApexAreaChart, Spinner, themeColors } from "@alphaday/ui-kit";
+import moment from "moment";
 import { TChartRange } from "src/api/types";
+import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
+import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
 
 type IProps = {
@@ -10,19 +13,19 @@ type IProps = {
     isLoading?: boolean;
 };
 
-// type TApexChartWindow = {
-//     globals: {
-//         seriesNames: string[];
-//     };
-// };
+type TApexChartWindow = {
+    globals: {
+        seriesNames: string[];
+    };
+};
 
 // see https://apexcharts.com/docs/options/tooltip/
-// type TCustomTooltip = {
-//     series: number[][];
-//     seriesIndex: number;
-//     dataPointIndex: number;
-//     w: TApexChartWindow;
-// };
+type TCustomTooltip = {
+    series: number[][];
+    seriesIndex: number;
+    dataPointIndex: number;
+    w: TApexChartWindow;
+};
 
 const chartSeries = [
     // History
@@ -406,10 +409,115 @@ const LineChart: FC<IProps> = memo(function LineChart({
             },
         },
         tooltip: {
-            shared: true,
-            fillSeriesColor: "#121212",
+            fillSeriesColor: themeColors.white,
+            title: {
+                formatter: (seriesName: string) => `$${seriesName}`,
+            },
             y: {
                 formatter: undefined,
+                title: {
+                    formatter: (val: string) => {
+                        return renderToString(
+                            <span className="text-white">${val}:</span>
+                        );
+                    },
+                },
+            },
+            custom: ({
+                series,
+                seriesIndex,
+                dataPointIndex,
+            }: TCustomTooltip) => {
+                const isPredictions = seriesIndex !== 0;
+
+                const seriesNameMap = {
+                    0: "Price",
+                    1: "Bullish",
+                    2: "Base",
+                    3: "Bearish",
+                };
+
+                return renderToString(
+                    <div className="px-2.5 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant100 border-[0.5px] border-borderLine fontGroup-support text-primary">
+                        {isPredictions ? (
+                            <div>
+                                <p className="fontGroup-supportBold [&_span]:fontGroup-support mb-2">
+                                    <span className="text-white capitalize">
+                                        {seriesNameMap[1]}: {}
+                                    </span>
+                                    {
+                                        formatNumber({
+                                            value: series[1][dataPointIndex],
+                                            style: ENumberStyle.Currency,
+                                            currency: "USD",
+                                        }).value
+                                    }
+                                </p>
+                                <p className="fontGroup-supportBold [&_span]:fontGroup-support mb-2">
+                                    <span className="text-white capitalize">
+                                        {seriesNameMap[2]}: {}
+                                    </span>
+                                    {
+                                        formatNumber({
+                                            value: series[2][dataPointIndex],
+                                            style: ENumberStyle.Currency,
+                                            currency: "USD",
+                                        }).value
+                                    }
+                                </p>
+                                <p className="fontGroup-supportBold [&_span]:fontGroup-support mb-2">
+                                    <span className="text-white capitalize">
+                                        {seriesNameMap[3]}: {}
+                                    </span>
+                                    {
+                                        formatNumber({
+                                            value: series[3][dataPointIndex],
+                                            style: ENumberStyle.Currency,
+                                            currency: "USD",
+                                        }).value
+                                    }
+                                </p>
+                                <span className="">
+                                    {moment(data[dataPointIndex][0]).format(
+                                        "YYYY-MM-DD"
+                                    )}
+                                </span>
+                                <span className="ml-2">
+                                    {moment(data[dataPointIndex][0]).format(
+                                        "HH:mm"
+                                    )}
+                                </span>
+                            </div>
+                        ) : (
+                            <div>
+                                <p className="fontGroup-supportBold [&_span]:fontGroup-support mb-2">
+                                    <span className="text-white capitalize">
+                                        {seriesNameMap[0]}: {}
+                                    </span>
+                                    {
+                                        formatNumber({
+                                            value: series[seriesIndex][
+                                                dataPointIndex
+                                            ],
+                                            style: ENumberStyle.Currency,
+                                            currency: "USD",
+                                        }).value
+                                    }
+                                </p>
+                                <span className="">
+                                    {moment(data[dataPointIndex][0]).format(
+                                        "YYYY-MM-DD"
+                                    )}
+                                </span>
+                                <span className="ml-2">
+                                    {moment(data[dataPointIndex][0]).format(
+                                        "HH:mm"
+                                    )}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                );
             },
         },
         responsive: [

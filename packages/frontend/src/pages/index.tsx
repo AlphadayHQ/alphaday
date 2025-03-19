@@ -62,27 +62,27 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         if (blogWidgetData && videosWidgetData && previousSelectedView?.data) {
             // modify widget data
             const modifiedWidgetOne = {
-                ...blogWidgetData,
+                ...videosWidgetData,
                 name: "Kasandra Timeline",
 
                 widget: {
-                    ...blogWidgetData.widget,
+                    ...videosWidgetData.widget,
                     name: "Kasandra Timeline",
                     template: {
-                        ...blogWidgetData.widget.template,
+                        ...videosWidgetData.widget.template,
                         slug: "kasandra_timeline_template" as TTemplateSlug,
                     },
                 },
             };
 
             const modifiedWidgetTwo = {
-                ...videosWidgetData,
+                ...blogWidgetData,
                 name: "Kasandra Predictions",
                 widget: {
-                    ...videosWidgetData.widget,
+                    ...blogWidgetData.widget,
                     name: "Kasandra Predictions",
                     template: {
-                        ...videosWidgetData.widget.template,
+                        ...blogWidgetData.widget.template,
                         slug: "kasandra_predictions_template" as TTemplateSlug,
                     },
                 },
