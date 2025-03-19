@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play2.svg";
 import { imgOnError } from "src/utils/errorHandling";
