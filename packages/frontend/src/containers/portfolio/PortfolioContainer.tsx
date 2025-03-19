@@ -66,7 +66,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [balancePollingInterval, setBalancePollingInterval] = useState(
         PORTFOLIO_DATA_WAIT_TIME
     );
-    const pollIntervalRef = useRef<NodeJS.Timer | null>(null);
+    const pollIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const switchPortfolioType = () =>
         setPortfolioType((prev) =>
