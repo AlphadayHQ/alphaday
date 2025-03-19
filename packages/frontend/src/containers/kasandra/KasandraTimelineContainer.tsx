@@ -20,7 +20,7 @@ import {
 } from "src/api/utils/itemUtils";
 import { Logger } from "src/api/utils/logging";
 import { toast } from "src/api/utils/toastUtils";
-import NewsModule from "src/components/news/NewsModule";
+import KasandraTimelineModule from "src/components/kasandra/KasandraTimelineModule";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import globalMessages from "src/globalMessages";
@@ -239,7 +239,7 @@ const ItemsContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     if (feedPreference !== undefined) {
         return (
-            <NewsModule
+            <KasandraTimelineModule
                 isLoadingItems={isLoading}
                 // we default items to newsData?.results to avoid a flickering/infinite loading
                 items={(items || itemsData?.results) as TNewsItem[] | undefined}

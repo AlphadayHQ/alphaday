@@ -1,8 +1,10 @@
 import { FC } from "react";
+import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
 import { ReactComponent as PauseSVG } from "src/assets/svg/pause.svg";
 import { ReactComponent as PlaySVG } from "src/assets/svg/play2.svg";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
+import { Arrow } from "../arrow/Arrow";
 import ItemBookmark from "./ItemBookmark";
 import styles from "./ListItem.module.scss";
 
@@ -11,7 +13,14 @@ export const HRElement = () => (
 );
 
 interface IList {
-    variant: "news" | "dao" | "podcast" | "video" | "reports" | "discord";
+    variant:
+        | "news"
+        | "dao"
+        | "podcast"
+        | "video"
+        | "reports"
+        | "discord"
+        | "kasandra";
     path?: string;
     duration: string;
     title: string;
@@ -26,6 +35,7 @@ interface IList {
     isAuthenticated?: boolean;
     isPlaying?: boolean;
     image?: string;
+    direction?: "up" | "down";
 }
 
 export const listItemVariants = (variant: IList["variant"]) => {
@@ -90,6 +100,10 @@ export const listItemVariants = (variant: IList["variant"]) => {
             lastLine: twMerge(defaults.lastLine, "center absolute bottom-4"),
         },
         reports: { ...defaults, date: twMerge(defaults.date, "pt-[1.5px]") },
+        kasandra: {
+            ...defaults,
+            date: "fontGroup-mini min-w-[50px] text-primaryVariant100 mr-[5px] pt-[1.5px]",
+        },
     };
 
     return variants[variant];
@@ -112,6 +126,7 @@ export const ListItem: FC<IList> = ({
     isAuthenticated,
     isPlaying,
     image,
+    direction,
 }) => {
     if (variant === "news") {
         const variantStyle = listItemVariants("news");
@@ -133,6 +148,57 @@ export const ListItem: FC<IList> = ({
                             {source && (
                                 <span className={variantStyle.spacer}>•</span>
                             )}
+                            <img
+                                src={tagImg}
+                                alt=""
+                                className={variantStyle.img}
+                                onError={imgOnError}
+                            />
+                            <span>{tag}</span>{" "}
+                            <ItemBookmark
+                                isAuthenticated={isAuthenticated}
+                                onBookmark={onBookmark}
+                                bookmarked={bookmarked}
+                            />
+                        </p>
+                    </div>
+                </a>
+                <HRElement />
+            </>
+        );
+    }
+    if (variant === "kasandra") {
+        const variantStyle = listItemVariants("kasandra");
+
+        return (
+            <>
+                <a
+                    href={path}
+                    target="_blank"
+                    onClick={onClick}
+                    className={variantStyle.base}
+                    rel="noreferrer"
+                >
+                    <div className={variantStyle.date}>
+                        <div
+                            className={twMerge(
+                                " p-3 h-10 w-10 mx-auto rounded-full",
+                                direction === "up"
+                                    ? "bg-green-300/10"
+                                    : "bg-red-300/10"
+                            )}
+                        >
+                            <Arrow
+                                direction={direction ?? "up"}
+                                className="stroke-success w-4 h-4 ml-[1px]"
+                            />
+                        </div>
+                    </div>
+                    <div className={variantStyle.info}>
+                        <div className={variantStyle.title}>{title}</div>
+                        <p className={variantStyle.lastLine}>
+                            <span>{duration}</span>
+                            <span className={variantStyle.spacer}>•</span>
                             <img
                                 src={tagImg}
                                 alt=""
