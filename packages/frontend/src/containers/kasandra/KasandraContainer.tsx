@@ -171,6 +171,10 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         }
     }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
+    const contentHeight = useMemo(() => {
+        return `${WIDGET_HEIGHT}px`;
+    }, [WIDGET_HEIGHT]);
+
     return (
         <BaseContainer
             uiProps={{
@@ -193,7 +197,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             adjustable={false}
         >
             <Suspense
-                fallback={<ModuleLoader $height={`${WIDGET_HEIGHT - 40}px`} />} // 40px is the height of the header
+                fallback={<ModuleLoader $height={contentHeight} />} // 40px is the height of the header
             >
                 <KasandraModule
                     isLoading={isLoadingCoinsData}
@@ -207,6 +211,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     pinnedCoins={pinnedCoins}
                     availableMarkets={coinsData}
                     onSelectMarket={handleSelectedMarket}
+                    contentHeight={contentHeight}
                 />
             </Suspense>
         </BaseContainer>

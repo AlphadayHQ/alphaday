@@ -27,6 +27,7 @@ export interface IMarketModule {
     pinnedCoins: TCoin[];
     availableMarkets: TMarketMeta[];
     onSelectMarket: (market: TMarketMeta) => void;
+    contentHeight: string;
 }
 
 const MarketModule: FC<IMarketModule> = ({
@@ -41,6 +42,7 @@ const MarketModule: FC<IMarketModule> = ({
     pinnedCoins,
     availableMarkets,
     onSelectMarket,
+    contentHeight,
 }) => {
     const { t } = useTranslation();
     const priceHistoryData = selectedMarketHistory?.history?.prices;
@@ -54,7 +56,7 @@ const MarketModule: FC<IMarketModule> = ({
     } = useHeaderScroll();
 
     if (isLoading) {
-        return <ModuleLoader $height="600px" />;
+        return <ModuleLoader $height={contentHeight} />;
     }
 
     return (
