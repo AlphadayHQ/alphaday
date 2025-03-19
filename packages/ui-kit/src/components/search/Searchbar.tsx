@@ -154,6 +154,7 @@ export interface ISearchProps<Option = unknown> {
     closeMenuOnSelect?: boolean;
     updateSearch?: boolean;
     autoFocus?: boolean;
+    hideFeedback?: boolean;
     isFetchingKeywordResults?: boolean;
     isFetchingTrendingKeywordResults?: boolean;
     showBackdrop?: boolean;
@@ -184,6 +185,7 @@ export const SearchBar = <T,>({
     closeMenuOnSelect = false,
     updateSearch = true,
     autoFocus = false,
+    hideFeedback = false,
     componentClassNames,
     customComponents,
     isFetchingKeywordResults,
@@ -312,7 +314,7 @@ export const SearchBar = <T,>({
             {isFocused && showBackdrop && (
                 <div className="bg-black w-full h-full top-0 left-0 fixed opacity-40" />
             )}
-            <Feedback message={message} />
+            {!hideFeedback && <Feedback message={message} />}
             <Select
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
