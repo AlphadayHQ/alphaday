@@ -81,18 +81,7 @@
                 }
             }
             .apexcharts-xaxis-annotations > rect {
-                stroke: #775dd0;
-            }
-
-            .apexcharts-point-annotation-marker {
-                fill: rgba(173, 158, 224, 0.7);
-
-                filter: drop-shadow(-1px -1px 0px rgba(119, 93, 208, 0.8))
-                    drop-shadow(1px -1px 0px rgba(119, 93, 208, 0.8))
-                    drop-shadow(-1px 1px 0px rgba(119, 93, 208, 0.8))
-                    drop-shadow(1px 1px 0px rgba(119, 93, 208, 0.8));
-
-                @apply stroke-[2px] stroke-background;
+                stroke: #f2f2f2;
             }
         }
     }
