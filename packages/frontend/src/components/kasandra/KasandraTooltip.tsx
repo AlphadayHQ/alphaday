@@ -1,18 +1,14 @@
 import moment from "moment";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
 
-// type TApexChartWindow = {
-//     globals: {
-//         seriesNames: string[];
-//     };
-// };
-
-// see https://apexcharts.com/docs/options/tooltip/
 export type TCustomTooltip = {
     series: number[][];
     seriesIndex: number;
     dataPointIndex: number;
-    dataset: number[][];
+    dataset: {
+        name: string;
+        data: number[][];
+    }[];
 };
 
 const KasandraTooltip = ({
@@ -80,19 +76,20 @@ const KasandraTooltip = ({
                         </div>
                     </div>
                     <span className="fontGroup-support ">
-                        {moment(dataset[dataPointIndex][0]).format(
-                            "YYYY-MM-DD"
-                        )}
+                        {moment(
+                            dataset[seriesIndex].data[dataPointIndex][0]
+                        ).format("YYYY-MM-DD")}
                     </span>
                     <span className="ml-7 fontGroup-support ">
-                        {moment(dataset[dataPointIndex][0]).format("HH:mm")}
+                        {moment(
+                            dataset[seriesIndex].data[dataPointIndex][0]
+                        ).format("HH:mm")}
                     </span>
                 </div>
             ) : (
                 <div>
                     <div className="mb-2 flex justify-between w-full">
                         <div className="text-white capitalize fontGroup-support !font-semibold inline">
-                            <div className="inline-flex mr-1.5 mb-0.5 self-start bg-primary w-1 h-1 rounded-full" />
                             {seriesNameMap[0]}: {}
                         </div>
                         <div className="inline ml-1">
@@ -106,12 +103,14 @@ const KasandraTooltip = ({
                         </div>
                     </div>
                     <span className="fontGroup-support ">
-                        {moment(dataset[dataPointIndex][0]).format(
-                            "YYYY-MM-DD"
-                        )}
+                        {moment(
+                            dataset[seriesIndex].data[dataPointIndex][0]
+                        ).format("YYYY-MM-DD")}
                     </span>
                     <span className="ml-4 fontGroup-support ">
-                        {moment(dataset[dataPointIndex][0]).format("HH:mm")}
+                        {moment(
+                            dataset[seriesIndex].data[dataPointIndex][0]
+                        ).format("HH:mm")}
                     </span>
                 </div>
             )}
