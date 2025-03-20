@@ -13,6 +13,8 @@ import ItemBookmark from "src/components/listItem/ItemBookmark";
 import { imgOnError } from "src/utils/errorHandling";
 import globalMessages from "src/globalMessages";
 
+const SCROLL_OFFSET = 100;
+
 interface IKasandraItemList {
     items: TKasandraItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
@@ -22,6 +24,7 @@ interface IKasandraItemList {
     selectedDataPoint: [number, number] | undefined;
     onSelectDataPoint: (dataPoint: [number, number]) => void;
 }
+
 const KasandraItemList: FC<IKasandraItemList> = ({
     items,
     handlePaginate,
@@ -33,7 +36,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
 }) => {
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const [itemRef, setItemRef] = useState<HTMLDivElement | null>();
-    const prevScrollRef = useRef<HTMLElement | undefined>();
+    // const prevScrollRef = useRef<HTMLElement | undefined>();
     const prevItemRef = useRef<HTMLElement | undefined>();
 
     const handleListScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -42,26 +45,24 @@ const KasandraItemList: FC<IKasandraItemList> = ({
         }
     };
 
+    console.log("KasandraItemList::selectedDataPoint", selectedDataPoint);
+
     useEffect(() => {
-        if (
-            scrollRef !== prevScrollRef.current &&
-            itemRef !== prevItemRef.current &&
-            itemRef &&
-            scrollRef
-        ) {
+        if (itemRef !== prevItemRef.current && itemRef && scrollRef) {
             if (scrollRef) {
                 console.log("itemRef", itemRef, "scrollRef", scrollRef);
                 console.log("itemRef", itemRef.offsetTop, scrollRef.scrollTop);
 
                 scrollRef.scrollBy({
-                    top: itemRef.offsetTop - scrollRef.scrollTop,
+                    top:
+                        itemRef.offsetTop - scrollRef.scrollTop - SCROLL_OFFSET,
                     left: 0,
+                    behavior: "smooth",
                 });
             }
-            prevScrollRef.current = scrollRef;
             prevItemRef.current = itemRef;
         }
-    }, [scrollRef, prevScrollRef, itemRef, selectedDataPoint]);
+    }, [scrollRef, itemRef]);
 
     if (items) {
         if (items.length === 0) {
@@ -77,29 +78,6 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                     const isSelected =
                         selectedDataPoint?.[0] === item.dataPoint[0];
                     return (
-                        // <ListItem
-                        //     key={item.id}
-                        //     variant="kasandra"
-                        //     title={item.title}
-                        //     path={item.url}
-                        //     duration={computeDuration(item.publishedAt)}
-                        //     tag={item.sourceName}
-                        //     tagImg={item.sourceIcon}
-                        //     source={item.author}
-                        //     direction={Math.random() > 0.5 ? "up" : "down"}
-                        //     bookmarked={item.bookmarked}
-                        //     onClick={async () => {
-                        //         if (onClick !== undefined) {
-                        //             await onClick(item.id);
-                        //         }
-                        //     }}
-                        //     onBookmark={async () => {
-                        //         if (onBookmark !== undefined) {
-                        //             await onBookmark(item);
-                        //         }
-                        //     }}
-                        //     isAuthenticated={isAuthenticated}
-                        // />
                         <span key={item.id}>
                             <div
                                 ref={(ref) =>
@@ -113,7 +91,10 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                                     onSelectDataPoint(item.dataPoint);
                                     // await onClick?.(item.id);
                                 }}
-                                className="flex relative flex-row items-start py-3 px-1 ml-2 mr-[3px] bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200"
+                                className={twMerge(
+                                    "flex relative flex-row items-start py-3 px-1 ml-2 mr-[3px] bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200",
+                                    isSelected && "bg-backgroundVariant200"
+                                )}
                                 // rel="noreferrer"
                             >
                                 <div className="fontGroup-mini min-w-[50px] text-primaryVariant100 mr-[5px] pt-[1.5px]">
