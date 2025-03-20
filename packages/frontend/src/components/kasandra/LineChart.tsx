@@ -277,6 +277,8 @@ const LineChart: FC<IProps> = memo(function LineChart({
             ? themeColors.success
             : themeColors.secondaryOrangeSoda;
 
+    console.log("LineChart::selectedDataPoint", selectedDataPoint);
+
     const options = {
         chart: {
             type: "area",

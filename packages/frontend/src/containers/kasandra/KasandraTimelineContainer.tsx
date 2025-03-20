@@ -1,5 +1,5 @@
-import { FC, useState, useEffect, useRef, useCallback } from "react";
-import { usePagination, useWidgetHeight } from "src/api/hooks";
+import { FC, useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { usePagination, useView, useWidgetHeight } from "src/api/hooks";
 import {
     TBaseTag,
     useBookmarkNewsItemMutation,
@@ -300,8 +300,21 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
 
+    const { selectedView } = useView();
+
+    // TODO(xavier-charles): update this once backend is ready
+    const kasandraModuleDataHash = useMemo(() => {
+        const widgetData = selectedView?.data.widgets.find(
+            (w) => w.widget.template.slug === "news_template"
+        );
+        if (widgetData) return widgetData.hash.replace("0", "x");
+        return undefined;
+    }, [selectedView?.data.widgets]);
+
     const selectedDataPoint = useAppSelector(
-        (state) => state.widgets.kasandra?.[moduleData.hash]?.selectedDataPoint
+        (state) =>
+            state.widgets.kasandra?.[kasandraModuleDataHash || moduleData.hash]
+                ?.selectedDataPoint
     );
 
     const widgetHeight = useWidgetHeight(moduleData);
@@ -364,7 +377,6 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const isLoading = false;
     const isSuccess = true;
 
-    console.log("itemsData", itemsData);
     const [openItemMut] = useOpenNewsItemMutation();
     const [bookmarkItemMut] = useBookmarkNewsItemMutation();
 
@@ -447,12 +459,12 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (dataPoint: [number, number]) => {
             dispatch(
                 setKasandraSelectedDataPoint({
-                    widgetHash: moduleData.hash,
+                    widgetHash: kasandraModuleDataHash || moduleData.hash,
                     dataPoint,
                 })
             );
         },
-        [dispatch, moduleData.hash]
+        [dispatch, kasandraModuleDataHash, moduleData.hash]
     );
 
     // reset results when tags preferences changed
