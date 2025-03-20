@@ -12,6 +12,34 @@ type IProps = {
     data: number[][];
     selectedChartRange: TChartRange;
     isLoading?: boolean;
+    selectedDataPoint: [number, number] | undefined;
+    onSelectDataPoint: (dataPoint: [number, number]) => void;
+};
+
+const generatePoints = (
+    data: [number, number][],
+    seriesIndex: 0 | 1 | 2 | 3,
+    selectedDataPoint: [number, number] | undefined,
+    onSelectDataPoint: (dataPoint: [number, number]) => void
+) => {
+    const seriesIndexColorMap = {
+        0: "#6dd230",
+        1: "#6dd230", // bullish
+        2: "#cdd230", // base
+        3: "#f45532", // bearish
+    };
+    return data.map((item) => ({
+        x: item[0],
+        y: item[1],
+        click: () => {
+            onSelectDataPoint(item);
+        },
+        marker: {
+            size: selectedDataPoint?.[0] === item[0] ? 7 : 5,
+            offsetY: 1,
+            fillColor: seriesIndexColorMap[seriesIndex],
+        },
+    }));
 };
 
 const chartSeries = [
@@ -107,7 +135,7 @@ const chartSeries = [
             [1741225820252, 96856.68173836585],
             [1741226741830, 96565.19124357773],
             [1741227635501, 96617.6068719462],
-            [1741228530187, 96116.63871546395],
+            [1741228530187, 96716.63871546395],
             [1741229487744, 96613.00422271452],
             [1741230378341, 96833.40344858613],
             [1741231346559, 96723.54005228134],
@@ -151,10 +179,10 @@ const chartSeries = [
             [1741223207316, 90173.67851810707],
             [1741224106283, 90347.06311338305],
             [1741224991917, 90360.60531197047],
-            [1741225820252, 91856.68173836585],
-            [1741226741830, 91565.19124357773],
-            [1741227635501, 91617.6068719462],
-            [1741228530187, 91116.63871546395],
+            [1741225820252, 91156.68173836585],
+            [1741226741830, 91365.19124357773],
+            [1741227635501, 91317.6068719462],
+            [1741228530187, 91516.63871546395],
             [1741229487744, 91613.00422271452],
             [1741230378341, 91833.40344858613],
             [1741231346559, 91723.54005228134],
@@ -202,9 +230,9 @@ const chartSeries = [
             [1741226741830, 86565.19124357773],
             [1741227635501, 86617.6068719462],
             [1741228530187, 86116.63871546395],
-            [1741229487744, 86613.00422271452],
+            [1741229487744, 86113.00422271452],
             [1741230378341, 86833.40344858613],
-            [1741231346559, 86723.54005228134],
+            [1741231346559, 86823.54005228134],
             [1741232194652, 86511.89606275827],
             [1741233138096, 86452.48735602442],
             [1741233957824, 86775.07080936989],
@@ -221,14 +249,23 @@ const chartSeries = [
     },
 ];
 
-const renderCustomTooltip = (data: number[][]) => (props: TCustomTooltip) => {
-    return renderToString(<KasandraTooltip {...props} dataset={data} />);
-};
+const renderCustomTooltip =
+    (
+        data: {
+            name: string;
+            data: number[][];
+        }[]
+    ) =>
+    (props: TCustomTooltip) => {
+        return renderToString(<KasandraTooltip {...props} dataset={data} />);
+    };
 
 const LineChart: FC<IProps> = memo(function LineChart({
     data,
     selectedChartRange,
     isLoading,
+    selectedDataPoint,
+    onSelectDataPoint,
 }) {
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
@@ -248,7 +285,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             stacked: false,
             events: {},
             zoom: {
-                enabled: true,
+                enabled: false,
                 type: "x",
                 autoScaleYaxis: false,
                 zoomedArea: {
@@ -307,8 +344,8 @@ const LineChart: FC<IProps> = memo(function LineChart({
             xaxis: [
                 {
                     x: 1741206976945, // TODO use Now date
-                    borderColor: "#775DD0",
-                    borderWidth: 1.5,
+                    borderColor: "var(--alpha-primary)", // for the dashed line
+                    borderWidth: 1,
                     strokeDashArray: 4,
                     label: {
                         style: {
@@ -319,35 +356,61 @@ const LineChart: FC<IProps> = memo(function LineChart({
                             fontWeight: 500,
                             letterSpacing: "1px !important",
                         },
-                        text: "Predictions",
-                        offsetX: 17.5,
-                        offsetY: -10,
+                        text: "Now",
+                        offsetX: 0,
+                        offsetY: 15,
+                        orientation: "horizontal",
+                        position: "bottom",
                     },
                 },
             ],
             points: [
-                {
-                    x: 1741178438708, // TODO use Now date
-                    y: 90642.95015625951,
-                    mouseEnter: () => {
-                        console.log("onMouseEnter");
-                    },
-                    marker: {
-                        size: 4,
-                        css: {
-                            filter: "drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.25))",
-                        },
-                        offsetY: 3,
-                    },
-                    label: {
-                        borderColor: "#775DD0",
-                        text: "SEC clears Uniswap",
-                        style: {
-                            background: "var(--alpha-base-400)",
-                            color: "var(--alpha-primary)",
-                        },
-                    },
-                },
+                ...generatePoints(
+                    [
+                        [1741164660348, 87851.52480429214],
+                        [1741170107310, 88585.41702795791],
+                        [1741178438708, 90642.95015625951],
+                        [1741187721785, 88645.80293266727],
+                        [1741194993156, 89200.38695874772],
+                    ],
+                    0,
+                    selectedDataPoint,
+                    onSelectDataPoint
+                ),
+                ...generatePoints(
+                    [
+                        [1741213299449, 93150.48615154381],
+                        [1741224991917, 95360.60531197047],
+                        [1741233957824, 96775.07080936989],
+                        [1741239404177, 97496.58285405449],
+                    ],
+                    1,
+                    selectedDataPoint,
+                    onSelectDataPoint
+                ),
+                ...generatePoints(
+                    [
+                        [1741213299449, 90150.48615154381],
+                        [1741224991917, 90360.60531197047],
+                        [1741233957824, 91775.07080936989],
+                        [1741239404177, 92496.58285405449],
+                    ],
+                    2,
+                    selectedDataPoint,
+                    onSelectDataPoint
+                ),
+                ...generatePoints(
+                    [
+                        [1741213299449, 87150.48615154381],
+                        [1741224991917, 85360.60531197047],
+                        [1741230378341, 86833.40344858613],
+                        [1741234857155, 86689.96098257162],
+                        [1741239404177, 85496.58285405449],
+                    ],
+                    3,
+                    selectedDataPoint,
+                    onSelectDataPoint
+                ),
             ],
         },
         xaxis: {
@@ -413,15 +476,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     },
                 },
             },
-            marker: {
-                show: false,
-            },
-            // onDatasetHover: {
-            //     highlightDataSeries: true,
-            // },
-            shared: false,
-            custom: renderCustomTooltip(data),
-            followCursor: true,
+            custom: renderCustomTooltip(chartSeries),
         },
         responsive: [
             {
