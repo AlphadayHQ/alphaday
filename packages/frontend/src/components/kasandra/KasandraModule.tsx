@@ -28,6 +28,8 @@ export interface IMarketModule {
     availableMarkets: TMarketMeta[];
     onSelectMarket: (market: TMarketMeta) => void;
     contentHeight: string;
+    selectedDataPoint: [number, number] | undefined;
+    onSelectDataPoint: (dataPoint: [number, number]) => void;
 }
 
 const MarketModule: FC<IMarketModule> = ({
@@ -43,6 +45,8 @@ const MarketModule: FC<IMarketModule> = ({
     availableMarkets,
     onSelectMarket,
     contentHeight,
+    selectedDataPoint,
+    onSelectDataPoint,
 }) => {
     const { t } = useTranslation();
     const priceHistoryData = selectedMarketHistory?.history?.prices;
@@ -104,6 +108,8 @@ const MarketModule: FC<IMarketModule> = ({
                         selectedChartRange={selectedChartRange}
                         data={priceHistoryData ?? [[0], [1]]}
                         isLoading={isLoadingHistory}
+                        selectedDataPoint={selectedDataPoint}
+                        onSelectDataPoint={onSelectDataPoint}
                     />
                 </div>
                 <div className="w-full flex py-0 px-4 flex-wrap">

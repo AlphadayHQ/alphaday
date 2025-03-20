@@ -34,6 +34,7 @@ export interface IBlogWidgetState {
 }
 export interface IKasandraWidgetState {
     feedPreference: EItemFeedPreference;
+    selectedDataPoint: [number, number] | undefined;
 }
 export interface IPodcastsWidgetState {
     feedPreference: EItemFeedPreference;
@@ -127,21 +128,6 @@ const widgetsSlice = createSlice({
                 feedPreference: preference,
             };
         },
-        setKasandraFeedPreference(
-            draft,
-            action: PayloadAction<{
-                widgetHash: string;
-                preference: EItemFeedPreference;
-            }>
-        ) {
-            const {
-                payload: { widgetHash, preference },
-            } = action;
-            draft.kasandra[widgetHash] = {
-                ...draft.kasandra[widgetHash],
-                feedPreference: preference,
-            };
-        },
         setPodcastFeedPreference(
             draft,
             action: PayloadAction<{
@@ -200,6 +186,36 @@ const widgetsSlice = createSlice({
             draft.video[widgetHash] = {
                 ...draft.video[widgetHash],
                 preferredChannelIds: preference,
+            };
+        },
+        setKasandraFeedPreference(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                preference: EItemFeedPreference;
+            }>
+        ) {
+            const {
+                payload: { widgetHash, preference },
+            } = action;
+            draft.kasandra[widgetHash] = {
+                ...draft.kasandra[widgetHash],
+                feedPreference: preference,
+            };
+        },
+        setKasandraSelectedDataPoint(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                dataPoint: [number, number];
+            }>
+        ) {
+            const {
+                payload: { widgetHash, dataPoint },
+            } = action;
+            draft.kasandra[widgetHash] = {
+                ...draft.kasandra[widgetHash],
+                selectedDataPoint: dataPoint,
             };
         },
         setSelectedChartRange(
@@ -370,6 +386,7 @@ export const {
     setNewsFeedPreference,
     setBlogFeedPreference,
     setKasandraFeedPreference,
+    setKasandraSelectedDataPoint,
     setPodcastFeedPreference,
     setPodcastPreferredChannelIds,
     setVideoFeedPreference,
@@ -410,6 +427,11 @@ export const selectKasandraFeedPreference =
     (widgetHash: string) =>
     (state: RootState): EItemFeedPreference | undefined =>
         state.widgets.kasandra[widgetHash]?.feedPreference;
+
+export const selectKasandraSelectedDataPoint =
+    (widgetHash: string) =>
+    (state: RootState): [number, number] | undefined =>
+        state.widgets.kasandra[widgetHash]?.selectedDataPoint;
 
 export const selectBlogFeedPreference =
     (widgetHash: string) =>
