@@ -9,6 +9,7 @@ import {
 } from "src/api/services";
 import {
     selectIsAuthenticated,
+    setKasandraSelectedDataPoint,
     setSelectedChartRange,
     setSelectedMarket,
 } from "src/api/store";
@@ -928,6 +929,10 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
+    const selectedDataPoint = useAppSelector(
+        (state) => state.widgets.kasandra?.[moduleData.hash]?.selectedDataPoint
+    );
+
     const selectedChartRange = useMemo(
         () =>
             prevSelectedMarketData?.selectedChartRange ||
@@ -979,8 +984,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         []
     );
 
-    console.log("coinsDataResponse", coinsDataResponse);
-
     const coinsData = useMemo(
         () => coinsDataResponse?.results ?? [],
         [coinsDataResponse]
@@ -993,18 +996,21 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return storedMarket ?? pinnedCoins[0] ?? coinsData[0] ?? undefined;
     }, [prevSelectedMarketData?.selectedMarket, coinsData, pinnedCoins]);
 
-    const { currentData: marketHistory, isFetching: isLoadingHistory } =
-        useGetMarketHistoryQuery(
-            {
-                coin: selectedMarket?.slug,
-                interval: selectedChartRange,
-            },
-            {
-                pollingInterval:
-                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-                skip: selectedMarket === undefined,
-            }
-        );
+    // const { currentData: marketHistory, isFetching: isLoadingHistory } =
+    //     useGetMarketHistoryQuery(
+    //         {
+    //             coin: selectedMarket?.slug,
+    //             interval: selectedChartRange,
+    //         },
+    //         {
+    //             pollingInterval:
+    //                 CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+    //             skip: selectedMarket === undefined,
+    //         }
+    //     );
+
+    const isLoadingHistory = false;
+    const marketHistory = undefined;
 
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
@@ -1055,6 +1061,18 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             }
         },
         [isAuthenticated, pinnedCoins, togglePinMut]
+    );
+
+    const handleSelectedDataPoint = useCallback(
+        (dataPoint: [number, number]) => {
+            dispatch(
+                setKasandraSelectedDataPoint({
+                    widgetHash: moduleData.hash,
+                    dataPoint,
+                })
+            );
+        },
+        [dispatch, moduleData.hash]
     );
 
     /**
@@ -1118,6 +1136,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     availableMarkets={coinsData}
                     onSelectMarket={handleSelectedMarket}
                     contentHeight={contentHeight}
+                    selectedDataPoint={selectedDataPoint}
+                    onSelectDataPoint={handleSelectedDataPoint}
                 />
             </Suspense>
         </BaseContainer>

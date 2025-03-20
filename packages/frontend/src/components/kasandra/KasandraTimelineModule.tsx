@@ -1,20 +1,22 @@
 import { FC, memo } from "react";
 import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
-import { TNewsItem, EItemFeedPreference } from "src/api/types";
+import { TKasandraItem, EItemFeedPreference } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { translateLabels } from "src/api/utils/translationUtils";
 import KasandraItemList from "./KasandraItemList";
 
-interface INews {
-    items: TNewsItem[] | undefined;
+interface IKasandra {
+    items: TKasandraItem[] | undefined;
     isLoadingItems: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     feedPreference: EItemFeedPreference;
     onSetFeedPreference: (preference: EItemFeedPreference) => void;
     widgetHeight: number;
     onClick?: (id: number) => MaybeAsync<void>;
-    onBookmark?: (id: TNewsItem) => MaybeAsync<void>;
+    onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
     isAuthenticated: boolean;
+    selectedDataPoint: [number, number] | undefined;
+    onSelectDataPoint: (dataPoint: [number, number]) => void;
 }
 /**
  * This should ease adding new preference based buttons
@@ -36,53 +38,61 @@ const translateNavItems = () => [
     },
 ];
 
-const KasandraTimelineModule: FC<INews> = memo(function KasandraTimelineModule({
-    items,
-    isLoadingItems,
-    handlePaginate,
-    feedPreference,
-    onSetFeedPreference,
-    widgetHeight,
-    onClick,
-    onBookmark,
-    isAuthenticated,
-}) {
-    const newsNavItems = translateNavItems();
-    const NavItemPreference =
-        newsNavItems.find((item) => item.value === feedPreference) ||
-        newsNavItems[0];
+const KasandraTimelineModule: FC<IKasandra> = memo(
+    function KasandraTimelineModule({
+        items,
+        isLoadingItems,
+        handlePaginate,
+        feedPreference,
+        onSetFeedPreference,
+        widgetHeight,
+        onClick,
+        onBookmark,
+        isAuthenticated,
+        selectedDataPoint,
+        onSelectDataPoint,
+    }) {
+        const newsNavItems = translateNavItems();
+        const NavItemPreference =
+            newsNavItems.find((item) => item.value === feedPreference) ||
+            newsNavItems[0];
 
-    const onTabOptionChange = (value: string) => {
-        const optionItem = newsNavItems.find((item) => item.value === value);
-        if (optionItem === undefined) {
-            Logger.debug("NewsModule::Nav option item not found");
-            return;
-        }
-        onSetFeedPreference(optionItem?.value);
-    };
+        const onTabOptionChange = (value: string) => {
+            const optionItem = newsNavItems.find(
+                (item) => item.value === value
+            );
+            if (optionItem === undefined) {
+                Logger.debug("NewsModule::Nav option item not found");
+                return;
+            }
+            onSetFeedPreference(optionItem?.value);
+        };
 
-    return (
-        <>
-            <div className="mx-2">
-                <TabsBar
-                    options={newsNavItems}
-                    onChange={onTabOptionChange}
-                    selectedOption={NavItemPreference}
-                />
-            </div>
-            {isLoadingItems || !items ? (
-                <ModuleLoader $height={`${widgetHeight}px`} />
-            ) : (
-                <KasandraItemList
-                    items={items}
-                    handlePaginate={handlePaginate}
-                    onClick={onClick}
-                    onBookmark={onBookmark}
-                    isAuthenticated={isAuthenticated}
-                />
-            )}
-        </>
-    );
-});
+        return (
+            <>
+                <div className="mx-2">
+                    <TabsBar
+                        options={newsNavItems}
+                        onChange={onTabOptionChange}
+                        selectedOption={NavItemPreference}
+                    />
+                </div>
+                {isLoadingItems || !items ? (
+                    <ModuleLoader $height={`${widgetHeight}px`} />
+                ) : (
+                    <KasandraItemList
+                        items={items}
+                        handlePaginate={handlePaginate}
+                        onClick={onClick}
+                        onBookmark={onBookmark}
+                        isAuthenticated={isAuthenticated}
+                        selectedDataPoint={selectedDataPoint}
+                        onSelectDataPoint={onSelectDataPoint}
+                    />
+                )}
+            </>
+        );
+    }
+);
 
 export default KasandraTimelineModule;
