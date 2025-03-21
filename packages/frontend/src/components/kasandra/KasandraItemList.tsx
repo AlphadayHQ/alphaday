@@ -45,14 +45,9 @@ const KasandraItemList: FC<IKasandraItemList> = ({
         }
     };
 
-    console.log("KasandraItemList::selectedDataPoint", selectedDataPoint);
-
     useEffect(() => {
         if (itemRef !== prevItemRef.current && itemRef && scrollRef) {
             if (scrollRef) {
-                console.log("itemRef", itemRef, "scrollRef", scrollRef);
-                console.log("itemRef", itemRef.offsetTop, scrollRef.scrollTop);
-
                 scrollRef.scrollBy({
                     top:
                         itemRef.offsetTop - scrollRef.scrollTop - SCROLL_OFFSET,
@@ -101,13 +96,17 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                                     <div
                                         className={twMerge(
                                             " p-3 h-10 w-10 mx-auto rounded-full",
-                                            item.direction === "up"
+                                            item.expectedPercentChange > 0
                                                 ? "bg-green-300/10"
                                                 : "bg-red-300/10"
                                         )}
                                     >
                                         <Arrow
-                                            direction={item.direction}
+                                            direction={
+                                                item.expectedPercentChange > 0
+                                                    ? "up"
+                                                    : "down"
+                                            }
                                             className="stroke-success w-4 h-4 ml-[1px]"
                                         />
                                     </div>
