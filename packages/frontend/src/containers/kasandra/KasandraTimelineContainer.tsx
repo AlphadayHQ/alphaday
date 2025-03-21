@@ -163,7 +163,7 @@ const mockItemsResponse: {
             author: "Ethan Caldwell",
             publishedAt: "2025-03-21T04:01:00Z",
             bookmarked: false,
-            direction: "up",
+            direction: "down",
             dataPoint: [1741239404177, 97496.58285405449],
         },
         {
@@ -219,7 +219,7 @@ const mockItemsResponse: {
             author: "Trisha Husada",
             publishedAt: "2025-03-21T04:01:00Z",
             bookmarked: false,
-            direction: "up",
+            direction: "down",
             dataPoint: [1741239404177, 92496.58285405449],
         },
         {
@@ -233,7 +233,7 @@ const mockItemsResponse: {
             author: "Omkar Godbole",
             publishedAt: "2025-03-20T16:54:00Z",
             bookmarked: false,
-            direction: "up",
+            direction: "down",
             dataPoint: [1741213299449, 87150.48615154381],
         },
         {
@@ -261,7 +261,7 @@ const mockItemsResponse: {
             author: "",
             publishedAt: "2025-03-20T22:49:00Z",
             bookmarked: false,
-            direction: "up",
+            direction: "down",
             dataPoint: [1741230378341, 86833.40344858613],
         },
         {
@@ -275,7 +275,7 @@ const mockItemsResponse: {
             author: "Cointelegraph by Ezra Reguerra",
             publishedAt: "2025-03-21T01:49:00Z",
             bookmarked: false,
-            direction: "up",
+            direction: "down",
             dataPoint: [1741234857155, 86689.96098257162],
         },
         {
@@ -289,7 +289,7 @@ const mockItemsResponse: {
             author: "Andrew Hayward",
             publishedAt: "2025-03-21T04:01:00Z",
             bookmarked: false,
-            direction: "up",
+            direction: "down",
             dataPoint: [1741239404177, 85496.58285405449],
         },
     ],
