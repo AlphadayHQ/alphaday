@@ -32,12 +32,17 @@ const KasandraItem: FC<{
         () => descHeight && descHeight + 5,
         [descHeight]
     ); // 5px comes from padding top in style
+
     return (
         <span
             key={item.id}
             tabIndex={0}
             role="button"
-            onClick={toggleAccordion}
+            onClick={() => {
+                toggleAccordion();
+                if (isSelected) return;
+                onSelectDataPoint(item.dataPoint);
+            }}
         >
             <div
                 className={twMerge(
@@ -47,18 +52,9 @@ const KasandraItem: FC<{
             >
                 <div
                     ref={(ref) => (isSelected ? setItemRef(ref) : undefined)}
-                    tabIndex={0}
-                    role="button"
-                    // href={item.url}
-                    // target="_blank"
-                    onClick={() => {
-                        onSelectDataPoint(item.dataPoint);
-                        // await onClick?.(item.id);
-                    }}
                     className={twMerge(
                         "flex relative flex-row items-start py-3 px-1 ml-2 mr-[3px]"
                     )}
-                    // rel="noreferrer"
                 >
                     <div className="fontGroup-mini min-w-[50px] text-primaryVariant100 mr-[5px] pt-[1.5px]">
                         <div
