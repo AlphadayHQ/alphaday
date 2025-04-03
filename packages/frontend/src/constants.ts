@@ -37,6 +37,7 @@ export enum EFeaturesRegistry {
     TranslationEs = "translation_es",
     TranslationTr = "translation_tr",
     TranslationJa = "translation_ja",
+    TranslationZh = "translation_zh",
 }
 
 /**

@@ -15,6 +15,9 @@ export const useAllowedTranslations = () => {
     const { isLoading: isLoadingTr, enabled: isTranslationsAllowedTr } =
         useFeatureFlags(EFeaturesRegistry.TranslationTr);
 
+    const { isLoading: isLoadingZh, enabled: isTranslationsAllowedZh } =
+        useFeatureFlags(EFeaturesRegistry.TranslationZh);
+
     return {
         languages: {
             [ELanguageCode.EN]: true,
@@ -22,7 +25,13 @@ export const useAllowedTranslations = () => {
             [ELanguageCode.TR]: isTranslationsAllowedTr,
             [ELanguageCode.FR]: isTranslationsAllowedFr,
             [ELanguageCode.JA]: isTranslationsAllowedJa,
+            [ELanguageCode.ZH]: isTranslationsAllowedZh,
         },
-        isLoading: isLoadingEs || isLoadingFr || isLoadingJa || isLoadingTr,
+        isLoading:
+            isLoadingEs ||
+            isLoadingFr ||
+            isLoadingJa ||
+            isLoadingTr ||
+            isLoadingZh,
     };
 };

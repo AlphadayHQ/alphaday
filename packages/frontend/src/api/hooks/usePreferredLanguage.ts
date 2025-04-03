@@ -9,6 +9,7 @@ import {
     translationFR,
     translationJA,
     translationTR,
+    translationZH,
 } from "../../locales/translation";
 import { alphadayApi } from "../services";
 import { useAppSelector } from "../store/hooks";
@@ -31,6 +32,9 @@ const resources: Record<ELanguageCode, { translation: JSONObject }> = {
     },
     tr: {
         translation: translationTR,
+    },
+    zh: {
+        translation: translationZH,
     },
 };
 
