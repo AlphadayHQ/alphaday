@@ -13,7 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import { TKasandraItem, EItemFeedPreference } from "src/api/types";
-import * as filterUtils from "src/api/utils/filterUtils";
+// import * as filterUtils from "src/api/utils/filterUtils";
 import {
     buildUniqueItemList,
     itemListsAreEqual,
@@ -379,6 +379,9 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         undefined
     );
 
+    // TODO(xavier-charles): remove this once backend is ready
+    Logger.info("KasandraTimelineContainer::currentPage", currentPage);
+
     const defaultFeed = widgetConfig.DEFAULT_FEED_PREFERENCE;
 
     const feedPreference =
@@ -410,15 +413,15 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const tags =
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
-    const pollingInterval =
-        (moduleData.widget.refresh_interval || widgetConfig.POLLING_INTERVAL) *
-        1000;
+    // const pollingInterval =
+    //     (moduleData.widget.refresh_interval || widgetConfig.POLLING_INTERVAL) *
+    //     1000;
 
-    const queryParameters = {
-        page: currentPage,
-        tags: tags ? filterUtils.filteringListToStr(tags) : undefined,
-        feedPreference,
-    };
+    // const queryParameters = {
+    //     page: currentPage,
+    //     tags: tags ? filterUtils.filteringListToStr(tags) : undefined,
+    //     feedPreference,
+    // };
 
     // TODO(xavier-charles): refactor to use the new api
     // const {

@@ -1,11 +1,5 @@
 import { FormEvent, FC, useEffect, useRef, useState } from "react";
-import {
-    HRElement,
-    CenteredBlock,
-    ScrollBar,
-    twMerge,
-    Arrow,
-} from "@alphaday/ui-kit";
+import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import { TKasandraItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
@@ -34,7 +28,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
 }) => {
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const [itemRef, setItemRef] = useState<HTMLDivElement | null>();
-    const [itemsHeight, setItemsHeight] = useState<number>(0);
+    // const [itemsHeight, setItemsHeight] = useState<number>(0);
     const prevItemRef = useRef<HTMLElement | undefined>();
 
     const handleListScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
@@ -57,6 +51,11 @@ const KasandraItemList: FC<IKasandraItemList> = ({
         }
     }, [scrollRef, itemRef]);
 
+    const handleOnSelectDataPoint = async (dataPoint: [number, number]) => {
+        onSelectDataPoint(dataPoint);
+        await onClick?.(dataPoint[0]);
+    };
+
     if (items) {
         if (items.length === 0) {
             return (
@@ -76,10 +75,10 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                             key={item.id}
                             isSelected={isSelected}
                             setItemRef={setItemRef}
-                            onSelectDataPoint={onSelectDataPoint}
+                            onSelectDataPoint={handleOnSelectDataPoint}
                             onBookmark={onBookmark}
                             isAuthenticated={isAuthenticated}
-                            setItemsHeight={setItemsHeight}
+                            // setItemsHeight={setItemsHeight}
                         />
                     );
                 })}

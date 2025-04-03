@@ -2,6 +2,7 @@ import { FC, useMemo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { TKasandraItem } from "src/api/types/kasandra";
 import { computeDuration } from "src/api/utils/dateUtils";
+import { Logger } from "src/api/utils/logging";
 import { Arrow } from "src/components/arrow/Arrow";
 import ItemBookmark from "src/components/listItem/ItemBookmark";
 import { HRElement } from "src/components/listItem/ListItem";
@@ -12,10 +13,10 @@ const KasandraItem: FC<{
     item: TKasandraItem;
     isSelected: boolean;
     setItemRef: (ref: HTMLDivElement | null) => void;
-    onSelectDataPoint: (dataPoint: [number, number]) => void;
+    onSelectDataPoint: (dataPoint: [number, number]) => MaybeAsync<void>;
     onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
     isAuthenticated?: boolean;
-    setItemsHeight: React.Dispatch<React.SetStateAction<number>>;
+    // setItemsHeight: React.Dispatch<React.SetStateAction<number>>;
 }> = ({
     item,
     isSelected,
@@ -23,10 +24,10 @@ const KasandraItem: FC<{
     onSelectDataPoint,
     onBookmark,
     isAuthenticated,
-    setItemsHeight,
+    // setItemsHeight,
 }) => {
     const { descHeight, descHeightRef, openAccordion, toggleAccordion } =
-        useDynamicWidgetItem({ setItemsHeight });
+        useDynamicWidgetItem({ setItemsHeight: undefined });
 
     const paddedDescHeight = useMemo(
         () => descHeight && descHeight + 5,
@@ -41,7 +42,9 @@ const KasandraItem: FC<{
             onClick={() => {
                 toggleAccordion();
                 if (isSelected) return;
-                onSelectDataPoint(item.dataPoint);
+                onSelectDataPoint(item.dataPoint)?.catch((err) =>
+                    Logger.error("KasandraItem::onClick", err)
+                );
             }}
         >
             <div
@@ -106,7 +109,7 @@ const KasandraItem: FC<{
                     className={twMerge(
                         "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 ease-[ease] transition-all duration-300",
                         openAccordion &&
-                            "line-clamp-6  pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-[ease] transition-all duration-300"
+                            "line-clamp-6 pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-[ease] transition-all duration-300"
                     )}
                     style={{
                         height: openAccordion
@@ -115,7 +118,7 @@ const KasandraItem: FC<{
                     }}
                 >
                     {openAccordion && (
-                        <div className="info ml-5 px-2 pt-2 rounded-sm min-h-[45px] [align-self:normal]">
+                        <div className="info ml-5 px-2 pr-3 pt-2 rounded-sm min-h-[45px] [align-self:normal]">
                             <div className="wrap flex flex-wrap text-primary whitespace-pre-wrap">
                                 {item.description}
                             </div>
