@@ -188,6 +188,7 @@ const HeaderSearchContainer: FC = () => {
                         setSearchState(e);
                     }, 500)}
                     placeholder={translate("navigation.searchBarPlaceholder")}
+                    hideFeedback
                     initialSearchValues={
                         keywordSearchList === undefined
                             ? []

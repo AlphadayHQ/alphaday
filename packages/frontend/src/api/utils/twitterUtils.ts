@@ -1,14 +1,12 @@
-import {
-    TGetTweetsRawResponseV1,
+import type {
     TRemoteTweet,
     TRemoteTweetEntities,
     TRemoteTweetMedia,
     TRemoteTweetMetrics,
     TRemoteTweetUrl,
     TRemoteTweetUser,
-    TRemoteTweetV1,
 } from "../services";
-import {
+import type {
     TTweets,
     TTweetAttachment,
     TTweetAuthor,
@@ -109,27 +107,7 @@ export const parseAsTweet = (remoteTweet: TRemoteTweet): TTweets => {
             remoteTweet?.attachments?.attachments.map(parseRemoteMedia),
         referencedTweets: remoteTweet.referenced_tweets,
         retweet: referencedTweets?.[0].tweet,
-        metrics: parseRemoteMetrics(remoteTweet.public_metrics),
         createdAt: remoteTweet.created_at,
         lang: remoteTweet.lang,
-    };
-};
-
-export const parseRemoteTweetV1 = (
-    t: TRemoteTweetV1,
-    r: TGetTweetsRawResponseV1
-): TRemoteTweet => {
-    return {
-        ...t,
-        attachments: {
-            media_keys: t.attachments?.media_keys ?? [],
-            attachments:
-                r.includes.media?.filter((m) =>
-                    t.attachments?.media_keys?.includes(m.media_key)
-                ) ?? [],
-        },
-        author: r.includes.users.find(
-            (u) => u.id === t.author_id
-        ) as TRemoteTweetUser,
     };
 };

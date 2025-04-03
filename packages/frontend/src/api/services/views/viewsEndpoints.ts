@@ -7,7 +7,7 @@ import { Logger } from "src/api/utils/logging";
 import { TEMPLATES_DICT } from "src/types";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
-import {
+import type {
     TRemoteUserView,
     TRemoteUserViewWidget,
     TViewsRequest,

@@ -80,7 +80,6 @@ export type TTweets = {
     attachments: TTweetAttachment[] | undefined;
     referencedTweets: TReferencedTweet[] | undefined;
     retweet: TTweets | undefined;
-    metrics: TTweetMetric;
     createdAt: string;
     lang: string; // language code if we ever want to support with i18n
 };

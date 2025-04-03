@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TUserAuth } from "src/api/types";
+import type { TUserAuth } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../config/config";
 
@@ -35,7 +35,7 @@ export const alphadayApi = createApi({
                 const token = authState.token.value;
                 if (token != null) {
                     // eslint-disable-next-line
-                    headers.set("Authorization", `Token ${token}`);
+					headers.set("Authorization", `Token ${token}`);
                 } else {
                     Logger.debug(
                         "alphadayApi::prepareHeaders: no session token"
