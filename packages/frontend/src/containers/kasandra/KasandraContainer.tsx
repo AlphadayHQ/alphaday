@@ -2,8 +2,6 @@ import { FC, useEffect, useMemo, useCallback, Suspense } from "react";
 import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
 import {
     TRemoteCoin,
-    useGetCoinsQuery,
-    useGetMarketHistoryQuery,
     useGetPinnedCoinsQuery,
     useTogglePinnedCoinMutation,
 } from "src/api/services";
@@ -15,7 +13,6 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TBaseEntity, TChartRange, TCoin } from "src/api/types";
-import { filteringListToStr } from "src/api/utils/filterUtils";
 
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
@@ -930,9 +927,9 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const tags =
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
-    const pollingInterval =
-        (moduleData.widget.refresh_interval ||
-            CONFIG.WIDGETS.MARKET.COIN_POLLING_INTERVAL) * 1000;
+    // const pollingInterval =
+    //     (moduleData.widget.refresh_interval ||
+    //         CONFIG.WIDGETS.MARKET.COIN_POLLING_INTERVAL) * 1000;
 
     // TODO: put this back this once we have the API working
     // const { data: coinsDataResponse, isLoading: isLoadingCoinsData } =

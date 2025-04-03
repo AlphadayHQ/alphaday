@@ -122,7 +122,7 @@ const options = {
                 x: 1741178438708, // TODO use Now date
                 y: 90642.95015625951,
                 mouseEnter: () => {
-                    console.log("onMouseEnter");
+                    // console.log("onMouseEnter");
                 },
                 marker: {
                     size: 4,

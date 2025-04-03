@@ -1,7 +1,11 @@
 import { FC, memo, useState } from "react";
-import { ApexAreaChart, Spinner, themeColors } from "@alphaday/ui-kit";
+import {
+    ApexAreaChart,
+    Spinner,
+    // themeColors
+} from "@alphaday/ui-kit";
 import { TChartRange } from "src/api/types";
-import { minVal } from "src/api/utils/helpers";
+// import { minVal } from "src/api/utils/helpers";
 import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
 import KasandraTooltip, { TCustomTooltip } from "./KasandraTooltip";
@@ -259,8 +263,8 @@ const renderCustomTooltip =
     };
 
 const LineChart: FC<IProps> = memo(function LineChart({
-    data,
-    selectedChartRange,
+    // data,
+    // selectedChartRange,
     isLoading,
     selectedDataPoint,
     onSelectDataPoint,
@@ -268,16 +272,14 @@ const LineChart: FC<IProps> = memo(function LineChart({
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
-    const minValue = minVal(data || [[0], [0]])[0];
-    const startPrice = data[0][1];
-    const lastPrice = data[data.length - 1][1];
+    // const minValue = minVal(data || [[0], [0]])[0];
+    // const startPrice = data[0][1];
+    // const lastPrice = data[data.length - 1][1];
 
-    const chartColor =
-        lastPrice > startPrice || lastPrice === startPrice
-            ? themeColors.success
-            : themeColors.secondaryOrangeSoda;
-
-    console.log("LineChart::selectedDataPoint", selectedDataPoint);
+    // const chartColor =
+    //     lastPrice > startPrice || lastPrice === startPrice
+    //         ? themeColors.success
+    //         : themeColors.secondaryOrangeSoda;
 
     const options = {
         chart: {
