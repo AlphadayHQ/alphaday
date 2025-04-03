@@ -25,6 +25,7 @@ const languages = [
     { code: ELanguageCode.ES, name: "Español", icon: "🇪🇸" },
     { code: ELanguageCode.JA, name: "日本語", icon: "🇯🇵" },
     { code: ELanguageCode.TR, name: "Turkish", icon: "🇹🇷" },
+    { code: ELanguageCode.ZH, name: "中文", icon: "🇨🇳" },
 ];
 
 export const LanguageModal: React.FC<IProps> = ({

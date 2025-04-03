@@ -1972,3 +1972,383 @@ export const translationTR: typeof translationEN = {
         closeButton: "Kapat",
     },
 };
+
+export const translationZH: typeof translationEN = {
+    navigation: {
+        searchBarPlaceholder: "搜索资产、项目、事件等",
+        boards: "面板",
+        openBoardsLibrary: "打开面板库",
+        widgets: "小部件",
+        sortBy: "排序方式",
+        menu: {
+            signIn: "登录",
+            signOut: "登出",
+            signUp: "注册",
+            tutorial: "教程",
+            language: "语言",
+            aboutUs: "关于我们",
+            version: "版本",
+            commit: "提交",
+        },
+        boardsLibrary: {
+            title: "面板库",
+            description: "切换不同面板以优化工作流程，并固定您最常用的面板。",
+            customBoardsTitle: "自定义面板",
+            customBoardsDescriptionWithAuth: "创建空白面板并添加小部件",
+            customBoardsDescription:
+                "连接并验证您的钱包以创建新面板并查看您的自定义面板",
+        },
+        widgetsLibrary: {
+            title: "小部件库",
+            searchBarPlaceholder: "搜索小部件",
+            allWidgets: "所有小部件",
+        },
+        general: {
+            all: "全部",
+            general: "通用",
+            nfts: "NFT",
+            daos: "DAO",
+            layer2: "第二层",
+            defi: "DeFi",
+            trading: "交易",
+            popular: "热门",
+            name: "名称(A-Z)",
+            new: "最新",
+            feed: "动态",
+            trending: "趋势",
+            readLater: "稍后阅读",
+            readMore: "阅读更多",
+            bookmarks: "书签",
+            timeRange: "时间范围",
+            media: "媒体",
+            chains: "链",
+            protocols: "协议",
+            less: "更少",
+            more: "更多",
+        },
+    },
+    widget: {
+        options: "选项",
+        closeOptions: "关闭选项",
+        expand: "展开",
+        maximize: "最大化",
+        minimize: "最小化",
+        screenshot: "截图",
+        removeWidget: "移除小部件",
+    },
+    tabs: {
+        news: "新闻",
+        portfolio: "投资组合",
+        calendar: "日历",
+        feed: "动态",
+        trending: "趋势",
+        readLater: "稍后阅读",
+    },
+    buttons: {
+        connectWallet: "连接钱包",
+        verifyWallet: "验证钱包",
+        addWallet: "添加新钱包",
+        disconnectWallet: "断开钱包",
+        enterAddress: "输入地址",
+        save: "保存",
+        notNow: "稍后",
+        next: "下一步",
+    },
+    portfolio: {
+        addAWallet: "添加钱包地址",
+        inputPlaceholder: "输入以太坊或ENS地址",
+        totalBalance: "总余额",
+        allWallets: "所有钱包",
+        asset: "资产",
+        assets: "资产",
+        nfts: "NFT",
+        balance: "余额",
+        price: "价格",
+        value: "价值",
+        modals: {
+            title: "钱包连接",
+            soon: "（即将推出）",
+            metamask: "Metamask",
+            selectingMethod: {
+                title: "选择钱包提供商",
+            },
+            prompted: {
+                title: "验证钱包",
+                saveButtonText: "验证钱包",
+                content:
+                    "您的钱包已成功连接。要保存您的自定义面板，请通过签署一条消息登录Alphaday。",
+            },
+            connectionError: {
+                title: "钱包连接错误",
+                content:
+                    "尝试连接到您的钱包提供商时发生错误。请确保您的钱包设置正确。",
+            },
+            verificationError: {
+                title: "钱包验证错误",
+                content: "认证失败。您的钱包是否已解锁？您是否切换了账户？",
+            },
+            genericError: {
+                title: "意外错误",
+                content: "出错了！请稍后再试。",
+            },
+        },
+    },
+    tutorials: {
+        switchViewTitle: "切换面板",
+        switchViewText:
+            "通过使用配置了各种小部件的不同面板，或创建自己的面板来优化工作流程。",
+        walletViewTitle: "创建钱包面板",
+        walletViewText: "在Alphaday上跟踪与您钱包中的资产相关的所有信息。",
+        useSeachBarTitle: "搜索栏",
+        useSeachBarText: "搜索您喜欢的代币、项目或主题，以过滤小部件内的内容。",
+        reArrangeWidgetTitle: "重新排列小部件",
+        reArrangeWidgetText:
+            "点击并拖动小部件的顶部栏来改变其在仪表板中的位置，或单击一次以最小化。",
+        useWidgetLibTitle: "小部件库",
+        useWidgetLibText: "小部件库中有几十个可供您选择的有用小部件。",
+        comeBackText: "随时可以通过用户菜单返回教程。",
+    },
+    market: {
+        title: "市场",
+        line: "线图",
+        candlestick: "K线图",
+        noCoinSelected: "没有选择标签的代币",
+        // eslint-disable-next-line no-template-curly-in-string
+        historyError: "这个币的${selectedChartRange}历史记录",
+        marketCap: "市值",
+        volume24h: "24小时交易量",
+    },
+    podcasts: {
+        channels: "频道",
+        selectedChannels: "已选频道",
+        allChannels: "所有频道",
+        channelsInputPlaceholder: "搜索频道",
+    },
+    calendar: {
+        organizers: "组织者",
+        speakers: "演讲者",
+        moreDetails: "更多详情",
+        noEvents: "未找到即将举行的活动",
+        eventTypes: {
+            conferences: "会议",
+            meetups: "聚会",
+            hackathons: "黑客马拉松",
+            productReleases: "产品发布",
+            devCalls: "开发者会议",
+            ico: "首次代币发行",
+            ido: "首次去中心化交易所发行",
+            daoVotes: "DAO投票",
+            economicEvents: "经济事件",
+            communityCalls: "社区会议",
+            softForks: "软分叉",
+            hardForks: "硬分叉",
+            education: "教育与学习",
+            interviews: "访谈",
+            parties: "派对",
+            workshops: "工作坊",
+            unfiltered: "未过滤",
+        },
+    },
+    others: {
+        tagOptions: {
+            auth: "以太坊，比特币等",
+            unAuth: "注册以固定代币等更多功能",
+        },
+        change: "更改",
+        name: "名称",
+        yourNfts: "您的NFT",
+        estValue: "估计价值",
+        tvl: "总锁仓价值",
+        noItemsFound: "未找到项目",
+        accept: "接受",
+        decline: "拒绝",
+        briefingFor: "简报",
+        cookie: {
+            text: "我们使用必要的cookie来使Alphaday正常工作。如果您接受，我们希望使用其他cookie来改进和个性化您的访问，并分析我们网站的性能。",
+            acceptAll: "接受全部",
+            acceptEssential: "只接受必要的",
+        },
+    },
+    verasity: {
+        tokenName: "代币名称",
+        tokenTicker: "代币代码",
+        smAddress: "智能合约地址",
+        totalSupply: "总供应量",
+        maxCircleSupply: "最大流通供应量",
+        circleSupply: "流通供应量",
+    },
+    messages: {
+        error: {
+            title: "错误",
+            notFound: "找不到请求的页面。",
+            generic: "处理您的请求时发生错误。",
+            forbidden: "您没有权限访问此页面。",
+            unauthorized: "您未被授权访问此页面。",
+            notAuthenticated: "请连接并验证您的钱包以继续",
+            maxViews: "您已创建最大允许的面板数量",
+            maxWidgets: "您的面板包含的小部件超过允许的数量",
+            maxViewWidgets: "您已超过此面板上此小部件的允许数量",
+            requestFailed:
+                // eslint-disable-next-line no-template-curly-in-string
+                "获取${term}时发生错误，请稍后再试",
+            boardHasNoRequiredWidget:
+                // eslint-disable-next-line no-template-curly-in-string
+                "此${boardName}面板没有所需的${SlugToWidgetNameMap[widget_template]}小部件，要访问此路径，您需要将${SlugToWidgetNameMap[widget_template]}小部件添加到此面板并刷新页面。",
+            back_to_home: "返回首页",
+            noNftsFound: "未找到提供的钱包的NFT。",
+            noVideo: "未选择视频",
+            somethingWrong: "出现错误。",
+        },
+        success: {
+            title: "成功",
+            generic: "您的请求已成功处理。",
+        },
+        queries: {
+            noResults: "未找到结果",
+            // eslint-disable-next-line no-template-curly-in-string
+            noMatchFound: "未找到匹配的${item}。",
+        },
+        portfolio: {
+            signUp: "注册以保存您的投资组合",
+            connectWallet: "要注册，请先连接您的钱包。",
+            verifyWallet:
+                "签署一条无手续费的消息以确认所有权并登录Alphaday以保存您的配置。",
+        },
+        callToAction: {
+            // eslint-disable-next-line no-template-curly-in-string
+            signUpToBookmark: "注册以将此${item}添加到书签",
+        },
+    },
+    countdown: {
+        labels: {
+            days: "天",
+            hours: "小时",
+            minutes: "分钟",
+            seconds: "秒",
+        },
+    },
+    datelocale: {
+        future: "%s后",
+        past: "%s前",
+        s: "秒",
+        m: "分",
+        mm: "分",
+        h: "时",
+        hh: "时",
+        d: "天",
+        dd: "天",
+        w: "周",
+        M: "月",
+        MM: "月",
+        y: "年",
+        ytd: "今年至今",
+        yy: "年",
+    },
+    gas: {
+        title: "燃气价格",
+        latestGasPrice: "最新燃气价格",
+        fast: "快速",
+        standard: "标准",
+        slow: "慢速",
+        beaconChainData: "信标链数据",
+    },
+    qna: {
+        intro: "此小部件是Alphaday聚合加密数据的接口。您可以通过简单地用自然语言输入任意问题来查询此数据，例如'哪个项目的总锁仓价值最高？'",
+        highlight: "您需要连接并验证您的钱包才能使用此小部件。",
+        button: "提问",
+    },
+    aboutUs: {
+        title: "关于我们",
+        companyOverview: {
+            title: "公司概况：",
+            registeredName: "注册名称：Alphabox Solutions Pte. Ltd.",
+            registrationNumber: "注册号：202136261C",
+            registeredOffice:
+                "注册办公地址：45 North Canal Road #01-01 Lew Building Singapore",
+        },
+        contactInfo: {
+            title: "联系信息：",
+            email: "电子邮件：hello@alphaday.com",
+            xcom: "X.com：https://x.com/AlphadayHQ",
+        },
+        legalInfo: {
+            title: "法律信息：",
+            terms: "条款和条件：https://alphaday.com/terms",
+            privacy: "隐私政策：https://alphaday.com/privacy",
+        },
+        additionalResources: {
+            title: "其他资源：",
+            faqs: "常见问题：alphaday.com",
+            feedback: "反馈：https://forms.gle/RbrrLGdFPAeuNJhk9",
+        },
+        mission:
+            "Alphaday的使命是为您提供所有必要的工具，让您能够关注喜爱的项目，及时了解最新动态，并通过一个易于使用的可定制仪表板使用您喜欢的去中心化应用程序。",
+        closeButton: "关闭",
+    },
+    errorPage: {
+        offline: {
+            heading: {
+                text: "您已",
+                highlight: "离线",
+            },
+            description: "看来您失去了连接。请检查并重试。",
+        },
+        "503": {
+            heading: {
+                text: "系统",
+                highlight: "维护",
+            },
+            description1: {
+                text: "我们目前正在进行一些计划内的维护。我们很快就会恢复！同时，您可以查看我们的",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+            },
+            description2: "并确保稍后再次查看。",
+        },
+        "403": {
+            heading: {
+                text: "未授权",
+                highlight: "403",
+            },
+            description: "您没有权限访问此页面。",
+        },
+        "404": {
+            heading: {
+                highlight: "404",
+            },
+            description: "抱歉，找不到您要查找的页面。",
+        },
+        default: {
+            description: {
+                text: "出了些问题，我们很快就会恢复！同时，您可以查看我们的",
+                link: {
+                    text: "twitter",
+                    url: "https://twitter.com/AlphadayHQ",
+                },
+                textAfterLink: "获取更新。",
+            },
+        },
+    },
+    walletView: {
+        createWalletBoard: "创建钱包面板",
+        viewWalletBoard: "查看钱包面板",
+        creatingWalletBoard: "正在创建钱包面板",
+    },
+    termsOfService: {
+        titleOne: "法律免责声明",
+        textOne:
+            "Alphaday不对第三方平台和小部件（包括Uniswap）的运营或性能负责。Uniswap Swap小部件是为了方便我们的用户而提供的。Alphaday不控制或管理通过Uniswap进行的交易，我们对使用Uniswap Swap小部件导致的任何损失或损害不承担责任。我们鼓励用户在交易加密货币时进行自己的研究并谨慎行事。使用Uniswap Swap小部件，即表示您同意Uniswap Lab的",
+        textTwo: "服务条款",
+        textThree: "和",
+        textFour: "隐私政策",
+        titleTwo: "风险披露",
+        textFive:
+            "加密货币交易涉及重大风险，可能导致您投入资金的损失。您不应投资超过您可以承受损失的金额，并应确保您完全了解所涉及的风险。价格波动和加密货币市场的全球性质可能导致重大损失。Alphaday不提供任何关于任何加密货币交易适合性的投资建议或推荐。所有交易决定均由用户而非Alphaday做出。在做出任何交易决定之前，请咨询财务顾问。",
+    },
+    language: {
+        title: "选择语言",
+        closeButton: "关闭",
+    },
+};

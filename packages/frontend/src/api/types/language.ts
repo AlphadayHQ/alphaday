@@ -4,4 +4,5 @@ export enum ELanguageCode {
     ES = "es",
     JA = "ja",
     TR = "tr",
+    ZH = "zh",
 }
