@@ -52,6 +52,7 @@ export const translationEN = {
             protocols: "Protocols",
             less: "Less",
             more: "More",
+            timeline: "Timeline",
         },
     },
     widget: {
@@ -444,6 +445,7 @@ export const translationJA: typeof translationEN = {
             protocols: "プロトコル",
             less: "少なく",
             more: "もっと",
+            timeline: "タイムライン",
         },
     },
     widget: {
@@ -838,6 +840,7 @@ export const translationES: typeof translationEN = {
             protocols: "Protocolos",
             less: "Menos",
             more: "Más",
+            timeline: "Timeline",
         },
     },
     widget: {
@@ -1231,6 +1234,7 @@ export const translationFR: typeof translationEN = {
             protocols: "Protocoles",
             less: "Moins",
             more: "Plus",
+            timeline: "Chronologie",
         },
     },
     widget: {
@@ -1631,6 +1635,7 @@ export const translationTR: typeof translationEN = {
             protocols: "Protokoller",
             less: "Daha Az",
             more: "Daha Fazla",
+            timeline: "	zaman akışı",
         },
     },
     widget: {

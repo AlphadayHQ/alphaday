@@ -14,6 +14,7 @@ import { Logger } from "../utils/logging";
 import { RootState } from "./reducer";
 import { IUIState } from "./slices/ui";
 import { IViewsState } from "./slices/views";
+import { IWidgetsState } from "./slices/widgets";
 
 type PersistedRootState = (PersistedState & RootState) | undefined;
 
@@ -39,7 +40,13 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV107 = PersistedRootState;
+type RootStateV108 = PersistedRootState;
+type RootStateV107 =
+    | (PersistedState &
+          Omit<RootState, "widgets"> & {
+              widgets: Omit<IWidgetsState, "kasandra">;
+          })
+    | undefined;
 type RootStateV106 =
     | (PersistedState &
           Omit<RootState, "ui"> & {
@@ -119,6 +126,7 @@ type TMigrations = MigrationManifest & {
     105: (s: RootStateV104) => RootStateV105;
     106: (s: RootStateV105) => RootStateV106;
     107: (s: RootStateV106) => RootStateV107;
+    108: (s: RootStateV107) => RootStateV108;
 };
 
 /**
@@ -148,6 +156,7 @@ type TMigrations = MigrationManifest & {
  * - The expected type of the persisted state should be defined in the
  * TMigrationStateVariant type.
  */
+
 // @ts-expect-error
 const migrations: TMigrations = {
     100: (s): RootStateV100 => {
@@ -296,6 +305,16 @@ const migrations: TMigrations = {
                 ...s.ui,
                 selectedLanguageCode: ELanguageCode.EN,
                 showLanguageModal: false,
+            },
+        };
+    },
+    108: (s: RootStateV107): RootStateV108 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            widgets: {
+                ...s.widgets,
+                kasandra: {},
             },
         };
     },
