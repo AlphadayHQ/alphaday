@@ -78,6 +78,7 @@ export const usePreferredLanguage = () => {
 
         if (lang && lang in languages && selectedLangCode !== lang) {
             dispatch(setSelectedLanguageCode({ code: lang as ELanguageCode }));
+            prevLangCodeRef.current = lang as ELanguageCode;
             i18nInit(lang as ELanguageCode);
         } else {
             i18nInit(selectedLangCode);
@@ -102,18 +103,23 @@ export const usePreferredLanguage = () => {
             .then(() => {
                 if (allowedLang !== prevLangCodeRef.current) {
                     prevLangCodeRef.current = allowedLang;
-                    // Reset all queries
 
+                    // Reset all queries
                     dispatch(
                         alphadayApi.util.invalidateTags([
                             "SubscribedViews",
                             "Views",
                         ])
                     );
+                    const isEnglish = allowedLang === ELanguageCode.EN;
+                    const queryString = isEnglish ? "" : `?lang=${allowedLang}`;
+                    const newUrl = `${window.location.pathname}${queryString}`;
 
-                    // A way to reload all local state invalidateTags is not enough
+                    // Also a way to reload all local state invalidateTags is not enough
                     //  https://redux-toolkit.js.org/rtk-query/api/created-api/api-slice-utils#resetapistate:~:text=Note%20that%20hooks%20also%20track%20state%20in%20local%20component%20state%20and%20might%20not%20fully%20be%20reset%20by%20resetApiState.
-                    setTimeout(() => window.location.reload(), 5);
+                    setTimeout(() => {
+                        window.location.assign(newUrl);
+                    }, 5);
                 }
             })
             .catch((e) => {
