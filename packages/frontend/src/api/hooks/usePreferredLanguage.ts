@@ -12,6 +12,7 @@ import {
     translationZH,
 } from "../../locales/translation";
 import { alphadayApi } from "../services";
+import { setSelectedLanguageCode } from "../store";
 import { useAppSelector } from "../store/hooks";
 import { ELanguageCode } from "../types/language";
 import { Logger } from "../utils/logging";
@@ -63,6 +64,8 @@ const i18nInit = (selectedLangCode: ELanguageCode) => {
 export const usePreferredLanguage = () => {
     const dispatch = useDispatch();
     const { isLoading, languages } = useAllowedTranslations();
+    const params = new URLSearchParams(window.location.search);
+
     const selectedLangCode = useAppSelector(
         (state) => state.ui.selectedLanguageCode
     );
@@ -71,7 +74,14 @@ export const usePreferredLanguage = () => {
     const isLangAllowed = languages[selectedLangCode];
 
     useEffect(() => {
-        i18nInit(selectedLangCode);
+        const lang = params.get("lang");
+
+        if (lang && lang in languages && selectedLangCode !== lang) {
+            dispatch(setSelectedLanguageCode({ code: lang as ELanguageCode }));
+            i18nInit(lang as ELanguageCode);
+        } else {
+            i18nInit(selectedLangCode);
+        }
         // this should only run once
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
