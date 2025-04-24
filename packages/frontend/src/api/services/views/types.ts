@@ -295,6 +295,7 @@ export type TRemoteRawUserView = TRemoteBaseUserView & {
         tag: TRemoteTagReadOnly;
     }[];
     max_widgets: number;
+    language: ELanguageCode | undefined;
 };
 
 export type TRemoteUserView = Omit<TRemoteRawUserView, "widgets"> & {

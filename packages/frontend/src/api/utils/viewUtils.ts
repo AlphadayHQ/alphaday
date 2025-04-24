@@ -33,6 +33,12 @@ export const isViewLangModified = (
     resolvedView: TRemoteUserView
 ): boolean => {
     if (cachedView === undefined || resolvedView === undefined) return false;
+    if (
+        cachedView.data.language !== undefined &&
+        cachedView.data.language !== resolvedView.language
+    ) {
+        return true;
+    }
     if (cachedView.data.description !== resolvedView.description) {
         return true;
     }
