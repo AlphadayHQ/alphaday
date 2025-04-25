@@ -39,12 +39,6 @@ export const isViewLangModified = (
     ) {
         return true;
     }
-    if (cachedView.data.description !== resolvedView.description) {
-        return true;
-    }
-    if (cachedView.data.lang !== resolvedView.lang) {
-        return true;
-    }
     return false;
 };
 

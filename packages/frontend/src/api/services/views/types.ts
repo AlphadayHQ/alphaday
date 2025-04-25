@@ -270,7 +270,6 @@ export type TRemoteBaseUserView = {
     is_smart: boolean;
     sort_order: number;
     updated_at: string; // eg. 2022-06-17T10:49:43.659579Z
-    lang?: ELanguageCode;
 };
 
 export type TRemoteUserViewMeta = {
