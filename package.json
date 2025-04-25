@@ -29,7 +29,7 @@
     "@types/react-dom": "18.2.6",
     "@typescript-eslint/eslint-plugin": "5.54.0",
     "@typescript-eslint/parser": "5.62.0",
-    "@vitejs/plugin-react": "4.0.2",
+    "@vitejs/plugin-react": "4.4.1",
     "autoprefixer": "10.4.14",
     "cypress": "12.17.4",
     "cypress-cucumber-preprocessor": "4.3.1",
