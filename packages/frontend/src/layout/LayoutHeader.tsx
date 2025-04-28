@@ -74,23 +74,25 @@ const LayoutHeader: FC<IProps> = ({
                                     <HeaderSearchContainer />
                                 </div>
                                 <HeaderNavRight className="p-0">
-                                    <HeaderNavElement className="mr-3">
+                                    <HeaderNavElement className="mx-3">
                                         <SyncIndicatorContainer />
                                     </HeaderNavElement>
-                                    <HeaderNavElement className="mr-3 [&_svg]:fill-none hidden three-col:block">
+                                    <HeaderNavElement className="mr-1 three-col:mr-3 [&_svg]:fill-none hidden two-col:block [&_span]:hidden three-col:[&_span]:block [&_svg]:mr-0 three-col:[&_svg]:mr-1.5">
                                         <NavTabButton
                                             variant="language"
                                             open={false}
                                             uppercase={false}
                                             onClick={toggleLanguageModal}
                                             title={t(
-                                                "navigation.menu.language"
+                                                "navigation.changeLanguage"
                                             )}
                                         >
-                                            {t("navigation.menu.language")}
+                                            <span>
+                                                {t("navigation.menu.language")}
+                                            </span>
                                         </NavTabButton>
                                     </HeaderNavElement>
-                                    <HeaderNavElement className="mr-1">
+                                    <HeaderNavElement className="mr-1 [&_span]:hidden three-col:[&_span]:block [&_svg]:mr-0 three-col:[&_svg]:mr-1.5">
                                         <NavTabButton
                                             variant="views"
                                             open={false}
@@ -100,7 +102,9 @@ const LayoutHeader: FC<IProps> = ({
                                                 "navigation.openBoardsLibrary"
                                             )}
                                         >
-                                            {t("navigation.boards")}
+                                            <span>
+                                                {t("navigation.boards")}
+                                            </span>
                                         </NavTabButton>
                                     </HeaderNavElement>
                                     <span
@@ -110,15 +114,19 @@ const LayoutHeader: FC<IProps> = ({
                                             setTutFocusElemRef(ref)
                                         }
                                     >
-                                        <HeaderNavElement>
+                                        <HeaderNavElement className="[&_span]:hidden three-col:[&_span]:block [&_svg]:mr-0 three-col:[&_svg]:mr-1.5">
                                             <NavTabButton
                                                 variant="modules"
                                                 open={false}
                                                 uppercase={false}
                                                 onClick={toggleWidgetLib}
-                                                title="Open Widget Library"
+                                                title={t(
+                                                    "navigation.openWidgetsLibrary"
+                                                )}
                                             >
-                                                {t("navigation.widgets")}
+                                                <span>
+                                                    {t("navigation.widgets")}
+                                                </span>
                                             </NavTabButton>
                                         </HeaderNavElement>
                                     </span>
