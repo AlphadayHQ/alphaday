@@ -83,6 +83,7 @@ export const TabButton: FC<ButtonProps> = ({
             )}
             aria-label={label}
             name={title}
+            title={title}
             {...restProps}
         >
             {children}

@@ -3,6 +3,8 @@ export const translationEN = {
         searchBarPlaceholder: "Search for assets, projects, events, etc.",
         boards: "Boards",
         openBoardsLibrary: "Open Boards Library",
+        openWidgetsLibrary: "Open Widgets Library",
+        changeLanguage: "Change Language",
         widgets: "Widgets",
         sortBy: "Sort by",
         menu: {
@@ -395,6 +397,8 @@ export const translationJA: typeof translationEN = {
         searchBarPlaceholder: "アセット、プロジェクト、イベントなどを検索",
         boards: "ボード",
         openBoardsLibrary: "ボードライブラリを開く",
+        openWidgetsLibrary: "ウィジェットライブラリを開く",
+        changeLanguage: "言語を変更",
         widgets: "ウィジェット",
         sortBy: "並び替え",
         menu: {
@@ -789,6 +793,8 @@ export const translationES: typeof translationEN = {
         searchBarPlaceholder: "Buscar activos, proyectos, eventos, etc.",
         boards: "Tableros",
         openBoardsLibrary: "Abrir biblioteca de Tableros",
+        openWidgetsLibrary: "Abrir biblioteca de Widgets",
+        changeLanguage: "Cambiar idioma",
         widgets: "Widgets",
         sortBy: "Ordenar por",
         menu: {
@@ -1182,6 +1188,8 @@ export const translationFR: typeof translationEN = {
             "Rechercher des actifs, projets, événements, etc.",
         boards: "Tableaux",
         openBoardsLibrary: "Ouvrir la bibliothèque de tableaux",
+        openWidgetsLibrary: "Ouvrir la bibliothèque de widgets",
+        changeLanguage: "Changer de langue",
         widgets: "Widgets",
         sortBy: "Trier par",
         menu: {
@@ -1582,6 +1590,8 @@ export const translationTR: typeof translationEN = {
         searchBarPlaceholder: "Varlıklar, projeler, etkinlikler vb. için ara",
         boards: "Panolar",
         openBoardsLibrary: "Pano Kütüphanesini Aç",
+        openWidgetsLibrary: "Araç Kütüphanesini Aç",
+        changeLanguage: "Dil Değiştir",
         widgets: "Araçlar",
         sortBy: "Sırala",
         menu: {
@@ -1978,6 +1988,8 @@ export const translationZH: typeof translationEN = {
         searchBarPlaceholder: "搜索资产、项目、事件等",
         boards: "面板",
         openBoardsLibrary: "打开面板库",
+        openWidgetsLibrary: "打开小部件库",
+        changeLanguage: "更改语言",
         widgets: "小部件",
         sortBy: "排序方式",
         menu: {
