@@ -17,17 +17,43 @@ const SyncIndicator: FC<IProps> = ({ state }: IProps) => {
     switch (state) {
         case EIndicatorState.error:
             return (
-                <RedCrossSVG
-                    className="fill-secondaryOrangeSoda"
+                <div
+                    className="w-full h-8 flex items-center justify-center"
                     title="Error retrieving server data"
-                />
+                >
+                    <RedCrossSVG
+                        className="fill-secondaryOrangeSoda"
+                        title="Error retrieving server data"
+                    />
+                </div>
             );
         case EIndicatorState.loading:
-            return <Spinner size="xs" />;
+            return (
+                <div
+                    className="w-full h-8 flex items-center justify-center"
+                    title="Loading..."
+                >
+                    <Spinner size="xs" />
+                </div>
+            );
         case EIndicatorState.synced:
-            return <CheckedSVG title="Your boards are up-to-date" />;
+            return (
+                <div
+                    className="w-full h-8 flex items-center justify-center"
+                    title="Your boards are up-to-date"
+                >
+                    <CheckedSVG />
+                </div>
+            );
         default:
-            return <CheckedSVG title="Your boards are up-to-date" />;
+            return (
+                <div
+                    className="w-full h-8 flex items-center justify-center"
+                    title="Your boards are up-to-date"
+                >
+                    <CheckedSVG />
+                </div>
+            );
     }
 };
 
