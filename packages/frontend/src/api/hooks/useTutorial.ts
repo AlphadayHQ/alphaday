@@ -135,7 +135,7 @@ export const useTutorial: () => ITutorial = () => {
                     ? // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
                       allowedTutorials.indexOf(currentTutorialTip) + 1
                     : 1
-            }/${tutorials.length - 1}`,
+            }/${allowedTutorials.length - 1}`,
         },
     };
 };
