@@ -30,6 +30,7 @@ import {
 import CONFIG from "src/config/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { RequestRejectedError } from "../errors";
+import { ELanguageCode } from "../types/language";
 import { getReadableErrorMessage } from "../utils/errorHandling";
 import { toast } from "../utils/toastUtils";
 
@@ -312,6 +313,7 @@ export const useView: () => IView = () => {
                               icon: null,
                               keywords: [],
                               max_widgets: CONFIG.VIEWS.MAX_WIDGETS,
+                              language: ELanguageCode.EN,
                           })
                         : selectedView;
                 if (currentView === undefined) {

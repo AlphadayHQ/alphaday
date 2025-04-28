@@ -1,5 +1,6 @@
 import { TRemoteUserView, TRemoteUserViewPreview } from "src/api/services";
 import { TCachedView, TSubscribedView, TUserView } from "src/api/types";
+import { ELanguageCode } from "src/api/types/language";
 import { remoteViewAsCachedView } from "src/api/utils/viewUtils";
 import { tableModuleDataMock } from "./tables";
 
@@ -20,6 +21,7 @@ export const fakeRemoteView = (
     updated_at: new Date().toISOString(),
     sort_order: 0,
     max_widgets: 9,
+    language: ELanguageCode.EN,
     ...viewData,
 });
 
