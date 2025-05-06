@@ -44,6 +44,7 @@ const WIDGETS_CONFIG = {
     [ETemplateNameRegistry.Kasandra]: {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: false,
+        PREDICTIONS_LIMIT: 24,
     },
     [ETemplateNameRegistry.KasandraTimeline]: {
         WIDGET_HEIGHT: 550,
