@@ -50,6 +50,11 @@ const API_V0 = {
             BASE: "items/forum",
             LIST: "/",
         },
+        KASANDRA: {
+            BASE: "kasandra/predictions",
+            DEFAULT: "/",
+            BY_ID: (id: number): string => `/${id}/`,
+        },
         KEYWORDS: {
             BASE: "keywords",
             LIST: "/",
