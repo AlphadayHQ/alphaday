@@ -1,61 +1,47 @@
-import { TChartRange, TCoin, TMarketHistory } from "src/api/types";
-import { TBaseCoin } from "../baseTypes";
+import { TBaseProject, TChartRange } from "src/api/types";
+import {
+    TBaseCoin,
+    TRemoteProjectType,
+    TRemoteTagReadOnly,
+} from "../baseTypes";
 
 /**
  * Primitive types
  */
 
-export type TCoinMarketHistory = {
+export type TRemotePredictionCoin = Omit<TBaseCoin, "gecko_id"> & {
+    project: Omit<TBaseProject, "projectType" | "networkId"> & {
+        project_type: TRemoteProjectType;
+        network_id: number;
+    };
+    gecko_id: string;
+    tags: TRemoteTagReadOnly[];
+};
+export type TRemotePredictionItem = {
     id: number;
-    coin: TCoin;
-    interval: string;
-    currency: string;
-    history: TMarketHistory | undefined;
-    requestedAt: string;
+    coin: TRemotePredictionCoin;
+};
+export type TRemotePredictions = {
+    results: TRemotePredictionItem[];
 };
 
-export type TRemoteMarketCoin = TBaseCoin & {
-    project?: number;
-    tags: number[];
+export type TPredictionCoin = Omit<TBaseCoin, "gecko_id"> & {
+    project: TBaseProject;
+    geckoId: string;
+    tags: TRemoteTagReadOnly[];
 };
-
-export type TRemoteCoinData = {
+export type TPredictionItem = {
     id: number;
-    coin: TRemoteMarketCoin;
-    currency: string;
-    price: number;
-    price_percent_change_24h: number;
-    price_percent_change_7d: number;
-    volume: number;
-    volume_change_24h: number;
-    market_cap: number;
-    date: string;
-};
-
-export type TRemoteMarketHistory =
-    | {
-          prices: [number, number][];
-          market_caps: [number, number][];
-      }
-    | Record<string, never>;
-
-export type TRemoteCoinMarketHistory = {
-    id: number;
-    coin: TRemoteMarketCoin;
-    interval: string;
-    currency: string;
-    history: TRemoteMarketHistory;
-    requested_at: string;
+    coin: TPredictionCoin;
 };
 
 /**
  * Queries
  */
-
-// /predictions/{coin}/{interval}
 export type TGetPredictionsRequest = {
-    coin: string;
+    coin: number;
     interval: TChartRange;
+    limit?: number; // how many datapoints to return
 };
-export type TGetPredictionsRawResponse = TRemoteCoinMarketHistory;
-export type TGetPredictionsResponse = TCoinMarketHistory;
+export type TGetPredictionsRawResponse = TRemotePredictions;
+export type TGetPredictionsResponse = TPredictionItem[];
