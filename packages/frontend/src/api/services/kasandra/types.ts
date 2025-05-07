@@ -1,4 +1,4 @@
-import { TBaseProject, TChartRange } from "src/api/types";
+import { TBaseProject, TChartRange, TPredictionItem } from "src/api/types";
 import {
     TBaseCoin,
     TRemoteProjectType,
@@ -20,19 +20,15 @@ export type TRemotePredictionCoin = Omit<TBaseCoin, "gecko_id"> & {
 export type TRemotePredictionItem = {
     id: number;
     coin: TRemotePredictionCoin;
+    price: number;
+    insight: string;
+    verbose_references: string;
+    case: string;
+    target_date: string;
+    created: string;
 };
 export type TRemotePredictions = {
     results: TRemotePredictionItem[];
-};
-
-export type TPredictionCoin = Omit<TBaseCoin, "gecko_id"> & {
-    project: TBaseProject;
-    geckoId: string;
-    tags: TRemoteTagReadOnly[];
-};
-export type TPredictionItem = {
-    id: number;
-    coin: TPredictionCoin;
 };
 
 /**

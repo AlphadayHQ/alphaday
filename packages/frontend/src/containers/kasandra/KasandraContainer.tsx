@@ -2,9 +2,11 @@ import { FC, useEffect, useMemo, useCallback, Suspense } from "react";
 import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
 import {
     TRemoteCoin,
+    useGetMarketHistoryQuery,
     useGetPinnedCoinsQuery,
     useTogglePinnedCoinMutation,
 } from "src/api/services";
+import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
 import {
     selectIsAuthenticated,
     setKasandraSelectedDataPoint,
@@ -965,21 +967,36 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return storedMarket ?? pinnedCoins[0] ?? coinsData[0] ?? undefined;
     }, [prevSelectedMarketData?.selectedMarket, coinsData, pinnedCoins]);
 
-    // const { currentData: marketHistory, isFetching: isLoadingHistory } =
-    //     useGetMarketHistoryQuery(
-    //         {
-    //             coin: selectedMarket?.slug,
-    //             interval: selectedChartRange,
-    //         },
-    //         {
-    //             pollingInterval:
-    //                 CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-    //             skip: selectedMarket === undefined,
-    //         }
-    //     );
+    const { currentData: marketHistory, isFetching: isLoadingHistory } =
+        useGetMarketHistoryQuery(
+            {
+                // coin: selectedMarket?.slug,
+                coin: "augur",
+                interval: selectedChartRange,
+            },
+            {
+                pollingInterval:
+                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+                skip: selectedMarket === undefined,
+            }
+        );
 
-    const isLoadingHistory = false;
-    const marketHistory = undefined;
+    const { currentData: predictions, isFetching: isLoadingPredictions } =
+        useGetPredictionsQuery(
+            {
+                // TODO: uncomment this once we have the API working
+                // coin: selectedMarket?.id,
+                coin: 34,
+                interval: selectedChartRange,
+                // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
+                limit: 300,
+            },
+            {
+                pollingInterval:
+                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+                skip: selectedMarket === undefined,
+            }
+        );
 
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
@@ -1095,6 +1112,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 <KasandraModule
                     isLoading={isLoadingCoinsData}
                     isLoadingHistory={isLoadingHistory}
+                    isLoadingPredictions={isLoadingPredictions}
+                    selectedPredictions={predictions}
                     selectedMarketHistory={marketHistory}
                     selectedChartRange={selectedChartRange}
                     onSelectChartRange={handleSelectedChartRange}

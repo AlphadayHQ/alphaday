@@ -42,6 +42,12 @@ const kasandraApi = alphadayApi.injectEndpoints({
                 return r.results.map((item) => ({
                     id: item.id,
                     coin: mapRemotePredictionCoin(item.coin),
+                    price: item.price,
+                    insight: item.insight,
+                    verboseReferences: item.verbose_references,
+                    case: item.case,
+                    targetDate: item.target_date,
+                    created: item.created,
                 }));
             },
         }),
