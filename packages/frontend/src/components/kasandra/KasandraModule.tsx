@@ -1,5 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
+import moment from "moment";
 import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
@@ -7,6 +8,7 @@ import {
     TChartRange,
     TCoin,
     TCoinMarketHistory,
+    TPredictionItem,
 } from "src/api/types";
 // import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import CoinInfo from "../market/CoinInfo";
@@ -18,7 +20,9 @@ import LineChart from "./LineChart";
 export interface IMarketModule {
     isLoading?: boolean;
     isLoadingHistory: boolean;
+    isLoadingPredictions: boolean;
     selectedMarketHistory: TCoinMarketHistory | undefined;
+    selectedPredictions: TPredictionItem[] | undefined;
     selectedChartRange: TChartRange;
     onSelectChartRange: (s: TChartRange) => void;
     selectedMarket: TCoin | undefined;
@@ -35,7 +39,9 @@ export interface IMarketModule {
 const MarketModule: FC<IMarketModule> = ({
     isLoading,
     isLoadingHistory,
+    isLoadingPredictions,
     selectedMarketHistory,
+    selectedPredictions,
     selectedChartRange,
     onSelectChartRange,
     selectedMarket,
@@ -49,8 +55,6 @@ const MarketModule: FC<IMarketModule> = ({
     onSelectDataPoint,
 }) => {
     const { t } = useTranslation();
-    const priceHistoryData = selectedMarketHistory?.history?.prices;
-
     const {
         squareRef,
         setHeaderRef,
@@ -58,6 +62,46 @@ const MarketModule: FC<IMarketModule> = ({
         hideLeftPan,
         hideRightPan,
     } = useHeaderScroll();
+    const priceHistoryData = selectedMarketHistory?.history?.prices;
+
+    console.log("selectedPredictions => Data", selectedPredictions);
+
+    const [predictionData, setPredictionData] = useState<{
+        bullish: [number, number][];
+        bearish: [number, number][];
+        base: [number, number][];
+    }>({ bullish: [], bearish: [], base: [] });
+
+    useEffect(() => {
+        const bullishPredictions: [number, number][] = [];
+        const bearishPredictions: [number, number][] = [];
+        const basePredictions: [number, number][] = [];
+        selectedPredictions?.forEach((prediction) => {
+            if (prediction.price && prediction.targetDate) {
+                if (prediction.case === "optimistic") {
+                    bullishPredictions.push([
+                        moment(prediction.targetDate).valueOf(),
+                        prediction.price,
+                    ]);
+                } else if (prediction.case === "pessimistic") {
+                    bearishPredictions.push([
+                        moment(prediction.targetDate).valueOf(),
+                        prediction.price,
+                    ]);
+                } else {
+                    basePredictions.push([
+                        moment(prediction.targetDate).valueOf(),
+                        prediction.price,
+                    ]);
+                }
+            }
+        });
+        setPredictionData({
+            bullish: bullishPredictions,
+            bearish: bearishPredictions,
+            base: basePredictions,
+        });
+    }, [selectedPredictions]);
 
     if (isLoading) {
         return <ModuleLoader $height={contentHeight} />;
@@ -106,8 +150,9 @@ const MarketModule: FC<IMarketModule> = ({
                     </div>
                     <LineChart
                         selectedChartRange={selectedChartRange}
-                        data={priceHistoryData ?? [[0], [1]]}
-                        isLoading={isLoadingHistory}
+                        historyData={priceHistoryData ?? [[0], [1]]}
+                        predictionData={predictionData}
+                        isLoading={isLoadingHistory || isLoadingPredictions}
                         selectedDataPoint={selectedDataPoint}
                         onSelectDataPoint={onSelectDataPoint}
                     />

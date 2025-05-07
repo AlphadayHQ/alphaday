@@ -5,13 +5,18 @@ import {
     // themeColors
 } from "@alphaday/ui-kit";
 import { TChartRange } from "src/api/types";
-// import { minVal } from "src/api/utils/helpers";
+import { maxVal, minVal } from "src/api/utils/helpers";
 import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
 import KasandraTooltip, { TCustomTooltip } from "./KasandraTooltip";
 
 type IProps = {
-    data: number[][];
+    historyData: number[][];
+    predictionData: {
+        bullish: number[][];
+        bearish: number[][];
+        base: number[][];
+    };
     selectedChartRange: TChartRange;
     isLoading?: boolean;
     selectedDataPoint: [number, number] | undefined;
@@ -44,7 +49,43 @@ const generatePoints = (
     }));
 };
 
-const chartSeries = [
+/**
+ * Reduces an array to a specified maximum number of items,
+ * evenly distributing the removed items across the array length.
+ * @param {Array} items - The original array of items
+ * @param {number} maxItems - The maximum number of items to keep
+ * @return {Array} A new array with at most maxItems items
+ */
+const reduceItems = (items: number[][], maxItems: number) => {
+    // If we already have fewer items than the maximum, return a copy of the original
+    if (items.length <= maxItems) {
+        return [...items];
+    }
+
+    // Handle edge cases
+    if (maxItems <= 0) {
+        return [];
+    }
+
+    const result = [];
+    const n = items.length;
+
+    // We'll divide the array into maxItems segments and take one item from each
+    const segmentSize = n / maxItems;
+
+    for (let i = 0; i < maxItems; i++) {
+        // Take the item at the middle of each segment
+        const index = Math.min(
+            Math.floor(i * segmentSize + segmentSize / 2),
+            n - 1
+        );
+        result.push(items[index]);
+    }
+
+    return result;
+};
+
+const chartSeriesMock = [
     // History
     {
         name: "History",
@@ -263,7 +304,8 @@ const renderCustomTooltip =
     };
 
 const LineChart: FC<IProps> = memo(function LineChart({
-    // data,
+    historyData,
+    predictionData,
     // selectedChartRange,
     isLoading,
     selectedDataPoint,
@@ -272,7 +314,28 @@ const LineChart: FC<IProps> = memo(function LineChart({
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
-    // const minValue = minVal(data || [[0], [0]])[0];
+    const chartSeries = [
+        // chartSeriesMock[0],
+        { name: "History", data: reduceItems(historyData, 24) },
+        { name: "Bullish case", data: predictionData.bullish },
+        { name: "Base case", data: predictionData.base },
+        { name: "Bearish case", data: predictionData.bearish },
+    ];
+    console.log("historyData => Data", historyData);
+    console.log("chartSeries => Data", chartSeries);
+
+    const minValue = minVal([
+        ...predictionData.bullish,
+        ...predictionData.base,
+        ...predictionData.bearish,
+        [0, 0],
+    ])[0];
+    const maxValue = maxVal([
+        ...predictionData.bullish,
+        ...predictionData.base,
+        ...predictionData.bearish,
+        [0, 0], // TODO sometimes 0,0 is too big, need to find a better solution for undefined historyData
+    ])[0];
     // const startPrice = data[0][1];
     // const lastPrice = data[data.length - 1][1];
 
@@ -440,10 +503,13 @@ const LineChart: FC<IProps> = memo(function LineChart({
         yaxis: {
             show: false,
             tickAmount: 3,
-            min: 83328.69486633895,
-            max:
-                97577.94333367079 +
-                (97577.94333367079 - 83328.69486633895) * 0.15, // TODO (max) + size of the future annotation in percentage ~= 15%
+            min: minValue,
+            max: maxValue,
+            // max: 50 * 0.15, // TODO (max) + size of the future annotation in percentage ~= 15%
+            // min: 83328.69486633895,
+            // max:
+            //     97577.94333367079 +
+            //     (97577.94333367079 - 83328.69486633895) * 0.15, // TODO (max) + size of the future annotation in percentage ~= 15%
             decimalsInFloat: false,
         },
         grid: {
@@ -521,6 +587,71 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 key={zoomKey}
                 options={options}
                 series={chartSeries}
+                // series={[
+                //     chartSeries[0],
+                //     // {
+                //     //     name: "History",
+                //     //     data: [
+                //     //         [1741155686060, 87070.09680238669],
+                //     //         [1741156600730, 87203.02276071082],
+                //     //         [1741157431902, 87421.59862371652],
+                //     //         [1741158392938, 87572.61283398552],
+                //     //         [1741159276850, 87394.068718299],
+                //     //         [1741160215492, 87512.04729270047],
+                //     //         [1741161093932, 87568.57935673255],
+                //     //         [1741161960389, 87642.61154756158],
+                //     //         [1741162853435, 87741.56450344747],
+                //     //         [1741163777268, 87831.07822462625],
+                //     //         [1741164660348, 87851.52480429214],
+                //     //         [1741165557707, 87869.06572148163],
+                //     //         [1741166482658, 88257.91440096953],
+                //     //         [1741167366580, 88685.04092669683],
+                //     //         [1741168291081, 88428.58242379213],
+                //     //         [1741169138517, 88641.41361763507],
+                //     //         [1741170107310, 88585.41702795791],
+                //     //         [1741170977226, 90243.38183795087],
+                //     //         [1741171858406, 89706.76061128601],
+                //     //         [1741172774876, 89691.95603478217],
+                //     //         [1741173660267, 89875.04834013591],
+                //     //         [1741174568261, 89613.36103831575],
+                //     //         [1741175499208, 90140.69417376975],
+                //     //         [1741176628226, 90305.75677895504],
+                //     //         [1741177527266, 90124.05243372297],
+                //     //         [1741178438708, 90642.95015625951],
+                //     //         [1741179353302, 90352.05950695107],
+                //     //         [1741180566106, 89638.32872581233],
+                //     //         [1741181436710, 89743.67597359545],
+                //     //         [1741182389371, 89144.4969719099],
+                //     //         [1741183243769, 89433.26802498609],
+                //     //         [1741184211348, 89756.27329972007],
+                //     //         [1741185088580, 89683.23825258194],
+                //     //         [1741185917175, 89545.54897017432],
+                //     //         [1741186911952, 88978.99942596417],
+                //     //         [1741187721785, 88645.80293266727],
+                //     //         [1741188710594, 88112.7887398987],
+                //     //         [1741189586118, 88592.06610616272],
+                //     //         [1741190463569, 88337.21345459952],
+                //     //         [1741191320984, 87886.51944370828],
+                //     //         [1741192240526, 87736.82159357124],
+                //     //         [1741193157713, 88075.58253289662],
+                //     //         [1741194036812, 89190.8514508287],
+                //     //         [1741194993156, 89200.38695874772],
+                //     //         [1741195875967, 90041.10727957473],
+                //     //         [1741196775292, 89606.83169485522],
+                //     //         [1741197703771, 89599.76636590458],
+                //     //         [1741198571942, 89343.8404624817],
+                //     //         [1741199490187, 89317.72214749803],
+                //     //         [1741200393447, 89030.86485734794],
+                //     //         [1741201264128, 89762.80824021908],
+                //     //         [1741202125771, 89920.56614890922],
+                //     //         [1741203048299, 89818.59998241573],
+                //     //         [1741204014753, 89907.26783288509],
+                //     //         [1741205145809, 90045.67120200407],
+                //     //         [1741206097140, 89780.34606340837],
+                //     //         [1741206976945, 90229.56280499678],
+                //     //     ],
+                //     // },
+                // ]}
                 width="100%"
                 height="100%"
             />
