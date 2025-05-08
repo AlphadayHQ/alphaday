@@ -14,7 +14,6 @@ import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
 import globalMessages from "src/globalMessages";
 import styles from "./ProfileDropdownWrapper.module.scss";
-// TODO (xavier-charles): wallet view button
 
 interface IProps {
     onSignOut: () => MaybeAsync<void>;

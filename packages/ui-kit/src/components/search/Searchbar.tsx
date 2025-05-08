@@ -15,8 +15,6 @@ import Select, {
     ValueContainerProps,
     OptionsOrGroups,
 } from "react-select";
-// TODO (xavier-charles): add slugify util
-// import { slugify } from "src/api/utils/textUtils";
 import { ReactComponent as CheckMarkSVG } from "src/assets/svg/checkmark.svg";
 import { twMerge } from "tailwind-merge";
 import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
