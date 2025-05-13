@@ -3,25 +3,12 @@ import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
 import {
-    TRemotePredictionCoin,
     TGetPredictionsRequest,
     TGetPredictionsRawResponse,
     TGetPredictionsResponse,
 } from "./types";
 
 const { KASANDRA } = CONFIG.API.DEFAULT.ROUTES;
-
-const mapRemotePredictionCoin = (coin: TRemotePredictionCoin) => {
-    return {
-        ...coin,
-        project: {
-            ...coin.project,
-            projectType: coin.project.project_type,
-            networkId: coin.project.network_id,
-        },
-        geckoId: coin.gecko_id,
-    };
-};
 
 const kasandraApi = alphadayApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -31,7 +18,6 @@ const kasandraApi = alphadayApi.injectEndpoints({
         >({
             query: (req) => {
                 const params: string = queryString.stringify(req);
-                // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 const route = `${KASANDRA.BASE}${KASANDRA.DEFAULT}?${params}`;
                 Logger.debug("querying", route);
                 return route;
@@ -41,12 +27,12 @@ const kasandraApi = alphadayApi.injectEndpoints({
             ): TGetPredictionsResponse => {
                 return r.results.map((item) => ({
                     id: item.id,
-                    coin: mapRemotePredictionCoin(item.coin),
+                    coin: item.coin,
                     price: item.price,
                     insight: item.insight,
-                    verboseReferences: item.verbose_references,
                     case: item.case,
                     targetDate: item.target_date,
+                    pricePercentChange: item.price_percent_change,
                     created: item.created,
                 }));
             },
