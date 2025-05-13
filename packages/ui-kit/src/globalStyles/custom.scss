@@ -9,6 +9,9 @@
 /* custom css for calendar */
 @import "./calendar.scss";
 
+/* custom css for kasandra */
+@import "./kasandra.scss";
+
 @layer utilities {
     .break-word {
         word-break: break-word;
