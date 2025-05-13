@@ -1,5 +1,4 @@
-import { TBaseCoin, TBaseTag } from "../services/baseTypes";
-import { TBaseItem, TBaseProject } from "./primitives";
+import { TBaseItem } from "./primitives";
 
 export type TKasandraItem = Omit<TBaseItem, "tags"> & {
     author: string;
@@ -9,18 +8,32 @@ export type TKasandraItem = Omit<TBaseItem, "tags"> & {
     description: string;
 };
 
-export type TPredictionCoin = Omit<TBaseCoin, "gecko_id"> & {
-    project: TBaseProject;
-    geckoId: string;
-    tags: TBaseTag[];
+export type TInsightSource = {
+    url: string;
+    title: string;
+    name: string;
+    icon: string;
+    slug: string;
+};
+
+export type TPredictionCoin = {
+    id: number;
+    name: string;
+    ticker: string;
+    slug: string;
+    icon: string;
 };
 
 export type TPredictionItem = {
     id: number;
     coin: TPredictionCoin;
     price: number;
-    insight: string;
-    verboseReferences: string;
+    pricePercentChange: number;
+    insight?: {
+        title: string;
+        rationale: string;
+        sources: TInsightSource[];
+    };
     case: string;
     targetDate: string;
     created: string;

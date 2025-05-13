@@ -1,12 +1,17 @@
-import { FC, memo } from "react";
+import { FC, memo, useMemo } from "react";
 import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
-import { TKasandraItem, EItemFeedPreference } from "src/api/types";
+import {
+    TKasandraItem,
+    EItemFeedPreference,
+    TPredictionItem,
+} from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { translateLabels } from "src/api/utils/translationUtils";
 import KasandraItemList from "./KasandraItemList";
 
 interface IKasandra {
     items: TKasandraItem[] | undefined;
+    selectedPredictions: TPredictionItem[] | undefined;
     isLoadingItems: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     feedPreference: EItemFeedPreference;
@@ -51,6 +56,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         isAuthenticated,
         selectedDataPoint,
         onSelectDataPoint,
+        selectedPredictions,
     }) {
         const newsNavItems = translateNavItems();
         const NavItemPreference =
@@ -68,6 +74,18 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
             onSetFeedPreference(optionItem?.value);
         };
 
+        const timelineItems = useMemo(() => {
+            const filteredItems = selectedPredictions?.filter((item) => {
+                if (item.insight !== null && item.insight !== undefined) {
+                    return true;
+                }
+                return false;
+            });
+            return filteredItems;
+        }, [selectedPredictions]);
+
+        console.log("timelineItems =>Data", timelineItems);
+
         return (
             <>
                 <div className="mx-2">
@@ -82,6 +100,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                 ) : (
                     <KasandraItemList
                         items={items}
+                        timelineItems={timelineItems}
                         handlePaginate={handlePaginate}
                         onClick={onClick}
                         onBookmark={onBookmark}

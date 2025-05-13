@@ -987,7 +987,9 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 // TODO: uncomment this once we have the API working
                 // coin: selectedMarket?.id,
                 coin: 34,
-                interval: selectedChartRange,
+                // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
+                // interval: selectedChartRange,
+                interval: "1W",
                 // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
                 limit: 300,
             },

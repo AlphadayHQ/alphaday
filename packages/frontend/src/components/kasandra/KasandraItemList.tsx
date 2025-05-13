@@ -1,6 +1,6 @@
 import { FormEvent, FC, useEffect, useRef, useState } from "react";
 import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
-import { TKasandraItem } from "src/api/types";
+import { TKasandraItem, TPredictionItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 import KasandraItem from "./KasandraItem";
@@ -9,6 +9,7 @@ const SCROLL_OFFSET = 100;
 
 interface IKasandraItemList {
     items: TKasandraItem[] | undefined;
+    timelineItems: TPredictionItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     onClick?: (id: number) => MaybeAsync<void>;
     onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
@@ -19,6 +20,7 @@ interface IKasandraItemList {
 
 const KasandraItemList: FC<IKasandraItemList> = ({
     items,
+    timelineItems,
     handlePaginate,
     onClick,
     onBookmark,
@@ -56,8 +58,8 @@ const KasandraItemList: FC<IKasandraItemList> = ({
         await onClick?.(dataPoint[0]);
     };
 
-    if (items) {
-        if (items.length === 0) {
+    if (timelineItems) {
+        if (timelineItems.length === 0) {
             return (
                 <CenteredBlock>
                     <p>{globalMessages.queries.noMatchFound("Kasandra")}</p>
@@ -66,9 +68,10 @@ const KasandraItemList: FC<IKasandraItemList> = ({
         }
         return (
             <ScrollBar containerRef={setScrollRef} onScroll={handleListScroll}>
-                {items.map((item) => {
-                    const isSelected =
-                        selectedDataPoint?.[0] === item.dataPoint[0];
+                {timelineItems.map((item) => {
+                    // const isSelected =
+                    //     selectedDataPoint?.[0] === item.dataPoint[0];
+                    const isSelected = false;
                     return (
                         <KasandraItem
                             item={item}
