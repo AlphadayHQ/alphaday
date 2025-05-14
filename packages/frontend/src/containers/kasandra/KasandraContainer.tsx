@@ -984,9 +984,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { currentData: predictions, isFetching: isLoadingPredictions } =
         useGetPredictionsQuery(
             {
-                // TODO: uncomment this once we have the API working
-                // coin: selectedMarket?.id,
-                coin: 34,
+                coin: selectedMarket?.id,
                 // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
                 // interval: selectedChartRange,
                 interval: "1W",
