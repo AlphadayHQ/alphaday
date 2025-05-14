@@ -3,7 +3,6 @@ import { FC, useMemo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
 import { TKasandraItem, TPredictionItem } from "src/api/types/kasandra";
-import { computeDuration } from "src/api/utils/dateUtils";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ArrowDownSVG } from "src/assets/svg/arrow-down.svg";
@@ -19,6 +18,20 @@ import { useDynamicWidgetItem } from "../dynamic-modules/hooks/useDynamicWidgetI
 // ----- create expectedPercentChange
 // ----- create title, rationale
 // ----- create sources 1 or 2
+
+const DateDisplay: FC<{ date: string }> = ({ date }) => {
+    return (
+        <div className="flex flex-col justify-between max-h-14 uppercase text-primaryVariant100 cursor-default text-center font-normal tracking-0.2 fontGroup-mini min-w-[50px] mr-[5px] pt-[1.5px]">
+            <span className="text-[10px] uppercase">
+                {moment(date).format("ddd")}
+            </span>
+            <span className="text-primary text-center font-semibold text-2xl leading-5 my-0.5">
+                {moment(date).format("DD")}
+            </span>
+            <span className="text-[10px]">{moment(date).format("HH:mm")}</span>
+        </div>
+    );
+};
 
 const KasandraItem: FC<{
     item: TPredictionItem;
@@ -45,6 +58,30 @@ const KasandraItem: FC<{
         [descHeight]
     ); // 5px comes from padding top in style
 
+    // object to display color & text based on case
+    const caseDisplay = useMemo(() => {
+        return {
+            color:
+                item.case === "optimistic"
+                    ? "text-success"
+                    : item.case === "pessimistic"
+                      ? "text-secondaryOrangeSoda"
+                      : "text-primaryVariant100",
+            text:
+                item.case === "optimistic"
+                    ? "Bull Case"
+                    : item.case === "pessimistic"
+                      ? "Bear Case"
+                      : "Base Case",
+            background:
+                item.case === "optimistic"
+                    ? "gradient-background-bullish"
+                    : item.case === "pessimistic"
+                      ? "gradient-background-bearish"
+                      : "",
+        };
+    }, [item.case]);
+
     return (
         <span
             key={item.id}
@@ -59,12 +96,6 @@ const KasandraItem: FC<{
                 ])?.catch((err) => Logger.error("KasandraItem::onClick", err));
             }}
         >
-            {/* <div
-                className={twMerge(
-                    "flex flex-col bg-background hover:bg-backgroundVariant100 active:bg-backgroundVariant200",
-                    isSelected && "bg-backgroundVariant200"
-                )}
-            > */}
             <div
                 className={twMerge(
                     "flex flex-col hover:bg-backgroundVariant100 active:bg-backgroundVariant200",
@@ -75,42 +106,16 @@ const KasandraItem: FC<{
                     ref={(ref) => (isSelected ? setItemRef(ref) : undefined)}
                     className={twMerge(
                         "flex relative flex-row items-stretch py-3 px-1 ml-2 mr-[3px]",
-                        item.case === "optimistic"
-                            ? "gradient-background-bullish"
-                            : item.case === "pessimistic"
-                              ? "gradient-background-bearish"
-                              : ""
+                        caseDisplay.background
                     )}
                 >
-                    <div className="flex flex-col justify-between max-h-14 uppercase text-primaryVariant100 cursor-default text-center font-normal tracking-0.2 fontGroup-mini min-w-[50px] mr-[5px] pt-[1.5px]">
-                        {/* <div className="items-center "> */}
-                        <span className="text-[10px] uppercase">
-                            {moment(item.targetDate).format("ddd")}
-                        </span>
-                        <span className="text-primary text-center font-semibold text-2xl leading-5 my-0.5">
-                            {moment(item.targetDate).format("DD")}
-                        </span>
-                        <span className="text-[10px]">
-                            {moment(item.targetDate).format("HH:mm")}
-                        </span>
-                        {/* </div> */}
-                    </div>
+                    <DateDisplay date={item.targetDate} />
                     <div className="flex-1 flex flex-col justify-between">
                         <div className="fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0">
                             {item.insight?.title}
                         </div>
                         <p className="lastLine fontGroup-mini flex text-primaryVariant100 mt-2">
-                            {/* <span>{computeDuration(item.targetDate)}</span> */}
-                            <span
-                                className={twMerge(
-                                    "text-primaryVariant100",
-                                    item.case === "optimistic"
-                                        ? "text-success"
-                                        : item.case === "pessimistic"
-                                          ? "text-secondaryOrangeSoda"
-                                          : ""
-                                )}
-                            >
+                            <span className={caseDisplay.color}>
                                 {item.pricePercentChange > 0 ? (
                                     <ArrowUpSVG className="w-2 h-2 mb-1 inline mr-[5px] fill-success" />
                                 ) : item.pricePercentChange < 0 ? (
@@ -128,7 +133,7 @@ const KasandraItem: FC<{
                                 >
                                     {
                                         formatNumber({
-                                            value: item.pricePercentChange,
+                                            value: item.price,
                                             style: ENumberStyle.Percent,
                                         }).value
                                     }
@@ -136,11 +141,7 @@ const KasandraItem: FC<{
                                 <span className="mx-[7px] my-0 self-center">
                                     •
                                 </span>
-                                {item.case === "optimistic"
-                                    ? `Bull Case`
-                                    : item.case === "pessimistic"
-                                      ? "Bear Case"
-                                      : "Base Case"}{" "}
+                                {caseDisplay.text}{" "}
                                 {item.case === "optimistic" ? (
                                     <TrendUpThinSVG className="w-4 h-4 inline fill-success" />
                                 ) : item.case === "pessimistic" ? (
