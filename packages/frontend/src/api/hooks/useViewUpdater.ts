@@ -297,7 +297,7 @@ export const useViewUpdater: () => void = () => {
         if (pathContainsHashOrSlug && routeInfo !== undefined) {
             if (
                 viewFromPathInCache !== undefined &&
-                viewFromPathInCache.data.id !== selectedView?.data.id
+                viewFromPathInCache.data.id !== selectedViewId
             ) {
                 Logger.debug(
                     `useViewUpdater: selecting view ${viewFromPathInCache.data.name} from path`
