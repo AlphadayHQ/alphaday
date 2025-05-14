@@ -60,7 +60,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
      * The assertion below is needed to render the widgets as we do not know the types
      * the module containers expect. Only the container is aware of its data types.
      */
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
     const ModuleContainer = TEMPLATES_DICT[templateSlug] as
         | FC<IModuleContainer>
         | undefined;

@@ -11,6 +11,7 @@ export * from "./gas";
 export * from "./lens";
 export * from "./market";
 export * from "./news";
+export * from "./kasandra";
 export * from "./notifications";
 export * from "./podcast";
 export * from "./portfolio";
