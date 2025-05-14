@@ -1222,10 +1222,6 @@ const widgetConfig = CONFIG.WIDGETS.KASANDRA_PREDICTIONS;
 const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
-    const prevSelectedMarketData = useAppSelector(
-        (state) => state.widgets.market?.[moduleData.hash]
-    );
-
     const { selectedView } = useView();
 
     // TODO(xavier-charles): update this once backend is ready
@@ -1236,6 +1232,11 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         if (widgetData) return widgetData.hash.replace("0", "x");
         return undefined;
     }, [selectedView?.data.widgets]);
+
+    const prevSelectedMarketData = useAppSelector(
+        (state) =>
+            state.widgets.market?.[kasandraModuleDataHash || moduleData.hash]
+    );
 
     const selectedDataPoint = useAppSelector(
         (state) =>
@@ -1248,9 +1249,6 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [currentPage, setCurrentPage] = useState<number | undefined>(
         undefined
     );
-
-    // TODO(xavier-charles): remove this once backend is ready
-    Logger.info("KasandraTimelineContainer::currentPage", currentPage);
 
     const defaultFeed = widgetConfig.DEFAULT_FEED_PREFERENCE;
 
@@ -1321,9 +1319,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { data: predictions, isFetching: isLoadingPredictions } =
         useGetPredictionsQuery(
             {
-                // TODO: uncomment this once we have the API working
-                // coin: selectedMarket?.id,
-                coin: 34,
+                coin: selectedMarket?.id,
                 // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
                 // interval: selectedChartRange,
                 interval: "1W",
