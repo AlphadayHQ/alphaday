@@ -17,6 +17,12 @@ import MarketsList from "../market/MarketsList";
 import { EChartType, TMarketMeta } from "../market/types";
 import LineChart from "./LineChart";
 
+// check if prediction date is today or in the future
+const isPredictionDateInFuture = (predictionDate: string) => {
+    const predictionDateMoment = moment(predictionDate);
+    return predictionDateMoment.isAfter(moment());
+};
+
 export interface IMarketModule {
     isLoading?: boolean;
     isLoadingHistory: boolean;
@@ -64,7 +70,7 @@ const MarketModule: FC<IMarketModule> = ({
     } = useHeaderScroll();
     const priceHistoryData = selectedMarketHistory?.history?.prices;
 
-    console.log("selectedPredictions => Data", selectedPredictions);
+    // console.log("selectedPredictions => Data", selectedPredictions);
 
     const [predictionData, setPredictionData] = useState<{
         bullish: [number, number][];
@@ -77,7 +83,7 @@ const MarketModule: FC<IMarketModule> = ({
         const bearishPredictions: [number, number][] = [];
         const basePredictions: [number, number][] = [];
         selectedPredictions?.forEach((prediction) => {
-            if (prediction.price && prediction.targetDate) {
+            if (isPredictionDateInFuture(prediction.targetDate)) {
                 if (prediction.case === "optimistic") {
                     bullishPredictions.push([
                         moment(prediction.targetDate).valueOf(),

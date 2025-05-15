@@ -981,15 +981,17 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             }
         );
 
+    console.log("marketHistory => Data", marketHistory);
+
     const { currentData: predictions, isFetching: isLoadingPredictions } =
         useGetPredictionsQuery(
             {
                 coin: selectedMarket?.id,
                 // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
-                // interval: selectedChartRange,
-                interval: "1W",
+                interval: selectedChartRange,
+                // interval: "1D",
                 // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
-                limit: 300,
+                limit: 1000,
             },
             {
                 pollingInterval:

@@ -1321,8 +1321,8 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
             {
                 coin: selectedMarket?.id,
                 // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
-                // interval: selectedChartRange,
-                interval: "1W",
+                interval: selectedChartRange,
+                // interval: "1D",
                 // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
                 limit: 300,
             },
@@ -1332,6 +1332,8 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 skip: selectedMarket === undefined,
             }
         );
+
+    console.log("predictions => Data", predictions);
 
     const itemsData = mockItemsResponse;
     const isSuccess = true;

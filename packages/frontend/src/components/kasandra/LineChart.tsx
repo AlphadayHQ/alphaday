@@ -73,6 +73,7 @@ const reduceItems = (items: number[][], maxItems: number) => {
     // We'll divide the array into maxItems segments and take one item from each
     const segmentSize = n / maxItems;
 
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < maxItems; i++) {
         // Take the item at the middle of each segment
         const index = Math.min(
@@ -314,15 +315,30 @@ const LineChart: FC<IProps> = memo(function LineChart({
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
+    console.log("predictionData => Data", predictionData);
+
+    const reducedHistoryData = reduceItems(historyData, 24);
+    const lastHistoryDataPoint =
+        reducedHistoryData[reducedHistoryData.length - 1];
+
     const chartSeries = [
         // chartSeriesMock[0],
-        { name: "History", data: reduceItems(historyData, 24) },
-        { name: "Bullish case", data: predictionData.bullish },
-        { name: "Base case", data: predictionData.base },
-        { name: "Bearish case", data: predictionData.bearish },
+        { name: "History", data: reducedHistoryData },
+        {
+            name: "Bullish case",
+            data: [lastHistoryDataPoint, ...predictionData.bullish],
+        },
+        {
+            name: "Base case",
+            data: [lastHistoryDataPoint, ...predictionData.base],
+        },
+        {
+            name: "Bearish case",
+            data: [lastHistoryDataPoint, ...predictionData.bearish],
+        },
     ];
-    console.log("historyData => Data", historyData);
-    console.log("chartSeries => Data", chartSeries);
+    // console.log("historyData => Data", historyData);
+    // console.log("chartSeries => Data", chartSeries);
 
     const minValue = minVal([
         ...predictionData.bullish,
@@ -408,7 +424,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
         annotations: {
             xaxis: [
                 {
-                    x: 1741206976945, // TODO use Now date
+                    x: lastHistoryDataPoint[0], // TODO use Now date
                     borderColor: "var(--alpha-primary)", // for the dashed line
                     borderWidth: 1,
                     strokeDashArray: 4,
