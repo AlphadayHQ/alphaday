@@ -970,8 +970,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { currentData: marketHistory, isFetching: isLoadingHistory } =
         useGetMarketHistoryQuery(
             {
-                // coin: selectedMarket?.slug,
-                coin: "augur",
+                coin: selectedMarket?.slug,
                 interval: selectedChartRange,
             },
             {
@@ -981,7 +980,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             }
         );
 
-    console.log("marketHistory => Data", marketHistory);
+    // console.log("marketHistory => Data", marketHistory);
 
     const { currentData: predictions, isFetching: isLoadingPredictions } =
         useGetPredictionsQuery(
@@ -999,6 +998,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 skip: selectedMarket === undefined,
             }
         );
+
+    // console.log("predictions =>", predictions);
 
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
