@@ -52,9 +52,9 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         onSetFeedPreference,
         widgetHeight,
         onClick,
-        onBookmark,
-        isAuthenticated,
-        selectedDataPoint,
+        // onBookmark,
+        // isAuthenticated,
+        // selectedDataPoint,
         onSelectDataPoint,
         selectedPredictions,
     }) {
@@ -99,13 +99,13 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                     <ModuleLoader $height={`${widgetHeight}px`} />
                 ) : (
                     <KasandraItemList
-                        items={items}
+                        // items={items}
                         timelineItems={timelineItems}
                         handlePaginate={handlePaginate}
                         onClick={onClick}
-                        onBookmark={onBookmark}
-                        isAuthenticated={isAuthenticated}
-                        selectedDataPoint={selectedDataPoint}
+                        // onBookmark={onBookmark}
+                        // isAuthenticated={isAuthenticated}
+                        // selectedDataPoint={selectedDataPoint}
                         onSelectDataPoint={onSelectDataPoint}
                     />
                 )}
