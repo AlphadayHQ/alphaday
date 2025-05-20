@@ -2042,6 +2042,7 @@ export const translationZH: typeof translationEN = {
             protocols: "协议",
             less: "更少",
             more: "更多",
+            timeline: "时间线",
         },
     },
     widget: {
