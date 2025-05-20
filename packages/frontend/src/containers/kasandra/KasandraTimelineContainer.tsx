@@ -1246,9 +1246,9 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const widgetHeight = useWidgetHeight(moduleData);
 
-    const [currentPage, setCurrentPage] = useState<number | undefined>(
-        undefined
-    );
+    // const [currentPage, setCurrentPage] = useState<number | undefined>(
+    //     undefined
+    // );
 
     const defaultFeed = widgetConfig.DEFAULT_FEED_PREFERENCE;
 
@@ -1440,7 +1440,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
          */
         if (tags && !itemListsAreEqual(tagsRef.current || [], tags)) {
             setItems(undefined);
-            setCurrentPage(undefined);
+            // setCurrentPage(undefined);
         }
         tagsRef.current = tags;
     }, [tags]);
@@ -1459,7 +1459,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     // reset results when feed preference changes
     useEffect(() => {
         setItems(undefined);
-        setCurrentPage(undefined);
+        // setCurrentPage(undefined);
     }, [feedPreference]);
 
     useEffect(() => {
@@ -1492,7 +1492,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
             return () => null;
         }
         const timeout = setTimeout(() => {
-            setCurrentPage(nextPage);
+            // setCurrentPage(nextPage);
         }, 350);
         return () => {
             clearTimeout(timeout);

@@ -1,6 +1,6 @@
 import { FormEvent, FC, useEffect, useRef, useState } from "react";
 import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
-import { TKasandraItem, TPredictionItem } from "src/api/types";
+import { TPredictionItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 import KasandraItem from "./KasandraItem";
@@ -8,24 +8,24 @@ import KasandraItem from "./KasandraItem";
 const SCROLL_OFFSET = 100;
 
 interface IKasandraItemList {
-    items: TKasandraItem[] | undefined;
+    // items: TKasandraItem[] | undefined;
     timelineItems: TPredictionItem[] | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     onClick?: (id: number) => MaybeAsync<void>;
-    onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
-    isAuthenticated?: boolean;
-    selectedDataPoint: [number, number] | undefined;
+    // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
+    // isAuthenticated?: boolean;
+    // selectedDataPoint: [number, number] | undefined;
     onSelectDataPoint: (dataPoint: [number, number]) => void;
 }
 
 const KasandraItemList: FC<IKasandraItemList> = ({
-    items,
+    // items,
     timelineItems,
     handlePaginate,
     onClick,
-    onBookmark,
-    isAuthenticated,
-    selectedDataPoint,
+    // onBookmark,
+    // isAuthenticated,
+    // selectedDataPoint,
     onSelectDataPoint,
 }) => {
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
@@ -79,8 +79,8 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                             isSelected={isSelected}
                             setItemRef={setItemRef}
                             onSelectDataPoint={handleOnSelectDataPoint}
-                            onBookmark={onBookmark}
-                            isAuthenticated={isAuthenticated}
+                            // onBookmark={onBookmark}
+                            // isAuthenticated={isAuthenticated}
                             // setItemsHeight={setItemsHeight}
                         />
                     );

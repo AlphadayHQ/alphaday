@@ -2,7 +2,7 @@
 import { FC, useMemo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
-import { TKasandraItem, TPredictionItem } from "src/api/types/kasandra";
+import { TPredictionItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ArrowDownSVG } from "src/assets/svg/arrow-down.svg";
@@ -38,16 +38,16 @@ const KasandraItem: FC<{
     isSelected: boolean;
     setItemRef: (ref: HTMLDivElement | null) => void;
     onSelectDataPoint: (dataPoint: [number, number]) => MaybeAsync<void>;
-    onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
-    isAuthenticated?: boolean;
+    // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
+    // isAuthenticated?: boolean;
     // setItemsHeight: React.Dispatch<React.SetStateAction<number>>;
 }> = ({
     item,
     isSelected,
     setItemRef,
     onSelectDataPoint,
-    onBookmark,
-    isAuthenticated,
+    // onBookmark,
+    // isAuthenticated,
     // setItemsHeight,
 }) => {
     const { descHeight, descHeightRef, openAccordion, toggleAccordion } =
