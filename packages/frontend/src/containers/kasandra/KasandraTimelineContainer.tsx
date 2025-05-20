@@ -1333,8 +1333,6 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
             }
         );
 
-    console.log("predictions => Data", predictions);
-
     const itemsData = mockItemsResponse;
     const isSuccess = true;
 
