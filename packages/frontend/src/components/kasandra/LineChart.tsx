@@ -319,13 +319,9 @@ const LineChart: FC<IProps> = memo(function LineChart({
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
-    // console.log("predictionData => [timestamp, value]", predictionData);
-
     const reducedHistoryData = reduceItems(historyData, 24);
     const lastHistoryDataPoint =
         reducedHistoryData[reducedHistoryData.length - 1];
-
-    // console.log([lastHistoryDataPoint, ...predictionData.bullish]);
 
     const chartSeries = [
         { name: "History", data: reducedHistoryData },
@@ -349,7 +345,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
         },
     ];
 
-    console.log("Chart series data => [timestamp, value]", chartSeries);
+    console.log("CHART SERIES DATA => [timestamp, value]", chartSeries);
 
     const minValue = minVal([
         ...predictionData.bullish,
@@ -366,14 +362,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
         [-Infinity, -Infinity],
     ])[0];
     console.log("maxValue =>", maxValue);
-
-    // const startPrice = data[0][1];
-    // const lastPrice = data[data.length - 1][1];
-
-    // const chartColor =
-    //     lastPrice > startPrice || lastPrice === startPrice
-    //         ? themeColors.success
-    //         : themeColors.secondaryOrangeSoda;
 
     const options = {
         chart: {
@@ -536,11 +524,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
             tickAmount: 3,
             min: minValue * 0.85,
             max: maxValue * 1.15,
-            // max: 50 * 0.15, // TODO (max) + size of the future annotation in percentage ~= 15%
-            // min: 83328.69486633895,
-            // max:
-            //     97577.94333367079 +
-            //     (97577.94333367079 - 83328.69486633895) * 0.15, // TODO (max) + size of the future annotation in percentage ~= 15%
             decimalsInFloat: false,
         },
         grid: {
