@@ -82,6 +82,8 @@ const KasandraItem: FC<{
         };
     }, [item.case]);
 
+    const itemSources = item.insight?.sources;
+
     return (
         <span
             key={item.id}
@@ -114,7 +116,7 @@ const KasandraItem: FC<{
                         <div className="fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0">
                             {item.insight?.title}
                         </div>
-                        <p className="lastLine fontGroup-mini flex text-primaryVariant100 mt-2">
+                        <div className="lastLine fontGroup-mini flex text-primaryVariant100 mt-2">
                             <span className={caseDisplay.color}>
                                 {item.pricePercentChange > 0 ? (
                                     <ArrowUpSVG className="w-2 h-2 mb-1 inline mr-[5px] fill-success" />
@@ -156,19 +158,20 @@ const KasandraItem: FC<{
                                 onError={imgOnError}
                             />
                             <span>{item.coin.name}</span>{" "}
-                            {!!item.insight?.sources.length && (
+                            {!!itemSources?.length && (
                                 <>
                                     <span className="mx-[7px] my-0 self-center">
                                         •
                                     </span>
                                     <div className="flex flex-wrap gap-1">
-                                        {item.insight.sources
+                                        {itemSources
                                             .slice(0, 2)
                                             .map((source) => (
                                                 <a
                                                     href={source.url}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
+                                                    key={source.url}
                                                 >
                                                     <span className="sr-only">
                                                         {source.name}
@@ -192,7 +195,7 @@ const KasandraItem: FC<{
                                 }
                                 bookmarked={item.bookmarked}
                             /> */}
-                        </p>
+                        </div>
                     </div>
                 </div>
                 <div
@@ -214,6 +217,31 @@ const KasandraItem: FC<{
                                 {item.insight?.rationale}
                             </div>
                             <br />
+                            {itemSources && (
+                                <>
+                                    <div className="flex flex-wrap gap-1">
+                                        {itemSources
+                                            .slice(0, 3)
+                                            .map((source) => (
+                                                <a
+                                                    href={source.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    key={source.url}
+                                                    onClick={(e) =>
+                                                        e.stopPropagation()
+                                                    }
+                                                    className="bg-backgroundVariant300 hover:bg-backgroundVariant400 py-1 px-2 rounded-lg font-medium outline-0 focus-visible:outline-0"
+                                                >
+                                                    <span className="">
+                                                        {source.name}
+                                                    </span>
+                                                </a>
+                                            ))}
+                                    </div>
+                                    <br />
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
