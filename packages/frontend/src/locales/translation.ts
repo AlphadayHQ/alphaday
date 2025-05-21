@@ -1055,7 +1055,7 @@ export const translationES: typeof translationEN = {
     },
     datelocale: {
         future: "en %s",
-        past: " hace",
+        past: "hace %s",
         s: "s",
         m: "m",
         mm: "m",
