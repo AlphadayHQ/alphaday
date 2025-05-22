@@ -294,7 +294,11 @@ export const useViewUpdater: () => void = () => {
      * Update the current selected view from the URL path if a new one is given.
      */
     if (!resolvedView.isFetching) {
-        if (pathContainsHashOrSlug && routeInfo !== undefined) {
+        if (
+            pathContainsHashOrSlug &&
+            routeInfo !== undefined &&
+            !resolvedView.isError
+        ) {
             if (
                 viewFromPathInCache !== undefined &&
                 viewFromPathInCache.data.id !== selectedViewId
@@ -309,7 +313,11 @@ export const useViewUpdater: () => void = () => {
         /**
          * If resolving the view from the path fails, we should reset the selectedViewId.
          */
-        if (pathContainsHashOrSlug && resolvedView.isError) {
+        if (
+            pathContainsHashOrSlug &&
+            resolvedView.isError &&
+            selectedViewId !== undefined
+        ) {
             setSelectedViewId(undefined);
             return;
         }
@@ -328,11 +336,14 @@ export const useViewUpdater: () => void = () => {
                     "useViewUpdater: selecting default view",
                     defaultView.name
                 );
-                navigate.push(
-                    buildViewPathFromHashOrSlug(
-                        defaultView.slug ?? defaultView.hash
-                    )
+
+                const defaultViewPath = buildViewPathFromHashOrSlug(
+                    defaultView.slug ?? defaultView.hash
                 );
+
+                if (window.location.pathname !== defaultViewPath) {
+                    navigate.push(defaultViewPath);
+                }
                 return;
             }
             Logger.debug("useViewUpdater: can't select view.");
