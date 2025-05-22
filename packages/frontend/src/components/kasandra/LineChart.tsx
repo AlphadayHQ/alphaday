@@ -325,7 +325,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
         reducedHistoryData[reducedHistoryData.length - 1];
 
     const chartSeries = [
-        { name: "History", data: reducedHistoryData },
+        { name: "History", data: historyData },
         {
             name: "Bullish case",
             data: sortByDateAsc([
@@ -404,7 +404,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             enabled: false,
         },
         stroke: {
-            curve: "smooth",
+            curve: "straight",
             width: [1.5, 1, 1, 1],
             dashArray: [0, 3, 3, 3],
         },
