@@ -6,6 +6,7 @@ import {
 } from "@alphaday/ui-kit";
 import { TChartRange } from "src/api/types";
 import { maxVal, minVal } from "src/api/utils/helpers";
+import { truncateDataByChartRange } from "src/api/utils/kasandraUtils";
 import { Logger } from "src/api/utils/logging";
 import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
@@ -57,35 +58,35 @@ const generatePoints = (
  * @param {number} maxItems - The maximum number of items to keep
  * @return {Array} A new array with at most maxItems items
  */
-const reduceItems = (items: number[][], maxItems: number) => {
-    // If we already have fewer items than the maximum, return a copy of the original
-    if (items.length <= maxItems) {
-        return [...items];
-    }
+// const reduceItems = (items: number[][], maxItems: number) => {
+//     // If we already have fewer items than the maximum, return a copy of the original
+//     if (items.length <= maxItems) {
+//         return [...items];
+//     }
 
-    // Handle edge cases
-    if (maxItems <= 0) {
-        return [];
-    }
+//     // Handle edge cases
+//     if (maxItems <= 0) {
+//         return [];
+//     }
 
-    const result = [];
-    const n = items.length;
+//     const result = [];
+//     const n = items.length;
 
-    // We'll divide the array into maxItems segments and take one item from each
-    const segmentSize = n / maxItems;
+//     // We'll divide the array into maxItems segments and take one item from each
+//     const segmentSize = n / maxItems;
 
-    // eslint-disable-next-line no-plusplus
-    for (let i = 0; i < maxItems; i++) {
-        // Take the item at the middle of each segment
-        const index = Math.min(
-            Math.floor(i * segmentSize + segmentSize / 2),
-            n - 1
-        );
-        result.push(items[index]);
-    }
+//     // eslint-disable-next-line no-plusplus
+//     for (let i = 0; i < maxItems; i++) {
+//         // Take the item at the middle of each segment
+//         const index = Math.min(
+//             Math.floor(i * segmentSize + segmentSize / 2),
+//             n - 1
+//         );
+//         result.push(items[index]);
+//     }
 
-    return result;
-};
+//     return result;
+// };
 
 function sortByDateAsc(items: number[][]) {
     return items.sort((a, b) => a[0] - b[0]);
@@ -312,7 +313,7 @@ const renderCustomTooltip =
 const LineChart: FC<IProps> = memo(function LineChart({
     historyData,
     predictionData,
-    // selectedChartRange,
+    selectedChartRange,
     isLoading,
     selectedDataPoint,
     onSelectDataPoint,
@@ -320,9 +321,22 @@ const LineChart: FC<IProps> = memo(function LineChart({
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
-    const reducedHistoryData = reduceItems(historyData, 24);
-    const lastHistoryDataPoint =
-        reducedHistoryData[reducedHistoryData.length - 1];
+    Logger.debug("PREDICTION DATA => [timestamp, value]", predictionData);
+
+    // const reducedHistoryData = reduceItems(historyData, 24);
+    const truncatedBullishData = truncateDataByChartRange(
+        predictionData.bullish,
+        selectedChartRange
+    );
+    const truncatedBaseData = truncateDataByChartRange(
+        predictionData.base,
+        selectedChartRange
+    );
+    const truncatedBearishData = truncateDataByChartRange(
+        predictionData.bearish,
+        selectedChartRange
+    );
+    const lastHistoryDataPoint = historyData[historyData.length - 1];
 
     const chartSeries = [
         { name: "History", data: historyData },
@@ -330,18 +344,18 @@ const LineChart: FC<IProps> = memo(function LineChart({
             name: "Bullish case",
             data: sortByDateAsc([
                 lastHistoryDataPoint,
-                ...predictionData.bullish,
+                ...truncatedBullishData,
             ]),
         },
         {
             name: "Base case",
-            data: sortByDateAsc([lastHistoryDataPoint, ...predictionData.base]),
+            data: sortByDateAsc([lastHistoryDataPoint, ...truncatedBaseData]),
         },
         {
             name: "Bearish case",
             data: sortByDateAsc([
                 lastHistoryDataPoint,
-                ...predictionData.bearish,
+                ...truncatedBearishData,
             ]),
         },
     ];
