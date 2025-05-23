@@ -135,7 +135,8 @@ const KasandraItem: FC<{
                                 >
                                     {
                                         formatNumber({
-                                            value: item.price,
+                                            value:
+                                                item.pricePercentChange / 100,
                                             style: ENumberStyle.Percent,
                                         }).value
                                     }

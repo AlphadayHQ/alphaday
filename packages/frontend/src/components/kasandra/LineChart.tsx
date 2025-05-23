@@ -537,8 +537,9 @@ const LineChart: FC<IProps> = memo(function LineChart({
         yaxis: {
             show: false,
             tickAmount: 3,
-            min: minValue * 0.85,
-            max: maxValue * 1.15,
+            // Manual adjustments to the y-axis to avoid clipping the line chart
+            min: minValue * (1 - 0.1),
+            max: maxValue * (1 + 0.01),
             decimalsInFloat: false,
         },
         grid: {
