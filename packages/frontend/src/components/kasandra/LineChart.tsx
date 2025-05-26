@@ -366,6 +366,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
         ...predictionData.bullish,
         ...predictionData.base,
         ...predictionData.bearish,
+        ...historyData,
         [Infinity, Infinity],
     ])[0];
     Logger.debug("minValue =>", minValue);
@@ -374,6 +375,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
         ...predictionData.bullish,
         ...predictionData.base,
         ...predictionData.bearish,
+        ...historyData,
         [-Infinity, -Infinity],
     ])[0];
     Logger.debug("maxValue =>", maxValue);
@@ -538,7 +540,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             show: false,
             tickAmount: 3,
             // Manual adjustments to the y-axis to avoid clipping the line chart
-            min: minValue * (1 - 0.1),
+            min: minValue * (1 - 0.01),
             max: maxValue * (1 + 0.01),
             decimalsInFloat: false,
         },
