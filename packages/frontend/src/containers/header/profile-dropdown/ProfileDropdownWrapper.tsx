@@ -100,8 +100,13 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                     <div className="mx-2">
                         <div className="flex justify-start px-2 pb-5 pt-0">
                             <DropdownAvatar />
-                            <p className="m-0 self-center ml-4 capitalize fontGroup-highlight">
-                                {profile?.user.username}
+                            <p
+                                className={twMerge(
+                                    "m-0 self-center ml-4 fontGroup-highlight break-words",
+                                    profile?.user.username && "capitalize"
+                                )}
+                            >
+                                {profile?.user.username || profile?.user.email}
                             </p>
                         </div>
                         <Divider />
