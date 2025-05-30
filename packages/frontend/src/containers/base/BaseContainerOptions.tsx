@@ -40,13 +40,13 @@ import {
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import PromptEditor from "src/components/kasandra/PromptEditor";
-import { TPromptEditorProps } from "src/components/kasandra/types";
+import { IPromptEditorProps } from "src/components/kasandra/types";
 import { EWidgetSettingsRegistry } from "src/constants";
 import BaseContainerMenu from "./BaseContainerMenu";
 
 interface IBaseContainerOptions {
     dragProps: DraggableProvidedDragHandleProps | undefined;
-    promptProps?: TPromptEditorProps;
+    promptProps?: IPromptEditorProps;
     headerRef: React.RefObject<HTMLDivElement>;
     moduleData: TUserViewWidget;
     showSettings: boolean | undefined;

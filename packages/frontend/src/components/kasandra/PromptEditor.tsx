@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { FormTextArea } from "src/mobile-components/form-elements/FormElements";
-import { TPromptEditorProps } from "./types";
+import { IPromptEditorProps } from "./types";
 
-const PromptEditor: FC<TPromptEditorProps> = ({
+const PromptEditor: FC<IPromptEditorProps> = ({
     prompts,
     onPromptsChange,
     // selectedMarket,
