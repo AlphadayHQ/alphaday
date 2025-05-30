@@ -68,6 +68,7 @@ beforeEach(() => {
         podcast: {},
         video: {},
         blog: {},
+        kasandra: {},
         tvl: {
             [tvlWidgetHash]: {
                 selectedProjectType: "chain",

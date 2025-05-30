@@ -188,7 +188,7 @@ export const ListItem: FC<IList> = ({
                             )}
 
                             <img
-                                src={source} // TODO (xavier-charles):: source is image url for tag pill
+                                src={source}
                                 alt=""
                                 className={variantStyle.img}
                                 onError={imgOnError}

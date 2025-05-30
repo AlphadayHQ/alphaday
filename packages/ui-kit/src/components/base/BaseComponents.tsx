@@ -28,11 +28,15 @@ export const BaseModuleWrapper = forwardRef<
 
 export const BaseModuleBody: FC<{
     children?: ReactNode;
+    className?: string;
     style?: React.CSSProperties;
-}> = ({ children, style }) => {
+}> = ({ children, className, style }) => {
     return (
         <div
-            className="p-0 flex h-[inherit] max-h-[calc(100%_-_40px)] min-h-[1px] flex-auto flex-col justify-between overflow-hidden"
+            className={twMerge(
+                "p-0 flex h-[inherit] max-h-[calc(100%_-_40px)] min-h-[1px] flex-auto flex-col justify-between overflow-hidden",
+                className
+            )}
             style={style}
         >
             {children}
