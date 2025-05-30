@@ -8,7 +8,7 @@ import {
     TChartRange,
     TCoin,
     TCoinMarketHistory,
-    TPredictionItem,
+    TPredictions,
 } from "src/api/types";
 // import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import CoinInfo from "../market/CoinInfo";
@@ -18,7 +18,7 @@ import { EChartType, TMarketMeta } from "../market/types";
 import LineChart from "./LineChart";
 
 // check if prediction date is today or in the future
-const isPredictionDateInFuture = (predictionDate: string) => {
+const isPredictionDateInFuture = (predictionDate: number) => {
     const predictionDateMoment = moment(predictionDate);
     return predictionDateMoment.isAfter(moment());
 };
@@ -28,7 +28,7 @@ export interface IMarketModule {
     isLoadingHistory: boolean;
     isLoadingPredictions: boolean;
     selectedMarketHistory: TCoinMarketHistory | undefined;
-    selectedPredictions: TPredictionItem[] | undefined;
+    selectedPredictions: TPredictions | undefined;
     selectedChartRange: TChartRange;
     onSelectChartRange: (s: TChartRange) => void;
     selectedMarket: TCoin | undefined;
@@ -82,26 +82,24 @@ const MarketModule: FC<IMarketModule> = ({
         const bullishPredictions: [number, number][] = [];
         const bearishPredictions: [number, number][] = [];
         const basePredictions: [number, number][] = [];
-        selectedPredictions?.forEach((prediction) => {
-            if (isPredictionDateInFuture(prediction.targetDate)) {
-                if (prediction.case === "optimistic") {
-                    bullishPredictions.push([
-                        moment(prediction.targetDate).valueOf(),
-                        prediction.price,
-                    ]);
-                } else if (prediction.case === "pessimistic") {
-                    bearishPredictions.push([
-                        moment(prediction.targetDate).valueOf(),
-                        prediction.price,
-                    ]);
-                } else {
-                    basePredictions.push([
-                        moment(prediction.targetDate).valueOf(),
-                        prediction.price,
-                    ]);
+
+        if (selectedPredictions) {
+            Object.entries(selectedPredictions).forEach(
+                ([predictionCase, prediction]) => {
+                    prediction.data.forEach((p) => {
+                        if (isPredictionDateInFuture(p.timestamp)) {
+                            if (predictionCase === "optimistic") {
+                                bullishPredictions.push([p.timestamp, p.price]);
+                            } else if (predictionCase === "pessimistic") {
+                                bearishPredictions.push([p.timestamp, p.price]);
+                            } else {
+                                basePredictions.push([p.timestamp, p.price]);
+                            }
+                        }
+                    });
                 }
-            }
-        });
+            );
+        }
         setPredictionData({
             bullish: bullishPredictions,
             bearish: bearishPredictions,
