@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useCallback, Suspense } from "react";
+import { FC, useEffect, useMemo, useCallback, Suspense, useState } from "react";
 import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
 import {
     TRemoteCoin,
@@ -26,6 +26,63 @@ import { EWidgetSettingsRegistry } from "src/constants";
 import globalMessages from "src/globalMessages";
 import { IModuleContainer } from "src/types";
 import BaseContainer from "../base/BaseContainer";
+
+const mockSystemPrompt = `
+Analyze the following cryptocurrency data and predict the price movements.
+
+Current Market Data:
+- Coin: {coin.name} ({coin.symbol.upper()})
+- Current Price: {current_price:.4f}
+- Market Cap: {market_cap:,.0f}
+- 24h Volume: {volume_24h:,.0f}
+- 24h Change: {price_change_24h:.2f}%
+- 7d Change: {price_change_7d:.2f}%
+- 30d Change: {price_change_30d:.2f}%
+
+Historical Analysis:
+{chr(10).join(historical_context)}
+{formatted_references}
+
+Target Prediction:
+- Prediction Date: {target_date.strftime('%Y-%m-%d')}
+- Prediction Interval: {prediction_interval}
+
+Based on the historical data, technical indicators, current market conditions, and any relevant news, provide price predictions for OPTIMISTIC, BASELINE, and PESSIMISTIC scenarios in the following JSON format:
+
+{{
+  "predictions": [
+    {{
+      "case": "optimistic",
+      "predicted_price": <predicted price in optimistic scenario>,
+      "price_percent_change": <percentage change from current price>,
+      "probability": <probability of this scenario 0-100>
+    }},
+    {{
+      "case": "baseline", 
+      "predicted_price": <predicted price in baseline scenario>,
+      "price_percent_change": <percentage change from current price>,
+      "probability": <probability of this scenario 0-100>
+    }},
+    {{
+      "case": "pessimistic",
+      "predicted_price": <predicted price in pessimistic scenario>,
+      "price_percent_change": <percentage change from current price>,
+      "probability": <probability of this scenario 0-100>
+    }}
+  ],
+  "most_likely_scenario": "<optimistic, baseline, or pessimistic>",
+  "confidence_level": "<high, medium, or low>",
+  "technical_analysis": {{
+    "overall_trend": "<optimistic, pessimistic, or baseline>",
+    "support_levels": [<list of 2-3 support price levels>],
+    "resistance_levels": [<list of 2-3 resistance price levels>],
+    "key_indicators": [<list of 3-5 key technical/fundamental indicators to watch>]
+  }}
+}}
+
+Ensure your predictions are data-driven and the probabilities across all scenarios sum to 100.
+
+`;
 
 const transformRemoteCoin = (coin: TRemoteCoin): TCoin => {
     const price = coin.price ?? 0;
@@ -900,6 +957,11 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
+    const [prompts, setPrompts] = useState({
+        system: mockSystemPrompt,
+        user: "",
+    });
+
     const selectedDataPoint = useAppSelector(
         (state) => state.widgets.kasandra?.[moduleData.hash]?.selectedDataPoint
     );
@@ -1097,6 +1159,14 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 allowFullSize: false,
                 showFullSize: false,
                 setTutFocusElemRef: undefined,
+            }}
+            promptProps={{
+                prompts,
+                onPromptsChange: (p) => {
+                    setPrompts(p);
+                },
+                selectedMarket,
+                selectedChartRange,
             }}
             // TODO (xavier-charles): revert the code below once backend is ready
             moduleData={{
