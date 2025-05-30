@@ -1,5 +1,4 @@
 import {
-    TInsightSource,
     TBaseProject,
     TChartRange,
     TPredictionCoin,
