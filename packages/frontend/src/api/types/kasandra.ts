@@ -1,4 +1,11 @@
+import { TChartRange } from "./market";
 import { TBaseItem } from "./primitives";
+
+export enum EPredictionCase {
+    OPTIMISTIC = "optimistic",
+    BASELINE = "baseline",
+    PESSIMISTIC = "pessimistic",
+}
 
 export type TKasandraItem = Omit<TBaseItem, "tags"> & {
     author: string;
@@ -37,4 +44,21 @@ export type TPredictionItem = {
     case: string;
     targetDate: string;
     created: string;
+};
+
+export type TPredictionData = {
+    id: number;
+    coin: TPredictionCoin;
+    case: EPredictionCase;
+    interval: TChartRange;
+    data: {
+        price: number;
+        pricePercentChange: number;
+        timestamp: number;
+    }[];
+    created: string;
+};
+
+export type TPredictions = {
+    [key in EPredictionCase]: TPredictionData;
 };

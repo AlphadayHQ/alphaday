@@ -3,7 +3,8 @@ import {
     TBaseProject,
     TChartRange,
     TPredictionCoin,
-    TPredictionItem,
+    TPredictions,
+    EPredictionCase,
 } from "src/api/types";
 import {
     TBaseCoin,
@@ -24,31 +25,29 @@ export type TRemotePredictionCoin = Omit<TBaseCoin, "gecko_id"> & {
     tags: TRemoteTagReadOnly[];
 };
 
-export type TRemotePredictionItem = {
+export type TRemotePredictionData = {
     id: number;
     coin: TPredictionCoin;
-    price: number;
-    insight: {
-        title: string;
-        rationale: string;
-        sources: TInsightSource[];
-    };
-    case: string;
-    target_date: string;
-    price_percent_change: number;
+    case: EPredictionCase;
+    interval: TChartRange;
+    data: {
+        price: number;
+        price_percent_change: number;
+        timestamp: number;
+    }[];
     created: string;
 };
 export type TRemotePredictions = {
-    results: TRemotePredictionItem[];
+    [key in EPredictionCase]: TRemotePredictionData;
 };
 
 /**
  * Queries
  */
 export type TGetPredictionsRequest = {
-    coin: number;
+    coin: string;
     interval: TChartRange;
     limit?: number; // how many datapoints to return
 };
 export type TGetPredictionsRawResponse = TRemotePredictions;
-export type TGetPredictionsResponse = TPredictionItem[];
+export type TGetPredictionsResponse = TPredictions;

@@ -1316,22 +1316,24 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return storedMarket ?? pinnedCoins[0] ?? coinsData[0] ?? undefined;
     }, [prevSelectedMarketData?.selectedMarket, coinsData, pinnedCoins]);
 
-    const { data: predictions, isFetching: isLoadingPredictions } =
-        useGetPredictionsQuery(
-            {
-                coin: selectedMarket?.id,
-                // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
-                interval: selectedChartRange,
-                // interval: "1D",
-                // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
-                limit: 300,
-            },
-            {
-                pollingInterval:
-                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-                skip: selectedMarket === undefined,
-            }
-        );
+    const {
+        // data: predictions,
+        isFetching: isLoadingPredictions,
+    } = useGetPredictionsQuery(
+        {
+            coin: selectedMarket?.slug,
+            // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
+            interval: selectedChartRange,
+            // interval: "1D",
+            // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
+            limit: 300,
+        },
+        {
+            pollingInterval:
+                CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+            skip: selectedMarket === undefined,
+        }
+    );
 
     const itemsData = mockItemsResponse;
     const isSuccess = true;
@@ -1507,7 +1509,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 items={
                     (items || itemsData?.results) as TKasandraItem[] | undefined
                 }
-                selectedPredictions={predictions}
+                selectedPredictions={undefined}
                 handlePaginate={handleNextPage}
                 feedPreference={feedPreference}
                 onSetFeedPreference={setFeedPreference}

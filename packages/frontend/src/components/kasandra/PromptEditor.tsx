@@ -5,8 +5,8 @@ import { TPromptEditorProps } from "./types";
 const PromptEditor: FC<TPromptEditorProps> = ({
     prompts,
     onPromptsChange,
-    selectedMarket,
-    selectedChartRange,
+    // selectedMarket,
+    // selectedChartRange,
 }) => {
     return (
         <div className="grid grid-cols-2 gap-4 w-full p-4 pb-12">
