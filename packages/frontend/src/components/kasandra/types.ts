@@ -13,7 +13,7 @@ export enum EChartType {
     Candlestick = "candlestick",
 }
 
-export type TPromptEditorProps = {
+export type IPromptEditorProps = {
     prompts: {
         system: string;
         user: string;
