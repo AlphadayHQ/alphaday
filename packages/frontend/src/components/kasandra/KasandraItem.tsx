@@ -2,6 +2,7 @@
 import { FC, useMemo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
+import { TCoin } from "src/api/types";
 import { TPredictionItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
@@ -35,6 +36,7 @@ const DateDisplay: FC<{ date: string }> = ({ date }) => {
 
 const KasandraItem: FC<{
     item: TPredictionItem;
+    selectedMarket: TCoin | undefined;
     isSelected: boolean;
     setItemRef: (ref: HTMLDivElement | null) => void;
     onSelectDataPoint: (dataPoint: [number, number]) => MaybeAsync<void>;
@@ -46,6 +48,7 @@ const KasandraItem: FC<{
     isSelected,
     setItemRef,
     onSelectDataPoint,
+    selectedMarket,
     // onBookmark,
     // isAuthenticated,
     // setItemsHeight,
@@ -153,12 +156,12 @@ const KasandraItem: FC<{
                             </span>
                             <span className="mx-[7px] my-0 self-center">•</span>
                             <img
-                                src={item.coin.icon}
+                                src={selectedMarket?.icon}
                                 alt=""
                                 className="w-4 h-4 mr-[5px] rounded-[100px]"
                                 onError={imgOnError}
                             />
-                            <span>{item.coin.name}</span>{" "}
+                            <span>{selectedMarket?.name}</span>{" "}
                             {!!itemSources?.length && (
                                 <>
                                     <span className="mx-[7px] my-0 self-center">
@@ -181,6 +184,7 @@ const KasandraItem: FC<{
                                                         src={source.icon}
                                                         alt=""
                                                         className="w-4 h-4 rounded-[100px]"
+                                                        onError={imgOnError}
                                                     />
                                                 </a>
                                             ))}

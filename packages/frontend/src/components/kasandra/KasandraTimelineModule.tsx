@@ -4,6 +4,7 @@ import {
     TKasandraItem,
     EItemFeedPreference,
     TPredictionItem,
+    TCoin,
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { translateLabels } from "src/api/utils/translationUtils";
@@ -12,6 +13,7 @@ import KasandraItemList from "./KasandraItemList";
 interface IKasandra {
     items: TKasandraItem[] | undefined;
     selectedPredictions: TPredictionItem[] | undefined;
+    selectedMarket: TCoin | undefined;
     isLoadingItems: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     feedPreference: EItemFeedPreference;
@@ -57,6 +59,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         // selectedDataPoint,
         onSelectDataPoint,
         selectedPredictions,
+        selectedMarket,
     }) {
         const newsNavItems = translateNavItems();
         const NavItemPreference =
@@ -106,6 +109,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                         // onBookmark={onBookmark}
                         // isAuthenticated={isAuthenticated}
                         // selectedDataPoint={selectedDataPoint}
+                        selectedMarket={selectedMarket}
                         onSelectDataPoint={onSelectDataPoint}
                     />
                 )}

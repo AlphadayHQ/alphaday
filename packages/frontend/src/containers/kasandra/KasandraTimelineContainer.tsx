@@ -1542,6 +1542,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     (items || itemsData?.results) as TKasandraItem[] | undefined
                 }
                 selectedPredictions={testPredictionItems || undefined}
+                selectedMarket={selectedMarket}
                 handlePaginate={handleNextPage}
                 feedPreference={feedPreference}
                 onSetFeedPreference={setFeedPreference}
