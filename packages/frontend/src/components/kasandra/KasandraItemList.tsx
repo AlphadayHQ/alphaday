@@ -1,6 +1,6 @@
 import { FormEvent, FC, useEffect, useRef, useState } from "react";
 import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
-import { TPredictionItem } from "src/api/types";
+import { TCoin, TPredictionItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 import KasandraItem from "./KasandraItem";
@@ -10,6 +10,7 @@ const SCROLL_OFFSET = 100;
 interface IKasandraItemList {
     // items: TKasandraItem[] | undefined;
     timelineItems: TPredictionItem[] | undefined;
+    selectedMarket: TCoin | undefined;
     handlePaginate: (type: "next" | "previous") => void;
     onClick?: (id: number) => MaybeAsync<void>;
     // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
@@ -27,6 +28,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
     // isAuthenticated,
     // selectedDataPoint,
     onSelectDataPoint,
+    selectedMarket,
 }) => {
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const [itemRef, setItemRef] = useState<HTMLDivElement | null>();
@@ -75,6 +77,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                     return (
                         <KasandraItem
                             item={item}
+                            selectedMarket={selectedMarket}
                             key={item.id}
                             isSelected={isSelected}
                             setItemRef={setItemRef}
