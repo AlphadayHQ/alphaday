@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
-import moment from "moment";
 import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
@@ -19,8 +18,13 @@ import LineChart from "./LineChart";
 
 // check if prediction date is today or in the future
 const isPredictionDateInFuture = (predictionDate: number) => {
-    const predictionDateMoment = moment(predictionDate);
-    return predictionDateMoment.isAfter(moment());
+    // Handle both seconds and milliseconds timestamps
+    const timestamp =
+        predictionDate < 10000000000 ? predictionDate * 1000 : predictionDate;
+    const predictionDateObj = new Date(timestamp);
+    const today = new Date();
+
+    return predictionDateObj >= today;
 };
 
 export interface IMarketModule {
@@ -89,11 +93,20 @@ const MarketModule: FC<IMarketModule> = ({
                     prediction.data.forEach((p) => {
                         if (isPredictionDateInFuture(p.timestamp)) {
                             if (predictionCase === "optimistic") {
-                                bullishPredictions.push([p.timestamp, p.price]);
+                                bullishPredictions.push([
+                                    p.timestamp * 1000,
+                                    p.price,
+                                ]);
                             } else if (predictionCase === "pessimistic") {
-                                bearishPredictions.push([p.timestamp, p.price]);
+                                bearishPredictions.push([
+                                    p.timestamp * 1000,
+                                    p.price,
+                                ]);
                             } else {
-                                basePredictions.push([p.timestamp, p.price]);
+                                basePredictions.push([
+                                    p.timestamp * 1000,
+                                    p.price,
+                                ]);
                             }
                         }
                     });

@@ -6,7 +6,7 @@ import {
     useGetPinnedCoinsQuery,
     useTogglePinnedCoinMutation,
 } from "src/api/services";
-import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
+// import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
 import {
     selectIsAuthenticated,
     setKasandraSelectedDataPoint,
@@ -14,8 +14,12 @@ import {
     setSelectedMarket,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { TBaseEntity, TChartRange, TCoin } from "src/api/types";
+import { TBaseEntity, TChartRange, TCoin, TPredictions } from "src/api/types";
 
+import {
+    convertToPredictions,
+    fetchTestPredictions,
+} from "src/api/utils/kasandraUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import KasandraModule from "src/components/kasandra/KasandraModule";
@@ -957,6 +961,10 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
+    const [testPredictions, setTestPredictions] = useState<
+        TPredictions | null | undefined
+    >(null);
+
     const [prompts, setPrompts] = useState({
         system: mockSystemPrompt,
         user: "",
@@ -1044,22 +1052,22 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     // console.log("marketHistory => Data", marketHistory);
 
-    const { currentData: predictions, isFetching: isLoadingPredictions } =
-        useGetPredictionsQuery(
-            {
-                coin: selectedMarket?.slug,
-                // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
-                interval: selectedChartRange,
-                // interval: "1D",
-                // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
-                limit: 1000,
-            },
-            {
-                pollingInterval:
-                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-                skip: selectedMarket === undefined,
-            }
-        );
+    // const { currentData: predictions, isFetching: isLoadingPredictions } =
+    //     useGetPredictionsQuery(
+    //         {
+    //             coin: selectedMarket?.slug,
+    //             // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
+    //             interval: selectedChartRange,
+    //             // interval: "1D",
+    //             // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
+    //             limit: 1000,
+    //         },
+    //         {
+    //             pollingInterval:
+    //                 CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+    //             skip: selectedMarket === undefined,
+    //         }
+    //     );
 
     // console.log("predictions =>", predictions);
 
@@ -1146,6 +1154,23 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         }
     }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
+    useEffect(() => {
+        if (
+            selectedMarket?.slug &&
+            selectedChartRange &&
+            testPredictions === null
+        ) {
+            fetchTestPredictions(
+                selectedMarket.slug,
+                selectedChartRange,
+                (data) => {
+                    setTestPredictions(convertToPredictions(data));
+                    // Logger.debug("testPredictions =>", data);
+                }
+            );
+        }
+    }, [selectedMarket.slug, selectedChartRange, testPredictions]);
+
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT}px`;
     }, [WIDGET_HEIGHT]);
@@ -1185,8 +1210,9 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 <KasandraModule
                     isLoading={isLoadingCoinsData}
                     isLoadingHistory={isLoadingHistory}
-                    isLoadingPredictions={isLoadingPredictions}
-                    selectedPredictions={predictions}
+                    // isLoadingPredictions={isLoadingPredictions}
+                    isLoadingPredictions={testPredictions === null}
+                    selectedPredictions={testPredictions || undefined}
                     selectedMarketHistory={marketHistory}
                     selectedChartRange={selectedChartRange}
                     onSelectChartRange={handleSelectedChartRange}
