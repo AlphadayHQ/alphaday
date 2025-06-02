@@ -84,7 +84,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
             return filteredItems;
         }, [selectedPredictions]);
 
-        // console.log("timelineItems =>Data", timelineItems);
+        Logger.debug("timelineItems =>Data", timelineItems);
 
         return (
             <>

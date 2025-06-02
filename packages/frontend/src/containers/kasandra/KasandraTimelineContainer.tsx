@@ -7,7 +7,7 @@ import {
     useGetPinnedCoinsQuery,
     useOpenNewsItemMutation,
 } from "src/api/services";
-import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
+// import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
 import {
     setKasandraFeedPreference,
     selectKasandraFeedPreference,
@@ -15,12 +15,22 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
-import { TKasandraItem, EItemFeedPreference, TCoin } from "src/api/types";
+import {
+    TKasandraItem,
+    EItemFeedPreference,
+    TCoin,
+    // TPredictions,
+    TPredictionItem,
+} from "src/api/types";
 // import * as filterUtils from "src/api/utils/filterUtils";
 import {
     buildUniqueItemList,
     itemListsAreEqual,
 } from "src/api/utils/itemUtils";
+import {
+    convertToPredictionItems,
+    fetchTestPredictions,
+} from "src/api/utils/kasandraUtils";
 import { Logger } from "src/api/utils/logging";
 import { toast } from "src/api/utils/toastUtils";
 import KasandraTimelineModule from "src/components/kasandra/KasandraTimelineModule";
@@ -1224,6 +1234,10 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
     const { selectedView } = useView();
 
+    const [testPredictionItems, setTestPredictionItems] = useState<
+        TPredictionItem[] | null | undefined
+    >(null);
+
     // TODO(xavier-charles): update this once backend is ready
     const kasandraModuleDataHash = useMemo(() => {
         const widgetData = selectedView?.data.widgets.find(
@@ -1316,24 +1330,24 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return storedMarket ?? pinnedCoins[0] ?? coinsData[0] ?? undefined;
     }, [prevSelectedMarketData?.selectedMarket, coinsData, pinnedCoins]);
 
-    const {
-        // data: predictions,
-        isFetching: isLoadingPredictions,
-    } = useGetPredictionsQuery(
-        {
-            coin: selectedMarket?.slug,
-            // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
-            interval: selectedChartRange,
-            // interval: "1D",
-            // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
-            limit: 300,
-        },
-        {
-            pollingInterval:
-                CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-            skip: selectedMarket === undefined,
-        }
-    );
+    // const {
+    //     // data: predictions,
+    //     isFetching: isLoadingPredictions,
+    // } = useGetPredictionsQuery(
+    //     {
+    //         coin: selectedMarket?.slug,
+    //         // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
+    //         interval: selectedChartRange,
+    //         // interval: "1D",
+    //         // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
+    //         limit: 300,
+    //     },
+    //     {
+    //         pollingInterval:
+    //             CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+    //         skip: selectedMarket === undefined,
+    //     }
+    // );
 
     const itemsData = mockItemsResponse;
     const isSuccess = true;
@@ -1501,15 +1515,33 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [nextPage]);
 
+    useEffect(() => {
+        if (
+            selectedMarket?.slug &&
+            selectedChartRange &&
+            testPredictionItems === null
+        ) {
+            fetchTestPredictions(
+                selectedMarket.slug,
+                selectedChartRange,
+                (data) => {
+                    setTestPredictionItems(convertToPredictionItems(data));
+                    Logger.debug("testPredictionItems =>", data);
+                }
+            );
+        }
+    }, [selectedMarket.slug, selectedChartRange, testPredictionItems]);
+
     if (feedPreference !== undefined) {
         return (
             <KasandraTimelineModule
-                isLoadingItems={isLoadingPredictions}
+                // isLoadingItems={isLoadingPredictions}
+                isLoadingItems={testPredictionItems === null}
                 // we default items to newsData?.results to avoid a flickering/infinite loading
                 items={
                     (items || itemsData?.results) as TKasandraItem[] | undefined
                 }
-                selectedPredictions={undefined}
+                selectedPredictions={testPredictionItems || undefined}
                 handlePaginate={handleNextPage}
                 feedPreference={feedPreference}
                 onSetFeedPreference={setFeedPreference}
