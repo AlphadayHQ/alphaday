@@ -421,8 +421,8 @@ const LineChart: FC<IProps> = memo(function LineChart({
         },
         stroke: {
             curve: "straight",
-            width: [1.5, 1, 1, 1],
-            dashArray: [0, 3, 3, 3],
+            width: [1.5, 2.5, 2.5, 2.5],
+            dashArray: [0, 0.5, 0.5, 0.5],
         },
         fill: {
             type: "gradient",

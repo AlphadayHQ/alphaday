@@ -1165,7 +1165,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 selectedChartRange,
                 (data) => {
                     setTestPredictions(convertToPredictions(data));
-                    // Logger.debug("testPredictions =>", data);
                 }
             );
         }

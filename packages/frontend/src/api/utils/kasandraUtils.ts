@@ -115,16 +115,17 @@ export const fetchTestPredictions = (
 export const convertToPredictions = (rawData: any): TPredictions => {
     const prediction = rawData.predictions;
     const predictionData = prediction.prediction_data;
-    const currentPrice = predictionData.current_price;
+    const metaData = prediction.meta_data;
+    const currentPrice = metaData.current_price;
+
+    Logger.debug("testPredictions =>", predictionData);
 
     // Create coin object from the available data
     const coin: TPredictionCoin = {
-        id: prediction.crypto_id,
-        name: prediction.cryptocurrencies.name,
-        ticker: prediction.cryptocurrencies.symbol,
-        slug: prediction.cryptocurrencies.name
-            .toLowerCase()
-            .replace(/\s+/g, "-"),
+        id: metaData.crypto.id,
+        name: metaData.coin_id,
+        ticker: metaData.coin_id,
+        slug: metaData.coin_id,
         icon: "", // Not provided in the source data
     };
 
@@ -137,16 +138,16 @@ export const convertToPredictions = (rawData: any): TPredictions => {
     };
 
     // Convert each scenario to TPredictionData format
-    const { neutral, optimistic, pessimistic } = predictionData.scenarios;
+    const { neutral, optimistic, pessimistic } = predictionData;
 
     const result: TPredictions = {
         [EPredictionCase.BASELINE]: {
-            id: prediction.id,
+            id: Number(prediction.id || 0) + 1,
             coin,
             case: EPredictionCase.BASELINE,
-            interval: predictionData.timeframe as TChartRange,
+            interval: prediction.timeframe as TChartRange,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data: neutral.chart_predictions.map((item: any) => ({
+            data: neutral.chart_data.map((item: any) => ({
                 price: item.price,
                 pricePercentChange: calculatePercentChange(
                     item.price,
@@ -157,12 +158,12 @@ export const convertToPredictions = (rawData: any): TPredictions => {
             created: prediction.created_at,
         },
         [EPredictionCase.OPTIMISTIC]: {
-            id: prediction.id,
+            id: Number(prediction.id || 0) + 2,
             coin,
             case: EPredictionCase.OPTIMISTIC,
             interval: predictionData.timeframe as TChartRange,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data: optimistic.chart_predictions.map((item: any) => ({
+            data: optimistic.chart_data.map((item: any) => ({
                 price: item.price,
                 pricePercentChange: calculatePercentChange(
                     item.price,
@@ -173,12 +174,12 @@ export const convertToPredictions = (rawData: any): TPredictions => {
             created: prediction.created_at,
         },
         [EPredictionCase.PESSIMISTIC]: {
-            id: prediction.id,
+            id: Number(prediction.id || 0) + 3,
             coin,
             case: EPredictionCase.PESSIMISTIC,
             interval: predictionData.timeframe as TChartRange,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data: pessimistic.chart_predictions.map((item: any) => ({
+            data: pessimistic.chart_data.map((item: any) => ({
                 price: item.price,
                 pricePercentChange: calculatePercentChange(
                     item.price,
