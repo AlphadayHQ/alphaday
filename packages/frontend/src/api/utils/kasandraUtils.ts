@@ -112,8 +112,8 @@ export const fetchTestPredictions = (
         });
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const convertToPredictions = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rawData: any,
     selectedMarket: TCoin
 ): TPredictions => {
