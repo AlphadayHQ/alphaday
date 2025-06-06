@@ -22,6 +22,7 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TUserViewWidget } from "src/api/types";
+import { IPromptEditorProps } from "src/components/kasandra/types";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import BaseContainerHeader from "./BaseContainerHeader";
@@ -43,6 +44,7 @@ interface IBaseContainerProps {
             | React.Dispatch<React.SetStateAction<HTMLElement | null>>
             | undefined;
     };
+    promptProps?: IPromptEditorProps;
     onToggleCollapse?: () => void;
     onRemoveWidget?: (hash: string) => void;
 }
@@ -53,6 +55,7 @@ interface IBaseContainerProps {
  */
 const BaseContainer: FC<IBaseContainerProps> = ({
     uiProps,
+    promptProps,
     children,
     onToggleCollapse,
     moduleData,
@@ -223,7 +226,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                                 <BaseModuleBody
                                     style={{
                                         height: adjustable
-                                            ? widgetHeight
+                                            ? `${widgetHeight}px`
                                             : undefined,
                                     }}
                                 >
@@ -241,6 +244,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                             removeWidget={removeWidget}
                             moduleData={moduleData}
                             dragProps={dragProps}
+                            promptProps={promptProps}
                         />
                     </div>
                     {adjustable && !isCollapsed && (
