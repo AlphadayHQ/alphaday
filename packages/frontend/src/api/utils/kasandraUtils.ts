@@ -4,6 +4,7 @@ import {
     TPredictionCoin,
     TPredictionItem,
     TInsightSource,
+    TCoin,
 } from "../types";
 import { TChartRange } from "../types/market";
 import { Logger } from "./logging";
@@ -112,7 +113,10 @@ export const fetchTestPredictions = (
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const convertToPredictions = (rawData: any): TPredictions => {
+export const convertToPredictions = (
+    rawData: any,
+    selectedMarket: TCoin
+): TPredictions => {
     const prediction = rawData.predictions;
     const predictionData = prediction.prediction_data;
     const metaData = prediction.meta_data;
@@ -122,11 +126,11 @@ export const convertToPredictions = (rawData: any): TPredictions => {
 
     // Create coin object from the available data
     const coin: TPredictionCoin = {
-        id: metaData.crypto.id,
-        name: metaData.coin_id,
-        ticker: metaData.coin_id,
-        slug: metaData.coin_id,
-        icon: "", // Not provided in the source data
+        id: selectedMarket.id,
+        name: selectedMarket.name,
+        ticker: selectedMarket.ticker,
+        slug: selectedMarket.slug,
+        icon: selectedMarket.icon || "",
     };
 
     // Helper function to calculate percentage change from current price

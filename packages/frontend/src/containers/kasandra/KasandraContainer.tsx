@@ -961,6 +961,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
+    const [isLoadingPredictions, setIsLoadingPredictions] = useState(true);
+
     const [testPredictions, setTestPredictions] = useState<
         TPredictions | null | undefined
     >(null);
@@ -1156,19 +1158,25 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     useEffect(() => {
         if (
-            selectedMarket?.slug &&
-            selectedChartRange &&
-            testPredictions === null
+            testPredictions &&
+            testPredictions?.baseline.coin.slug !== selectedMarket?.slug
         ) {
+            setIsLoadingPredictions(true);
+        }
+
+        if (selectedMarket?.slug && selectedChartRange) {
             fetchTestPredictions(
                 selectedMarket.slug,
                 selectedChartRange,
                 (data) => {
-                    setTestPredictions(convertToPredictions(data));
+                    setTestPredictions(
+                        convertToPredictions(data, selectedMarket)
+                    );
+                    setIsLoadingPredictions(false);
                 }
             );
         }
-    }, [selectedMarket.slug, selectedChartRange, testPredictions]);
+    }, [selectedMarket, selectedChartRange, testPredictions]);
 
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT}px`;
@@ -1209,8 +1217,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 <KasandraModule
                     isLoading={isLoadingCoinsData}
                     isLoadingHistory={isLoadingHistory}
-                    // isLoadingPredictions={isLoadingPredictions}
-                    isLoadingPredictions={testPredictions === null}
+                    isLoadingPredictions={isLoadingPredictions}
                     selectedPredictions={testPredictions || undefined}
                     selectedMarketHistory={marketHistory}
                     selectedChartRange={selectedChartRange}
