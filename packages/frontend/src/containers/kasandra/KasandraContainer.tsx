@@ -961,7 +961,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-    const [isLoadingPredictions, setIsLoadingPredictions] = useState(true);
+    const [isLoadingPredictions, setIsLoadingPredictions] = useState(false);
 
     const [testPredictions, setTestPredictions] = useState<
         TPredictions | null | undefined
@@ -1157,14 +1157,20 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
     useEffect(() => {
+        const isDataFetched =
+            testPredictions?.baseline.interval.toLowerCase() ===
+                selectedChartRange.toLowerCase() &&
+            testPredictions?.baseline.coin?.slug.toLowerCase() ===
+                selectedMarket?.slug.toLowerCase();
+
         if (
-            testPredictions &&
-            testPredictions?.baseline.coin.slug !== selectedMarket?.slug
+            !isDataFetched &&
+            selectedMarket?.slug &&
+            selectedChartRange &&
+            !isLoadingPredictions
         ) {
             setIsLoadingPredictions(true);
-        }
 
-        if (selectedMarket?.slug && selectedChartRange) {
             fetchTestPredictions(
                 selectedMarket.slug,
                 selectedChartRange,
@@ -1176,7 +1182,12 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 }
             );
         }
-    }, [selectedMarket, selectedChartRange, testPredictions]);
+    }, [
+        selectedMarket,
+        selectedChartRange,
+        testPredictions,
+        isLoadingPredictions,
+    ]);
 
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT}px`;

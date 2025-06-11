@@ -97,6 +97,8 @@ export const fetchTestPredictions = (
         timeframe = "1d";
     } else if (interval === "1W") {
         timeframe = "7d";
+    } else if (interval === "1Y") {
+        timeframe = "1y";
     }
     fetch(
         `https://vokocnrsbwutyybhaiip.supabase.co/functions/v1/get-predictions?symbol=${coin}&timeframe=${timeframe}`
