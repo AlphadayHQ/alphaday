@@ -1157,11 +1157,16 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
     useEffect(() => {
-        const isDataFetched =
-            testPredictions?.baseline.interval.toLowerCase() ===
-                selectedChartRange.toLowerCase() &&
-            testPredictions?.baseline.coin?.slug.toLowerCase() ===
-                selectedMarket?.slug.toLowerCase();
+        const is30d = selectedChartRange === "1M";
+
+        const isDataFetched = is30d
+            ? testPredictions?.baseline.coin?.slug.toLowerCase() ===
+                  selectedMarket?.slug.toLowerCase() &&
+              testPredictions?.baseline.interval.toLowerCase() === "30d"
+            : testPredictions?.baseline.interval.toLowerCase() ===
+                  selectedChartRange.toLowerCase() &&
+              testPredictions?.baseline.coin?.slug.toLowerCase() ===
+                  selectedMarket?.slug.toLowerCase();
 
         if (
             !isDataFetched &&
