@@ -71,6 +71,15 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/items/ItemsContainer")
     ),
     gas_template: lazyRetry(() => import("./containers/gas/GasContainer")),
+    kasandra_template: lazyRetry(
+        () => import("./containers/kasandra/KasandraContainer")
+    ),
+    kasandra_predictions_template: lazyRetry(
+        () => import("./containers/kasandra/KasandraTimelineContainer")
+    ),
+    kasandra_timeline_template: lazyRetry(
+        () => import("./containers/kasandra/KasandraTimelineContainer")
+    ),
     latest_video_template: lazyRetry(
         () => import("./containers/media/MediaContainer")
     ),
@@ -110,9 +119,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/dynamic/AgendaContainer")
     ),
     tvl_template: lazyRetry(() => import("./containers/tvl/TvlContainer")),
-    uniswap_template: lazyRetry(
-        () => import("./containers/uniswap/SwapContainer")
-    ),
+    // uniswap_template: lazyRetry(
+    //     () => import("./containers/uniswap/SwapContainer")
+    // ),
     venue_template: lazyRetry(
         () => import("./containers/maps/VenueMapContainer")
     ),

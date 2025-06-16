@@ -20,6 +20,7 @@ export enum ETranslationValues {
     trading = "Trading",
     chains = "Chains",
     protocols = "Protocols",
+    timeline = "Timeline",
 }
 
 export type TTranslationValues = `${ETranslationValues}`;
