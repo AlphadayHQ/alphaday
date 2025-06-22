@@ -90,23 +90,14 @@ const MarketModule: FC<IMarketModule> = ({
         if (selectedPredictions) {
             Object.entries(selectedPredictions).forEach(
                 ([predictionCase, prediction]) => {
-                    prediction.data.forEach((p) => {
+                    prediction.forEach((p) => {
                         if (isPredictionDateInFuture(p.timestamp)) {
                             if (predictionCase === "optimistic") {
-                                bullishPredictions.push([
-                                    p.timestamp * 1000,
-                                    p.price,
-                                ]);
+                                bullishPredictions.push([p.timestamp, p.price]);
                             } else if (predictionCase === "pessimistic") {
-                                bearishPredictions.push([
-                                    p.timestamp * 1000,
-                                    p.price,
-                                ]);
+                                bearishPredictions.push([p.timestamp, p.price]);
                             } else {
-                                basePredictions.push([
-                                    p.timestamp * 1000,
-                                    p.price,
-                                ]);
+                                basePredictions.push([p.timestamp, p.price]);
                             }
                         }
                     });

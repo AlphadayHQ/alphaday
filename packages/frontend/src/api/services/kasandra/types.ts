@@ -1,7 +1,6 @@
 import {
     TBaseProject,
     TChartRange,
-    TPredictionCoin,
     TPredictions,
     EPredictionCase,
 } from "src/api/types";
@@ -25,19 +24,22 @@ export type TRemotePredictionCoin = Omit<TBaseCoin, "gecko_id"> & {
 };
 
 export type TRemotePredictionData = {
-    id: number;
-    coin: TPredictionCoin;
-    case: EPredictionCase;
-    interval: TChartRange;
-    data: {
-        price: number;
-        price_percent_change: number;
-        timestamp: number;
-    }[];
-    created: string;
+    // id: number;
+    // coin: TPredictionCoin;
+    // case: EPredictionCase;
+    // interval: TChartRange;
+    // data: {
+    //     price: number;
+    //     price_percent_change: number;
+    //     timestamp: number;
+    // }[];
+    // created: string;
+    price: number;
+    timestamp: number;
+    volatility: number;
 };
 export type TRemotePredictions = {
-    [key in EPredictionCase]: TRemotePredictionData;
+    [key in EPredictionCase]: TRemotePredictionData[];
 };
 
 /**
