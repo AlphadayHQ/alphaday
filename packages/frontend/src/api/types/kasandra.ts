@@ -1,4 +1,3 @@
-import { TChartRange } from "./market";
 import { TBaseItem } from "./primitives";
 
 export enum EPredictionCase {
@@ -47,18 +46,11 @@ export type TPredictionItem = {
 };
 
 export type TPredictionData = {
-    id: number;
-    coin: TPredictionCoin;
-    case: EPredictionCase;
-    interval: TChartRange;
-    data: {
-        price: number;
-        pricePercentChange: number;
-        timestamp: number;
-    }[];
-    created: string;
+    price: number;
+    timestamp: number;
+    volatility: number;
 };
 
 export type TPredictions = {
-    [key in EPredictionCase]: TPredictionData;
+    [key in EPredictionCase]: TPredictionData[];
 };

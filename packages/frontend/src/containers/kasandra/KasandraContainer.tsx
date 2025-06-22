@@ -6,7 +6,7 @@ import {
     useGetPinnedCoinsQuery,
     useTogglePinnedCoinMutation,
 } from "src/api/services";
-// import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
+import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
 import {
     selectIsAuthenticated,
     setKasandraSelectedDataPoint,
@@ -14,12 +14,8 @@ import {
     setSelectedMarket,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { TBaseEntity, TChartRange, TCoin, TPredictions } from "src/api/types";
+import { TBaseEntity, TChartRange, TCoin } from "src/api/types";
 
-import {
-    convertToPredictions,
-    fetchTestPredictions,
-} from "src/api/utils/kasandraUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import KasandraModule from "src/components/kasandra/KasandraModule";
@@ -961,12 +957,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-    const [isLoadingPredictions, setIsLoadingPredictions] = useState(false);
-
-    const [testPredictions, setTestPredictions] = useState<
-        TPredictions | null | undefined
-    >(null);
-
     const [prompts, setPrompts] = useState({
         system: mockSystemPrompt,
         user: "",
@@ -1054,24 +1044,19 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     // console.log("marketHistory => Data", marketHistory);
 
-    // const { currentData: predictions, isFetching: isLoadingPredictions } =
-    //     useGetPredictionsQuery(
-    //         {
-    //             coin: selectedMarket?.slug,
-    //             // TODO: SOmething is wromg with selectedChartRange RTK query is not reading it as the same in KasandraContainer and KasandraTimelineContainer
-    //             interval: selectedChartRange,
-    //             // interval: "1D",
-    //             // limit: CONFIG.WIDGETS.KASANDRA.PREDICTIONS_LIMIT,
-    //             limit: 1000,
-    //         },
-    //         {
-    //             pollingInterval:
-    //                 CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-    //             skip: selectedMarket === undefined,
-    //         }
-    //     );
-
-    // console.log("predictions =>", predictions);
+    const { currentData: predictions, isFetching: isLoadingPredictions } =
+        useGetPredictionsQuery(
+            {
+                coin: selectedMarket?.slug,
+                interval: selectedChartRange,
+                limit: 1000,
+            },
+            {
+                pollingInterval:
+                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+                skip: selectedMarket === undefined,
+            }
+        );
 
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
@@ -1156,44 +1141,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         }
     }, [lastSelectedKeyword, coinsData, tags, handleSelectedMarket]);
 
-    useEffect(() => {
-        const is30d = selectedChartRange === "1M";
-
-        const isDataFetched = is30d
-            ? testPredictions?.baseline.coin?.slug.toLowerCase() ===
-                  selectedMarket?.slug.toLowerCase() &&
-              testPredictions?.baseline.interval.toLowerCase() === "30d"
-            : testPredictions?.baseline.interval.toLowerCase() ===
-                  selectedChartRange.toLowerCase() &&
-              testPredictions?.baseline.coin?.slug.toLowerCase() ===
-                  selectedMarket?.slug.toLowerCase();
-
-        if (
-            !isDataFetched &&
-            selectedMarket?.slug &&
-            selectedChartRange &&
-            !isLoadingPredictions
-        ) {
-            setIsLoadingPredictions(true);
-
-            fetchTestPredictions(
-                selectedMarket.slug,
-                selectedChartRange,
-                (data) => {
-                    setTestPredictions(
-                        convertToPredictions(data, selectedMarket)
-                    );
-                    setIsLoadingPredictions(false);
-                }
-            );
-        }
-    }, [
-        selectedMarket,
-        selectedChartRange,
-        testPredictions,
-        isLoadingPredictions,
-    ]);
-
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT}px`;
     }, [WIDGET_HEIGHT]);
@@ -1234,7 +1181,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     isLoading={isLoadingCoinsData}
                     isLoadingHistory={isLoadingHistory}
                     isLoadingPredictions={isLoadingPredictions}
-                    selectedPredictions={testPredictions || undefined}
+                    selectedPredictions={predictions || undefined}
                     selectedMarketHistory={marketHistory}
                     selectedChartRange={selectedChartRange}
                     onSelectChartRange={handleSelectedChartRange}

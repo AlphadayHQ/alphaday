@@ -1,5 +1,3 @@
-// import queryString from "query-string";
-import { EPredictionCase, TPredictionData } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
@@ -14,22 +12,7 @@ const { KASANDRA } = CONFIG.API.DEFAULT.ROUTES;
 const mapRemotePredictions = (
     r: TGetPredictionsRawResponse
 ): TGetPredictionsResponse => {
-    const result: TGetPredictionsResponse = {} as TGetPredictionsResponse;
-
-    Object.entries(r).forEach(([predictionCase, item]) => {
-        result[predictionCase as EPredictionCase] = {
-            ...item,
-            data: item.data.map(
-                ({ price_percent_change, ...rest }) =>
-                    ({
-                        ...rest,
-                        pricePercentChange: price_percent_change,
-                    }) as TPredictionData["data"][0]
-            ),
-        };
-    });
-
-    return result;
+    return r as TGetPredictionsResponse;
 };
 
 const kasandraApi = alphadayApi.injectEndpoints({
