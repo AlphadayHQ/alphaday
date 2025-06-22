@@ -1,11 +1,4 @@
-import {
-    EPredictionCase,
-    TPredictions,
-    TPredictionCoin,
-    TPredictionItem,
-    TInsightSource,
-    TCoin,
-} from "../types";
+import { TPredictionCoin, TPredictionItem, TInsightSource } from "../types";
 import { TChartRange } from "../types/market";
 import { Logger } from "./logging";
 
@@ -112,92 +105,6 @@ export const fetchTestPredictions = (
             Logger.error("Error fetching test predictions:", error);
             callback(undefined);
         });
-};
-
-export const convertToPredictions = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    rawData: any,
-    selectedMarket: TCoin
-): TPredictions => {
-    const prediction = rawData.predictions;
-    const predictionData = prediction.prediction_data;
-    const metaData = prediction.meta_data;
-    const currentPrice = metaData.current_price;
-
-    Logger.debug("testPredictions =>", predictionData);
-
-    // Create coin object from the available data
-    const coin: TPredictionCoin = {
-        id: selectedMarket.id,
-        name: selectedMarket.name,
-        ticker: selectedMarket.ticker,
-        slug: selectedMarket.slug,
-        icon: selectedMarket.icon || "",
-    };
-
-    // Helper function to calculate percentage change from current price
-    const calculatePercentChange = (
-        price: number,
-        _currentPrice: number
-    ): number => {
-        return ((price - _currentPrice) / _currentPrice) * 100;
-    };
-
-    // Convert each scenario to TPredictionData format
-    const { neutral, optimistic, pessimistic } = predictionData;
-
-    const result: TPredictions = {
-        [EPredictionCase.BASELINE]: {
-            id: Number(prediction.id || 0) + 1,
-            coin,
-            case: EPredictionCase.BASELINE,
-            interval: prediction.timeframe as TChartRange,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data: neutral.chart_data.map((item: any) => ({
-                price: item.price,
-                pricePercentChange: calculatePercentChange(
-                    item.price,
-                    currentPrice
-                ),
-                timestamp: item.timestamp,
-            })),
-            created: prediction.created_at,
-        },
-        [EPredictionCase.OPTIMISTIC]: {
-            id: Number(prediction.id || 0) + 2,
-            coin,
-            case: EPredictionCase.OPTIMISTIC,
-            interval: predictionData.timeframe as TChartRange,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data: optimistic.chart_data.map((item: any) => ({
-                price: item.price,
-                pricePercentChange: calculatePercentChange(
-                    item.price,
-                    currentPrice
-                ),
-                timestamp: item.timestamp,
-            })),
-            created: prediction.created_at,
-        },
-        [EPredictionCase.PESSIMISTIC]: {
-            id: Number(prediction.id || 0) + 3,
-            coin,
-            case: EPredictionCase.PESSIMISTIC,
-            interval: predictionData.timeframe as TChartRange,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            data: pessimistic.chart_data.map((item: any) => ({
-                price: item.price,
-                pricePercentChange: calculatePercentChange(
-                    item.price,
-                    currentPrice
-                ),
-                timestamp: item.timestamp,
-            })),
-            created: prediction.created_at,
-        },
-    };
-
-    return result;
 };
 
 export const convertToPredictionItems = (
