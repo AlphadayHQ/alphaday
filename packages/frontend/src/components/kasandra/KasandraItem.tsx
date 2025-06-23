@@ -16,7 +16,7 @@ import { imgOnError } from "src/utils/errorHandling";
 import { useDynamicWidgetItem } from "../dynamic-modules/hooks/useDynamicWidgetItem";
 
 // TODO: calculate 24h change
-// ----- create expectedPercentChange
+// ----- create pricePercentChange
 // ----- create title, rationale
 // ----- create sources 1 or 2
 

@@ -5,6 +5,9 @@ import {
     TGetPredictionsRequest,
     TGetPredictionsRawResponse,
     TGetPredictionsResponse,
+    TGetInsightsResponse,
+    TGetInsightsRequest,
+    TGetInsightsRawResponse,
 } from "./types";
 
 const { KASANDRA } = CONFIG.API.DEFAULT.ROUTES;
@@ -15,6 +18,25 @@ const mapRemotePredictions = (
     return r as TGetPredictionsResponse;
 };
 
+const mapRemoteInsights = (
+    r: TGetInsightsRawResponse
+): TGetInsightsResponse => {
+    const results = r.results.map((i) => ({
+        id: i.id,
+        coin: {
+            ...i.coin,
+            icon: i.coin.icon || "",
+        },
+        timestamp: i.timestamp,
+        case: i.case,
+        title: i.title,
+        rationale: i.rationale,
+        pricePercentChange: i.price_percent_change,
+        sources: i.sources,
+    }));
+    return results;
+};
+
 const kasandraApi = alphadayApi.injectEndpoints({
     endpoints: (builder) => ({
         getPredictions: builder.query<
@@ -22,9 +44,7 @@ const kasandraApi = alphadayApi.injectEndpoints({
             TGetPredictionsRequest
         >({
             query: (req) => {
-                // const params: string = queryString.stringify(req);
-                // const route = `${KASANDRA.BASE}${KASANDRA.DEFAULT}?${params}`;
-                const route = `${KASANDRA.BASE}${KASANDRA.DEFAULT}${
+                const route = `${KASANDRA.BASE}${KASANDRA.PREDICTIONS}${
                     req.coin
                 }/${String(req.interval)}`;
                 Logger.debug("querying", route);
@@ -34,6 +54,18 @@ const kasandraApi = alphadayApi.injectEndpoints({
                 r: TGetPredictionsRawResponse
             ): TGetPredictionsResponse => {
                 return mapRemotePredictions(r);
+            },
+        }),
+        getInsights: builder.query<TGetInsightsResponse, TGetInsightsRequest>({
+            query: (req) => {
+                const route = `${KASANDRA.BASE}${KASANDRA.INSIGHTS}${req.coin}`;
+                Logger.debug("querying", route);
+                return route;
+            },
+            transformResponse: (
+                r: TGetInsightsRawResponse
+            ): TGetInsightsResponse => {
+                return mapRemoteInsights(r);
             },
         }),
     }),

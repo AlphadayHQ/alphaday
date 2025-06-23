@@ -51,9 +51,9 @@ const API_V0 = {
             LIST: "/",
         },
         KASANDRA: {
-            BASE: "kasandra/predictions",
-            DEFAULT: "/",
-            BY_ID: (id: number): string => `/${id}/`,
+            BASE: "kasandra",
+            INSIGHTS: "/insights",
+            PREDICTIONS: "/predictions",
         },
         KEYWORDS: {
             BASE: "keywords",

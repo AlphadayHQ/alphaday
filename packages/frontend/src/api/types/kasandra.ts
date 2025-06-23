@@ -10,7 +10,7 @@ export type TKasandraItem = Omit<TBaseItem, "tags"> & {
     author: string;
     publishedAt: string;
     dataPoint: [number, number];
-    expectedPercentChange: number;
+    pricePercentChange: number;
     description: string;
 };
 
@@ -51,6 +51,19 @@ export type TPredictionData = {
     volatility: number;
 };
 
+export type TInsightData = {
+    id: number;
+    coin: TPredictionCoin;
+    timestamp: number;
+    case: EPredictionCase;
+    title: string;
+    rationale: string;
+    pricePercentChange: number;
+    sources: TInsightSource[];
+};
+
 export type TPredictions = {
     [key in EPredictionCase]: TPredictionData[];
 };
+
+export type TInsights = TInsightData[];
