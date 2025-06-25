@@ -50,7 +50,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         onClick,
         // onBookmark,
         // isAuthenticated,
-        // selectedTimestamp,
+        selectedTimestamp,
         onSelectDataPoint,
         selectedMarket,
     }) {
@@ -89,7 +89,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                         onClick={onClick}
                         // onBookmark={onBookmark}
                         // isAuthenticated={isAuthenticated}
-                        // selectedTimestamp={selectedTimestamp}
+                        selectedTimestamp={selectedTimestamp}
                         selectedMarket={selectedMarket}
                         onSelectDataPoint={onSelectDataPoint}
                     />
