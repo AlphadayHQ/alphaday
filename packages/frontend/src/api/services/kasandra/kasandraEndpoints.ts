@@ -1,3 +1,4 @@
+import queryString from "query-string";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
@@ -58,7 +59,8 @@ const kasandraApi = alphadayApi.injectEndpoints({
         }),
         getInsights: builder.query<TGetInsightsResponse, TGetInsightsRequest>({
             query: (req) => {
-                const route = `${KASANDRA.BASE}${KASANDRA.INSIGHTS}${req.coin}`;
+                const params: string = queryString.stringify(req);
+                const route = `${KASANDRA.BASE}${KASANDRA.INSIGHTS}?${params}`;
                 Logger.debug("querying", route);
                 return route;
             },
@@ -72,4 +74,4 @@ const kasandraApi = alphadayApi.injectEndpoints({
     overrideExisting: false,
 });
 
-export const { useGetPredictionsQuery } = kasandraApi;
+export const { useGetPredictionsQuery, useGetInsightsQuery } = kasandraApi;
