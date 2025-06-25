@@ -15,7 +15,7 @@ interface IKasandraItemList {
     onClick?: (id: number) => MaybeAsync<void>;
     // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
     // isAuthenticated?: boolean;
-    // selectedTimestamp: [number, number] | undefined;
+    selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
 }
 
@@ -26,7 +26,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
     onClick,
     // onBookmark,
     // isAuthenticated,
-    // selectedTimestamp,
+    selectedTimestamp,
     onSelectDataPoint,
     selectedMarket,
 }) => {
@@ -53,7 +53,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
             }
             prevItemRef.current = itemRef;
         }
-    }, [scrollRef, itemRef]);
+    }, [scrollRef, itemRef, selectedTimestamp]);
 
     const handleOnSelectDataPoint = async (timestamp: number) => {
         onSelectDataPoint(timestamp);
@@ -74,9 +74,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                 // onScroll={handleListScroll}
             >
                 {timelineItems.map((item) => {
-                    // const isSelected =
-                    //     selectedTimestamp?.[0] === item.dataPoint[0];
-                    const isSelected = false;
+                    const isSelected = selectedTimestamp === item.timestamp;
                     return (
                         <KasandraItem
                             item={item}
