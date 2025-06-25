@@ -1,7 +1,7 @@
-import { FormEvent, FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
-import { TCoin, TPredictionItem } from "src/api/types";
-import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import { TCoin, TInsightItem } from "src/api/types";
+// import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 import KasandraItem from "./KasandraItem";
 
@@ -9,24 +9,24 @@ const SCROLL_OFFSET = 100;
 
 interface IKasandraItemList {
     // items: TKasandraItem[] | undefined;
-    timelineItems: TPredictionItem[] | undefined;
+    timelineItems: TInsightItem[] | undefined;
     selectedMarket: TCoin | undefined;
-    handlePaginate: (type: "next" | "previous") => void;
+    // handlePaginate: (type: "next" | "previous") => void;
     onClick?: (id: number) => MaybeAsync<void>;
     // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
     // isAuthenticated?: boolean;
-    // selectedDataPoint: [number, number] | undefined;
-    onSelectDataPoint: (dataPoint: [number, number]) => void;
+    // selectedTimestamp: [number, number] | undefined;
+    onSelectDataPoint: (timestamp: number) => void;
 }
 
 const KasandraItemList: FC<IKasandraItemList> = ({
     // items,
     timelineItems,
-    handlePaginate,
+    // handlePaginate,
     onClick,
     // onBookmark,
     // isAuthenticated,
-    // selectedDataPoint,
+    // selectedTimestamp,
     onSelectDataPoint,
     selectedMarket,
 }) => {
@@ -35,11 +35,11 @@ const KasandraItemList: FC<IKasandraItemList> = ({
     // const [itemsHeight, setItemsHeight] = useState<number>(0);
     const prevItemRef = useRef<HTMLElement | undefined>();
 
-    const handleListScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
-        if (shouldFetchMoreItems(currentTarget)) {
-            handlePaginate("next");
-        }
-    };
+    // const handleListScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
+    //     if (shouldFetchMoreItems(currentTarget)) {
+    //         handlePaginate("next");
+    //     }
+    // };
 
     useEffect(() => {
         if (itemRef !== prevItemRef.current && itemRef && scrollRef) {
@@ -55,9 +55,9 @@ const KasandraItemList: FC<IKasandraItemList> = ({
         }
     }, [scrollRef, itemRef]);
 
-    const handleOnSelectDataPoint = async (dataPoint: [number, number]) => {
-        onSelectDataPoint(dataPoint);
-        await onClick?.(dataPoint[0]);
+    const handleOnSelectDataPoint = async (timestamp: number) => {
+        onSelectDataPoint(timestamp);
+        await onClick?.(timestamp);
     };
 
     if (timelineItems) {
@@ -69,10 +69,13 @@ const KasandraItemList: FC<IKasandraItemList> = ({
             );
         }
         return (
-            <ScrollBar containerRef={setScrollRef} onScroll={handleListScroll}>
+            <ScrollBar
+                containerRef={setScrollRef}
+                // onScroll={handleListScroll}
+            >
                 {timelineItems.map((item) => {
                     // const isSelected =
-                    //     selectedDataPoint?.[0] === item.dataPoint[0];
+                    //     selectedTimestamp?.[0] === item.dataPoint[0];
                     const isSelected = false;
                     return (
                         <KasandraItem

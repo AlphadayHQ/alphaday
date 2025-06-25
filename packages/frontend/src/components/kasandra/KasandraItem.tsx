@@ -3,7 +3,7 @@ import { FC, useMemo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
 import { TCoin } from "src/api/types";
-import { TPredictionItem } from "src/api/types/kasandra";
+import { TInsightItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ArrowDownSVG } from "src/assets/svg/arrow-down.svg";
@@ -20,7 +20,7 @@ import { useDynamicWidgetItem } from "../dynamic-modules/hooks/useDynamicWidgetI
 // ----- create title, rationale
 // ----- create sources 1 or 2
 
-const DateDisplay: FC<{ date: string }> = ({ date }) => {
+const DateDisplay: FC<{ date: number }> = ({ date }) => {
     return (
         <div className="flex flex-col justify-between max-h-14 uppercase text-primaryVariant100 cursor-default text-center font-normal tracking-0.2 fontGroup-mini min-w-[50px] mr-[5px] pt-[1.5px]">
             <span className="text-[10px] uppercase">
@@ -35,11 +35,11 @@ const DateDisplay: FC<{ date: string }> = ({ date }) => {
 };
 
 const KasandraItem: FC<{
-    item: TPredictionItem;
+    item: TInsightItem;
     selectedMarket: TCoin | undefined;
     isSelected: boolean;
     setItemRef: (ref: HTMLDivElement | null) => void;
-    onSelectDataPoint: (dataPoint: [number, number]) => MaybeAsync<void>;
+    onSelectDataPoint: (timestamp: number) => MaybeAsync<void>;
     // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
     // isAuthenticated?: boolean;
     // setItemsHeight: React.Dispatch<React.SetStateAction<number>>;
@@ -85,7 +85,7 @@ const KasandraItem: FC<{
         };
     }, [item.case]);
 
-    const itemSources = item.insight?.sources;
+    const itemSources = item.sources;
 
     return (
         <span
@@ -95,10 +95,9 @@ const KasandraItem: FC<{
             onClick={() => {
                 toggleAccordion();
                 if (isSelected) return;
-                onSelectDataPoint([
-                    moment(item.targetDate).valueOf(),
-                    item.price,
-                ])?.catch((err) => Logger.error("KasandraItem::onClick", err));
+                onSelectDataPoint(item.timestamp)?.catch((err) =>
+                    Logger.error("KasandraItem::onClick", err)
+                );
             }}
         >
             <div
@@ -114,10 +113,10 @@ const KasandraItem: FC<{
                         caseDisplay.background
                     )}
                 >
-                    <DateDisplay date={item.targetDate} />
+                    <DateDisplay date={item.timestamp} />
                     <div className="flex-1 flex flex-col justify-between">
                         <div className="fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0">
-                            {item.insight?.title}
+                            {item.title}
                         </div>
                         <div className="lastLine fontGroup-mini flex text-primaryVariant100 mt-2">
                             <span className={caseDisplay.color}>
@@ -219,7 +218,7 @@ const KasandraItem: FC<{
                     {openAccordion && (
                         <div className="info ml-5 px-2 pr-3 pt-2 rounded-sm min-h-[45px] [align-self:normal]">
                             <div className="wrap flex flex-wrap text-primary whitespace-pre-wrap">
-                                {item.insight?.rationale}
+                                {item.rationale}
                             </div>
                             <br />
                             {itemSources && (

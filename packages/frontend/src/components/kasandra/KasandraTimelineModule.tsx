@@ -1,29 +1,23 @@
-import { FC, memo, useMemo } from "react";
+import { FC, memo } from "react";
 import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
-import {
-    TKasandraItem,
-    EItemFeedPreference,
-    TPredictionItem,
-    TCoin,
-} from "src/api/types";
+import { EItemFeedPreference, TCoin, TInsightItem } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { translateLabels } from "src/api/utils/translationUtils";
 import KasandraItemList from "./KasandraItemList";
 
 interface IKasandra {
-    items: TKasandraItem[] | undefined;
-    selectedPredictions: TPredictionItem[] | undefined;
+    items: TInsightItem[] | undefined;
     selectedMarket: TCoin | undefined;
     isLoadingItems: boolean;
-    handlePaginate: (type: "next" | "previous") => void;
+    // handlePaginate: (type: "next" | "previous") => void;
     feedPreference: EItemFeedPreference;
     onSetFeedPreference: (preference: EItemFeedPreference) => void;
     widgetHeight: number;
     onClick?: (id: number) => MaybeAsync<void>;
-    onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
+    onBookmark?: (id: TInsightItem) => MaybeAsync<void>;
     isAuthenticated: boolean;
-    selectedDataPoint: [number, number] | undefined;
-    onSelectDataPoint: (dataPoint: [number, number]) => void;
+    selectedTimestamp: number | undefined;
+    onSelectDataPoint: (timestamp: number) => void;
 }
 /**
  * This should ease adding new preference based buttons
@@ -49,16 +43,15 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
     function KasandraTimelineModule({
         items,
         isLoadingItems,
-        handlePaginate,
+        // handlePaginate,
         feedPreference,
         onSetFeedPreference,
         widgetHeight,
         onClick,
         // onBookmark,
         // isAuthenticated,
-        // selectedDataPoint,
+        // selectedTimestamp,
         onSelectDataPoint,
-        selectedPredictions,
         selectedMarket,
     }) {
         const newsNavItems = translateNavItems();
@@ -77,18 +70,6 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
             onSetFeedPreference(optionItem?.value);
         };
 
-        const timelineItems = useMemo(() => {
-            const filteredItems = selectedPredictions?.filter((item) => {
-                if (item.insight !== null && item.insight !== undefined) {
-                    return true;
-                }
-                return false;
-            });
-            return filteredItems;
-        }, [selectedPredictions]);
-
-        Logger.debug("timelineItems =>Data", timelineItems);
-
         return (
             <>
                 <div className="mx-2">
@@ -103,12 +84,12 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                 ) : (
                     <KasandraItemList
                         // items={items}
-                        timelineItems={timelineItems}
-                        handlePaginate={handlePaginate}
+                        timelineItems={items}
+                        // handlePaginate={handlePaginate}
                         onClick={onClick}
                         // onBookmark={onBookmark}
                         // isAuthenticated={isAuthenticated}
-                        // selectedDataPoint={selectedDataPoint}
+                        // selectedTimestamp={selectedTimestamp}
                         selectedMarket={selectedMarket}
                         onSelectDataPoint={onSelectDataPoint}
                     />
