@@ -24,7 +24,7 @@ const DateDisplay: FC<{ date: number }> = ({ date }) => {
     return (
         <div className="flex flex-col justify-between max-h-14 uppercase text-primaryVariant100 cursor-default text-center font-normal tracking-0.2 fontGroup-mini min-w-[50px] mr-[5px] pt-[1.5px]">
             <span className="text-[10px] uppercase">
-                {moment(date).format("ddd")}
+                {moment(date).format("MMM")}
             </span>
             <span className="text-primary text-center font-semibold text-2xl leading-5 my-0.5">
                 {moment(date).format("DD")}
