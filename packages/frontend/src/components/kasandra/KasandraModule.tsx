@@ -135,8 +135,6 @@ const KasandraModule: FC<IKasandraModule> = ({
                     (p) => p[0] === item.timestamp
                 );
                 if (prediction) {
-                    console.log("points base", prediction);
-
                     baseInsights.push([item.timestamp, prediction[1]]);
                 }
             }
