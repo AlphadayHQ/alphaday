@@ -34,7 +34,7 @@ export interface IBlogWidgetState {
 }
 export interface IKasandraWidgetState {
     feedPreference: EItemFeedPreference;
-    selectedDataPoint: [number, number] | undefined;
+    selectedTimestamp: number | undefined;
 }
 export interface IPodcastsWidgetState {
     feedPreference: EItemFeedPreference;
@@ -203,19 +203,19 @@ const widgetsSlice = createSlice({
                 feedPreference: preference,
             };
         },
-        setKasandraSelectedDataPoint(
+        setSelectedTimestamp(
             draft,
             action: PayloadAction<{
                 widgetHash: string;
-                dataPoint: [number, number];
+                timestamp: number;
             }>
         ) {
             const {
-                payload: { widgetHash, dataPoint },
+                payload: { widgetHash, timestamp },
             } = action;
             draft.kasandra[widgetHash] = {
                 ...draft.kasandra[widgetHash],
-                selectedDataPoint: dataPoint,
+                selectedTimestamp: timestamp,
             };
         },
         setSelectedChartRange(
@@ -386,7 +386,7 @@ export const {
     setNewsFeedPreference,
     setBlogFeedPreference,
     setKasandraFeedPreference,
-    setKasandraSelectedDataPoint,
+    setSelectedTimestamp,
     setPodcastFeedPreference,
     setPodcastPreferredChannelIds,
     setVideoFeedPreference,
@@ -428,10 +428,10 @@ export const selectKasandraFeedPreference =
     (state: RootState): EItemFeedPreference | undefined =>
         state.widgets.kasandra[widgetHash]?.feedPreference;
 
-export const selectKasandraSelectedDataPoint =
+export const selectKasandraselectedTimestamp =
     (widgetHash: string) =>
-    (state: RootState): [number, number] | undefined =>
-        state.widgets.kasandra[widgetHash]?.selectedDataPoint;
+    (state: RootState): number | undefined =>
+        state.widgets.kasandra[widgetHash]?.selectedTimestamp;
 
 export const selectBlogFeedPreference =
     (widgetHash: string) =>

@@ -52,8 +52,8 @@ const API_V0 = {
         },
         KASANDRA: {
             BASE: "kasandra",
-            INSIGHTS: "/insights",
-            PREDICTIONS: "/predictions",
+            INSIGHTS: "/insights/",
+            PREDICTIONS: "/predictions/",
         },
         KEYWORDS: {
             BASE: "keywords",
