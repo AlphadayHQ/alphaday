@@ -6,10 +6,13 @@ import {
     useGetPinnedCoinsQuery,
     useTogglePinnedCoinMutation,
 } from "src/api/services";
-import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
+import {
+    useGetInsightsQuery,
+    useGetPredictionsQuery,
+} from "src/api/services/kasandra/kasandraEndpoints";
 import {
     selectIsAuthenticated,
-    setKasandraSelectedDataPoint,
+    setSelectedTimestamp,
     setSelectedChartRange,
     setSelectedMarket,
 } from "src/api/store";
@@ -514,8 +517,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         user: "",
     });
 
-    const selectedDataPoint = useAppSelector(
-        (state) => state.widgets.kasandra?.[moduleData.hash]?.selectedDataPoint
+    const selectedTimestamp = useAppSelector(
+        (state) => state.widgets.kasandra?.[moduleData.hash]?.selectedTimestamp
     );
 
     const selectedChartRange = useMemo(
@@ -594,8 +597,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             }
         );
 
-    // console.log("marketHistory => Data", marketHistory);
-
     const { currentData: predictions, isFetching: isLoadingPredictions } =
         useGetPredictionsQuery(
             {
@@ -609,6 +610,12 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 skip: selectedMarket === undefined,
             }
         );
+
+    const { data: insights } = useGetInsightsQuery({
+        coin: selectedMarket?.id.toString(), // TODO: change to slug
+        interval: selectedChartRange,
+        limit: 24,
+    });
 
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
@@ -661,12 +668,12 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [isAuthenticated, pinnedCoins, togglePinMut]
     );
 
-    const handleSelectedDataPoint = useCallback(
-        (dataPoint: [number, number]) => {
+    const handleselectedTimestamp = useCallback(
+        (timestamp: number) => {
             dispatch(
-                setKasandraSelectedDataPoint({
+                setSelectedTimestamp({
                     widgetHash: moduleData.hash,
-                    dataPoint,
+                    timestamp,
                 })
             );
         },
@@ -733,6 +740,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     isLoading={isLoadingCoinsData}
                     isLoadingHistory={isLoadingHistory}
                     isLoadingPredictions={isLoadingPredictions}
+                    insights={insights || undefined}
                     selectedPredictions={predictions || undefined}
                     selectedMarketHistory={marketHistory}
                     selectedChartRange={selectedChartRange}
@@ -744,8 +752,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     availableMarkets={coinsData}
                     onSelectMarket={handleSelectedMarket}
                     contentHeight={contentHeight}
-                    selectedDataPoint={selectedDataPoint}
-                    onSelectDataPoint={handleSelectedDataPoint}
+                    selectedTimestamp={selectedTimestamp}
+                    onSelectDataPoint={handleselectedTimestamp}
                 />
             </Suspense>
         </BaseContainer>

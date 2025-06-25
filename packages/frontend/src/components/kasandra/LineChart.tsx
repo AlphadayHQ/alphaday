@@ -1,9 +1,5 @@
-import { FC, memo, useState } from "react";
-import {
-    ApexAreaChart,
-    Spinner,
-    // themeColors
-} from "@alphaday/ui-kit";
+import { FC, memo, useCallback, useMemo, useState } from "react";
+import { ApexAreaChart, Spinner } from "@alphaday/ui-kit";
 import { TChartRange } from "src/api/types";
 import { maxVal, minVal } from "src/api/utils/helpers";
 import { truncateDataByChartRange } from "src/api/utils/kasandraUtils";
@@ -12,24 +8,27 @@ import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
 import KasandraTooltip, { TCustomTooltip } from "./KasandraTooltip";
 
+type TDataPoints = {
+    bullish: [number, number][];
+    bearish: [number, number][];
+    base: [number, number][];
+};
+
 type IProps = {
     historyData: number[][];
-    predictionData: {
-        bullish: number[][];
-        bearish: number[][];
-        base: number[][];
-    };
+    predictionData: TDataPoints;
+    insightsData: TDataPoints | undefined;
     selectedChartRange: TChartRange;
     isLoading?: boolean;
-    selectedDataPoint: [number, number] | undefined;
-    onSelectDataPoint: (dataPoint: [number, number]) => void;
+    selectedTimestamp: number | undefined;
+    onSelectDataPoint: (timestamp: number) => void;
 };
 
 const generatePoints = (
     data: [number, number][],
     seriesIndex: 0 | 1 | 2 | 3,
-    selectedDataPoint: [number, number] | undefined,
-    onSelectDataPoint: (dataPoint: [number, number]) => void
+    selectedTimestamp: number | undefined,
+    onSelectDataPoint: (dataPoint: number) => void
 ) => {
     const seriesIndexColorMap = {
         0: "#6dd230",
@@ -41,10 +40,10 @@ const generatePoints = (
         x: item[0],
         y: item[1],
         click: () => {
-            onSelectDataPoint(item);
+            onSelectDataPoint(item[0]);
         },
         marker: {
-            size: selectedDataPoint?.[0] === item[0] ? 7 : 5,
+            size: selectedTimestamp === item[0] ? 7 : 5,
             offsetY: 1,
             fillColor: seriesIndexColorMap[seriesIndex],
         },
@@ -58,35 +57,6 @@ const generatePoints = (
  * @param {number} maxItems - The maximum number of items to keep
  * @return {Array} A new array with at most maxItems items
  */
-// const reduceItems = (items: number[][], maxItems: number) => {
-//     // If we already have fewer items than the maximum, return a copy of the original
-//     if (items.length <= maxItems) {
-//         return [...items];
-//     }
-
-//     // Handle edge cases
-//     if (maxItems <= 0) {
-//         return [];
-//     }
-
-//     const result = [];
-//     const n = items.length;
-
-//     // We'll divide the array into maxItems segments and take one item from each
-//     const segmentSize = n / maxItems;
-
-//     // eslint-disable-next-line no-plusplus
-//     for (let i = 0; i < maxItems; i++) {
-//         // Take the item at the middle of each segment
-//         const index = Math.min(
-//             Math.floor(i * segmentSize + segmentSize / 2),
-//             n - 1
-//         );
-//         result.push(items[index]);
-//     }
-
-//     return result;
-// };
 
 function sortByDateAsc(items: number[][]) {
     return items.sort((a, b) => a[0] - b[0]);
@@ -313,9 +283,10 @@ const renderCustomTooltip =
 const LineChart: FC<IProps> = memo(function LineChart({
     historyData,
     predictionData,
+    insightsData,
     selectedChartRange,
     isLoading,
-    selectedDataPoint,
+    selectedTimestamp,
     onSelectDataPoint,
 }) {
     const [zoomKey, setZoomKey] = useState(0);
@@ -323,7 +294,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
 
     Logger.debug("PREDICTION DATA => [timestamp, value]", predictionData);
 
-    // const reducedHistoryData = reduceItems(historyData, 24);
     const truncatedBullishData = truncateDataByChartRange(
         predictionData.bullish,
         selectedChartRange
@@ -379,6 +349,29 @@ const LineChart: FC<IProps> = memo(function LineChart({
         [-Infinity, -Infinity],
     ])[0];
     Logger.debug("maxValue =>", maxValue);
+
+    const genPoints = useCallback(
+        (data: [number, number][], seriesIndex: 0 | 1 | 2 | 3) => {
+            return generatePoints(
+                data,
+                seriesIndex,
+                selectedTimestamp,
+                onSelectDataPoint
+            );
+        },
+        [selectedTimestamp, onSelectDataPoint]
+    );
+
+    const points = useMemo(() => {
+        return [
+            // ...generatePoints(insightsData?.bullish ?? [], 0, selectedTimestamp, onSelectDataPoint),
+            ...genPoints(insightsData?.bullish ?? [], 1),
+            ...genPoints(insightsData?.base ?? [], 2),
+            ...genPoints(insightsData?.bearish ?? [], 3),
+        ];
+    }, [genPoints, insightsData]);
+
+    Logger.debug("POINTS =>", points);
 
     const options = {
         chart: {
@@ -465,54 +458,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     },
                 },
             ],
-            points: [
-                ...generatePoints(
-                    [
-                        [1741164660348, 87851.52480429214],
-                        [1741170107310, 88585.41702795791],
-                        [1741178438708, 90642.95015625951],
-                        [1741187721785, 88645.80293266727],
-                        [1741194993156, 89200.38695874772],
-                    ],
-                    0,
-                    selectedDataPoint,
-                    onSelectDataPoint
-                ),
-                ...generatePoints(
-                    [
-                        [1741213299449, 93150.48615154381],
-                        [1741224991917, 95360.60531197047],
-                        [1741233957824, 96775.07080936989],
-                        [1741239404177, 97496.58285405449],
-                    ],
-                    1,
-                    selectedDataPoint,
-                    onSelectDataPoint
-                ),
-                ...generatePoints(
-                    [
-                        [1741213299449, 90150.48615154381],
-                        [1741224991917, 90360.60531197047],
-                        [1741233957824, 91775.07080936989],
-                        [1741239404177, 92496.58285405449],
-                    ],
-                    2,
-                    selectedDataPoint,
-                    onSelectDataPoint
-                ),
-                ...generatePoints(
-                    [
-                        [1741213299449, 87150.48615154381],
-                        [1741224991917, 85360.60531197047],
-                        [1741230378341, 86833.40344858613],
-                        [1741234857155, 86689.96098257162],
-                        [1741239404177, 85496.58285405449],
-                    ],
-                    3,
-                    selectedDataPoint,
-                    onSelectDataPoint
-                ),
-            ],
+            points,
         },
         xaxis: {
             type: "datetime",
@@ -592,13 +538,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
             },
         ],
     };
-
-    // const chartSeries = [
-    //     {
-    //         name: "Price",
-    //         data,
-    //     },
-    // ];
 
     const resetZoom = () => {
         setZoomKey((prev) => prev + 1);

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useMemo } from "react";
 import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
@@ -7,9 +7,11 @@ import {
     TChartRange,
     TCoin,
     TCoinMarketHistory,
+    TInsightItem,
     TPredictions,
 } from "src/api/types";
 // import { formatNumber, ENumberStyle } from "src/api/utils/format";
+import { Logger } from "src/api/utils/logging";
 import CoinInfo from "../market/CoinInfo";
 import DateRangeBar from "../market/DateRangeBar";
 import MarketsList from "../market/MarketsList";
@@ -27,12 +29,13 @@ const isPredictionDateInFuture = (predictionDate: number) => {
     return predictionDateObj >= today;
 };
 
-export interface IMarketModule {
+export interface IKasandraModule {
     isLoading?: boolean;
     isLoadingHistory: boolean;
     isLoadingPredictions: boolean;
     selectedMarketHistory: TCoinMarketHistory | undefined;
     selectedPredictions: TPredictions | undefined;
+    insights: TInsightItem[] | undefined;
     selectedChartRange: TChartRange;
     onSelectChartRange: (s: TChartRange) => void;
     selectedMarket: TCoin | undefined;
@@ -42,16 +45,17 @@ export interface IMarketModule {
     availableMarkets: TMarketMeta[];
     onSelectMarket: (market: TMarketMeta) => void;
     contentHeight: string;
-    selectedDataPoint: [number, number] | undefined;
-    onSelectDataPoint: (dataPoint: [number, number]) => void;
+    selectedTimestamp: number | undefined;
+    onSelectDataPoint: (timestamp: number) => void;
 }
 
-const MarketModule: FC<IMarketModule> = ({
+const KasandraModule: FC<IKasandraModule> = ({
     isLoading,
     isLoadingHistory,
     isLoadingPredictions,
     selectedMarketHistory,
     selectedPredictions,
+    insights,
     selectedChartRange,
     onSelectChartRange,
     selectedMarket,
@@ -61,7 +65,7 @@ const MarketModule: FC<IMarketModule> = ({
     availableMarkets,
     onSelectMarket,
     contentHeight,
-    selectedDataPoint,
+    selectedTimestamp,
     onSelectDataPoint,
 }) => {
     const { t } = useTranslation();
@@ -74,15 +78,7 @@ const MarketModule: FC<IMarketModule> = ({
     } = useHeaderScroll();
     const priceHistoryData = selectedMarketHistory?.history?.prices;
 
-    // console.log("selectedPredictions => Data", selectedPredictions);
-
-    const [predictionData, setPredictionData] = useState<{
-        bullish: [number, number][];
-        bearish: [number, number][];
-        base: [number, number][];
-    }>({ bullish: [], bearish: [], base: [] });
-
-    useEffect(() => {
+    const predictionData = useMemo(() => {
         const bullishPredictions: [number, number][] = [];
         const bearishPredictions: [number, number][] = [];
         const basePredictions: [number, number][] = [];
@@ -104,12 +100,56 @@ const MarketModule: FC<IMarketModule> = ({
                 }
             );
         }
-        setPredictionData({
+
+        return {
             bullish: bullishPredictions,
             bearish: bearishPredictions,
             base: basePredictions,
-        });
+        };
     }, [selectedPredictions]);
+
+    const insightsData = useMemo(() => {
+        if (!insights || !selectedPredictions) {
+            return undefined;
+        }
+        const bullishInsights: [number, number][] = [];
+        const bearishInsights: [number, number][] = [];
+        const baseInsights: [number, number][] = [];
+        insights.forEach((item) => {
+            if (item.case === "optimistic") {
+                const prediction = predictionData.bullish.find(
+                    (p) => p[0] === item.timestamp
+                );
+                if (prediction) {
+                    bullishInsights.push([item.timestamp, prediction[1]]);
+                }
+            } else if (item.case === "pessimistic") {
+                const prediction = predictionData.bearish.find(
+                    (p) => p[0] === item.timestamp
+                );
+                if (prediction) {
+                    bearishInsights.push([item.timestamp, prediction[1]]);
+                }
+            } else {
+                const prediction = predictionData.base.find(
+                    (p) => p[0] === item.timestamp
+                );
+                if (prediction) {
+                    console.log("points base", prediction);
+
+                    baseInsights.push([item.timestamp, prediction[1]]);
+                }
+            }
+        });
+
+        return {
+            bullish: bullishInsights,
+            bearish: bearishInsights,
+            base: baseInsights,
+        };
+    }, [insights, predictionData, selectedPredictions]);
+
+    Logger.debug("INSIGHTS =>", insights, "INSIGHTS DATA =>", insightsData);
 
     if (isLoading) {
         return <ModuleLoader $height={contentHeight} />;
@@ -160,8 +200,9 @@ const MarketModule: FC<IMarketModule> = ({
                         selectedChartRange={selectedChartRange}
                         historyData={priceHistoryData ?? [[0], [1]]}
                         predictionData={predictionData}
+                        insightsData={insightsData}
                         isLoading={isLoadingHistory || isLoadingPredictions}
-                        selectedDataPoint={selectedDataPoint}
+                        selectedTimestamp={selectedTimestamp}
                         onSelectDataPoint={onSelectDataPoint}
                     />
                 </div>
@@ -208,4 +249,4 @@ const MarketModule: FC<IMarketModule> = ({
     );
 };
 
-export default MarketModule;
+export default KasandraModule;

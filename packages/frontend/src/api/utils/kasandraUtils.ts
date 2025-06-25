@@ -47,16 +47,6 @@ export function truncateDataByChartRange(
             cutoffTimestamp = date.getTime();
             break;
         }
-        // case "YTD": {
-        //     // Start of the current year
-        //     const startOfYear = new Date(
-        //         new Date().getFullYear(),
-        //         0,
-        //         1
-        //     ).getTime();
-        //     cutoffTimestamp = startOfYear;
-        //     break;
-        // }
         case "1Y": {
             date.setFullYear(date.getFullYear() + 1);
             cutoffTimestamp = date.getTime();
@@ -70,10 +60,6 @@ export function truncateDataByChartRange(
         default:
             return data; // If range not recognized, return all data
     }
-
-    Logger.debug(
-        `PREDICTION DATA CUTOFF TIMESTAMP FOR ${range} => ${cutoffTimestamp}`
-    );
 
     // Filter data to include only points on or after the cutoff timestamp
     return data.filter(([timestamp]) => timestamp <= cutoffTimestamp);
