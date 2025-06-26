@@ -36,6 +36,7 @@ import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
+import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug } from "src/types";
 
 const { UI, VIEWS, WIDGETS } = CONFIG;
@@ -179,10 +180,26 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 : undefined,
         [isFullsize, selectedView?.data.widgets]
     );
-    const layoutGrid = useMemo(
-        () => computeLayoutGrid(selectedView?.data.widgets),
-        [selectedView]
-    );
+
+    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
+    const layoutGrid = useMemo(() => {
+        if (selectedView?.data.widgets.length === 0) {
+            return undefined;
+        }
+        return computeLayoutGrid(
+            selectedView?.data.widgets.filter(
+                (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
+            )
+        );
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
+    const kasandraModuleData = useMemo(() => {
+        const widgetData = selectedView?.data.widgets.find(
+            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
+        );
+        return widgetData;
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
     /**
      * The current layout state according to the screen size
      * IMPORTANT: checking that layoutGrid.<layout> != null is necessary
@@ -338,29 +355,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     }, [layoutState]);
 
     useViewUpdater();
-
-    // TODO (xavier-charles): remove this once backend is ready
-    const kasandraModuleData = useMemo(() => {
-        const widgetData = selectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === "news_template"
-        );
-        if (widgetData) {
-            return {
-                ...widgetData,
-                name: "Kasandra",
-                hash: widgetData.hash.replace("0", "x"),
-                widget: {
-                    ...widgetData.widget,
-                    name: "Kasandra",
-                    template: {
-                        ...widgetData.widget.template,
-                        slug: "kasandra_template" as TTemplateSlug,
-                    },
-                },
-            };
-        }
-        return undefined;
-    }, [selectedView?.data.widgets]);
 
     if (
         subscribedViews.length === 0 &&
