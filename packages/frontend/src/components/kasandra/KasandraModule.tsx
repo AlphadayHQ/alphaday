@@ -192,6 +192,7 @@ const KasandraModule: FC<IKasandraModule> = ({
                             selectedChartRange={selectedChartRange}
                             onSelectChartRange={onSelectChartRange}
                             selectedChartType={EChartType.Line}
+                            isKasandra
                         />
                     </div>
                     <LineChart
