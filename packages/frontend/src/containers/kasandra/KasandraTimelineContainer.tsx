@@ -996,7 +996,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const { data: insights, isLoading: isLoadingInsights } =
         useGetInsightsQuery({
-            coin: selectedMarket?.id.toString(), // TODO: change to slug
+            coin: selectedMarket?.slug,
             interval: selectedChartRange,
             limit: 24,
         });
