@@ -8,7 +8,6 @@ import KasandraItem from "./KasandraItem";
 const SCROLL_OFFSET = 100;
 
 interface IKasandraItemList {
-    // items: TKasandraItem[] | undefined;
     timelineItems: TInsightItem[] | undefined;
     selectedMarket: TCoin | undefined;
     // handlePaginate: (type: "next" | "previous") => void;
@@ -20,7 +19,6 @@ interface IKasandraItemList {
 }
 
 const KasandraItemList: FC<IKasandraItemList> = ({
-    // items,
     timelineItems,
     // handlePaginate,
     onClick,

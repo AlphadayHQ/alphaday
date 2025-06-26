@@ -1159,7 +1159,6 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return (
             <KasandraTimelineModule
                 isLoadingItems={isLoadingInsights}
-                // we default items to newsData?.results to avoid a flickering/infinite loading
                 items={items}
                 selectedMarket={selectedMarket}
                 // handlePaginate={handleNextPage}
