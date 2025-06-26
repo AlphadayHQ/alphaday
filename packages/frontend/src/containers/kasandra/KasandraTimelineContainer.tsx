@@ -3,17 +3,16 @@ import { useView, useWidgetHeight } from "src/api/hooks";
 import {
     TBaseTag,
     TRemoteCoin,
-    // useBookmarkNewsItemMutation,
     useGetPinnedCoinsQuery,
     useOpenNewsItemMutation,
 } from "src/api/services";
 import { useGetInsightsQuery } from "src/api/services/kasandra/kasandraEndpoints";
-// import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
 import { selectKasandraData, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import {
     EItemFeedPreference,
+    TChartRange,
     TCoin,
     // TPredictions,
     TInsightItem,
@@ -24,6 +23,7 @@ import {
     itemListsAreEqual,
 } from "src/api/utils/itemUtils";
 import KasandraTimelineModule from "src/components/kasandra/KasandraTimelineModule";
+import { TMarketMeta } from "src/components/market/types";
 import CONFIG from "src/config";
 import { ETemplateNameRegistry, EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
@@ -982,15 +982,40 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return storedMarket ?? pinnedCoins[0] ?? coinsData[0] ?? undefined;
     }, [prevSelectedMarketData?.selectedMarket, coinsData, pinnedCoins]);
 
-    const { data: insights, isLoading: isLoadingInsights } =
+    const { data: insights, isFetching: isLoadingInsights } =
         useGetInsightsQuery({
             coin: selectedMarket?.slug,
             interval: selectedChartRange,
             limit: 24,
         });
 
+    const handleSelectedChartRange = useCallback(
+        (chartRange: TChartRange) => {
+            dispatch(
+                setKasandraData({
+                    widgetHash: kasandraModuleDataHash || moduleData.hash,
+                    chartRange,
+                })
+            );
+        },
+
+        [dispatch, kasandraModuleDataHash, moduleData.hash]
+    );
+
+    const handleSelectedMarket = useCallback(
+        (market: TMarketMeta) => {
+            dispatch(
+                setKasandraData({
+                    widgetHash: kasandraModuleDataHash || moduleData.hash,
+                    market,
+                })
+            );
+        },
+
+        [dispatch, kasandraModuleDataHash, moduleData.hash]
+    );
+
     const [openItemMut] = useOpenNewsItemMutation();
-    // const [bookmarkItemMut] = useBookmarkNewsItemMutation();
 
     const onOpenItem = async (id: number) => {
         if (openItemMut !== undefined) {
@@ -999,77 +1024,6 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
             });
         }
     };
-
-    // const onBookmarkItem = useCallback(
-    //     () =>
-    //         item: TInsightItem
-    //         {
-    //             if (bookmarkItemMut !== undefined) {
-    //                 if (!isAuthenticated) {
-    //                     toast(
-    //                         globalMessages.callToAction.signUpToBookmark("items")
-    //                     );
-    //                     return;
-    //                 }
-    //                 bookmarkItemMut({ item })
-    //                     .unwrap()
-    //                     .then(() => {
-    //                         toast("Your preference has been saved successfully.");
-    //                         /**
-    //                          * When a user bookmarks an item, we need to update the list of items
-    //                          * to reflect the change. We do this by updating the list of items
-    //                          */
-    //                         setItems((prevItems) => {
-    //                             if (!prevItems) {
-    //                                 /**
-    //                                  * Prev items should never be undefined, but we need to handle this case
-    //                                  */
-    //                                 Logger.error(
-    //                                     "KasandraTimelineContainer::onBookmarkNewsItem: prevItems is undefined, this should not happen for news",
-    //                                     item.id
-    //                                 );
-    //                                 return prevItems;
-    //                             }
-    //                             /**
-    //                              * If the current feedPreference is not bookmarked items, then we need to toggle its bookmark status
-    //                              * else we need to remove it from the list
-    //                              */
-    //                             if (
-    //                                 feedPreference !== EItemFeedPreference.Bookmark
-    //                             ) {
-    //                                 const bookmarkPos = prevItems.indexOf(item);
-    //                                 if (bookmarkPos === -1) {
-    //                                     /**
-    //                                      * Bookmarked item should be in the list of items, but we need to handle this case
-    //                                      */
-    //                                     Logger.error(
-    //                                         "KasandraTimelineContainer::onBookmarkNewsItem: news item is not in prevItems, this should not happen for news",
-    //                                         item.id
-    //                                     );
-    //                                     return prevItems;
-    //                                 }
-    //                                 const newItems = [...prevItems];
-    //                                 newItems[bookmarkPos] = {
-    //                                     ...item,
-    //                                     bookmarked: !item.bookmarked,
-    //                                 };
-    //                                 return newItems;
-    //                             }
-    //                             // removing from the list ensures bookmarked items only are shown in the list
-    //                             return prevItems.filter((i) => i.id !== item.id);
-    //                         });
-    //                     })
-    //                     .catch(() =>
-    //                         toast(
-    //                             "We could not save your preference. Please try again"
-    //                         )
-    //                     );
-    //             }
-    //         },
-    //     [
-    //         bookmarkItemMut, feedPreference, isAuthenticated
-    //     ]
-    // );
 
     const handleSelectedTimestamp = useCallback(
         (timestamp: number) => {
@@ -1164,9 +1118,12 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 // handlePaginate={handleNextPage}
                 feedPreference={feedPreference}
                 onSetFeedPreference={setFeedPreference}
+                selectedChartRange={selectedChartRange}
+                onSelectChartRange={handleSelectedChartRange}
+                availableMarkets={coinsData}
+                onSelectMarket={handleSelectedMarket}
                 widgetHeight={widgetHeight}
                 onClick={onOpenItem}
-                // onBookmark={onBookmarkItem}
                 isAuthenticated={isAuthenticated}
                 selectedTimestamp={selectedTimestamp}
                 onSelectDataPoint={handleSelectedTimestamp}
