@@ -10,12 +10,7 @@ import {
     useGetInsightsQuery,
     useGetPredictionsQuery,
 } from "src/api/services/kasandra/kasandraEndpoints";
-import {
-    selectIsAuthenticated,
-    setSelectedTimestamp,
-    setSelectedChartRange,
-    setSelectedMarket,
-} from "src/api/store";
+import { selectIsAuthenticated, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TBaseEntity, TChartRange, TCoin } from "src/api/types";
 
@@ -506,7 +501,7 @@ const staticCoins: Record<string, TRemoteCoin> = {
 const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const prevSelectedMarketData = useAppSelector(
-        (state) => state.widgets.market?.[moduleData.hash]
+        (state) => state.widgets.kasandra?.[moduleData.hash]
     );
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
 
@@ -619,9 +614,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
-            dispatch(
-                setSelectedMarket({ widgetHash: moduleData.hash, market })
-            );
+            dispatch(setKasandraData({ widgetHash: moduleData.hash, market }));
         },
 
         [dispatch, moduleData.hash]
@@ -630,7 +623,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const handleSelectedChartRange = useCallback(
         (chartRange: TChartRange) => {
             dispatch(
-                setSelectedChartRange({
+                setKasandraData({
                     widgetHash: moduleData.hash,
                     chartRange,
                 })
@@ -671,7 +664,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const handleselectedTimestamp = useCallback(
         (timestamp: number) => {
             dispatch(
-                setSelectedTimestamp({
+                setKasandraData({
                     widgetHash: moduleData.hash,
                     timestamp,
                 })

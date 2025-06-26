@@ -9,11 +9,7 @@ import {
 } from "src/api/services";
 import { useGetInsightsQuery } from "src/api/services/kasandra/kasandraEndpoints";
 // import { useGetPredictionsQuery } from "src/api/services/kasandra/kasandraEndpoints";
-import {
-    setKasandraFeedPreference,
-    selectKasandraFeedPreference,
-    setSelectedTimestamp,
-} from "src/api/store";
+import { selectKasandraData, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import {
@@ -29,7 +25,7 @@ import {
 } from "src/api/utils/itemUtils";
 import KasandraTimelineModule from "src/components/kasandra/KasandraTimelineModule";
 import CONFIG from "src/config";
-import { EWidgetSettingsRegistry } from "src/constants";
+import { ETemplateNameRegistry, EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
 
 const transformRemoteCoin = (coin: TRemoteCoin): TCoin => {
@@ -896,24 +892,22 @@ const staticCoins: Record<string, TRemoteCoin> = {
     },
 };
 
-const widgetConfig = CONFIG.WIDGETS.KASANDRA_PREDICTIONS;
 const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
     const { selectedView } = useView();
 
-    // TODO(xavier-charles): update this once backend is ready
+    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
     const kasandraModuleDataHash = useMemo(() => {
         const widgetData = selectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === "news_template"
+            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
         );
-        if (widgetData) return widgetData.hash.replace("0", "x");
-        return undefined;
-    }, [selectedView?.data.widgets]);
+        return widgetData?.hash;
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
 
     const prevSelectedMarketData = useAppSelector(
         (state) =>
-            state.widgets.market?.[kasandraModuleDataHash || moduleData.hash]
+            state.widgets.kasandra?.[kasandraModuleDataHash || moduleData.hash]
     );
 
     const selectedTimestamp = useAppSelector(
@@ -924,22 +918,16 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const widgetHeight = useWidgetHeight(moduleData);
 
-    // const [currentPage, setCurrentPage] = useState<number | undefined>(
-    //     undefined
-    // );
-
-    const defaultFeed = widgetConfig.DEFAULT_FEED_PREFERENCE;
-
     const feedPreference =
-        useAppSelector(selectKasandraFeedPreference(moduleData.hash)) ??
-        defaultFeed;
+        useAppSelector(selectKasandraData(moduleData.hash))?.feedPreference ??
+        CONFIG.WIDGETS.KASANDRA_TIMELINE.DEFAULT_FEED_PREFERENCE;
 
     const setFeedPreference = useCallback(
         (preference: EItemFeedPreference) => {
             dispatch(
-                setKasandraFeedPreference({
+                setKasandraData({
                     widgetHash: moduleData.hash,
-                    preference,
+                    feedPreference: preference,
                 })
             );
         },
@@ -1083,10 +1071,10 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     //     ]
     // );
 
-    const handleselectedTimestamp = useCallback(
+    const handleSelectedTimestamp = useCallback(
         (timestamp: number) => {
             dispatch(
-                setSelectedTimestamp({
+                setKasandraData({
                     widgetHash: kasandraModuleDataHash || moduleData.hash,
                     timestamp,
                 })
@@ -1182,7 +1170,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 // onBookmark={onBookmarkItem}
                 isAuthenticated={isAuthenticated}
                 selectedTimestamp={selectedTimestamp}
-                onSelectDataPoint={handleselectedTimestamp}
+                onSelectDataPoint={handleSelectedTimestamp}
             />
         );
     }
