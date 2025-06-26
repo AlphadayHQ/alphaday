@@ -64,7 +64,7 @@ const KasandraItemList: FC<IKasandraItemList> = ({
         if (timelineItems.length === 0) {
             return (
                 <CenteredBlock>
-                    <p>{globalMessages.queries.noMatchFound("Kasandra")}</p>
+                    <p>{globalMessages.queries.noMatchFound("Items")}</p>
                 </CenteredBlock>
             );
         }
