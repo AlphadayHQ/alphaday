@@ -16,7 +16,7 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
-import { ETutorialTipId, TUserViewWidget } from "src/api/types";
+import { ETutorialTipId, TUserViewWidget, TCachedView } from "src/api/types";
 import {
     computeLayoutGrid,
     getDraggedWidget,
@@ -32,23 +32,85 @@ import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
+import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
+import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS } = CONFIG;
+const { UI, VIEWS, WIDGETS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
 
     const {
-        selectedView,
+        selectedView: previousSelectedView,
         addWidgetsToCache,
         hasWidgetInCache,
         subscribedViews,
         // navigateToView,
     } = useView();
+
+    // TODO (xavier-charles): remove this once backend is ready
+    const selectedView = useMemo(() => {
+        const blogWidgetData = previousSelectedView?.data.widgets.find(
+            (w) => w.widget.template.slug === "blog_template"
+        );
+        const videosWidgetData = previousSelectedView?.data.widgets.find(
+            (w) => w.widget.template.slug === "video_template"
+        );
+        if (blogWidgetData && videosWidgetData && previousSelectedView?.data) {
+            // modify widget data
+            const modifiedWidgetOne = {
+                ...videosWidgetData,
+                name: "Kasandra Timeline",
+
+                widget: {
+                    ...videosWidgetData.widget,
+                    name: "Kasandra Timeline",
+                    template: {
+                        ...videosWidgetData.widget.template,
+                        slug: "kasandra_timeline_template" as TTemplateSlug,
+                    },
+                },
+            };
+
+            const modifiedWidgetTwo = {
+                ...blogWidgetData,
+                name: "Kasandra Predictions",
+                widget: {
+                    ...blogWidgetData.widget,
+                    name: "Kasandra Predictions",
+                    template: {
+                        ...blogWidgetData.widget.template,
+                        slug: "kasandra_predictions_template" as TTemplateSlug,
+                    },
+                },
+            };
+
+            // replace the widgets with the new ones
+            const newWidgets = previousSelectedView.data.widgets.map((w) => {
+                if (w.hash === blogWidgetData.hash) {
+                    return modifiedWidgetOne;
+                }
+                if (w.hash === videosWidgetData.hash) {
+                    return modifiedWidgetTwo;
+                }
+                return w;
+            });
+
+            return {
+                ...previousSelectedView,
+                data: {
+                    ...previousSelectedView.data,
+                    widgets: newWidgets,
+                },
+            } as TCachedView;
+        }
+        return previousSelectedView;
+    }, [previousSelectedView]);
+
     const availableViews = useAvailableViews();
 
     const removeWidget = useCallback(
@@ -109,7 +171,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         () =>
             isFullsize
                 ? {
-                      slug: "calendar_template", // TODO (xavier-charles) replace hardcoded slug with a dynamic one
+                      slug: "calendar_template",
                       // we should not check the hash if `fullSizeWidgetSlug` is undefined.
                       hash: selectedView?.data.widgets.find(
                           (w) => w.widget.template.slug === "calendar_template"
@@ -118,10 +180,26 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 : undefined,
         [isFullsize, selectedView?.data.widgets]
     );
-    const layoutGrid = useMemo(
-        () => computeLayoutGrid(selectedView?.data.widgets),
-        [selectedView]
-    );
+
+    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
+    const layoutGrid = useMemo(() => {
+        if (selectedView?.data.widgets.length === 0) {
+            return undefined;
+        }
+        return computeLayoutGrid(
+            selectedView?.data.widgets.filter(
+                (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
+            )
+        );
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
+    const kasandraModuleData = useMemo(() => {
+        const widgetData = selectedView?.data.widgets.find(
+            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
+        );
+        return widgetData;
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
     /**
      * The current layout state according to the screen size
      * IMPORTANT: checking that layoutGrid.<layout> != null is necessary
@@ -327,7 +405,17 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                     }
                 }}
             >
-                <div className="two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                    {kasandraModuleData && (
+                        <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                            <div className="col-span-2">
+                                <KasandraContainer
+                                    moduleData={kasandraModuleData}
+                                    toggleAdjustable={() => {}}
+                                />
+                            </div>
+                        </div>
+                    )}
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -338,6 +426,13 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
+                                    style={{
+                                        marginTop:
+                                            kasandraModuleData &&
+                                            (colIndex === 0 || colIndex === 1)
+                                                ? `${WIDGETS.KASANDRA.WIDGET_HEIGHT}px`
+                                                : "0px",
+                                    }}
                                 >
                                     {widgets.map((widget, rowIndex) => (
                                         <ModuleWrapper

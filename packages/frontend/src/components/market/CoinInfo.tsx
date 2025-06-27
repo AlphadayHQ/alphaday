@@ -8,8 +8,8 @@ import ItemBookmark from "src/components/listItem/ItemBookmark";
 const CoinInfo: FC<{
     selectedMarket: TCoin;
     isAuthenticated: boolean;
-    onTogglePin: (coin: TBaseEntity) => Promise<void>;
-    isBookmarked: boolean;
+    onTogglePin?: (coin: TBaseEntity) => Promise<void>;
+    isBookmarked?: boolean;
 }> = ({ selectedMarket, isAuthenticated, onTogglePin, isBookmarked }) => {
     const { t } = useTranslation();
 
@@ -29,15 +29,17 @@ const CoinInfo: FC<{
                 <span className="text-primaryVariant100 fontGroup-highlightSemi">
                     {selectedMarket.ticker.toUpperCase()}
                 </span>
-                <ItemBookmark
-                    isAuthenticated={isAuthenticated}
-                    onBookmark={async () => {
-                        await onTogglePin(selectedMarket);
-                    }}
-                    bookmarked={isBookmarked}
-                    showSpacer={false}
-                    className="self-center"
-                />
+                {onTogglePin && (
+                    <ItemBookmark
+                        isAuthenticated={isAuthenticated}
+                        onBookmark={async () => {
+                            await onTogglePin?.(selectedMarket);
+                        }}
+                        bookmarked={isBookmarked}
+                        showSpacer={false}
+                        className="self-center"
+                    />
+                )}
             </div>
             {selectedMarket && (
                 <div className="flex flex-nowrap single-col:flex-wrap mb-[5px]">
