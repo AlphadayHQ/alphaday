@@ -40,6 +40,7 @@ const API_V0 = {
             BASE: "coins",
             LIST: "/",
             PINNED: "/pinned_coins/",
+            KASANDRA_SUPPORTED: "/kasandra_supported/",
             PIN: (id: number): string => `/${id}/toggle_pin/`,
         },
         DAO: {
