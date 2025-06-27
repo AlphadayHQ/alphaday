@@ -19,7 +19,7 @@ interface IKasandra {
     onSetFeedPreference: (preference: EItemFeedPreference) => void;
     selectedChartRange: TChartRange;
     onSelectChartRange: (range: TChartRange) => void;
-    availableMarkets: TMarketMeta[];
+    supportedCoins: TCoin[];
     onSelectMarket: (market: TMarketMeta) => void;
     widgetHeight: number;
     onClick?: (id: number) => MaybeAsync<void>;
@@ -42,7 +42,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         selectedTimestamp,
         onSelectDataPoint,
         selectedMarket,
-        availableMarkets,
+        supportedCoins,
         onSelectMarket,
     }) {
         return (
@@ -50,7 +50,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                 <div className="mx-2 border-b border-borderLine">
                     <div className="flex justify-between">
                         <CoinSelect
-                            coins={availableMarkets}
+                            coins={supportedCoins}
                             selectedCoin={selectedMarket}
                             onSelect={onSelectMarket}
                         />
