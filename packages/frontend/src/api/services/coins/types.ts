@@ -30,6 +30,8 @@ export type TGetCoinsRawResponse = TPagination & {
 export type TGetCoinsResponse = TPagination & {
     results: TCoin[];
 };
+export type TGetKasandraCoinsRawResponse = TRemoteCoin[];
+export type TGetKasandraCoinsResponse = { results: TCoin[] };
 
 // /coins/{coinId}/
 export type TTogglePinnedCoinRequest = { coinId: number };

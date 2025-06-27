@@ -45,6 +45,7 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: false,
         PREDICTIONS_LIMIT: 72,
+        COINS_QUERY_HARD_LIMIT: 30,
     },
     [ETemplateNameRegistry.KasandraTimeline]: {
         WIDGET_HEIGHT: 550,
