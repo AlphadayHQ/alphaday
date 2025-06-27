@@ -3,7 +3,6 @@ import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
-    TBaseEntity,
     TChartRange,
     TCoin,
     TCoinMarketHistory,
@@ -40,9 +39,7 @@ export interface IKasandraModule {
     onSelectChartRange: (s: TChartRange) => void;
     selectedMarket: TCoin | undefined;
     isAuthenticated: boolean;
-    onTogglePin: (coin: TBaseEntity) => Promise<void>;
-    pinnedCoins: TCoin[];
-    availableMarkets: TMarketMeta[];
+    supportedCoins: TCoin[];
     onSelectMarket: (market: TMarketMeta) => void;
     contentHeight: string;
     selectedTimestamp: number | undefined;
@@ -60,9 +57,7 @@ const KasandraModule: FC<IKasandraModule> = ({
     onSelectChartRange,
     selectedMarket,
     isAuthenticated,
-    onTogglePin,
-    pinnedCoins,
-    availableMarkets,
+    supportedCoins,
     onSelectMarket,
     contentHeight,
     selectedTimestamp,
@@ -158,8 +153,7 @@ const KasandraModule: FC<IKasandraModule> = ({
             <div className="p-0 flex items-center justify-between flex-wrap flex-1 basis-auto min-h-[1px]">
                 <div className="w-full flex flex-col mt-[10px] two-col:mt-0">
                     <MarketsList
-                        pinnedCoins={pinnedCoins}
-                        markets={availableMarkets}
+                        pinnedCoins={supportedCoins}
                         onSelectMarket={onSelectMarket}
                         setHeaderRef={setHeaderRef}
                         handleClickScroll={handleClickScroll}
@@ -174,13 +168,6 @@ const KasandraModule: FC<IKasandraModule> = ({
                                     <CoinInfo
                                         selectedMarket={selectedMarket}
                                         isAuthenticated={isAuthenticated}
-                                        onTogglePin={onTogglePin}
-                                        isBookmarked={
-                                            pinnedCoins.find(
-                                                (c) =>
-                                                    c.id === selectedMarket.id
-                                            ) !== undefined
-                                        }
                                     />
                                 </div>
                             </div>
