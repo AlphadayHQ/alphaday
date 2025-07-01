@@ -53,6 +53,7 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
         >
             <TweetColumn className="pt-1 w-[68px] items-center justify-start">
                 <a href={profileUrl} target="_blank" rel="noopener noreferrer">
+                    <span className="sr-only">{social_account.username}</span>
                     <AuthorImage
                         src={
                             profile.picture?.optimized?.uri ??
@@ -89,13 +90,11 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
                     </AuthorName>
                 </div>
                 <TweetContent>
-                    <ReactMarkdown
-                        remarkPlugins={PLUGINS}
-                        className="[&_a]:text-secondaryOrange50 [&_a]:hover:underline break-word prose-p:mb-1"
-                        linkTarget="_blank"
-                    >
-                        {tweet.metadata.content}
-                    </ReactMarkdown>
+                    <div className="[&_a]:text-secondaryOrange50 [&_a]:hover:underline break-word prose-p:mb-1">
+                        <ReactMarkdown remarkPlugins={PLUGINS}>
+                            {tweet.metadata.content}
+                        </ReactMarkdown>
+                    </div>
 
                     {Number(tweet.metadata.attachments?.length) > 0 && (
                         <TweetAttachment>
