@@ -1,6 +1,7 @@
 import { FC, RefObject } from "react";
 import ReactMarkdown from "react-markdown";
 import { twMerge } from "tailwind-merge";
+import type { Node } from "unist";
 import CollapseButton from "../buttons/CollapseButton";
 import styles from "./ListItem.module.scss";
 
