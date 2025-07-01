@@ -50,9 +50,9 @@ const discordStyle = listItemVariants("discord");
 const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
     const { t } = useTranslation();
     const [isExpanded, setIsExpanded] = useState(false);
-    const contentPreview =
-        item.content.slice(0, MIN_CONTENT_LENGTH) +
-        (item.content.length > MIN_CONTENT_LENGTH ? "..." : "");
+    const contentPreview = `${item.content.slice(0, MIN_CONTENT_LENGTH)}${
+        item.content.length > MIN_CONTENT_LENGTH ? "..." : ""
+    }`;
     return (
         <>
             <div
@@ -85,13 +85,11 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
                     </div>
                     {isExpanded ? (
                         <>
-                            <ReactMarkdown
-                                className={discordStyle.content}
-                                remarkPlugins={REMARK_PLUGINS}
-                                linkTarget="_blank"
-                            >
-                                {item.content}
-                            </ReactMarkdown>
+                            <div className={discordStyle.content}>
+                                <ReactMarkdown remarkPlugins={REMARK_PLUGINS}>
+                                    {item.content}
+                                </ReactMarkdown>
+                            </div>
                             {item.embeds.map((embed) => (
                                 <a
                                     key={embed.url}
@@ -102,19 +100,21 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
                                 >
                                     {embed.type === "rich" ? (
                                         <>
-                                            <ReactMarkdown
+                                            <div
                                                 className={discordStyle.content}
-                                                remarkPlugins={
-                                                    embed.url.indexOf(
-                                                        "//twitter.com" // if this is a twitter embed, use twitter remark plugins
-                                                    )
-                                                        ? TWITTER_REMARK_PLUGINS
-                                                        : REMARK_PLUGINS
-                                                }
-                                                linkTarget="_blank"
                                             >
-                                                {embed.description}
-                                            </ReactMarkdown>
+                                                <ReactMarkdown
+                                                    remarkPlugins={
+                                                        embed.url.indexOf(
+                                                            "//twitter.com" // if this is a twitter embed, use twitter remark plugins
+                                                        )
+                                                            ? TWITTER_REMARK_PLUGINS
+                                                            : REMARK_PLUGINS
+                                                    }
+                                                >
+                                                    {embed.description}
+                                                </ReactMarkdown>
+                                            </div>
                                             {embed.image && (
                                                 <img
                                                     src={embed.image.url}

@@ -1,6 +1,5 @@
 import { FC, RefObject } from "react";
 import ReactMarkdown from "react-markdown";
-import { PluggableList } from "react-markdown/lib/react-markdown";
 import { twMerge } from "tailwind-merge";
 import CollapseButton from "../buttons/CollapseButton";
 import styles from "./ListItem.module.scss";
@@ -13,7 +12,7 @@ interface ICollapseListItem {
     description: string;
     fullHeight: number | undefined;
     variant: "faq" | "agenda" | "roadmap";
-    remarkPlugins?: PluggableList;
+    remarkPlugins?: (() => (tree: Node) => void)[];
 }
 
 const collapseItemVaraints = (variant: ICollapseListItem["variant"]) => {
@@ -126,13 +125,11 @@ export const CollapseListItem: FC<ICollapseListItem> = ({
                 {openAccordion && (
                     <div className={collapseItemVaraints(variant).wrap}>
                         {description.length > 0 ? (
-                            <ReactMarkdown
-                                remarkPlugins={remarkPlugins}
-                                linkTarget="_blank"
-                                className="prose-a:text-secondaryOrange"
-                            >
-                                {description}
-                            </ReactMarkdown>
+                            <div className="prose-a:text-secondaryOrange">
+                                <ReactMarkdown remarkPlugins={remarkPlugins}>
+                                    {description}
+                                </ReactMarkdown>
+                            </div>
                         ) : (
                             <>
                                 <div
