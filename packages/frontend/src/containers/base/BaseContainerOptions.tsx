@@ -8,7 +8,6 @@ import {
     ScrollBar,
     SearchBar,
     TabButton,
-    twMerge,
 } from "@alphaday/ui-kit";
 import { ReactComponent as PinSVG } from "@alphaday/ui-kit/src/assets/svg/pin.svg";
 import { ReactComponent as PinnedSVG } from "@alphaday/ui-kit/src/assets/svg/pinned.svg";
@@ -39,14 +38,11 @@ import {
     TBaseEntity,
 } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
-import PromptEditor from "src/components/kasandra/PromptEditor";
-import { IPromptEditorProps } from "src/components/kasandra/types";
 import { EWidgetSettingsRegistry } from "src/constants";
 import BaseContainerMenu from "./BaseContainerMenu";
 
 interface IBaseContainerOptions {
     dragProps: DraggableProvidedDragHandleProps | undefined;
-    promptProps?: IPromptEditorProps;
     headerRef: React.RefObject<HTMLDivElement>;
     moduleData: TUserViewWidget;
     showSettings: boolean | undefined;
@@ -203,7 +199,6 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
     showSettings,
     headerRef,
     dragProps,
-    promptProps,
 }) => {
     const { t: translate } = useTranslation();
     const { name, settings, widget } = moduleData;
@@ -273,9 +268,7 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                     </div>
                 </BaseModuleHeader>
             </div>
-            <BaseModuleBody
-                className={twMerge("justify-start", promptProps && "max-h-min")}
-            >
+            <BaseModuleBody className="justify-start">
                 <ScrollBar className="shrink p-4">
                     {settings?.map((group) => {
                         // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -397,7 +390,6 @@ const BaseContainerOptions: FC<IBaseContainerOptions> = ({
                         return null; // we don't support other settings types yet
                     })}
                 </ScrollBar>
-                {promptProps && <PromptEditor {...promptProps} />}
             </BaseModuleBody>
             <BaseModuleOptionsFooter
                 removeWidget={removeWidget}
