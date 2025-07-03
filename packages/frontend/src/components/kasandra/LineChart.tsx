@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useMemo, useState } from "react";
 import { ApexAreaChart, Spinner } from "@alphaday/ui-kit";
-import { TChartRange } from "src/api/types";
+import { EPredictionCase, TChartRange } from "src/api/types";
 import { maxVal, minVal } from "src/api/utils/helpers";
 import { truncateDataByChartRange } from "src/api/utils/kasandraUtils";
 import { Logger } from "src/api/utils/logging";
@@ -22,6 +22,7 @@ type IProps = {
     isLoading?: boolean;
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
+    selectedCase: EPredictionCase | "all" | undefined;
 };
 
 const generatePoints = (
@@ -67,10 +68,17 @@ const renderCustomTooltip =
         data: {
             name: string;
             data: number[][];
-        }[]
+        }[],
+        selectedCase: EPredictionCase | "all" | undefined
     ) =>
     (props: TCustomTooltip) => {
-        return renderToString(<KasandraTooltip {...props} dataset={data} />);
+        return renderToString(
+            <KasandraTooltip
+                {...props}
+                dataset={data}
+                selectedCase={selectedCase}
+            />
+        );
     };
 
 const LineChart: FC<IProps> = memo(function LineChart({
@@ -81,6 +89,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
     isLoading,
     selectedTimestamp,
     onSelectDataPoint,
+    selectedCase,
 }) {
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
@@ -101,46 +110,60 @@ const LineChart: FC<IProps> = memo(function LineChart({
     );
     const lastHistoryDataPoint = historyData[historyData.length - 1];
 
-    const chartSeries = [
-        { name: "History", data: historyData },
-        {
-            name: "Bullish case",
-            data: sortByDateAsc([
-                lastHistoryDataPoint,
-                ...truncatedBullishData,
-            ]),
-        },
-        {
-            name: "Base case",
-            data: sortByDateAsc([lastHistoryDataPoint, ...truncatedBaseData]),
-        },
-        {
-            name: "Bearish case",
-            data: sortByDateAsc([
-                lastHistoryDataPoint,
-                ...truncatedBearishData,
-            ]),
-        },
-    ];
+    const chartSeries = useMemo(() => {
+        const createSeries = (name: string, data: number[][]) => ({
+            name,
+            data: sortByDateAsc([lastHistoryDataPoint, ...data]),
+        });
+
+        const cases = {
+            [EPredictionCase.OPTIMISTIC]: createSeries(
+                "Bullish case",
+                truncatedBullishData
+            ),
+            [EPredictionCase.BASELINE]: createSeries(
+                "Base case",
+                truncatedBaseData
+            ),
+            [EPredictionCase.PESSIMISTIC]: createSeries(
+                "Bearish case",
+                truncatedBearishData
+            ),
+        };
+
+        const historySeries = { name: "History", data: historyData };
+
+        if (selectedCase && selectedCase in cases) {
+            return [historySeries, cases[selectedCase as keyof typeof cases]];
+        }
+
+        return [
+            historySeries,
+            createSeries("Bullish case", truncatedBullishData),
+            createSeries("Base case", truncatedBaseData),
+            createSeries("Bearish case", truncatedBearishData),
+        ];
+    }, [
+        lastHistoryDataPoint,
+        truncatedBullishData,
+        truncatedBaseData,
+        truncatedBearishData,
+        selectedCase,
+        historyData,
+    ]);
 
     Logger.debug("CHART SERIES DATA => [timestamp, value]", chartSeries);
 
-    const minValue = minVal([
-        ...predictionData.bullish,
-        ...predictionData.base,
-        ...predictionData.bearish,
-        ...historyData,
-        [Infinity, Infinity],
-    ])[0];
+    const minValue = useMemo(() => {
+        const data = chartSeries.flatMap((series) => series.data);
+        return minVal(data)[0];
+    }, [chartSeries]);
     Logger.debug("minValue =>", minValue);
 
-    const maxValue = maxVal([
-        ...predictionData.bullish,
-        ...predictionData.base,
-        ...predictionData.bearish,
-        ...historyData,
-        [-Infinity, -Infinity],
-    ])[0];
+    const maxValue = useMemo(() => {
+        const data = chartSeries.flatMap((series) => series.data);
+        return maxVal(data)[0];
+    }, [chartSeries]);
     Logger.debug("maxValue =>", maxValue);
 
     const genPoints = useCallback(
@@ -156,15 +179,45 @@ const LineChart: FC<IProps> = memo(function LineChart({
     );
 
     const points = useMemo(() => {
+        if (selectedCase === EPredictionCase.OPTIMISTIC) {
+            return [...genPoints(insightsData?.bullish ?? [], 1)];
+        }
+
+        if (selectedCase === EPredictionCase.BASELINE) {
+            return [...genPoints(insightsData?.base ?? [], 2)];
+        }
+
+        if (selectedCase === EPredictionCase.PESSIMISTIC) {
+            return [...genPoints(insightsData?.bearish ?? [], 3)];
+        }
         return [
             // ...generatePoints(insightsData?.bullish ?? [], 0, selectedTimestamp, onSelectDataPoint),
             ...genPoints(insightsData?.bullish ?? [], 1),
             ...genPoints(insightsData?.base ?? [], 2),
             ...genPoints(insightsData?.bearish ?? [], 3),
         ];
-    }, [genPoints, insightsData]);
+    }, [genPoints, insightsData, selectedCase]);
 
     Logger.debug("POINTS =>", points);
+
+    const seriesColors = useMemo(() => {
+        const colors = [
+            "var(--alpha-green)",
+            "var(--alpha-bullish)",
+            "var(--alpha-base)",
+            "var(--alpha-bearish)",
+        ];
+
+        if (selectedCase === EPredictionCase.PESSIMISTIC) {
+            colors[1] = "var(--alpha-bearish)";
+        }
+
+        if (selectedCase === EPredictionCase.BASELINE) {
+            colors[1] = "var(--alpha-base)";
+        }
+
+        return colors;
+    }, [selectedCase]);
 
     const options = {
         chart: {
@@ -196,12 +249,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             redrawOnParentResize: true,
         },
         // color selection should match the case
-        colors: [
-            "var(--alpha-green)",
-            "var(--alpha-bullish)",
-            "var(--alpha-base)",
-            "var(--alpha-bearish)",
-        ],
+        colors: seriesColors,
         dataLabels: {
             enabled: false,
         },
@@ -315,7 +363,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     },
                 },
             },
-            custom: renderCustomTooltip(chartSeries),
+            custom: renderCustomTooltip(chartSeries, selectedCase),
         },
         responsive: [
             {
