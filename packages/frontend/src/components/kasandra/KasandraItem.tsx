@@ -75,7 +75,7 @@ const KasandraItem: FC<{
                     ? "gradient-background-bullish"
                     : item.case === "pessimistic"
                       ? "gradient-background-bearish"
-                      : "",
+                      : "gradient-background-neutral",
         };
     }, [item.case]);
 
