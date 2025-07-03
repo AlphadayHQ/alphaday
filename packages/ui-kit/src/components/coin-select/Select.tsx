@@ -1,24 +1,16 @@
-import { FC } from "react";
 import ReactSelect, { SingleValue } from "react-select";
 import { ReactComponent as CheckMarkSVG } from "../../assets/svg/checkmark.svg";
 import { ReactComponent as ChevronUpDownSVG } from "../../assets/svg/chevron-up-down.svg";
 
-type TCoin = {
-    id: number;
-    name: string;
-    slug: string;
-    ticker: string;
-    icon?: string | undefined;
-};
-
+type TSelect = { id: string; name: string; icon: React.ReactNode };
 const Option =
-    (selectedCoin: TCoin | undefined) =>
+    (selectedOption: TSelect | undefined) =>
     ({
         data: coin,
         innerRef,
         innerProps,
     }: {
-        data: TCoin;
+        data: TSelect;
         innerRef: (instance: HTMLDivElement | null) => void;
         innerProps: JSX.IntrinsicElements["div"];
     }) => (
@@ -29,11 +21,11 @@ const Option =
             ref={innerRef}
             {...innerProps}
         >
-            <img alt="" src={coin.icon} className="w-5 shrink-0 rounded-full" />
+            {coin.icon}
             <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
                 {coin.name}
             </span>
-            {coin.id === selectedCoin?.id && (
+            {coin.id === selectedOption?.id && (
                 <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-data-selected:hidden group-data-focus:text-white">
                     <CheckMarkSVG aria-hidden="true" className="size-5" />
                 </span>
@@ -50,27 +42,82 @@ const IndicatorsContainer = () => (
     </div>
 );
 
-export const CoinSelect: FC<{
-    coins: TCoin[];
-    onSelect: (coin: TCoin) => void;
-    selectedCoin: TCoin | undefined;
-}> = ({ coins, onSelect, selectedCoin }) => {
-    const handleChange = (coin: SingleValue<TCoin>) => {
-        const selected = coins.find((c) => c.id === coin?.id);
+// export const CoinSelect: FC<{
+//     coins: TCoin[];
+//     onSelect: (coin: TCoin) => void;
+//     selectedCoin: TCoin | undefined;
+// }> = ({ coins, onSelect, selectedCoin }) => {
+//     const handleChange = (coin: SingleValue<TCoin>) => {
+//         const selected = coins.find((c) => c.id === coin?.id);
 
-        onSelect(selected ?? coins[0]);
-    };
+//         onSelect(selected ?? coins[0]);
+//     };
 
+//     return (
+//         <ReactSelect
+//             unstyled
+//             isSearchable={false}
+//             value={selectedCoin}
+//             options={coins}
+//             onChange={handleChange}
+//             className="w-full"
+//             components={{
+//                 Option: Option(selectedCoin),
+//                 IndicatorsContainer,
+//             }}
+//             classNames={{
+//                 container: () =>
+//                     "w-full max-w-[180px] hover:bg-backgroundVariant200 rounded-md",
+//                 control: () => "w-full rounded-md",
+//                 menu: () =>
+//                     "w-full bg-background border border-borderLine shadow-sm rounded-b-md",
+//                 option: () => "w-full",
+//                 singleValue: () => "w-full px-3",
+//                 valueContainer: () => "w-full",
+//                 input: () => "w-full",
+//                 placeholder: () => "w-full",
+//             }}
+//             // eslint-disable-next-line react/no-unstable-nested-components
+//             formatOptionLabel={(coin) => (
+//                 <div
+//                     key={coin.id}
+//                     className="group relative cursor-default text-primary fontGroup-highlightSemi select-none data-focus:text-white data-focus:outline-hidden"
+//                 >
+//                     <div className="flex items-center">
+//                         <img
+//                             alt=""
+//                             src={coin.icon}
+//                             className="w-5 shrink-0 rounded-full"
+//                         />
+//                         <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
+//                             {coin.name}
+//                         </span>
+//                     </div>
+//                 </div>
+//             )}
+//         />
+//     );
+// };
+
+export const Select = ({
+    options,
+    selectedOption,
+    onChange,
+}: {
+    options: TSelect[];
+    selectedOption: TSelect | undefined;
+    onChange: (option: SingleValue<TSelect>) => void;
+}) => {
     return (
         <ReactSelect
             unstyled
             isSearchable={false}
-            value={selectedCoin}
-            options={coins}
-            onChange={handleChange}
+            value={selectedOption ?? options[0]}
+            options={options}
+            onChange={onChange}
             className="w-full"
             components={{
-                Option: Option(selectedCoin),
+                Option: Option(selectedOption),
                 IndicatorsContainer,
             }}
             classNames={{
@@ -86,19 +133,15 @@ export const CoinSelect: FC<{
                 placeholder: () => "w-full",
             }}
             // eslint-disable-next-line react/no-unstable-nested-components
-            formatOptionLabel={(coin) => (
+            formatOptionLabel={(option) => (
                 <div
-                    key={coin.id}
+                    key={option.id}
                     className="group relative cursor-default text-primary fontGroup-highlightSemi select-none data-focus:text-white data-focus:outline-hidden"
                 >
                     <div className="flex items-center">
-                        <img
-                            alt=""
-                            src={coin.icon}
-                            className="w-5 shrink-0 rounded-full"
-                        />
+                        {option.icon}
                         <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
-                            {coin.name}
+                            {option.name}
                         </span>
                     </div>
                 </div>

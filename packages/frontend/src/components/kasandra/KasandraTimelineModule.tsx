@@ -1,5 +1,5 @@
 import { FC, memo, useMemo, useState } from "react";
-import { ModuleLoader, CoinSelect } from "@alphaday/ui-kit";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import {
     EItemFeedPreference,
     EPredictionCase,
@@ -8,6 +8,7 @@ import {
 } from "src/api/types";
 import { TMarketMeta } from "../market/types";
 import { CaseSelect, TCase } from "./CaseSelect";
+import { CoinSelect } from "./CoinSelect";
 import KasandraItemList from "./KasandraItemList";
 
 interface IKasandra {
