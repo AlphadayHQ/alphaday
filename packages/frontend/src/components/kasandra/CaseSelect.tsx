@@ -1,24 +1,40 @@
 import { FC } from "react";
 import ReactSelect, { SingleValue } from "react-select";
-import { ReactComponent as CheckMarkSVG } from "../../assets/svg/checkmark.svg";
-import { ReactComponent as ChevronUpDownSVG } from "../../assets/svg/chevron-up-down.svg";
+import { EPredictionCase } from "src/api/types";
+import { ReactComponent as TrendDownThinSVG } from "src/assets/svg/trend-down-thin.svg";
+import { ReactComponent as TrendUpThinSVG } from "src/assets/svg/trend-up-thin.svg";
 
-type TCoin = {
-    id: number;
+// import { ReactComponent as CheckMarkSVG } from "../../assets/svg/checkmark.svg";
+// import { ReactComponent as ChevronUpDownSVG } from "../../assets/svg/chevron-up-down.svg";
+
+export type TCase = {
+    id: EPredictionCase | "all";
     name: string;
-    slug: string;
-    ticker: string;
-    icon?: string | undefined;
+};
+
+const ICONS = {
+    [EPredictionCase.OPTIMISTIC]: (
+        <TrendUpThinSVG className="w-4 h-4 inline fill-success" />
+    ),
+    [EPredictionCase.PESSIMISTIC]: (
+        <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
+    ),
+    [EPredictionCase.BASELINE]: (
+        <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
+    ),
+    all: (
+        <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
+    ),
 };
 
 const Option =
-    (selectedCoin: TCoin | undefined) =>
+    (selectedCase: TCase | undefined) =>
     ({
-        data: coin,
+        data: coinCase,
         innerRef,
         innerProps,
     }: {
-        data: TCoin;
+        data: TCase;
         innerRef: (instance: HTMLDivElement | null) => void;
         innerProps: JSX.IntrinsicElements["div"];
     }) => (
@@ -29,13 +45,13 @@ const Option =
             ref={innerRef}
             {...innerProps}
         >
-            <img alt="" src={coin.icon} className="w-5 shrink-0 rounded-full" />
+            {ICONS[coinCase.id]}
             <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
-                {coin.name}
+                {coinCase.name}
             </span>
-            {coin.id === selectedCoin?.id && (
+            {coinCase.id === selectedCase?.id && (
                 <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-data-selected:hidden group-data-focus:text-white">
-                    <CheckMarkSVG aria-hidden="true" className="size-5" />
+                    {/* <CheckMarkSVG aria-hidden="true" className="size-5" /> */}
                 </span>
             )}
         </div>
@@ -43,34 +59,34 @@ const Option =
 
 const IndicatorsContainer = () => (
     <div className="absolute inset-y-0 right-0 flex items-center pr-4">
-        <ChevronUpDownSVG
+        {/* <ChevronUpDownSVG
             aria-hidden="true"
             className="w-5 stroke-primaryVariant100"
-        />
+        /> */}
     </div>
 );
 
-export const CoinSelect: FC<{
-    coins: TCoin[];
-    onSelect: (coin: TCoin) => void;
-    selectedCoin: TCoin | undefined;
-}> = ({ coins, onSelect, selectedCoin }) => {
-    const handleChange = (coin: SingleValue<TCoin>) => {
-        const selected = coins.find((c) => c.id === coin?.id);
+export const CaseSelect: FC<{
+    cases: TCase[];
+    onSelect: (coinCase: TCase) => void;
+    selectedCase: TCase | undefined;
+}> = ({ cases, onSelect, selectedCase }) => {
+    const handleChange = (coinCase: SingleValue<TCase>) => {
+        const selected = cases.find((c) => c.id === coinCase?.id);
 
-        onSelect(selected ?? coins[0]);
+        onSelect(selected ?? cases[0]);
     };
 
     return (
         <ReactSelect
             unstyled
             isSearchable={false}
-            value={selectedCoin}
-            options={coins}
+            value={selectedCase}
+            options={cases}
             onChange={handleChange}
             className="w-full"
             components={{
-                Option: Option(selectedCoin),
+                Option: Option(selectedCase),
                 IndicatorsContainer,
             }}
             classNames={{
@@ -86,19 +102,15 @@ export const CoinSelect: FC<{
                 placeholder: () => "w-full",
             }}
             // eslint-disable-next-line react/no-unstable-nested-components
-            formatOptionLabel={(coin) => (
+            formatOptionLabel={(coinCase) => (
                 <div
-                    key={coin.id}
+                    key={coinCase.id}
                     className="group relative cursor-default text-primary fontGroup-highlightSemi select-none data-focus:text-white data-focus:outline-hidden"
                 >
                     <div className="flex items-center">
-                        <img
-                            alt=""
-                            src={coin.icon}
-                            className="w-5 shrink-0 rounded-full"
-                        />
+                        {ICONS[coinCase.id]}
                         <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
-                            {coin.name}
+                            {coinCase.name}
                         </span>
                     </div>
                 </div>

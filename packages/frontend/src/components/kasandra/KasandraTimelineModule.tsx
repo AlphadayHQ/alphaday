@@ -1,13 +1,13 @@
-import { FC, memo } from "react";
+import { FC, memo, useMemo, useState } from "react";
 import { ModuleLoader, CoinSelect } from "@alphaday/ui-kit";
 import {
     EItemFeedPreference,
-    TChartRange,
+    EPredictionCase,
     TCoin,
     TInsightItem,
 } from "src/api/types";
-import DateRangeBar from "../market/DateRangeBar";
-import { EChartType, TMarketMeta } from "../market/types";
+import { TMarketMeta } from "../market/types";
+import { CaseSelect, TCase } from "./CaseSelect";
 import KasandraItemList from "./KasandraItemList";
 
 interface IKasandra {
@@ -17,8 +17,6 @@ interface IKasandra {
     // handlePaginate: (type: "next" | "previous") => void;
     feedPreference: EItemFeedPreference;
     onSetFeedPreference: (preference: EItemFeedPreference) => void;
-    selectedChartRange: TChartRange;
-    onSelectChartRange: (range: TChartRange) => void;
     supportedCoins: TCoin[];
     onSelectMarket: (market: TMarketMeta) => void;
     widgetHeight: number;
@@ -34,8 +32,6 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         items,
         isLoadingItems,
         // handlePaginate,
-        selectedChartRange,
-        onSelectChartRange,
         widgetHeight,
         onClick,
         // isAuthenticated,
@@ -45,6 +41,23 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         supportedCoins,
         onSelectMarket,
     }) {
+        const cases: TCase[] = [
+            { id: "all", name: "All Insights" },
+            { id: EPredictionCase.OPTIMISTIC, name: "Bullish" },
+            { id: EPredictionCase.PESSIMISTIC, name: "Bearish" },
+            { id: EPredictionCase.BASELINE, name: "Neutral" },
+        ];
+        const [selectedCase, setSelectedCase] = useState<TCase | undefined>(
+            cases[0]
+        );
+
+        const filteredItems = useMemo(() => {
+            if (selectedCase?.id === "all") {
+                return items;
+            }
+            return items?.filter((item) => item.case === selectedCase?.id);
+        }, [items, selectedCase]);
+
         return (
             <>
                 <div className="mx-2 border-b border-borderLine">
@@ -54,11 +67,10 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                             selectedCoin={selectedMarket}
                             onSelect={onSelectMarket}
                         />
-                        <DateRangeBar
-                            selectedChartRange={selectedChartRange}
-                            onSelectChartRange={onSelectChartRange}
-                            selectedChartType={EChartType.Line}
-                            isKasandra
+                        <CaseSelect
+                            cases={cases}
+                            selectedCase={selectedCase}
+                            onSelect={setSelectedCase}
                         />
                     </div>
                 </div>
@@ -66,7 +78,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                     <ModuleLoader $height={`${widgetHeight}px`} />
                 ) : (
                     <KasandraItemList
-                        timelineItems={items}
+                        timelineItems={filteredItems}
                         // handlePaginate={handlePaginate}
                         onClick={onClick}
                         // isAuthenticated={isAuthenticated}

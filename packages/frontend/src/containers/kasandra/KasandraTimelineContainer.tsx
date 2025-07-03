@@ -8,7 +8,7 @@ import { useGetInsightsQuery } from "src/api/services/kasandra/kasandraEndpoints
 import { selectKasandraData, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
-import { EItemFeedPreference, TChartRange, TCoin } from "src/api/types";
+import { EItemFeedPreference, TCoin } from "src/api/types";
 
 import KasandraTimelineModule from "src/components/kasandra/KasandraTimelineModule";
 import { TMarketMeta } from "src/components/market/types";
@@ -111,19 +111,6 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
             limit: 24,
         });
 
-    const handleSelectedChartRange = useCallback(
-        (chartRange: TChartRange) => {
-            dispatch(
-                setKasandraData({
-                    widgetHash: kasandraModuleDataHash || moduleData.hash,
-                    chartRange,
-                })
-            );
-        },
-
-        [dispatch, kasandraModuleDataHash, moduleData.hash]
-    );
-
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
             dispatch(
@@ -178,8 +165,6 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 selectedMarket={selectedMarket}
                 feedPreference={feedPreference}
                 onSetFeedPreference={setFeedPreference}
-                selectedChartRange={selectedChartRange}
-                onSelectChartRange={handleSelectedChartRange}
                 supportedCoins={kasandraCoins}
                 onSelectMarket={handleSelectedMarket}
                 widgetHeight={widgetHeight}

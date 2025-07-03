@@ -10,15 +10,9 @@ import { ReactComponent as ArrowDownSVG } from "src/assets/svg/arrow-down.svg";
 import { ReactComponent as ArrowUpSVG } from "src/assets/svg/arrow-up.svg";
 import { ReactComponent as TrendDownThinSVG } from "src/assets/svg/trend-down-thin.svg";
 import { ReactComponent as TrendUpThinSVG } from "src/assets/svg/trend-up-thin.svg";
-// import ItemBookmark from "src/components/listItem/ItemBookmark";
 import { HRElement } from "src/components/listItem/ListItem";
 import { imgOnError } from "src/utils/errorHandling";
 import { useDynamicWidgetItem } from "../dynamic-modules/hooks/useDynamicWidgetItem";
-
-// TODO: calculate 24h change
-// ----- create pricePercentChange
-// ----- create title, rationale
-// ----- create sources 1 or 2
 
 const DateDisplay: FC<{ date: number }> = ({ date }) => {
     return (
