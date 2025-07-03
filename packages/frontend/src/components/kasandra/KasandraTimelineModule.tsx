@@ -5,6 +5,7 @@ import {
     EPredictionCase,
     TCoin,
     TInsightItem,
+    TKasandraCase,
 } from "src/api/types";
 import { TMarketMeta } from "../market/types";
 import { CaseSelect, TCase } from "./CaseSelect";
@@ -24,6 +25,8 @@ interface IKasandra {
     onClick?: (id: number) => MaybeAsync<void>;
     onBookmark?: (id: TInsightItem) => MaybeAsync<void>;
     isAuthenticated: boolean;
+    selectedCase: TKasandraCase | undefined;
+    onSelectCase: (kase: TKasandraCase) => void;
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
 }
@@ -37,21 +40,13 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         onClick,
         // isAuthenticated,
         selectedTimestamp,
+        selectedCase,
+        onSelectCase,
         onSelectDataPoint,
         selectedMarket,
         supportedCoins,
         onSelectMarket,
     }) {
-        const cases: TCase[] = [
-            { id: "all", name: "All Insights" },
-            { id: EPredictionCase.OPTIMISTIC, name: "Bullish" },
-            { id: EPredictionCase.PESSIMISTIC, name: "Bearish" },
-            { id: EPredictionCase.BASELINE, name: "Neutral" },
-        ];
-        const [selectedCase, setSelectedCase] = useState<TCase | undefined>(
-            cases[0]
-        );
-
         const filteredItems = useMemo(() => {
             if (selectedCase?.id === "all") {
                 return items;
@@ -69,9 +64,8 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                             onSelect={onSelectMarket}
                         />
                         <CaseSelect
-                            cases={cases}
                             selectedCase={selectedCase}
-                            onSelect={setSelectedCase}
+                            onSelect={onSelectCase}
                         />
                     </div>
                 </div>

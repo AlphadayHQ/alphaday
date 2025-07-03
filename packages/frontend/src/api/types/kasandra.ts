@@ -4,13 +4,10 @@ export enum EPredictionCase {
     PESSIMISTIC = "pessimistic",
 }
 
-// export type TKasandraItem = Omit<TBaseItem, "tags"> & {
-//     author: string;
-//     publishedAt: string;
-//     dataPoint: [number, number];
-//     pricePercentChange: number;
-//     description: string;
-// };
+export type TKasandraCase = {
+    id: EPredictionCase | "all";
+    name: string;
+};
 
 export type TInsightSource = {
     url: string;

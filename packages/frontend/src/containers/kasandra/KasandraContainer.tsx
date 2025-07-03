@@ -10,7 +10,7 @@ import {
 } from "src/api/services/kasandra/kasandraEndpoints";
 import { selectIsAuthenticated, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { TChartRange, TCoin } from "src/api/types";
+import { TChartRange, TCoin, TKasandraCase } from "src/api/types";
 
 import KasandraModule from "src/components/kasandra/KasandraModule";
 import { TMarketMeta } from "src/components/kasandra/types";
@@ -38,6 +38,11 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             prevSelectedMarketData?.selectedChartRange ||
             CONFIG.WIDGETS.MARKET.DEFAULT_INTERVAL,
         [prevSelectedMarketData?.selectedChartRange]
+    );
+
+    const selectedCase = useMemo(
+        () => prevSelectedMarketData?.selectedCase || undefined,
+        [prevSelectedMarketData?.selectedCase]
     );
 
     const { lastSelectedKeyword } = useGlobalSearch();
@@ -132,6 +137,15 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [dispatch, moduleData.hash]
     );
 
+    const handleSelectedCase = useCallback(
+        (kase: TKasandraCase) => {
+            dispatch(
+                setKasandraData({ widgetHash: moduleData.hash, case: kase })
+            );
+        },
+        [dispatch, moduleData.hash]
+    );
+
     const handleselectedTimestamp = useCallback(
         (timestamp: number) => {
             dispatch(
@@ -199,6 +213,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     insights={insights || undefined}
                     selectedPredictions={predictions || undefined}
                     selectedMarketHistory={marketHistory}
+                    selectedCase={selectedCase}
+                    onSelectCase={handleSelectedCase}
                     selectedChartRange={selectedChartRange}
                     onSelectChartRange={handleSelectedChartRange}
                     selectedMarket={selectedMarket}

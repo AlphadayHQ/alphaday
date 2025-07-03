@@ -59,21 +59,38 @@ const ICONS = {
     ),
 };
 
+const cases: {
+    id: string;
+    name: string;
+    icon: JSX.Element;
+}[] = [
+    { id: "all", name: "All Cases", icon: ICONS.all },
+    { id: EPredictionCase.OPTIMISTIC, name: "Bullish", icon: ICONS.optimistic },
+    {
+        id: EPredictionCase.PESSIMISTIC,
+        name: "Bearish",
+        icon: ICONS.pessimistic,
+    },
+    { id: EPredictionCase.BASELINE, name: "Neutral", icon: ICONS.baseline },
+];
+
 export const CaseSelect: FC<{
-    cases: TCase[];
     onSelect: (coinCase: TCase) => void;
     selectedCase: TCase | undefined;
-}> = ({ cases, onSelect, selectedCase }) => {
+}> = ({ onSelect, selectedCase }) => {
     const options = cases.map((c) => ({
-        id: c.id as string,
+        id: c.id,
         name: c.name,
-        icon: ICONS[c.id] as React.ReactNode,
+        icon: c.icon as React.ReactNode,
     }));
 
     const handleChange = (option: SingleValue<(typeof options)[0]>) => {
-        const selected = cases.find((c) => c.id === option?.id);
+        const selected = cases.find((c) => c.id === option?.id) || cases[0];
 
-        onSelect(selected ?? cases[0]);
+        onSelect({
+            id: selected?.id as EPredictionCase | "all",
+            name: selected?.name,
+        });
     };
 
     const selectedOption = options.find((c) => c.id === selectedCase?.id);

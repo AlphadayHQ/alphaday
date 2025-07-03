@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TChartRange, EItemFeedPreference, TProjectType } from "src/api/types";
+import {
+    TChartRange,
+    EItemFeedPreference,
+    TProjectType,
+    TKasandraCase,
+} from "src/api/types";
 import { ECalendarType } from "src/components/calendar/types";
 import { EChartType, TMarketMeta } from "src/components/market/types";
 import { TEventCategory } from "src/components/types";
@@ -37,6 +42,7 @@ export interface IKasandraWidgetState {
     selectedTimestamp: number | undefined;
     selectedMarket: TMarketMeta | undefined;
     selectedChartRange: TChartRange | undefined;
+    selectedCase: TKasandraCase | undefined;
 }
 export interface IPodcastsWidgetState {
     feedPreference: EItemFeedPreference;
@@ -196,6 +202,7 @@ const widgetsSlice = createSlice({
                 widgetHash: string;
                 timestamp?: number;
                 market?: TMarketMeta;
+                case?: TKasandraCase;
                 chartRange?: TChartRange;
                 feedPreference?: EItemFeedPreference;
             }>
@@ -205,6 +212,7 @@ const widgetsSlice = createSlice({
                     widgetHash,
                     timestamp,
                     market,
+                    case: kase,
                     chartRange,
                     feedPreference,
                 },
@@ -218,6 +226,7 @@ const widgetsSlice = createSlice({
                 selectedChartRange:
                     chartRange ??
                     draft.kasandra[widgetHash]?.selectedChartRange,
+                selectedCase: kase ?? draft.kasandra[widgetHash]?.selectedCase,
                 feedPreference:
                     feedPreference ??
                     draft.kasandra[widgetHash]?.feedPreference,
@@ -426,11 +435,6 @@ export const selectPodcastPreferredChannelIds =
     (widgetHash: string) =>
     (state: RootState): number[] | undefined =>
         state.widgets.podcast[widgetHash]?.preferredChannelIds;
-
-export const selectKasandraFeedPreference =
-    (widgetHash: string) =>
-    (state: RootState): EItemFeedPreference | undefined =>
-        state.widgets.kasandra[widgetHash]?.feedPreference;
 
 export const selectKasandraData =
     (widgetHash: string) =>

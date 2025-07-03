@@ -7,14 +7,15 @@ import {
     TCoin,
     TCoinMarketHistory,
     TInsightItem,
+    TKasandraCase,
     TPredictions,
 } from "src/api/types";
-// import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
 import CoinInfo from "../market/CoinInfo";
 import DateRangeBar from "../market/DateRangeBar";
 import MarketsList from "../market/MarketsList";
 import { EChartType, TMarketMeta } from "../market/types";
+import { CaseSelect } from "./CaseSelect";
 import LineChart from "./LineChart";
 
 // check if prediction date is today or in the future
@@ -37,6 +38,8 @@ export interface IKasandraModule {
     insights: TInsightItem[] | undefined;
     selectedChartRange: TChartRange;
     onSelectChartRange: (s: TChartRange) => void;
+    selectedCase: TKasandraCase | undefined;
+    onSelectCase: (kase: TKasandraCase) => void;
     selectedMarket: TCoin | undefined;
     isAuthenticated: boolean;
     supportedCoins: TCoin[];
@@ -55,6 +58,8 @@ const KasandraModule: FC<IKasandraModule> = ({
     insights,
     selectedChartRange,
     onSelectChartRange,
+    selectedCase,
+    onSelectCase,
     selectedMarket,
     isAuthenticated,
     supportedCoins,
@@ -72,6 +77,8 @@ const KasandraModule: FC<IKasandraModule> = ({
         hideRightPan,
     } = useHeaderScroll();
     const priceHistoryData = selectedMarketHistory?.history?.prices;
+
+    console.log("Kasandra module selectedCase", selectedCase);
 
     const predictionData = useMemo(() => {
         const bullishPredictions: [number, number][] = [];
@@ -161,25 +168,33 @@ const KasandraModule: FC<IKasandraModule> = ({
                         hideRightPan={hideRightPan}
                         selectedMarket={selectedMarket}
                     />
-                    {selectedMarket && (
-                        <div className="flex flex-col mt-3 pl-4 pr-4 w-full self-start single-col:mt-4 single-col:pl-[10px]">
-                            <div className="flex items-start">
-                                <div className="flex justify-between flex-1 ml-[5px]">
-                                    <CoinInfo
-                                        selectedMarket={selectedMarket}
-                                        isAuthenticated={isAuthenticated}
-                                    />
+                    <div className="flex justify-between">
+                        {selectedMarket && (
+                            <div className="flex flex-col mt-3 pl-4 pr-4 w-full self-start single-col:mt-4 single-col:pl-[10px]">
+                                <div className="flex items-start">
+                                    <div className="flex justify-between flex-1 ml-[5px]">
+                                        <CoinInfo
+                                            selectedMarket={selectedMarket}
+                                            isAuthenticated={isAuthenticated}
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
 
-                    <div className="pt-0 pb-[5px] px-5 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
-                        <DateRangeBar
-                            selectedChartRange={selectedChartRange}
-                            onSelectChartRange={onSelectChartRange}
-                            selectedChartType={EChartType.Line}
-                            isKasandra
+                        <div className="pt-0 pb-[5px] px-5 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
+                            <DateRangeBar
+                                selectedChartRange={selectedChartRange}
+                                onSelectChartRange={onSelectChartRange}
+                                selectedChartType={EChartType.Line}
+                                isKasandra
+                            />
+                        </div>
+                    </div>
+                    <div className="pt-0 pb-[5px] px-0 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
+                        <CaseSelect
+                            selectedCase={selectedCase}
+                            onSelect={onSelectCase}
                         />
                     </div>
                     <LineChart
