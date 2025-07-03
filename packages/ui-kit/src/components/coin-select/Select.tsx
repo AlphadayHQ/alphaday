@@ -42,63 +42,6 @@ const IndicatorsContainer = () => (
     </div>
 );
 
-// export const CoinSelect: FC<{
-//     coins: TCoin[];
-//     onSelect: (coin: TCoin) => void;
-//     selectedCoin: TCoin | undefined;
-// }> = ({ coins, onSelect, selectedCoin }) => {
-//     const handleChange = (coin: SingleValue<TCoin>) => {
-//         const selected = coins.find((c) => c.id === coin?.id);
-
-//         onSelect(selected ?? coins[0]);
-//     };
-
-//     return (
-//         <ReactSelect
-//             unstyled
-//             isSearchable={false}
-//             value={selectedCoin}
-//             options={coins}
-//             onChange={handleChange}
-//             className="w-full"
-//             components={{
-//                 Option: Option(selectedCoin),
-//                 IndicatorsContainer,
-//             }}
-//             classNames={{
-//                 container: () =>
-//                     "w-full max-w-[180px] hover:bg-backgroundVariant200 rounded-md",
-//                 control: () => "w-full rounded-md",
-//                 menu: () =>
-//                     "w-full bg-background border border-borderLine shadow-sm rounded-b-md",
-//                 option: () => "w-full",
-//                 singleValue: () => "w-full px-3",
-//                 valueContainer: () => "w-full",
-//                 input: () => "w-full",
-//                 placeholder: () => "w-full",
-//             }}
-//             // eslint-disable-next-line react/no-unstable-nested-components
-//             formatOptionLabel={(coin) => (
-//                 <div
-//                     key={coin.id}
-//                     className="group relative cursor-default text-primary fontGroup-highlightSemi select-none data-focus:text-white data-focus:outline-hidden"
-//                 >
-//                     <div className="flex items-center">
-//                         <img
-//                             alt=""
-//                             src={coin.icon}
-//                             className="w-5 shrink-0 rounded-full"
-//                         />
-//                         <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
-//                             {coin.name}
-//                         </span>
-//                     </div>
-//                 </div>
-//             )}
-//         />
-//     );
-// };
-
 export const Select = ({
     options,
     selectedOption,

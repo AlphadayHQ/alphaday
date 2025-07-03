@@ -12,16 +12,50 @@ export type TCase = {
 
 const ICONS = {
     [EPredictionCase.OPTIMISTIC]: (
-        <TrendUpThinSVG className="w-4 h-4 inline fill-success" />
+        <div className="flex items-center w-6 h-6 p-1 pl-0.5 shrink-0 rounded-full bg-[#6DD230]/20">
+            <TrendUpThinSVG className="w-5 h-5 inline fill-success" />
+        </div>
     ),
     [EPredictionCase.PESSIMISTIC]: (
-        <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
+        <div className="flex items-center w-6 h-6 p-1 pl-0.5 shrink-0 rounded-full bg-[#F45532]/20">
+            <TrendDownThinSVG className="w-5 h-5 inline fill-secondaryOrangeSoda" />
+        </div>
     ),
     [EPredictionCase.BASELINE]: (
-        <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
+        <div className="flex items-center w-6 h-6 pl-0.5 shrink-0 rounded-full bg-[#FAA202]/20">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1"
+                stroke="currentColor"
+                className="w-5 h-5 inline stroke-secondaryOrange"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5 12h14"
+                />
+            </svg>
+        </div>
     ),
     all: (
-        <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
+        <div className="flex items-center w-6 h-6 p-0.5 shrink-0 rounded-full bg-[#84899a]/30">
+            <svg
+                className="w-5 h-5 inline stroke-[#84899a]"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1"
+                stroke="currentColor"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 12H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+            </svg>
+        </div>
     ),
 };
 
