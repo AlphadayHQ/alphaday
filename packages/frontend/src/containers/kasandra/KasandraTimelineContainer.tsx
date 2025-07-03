@@ -9,6 +9,7 @@ import { selectKasandraData, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import { EItemFeedPreference, TCoin, TKasandraCase } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
 
 import KasandraTimelineModule from "src/components/kasandra/KasandraTimelineModule";
 import { TMarketMeta } from "src/components/market/types";
@@ -153,11 +154,15 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const handleSelectedCase = useCallback(
         (kase: TKasandraCase) => {
+            Logger.debug("Kasandra timeline selectedCase", kase);
             dispatch(
-                setKasandraData({ widgetHash: moduleData.hash, case: kase })
+                setKasandraData({
+                    widgetHash: kasandraModuleDataHash || moduleData.hash,
+                    case: kase,
+                })
             );
         },
-        [dispatch, moduleData.hash]
+        [dispatch, kasandraModuleDataHash, moduleData.hash]
     );
 
     useEffect(() => {
