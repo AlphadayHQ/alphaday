@@ -11,6 +11,13 @@ type Props = {
     isKasandra?: boolean;
 };
 
+const kasandraRangeOptions = [
+    CHART_RANGE_OPTIONS.oneWeek,
+    CHART_RANGE_OPTIONS.oneMonth,
+    CHART_RANGE_OPTIONS.threeMonths,
+    CHART_RANGE_OPTIONS.oneYear,
+];
+
 const DateRangeBar: FC<Props> = memo(function DateRangeBar({
     selectedChartRange,
     onSelectChartRange,
@@ -18,12 +25,6 @@ const DateRangeBar: FC<Props> = memo(function DateRangeBar({
     isKasandra,
 }) {
     const { t } = useTranslation();
-    const kasandraRangeOptions = [
-        CHART_RANGE_OPTIONS.oneDay,
-        CHART_RANGE_OPTIONS.oneWeek,
-        CHART_RANGE_OPTIONS.oneMonth,
-        CHART_RANGE_OPTIONS.oneYear,
-    ];
     return (
         <div className="flex w-full justify-end border-none uppercase mb-2">
             {Object.values(
