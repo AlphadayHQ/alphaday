@@ -36,7 +36,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const selectedChartRange = useMemo(
         () =>
             prevSelectedMarketData?.selectedChartRange ||
-            CONFIG.WIDGETS.MARKET.DEFAULT_INTERVAL,
+            CONFIG.WIDGETS.KASANDRA.DEFAULT_INTERVAL,
         [prevSelectedMarketData?.selectedChartRange]
     );
 
