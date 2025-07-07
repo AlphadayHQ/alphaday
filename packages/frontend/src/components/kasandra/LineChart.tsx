@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useMemo, useState } from "react";
 import { ApexAreaChart, Spinner } from "@alphaday/ui-kit";
 import { EPredictionCase, TChartRange } from "src/api/types";
+import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { maxVal, minVal } from "src/api/utils/helpers";
 import { truncateDataByChartRange } from "src/api/utils/kasandraUtils";
 import { Logger } from "src/api/utils/logging";
@@ -314,22 +315,53 @@ const LineChart: FC<IProps> = memo(function LineChart({
             labels: {
                 datetimeUTC: false,
                 style: {
-                    colors: "var(--alpha-border)",
+                    colors: "var(--alpha-primary-200)",
                     fontSize: "10px",
                     fontFamily: "Arial, sans-serif",
-                    fontWeight: 700,
+                    fontWeight: 500,
                     cssClass: "apexcharts-xaxis-label",
                 },
             },
             convertedCatToNumeric: false,
         },
         yaxis: {
-            show: false,
+            show: true,
             tickAmount: 3,
             // Manual adjustments to the y-axis to avoid clipping the line chart
-            min: minValue * (1 - 0.01),
-            max: maxValue * (1 + 0.01),
+            min: minValue,
+            max: maxValue,
             decimalsInFloat: false,
+            labels: {
+                datetimeUTC: false,
+                style: {
+                    colors: "var(--alpha-primary-200)",
+                    fontSize: "10px",
+                    fontWeight: 500,
+                    fontFamily: "Arial, sans-serif",
+                    cssClass: "apexcharts-xaxis-label",
+                },
+                formatter: (value: number) => {
+                    return formatNumber({
+                        value,
+                        style: ENumberStyle.Currency,
+                        currency: "USD",
+                    }).value;
+                },
+            },
+            axisBorder: {
+                show: true,
+                color: "var(--alpha-border)",
+                offsetX: 0,
+                offsetY: 0,
+            },
+            axisTicks: {
+                show: true,
+                borderType: "solid",
+                color: "var(--alpha-border)",
+                width: 6,
+                offsetX: 0,
+                offsetY: 0,
+            },
         },
         grid: {
             borderColor: "var(--alpha-border)",

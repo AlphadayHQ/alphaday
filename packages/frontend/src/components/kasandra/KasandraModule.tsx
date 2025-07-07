@@ -154,7 +154,7 @@ const KasandraModule: FC<IKasandraModule> = ({
     }
 
     return (
-        <div ref={squareRef} className="market-widget">
+        <div ref={squareRef} className="kasandra-widget">
             <div className="p-0 flex items-center justify-between flex-wrap flex-1 basis-auto min-h-[1px]">
                 <div className="w-full flex flex-col mt-[10px] two-col:mt-0">
                     <MarketsList
