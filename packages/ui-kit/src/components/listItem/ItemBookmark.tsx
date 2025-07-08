@@ -2,7 +2,6 @@ import { FC } from "react";
 import { ReactComponent as BookmarkSVG } from "src/assets/svg/bookmark.svg";
 import { ReactComponent as BookmarkedSVG } from "src/assets/svg/bookmarked.svg";
 import { twMerge } from "tailwind-merge";
-// import globalMessages from "src/globalMessages";
 
 interface IBookmark {
     isAuthenticated: boolean | undefined;
@@ -38,7 +37,10 @@ const ItemBookmark: FC<IBookmark> = ({
                     };
                     handler().catch(() => ({}));
                 }}
-                title={isAuthenticated ? "Bookmark this item" : ""}
+                title={
+                    isAuthenticated ? "Bookmark this item" : ""
+                    // TODO (xavier-charles): : globalMessages.callToAction.signUpToBookmark("items")
+                }
             >
                 {bookmarked ? (
                     <BookmarkedSVG className={className} />
