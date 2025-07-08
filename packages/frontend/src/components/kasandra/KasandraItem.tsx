@@ -184,15 +184,6 @@ const KasandraItem: FC<{
                                     </div>
                                 </>
                             )}
-                            {/* <ItemBookmark
-                                isAuthenticated={isAuthenticated}
-                                onBookmark={
-                                    onBookmark
-                                        ? () => onBookmark(item)
-                                        : undefined
-                                }
-                                bookmarked={item.bookmarked}
-                            /> */}
                         </div>
                     </div>
                 </div>
