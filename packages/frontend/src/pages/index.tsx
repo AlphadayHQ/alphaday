@@ -111,10 +111,12 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         () =>
             isFullsize
                 ? {
-                      slug: "calendar_template",
+                      slug: UI.FULL_SIZE_WIDGET_SLUG as TTemplateSlug,
                       // we should not check the hash if `fullSizeWidgetSlug` is undefined.
                       hash: selectedView?.data.widgets.find(
-                          (w) => w.widget.template.slug === "calendar_template"
+                          (w) =>
+                              w.widget.template.slug ===
+                              UI.FULL_SIZE_WIDGET_SLUG
                       )?.hash,
                   }
                 : undefined,
