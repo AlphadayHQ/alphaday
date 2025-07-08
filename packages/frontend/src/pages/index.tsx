@@ -16,7 +16,7 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
-import { ETutorialTipId, TUserViewWidget, TCachedView } from "src/api/types";
+import { ETutorialTipId, TUserViewWidget } from "src/api/types";
 import {
     computeLayoutGrid,
     getDraggedWidget,
@@ -45,71 +45,11 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
 
     const {
-        selectedView: previousSelectedView,
+        selectedView,
         addWidgetsToCache,
         hasWidgetInCache,
         subscribedViews,
-        // navigateToView,
     } = useView();
-
-    // TODO (xavier-charles): remove this once backend is ready
-    const selectedView = useMemo(() => {
-        const blogWidgetData = previousSelectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === "blog_template"
-        );
-        const videosWidgetData = previousSelectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === "video_template"
-        );
-        if (blogWidgetData && videosWidgetData && previousSelectedView?.data) {
-            // modify widget data
-            const modifiedWidgetOne = {
-                ...videosWidgetData,
-                name: "Kasandra Timeline",
-
-                widget: {
-                    ...videosWidgetData.widget,
-                    name: "Kasandra Timeline",
-                    template: {
-                        ...videosWidgetData.widget.template,
-                        slug: "kasandra_timeline_template" as TTemplateSlug,
-                    },
-                },
-            };
-
-            const modifiedWidgetTwo = {
-                ...blogWidgetData,
-                name: "Kasandra Predictions",
-                widget: {
-                    ...blogWidgetData.widget,
-                    name: "Kasandra Predictions",
-                    template: {
-                        ...blogWidgetData.widget.template,
-                        slug: "kasandra_predictions_template" as TTemplateSlug,
-                    },
-                },
-            };
-
-            // replace the widgets with the new ones
-            const newWidgets = previousSelectedView.data.widgets.map((w) => {
-                if (w.hash === blogWidgetData.hash) {
-                    return modifiedWidgetOne;
-                }
-                if (w.hash === videosWidgetData.hash) {
-                    return modifiedWidgetTwo;
-                }
-                return w;
-            });
-
-            return {
-                ...previousSelectedView,
-                data: {
-                    ...previousSelectedView.data,
-                    widgets: newWidgets,
-                },
-            } as TCachedView;
-        }
-        return previousSelectedView;
-    }, [previousSelectedView]);
 
     const availableViews = useAvailableViews();
 
