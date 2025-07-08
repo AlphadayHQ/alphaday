@@ -192,15 +192,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 showFullSize: false,
                 setTutFocusElemRef: undefined,
             }}
-            // TODO (xavier-charles): revert the code below once backend is ready
-            moduleData={{
-                ...moduleData,
-                name: moduleData.name,
-                widget: {
-                    ...moduleData.widget,
-                    name: moduleData.widget.name,
-                },
-            }}
+            moduleData={moduleData}
             adjustable={false}
         >
             <Suspense
