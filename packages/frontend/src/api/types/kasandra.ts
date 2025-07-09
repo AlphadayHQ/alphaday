@@ -25,21 +25,6 @@ export type TPredictionCoin = {
     icon: string;
 };
 
-export type TPredictionItem = {
-    id: number;
-    coin: TPredictionCoin;
-    price: number;
-    pricePercentChange: number;
-    insight?: {
-        title: string;
-        rationale: string;
-        // sources: TInsightSource[];
-    };
-    case: string;
-    targetDate: string;
-    created: string;
-};
-
 export type TPredictionData = {
     price: number;
     timestamp: number;
