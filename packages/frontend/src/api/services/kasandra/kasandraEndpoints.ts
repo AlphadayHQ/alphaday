@@ -32,8 +32,8 @@ const mapRemoteInsights = (
         case: i.case,
         title: i.title,
         rationale: i.rationale,
-        pricePercentChange: i.price_percent_change,
-        sources: i.sources,
+        price: i.price,
+        // sources: i.sources,
     }));
     return results;
 };

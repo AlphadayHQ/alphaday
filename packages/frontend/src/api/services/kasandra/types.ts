@@ -49,8 +49,8 @@ export type TRemoteInsight = {
     case: EPredictionCase;
     title: string;
     rationale: string;
-    price_percent_change: number;
-    sources: TRemoteInsightSource[];
+    price: number;
+    // sources: TRemoteInsightSource[];
 };
 
 /**
