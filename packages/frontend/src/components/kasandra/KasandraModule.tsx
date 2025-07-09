@@ -38,7 +38,7 @@ export interface IKasandraModule {
     insights: TInsightItem[] | undefined;
     selectedChartRange: TChartRange;
     onSelectChartRange: (s: TChartRange) => void;
-    selectedCase: TKasandraCase | undefined;
+    selectedCase: TKasandraCase;
     onSelectCase: (kase: TKasandraCase) => void;
     selectedMarket: TCoin | undefined;
     isAuthenticated: boolean;

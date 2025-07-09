@@ -41,7 +41,9 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     );
 
     const selectedCase = useMemo(
-        () => prevSelectedMarketData?.selectedCase || undefined,
+        () =>
+            prevSelectedMarketData?.selectedCase ||
+            CONFIG.WIDGETS.KASANDRA.DEFAULT_SELECTED_CASE,
         [prevSelectedMarketData?.selectedCase]
     );
 

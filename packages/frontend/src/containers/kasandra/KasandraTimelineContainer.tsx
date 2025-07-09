@@ -42,7 +42,9 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     );
 
     const selectedCase = useMemo(
-        () => prevSelectedMarketData?.selectedCase || undefined,
+        () =>
+            prevSelectedMarketData?.selectedCase ||
+            CONFIG.WIDGETS.KASANDRA_TIMELINE.DEFAULT_SELECTED_CASE,
         [prevSelectedMarketData?.selectedCase]
     );
 

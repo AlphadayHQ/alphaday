@@ -24,7 +24,7 @@ interface IKasandra {
     onClick?: (id: number) => MaybeAsync<void>;
     onBookmark?: (id: TInsightItem) => MaybeAsync<void>;
     isAuthenticated: boolean;
-    selectedCase: TKasandraCase | undefined;
+    selectedCase: TKasandraCase;
     onSelectCase: (kase: TKasandraCase) => void;
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
