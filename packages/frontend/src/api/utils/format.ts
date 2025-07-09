@@ -29,7 +29,7 @@ const NUMBER_FORMAT_CONFIG: Record<string, TNumberFormatConfig> = {
     MediumSizeNumbers: {
         From: 1_000,
         To: 100_000,
-        DecimalPlaces: 1,
+        DecimalPlaces: 0,
     },
     SmallNumbers: {
         From: 1,
