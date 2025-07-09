@@ -37,7 +37,7 @@ const ModuleDisclaimer: FC<IProps> = ({
         >
             <ScrollBar>
                 <div className="relative flex flex-col flex-wrap items-center justify-center m-4 mt-3 mr-2.5 text-justify prose-h4:fontGroup-highlight ">
-                    <ReactMarkdown remarkPlugins={PLUGINS} linkTarget="_blank">
+                    <ReactMarkdown remarkPlugins={PLUGINS}>
                         {disclaimer}
                     </ReactMarkdown>
                     <div className="flex flex-1 flex-row justify-end items-end">
