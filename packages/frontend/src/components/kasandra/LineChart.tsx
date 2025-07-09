@@ -1,5 +1,6 @@
 import { FC, memo, useCallback, useMemo, useState } from "react";
 import { ApexAreaChart, Spinner } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { EPredictionCase, TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { maxVal, minVal } from "src/api/utils/helpers";
@@ -92,6 +93,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
     onSelectDataPoint,
     selectedCase,
 }) {
+    const { t } = useTranslation();
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
@@ -292,7 +294,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                             fontWeight: 500,
                             letterSpacing: "1px !important",
                         },
-                        text: "Now",
+                        text: t("kasandra.now"),
                         offsetX: 0,
                         offsetY: 15,
                         orientation: "horizontal",

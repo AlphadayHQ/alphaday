@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Select } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { SingleValue } from "react-select";
 import { EPredictionCase } from "src/api/types";
 import { ReactComponent as TrendDownThinSVG } from "src/assets/svg/trend-down-thin.svg";
@@ -78,9 +79,11 @@ export const CaseSelect: FC<{
     onSelect: (coinCase: TCase) => void;
     selectedCase: TCase | undefined;
 }> = ({ onSelect, selectedCase }) => {
+    const { t } = useTranslation();
+
     const options = cases.map((c) => ({
         id: c.id,
-        name: c.name,
+        name: t(`kasandra.${c.id}`),
         icon: c.icon as React.ReactNode,
     }));
 
