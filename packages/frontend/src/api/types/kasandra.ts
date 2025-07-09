@@ -53,7 +53,7 @@ export type TInsightItem = {
     case: EPredictionCase;
     title: string;
     rationale: string;
-    pricePercentChange: number;
+    price: number;
     sources: TInsightSource[];
 };
 

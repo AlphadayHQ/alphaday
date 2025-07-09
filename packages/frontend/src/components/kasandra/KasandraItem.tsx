@@ -81,6 +81,13 @@ const KasandraItem: FC<{
 
     const itemSources = item.sources;
 
+    const pricePercentChange = useMemo(() => {
+        if (!selectedMarket?.price) return 0;
+        const change = item.price - selectedMarket.price;
+        const percentChange = (change / selectedMarket.price) * 100;
+        return percentChange;
+    }, [selectedMarket?.price, item.price]);
+
     return (
         <span
             key={item.id}
@@ -114,25 +121,24 @@ const KasandraItem: FC<{
                         </div>
                         <div className="lastLine fontGroup-mini flex text-primaryVariant100 mt-2">
                             <span className={caseDisplay.color}>
-                                {item.pricePercentChange > 0 ? (
+                                {pricePercentChange > 0 ? (
                                     <ArrowUpSVG className="w-2 h-2 mb-1 inline mr-[5px] fill-success" />
-                                ) : item.pricePercentChange < 0 ? (
+                                ) : pricePercentChange < 0 ? (
                                     <ArrowDownSVG className="w-2 h-2 inline mr-[5px] fill-secondaryOrangeSoda" />
                                 ) : null}
                                 <span
                                     className={twMerge(
                                         "text-primaryVariant100",
-                                        item.pricePercentChange > 0
+                                        pricePercentChange > 0
                                             ? "text-success"
-                                            : item.pricePercentChange < 0
+                                            : pricePercentChange < 0
                                               ? "text-secondaryOrangeSoda"
                                               : ""
                                     )}
                                 >
                                     {
                                         formatNumber({
-                                            value:
-                                                item.pricePercentChange / 100,
+                                            value: pricePercentChange / 100,
                                             style: ENumberStyle.Percent,
                                         }).value
                                     }
