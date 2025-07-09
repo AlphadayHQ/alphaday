@@ -79,7 +79,7 @@ const KasandraItem: FC<{
         };
     }, [item.case]);
 
-    const itemSources = item.sources;
+    // const itemSources = item.sources;
 
     const pricePercentChange = useMemo(() => {
         if (!selectedMarket?.price) return 0;
@@ -161,7 +161,7 @@ const KasandraItem: FC<{
                                 onError={imgOnError}
                             />
                             <span>{selectedMarket?.name}</span>{" "}
-                            {!!itemSources?.length && (
+                            {/* {!!itemSources?.length && (
                                 <>
                                     <span className="mx-[7px] my-0 self-center">
                                         •
@@ -189,7 +189,7 @@ const KasandraItem: FC<{
                                             ))}
                                     </div>
                                 </>
-                            )}
+                            )} */}
                         </div>
                     </div>
                 </div>
@@ -212,7 +212,7 @@ const KasandraItem: FC<{
                                 {item.rationale}
                             </div>
                             <br />
-                            {itemSources && (
+                            {/* {itemSources && (
                                 <>
                                     <div className="flex flex-wrap gap-1">
                                         {itemSources
@@ -236,7 +236,7 @@ const KasandraItem: FC<{
                                     </div>
                                     <br />
                                 </>
-                            )}
+                            )} */}
                         </div>
                     )}
                 </div>

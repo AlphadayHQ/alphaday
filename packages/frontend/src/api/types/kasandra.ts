@@ -33,7 +33,7 @@ export type TPredictionItem = {
     insight?: {
         title: string;
         rationale: string;
-        sources: TInsightSource[];
+        // sources: TInsightSource[];
     };
     case: string;
     targetDate: string;
@@ -54,7 +54,7 @@ export type TInsightItem = {
     title: string;
     rationale: string;
     price: number;
-    sources: TInsightSource[];
+    // sources: TInsightSource[];
 };
 
 export type TPredictions = {
