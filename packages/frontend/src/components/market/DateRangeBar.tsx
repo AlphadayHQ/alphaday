@@ -8,17 +8,28 @@ type Props = {
     selectedChartRange: TChartRange;
     onSelectChartRange: (range: TChartRange) => void;
     selectedChartType: EChartType;
+    isKasandra?: boolean;
 };
+
+const kasandraRangeOptions = [
+    CHART_RANGE_OPTIONS.oneWeek,
+    CHART_RANGE_OPTIONS.oneMonth,
+    CHART_RANGE_OPTIONS.threeMonths,
+    CHART_RANGE_OPTIONS.oneYear,
+];
 
 const DateRangeBar: FC<Props> = memo(function DateRangeBar({
     selectedChartRange,
     onSelectChartRange,
     selectedChartType,
+    isKasandra,
 }) {
     const { t } = useTranslation();
     return (
         <div className="flex w-full justify-end border-none uppercase mb-2">
-            {Object.values(CHART_RANGE_OPTIONS).map((option) => (
+            {Object.values(
+                isKasandra ? kasandraRangeOptions : CHART_RANGE_OPTIONS
+            ).map((option) => (
                 <span key={option.value} className="ml-1.5 mt-1.5">
                     <TabButton
                         open={selectedChartRange === option.value}

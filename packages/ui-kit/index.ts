@@ -32,6 +32,7 @@ import {
     ApexRadialChart,
 } from "./src/components/charts/apexchart";
 import { ChatForm } from "./src/components/chat/ChatForm";
+import { Select } from "./src/components/coin-select/Select";
 import { Dialog } from "./src/components/dialog/Dialog";
 import { MiniDialog } from "./src/components/dialog/MiniDialog";
 import { ShareViewDialog } from "./src/components/dialog/ShareViewDialog";
@@ -181,6 +182,7 @@ export {
     FadeIn,
     TabsBar,
     SortBy,
+    Select,
     /**
      * Mobile-only components
      */

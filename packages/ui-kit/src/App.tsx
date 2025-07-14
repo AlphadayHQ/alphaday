@@ -21,7 +21,6 @@ function App() {
             <h1 className="text-primary text-lg font-semibold">
                 Vite + React + Ionic + Tailwind
             </h1>
-            {/* <IonDatetime className="mt-10" /> */}
             <div className="max-w-md w-full">
                 <div className="m-1">
                     <FormInput

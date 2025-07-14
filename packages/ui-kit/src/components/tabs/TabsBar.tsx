@@ -12,7 +12,7 @@ export type TTabsOption = {
 
 export const TabsBar: FC<{
     options: TTabsOption[];
-    selectedOption: TTabsOption;
+    selectedOption: TTabsOption | undefined;
     onChange: (option: string) => void;
     onRemoveTab?: (option: string) => MaybeAsync<void>;
 
@@ -56,13 +56,13 @@ export const TabsBar: FC<{
                             {options.map((tab) => (
                                 <span
                                     className={twMerge(
-                                        tab.value === selectedOption.value
+                                        tab.value === selectedOption?.value
                                             ? "border-primary text-primary"
                                             : "border-transparent hover:border-primaryFiltered text-primaryVariant100 hover:text-primaryFiltered",
                                         "flex min-w-max items-center whitespace-nowrap border-b-2 pt-1 pb-1.5 px-2 text-sm font-medium box-border cursor-pointer fontGroup-highlightSemi"
                                     )}
                                     aria-current={
-                                        tab.value === selectedOption.value
+                                        tab.value === selectedOption?.value
                                             ? "page"
                                             : undefined
                                     }

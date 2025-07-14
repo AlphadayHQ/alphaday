@@ -10,6 +10,8 @@ import {
     TTogglePinnedCoinRequest,
     TTogglePinnedCoinRawResponse,
     TRemoteCoin,
+    TGetKasandraCoinsResponse,
+    TGetKasandraCoinsRawResponse,
 } from "./types";
 
 const { COINS } = CONFIG.API.DEFAULT.ROUTES;
@@ -66,6 +68,17 @@ const coinsApi = alphadayApi.injectEndpoints({
             }),
             providesTags: ["PinnedCoins"],
         }),
+        getKasandraCoins: builder.query<
+            TGetKasandraCoinsResponse,
+            TGetCoinsRequest
+        >({
+            query: () => `${COINS.BASE}${COINS.KASANDRA_SUPPORTED}`,
+            transformResponse: (
+                res: TGetKasandraCoinsRawResponse
+            ): TGetKasandraCoinsResponse => ({
+                results: res?.map(transformRemoteCoin),
+            }),
+        }),
         togglePinnedCoin: builder.mutation<
             TTogglePinnedCoinRawResponse,
             TTogglePinnedCoinRequest
@@ -86,5 +99,6 @@ const coinsApi = alphadayApi.injectEndpoints({
 export const {
     useGetCoinsQuery,
     useGetPinnedCoinsQuery,
+    useGetKasandraCoinsQuery,
     useTogglePinnedCoinMutation,
 } = coinsApi;

@@ -1,5 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TChartRange, EItemFeedPreference, TProjectType } from "src/api/types";
+import {
+    TChartRange,
+    EItemFeedPreference,
+    TProjectType,
+    TKasandraCase,
+} from "src/api/types";
 import { ECalendarType } from "src/components/calendar/types";
 import { EChartType, TMarketMeta } from "src/components/market/types";
 import { TEventCategory } from "src/components/types";
@@ -32,6 +37,13 @@ export interface INewsWidgetState {
 export interface IBlogWidgetState {
     feedPreference: EItemFeedPreference;
 }
+export interface IKasandraWidgetState {
+    feedPreference: EItemFeedPreference;
+    selectedTimestamp: number | undefined;
+    selectedMarket: TMarketMeta | undefined;
+    selectedChartRange: TChartRange | undefined;
+    selectedCase: TKasandraCase | undefined;
+}
 export interface IPodcastsWidgetState {
     feedPreference: EItemFeedPreference;
     preferredChannelIds: number[];
@@ -55,6 +67,7 @@ export interface IWidgetsState {
     podcast: Record<string, IPodcastsWidgetState>;
     video: Record<string, IVideosWidgetState>;
     tvl: Record<string, ITvlWidgetState>;
+    kasandra: Record<string, IKasandraWidgetState>;
 }
 
 const initialState: IWidgetsState = {
@@ -67,6 +80,7 @@ const initialState: IWidgetsState = {
     video: {},
     blog: {},
     tvl: {},
+    kasandra: {},
 };
 
 const widgetsSlice = createSlice({
@@ -180,6 +194,42 @@ const widgetsSlice = createSlice({
             draft.video[widgetHash] = {
                 ...draft.video[widgetHash],
                 preferredChannelIds: preference,
+            };
+        },
+        setKasandraData(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                timestamp?: number;
+                market?: TMarketMeta;
+                case?: TKasandraCase;
+                chartRange?: TChartRange;
+                feedPreference?: EItemFeedPreference;
+            }>
+        ) {
+            const {
+                payload: {
+                    widgetHash,
+                    timestamp,
+                    market,
+                    case: kase,
+                    chartRange,
+                    feedPreference,
+                },
+            } = action;
+            draft.kasandra[widgetHash] = {
+                ...draft.kasandra[widgetHash],
+                selectedTimestamp:
+                    timestamp ?? draft.kasandra[widgetHash]?.selectedTimestamp,
+                selectedMarket:
+                    market ?? draft.kasandra[widgetHash]?.selectedMarket,
+                selectedChartRange:
+                    chartRange ??
+                    draft.kasandra[widgetHash]?.selectedChartRange,
+                selectedCase: kase ?? draft.kasandra[widgetHash]?.selectedCase,
+                feedPreference:
+                    feedPreference ??
+                    draft.kasandra[widgetHash]?.feedPreference,
             };
         },
         setSelectedChartRange(
@@ -349,6 +399,7 @@ export const {
     setSelectedMarket,
     setNewsFeedPreference,
     setBlogFeedPreference,
+    setKasandraData,
     setPodcastFeedPreference,
     setPodcastPreferredChannelIds,
     setVideoFeedPreference,
@@ -384,6 +435,11 @@ export const selectPodcastPreferredChannelIds =
     (widgetHash: string) =>
     (state: RootState): number[] | undefined =>
         state.widgets.podcast[widgetHash]?.preferredChannelIds;
+
+export const selectKasandraData =
+    (widgetHash: string) =>
+    (state: RootState): IKasandraWidgetState | undefined =>
+        state.widgets.kasandra[widgetHash];
 
 export const selectBlogFeedPreference =
     (widgetHash: string) =>

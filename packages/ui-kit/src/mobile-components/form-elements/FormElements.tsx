@@ -78,7 +78,12 @@ export const FormInput: FC<IFormInput> = ({
     );
 };
 
-export const FormTextArea: FC<IFormElement<HTMLTextAreaElement>> = ({
+interface FormTextAreaProps
+    extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+    label?: string;
+}
+
+export const FormTextArea: FC<FormTextAreaProps> = ({
     label,
     placeholder,
     defaultValue,
@@ -86,32 +91,34 @@ export const FormTextArea: FC<IFormElement<HTMLTextAreaElement>> = ({
     value,
     onChange,
     disabled,
+    rows = 4,
+    ...props
 }) => {
     return (
-        <div>
+        <>
             <label
                 htmlFor="email"
                 className="text-sm font-medium leading-6 text-primary flex"
             >
                 {label}
             </label>
-            <div className="mt-1">
-                <textarea
-                    rows={4}
-                    name={label}
-                    id="comment"
-                    className={twMerge(
-                        "block w-full bg-backgroundVariant100 rounded-md border-0 py-1.5 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-50 disabled:ring-gray-200 text-primary shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6",
-                        className
-                    )}
-                    defaultValue={defaultValue}
-                    value={value}
-                    onChange={onChange}
-                    placeholder={placeholder}
-                    disabled={disabled}
-                />
-            </div>
-        </div>
+
+            <textarea
+                rows={rows}
+                name={label}
+                id="comment"
+                className={twMerge(
+                    "block w-full mt-1 bg-backgroundVariant100 rounded-md border-0 py-1.5 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-50 disabled:ring-gray-200 text-primary shadow-sm ring-1 ring-inset placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6",
+                    className
+                )}
+                defaultValue={defaultValue}
+                value={value}
+                onChange={onChange}
+                placeholder={placeholder}
+                disabled={disabled}
+                {...props}
+            />
+        </>
     );
 };
 

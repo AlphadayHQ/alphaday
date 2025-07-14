@@ -32,12 +32,14 @@ import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
+import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
+import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS } = CONFIG;
+const { UI, VIEWS, WIDGETS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -47,8 +49,8 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         addWidgetsToCache,
         hasWidgetInCache,
         subscribedViews,
-        // navigateToView,
     } = useView();
+
     const availableViews = useAvailableViews();
 
     const removeWidget = useCallback(
@@ -109,19 +111,37 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         () =>
             isFullsize
                 ? {
-                      slug: "calendar_template", // TODO (xavier-charles) replace hardcoded slug with a dynamic one
+                      slug: UI.FULL_SIZE_WIDGET_SLUG as TTemplateSlug,
                       // we should not check the hash if `fullSizeWidgetSlug` is undefined.
                       hash: selectedView?.data.widgets.find(
-                          (w) => w.widget.template.slug === "calendar_template"
+                          (w) =>
+                              w.widget.template.slug ===
+                              UI.FULL_SIZE_WIDGET_SLUG
                       )?.hash,
                   }
                 : undefined,
         [isFullsize, selectedView?.data.widgets]
     );
-    const layoutGrid = useMemo(
-        () => computeLayoutGrid(selectedView?.data.widgets),
-        [selectedView]
-    );
+
+    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
+    const layoutGrid = useMemo(() => {
+        if (selectedView?.data.widgets.length === 0) {
+            return undefined;
+        }
+        return computeLayoutGrid(
+            selectedView?.data.widgets.filter(
+                (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
+            )
+        );
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
+    const kasandraModuleData = useMemo(() => {
+        const widgetData = selectedView?.data.widgets.find(
+            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
+        );
+        return widgetData;
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
     /**
      * The current layout state according to the screen size
      * IMPORTANT: checking that layoutGrid.<layout> != null is necessary
@@ -327,7 +347,17 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                     }
                 }}
             >
-                <div className="two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                    {kasandraModuleData && (
+                        <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                            <div className="col-span-2">
+                                <KasandraContainer
+                                    moduleData={kasandraModuleData}
+                                    toggleAdjustable={() => {}}
+                                />
+                            </div>
+                        </div>
+                    )}
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -338,6 +368,13 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
+                                    style={{
+                                        marginTop:
+                                            kasandraModuleData &&
+                                            (colIndex === 0 || colIndex === 1)
+                                                ? `${WIDGETS.KASANDRA.WIDGET_HEIGHT}px`
+                                                : "0px",
+                                    }}
                                 >
                                     {widgets.map((widget, rowIndex) => (
                                         <ModuleWrapper
