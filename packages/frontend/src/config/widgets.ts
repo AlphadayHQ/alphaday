@@ -42,7 +42,7 @@ const WIDGETS_CONFIG = {
         ADJUSTABLE: true,
     },
     [ETemplateNameRegistry.Kasandra]: {
-        WIDGET_HEIGHT: 550,
+        WIDGET_HEIGHT: 585,
         ADJUSTABLE: false,
         PREDICTIONS_LIMIT: 72,
         COINS_QUERY_HARD_LIMIT: 30,

@@ -404,7 +404,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 breakpoint: 575,
                 options: {
                     chart: {
-                        height: 200,
+                        height: 250,
                     },
                     xaxis: {
                         show: false,
@@ -428,7 +428,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
     }
 
     return (
-        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">
+        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[354px] line-chart">
             <ApexAreaChart
                 key={zoomKey}
                 options={options}
