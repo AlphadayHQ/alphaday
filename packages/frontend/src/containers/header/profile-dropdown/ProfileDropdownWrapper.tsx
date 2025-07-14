@@ -14,7 +14,6 @@ import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
 import globalMessages from "src/globalMessages";
 import styles from "./ProfileDropdownWrapper.module.scss";
-// TODO (xavier-charles): wallet view button
 
 interface IProps {
     onSignOut: () => MaybeAsync<void>;
@@ -99,9 +98,16 @@ const ProfileDropdownWrapper: React.FC<IProps> = ({
                 >
                     <div className="mx-2">
                         <div className="flex justify-start px-2 pb-5 pt-0">
-                            <DropdownAvatar />
-                            <p className="m-0 self-center ml-4 capitalize fontGroup-highlight">
-                                {profile?.user.username}
+                            <span className=" flex-shrink-0">
+                                <DropdownAvatar />
+                            </span>
+                            <p
+                                className={twMerge(
+                                    "m-0 self-center ml-4 fontGroup-highlight min-w-[0px]",
+                                    profile?.user.username && "capitalize"
+                                )}
+                            >
+                                {profile?.user.username || profile?.user.email}
                             </p>
                         </div>
                         <Divider />

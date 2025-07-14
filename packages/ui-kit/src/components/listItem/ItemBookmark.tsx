@@ -2,7 +2,6 @@ import { FC } from "react";
 import { ReactComponent as BookmarkSVG } from "src/assets/svg/bookmark.svg";
 import { ReactComponent as BookmarkedSVG } from "src/assets/svg/bookmarked.svg";
 import { twMerge } from "tailwind-merge";
-// import globalMessages from "src/globalMessages";
 
 interface IBookmark {
     isAuthenticated: boolean | undefined;

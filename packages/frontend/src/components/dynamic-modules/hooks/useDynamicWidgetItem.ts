@@ -22,7 +22,7 @@ interface IDynamicWidgetHeight {
  */
 
 export const useDynamicWidgetItem: (arg: {
-    setItemsHeight: React.Dispatch<React.SetStateAction<number>>;
+    setItemsHeight?: React.Dispatch<React.SetStateAction<number>>;
 }) => IDynamicWidgetHeight = ({ setItemsHeight }) => {
     const descHeightRef = useRef<HTMLDivElement>(null);
     const [openAccordion, setOpenAccordion] = useState(false);
@@ -36,7 +36,7 @@ export const useDynamicWidgetItem: (arg: {
 
     const toggleAccordion = useCallback(() => {
         setOpenAccordion((prev) => {
-            setItemsHeight((prevHeight) => {
+            setItemsHeight?.((prevHeight) => {
                 if (!descHeightRef.current) return prevHeight;
                 const newHeight = prev
                     ? prevHeight - descHeightRef.current.scrollHeight

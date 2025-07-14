@@ -40,6 +40,7 @@ const API_V0 = {
             BASE: "coins",
             LIST: "/",
             PINNED: "/pinned_coins/",
+            KASANDRA_SUPPORTED: "/kasandra_supported/",
             PIN: (id: number): string => `/${id}/toggle_pin/`,
         },
         DAO: {
@@ -49,6 +50,11 @@ const API_V0 = {
         FORUM: {
             BASE: "items/forum",
             LIST: "/",
+        },
+        KASANDRA: {
+            BASE: "kasandra",
+            INSIGHTS: "/insights/",
+            PREDICTIONS: "/predictions/",
         },
         KEYWORDS: {
             BASE: "keywords",
