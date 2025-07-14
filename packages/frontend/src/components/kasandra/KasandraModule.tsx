@@ -212,34 +212,10 @@ const KasandraModule: FC<IKasandraModule> = ({
                             <span className="fontGroup-mini text-primaryVariant100">
                                 {t("market.marketCap")}
                             </span>
-                            <span className="value">
-                                <span>
-                                    {/* {selectedMarket !== undefined
-                                        ? formatNumber({
-                                              value: selectedMarket.marketCap,
-                                              style: ENumberStyle.Currency,
-                                              currency: "USD",
-                                          }).value
-                                        : "-"} */}
-                                    $1.7T
-                                </span>
-                            </span>
                         </div>
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
                                 {t("market.volume24h")}
-                            </span>
-                            <span className="value">
-                                <span>
-                                    {/* {selectedMarket?.volume !== undefined
-                                        ? formatNumber({
-                                              value: selectedMarket.volume,
-                                              style: ENumberStyle.Currency,
-                                              currency: "USD",
-                                          }).value
-                                        : "-"} */}
-                                    $2.51B
-                                </span>
                             </span>
                         </div>
                     </div>

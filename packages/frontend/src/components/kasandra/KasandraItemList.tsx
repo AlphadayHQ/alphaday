@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import { TCoin, TInsightItem } from "src/api/types";
-// import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
 import KasandraItem from "./KasandraItem";
 
@@ -10,34 +9,21 @@ const SCROLL_OFFSET = 100;
 interface IKasandraItemList {
     timelineItems: TInsightItem[] | undefined;
     selectedMarket: TCoin | undefined;
-    // handlePaginate: (type: "next" | "previous") => void;
     onClick?: (id: number) => MaybeAsync<void>;
-    // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
-    // isAuthenticated?: boolean;
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
 }
 
 const KasandraItemList: FC<IKasandraItemList> = ({
     timelineItems,
-    // handlePaginate,
     onClick,
-    // onBookmark,
-    // isAuthenticated,
     selectedTimestamp,
     onSelectDataPoint,
     selectedMarket,
 }) => {
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const [itemRef, setItemRef] = useState<HTMLDivElement | null>();
-    // const [itemsHeight, setItemsHeight] = useState<number>(0);
     const prevItemRef = useRef<HTMLElement | undefined>();
-
-    // const handleListScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
-    //     if (shouldFetchMoreItems(currentTarget)) {
-    //         handlePaginate("next");
-    //     }
-    // };
 
     useEffect(() => {
         if (itemRef !== prevItemRef.current && itemRef && scrollRef) {
@@ -81,9 +67,6 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                             isSelected={isSelected}
                             setItemRef={setItemRef}
                             onSelectDataPoint={handleOnSelectDataPoint}
-                            // onBookmark={onBookmark}
-                            // isAuthenticated={isAuthenticated}
-                            // setItemsHeight={setItemsHeight}
                         />
                     );
                 })}

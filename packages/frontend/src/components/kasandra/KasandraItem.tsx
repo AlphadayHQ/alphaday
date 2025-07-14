@@ -34,19 +34,7 @@ const KasandraItem: FC<{
     isSelected: boolean;
     setItemRef: (ref: HTMLDivElement | null) => void;
     onSelectDataPoint: (timestamp: number) => MaybeAsync<void>;
-    // onBookmark?: (id: TKasandraItem) => MaybeAsync<void>;
-    // isAuthenticated?: boolean;
-    // setItemsHeight: React.Dispatch<React.SetStateAction<number>>;
-}> = ({
-    item,
-    isSelected,
-    setItemRef,
-    onSelectDataPoint,
-    selectedMarket,
-    // onBookmark,
-    // isAuthenticated,
-    // setItemsHeight,
-}) => {
+}> = ({ item, isSelected, setItemRef, onSelectDataPoint, selectedMarket }) => {
     const { descHeight, descHeightRef, openAccordion, toggleAccordion } =
         useDynamicWidgetItem({ setItemsHeight: undefined });
 

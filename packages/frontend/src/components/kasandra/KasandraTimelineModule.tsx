@@ -15,7 +15,6 @@ interface IKasandra {
     items: TInsightItem[] | undefined;
     selectedMarket: TCoin | undefined;
     isLoadingItems: boolean;
-    // handlePaginate: (type: "next" | "previous") => void;
     feedPreference: EItemFeedPreference;
     onSetFeedPreference: (preference: EItemFeedPreference) => void;
     supportedCoins: TCoin[];
@@ -34,10 +33,8 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
     function KasandraTimelineModule({
         items,
         isLoadingItems,
-        // handlePaginate,
         widgetHeight,
         onClick,
-        // isAuthenticated,
         selectedTimestamp,
         selectedCase,
         onSelectCase,
@@ -73,9 +70,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                 ) : (
                     <KasandraItemList
                         timelineItems={filteredItems}
-                        // handlePaginate={handlePaginate}
                         onClick={onClick}
-                        // isAuthenticated={isAuthenticated}
                         selectedTimestamp={selectedTimestamp}
                         selectedMarket={selectedMarket}
                         onSelectDataPoint={onSelectDataPoint}
