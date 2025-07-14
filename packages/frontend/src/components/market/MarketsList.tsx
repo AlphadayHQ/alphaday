@@ -4,7 +4,7 @@ import { TCoin } from "src/api/types";
 import { TMarketMeta } from "./types";
 
 interface IMarketsList {
-    markets: TMarketMeta[] | undefined;
+    markets?: TMarketMeta[] | undefined;
     setHeaderRef: React.Dispatch<React.SetStateAction<HTMLDivElement | null>>;
     handleClickScroll: (scrollRight?: boolean) => void;
     hideLeftPan: boolean;
@@ -46,7 +46,9 @@ const MarketsList: FC<IMarketsList> = ({
         pinnedCoins[0];
 
     const handleTabChange = (value: string) => {
-        const coin = markets?.find((market) => market.id.toString() === value);
+        const coin = (markets || pinnedCoins)?.find(
+            (market) => market.id.toString() === value
+        );
         if (coin) onSelectMarket(coin);
     };
 
@@ -65,7 +67,7 @@ const MarketsList: FC<IMarketsList> = ({
                     hideLeftPan={hideLeftPan}
                     hideRightPan={hideRightPan}
                 />
-                {pinnedCoins.length > 0 && (
+                {markets && markets.length > 0 && (
                     <div className="w-[2.5px] ml-1.5 mr-3 bg-borderLine rounded-sm shrink-0" />
                 )}
                 <div className="min-w-4 h-5 self-center" />

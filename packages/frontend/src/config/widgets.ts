@@ -41,6 +41,22 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Kasandra]: {
+        WIDGET_HEIGHT: 550,
+        ADJUSTABLE: false,
+        PREDICTIONS_LIMIT: 72,
+        COINS_QUERY_HARD_LIMIT: 30,
+        DEFAULT_INTERVAL: "1W",
+        DEFAULT_SELECTED_CASE: { id: "all", name: "All" },
+    },
+    [ETemplateNameRegistry.KasandraTimeline]: {
+        WIDGET_HEIGHT: 550,
+        ADJUSTABLE: true,
+        DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
+        POLLING_INTERVAL: 8 * 60, // 8 min
+        MAX_PAGE_NUMBER: 10,
+        DEFAULT_SELECTED_CASE: { id: "all", name: "All Cases" },
+    },
     [ETemplateNameRegistry.Lens]: {
         WIDGET_HEIGHT: 570,
         ADJUSTABLE: true,

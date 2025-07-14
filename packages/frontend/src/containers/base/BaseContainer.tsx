@@ -223,7 +223,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                                 <BaseModuleBody
                                     style={{
                                         height: adjustable
-                                            ? widgetHeight
+                                            ? `${widgetHeight}px`
                                             : undefined,
                                     }}
                                 >

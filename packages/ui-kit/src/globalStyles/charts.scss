@@ -16,6 +16,14 @@
         background-color: transparent !important;
         border: none !important;
 
+        .apexcharts-tooltip-title {
+            @apply text-backgroundVariant400;
+        }
+
+        .apexcharts-tooltip-text {
+            @apply text-backgroundVariant400;
+        }
+
         @apply ring-[0.5px] ring-borderLine;
     }
 
@@ -71,6 +79,9 @@
                 .apexcharts-text.apexcharts-xaxis-label:nth-of-type(1) {
                     display: none;
                 }
+            }
+            .apexcharts-xaxis-annotations > rect {
+                stroke: #f2f2f2;
             }
         }
     }
@@ -240,6 +251,75 @@
         .apexcharts-grid-borders {
             line {
                 stroke: theme("colors.borderLine");
+            }
+        }
+    }
+}
+
+.kasandra-widget {
+    .zoom-reset {
+        position: absolute;
+        bottom: 35px;
+        right: 10px;
+        border-radius: 8px;
+        padding: 6px;
+        width: 32px;
+        height: 26px;
+        cursor: pointer;
+        @apply stroke-primary bg-backgroundBlue;
+    }
+    .apexcharts-tooltip {
+        background-color: transparent !important;
+        border: none !important;
+
+        .apexcharts-tooltip-title {
+            @apply text-backgroundVariant400;
+        }
+
+        .apexcharts-tooltip-text {
+            @apply text-backgroundVariant400;
+        }
+
+        @apply ring-[0.5px] ring-borderLine;
+    }
+
+    .candlestick-chart {
+        margin-top: -12px;
+        .apexcharts-grid-borders {
+            line {
+                @apply stroke-1 stroke-borderLine;
+            }
+        }
+
+        & > div {
+            margin-left: -14px;
+        }
+        .price-tooltip .price {
+            padding-top: 1px;
+        }
+        .apexcharts-graphical {
+            transform: translate(25px, 31px) scale(1);
+        }
+    }
+    .line-chart {
+        margin-top: -16px;
+        .apexcharts-grid-borders {
+            line {
+                @apply stroke-[1.5px] stroke-borderLine;
+            }
+        }
+
+        .apexcharts-inner {
+            margin-top: -16px;
+            & > div {
+                margin-left: -10px;
+            }
+            .price-tooltip .price {
+                padding-top: 0px;
+            }
+
+            .apexcharts-xaxis-annotations > rect {
+                stroke: #f2f2f2;
             }
         }
     }

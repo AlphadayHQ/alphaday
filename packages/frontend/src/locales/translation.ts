@@ -54,6 +54,7 @@ export const translationEN = {
             protocols: "Protocols",
             less: "Less",
             more: "More",
+            timeline: "Timeline",
         },
     },
     widget: {
@@ -390,6 +391,13 @@ export const translationEN = {
         title: "Select Language",
         closeButton: "Close",
     },
+    kasandra: {
+        optimistic: "Bullish",
+        pessimistic: "Bearish",
+        baseline: "Neutral",
+        all: "All Cases",
+        now: "Now",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -448,6 +456,7 @@ export const translationJA: typeof translationEN = {
             protocols: "プロトコル",
             less: "少なく",
             more: "もっと",
+            timeline: "タイムライン",
         },
     },
     widget: {
@@ -786,6 +795,13 @@ export const translationJA: typeof translationEN = {
         title: "言語を選択",
         closeButton: "閉じる",
     },
+    kasandra: {
+        optimistic: "強気",
+        pessimistic: "弱気",
+        baseline: "中立",
+        all: "すべてのケース",
+        now: "今",
+    },
 };
 
 export const translationES: typeof translationEN = {
@@ -844,6 +860,7 @@ export const translationES: typeof translationEN = {
             protocols: "Protocolos",
             less: "Menos",
             more: "Más",
+            timeline: "Timeline",
         },
     },
     widget: {
@@ -1180,6 +1197,13 @@ export const translationES: typeof translationEN = {
         title: "Seleccionar Idioma",
         closeButton: "Cerrar",
     },
+    kasandra: {
+        optimistic: "Alcista",
+        pessimistic: "Bajista",
+        baseline: "Neutral",
+        all: "Todos los casos",
+        now: "Ahora",
+    },
 };
 
 export const translationFR: typeof translationEN = {
@@ -1239,6 +1263,7 @@ export const translationFR: typeof translationEN = {
             protocols: "Protocoles",
             less: "Moins",
             more: "Plus",
+            timeline: "Chronologie",
         },
     },
     widget: {
@@ -1583,6 +1608,13 @@ export const translationFR: typeof translationEN = {
         title: "Sélectionner la Langue",
         closeButton: "Fermer",
     },
+    kasandra: {
+        optimistic: "Haussier",
+        pessimistic: "Baissier",
+        baseline: "Neutre",
+        all: "Tous les cas",
+        now: "Maintenant",
+    },
 };
 
 export const translationTR: typeof translationEN = {
@@ -1641,6 +1673,7 @@ export const translationTR: typeof translationEN = {
             protocols: "Protokoller",
             less: "Daha Az",
             more: "Daha Fazla",
+            timeline: "	zaman akışı",
         },
     },
     widget: {
@@ -1981,6 +2014,13 @@ export const translationTR: typeof translationEN = {
         title: "Dil Seçin",
         closeButton: "Kapat",
     },
+    kasandra: {
+        optimistic: "Yükseliş",
+        pessimistic: "Düşüş",
+        baseline: "Nötr",
+        all: "Tüm Durumlar",
+        now: "Şimdi",
+    },
 };
 
 export const translationZH: typeof translationEN = {
@@ -2037,6 +2077,7 @@ export const translationZH: typeof translationEN = {
             protocols: "协议",
             less: "更少",
             more: "更多",
+            timeline: "时间线",
         },
     },
     widget: {
@@ -2362,5 +2403,12 @@ export const translationZH: typeof translationEN = {
     language: {
         title: "选择语言",
         closeButton: "关闭",
+    },
+    kasandra: {
+        optimistic: "看涨",
+        pessimistic: "看跌",
+        baseline: "中性",
+        all: "所有情况",
+        now: "现在",
     },
 };

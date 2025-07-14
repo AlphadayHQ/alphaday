@@ -31,6 +31,17 @@ export function minVal(items: number[][]): number[] {
     );
 }
 
+export function maxVal(items: number[][]): number[] {
+    return items.reduce(
+        (acc, val) => {
+            // eslint-disable-next-line no-param-reassign
+            acc[0] = val[1] > acc[0] ? val[1] : acc[0];
+            return acc;
+        },
+        [0]
+    );
+}
+
 export const isHash: (s: string | undefined | null) => boolean = (s) => {
     if (s == null) return false;
     const HASH_REGEX = /^[abcdef0-9]{32}$/;
