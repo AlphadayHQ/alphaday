@@ -9,6 +9,7 @@ import {
 import { TMarketMeta } from "../market/types";
 import { CaseSelect } from "./CaseSelect";
 import { CoinSelect } from "./CoinSelect";
+import Disclaimer from "./Disclaimer";
 import KasandraItemList from "./KasandraItemList";
 
 interface IKasandra {
@@ -27,6 +28,8 @@ interface IKasandra {
     onSelectCase: (kase: TKasandraCase) => void;
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
+    disclaimerAccepted: boolean;
+    onAcceptDisclaimer: () => void;
 }
 
 const KasandraTimelineModule: FC<IKasandra> = memo(
@@ -42,6 +45,8 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         selectedMarket,
         supportedCoins,
         onSelectMarket,
+        disclaimerAccepted,
+        onAcceptDisclaimer,
     }) {
         const filteredItems = useMemo(() => {
             if (selectedCase?.id === "all") {
@@ -65,6 +70,10 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                         />
                     </div>
                 </div>
+                <Disclaimer
+                    onAccept={onAcceptDisclaimer}
+                    accepted={disclaimerAccepted}
+                />
                 {isLoadingItems || !items ? (
                     <ModuleLoader $height={`${widgetHeight}px`} />
                 ) : (
