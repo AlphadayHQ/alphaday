@@ -430,8 +430,9 @@ const LineChart: FC<IProps> = memo(function LineChart({
 
     /**
      * The second line of styles keeps the now indicator below the x labels.
+     * Notice that the color of the now indicator has to be a var(--alpha-primary)
+     * for the style to work.
      */
-
     return (
         <div
             className={twMerge(
