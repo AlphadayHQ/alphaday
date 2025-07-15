@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
@@ -10,6 +10,7 @@ import {
     TKasandraCase,
     TPredictions,
 } from "src/api/types";
+import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
 import CoinInfo from "../market/CoinInfo";
 import DateRangeBar from "../market/DateRangeBar";
@@ -207,18 +208,63 @@ const KasandraModule: FC<IKasandraModule> = ({
                     />
                 </div>
                 <div className="w-full flex py-0 px-4 flex-wrap">
-                    <div className={twMerge("flex justify-around w-[50%]")}>
+                    <div className="flex justify-around w-full">
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
                                 {t("market.marketCap")}
+                            </span>
+                            <span className="value">
+                                <span>
+                                    {selectedMarket !== undefined
+                                        ? formatNumber({
+                                              value: selectedMarket.marketCap,
+                                              style: ENumberStyle.Currency,
+                                              currency: "USD",
+                                          }).value
+                                        : "-"}
+                                </span>
                             </span>
                         </div>
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
                                 {t("market.volume24h")}
                             </span>
+                            <span className="value">
+                                <span>
+                                    {selectedMarket?.volume !== undefined
+                                        ? formatNumber({
+                                              value: selectedMarket.volume,
+                                              style: ENumberStyle.Currency,
+                                              currency: "USD",
+                                          }).value
+                                        : "-"}
+                                </span>
+                            </span>
                         </div>
                     </div>
+                    {/* <div className="block">
+                                <div className="column">
+                                    <span className="label">
+                                        24h Low / 24h High
+                                    </span>
+                                    <span className="value">
+                                        <span>
+                                            ${selectedChart?.low24 || 0} / $
+                                            {selectedChart?.high24 || 0}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div className="column">
+                                    <span className="label">
+                                        Volume / Market Cap
+                                    </span>
+                                    <span className="value">
+                                        <span>
+                                            {selectedChart?.volRatio || 0}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div> */}
                 </div>
             </div>
         </div>
