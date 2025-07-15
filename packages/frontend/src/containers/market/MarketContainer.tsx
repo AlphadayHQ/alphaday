@@ -147,7 +147,9 @@ const MarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
         ) {
             const newMarketFromSearch = coinsData.find((marketMeta) => {
                 // marketMeta.tags can be [] (an empty array)
-                return marketMeta.tags?.[0]?.id === lastSelectedKeyword.tag.id;
+                return marketMeta.tags?.find(
+                    (t) => t.id === lastSelectedKeyword.tag.id
+                );
             });
             if (newMarketFromSearch) {
                 handleSelectedMarket(newMarketFromSearch);
