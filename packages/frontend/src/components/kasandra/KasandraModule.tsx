@@ -17,6 +17,7 @@ import DateRangeBar from "../market/DateRangeBar";
 import MarketsList from "../market/MarketsList";
 import { EChartType, TMarketMeta } from "../market/types";
 import { CaseSelect } from "./CaseSelect";
+import Disclaimer from "./Disclaimer";
 import LineChart from "./LineChart";
 
 // check if prediction date is today or in the future
@@ -48,6 +49,8 @@ export interface IKasandraModule {
     contentHeight: string;
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
+    disclaimerAccepted: boolean;
+    onAcceptDisclaimer: () => void;
 }
 
 const KasandraModule: FC<IKasandraModule> = ({
@@ -68,6 +71,8 @@ const KasandraModule: FC<IKasandraModule> = ({
     contentHeight,
     selectedTimestamp,
     onSelectDataPoint,
+    disclaimerAccepted,
+    onAcceptDisclaimer,
 }) => {
     const { t } = useTranslation();
     const {
@@ -167,6 +172,12 @@ const KasandraModule: FC<IKasandraModule> = ({
                         hideRightPan={hideRightPan}
                         selectedMarket={selectedMarket}
                     />
+                    <div className="-mt-2">
+                        <Disclaimer
+                            onAccept={onAcceptDisclaimer}
+                            accepted={disclaimerAccepted}
+                        />
+                    </div>
                     <div className="flex justify-between">
                         {selectedMarket && (
                             <div className="flex flex-col mt-3 pl-4 pr-4 w-full self-start single-col:mt-4 single-col:pl-[10px]">
