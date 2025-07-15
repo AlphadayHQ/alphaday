@@ -1,5 +1,5 @@
 import { FC, memo, useCallback, useMemo, useState } from "react";
-import { ApexAreaChart, Spinner } from "@alphaday/ui-kit";
+import { ApexAreaChart, Spinner, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { EPredictionCase, TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
@@ -283,6 +283,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 {
                     x: lastHistoryDataPoint[0], // TODO use Now date
                     borderColor: "var(--alpha-primary)", // for the dashed line
+                    offsetY: 0,
                     borderWidth: 1,
                     strokeDashArray: 4,
                     label: {
@@ -296,7 +297,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                         },
                         text: t("kasandra.now"),
                         offsetX: 0,
-                        offsetY: 15,
+                        offsetY: 50,
                         orientation: "horizontal",
                         position: "bottom",
                     },
@@ -427,8 +428,17 @@ const LineChart: FC<IProps> = memo(function LineChart({
         );
     }
 
+    /**
+     * The second line of styles keeps the now indicator below the x labels.
+     */
+
     return (
-        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[354px] line-chart">
+        <div
+            className={twMerge(
+                "w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[354px] line-chart",
+                "[&_.apexcharts-svg]:h-[404px] [&_.apexcharts-xaxis-annotations_line[id^='SvgjsLine'][stroke='var(--alpha-primary)']]:scale-y-[1.2]"
+            )}
+        >
             <ApexAreaChart
                 key={zoomKey}
                 options={options}
