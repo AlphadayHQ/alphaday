@@ -43,6 +43,7 @@ export interface IKasandraWidgetState {
     selectedMarket: TMarketMeta | undefined;
     selectedChartRange: TChartRange | undefined;
     selectedCase: TKasandraCase | undefined;
+    disclaimerAccepted: boolean;
 }
 export interface IPodcastsWidgetState {
     feedPreference: EItemFeedPreference;
@@ -205,6 +206,7 @@ const widgetsSlice = createSlice({
                 case?: TKasandraCase;
                 chartRange?: TChartRange;
                 feedPreference?: EItemFeedPreference;
+                disclaimerAccepted?: boolean;
             }>
         ) {
             const {
@@ -215,6 +217,7 @@ const widgetsSlice = createSlice({
                     case: kase,
                     chartRange,
                     feedPreference,
+                    disclaimerAccepted,
                 },
             } = action;
             draft.kasandra[widgetHash] = {
@@ -230,6 +233,9 @@ const widgetsSlice = createSlice({
                 feedPreference:
                     feedPreference ??
                     draft.kasandra[widgetHash]?.feedPreference,
+                disclaimerAccepted:
+                    disclaimerAccepted ??
+                    draft.kasandra[widgetHash]?.disclaimerAccepted,
             };
         },
         setSelectedChartRange(
