@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
+import moment from "moment";
 import { TCoin, TInsightItem } from "src/api/types";
 import globalMessages from "src/globalMessages";
 import KasandraItem from "./KasandraItem";
@@ -13,6 +14,72 @@ interface IKasandraItemList {
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
 }
+
+const groupItemsByDate = (items: TInsightItem[]) => {
+    return items.reduce(
+        (acc, item) => {
+            const date = moment(item.timestamp).format("YYYY-MM-DD");
+            return {
+                ...acc,
+                [date]: [...(acc[date] ?? []), item],
+            };
+        },
+        {} as Record<string, TInsightItem[]>
+    );
+};
+
+const DateDisplay: FC<{ date: number }> = ({ date }) => {
+    return (
+        <div className="flex flex-col justify-center max-h-14 uppercase text-primaryVariant100 cursor-default text-center font-normal tracking-0.2 fontGroup-mini min-w-[50px] mr-[5px] pt-[1.5px]">
+            <span className="text-[10px] uppercase">
+                {moment(date).format("MMM")}
+            </span>
+            <span className="text-primary text-center font-semibold text-2xl leading-5 my-0.5">
+                {moment(date).format("DD")}
+            </span>
+        </div>
+    );
+};
+
+const GroupedKasandraItems: FC<{
+    items: TInsightItem[];
+    selectedTimestamp: number | undefined;
+    selectedMarket: TCoin | undefined;
+    setItemRef: (ref: HTMLDivElement | null) => void;
+    onSelectDataPoint: (timestamp: number) => MaybeAsync<void>;
+}> = ({
+    items,
+    selectedTimestamp,
+    selectedMarket,
+    setItemRef,
+    onSelectDataPoint,
+}) => {
+    if (items) {
+        return (
+            <div className="flex w-full">
+                <div className="mt-3">
+                    <DateDisplay date={items[0].timestamp} />
+                </div>
+                <div className="flex flex-col w-full">
+                    {items.map((item) => {
+                        const isSelected = selectedTimestamp === item.timestamp;
+                        return (
+                            <KasandraItem
+                                item={item}
+                                selectedMarket={selectedMarket}
+                                key={item.id}
+                                isSelected={isSelected}
+                                setItemRef={setItemRef}
+                                onSelectDataPoint={onSelectDataPoint}
+                            />
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    }
+    return null;
+};
 
 const KasandraItemList: FC<IKasandraItemList> = ({
     timelineItems,
@@ -52,19 +119,15 @@ const KasandraItemList: FC<IKasandraItemList> = ({
                 </CenteredBlock>
             );
         }
+        const groupedItems = groupItemsByDate(timelineItems);
         return (
-            <ScrollBar
-                containerRef={setScrollRef}
-                // onScroll={handleListScroll}
-            >
-                {timelineItems.map((item) => {
-                    const isSelected = selectedTimestamp === item.timestamp;
+            <ScrollBar containerRef={setScrollRef}>
+                {Object.values(groupedItems).map((items) => {
                     return (
-                        <KasandraItem
-                            item={item}
+                        <GroupedKasandraItems
+                            items={items}
+                            selectedTimestamp={selectedTimestamp}
                             selectedMarket={selectedMarket}
-                            key={item.id}
-                            isSelected={isSelected}
                             setItemRef={setItemRef}
                             onSelectDataPoint={handleOnSelectDataPoint}
                         />
