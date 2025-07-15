@@ -16,9 +16,16 @@ interface IKasandraItemList {
 }
 
 const groupItemsByDate = (items: TInsightItem[]) => {
-    return Object.groupBy(items, (item) =>
-        moment(item.timestamp).format("YYYY-MM-DD")
-    ) as Record<string, TInsightItem[]>;
+    return items.reduce(
+        (acc, item) => {
+            const date = moment(item.timestamp).format("YYYY-MM-DD");
+            return {
+                ...acc,
+                [date]: [...(acc[date] ?? []), item],
+            };
+        },
+        {} as Record<string, TInsightItem[]>
+    );
 };
 
 const DateDisplay: FC<{ date: number }> = ({ date }) => {
