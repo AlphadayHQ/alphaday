@@ -34,7 +34,7 @@ const Option =
     );
 
 const IndicatorsContainer = () => (
-    <div className="absolute inset-y-0 right-0 flex items-center pr-4">
+    <div className="absolute inset-y-0 right-0 flex items-center pr-1">
         <ChevronUpDownSVG
             aria-hidden="true"
             className="w-5 stroke-primaryVariant100"
