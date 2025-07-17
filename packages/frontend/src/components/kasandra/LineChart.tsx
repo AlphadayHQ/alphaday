@@ -422,7 +422,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
 
     if (isLoading) {
         return (
-            <div className="flex w-full h-[200px] items-center justify-center">
+            <div className="flex w-full h-[340px] items-center justify-center">
                 <Spinner size="sm" />
             </div>
         );
@@ -436,7 +436,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
     return (
         <div
             className={twMerge(
-                "w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[354px] line-chart",
+                "w-full [&>div]:-mx-[10px] h-[354px] line-chart",
                 "[&_.apexcharts-svg]:h-[404px] [&_.apexcharts-xaxis-annotations_line[id^='SvgjsLine'][stroke='var(--alpha-primary)']]:scale-y-[1.2]"
             )}
         >
