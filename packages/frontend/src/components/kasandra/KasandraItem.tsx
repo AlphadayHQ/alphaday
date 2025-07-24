@@ -2,7 +2,6 @@
 import { FC, useMemo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import ReactMarkdown from "react-markdown";
-import remarkBreaks from "remark-breaks";
 import { TCoin } from "src/api/types";
 import { TInsightItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
