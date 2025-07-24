@@ -2,6 +2,7 @@ import { FC, memo, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import {
     EItemFeedPreference,
+    TChartRange,
     TCoin,
     TInsightItem,
     TKasandraCase,
@@ -27,6 +28,7 @@ interface IKasandra {
     selectedCase: TKasandraCase;
     onSelectCase: (kase: TKasandraCase) => void;
     selectedTimestamp: number | undefined;
+    selectedChartRange: TChartRange;
     onSelectDataPoint: (timestamp: number) => void;
     disclaimerAccepted: boolean;
     onAcceptDisclaimer: () => void;
@@ -47,6 +49,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         onSelectMarket,
         disclaimerAccepted,
         onAcceptDisclaimer,
+        selectedChartRange,
     }) {
         const filteredItems = useMemo(() => {
             if (selectedCase?.id === "all") {
@@ -83,6 +86,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                         selectedTimestamp={selectedTimestamp}
                         selectedMarket={selectedMarket}
                         onSelectDataPoint={onSelectDataPoint}
+                        selectedChartRange={selectedChartRange}
                     />
                 )}
             </>

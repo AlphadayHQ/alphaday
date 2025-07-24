@@ -199,7 +199,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [lastSelectedKeyword, kasandraCoins, tags, handleSelectedMarket]);
 
     const contentHeight = useMemo(() => {
-        return `${WIDGET_HEIGHT}px`;
+        return `${WIDGET_HEIGHT - 55}px`;
     }, [WIDGET_HEIGHT]);
 
     return (
