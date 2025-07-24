@@ -37,6 +37,9 @@ const DateDisplay: FC<{ date: number }> = ({ date }) => {
             <span className="text-primary text-center font-semibold text-2xl leading-5 my-0.5">
                 {moment(date).format("DD")}
             </span>
+            <span className="text-[10px] uppercase">
+                {moment(date).format("YYYY")}
+            </span>
         </div>
     );
 };
