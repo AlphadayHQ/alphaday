@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { FC, useMemo } from "react";
 import { twMerge } from "@alphaday/ui-kit";
-import moment from "moment";
+import ReactMarkdown from "react-markdown";
 import { TCoin } from "src/api/types";
 import { TInsightItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
@@ -10,23 +10,8 @@ import { ReactComponent as ArrowDownSVG } from "src/assets/svg/arrow-down.svg";
 import { ReactComponent as ArrowUpSVG } from "src/assets/svg/arrow-up.svg";
 import { ReactComponent as TrendDownThinSVG } from "src/assets/svg/trend-down-thin.svg";
 import { ReactComponent as TrendUpThinSVG } from "src/assets/svg/trend-up-thin.svg";
-import { HRElement } from "src/components/listItem/ListItem";
 import { imgOnError } from "src/utils/errorHandling";
 import { useDynamicWidgetItem } from "../dynamic-modules/hooks/useDynamicWidgetItem";
-
-const DateDisplay: FC<{ date: number }> = ({ date }) => {
-    return (
-        <div className="flex flex-col justify-between max-h-14 uppercase text-primaryVariant100 cursor-default text-center font-normal tracking-0.2 fontGroup-mini min-w-[50px] mr-[5px] pt-[1.5px]">
-            <span className="text-[10px] uppercase">
-                {moment(date).format("MMM")}
-            </span>
-            <span className="text-primary text-center font-semibold text-2xl leading-5 my-0.5">
-                {moment(date).format("DD")}
-            </span>
-            <span className="text-[10px]">{moment(date).format("HH:mm")}</span>
-        </div>
-    );
-};
 
 const KasandraItem: FC<{
     item: TInsightItem;
@@ -98,11 +83,10 @@ const KasandraItem: FC<{
                 <div
                     ref={(ref) => (isSelected ? setItemRef(ref) : undefined)}
                     className={twMerge(
-                        "flex relative flex-row items-stretch py-3 px-1 ml-2 mr-[3px]",
+                        "flex relative flex-row items-stretch py-3 px-1 pl-2 mr-[3px]",
                         caseDisplay.background
                     )}
                 >
-                    <DateDisplay date={item.timestamp} />
                     <div className="flex-1 flex flex-col justify-between">
                         <div className="fontGroup-highlight text-primary self-stretch grow-0 flex items-center mb-0">
                             {item.title}
@@ -196,8 +180,8 @@ const KasandraItem: FC<{
                 >
                     {openAccordion && (
                         <div className="info ml-5 px-2 pr-3 pt-2 rounded-sm min-h-[45px] [align-self:normal]">
-                            <div className="wrap flex flex-wrap text-primary whitespace-pre-wrap">
-                                {item.rationale}
+                            <div className="wrap flex flex-wrap text-primary whitespace-pre-wrap [&>p]:mb-2 [&>p]:w-full [&>p]:[display:ruby]">
+                                <ReactMarkdown>{item.rationale}</ReactMarkdown>
                             </div>
                             <br />
                             {/* {itemSources && (
@@ -229,7 +213,7 @@ const KasandraItem: FC<{
                     )}
                 </div>
             </div>
-            <HRElement />
+            <hr className="border-borderLine m-0 mr-[3px]" />
         </span>
     );
 };

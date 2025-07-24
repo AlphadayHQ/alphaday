@@ -47,6 +47,13 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [prevSelectedMarketData?.selectedCase]
     );
 
+    const disclaimerAccepted = useMemo(
+        () =>
+            prevSelectedMarketData?.disclaimerAccepted ??
+            CONFIG.WIDGETS.KASANDRA.DEFAULT_DISCLAIMER_ACCEPTED,
+        [prevSelectedMarketData?.disclaimerAccepted]
+    );
+
     const { lastSelectedKeyword } = useGlobalSearch();
 
     const tagsSettings = moduleData.settings.filter(
@@ -160,6 +167,15 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [dispatch, moduleData.hash]
     );
 
+    const handleAcceptDisclaimer = useCallback(() => {
+        dispatch(
+            setKasandraData({
+                widgetHash: moduleData.hash,
+                disclaimerAccepted: true,
+            })
+        );
+    }, [dispatch, moduleData.hash]);
+
     /**
      * if user searches for some keyword and tags are included, automatically set the selected market
      * to some market that matches this new keyword, if any.
@@ -172,7 +188,9 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         ) {
             const newMarketFromSearch = kasandraCoins.find((marketMeta) => {
                 // marketMeta.tags can be [] (an empty array)
-                return marketMeta.tags?.[0]?.id === lastSelectedKeyword.tag.id;
+                return marketMeta.tags?.find(
+                    (t) => t.id === lastSelectedKeyword.tag.id
+                );
             });
             if (newMarketFromSearch) {
                 handleSelectedMarket(newMarketFromSearch);
@@ -181,7 +199,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [lastSelectedKeyword, kasandraCoins, tags, handleSelectedMarket]);
 
     const contentHeight = useMemo(() => {
-        return `${WIDGET_HEIGHT}px`;
+        return `${WIDGET_HEIGHT - 55}px`;
     }, [WIDGET_HEIGHT]);
 
     return (
@@ -218,6 +236,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     contentHeight={contentHeight}
                     selectedTimestamp={selectedTimestamp}
                     onSelectDataPoint={handleselectedTimestamp}
+                    disclaimerAccepted={disclaimerAccepted}
+                    onAcceptDisclaimer={handleAcceptDisclaimer}
                 />
             </Suspense>
         </BaseContainer>

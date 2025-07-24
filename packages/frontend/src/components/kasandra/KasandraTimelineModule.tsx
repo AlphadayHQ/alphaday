@@ -2,6 +2,7 @@ import { FC, memo, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import {
     EItemFeedPreference,
+    TChartRange,
     TCoin,
     TInsightItem,
     TKasandraCase,
@@ -9,6 +10,7 @@ import {
 import { TMarketMeta } from "../market/types";
 import { CaseSelect } from "./CaseSelect";
 import { CoinSelect } from "./CoinSelect";
+import Disclaimer from "./Disclaimer";
 import KasandraItemList from "./KasandraItemList";
 
 interface IKasandra {
@@ -26,7 +28,10 @@ interface IKasandra {
     selectedCase: TKasandraCase;
     onSelectCase: (kase: TKasandraCase) => void;
     selectedTimestamp: number | undefined;
+    selectedChartRange: TChartRange;
     onSelectDataPoint: (timestamp: number) => void;
+    disclaimerAccepted: boolean;
+    onAcceptDisclaimer: () => void;
 }
 
 const KasandraTimelineModule: FC<IKasandra> = memo(
@@ -42,6 +47,9 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         selectedMarket,
         supportedCoins,
         onSelectMarket,
+        disclaimerAccepted,
+        onAcceptDisclaimer,
+        selectedChartRange,
     }) {
         const filteredItems = useMemo(() => {
             if (selectedCase?.id === "all") {
@@ -65,6 +73,10 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                         />
                     </div>
                 </div>
+                <Disclaimer
+                    onAccept={onAcceptDisclaimer}
+                    accepted={disclaimerAccepted}
+                />
                 {isLoadingItems || !items ? (
                     <ModuleLoader $height={`${widgetHeight}px`} />
                 ) : (
@@ -74,6 +86,7 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
                         selectedTimestamp={selectedTimestamp}
                         selectedMarket={selectedMarket}
                         onSelectDataPoint={onSelectDataPoint}
+                        selectedChartRange={selectedChartRange}
                     />
                 )}
             </>

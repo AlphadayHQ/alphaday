@@ -372,7 +372,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                         marginTop:
                                             kasandraModuleData &&
                                             (colIndex === 0 || colIndex === 1)
-                                                ? `${WIDGETS.KASANDRA.WIDGET_HEIGHT}px`
+                                                ? `${((WIDGETS.KASANDRA.WIDGET_HEIGHT as number) || 0) + 14}px`
                                                 : "0px",
                                     }}
                                 >

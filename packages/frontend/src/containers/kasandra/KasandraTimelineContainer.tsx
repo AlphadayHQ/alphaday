@@ -48,6 +48,13 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [prevSelectedMarketData?.selectedCase]
     );
 
+    const disclaimerAccepted = useMemo(
+        () =>
+            prevSelectedMarketData?.disclaimerAccepted ??
+            CONFIG.WIDGETS.KASANDRA_TIMELINE.DEFAULT_DISCLAIMER_ACCEPTED,
+        [prevSelectedMarketData?.disclaimerAccepted]
+    );
+
     const widgetHeight = useWidgetHeight(moduleData);
 
     const feedPreference =
@@ -167,6 +174,15 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [dispatch, kasandraModuleDataHash, moduleData.hash]
     );
 
+    const handleAcceptDisclaimer = useCallback(() => {
+        dispatch(
+            setKasandraData({
+                widgetHash: kasandraModuleDataHash || moduleData.hash,
+                disclaimerAccepted: true,
+            })
+        );
+    }, [dispatch, kasandraModuleDataHash, moduleData.hash]);
+
     useEffect(() => {
         if (
             !isAuthenticated &&
@@ -194,7 +210,10 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 onClick={onOpenItem}
                 isAuthenticated={isAuthenticated}
                 selectedTimestamp={selectedTimestamp}
+                selectedChartRange={selectedChartRange}
                 onSelectDataPoint={handleSelectedTimestamp}
+                disclaimerAccepted={disclaimerAccepted}
+                onAcceptDisclaimer={handleAcceptDisclaimer}
             />
         );
     }

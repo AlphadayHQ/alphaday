@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
@@ -10,12 +10,14 @@ import {
     TKasandraCase,
     TPredictions,
 } from "src/api/types";
+import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
 import CoinInfo from "../market/CoinInfo";
 import DateRangeBar from "../market/DateRangeBar";
 import MarketsList from "../market/MarketsList";
 import { EChartType, TMarketMeta } from "../market/types";
 import { CaseSelect } from "./CaseSelect";
+import Disclaimer from "./Disclaimer";
 import LineChart from "./LineChart";
 
 // check if prediction date is today or in the future
@@ -47,6 +49,8 @@ export interface IKasandraModule {
     contentHeight: string;
     selectedTimestamp: number | undefined;
     onSelectDataPoint: (timestamp: number) => void;
+    disclaimerAccepted: boolean;
+    onAcceptDisclaimer: () => void;
 }
 
 const KasandraModule: FC<IKasandraModule> = ({
@@ -67,6 +71,8 @@ const KasandraModule: FC<IKasandraModule> = ({
     contentHeight,
     selectedTimestamp,
     onSelectDataPoint,
+    disclaimerAccepted,
+    onAcceptDisclaimer,
 }) => {
     const { t } = useTranslation();
     const {
@@ -166,6 +172,12 @@ const KasandraModule: FC<IKasandraModule> = ({
                         hideRightPan={hideRightPan}
                         selectedMarket={selectedMarket}
                     />
+                    <div className="-mt-2">
+                        <Disclaimer
+                            onAccept={onAcceptDisclaimer}
+                            accepted={disclaimerAccepted}
+                        />
+                    </div>
                     <div className="flex justify-between">
                         {selectedMarket && (
                             <div className="flex flex-col mt-3 pl-4 pr-4 w-full self-start single-col:mt-4 single-col:pl-[10px]">
@@ -180,20 +192,20 @@ const KasandraModule: FC<IKasandraModule> = ({
                             </div>
                         )}
 
-                        <div className="pt-0 pb-[5px] px-5 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
+                        <div className="pt-4 pb-10 px-5 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
                             <DateRangeBar
                                 selectedChartRange={selectedChartRange}
                                 onSelectChartRange={onSelectChartRange}
                                 selectedChartType={EChartType.Line}
                                 isKasandra
                             />
+                            <div className="w-56 ml-2 -mr-4 [&>.coin-select-indicator]:pr-0">
+                                <CaseSelect
+                                    selectedCase={selectedCase}
+                                    onSelect={onSelectCase}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="pt-0 pb-[5px] px-0 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
-                        <CaseSelect
-                            selectedCase={selectedCase}
-                            onSelect={onSelectCase}
-                        />
                     </div>
                     <LineChart
                         selectedChartRange={selectedChartRange}
@@ -207,18 +219,63 @@ const KasandraModule: FC<IKasandraModule> = ({
                     />
                 </div>
                 <div className="w-full flex py-0 px-4 flex-wrap">
-                    <div className={twMerge("flex justify-around w-[50%]")}>
+                    <div className="flex justify-around w-full">
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
                                 {t("market.marketCap")}
+                            </span>
+                            <span className="value">
+                                <span>
+                                    {selectedMarket !== undefined
+                                        ? formatNumber({
+                                              value: selectedMarket.marketCap,
+                                              style: ENumberStyle.Currency,
+                                              currency: "USD",
+                                          }).value
+                                        : "-"}
+                                </span>
                             </span>
                         </div>
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
                                 {t("market.volume24h")}
                             </span>
+                            <span className="value">
+                                <span>
+                                    {selectedMarket?.volume !== undefined
+                                        ? formatNumber({
+                                              value: selectedMarket.volume,
+                                              style: ENumberStyle.Currency,
+                                              currency: "USD",
+                                          }).value
+                                        : "-"}
+                                </span>
+                            </span>
                         </div>
                     </div>
+                    {/* <div className="block">
+                                <div className="column">
+                                    <span className="label">
+                                        24h Low / 24h High
+                                    </span>
+                                    <span className="value">
+                                        <span>
+                                            ${selectedChart?.low24 || 0} / $
+                                            {selectedChart?.high24 || 0}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div className="column">
+                                    <span className="label">
+                                        Volume / Market Cap
+                                    </span>
+                                    <span className="value">
+                                        <span>
+                                            {selectedChart?.volRatio || 0}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div> */}
                 </div>
             </div>
         </div>
