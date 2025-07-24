@@ -58,7 +58,7 @@ const CLARITY = {
 };
 
 const HOTJAR = {
-    ENABLE: true,
+    ENABLE: false,
     SITE_ID: import.meta.env.VITE_HOTJAR_SITE_ID,
     SNIPPET_VERSION: import.meta.env.VITE_HOTJAR_SNIPPET_VERSION,
 };
