@@ -210,6 +210,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 onClick={onOpenItem}
                 isAuthenticated={isAuthenticated}
                 selectedTimestamp={selectedTimestamp}
+                selectedChartRange={selectedChartRange}
                 onSelectDataPoint={handleSelectedTimestamp}
                 disclaimerAccepted={disclaimerAccepted}
                 onAcceptDisclaimer={handleAcceptDisclaimer}
