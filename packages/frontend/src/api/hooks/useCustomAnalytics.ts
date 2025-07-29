@@ -5,19 +5,13 @@ import { analytics } from "../utils/firebaseUtils";
 import { Logger } from "../utils/logging";
 import { useActivityLogger } from "./useActivityLogger";
 
-type TButtonClickEventPayload = {
+export type TButtonClickEventPayload = {
     buttonName:
-        | "menu"
-        | "like"
-        | "share"
-        | "bookmark"
-        | "comments"
-        | "action"
-        | "ad_action"
-        | "customize_pill_card"
-        | "customize_pill_settings"
-        | "update_page_button"
-        | "update_pop_up_button";
+        | "kasandra-coin"
+        | "kasandra-case"
+        | "kasandra-date-range"
+        | "kasandra-disclaimer"
+        | "kasandra-datapoint";
     data?: JSONValue;
 };
 
