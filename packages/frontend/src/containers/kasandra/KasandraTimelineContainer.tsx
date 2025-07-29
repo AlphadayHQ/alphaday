@@ -135,7 +135,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return {
             selectedTimestamp: selectedTimestamp ?? 0,
             widgetName: moduleData.name,
-            case: selectedCase,
+            case: selectedCase.name,
             chartRange: selectedChartRange,
             marketId: selectedMarket?.id,
             marketTicker: selectedMarket?.ticker,
@@ -208,8 +208,15 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     case: kase,
                 })
             );
+            logButtonClicked({
+                buttonName: "kasandra-case",
+                data: {
+                    ...logData,
+                    case: kase.name,
+                },
+            });
         },
-        [dispatch, kasandraModuleHash]
+        [dispatch, kasandraModuleHash, logButtonClicked, logData]
     );
 
     const handleAcceptDisclaimer = useCallback(() => {
