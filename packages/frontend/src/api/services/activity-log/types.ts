@@ -5,6 +5,7 @@ export enum EActivityLogEventTypes {
     CookieChoiceSet = "COOKIE_CHOICE_SET",
     WalletConnection = "WALLET_CONNECT",
     ShareSuperfeedItem = "SHARE_ITEM",
+    ButtonClicked = "BUTTON_CLICKED",
 }
 
 export enum EActivityLogObjectTypes {
@@ -13,6 +14,7 @@ export enum EActivityLogObjectTypes {
     View,
     WalletConnection,
     ShareSuperfeedItem,
+    Button,
 }
 
 export type TKeywordActivityLog = {
@@ -54,13 +56,20 @@ export type TShareSuperfeedItemActivityLog = {
     data: JSONValue;
 };
 
+export type TButtonClickedActivityLog = {
+    event_type: EActivityLogEventTypes.ButtonClicked;
+    object_name: string;
+    data?: JSONValue;
+};
+
 export type TRemoteActivityLog =
     | TKeywordActivityLog
     | TWidgetActivityLog
     | TViewActivityLog
     | TCookieActivityLog
     | TWalletConnectionActivityLog
-    | TShareSuperfeedItemActivityLog;
+    | TShareSuperfeedItemActivityLog
+    | TButtonClickedActivityLog;
 
 export type TActivityLogRequest = TRemoteActivityLog;
 export type TActivityLogResponse = TRemoteActivityLog;
