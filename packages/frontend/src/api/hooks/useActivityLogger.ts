@@ -140,7 +140,20 @@ export const useActivityLogger = (): IActivityLogger => {
             event_type: EActivityLogEventTypes.ButtonClicked,
             object_name: buttonName,
             data,
-        });
+        })
+            .unwrap()
+            .then((resp) =>
+                Logger.debug(
+                    "useActivityLogger::logButtonClicked: updated button clicked activity log",
+                    resp
+                )
+            )
+            .catch((err) =>
+                Logger.error(
+                    "useActivityLogger::logButtonClicked: error updating button clicked activity log",
+                    err
+                )
+            );
     };
 
     return {
