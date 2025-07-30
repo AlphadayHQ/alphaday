@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { TabsBar } from "@alphaday/ui-kit";
-import { TCoin } from "src/api/types";
-import { TMarketMeta } from "./types";
+import type { TCoin } from "src/api/types";
+import type { TMarketMeta } from "./types";
 
 interface IMarketsList {
     markets?: TMarketMeta[] | undefined;
