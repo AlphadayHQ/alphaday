@@ -180,7 +180,7 @@ const KasandraItem: FC<{
                 >
                     {openAccordion && (
                         <div className="info ml-5 px-2 pr-3 pt-2 rounded-sm min-h-[45px] [align-self:normal]">
-                            <div className="wrap flex flex-wrap text-primary whitespace-pre-wrap [&>p]:mb-2 [&>p]:w-full [&>p]:flex [&>p]:flex-col [&>p]:items-center">
+                            <div className="wrap flex flex-wrap text-primary whitespace-pre-wrap [&>p]:mb-2 [&>p]:w-full [&>p]:inline">
                                 <ReactMarkdown>{item.rationale}</ReactMarkdown>
                             </div>
                             <br />

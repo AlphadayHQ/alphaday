@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
-import {
+import type {
     TChartRange,
     TCoin,
     TCoinMarketHistory,
