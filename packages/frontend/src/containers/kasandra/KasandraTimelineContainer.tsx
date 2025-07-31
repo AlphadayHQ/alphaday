@@ -1,5 +1,6 @@
 import { FC, useEffect, useCallback, useMemo } from "react";
 import { useView, useWidgetHeight } from "src/api/hooks";
+import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import {
     useGetKasandraCoinsQuery,
     useOpenNewsItemMutation,
@@ -20,6 +21,8 @@ import { IModuleContainer } from "src/types";
 const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
+    const { logButtonClicked } = useCustomAnalytics();
+
     const { selectedView } = useView();
 
     const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
@@ -30,15 +33,17 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return widgetData?.hash;
     }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
 
+    const kasandraModuleHash = useMemo(() => {
+        return kasandraModuleDataHash || moduleData.hash;
+    }, [kasandraModuleDataHash, moduleData.hash]);
+
     const prevSelectedMarketData = useAppSelector(
-        (state) =>
-            state.widgets.kasandra?.[kasandraModuleDataHash || moduleData.hash]
+        (state) => state.widgets.kasandra?.[kasandraModuleHash]
     );
 
     const selectedTimestamp = useAppSelector(
         (state) =>
-            state.widgets.kasandra?.[kasandraModuleDataHash || moduleData.hash]
-                ?.selectedTimestamp
+            state.widgets.kasandra?.[kasandraModuleHash]?.selectedTimestamp
     );
 
     const selectedCase = useMemo(
@@ -126,17 +131,43 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
             limit: 24,
         });
 
+    const logData = useMemo(() => {
+        return {
+            selectedTimestamp: selectedTimestamp ?? 0,
+            widgetName: moduleData.name,
+            case: selectedCase.name,
+            chartRange: selectedChartRange,
+            marketId: selectedMarket?.id,
+            marketTicker: selectedMarket?.ticker,
+        };
+    }, [
+        moduleData.name,
+        selectedCase,
+        selectedChartRange,
+        selectedMarket?.id,
+        selectedMarket?.ticker,
+        selectedTimestamp,
+    ]);
+
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
             dispatch(
                 setKasandraData({
-                    widgetHash: kasandraModuleDataHash || moduleData.hash,
+                    widgetHash: kasandraModuleHash,
                     market,
                 })
             );
+            logButtonClicked({
+                buttonName: "kasandra-coin",
+                data: {
+                    ...logData,
+                    marketId: market.id,
+                    marketTicker: market.ticker,
+                },
+            });
         },
 
-        [dispatch, kasandraModuleDataHash, moduleData.hash]
+        [dispatch, kasandraModuleHash, logButtonClicked, logData]
     );
 
     const [openItemMut] = useOpenNewsItemMutation();
@@ -153,12 +184,19 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (timestamp: number) => {
             dispatch(
                 setKasandraData({
-                    widgetHash: kasandraModuleDataHash || moduleData.hash,
+                    widgetHash: kasandraModuleHash,
                     timestamp,
                 })
             );
+            logButtonClicked({
+                buttonName: "kasandra-datapoint",
+                data: {
+                    ...logData,
+                    selectedTimestamp: timestamp,
+                },
+            });
         },
-        [dispatch, kasandraModuleDataHash, moduleData.hash]
+        [dispatch, kasandraModuleHash, logButtonClicked, logData]
     );
 
     const handleSelectedCase = useCallback(
@@ -166,22 +204,35 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
             Logger.debug("Kasandra timeline selectedCase", kase);
             dispatch(
                 setKasandraData({
-                    widgetHash: kasandraModuleDataHash || moduleData.hash,
+                    widgetHash: kasandraModuleHash,
                     case: kase,
                 })
             );
+            logButtonClicked({
+                buttonName: "kasandra-case",
+                data: {
+                    ...logData,
+                    case: kase.name,
+                },
+            });
         },
-        [dispatch, kasandraModuleDataHash, moduleData.hash]
+        [dispatch, kasandraModuleHash, logButtonClicked, logData]
     );
 
     const handleAcceptDisclaimer = useCallback(() => {
         dispatch(
             setKasandraData({
-                widgetHash: kasandraModuleDataHash || moduleData.hash,
+                widgetHash: kasandraModuleHash,
                 disclaimerAccepted: true,
             })
         );
-    }, [dispatch, kasandraModuleDataHash, moduleData.hash]);
+        logButtonClicked({
+            buttonName: "kasandra-disclaimer",
+            data: {
+                widgetName: moduleData.name,
+            },
+        });
+    }, [dispatch, kasandraModuleHash, logButtonClicked, moduleData.name]);
 
     useEffect(() => {
         if (

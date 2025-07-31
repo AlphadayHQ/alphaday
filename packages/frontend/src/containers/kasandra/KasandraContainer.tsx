@@ -1,5 +1,6 @@
 import { FC, useEffect, useMemo, useCallback, Suspense } from "react";
 import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
+import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import {
     useGetKasandraCoinsQuery,
     useGetMarketHistoryQuery,
@@ -28,6 +29,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
+    const { logButtonClicked } = useCustomAnalytics();
 
     const selectedTimestamp = useAppSelector(
         (state) => state.widgets.kasandra?.[moduleData.hash]?.selectedTimestamp
@@ -125,12 +127,38 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         limit: 24,
     });
 
+    const logData = useMemo(() => {
+        return {
+            selectedTimestamp: selectedTimestamp ?? 0,
+            widgetName: moduleData.name,
+            case: selectedCase,
+            chartRange: selectedChartRange,
+            marketId: selectedMarket?.id,
+            marketTicker: selectedMarket?.ticker,
+        };
+    }, [
+        moduleData.name,
+        selectedCase,
+        selectedChartRange,
+        selectedMarket?.id,
+        selectedMarket?.ticker,
+        selectedTimestamp,
+    ]);
+
     const handleSelectedMarket = useCallback(
         (market: TMarketMeta) => {
             dispatch(setKasandraData({ widgetHash: moduleData.hash, market }));
+            logButtonClicked({
+                buttonName: "kasandra-coin",
+                data: {
+                    ...logData,
+                    marketId: market.id,
+                    marketTicker: market.ticker,
+                },
+            });
         },
 
-        [dispatch, moduleData.hash]
+        [dispatch, logButtonClicked, logData, moduleData.hash]
     );
 
     const handleSelectedChartRange = useCallback(
@@ -141,9 +169,16 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     chartRange,
                 })
             );
+            logButtonClicked({
+                buttonName: "kasandra-date-range",
+                data: {
+                    ...logData,
+                    chartRange,
+                },
+            });
         },
 
-        [dispatch, moduleData.hash]
+        [dispatch, logButtonClicked, logData, moduleData.hash]
     );
 
     const handleSelectedCase = useCallback(
@@ -151,8 +186,15 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             dispatch(
                 setKasandraData({ widgetHash: moduleData.hash, case: kase })
             );
+            logButtonClicked({
+                buttonName: "kasandra-case",
+                data: {
+                    ...logData,
+                    case: kase,
+                },
+            });
         },
-        [dispatch, moduleData.hash]
+        [dispatch, logButtonClicked, logData, moduleData.hash]
     );
 
     const handleselectedTimestamp = useCallback(
@@ -163,8 +205,15 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     timestamp,
                 })
             );
+            logButtonClicked({
+                buttonName: "kasandra-datapoint",
+                data: {
+                    ...logData,
+                    selectedTimestamp: timestamp,
+                },
+            });
         },
-        [dispatch, moduleData.hash]
+        [dispatch, logButtonClicked, logData, moduleData.hash]
     );
 
     const handleAcceptDisclaimer = useCallback(() => {
@@ -174,7 +223,13 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 disclaimerAccepted: true,
             })
         );
-    }, [dispatch, moduleData.hash]);
+        logButtonClicked({
+            buttonName: "kasandra-disclaimer",
+            data: {
+                widgetName: moduleData.name,
+            },
+        });
+    }, [dispatch, logButtonClicked, moduleData.hash, moduleData.name]);
 
     /**
      * if user searches for some keyword and tags are included, automatically set the selected market

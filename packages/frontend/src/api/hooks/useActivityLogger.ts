@@ -16,6 +16,7 @@ interface IActivityLogger {
     logKeywordSelected: (id: number) => void;
     logWalletConnection: (method: EWalletConnectionMethod) => void;
     logShareSuperfeedItem: (item: TSuperfeedItem) => void;
+    logButtonClicked: (buttonName: string, data?: JSONValue) => void;
 }
 
 export const useActivityLogger = (): IActivityLogger => {
@@ -134,11 +135,33 @@ export const useActivityLogger = (): IActivityLogger => {
             );
     };
 
+    const logButtonClicked = (buttonName: string, data?: JSONValue) => {
+        sendActivityLog({
+            event_type: EActivityLogEventTypes.ButtonClicked,
+            object_name: buttonName,
+            data,
+        })
+            .unwrap()
+            .then((resp) =>
+                Logger.debug(
+                    "useActivityLogger::logButtonClicked: updated button clicked activity log",
+                    resp
+                )
+            )
+            .catch((err) =>
+                Logger.error(
+                    "useActivityLogger::logButtonClicked: error updating button clicked activity log",
+                    err
+                )
+            );
+    };
+
     return {
         logViewVisited,
         logCookieChoice,
         logKeywordSelected,
         logWalletConnection,
         logShareSuperfeedItem,
+        logButtonClicked,
     };
 };
