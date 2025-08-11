@@ -397,6 +397,10 @@ export const translationEN = {
         baseline: "Neutral",
         all: "All Cases",
         now: "Now",
+        predictionAccuracy: "24h Prediction Accuracy",
+        bull: "Bull",
+        bear: "Bear",
+        base: "Base",
     },
 };
 
@@ -801,6 +805,10 @@ export const translationJA: typeof translationEN = {
         baseline: "中立",
         all: "すべてのケース",
         now: "今",
+        predictionAccuracy: "24h 予測精度",
+        bull: "強気",
+        bear: "弱気",
+        base: "中立",
     },
 };
 
@@ -1203,6 +1211,10 @@ export const translationES: typeof translationEN = {
         baseline: "Neutral",
         all: "Todos los casos",
         now: "Ahora",
+        predictionAccuracy: "Precisión de predicción 24h",
+        bull: "Alcista",
+        bear: "Bajista",
+        base: "Base",
     },
 };
 
@@ -1614,6 +1626,10 @@ export const translationFR: typeof translationEN = {
         baseline: "Neutre",
         all: "Tous les cas",
         now: "Maintenant",
+        predictionAccuracy: "Précision de la prédiction 24h",
+        bull: "Haussier",
+        bear: "Baissier",
+        base: "Neutre",
     },
 };
 
@@ -2020,6 +2036,10 @@ export const translationTR: typeof translationEN = {
         baseline: "Nötr",
         all: "Tüm Durumlar",
         now: "Şimdi",
+        predictionAccuracy: "24h Prediction Accuracy",
+        bull: "Bull",
+        bear: "Bear",
+        base: "Base",
     },
 };
 
@@ -2410,5 +2430,9 @@ export const translationZH: typeof translationEN = {
         baseline: "中性",
         all: "所有情况",
         now: "现在",
+        predictionAccuracy: "24h 预测准确率",
+        bull: "看涨",
+        bear: "看跌",
+        base: "中性",
     },
 };
