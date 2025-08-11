@@ -219,7 +219,7 @@ const KasandraModule: FC<IKasandraModule> = ({
                     />
                 </div>
                 <div className="w-full flex py-0 px-4 flex-wrap">
-                    <div className="flex justify-around w-full">
+                    <div className="flex justify-around w-1/2">
                         <div className="flex flex-col items-start w-full max-w-[117px] min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
                             <span className="fontGroup-mini text-primaryVariant100">
                                 {t("market.marketCap")}
@@ -251,6 +251,33 @@ const KasandraModule: FC<IKasandraModule> = ({
                                         : "-"}
                                 </span>
                             </span>
+                        </div>
+                    </div>
+                    <div className="flex justify-center w-1/2">
+                        <div className="flex flex-col items-start w-max min-w-[120px] my-4 mx-0 fontGroup-normal text-primary">
+                            <span className="fontGroup-mini text-primaryVariant100">
+                                {t("kasandra.predictionAccuracy")}
+                            </span>
+                            <p className="value flex items-center">
+                                <span className="mr-3 flex items-center">
+                                    {t("kasandra.bull")}:
+                                    <span className="ml-1 fontGroup-highlightSemi text-[#6dd230]">
+                                        20%
+                                    </span>
+                                </span>
+                                <span className="mr-3 flex items-center">
+                                    {t("kasandra.bear")}:
+                                    <span className="ml-1 fontGroup-highlightSemi text-secondaryOrangeSoda">
+                                        30%
+                                    </span>
+                                </span>
+                                <span className="flex items-center">
+                                    {t("kasandra.base")}:
+                                    <span className="ml-1 fontGroup-highlightSemi text-[#cdd230]">
+                                        50%
+                                    </span>
+                                </span>
+                            </p>
                         </div>
                     </div>
                     {/* <div className="block">
