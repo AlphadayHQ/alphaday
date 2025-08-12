@@ -5,7 +5,6 @@ import { EPredictionCase, TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { maxVal, minVal } from "src/api/utils/helpers";
 import { truncateDataByChartRange } from "src/api/utils/kasandraUtils";
-import { Logger } from "src/api/utils/logging";
 import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
 import KasandraTooltip, { TCustomTooltip } from "./KasandraTooltip";
@@ -97,8 +96,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
-    Logger.debug("PREDICTION DATA => [timestamp, value]", predictionData);
-
     const truncatedBullishData = truncateDataByChartRange(
         predictionData.bullish,
         selectedChartRange
@@ -155,19 +152,15 @@ const LineChart: FC<IProps> = memo(function LineChart({
         historyData,
     ]);
 
-    Logger.debug("CHART SERIES DATA => [timestamp, value]", chartSeries);
-
     const minValue = useMemo(() => {
         const data = chartSeries.flatMap((series) => series.data);
         return minVal(data)[0];
     }, [chartSeries]);
-    Logger.debug("minValue =>", minValue);
 
     const maxValue = useMemo(() => {
         const data = chartSeries.flatMap((series) => series.data);
         return maxVal(data)[0];
     }, [chartSeries]);
-    Logger.debug("maxValue =>", maxValue);
 
     const genPoints = useCallback(
         (data: [number, number][], seriesIndex: 0 | 1 | 2 | 3) => {
@@ -200,8 +193,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
             ...genPoints(insightsData?.bearish ?? [], 3),
         ];
     }, [genPoints, insightsData, selectedCase]);
-
-    Logger.debug("POINTS =>", points);
 
     const seriesColors = useMemo(() => {
         const colors = [
