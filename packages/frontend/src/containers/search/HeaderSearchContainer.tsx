@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { SearchBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { ActionMeta } from "react-select";
@@ -167,6 +167,23 @@ const HeaderSearchContainer: FC = () => {
         },
     }));
 
+    const initialSearchValues = useMemo(() => {
+        if (keywordSearchList === undefined) {
+            return [];
+        }
+        return keywordSearchList.map((keyword) => ({
+            id: keyword.id,
+            label: keyword.name,
+            value: String(keyword.id),
+            tag: {
+                id: keyword.tag.id,
+                name: keyword.tag.name,
+                slug: keyword.tag.slug,
+                tagType: keyword.tag.tagType,
+            },
+        }));
+    }, [keywordSearchList]);
+
     return (
         <div
             className="two-col:mx-2.5 two-col:my-auto three-col:m-auto flex w-full justify-center"
@@ -189,21 +206,7 @@ const HeaderSearchContainer: FC = () => {
                     }, 500)}
                     placeholder={translate("navigation.searchBarPlaceholder")}
                     hideFeedback
-                    initialSearchValues={
-                        keywordSearchList === undefined
-                            ? []
-                            : keywordSearchList.map((keyword) => ({
-                                  id: keyword.id,
-                                  label: keyword.name,
-                                  value: String(keyword.id),
-                                  tag: {
-                                      id: keyword.tag.id,
-                                      name: keyword.tag.name,
-                                      slug: keyword.tag.slug,
-                                      tagType: keyword.tag.tagType,
-                                  },
-                              }))
-                    }
+                    initialSearchValues={initialSearchValues}
                     options={filteredResults}
                     trendingOptions={trendingResults}
                     isFetchingKeywordResults={isFetchingKeywordResults}
