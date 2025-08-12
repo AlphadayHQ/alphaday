@@ -11,7 +11,6 @@ import type {
     TPredictions,
 } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
-import { Logger } from "src/api/utils/logging";
 import CoinInfo from "../market/CoinInfo";
 import DateRangeBar from "../market/DateRangeBar";
 import MarketsList from "../market/MarketsList";
@@ -152,8 +151,6 @@ const KasandraModule: FC<IKasandraModule> = ({
             base: baseInsights,
         };
     }, [insights, predictionData, selectedPredictions]);
-
-    Logger.debug("INSIGHTS =>", insights, "INSIGHTS DATA =>", insightsData);
 
     if (isLoading) {
         return <ModuleLoader $height={contentHeight} />;
