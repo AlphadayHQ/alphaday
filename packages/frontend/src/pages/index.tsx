@@ -126,9 +126,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
 
     const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
     const layoutGrid = useMemo(() => {
-        if (selectedView?.data.widgets.length === 0) {
-            return undefined;
-        }
         return computeLayoutGrid(
             selectedView?.data.widgets.filter(
                 (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
@@ -326,6 +323,8 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             </MainLayout>
         );
     }
+
+    console.log("layoutState index", layoutState, "layoutGrid", layoutGrid);
 
     return (
         <MainLayout
