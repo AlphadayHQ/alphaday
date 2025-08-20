@@ -324,8 +324,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         );
     }
 
-    console.log("layoutState index", layoutState, "layoutGrid", layoutGrid);
-
     return (
         <MainLayout
             toggleWidgetLib={toggleWidgetLib}
