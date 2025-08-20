@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, FormEvent, useCallback } from "react";
+import { FC, ChangeEvent, FormEvent, useCallback, useMemo } from "react";
 import {
     Input,
     Modal,
@@ -11,7 +11,10 @@ import {
 import { useTranslation } from "react-i18next";
 import { EItemsSortBy, TRemoteWidgetCategory } from "src/api/services";
 import { TWidget, TWidgetMini } from "src/api/types";
-import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import {
+    buildUniqueItemList,
+    shouldFetchMoreItems,
+} from "src/api/utils/itemUtils";
 import { generateSortOptions } from "src/api/utils/sortOptions";
 import {
     ETranslationValues,
@@ -142,16 +145,21 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
         [cachedWidgets, handleSelectWidget, selectedWidget]
     );
 
+    const uniqueWidgets = useMemo(
+        () => buildUniqueItemList([...widgets]),
+        [widgets]
+    );
+
     const renderContent = useCallback(() => {
         if (isLoading) {
             return <ModuleLoader $height="60vh" />;
         }
 
-        if (widgets.length > 0) {
+        if (uniqueWidgets.length > 0) {
             return (
                 <ScrollBar onScroll={handleScrollEvent}>
                     <div className="grid grid-cols-3 gap-2.5 pl-3">
-                        {widgets.map(renderModulePreview)}
+                        {uniqueWidgets.map(renderModulePreview)}
                     </div>
                     <div className="w-full h-10" />
                 </ScrollBar>
@@ -173,7 +181,7 @@ const WidgetLibrary: FC<IWidgetLibProps> = ({
         isLoading,
         renderModulePreview,
         selectedCategory,
-        widgets,
+        uniqueWidgets,
     ]);
 
     return (
