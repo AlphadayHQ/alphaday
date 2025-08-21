@@ -62,11 +62,12 @@ const KasandraItem: FC<{
 
     const pricePercentChange = useMemo(() => {
         if (item.type === "history") return 0;
+        if (selectedMarket?.id !== item.coin.id) return undefined;
         if (!selectedMarket?.price) return 0;
         const change = item.price - selectedMarket.price;
         const percentChange = (change / selectedMarket.price) * 100;
         return percentChange;
-    }, [selectedMarket?.price, item.price, item.type]);
+    }, [selectedMarket, item]);
 
     const trendIcon = useMemo(() => {
         if (item.type === "history") return null;
