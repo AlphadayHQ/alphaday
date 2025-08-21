@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { FC, useEffect, useMemo, useRef } from "react";
-import { twMerge } from "@alphaday/ui-kit";
+import { Skeleton, twMerge } from "@alphaday/ui-kit";
 import ReactMarkdown from "react-markdown";
 import { TCoin } from "src/api/types";
 import { THistoryInsightItem, TInsightItem } from "src/api/types/kasandra";
@@ -127,43 +127,56 @@ const KasandraItem: FC<{
                             {item.title}
                         </div>
                         <div className="lastLine fontGroup-mini flex text-primaryVariant100 mt-2">
-                            <span className={caseDisplay.color}>
-                                {pricePercentChange > 0 ? (
-                                    <ArrowUpSVG className="w-2 h-2 mb-1 inline mr-[5px] fill-success" />
-                                ) : pricePercentChange < 0 ? (
-                                    <ArrowDownSVG className="w-2 h-2 inline mr-[5px] fill-secondaryOrangeSoda" />
-                                ) : null}
-                                <span
-                                    className={twMerge(
-                                        "text-primaryVariant100",
-                                        pricePercentChange > 0
-                                            ? "text-success"
-                                            : pricePercentChange < 0
-                                              ? "text-secondaryOrangeSoda"
-                                              : ""
-                                    )}
-                                >
-                                    {item.type === "prediction" &&
-                                        formatNumber({
-                                            value: pricePercentChange / 100,
-                                            style: ENumberStyle.Percent,
-                                        }).value}
-                                </span>
-                                {item.type === "prediction" && (
-                                    <span className="mx-[7px] my-0 self-center">
-                                        •
+                            {pricePercentChange ? (
+                                <>
+                                    <span className={caseDisplay.color}>
+                                        {pricePercentChange > 0 ? (
+                                            <ArrowUpSVG className="w-2 h-2 mb-1 inline mr-[5px] fill-success" />
+                                        ) : pricePercentChange < 0 ? (
+                                            <ArrowDownSVG className="w-2 h-2 inline mr-[5px] fill-secondaryOrangeSoda" />
+                                        ) : null}
+                                        <span
+                                            className={twMerge(
+                                                "text-primaryVariant100",
+                                                pricePercentChange > 0
+                                                    ? "text-success"
+                                                    : pricePercentChange < 0
+                                                      ? "text-secondaryOrangeSoda"
+                                                      : ""
+                                            )}
+                                        >
+                                            {item.type === "prediction" &&
+                                                formatNumber({
+                                                    value:
+                                                        pricePercentChange /
+                                                        100,
+                                                    style: ENumberStyle.Percent,
+                                                }).value}
+                                        </span>
                                     </span>
-                                )}
-                                {caseDisplay.text} {trendIcon}
-                            </span>
-                            <span className="mx-[7px] my-0 self-center">•</span>
+                                    {item.type === "prediction" && (
+                                        <span className="mx-[7px] my-0 self-center">
+                                            •
+                                        </span>
+                                    )}
+                                    {caseDisplay.text} {trendIcon}
+                                </>
+                            ) : (
+                                <Skeleton className="w-28 h-3.5 mr-2" />
+                            )}
                             <img
                                 src={selectedMarket?.icon}
                                 alt=""
                                 className="w-4 h-4 mr-[5px] rounded-[100px]"
                                 onError={imgOnError}
                             />
-                            <span>{selectedMarket?.name}</span>{" "}
+                            <span
+                                className={
+                                    pricePercentChange ? "" : "self-center"
+                                }
+                            >
+                                {selectedMarket?.name}
+                            </span>
                             {/* {!!itemSources?.length && (
                                 <>
                                     <span className="mx-[7px] my-0 self-center">
