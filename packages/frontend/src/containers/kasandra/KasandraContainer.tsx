@@ -248,10 +248,15 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 );
             });
             if (newMarketFromSearch) {
-                handleSelectedMarket(newMarketFromSearch);
+                dispatch(
+                    setKasandraData({
+                        widgetHash: moduleData.hash,
+                        market: newMarketFromSearch,
+                    })
+                );
             }
         }
-    }, [lastSelectedKeyword, kasandraCoins, tags, handleSelectedMarket]);
+    }, [lastSelectedKeyword, kasandraCoins, tags, dispatch, moduleData.hash]);
 
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT - 55}px`;

@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import ReactMarkdown from "react-markdown";
 import { TCoin } from "src/api/types";
@@ -20,6 +20,7 @@ const KasandraItem: FC<{
     setItemRef: (ref: HTMLDivElement | null) => void;
     onSelectDataPoint: (timestamp: number) => MaybeAsync<void>;
 }> = ({ item, isSelected, setItemRef, onSelectDataPoint, selectedMarket }) => {
+    const prevIsSelected = useRef<boolean | undefined>(undefined);
     const { descHeight, descHeightRef, openAccordion, toggleAccordion } =
         useDynamicWidgetItem({ setItemsHeight: undefined });
 
@@ -61,17 +62,32 @@ const KasandraItem: FC<{
         return percentChange;
     }, [selectedMarket?.price, item.price]);
 
+    useEffect(() => {
+        if (isSelected === prevIsSelected.current) return;
+        if (isSelected) {
+            Logger.info("KasandraItem::useEffect", "isSelected");
+            if (openAccordion) return;
+            toggleAccordion();
+        } else if (openAccordion) {
+            Logger.info("KasandraItem::useEffect", "openAccordion");
+            toggleAccordion();
+        }
+        prevIsSelected.current = isSelected;
+    }, [isSelected, openAccordion, toggleAccordion]);
+
     return (
         <span
             key={item.id}
             tabIndex={0}
             role="button"
             onClick={() => {
-                toggleAccordion();
-                if (isSelected) return;
-                onSelectDataPoint(item.timestamp)?.catch((err) =>
-                    Logger.error("KasandraItem::onClick", err)
-                );
+                if (isSelected) {
+                    toggleAccordion();
+                } else {
+                    onSelectDataPoint(item.timestamp)?.catch((err) =>
+                        Logger.error("KasandraItem::onClick", err)
+                    );
+                }
             }}
         >
             <div

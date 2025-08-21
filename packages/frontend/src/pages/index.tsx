@@ -12,6 +12,7 @@ import useMousePosition from "src/api/hooks/useMousePosition";
 import {
     removeWidgetFromView,
     removeWidgetStateFromCache,
+    selectIsMinimised,
     toggleLanguageModal,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
@@ -125,9 +126,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
 
     const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
     const layoutGrid = useMemo(() => {
-        if (selectedView?.data.widgets.length === 0) {
-            return undefined;
-        }
         return computeLayoutGrid(
             selectedView?.data.widgets.filter(
                 (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
@@ -141,6 +139,12 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         );
         return widgetData;
     }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
+    const isKasandraModuleCollapsed = useAppSelector((state) =>
+        kasandraModuleData?.hash
+            ? selectIsMinimised(kasandraModuleData.hash)(state)
+            : false
+    );
 
     /**
      * The current layout state according to the screen size
@@ -372,7 +376,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                         marginTop:
                                             kasandraModuleData &&
                                             (colIndex === 0 || colIndex === 1)
-                                                ? `${((WIDGETS.KASANDRA.WIDGET_HEIGHT as number) || 0) + 14}px`
+                                                ? `${(((isKasandraModuleCollapsed ? WIDGETS.KASANDRA.COLLAPSED_WIDGET_HEIGHT : WIDGETS.KASANDRA.WIDGET_HEIGHT) as number) || 0) + 14}px`
                                                 : "0px",
                                     }}
                                 >
