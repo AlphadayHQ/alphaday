@@ -1,4 +1,5 @@
 import queryString from "query-string";
+import { THistoryInsightItem, TInsightItem } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
@@ -22,20 +23,28 @@ const mapRemotePredictions = (
 const mapRemoteInsights = (
     r: TGetInsightsRawResponse
 ): TGetInsightsResponse => {
-    const results = r.results.map((i) => ({
-        id: i.id,
-        coin: {
-            ...i.coin,
-            icon: i.coin.icon || "",
-        },
-        timestamp: i.timestamp,
-        case: i.case,
-        title: i.title,
-        rationale: i.rationale,
-        price: i.price,
-        // sources: i.sources,
-    }));
-    return results;
+    const predictions: TInsightItem[] = [];
+    const history: THistoryInsightItem[] = [];
+    r.results.forEach((i) => {
+        const insight = {
+            id: i.id,
+            coin: {
+                ...i.coin,
+                icon: i.coin.icon || "",
+            },
+            timestamp: i.timestamp,
+            case: i.case,
+            title: i.title,
+            rationale: i.rationale,
+            price: i.price,
+            // sources: i.sources,
+        };
+        if (i.type === "history") history.push({ ...insight, type: "history" });
+        if (i.type === "prediction") {
+            predictions.push({ ...insight, type: "prediction" });
+        }
+    });
+    return { predictions, history };
 };
 
 const kasandraApi = alphadayApi.injectEndpoints({
