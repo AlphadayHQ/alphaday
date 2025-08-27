@@ -15,10 +15,14 @@ type TDataPoints = {
     base: [number, number][];
 };
 
+type TInsightsDataPoints = TDataPoints & {
+    history: [number, number][];
+};
+
 type IProps = {
     historyData: number[][];
     predictionData: TDataPoints;
-    insightsData: TDataPoints | undefined;
+    insightsData: TInsightsDataPoints | undefined;
     selectedChartRange: TChartRange;
     isLoading?: boolean;
     selectedTimestamp: number | undefined;
@@ -187,7 +191,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
             return [...genPoints(insightsData?.bearish ?? [], 3)];
         }
         return [
-            // ...generatePoints(insightsData?.bullish ?? [], 0, selectedTimestamp, onSelectDataPoint),
+            ...genPoints(insightsData?.history ?? [], 0),
             ...genPoints(insightsData?.bullish ?? [], 1),
             ...genPoints(insightsData?.base ?? [], 2),
             ...genPoints(insightsData?.bearish ?? [], 3),
