@@ -161,6 +161,9 @@ const KasandraItem: FC<{
                                         </span>
                                     )}
                                     {caseDisplay.text} {trendIcon}
+                                    <span className="mx-[7px] my-0 self-center">
+                                        •
+                                    </span>
                                 </>
                             ) : (
                                 <Skeleton className="w-28 h-3.5 mr-2" />
