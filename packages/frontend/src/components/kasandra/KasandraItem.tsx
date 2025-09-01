@@ -3,7 +3,7 @@ import { FC, useEffect, useMemo, useRef } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import ReactMarkdown from "react-markdown";
 import { TCoin } from "src/api/types";
-import { TInsightItem } from "src/api/types/kasandra";
+import { THistoryInsightItem, TInsightItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
 import { ReactComponent as ArrowDownSVG } from "src/assets/svg/arrow-down.svg";
@@ -14,7 +14,7 @@ import { imgOnError } from "src/utils/errorHandling";
 import { useDynamicWidgetItem } from "../dynamic-modules/hooks/useDynamicWidgetItem";
 
 const KasandraItem: FC<{
-    item: TInsightItem;
+    item: TInsightItem | THistoryInsightItem;
     selectedMarket: TCoin | undefined;
     isSelected: boolean;
     setItemRef: (ref: HTMLDivElement | null) => void;
@@ -31,6 +31,13 @@ const KasandraItem: FC<{
 
     // object to display color & text based on case
     const caseDisplay = useMemo(() => {
+        if (item.type === "history") {
+            return {
+                color: "text-primaryVariant100",
+                text: "History",
+                background: "gradient-background-neutral",
+            };
+        }
         return {
             color:
                 item.case === "optimistic"
@@ -51,16 +58,28 @@ const KasandraItem: FC<{
                       ? "gradient-background-bearish"
                       : "gradient-background-neutral",
         };
-    }, [item.case]);
-
-    // const itemSources = item.sources;
+    }, [item]);
 
     const pricePercentChange = useMemo(() => {
+        if (item.type === "history") return 0;
         if (!selectedMarket?.price) return 0;
         const change = item.price - selectedMarket.price;
         const percentChange = (change / selectedMarket.price) * 100;
         return percentChange;
-    }, [selectedMarket?.price, item.price]);
+    }, [selectedMarket?.price, item.price, item.type]);
+
+    const trendIcon = useMemo(() => {
+        if (item.type === "history") return null;
+        if (item.case === "optimistic") {
+            return <TrendUpThinSVG className="w-4 h-4 inline fill-success" />;
+        }
+        if (item.case === "pessimistic") {
+            return (
+                <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
+            );
+        }
+        return null;
+    }, [item]);
 
     useEffect(() => {
         if (isSelected === prevIsSelected.current) return;
@@ -124,22 +143,18 @@ const KasandraItem: FC<{
                                               : ""
                                     )}
                                 >
-                                    {
+                                    {item.type === "prediction" &&
                                         formatNumber({
                                             value: pricePercentChange / 100,
                                             style: ENumberStyle.Percent,
-                                        }).value
-                                    }
+                                        }).value}
                                 </span>
-                                <span className="mx-[7px] my-0 self-center">
-                                    •
-                                </span>
-                                {caseDisplay.text}{" "}
-                                {item.case === "optimistic" ? (
-                                    <TrendUpThinSVG className="w-4 h-4 inline fill-success" />
-                                ) : item.case === "pessimistic" ? (
-                                    <TrendDownThinSVG className="w-4 h-4 inline fill-secondaryOrangeSoda" />
-                                ) : null}
+                                {item.type === "prediction" && (
+                                    <span className="mx-[7px] my-0 self-center">
+                                        •
+                                    </span>
+                                )}
+                                {caseDisplay.text} {trendIcon}
                             </span>
                             <span className="mx-[7px] my-0 self-center">•</span>
                             <img

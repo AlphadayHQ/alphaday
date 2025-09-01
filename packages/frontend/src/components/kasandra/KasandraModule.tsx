@@ -6,7 +6,7 @@ import type {
     TChartRange,
     TCoin,
     TCoinMarketHistory,
-    TInsightItem,
+    TInsights,
     TKasandraCase,
     TPredictions,
 } from "src/api/types";
@@ -36,7 +36,7 @@ export interface IKasandraModule {
     isLoadingPredictions: boolean;
     selectedMarketHistory: TCoinMarketHistory | undefined;
     selectedPredictions: TPredictions | undefined;
-    insights: TInsightItem[] | undefined;
+    insights: TInsights | undefined;
     selectedChartRange: TChartRange;
     onSelectChartRange: (s: TChartRange) => void;
     selectedCase: TKasandraCase;
@@ -117,10 +117,12 @@ const KasandraModule: FC<IKasandraModule> = ({
         if (!insights || !selectedPredictions) {
             return undefined;
         }
+        const { predictions, history } = insights;
         const bullishInsights: [number, number][] = [];
         const bearishInsights: [number, number][] = [];
         const baseInsights: [number, number][] = [];
-        insights.forEach((item) => {
+        const historyInsights: [number, number][] = [];
+        predictions.forEach((item) => {
             if (item.case === "optimistic") {
                 const prediction = predictionData.bullish.find(
                     (p) => p[0] === item.timestamp
@@ -144,11 +146,15 @@ const KasandraModule: FC<IKasandraModule> = ({
                 }
             }
         });
+        history.forEach((item) => {
+            historyInsights.push([item.timestamp, item.price]);
+        });
 
         return {
             bullish: bullishInsights,
             bearish: bearishInsights,
             base: baseInsights,
+            history: historyInsights,
         };
     }, [insights, predictionData, selectedPredictions]);
 

@@ -128,7 +128,7 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         useGetInsightsQuery({
             coin: selectedMarket?.slug,
             interval: selectedChartRange,
-            limit: 24,
+            limit: 30,
         });
 
     const logData = useMemo(() => {

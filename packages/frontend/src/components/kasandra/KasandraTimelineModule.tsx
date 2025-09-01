@@ -5,6 +5,7 @@ import {
     TChartRange,
     TCoin,
     TInsightItem,
+    TInsights,
     TKasandraCase,
 } from "src/api/types";
 import { TMarketMeta } from "../market/types";
@@ -14,7 +15,7 @@ import Disclaimer from "./Disclaimer";
 import KasandraItemList from "./KasandraItemList";
 
 interface IKasandra {
-    items: TInsightItem[] | undefined;
+    items: TInsights | undefined;
     selectedMarket: TCoin | undefined;
     isLoadingItems: boolean;
     feedPreference: EItemFeedPreference;
@@ -52,10 +53,12 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         selectedChartRange,
     }) {
         const filteredItems = useMemo(() => {
+            if (!items) return [];
+            const { predictions, history } = items;
             if (selectedCase?.id === "all") {
-                return items;
+                return [...history, ...predictions];
             }
-            return items?.filter((item) => item.case === selectedCase?.id);
+            return predictions.filter((item) => item.case === selectedCase?.id);
         }, [items, selectedCase]);
 
         return (
