@@ -128,7 +128,7 @@ const KasandraItem: FC<{
                             {item.title}
                         </div>
                         <div className="lastLine fontGroup-mini flex text-primaryVariant100 mt-2">
-                            {pricePercentChange ? (
+                            {pricePercentChange !== undefined ? (
                                 <>
                                     <span className={caseDisplay.color}>
                                         {pricePercentChange > 0 ? (
