@@ -185,22 +185,26 @@ const LineChart: FC<IProps> = memo(function LineChart({
     );
 
     const points = useMemo(() => {
+        const historyPoints = genPoints(insightsData?.history ?? [], 0);
+        const bullishPoints = genPoints(insightsData?.bullish ?? [], 1);
+        const basePoints = genPoints(insightsData?.base ?? [], 2);
+        const bearishPoints = genPoints(insightsData?.bearish ?? [], 3);
         if (selectedCase === EPredictionCase.OPTIMISTIC) {
-            return [...genPoints(insightsData?.bullish ?? [], 1)];
+            return [...historyPoints, ...bullishPoints];
         }
 
         if (selectedCase === EPredictionCase.BASELINE) {
-            return [...genPoints(insightsData?.base ?? [], 2)];
+            return [...historyPoints, ...basePoints];
         }
 
         if (selectedCase === EPredictionCase.PESSIMISTIC) {
-            return [...genPoints(insightsData?.bearish ?? [], 3)];
+            return [...historyPoints, ...bearishPoints];
         }
         return [
-            ...genPoints(insightsData?.history ?? [], 0),
-            ...genPoints(insightsData?.bullish ?? [], 1),
-            ...genPoints(insightsData?.base ?? [], 2),
-            ...genPoints(insightsData?.bearish ?? [], 3),
+            ...historyPoints,
+            ...bullishPoints,
+            ...basePoints,
+            ...bearishPoints,
         ];
     }, [genPoints, insightsData, selectedCase]);
 
