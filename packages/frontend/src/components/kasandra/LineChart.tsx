@@ -1,5 +1,5 @@
 import { FC, memo, useCallback, useMemo, useState } from "react";
-import { ApexAreaChart, Spinner, twMerge } from "@alphaday/ui-kit";
+import { ApexAreaChart, Spinner, themeColors, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { EPredictionCase, TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
@@ -113,6 +113,12 @@ const LineChart: FC<IProps> = memo(function LineChart({
         selectedChartRange
     );
     const lastHistoryDataPoint = historyData[historyData.length - 1];
+    const startPrice = historyData[0][1];
+    const lastPrice = historyData[historyData.length - 1][1];
+    const historyColor =
+        lastPrice > startPrice || lastPrice === startPrice
+            ? themeColors.success
+            : themeColors.secondaryOrangeSoda;
 
     const chartSeries = useMemo(() => {
         const createSeries = (name: string, data: number[][]) => ({
@@ -179,28 +185,32 @@ const LineChart: FC<IProps> = memo(function LineChart({
     );
 
     const points = useMemo(() => {
+        const historyPoints = genPoints(insightsData?.history ?? [], 0);
+        const bullishPoints = genPoints(insightsData?.bullish ?? [], 1);
+        const basePoints = genPoints(insightsData?.base ?? [], 2);
+        const bearishPoints = genPoints(insightsData?.bearish ?? [], 3);
         if (selectedCase === EPredictionCase.OPTIMISTIC) {
-            return [...genPoints(insightsData?.bullish ?? [], 1)];
+            return [...historyPoints, ...bullishPoints];
         }
 
         if (selectedCase === EPredictionCase.BASELINE) {
-            return [...genPoints(insightsData?.base ?? [], 2)];
+            return [...historyPoints, ...basePoints];
         }
 
         if (selectedCase === EPredictionCase.PESSIMISTIC) {
-            return [...genPoints(insightsData?.bearish ?? [], 3)];
+            return [...historyPoints, ...bearishPoints];
         }
         return [
-            ...genPoints(insightsData?.history ?? [], 0),
-            ...genPoints(insightsData?.bullish ?? [], 1),
-            ...genPoints(insightsData?.base ?? [], 2),
-            ...genPoints(insightsData?.bearish ?? [], 3),
+            ...historyPoints,
+            ...bullishPoints,
+            ...basePoints,
+            ...bearishPoints,
         ];
     }, [genPoints, insightsData, selectedCase]);
 
     const seriesColors = useMemo(() => {
         const colors = [
-            "var(--alpha-green)",
+            historyColor,
             "var(--alpha-bullish)",
             "var(--alpha-base)",
             "var(--alpha-bearish)",
@@ -215,7 +225,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
         }
 
         return colors;
-    }, [selectedCase]);
+    }, [historyColor, selectedCase]);
 
     const options = {
         chart: {
