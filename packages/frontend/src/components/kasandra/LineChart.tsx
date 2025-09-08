@@ -34,10 +34,11 @@ const generatePoints = (
     data: [number, number][],
     seriesIndex: 0 | 1 | 2 | 3,
     selectedTimestamp: number | undefined,
-    onSelectDataPoint: (dataPoint: number) => void
+    onSelectDataPoint: (dataPoint: number) => void,
+    historyColor: string
 ) => {
     const seriesIndexColorMap = {
-        0: "#6dd230",
+        0: historyColor,
         1: "#6dd230", // bullish
         2: "#cdd230", // base
         3: "#f45532", // bearish
@@ -178,10 +179,11 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 data,
                 seriesIndex,
                 selectedTimestamp,
-                onSelectDataPoint
+                onSelectDataPoint,
+                historyColor
             );
         },
-        [selectedTimestamp, onSelectDataPoint]
+        [selectedTimestamp, onSelectDataPoint, historyColor]
     );
 
     const points = useMemo(() => {
