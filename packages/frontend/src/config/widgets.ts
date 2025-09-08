@@ -46,7 +46,7 @@ const WIDGETS_CONFIG = {
         COLLAPSED_WIDGET_HEIGHT: 45,
         ADJUSTABLE: false,
         PREDICTIONS_LIMIT: 72,
-        COINS_QUERY_HARD_LIMIT: 30,
+        COINS_QUERY_HARD_LIMIT: 30 * 60, // 15 min
         DEFAULT_INTERVAL: "1W",
         DEFAULT_SELECTED_CASE: { id: "all", name: "All" },
         DEFAULT_DISCLAIMER_ACCEPTED: false,

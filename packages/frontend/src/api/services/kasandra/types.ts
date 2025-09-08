@@ -50,6 +50,7 @@ export type TRemoteInsight = {
     title: string;
     rationale: string;
     price: number;
+    type: "history" | "prediction";
     // sources: TRemoteInsightSource[];
 };
 
