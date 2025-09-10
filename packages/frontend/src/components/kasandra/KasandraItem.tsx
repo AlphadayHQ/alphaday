@@ -2,6 +2,7 @@
 import { FC, useEffect, useMemo, useRef } from "react";
 import { Skeleton, twMerge } from "@alphaday/ui-kit";
 import ReactMarkdown from "react-markdown";
+import remarkBreaks from "remark-breaks";
 import { TCoin } from "src/api/types";
 import { THistoryInsightItem, TInsightItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
@@ -228,8 +229,10 @@ const KasandraItem: FC<{
                 >
                     {openAccordion && (
                         <div className="info ml-5 px-2 pr-3 pt-2 rounded-sm min-h-[45px] [align-self:normal]">
-                            <div className="wrap flex flex-wrap text-primary whitespace-pre-wrap [&>p]:mb-2 [&>p]:w-full [&>p]:inline">
-                                <ReactMarkdown>{item.rationale}</ReactMarkdown>
+                            <div className="flex flex-col wrap text-primary whitespace-pre-wrap [&>p]:mb-2 [&>p]:block">
+                                <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+                                    {item.rationale}
+                                </ReactMarkdown>
                             </div>
                             <br />
                             {/* {itemSources && (
