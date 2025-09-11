@@ -1,57 +1,24 @@
-import { FC, useCallback, useMemo, useState } from "react";
+import { FC, useMemo } from "react";
 import { BaseModuleWrapper, ModuleLoader } from "@alphaday/ui-kit";
-import { useWidgetHeight, useHistory } from "src/api/hooks";
-import { useGetMarketDataQuery } from "src/api/services";
+import type { TGetMarketDataResponse } from "src/api/services";
 import type { TRemoteCoinData } from "src/api/services/market/types";
-import BOARDS from "src/config/boards";
-import { EWidgetSettingsRegistry } from "src/constants";
-import type { IModuleContainer } from "src/types";
-import { MarketHeatmap } from "./components/MarketHeatmap";
+import { MarketHeatmap } from "src/components/market-heatmap/MarketHeatmap";
 
-export const MarketHeatmapModule: FC<IModuleContainer> = ({ moduleData }) => {
-    const widgetHeight = useWidgetHeight(moduleData);
-    const history = useHistory();
+interface IMarketHeatmapModule {
+    data: TGetMarketDataResponse | undefined;
+    isLoading: boolean;
+    isError: boolean;
+    widgetHeight: number;
+    onCoinClick: (coinData: TRemoteCoinData) => void;
+}
 
-    const [maxItems] = useState(50);
-
-    const tagsSettings = moduleData.settings.filter(
-        (s) =>
-            s.widget_setting.setting.slug ===
-            EWidgetSettingsRegistry.IncludedTags
-    );
-
-    const tags = tagsSettings[0]?.tags;
-    const tagsStr = tags?.map((tag) => tag.slug).join(",");
-
-    const {
-        currentData: data,
-        isLoading,
-        isError,
-    } = useGetMarketDataQuery({
-        tags: tagsStr,
-        limit: maxItems,
-    });
-
-    const handleCoinClick = useCallback(
-        (coinData: TRemoteCoinData) => {
-            const ticker = coinData.coin.ticker.toLowerCase();
-
-            // Find board slug for this coin
-            const boardSlugMap = BOARDS.BOARD_SLUG_MAP as Record<
-                string,
-                string[]
-            >;
-            const boardSlug = Object.entries(boardSlugMap).find(
-                ([, boardSlugs]) => boardSlugs.includes(ticker)
-            )?.[0];
-
-            if (boardSlug) {
-                history.push(`/b/${boardSlug}`);
-            }
-        },
-        [history]
-    );
-
+export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
+    data,
+    isLoading,
+    isError,
+    widgetHeight,
+    onCoinClick,
+}) => {
     // Transform the data to match TRemoteCoinData structure
     const transformedData = useMemo(() => {
         if (!data?.results) return [];
@@ -101,7 +68,7 @@ export const MarketHeatmapModule: FC<IModuleContainer> = ({ moduleData }) => {
                 <MarketHeatmap
                     data={transformedData}
                     isLoading={isLoading}
-                    onCoinClick={handleCoinClick}
+                    onCoinClick={onCoinClick}
                 />
             )}
         </BaseModuleWrapper>

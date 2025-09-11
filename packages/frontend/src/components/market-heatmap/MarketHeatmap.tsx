@@ -2,6 +2,7 @@ import { type FC, useMemo, useState } from "react";
 import type { TRemoteCoinData } from "src/api/services/market/types";
 import { HeatmapFilters } from "./HeatmapFilters";
 import { HeatmapGrid } from "./HeatmapGrid";
+import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
 
 interface IMarketHeatmap {
     data: TRemoteCoinData[];
@@ -14,12 +15,12 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
     isLoading,
     onCoinClick,
 }) => {
-    const [sizeMetric, setSizeMetric] = useState<"market_cap" | "volume">(
-        "market_cap"
+    const [sizeMetric, setSizeMetric] = useState<EHeatmapSizeMetric>(
+        EHeatmapSizeMetric.MarketCap
     );
-    const [colorMetric, setColorMetric] = useState<
-        "price_percent_change_24h" | "price_percent_change_7d"
-    >("price_percent_change_24h");
+    const [colorMetric, setColorMetric] = useState<EHeatmapColorMetric>(
+        EHeatmapColorMetric.PriceChange24h
+    );
     const [maxItems, setMaxItems] = useState<number>(50);
 
     const filteredData = useMemo(() => {
@@ -43,7 +44,7 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
             <HeatmapFilters
                 sizeMetric={sizeMetric}
                 colorMetric={colorMetric}
-                maxItems={maxItems}
+                maxItems={50}
                 onSizeMetricChange={setSizeMetric}
                 onColorMetricChange={setColorMetric}
                 onMaxItemsChange={setMaxItems}
