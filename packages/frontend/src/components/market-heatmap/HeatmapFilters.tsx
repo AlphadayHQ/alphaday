@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { TabButton, Select } from "@alphaday/ui-kit";
+import { Select } from "@alphaday/ui-kit";
 import { SingleValue } from "react-select";
 import {
     EHeatmapSizeMetric,
@@ -17,6 +17,32 @@ interface IHeatmapFilters {
     onMaxItemsChange: (value: THeatmapMaxItems) => void;
 }
 
+const sizeMetricOptions = [
+    {
+        id: EHeatmapSizeMetric.MarketCap,
+        name: "Market Cap",
+        icon: null,
+    },
+    {
+        id: EHeatmapSizeMetric.Volume,
+        name: "Volume",
+        icon: null,
+    },
+];
+
+const colorMetricOptions = [
+    {
+        id: EHeatmapColorMetric.PriceChange24h,
+        name: "24h %",
+        icon: null,
+    },
+    {
+        id: EHeatmapColorMetric.PriceChange7d,
+        name: "7d %",
+        icon: null,
+    },
+];
+
 export const HeatmapFilters: FC<IHeatmapFilters> = ({
     sizeMetric,
     colorMetric,
@@ -28,12 +54,24 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
     const maxItemsOptions = HEATMAP_MAX_ITEMS_OPTIONS.map((option) => ({
         id: option.value.toString(),
         name: option.label,
-        icon: (
-            <div className="flex items-center justify-center w-6 h-6 text-xs text-primaryVariant100">
-                {option.value}
-            </div>
-        ),
+        icon: null,
     }));
+
+    const handleSizeMetricChange = (
+        option: SingleValue<{ id: string; name: string }>
+    ) => {
+        if (option) {
+            onSizeMetricChange(option.id as EHeatmapSizeMetric);
+        }
+    };
+
+    const handleColorMetricChange = (
+        option: SingleValue<{ id: string; name: string }>
+    ) => {
+        if (option) {
+            onColorMetricChange(option.id as EHeatmapColorMetric);
+        }
+    };
 
     const handleMaxItemsChange = (
         option: SingleValue<{ id: string; name: string }>
@@ -43,82 +81,70 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
         }
     };
 
+    const selectedSizeMetricOption = sizeMetricOptions.find(
+        (option) => option.id === sizeMetric
+    );
+
+    const selectedColorMetricOption = colorMetricOptions.find(
+        (option) => option.id === colorMetric
+    );
+
     const selectedMaxItemsOption = maxItemsOptions.find(
         (option) => option.id === maxItems.toString()
     );
 
     return (
-        <div className="p-3 border-b border-borderLine bg-backgroundVariant100">
-            <div className="flex flex-wrap gap-4 items-center text-sm">
-                <div className="flex items-center gap-2">
-                    <span className="text-primaryVariant100">Size:</span>
-                    <div className="flex gap-1">
-                        <TabButton
-                            open={sizeMetric === EHeatmapSizeMetric.MarketCap}
-                            onClick={() =>
-                                onSizeMetricChange(EHeatmapSizeMetric.MarketCap)
-                            }
-                            variant="extraSmall"
-                            className="capitalize"
-                        >
-                            Market Cap
-                        </TabButton>
-                        <TabButton
-                            open={sizeMetric === EHeatmapSizeMetric.Volume}
-                            onClick={() =>
-                                onSizeMetricChange(EHeatmapSizeMetric.Volume)
-                            }
-                            variant="extraSmall"
-                            className="capitalize"
-                        >
-                            Volume
-                        </TabButton>
+        <div className="bg-backgroundVariant100 border-b border-borderLine">
+            <div className="p-4">
+                <div className="grid grid-cols-3 gap-6">
+                    {/* Size Metric Control */}
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-accent" />
+                            <span className="text-sm font-medium text-primaryVariant100">
+                                Size
+                            </span>
+                        </div>
+                        <div className="w-full">
+                            <Select
+                                options={sizeMetricOptions}
+                                selectedOption={selectedSizeMetricOption}
+                                onChange={handleSizeMetricChange}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <div className="flex items-center gap-2">
-                    <span className="text-primaryVariant100">Color:</span>
-                    <div className="flex gap-1">
-                        <TabButton
-                            open={
-                                colorMetric ===
-                                EHeatmapColorMetric.PriceChange24h
-                            }
-                            onClick={() =>
-                                onColorMetricChange(
-                                    EHeatmapColorMetric.PriceChange24h
-                                )
-                            }
-                            variant="extraSmall"
-                            className="capitalize"
-                        >
-                            24h %
-                        </TabButton>
-                        <TabButton
-                            open={
-                                colorMetric ===
-                                EHeatmapColorMetric.PriceChange7d
-                            }
-                            onClick={() =>
-                                onColorMetricChange(
-                                    EHeatmapColorMetric.PriceChange7d
-                                )
-                            }
-                            variant="extraSmall"
-                            className="capitalize"
-                        >
-                            7d %
-                        </TabButton>
+                    {/* Color Metric Control */}
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-primaryVariant100">
+                                Color
+                            </span>
+                        </div>
+                        <div className="w-full">
+                            <Select
+                                options={colorMetricOptions}
+                                selectedOption={selectedColorMetricOption}
+                                onChange={handleColorMetricChange}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <div className="flex items-center gap-2">
-                    <span className="text-primaryVariant100">Items:</span>
-                    <Select
-                        options={maxItemsOptions}
-                        selectedOption={selectedMaxItemsOption}
-                        onChange={handleMaxItemsChange}
-                    />
+                    {/* Items Count Control */}
+                    <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                            <span className="text-sm font-medium text-primaryVariant100">
+                                Limit
+                            </span>
+                        </div>
+                        <div className="w-full">
+                            <Select
+                                options={maxItemsOptions}
+                                selectedOption={selectedMaxItemsOption}
+                                onChange={handleMaxItemsChange}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
