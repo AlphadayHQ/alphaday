@@ -68,6 +68,7 @@ export enum ETemplateNameRegistry {
     Lens = "LENS",
     Map = "MAP",
     Market = "MARKET",
+    MarketHeatmap = "MARKET_HEATMAP",
     Media = "MEDIA",
     Network = "NETWORK",
     News = "NEWS",

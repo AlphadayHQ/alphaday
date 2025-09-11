@@ -190,6 +190,11 @@ const WIDGETS_CONFIG = {
         DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
         ADJUSTABLE: false,
     },
+    [ETemplateNameRegistry.MarketHeatmap]: {
+        WIDGET_HEIGHT: 600,
+        POLLING_INTERVAL: 5 * 60, // 5 min
+        ADJUSTABLE: true,
+    },
     [ETemplateNameRegistry.Polls]: {
         ADJUSTABLE: false,
         WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT,
