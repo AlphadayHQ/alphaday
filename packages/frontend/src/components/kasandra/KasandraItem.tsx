@@ -219,7 +219,7 @@ const KasandraItem: FC<{
                     className={twMerge(
                         "desc fontGroup-normal pointer-events-none h-2.5 opacity-0 ease-[ease] transition-all duration-300",
                         openAccordion &&
-                            "line-clamp-6 pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-[ease] transition-all duration-300"
+                            "line-clamp-6 pointer-events-auto overflow-hidden text-ellipsis opacity-100 ease-[ease] transition-all duration-300 mb-2"
                     )}
                     style={{
                         height: openAccordion
@@ -228,13 +228,14 @@ const KasandraItem: FC<{
                     }}
                 >
                     {openAccordion && (
-                        <div className="info ml-5 px-2 pr-3 pt-2 rounded-sm min-h-[45px] [align-self:normal]">
-                            <div className="flex flex-col gap-4 wrap text-primary whitespace-pre-wrap [&>p]:mb-2 [&>p]:block">
-                                <ReactMarkdown remarkPlugins={[remarkBreaks]}>
-                                    {item.rationale}
-                                </ReactMarkdown>
+                        <div className="info ml-5 px-2 pr-3 rounded-sm min-h-full [align-self:normal]">
+                            <div
+                                className={twMerge(
+                                    "wrap min-h-full inline text-primary whitespace-pre-wrap [&>p]:mt-2 [&>p]:w-full [&>p]:inline-block" // mb-2 does not work for some reason
+                                )}
+                            >
+                                <ReactMarkdown>{item.rationale}</ReactMarkdown>
                             </div>
-                            <br />
                             {/* {itemSources && (
                                 <>
                                     <div className="flex flex-wrap gap-1">
