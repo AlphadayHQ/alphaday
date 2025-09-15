@@ -4,7 +4,6 @@ import { SingleValue } from "react-select";
 import {
     EHeatmapSizeMetric,
     EHeatmapColorMetric,
-    HEATMAP_MAX_ITEMS_OPTIONS,
     EHeatmapMaxItems,
 } from "./types";
 
@@ -33,15 +32,23 @@ const sizeMetricOptions = [
 const colorMetricOptions = [
     {
         id: EHeatmapColorMetric.PriceChange24h,
-        name: "24h %",
+        name: "Change 24h %",
         icon: null,
     },
     {
         id: EHeatmapColorMetric.PriceChange7d,
-        name: "7d %",
+        name: "Change 7d %",
         icon: null,
     },
 ];
+
+const maxItemsOptions = Object.keys(EHeatmapMaxItems)
+    .filter((key) => !isNaN(Number(key)))
+    .map((option) => ({
+        id: option.toString(),
+        name: `Top ${option} coins`,
+        icon: null,
+    }));
 
 export const HeatmapFilters: FC<IHeatmapFilters> = ({
     sizeMetric,
@@ -51,12 +58,6 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
     onColorMetricChange,
     onMaxItemsChange,
 }) => {
-    const maxItemsOptions = HEATMAP_MAX_ITEMS_OPTIONS.map((option) => ({
-        id: option.value.toString(),
-        name: option.label,
-        icon: null,
-    }));
-
     const handleSizeMetricChange = (
         option: SingleValue<{ id: string; name: string }>
     ) => {

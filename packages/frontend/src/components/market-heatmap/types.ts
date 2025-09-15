@@ -14,10 +14,3 @@ export enum EHeatmapMaxItems {
     OneHundred = 100,
     TwoHundred = 200,
 }
-
-export const HEATMAP_MAX_ITEMS_OPTIONS = [
-    { value: EHeatmapMaxItems.TwentyFive, label: "25" },
-    { value: EHeatmapMaxItems.Fifty, label: "50" },
-    { value: EHeatmapMaxItems.OneHundred, label: "100" },
-    { value: EHeatmapMaxItems.TwoHundred, label: "200" },
-] as const;
