@@ -1,14 +1,14 @@
 import { type FC, useMemo, useState } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import type { TRemoteCoinData } from "src/api/services/market/types";
+import { TCoin } from "src/api/types";
 import { HeatmapFilters } from "./HeatmapFilters";
 import { HeatmapGrid } from "./HeatmapGrid";
 import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
 
 interface IMarketHeatmap {
-    data: TRemoteCoinData[];
+    data: TCoin[];
     isLoading: boolean;
-    onCoinClick: (coin: TRemoteCoinData) => void;
+    onCoinClick: (coin: TCoin) => void;
 }
 
 export const MarketHeatmap: FC<IMarketHeatmap> = ({
@@ -27,9 +27,11 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
     const filteredData = useMemo(() => {
         if (!data) return [];
 
-        return data
-            .sort((a, b) => b.market_cap - a.market_cap)
-            .slice(0, maxItems);
+        return (
+            data
+                // .sort((a, b) => b.market_cap - a.market_cap)
+                .slice(0, maxItems)
+        );
     }, [data, maxItems]);
 
     if (isLoading) {

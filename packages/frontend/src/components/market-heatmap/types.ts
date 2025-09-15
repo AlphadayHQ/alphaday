@@ -1,11 +1,11 @@
 export enum EHeatmapSizeMetric {
-    MarketCap = "market_cap",
+    MarketCap = "marketCap",
     Volume = "volume",
 }
 
 export enum EHeatmapColorMetric {
-    PriceChange24h = "price_percent_change_24h",
-    PriceChange7d = "price_percent_change_7d",
+    PriceChange24h = "percentChange24h",
+    PriceChange7d = "percentChange7d",
 }
 
 export const HEATMAP_MAX_ITEMS_OPTIONS = [

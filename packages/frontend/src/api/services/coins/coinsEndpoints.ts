@@ -36,6 +36,8 @@ const transformRemoteCoin = (coin: TRemoteCoin): TCoin => {
         volume: coin.volume ?? 0,
         marketCap: coin.market_cap ?? 0,
         percentChange24h: coin.price_percent_change_24h ?? 0,
+        percentChange7d: coin.price_percent_change_7d ?? 0,
+        percentChange30d: coin.price_percent_change_30d ?? 0,
     };
 };
 

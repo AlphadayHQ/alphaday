@@ -52,6 +52,8 @@ export type TCoin = {
     tags?: TTag[];
     price: number;
     percentChange24h: number;
+    percentChange7d: number;
+    percentChange30d: number;
     marketCap: number;
     volume?: number;
 };

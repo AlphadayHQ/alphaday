@@ -1,13 +1,13 @@
 import { type FC, useMemo, useRef, useEffect, useState } from "react";
-import type { TRemoteCoinData } from "src/api/services/market/types";
+import { TCoin } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
 
 interface IHeatmapGrid {
-    data: TRemoteCoinData[];
+    data: TCoin[];
     sizeMetric: EHeatmapSizeMetric;
     colorMetric: EHeatmapColorMetric;
-    onCoinClick: (coin: TRemoteCoinData) => void;
+    onCoinClick: (coin: TCoin) => void;
 }
 
 export const HeatmapGrid: FC<IHeatmapGrid> = ({
@@ -59,13 +59,13 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
         const containerHeight = dimensions.height;
 
         const layoutTreeMap = (
-            items: TRemoteCoinData[],
+            items: TCoin[],
             x: number,
             y: number,
             width: number,
             height: number
         ): Array<{
-            coin: TRemoteCoinData;
+            coin: TCoin;
             x: number;
             y: number;
             width: number;
@@ -214,7 +214,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                             fontSize: Math.min(width / 8, 12),
                                         }}
                                     >
-                                        {coin.coin.ticker.toUpperCase()}
+                                        {coin.ticker.toUpperCase()}
                                     </text>
                                     <text
                                         x={x + width / 2}
