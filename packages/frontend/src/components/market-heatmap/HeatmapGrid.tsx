@@ -230,9 +230,9 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                             formatNumber({
                                                 value: color,
                                                 style: ENumberStyle.Percent,
+                                                normalise: true,
                                             }).value
                                         }
-                                        %
                                     </text>
                                 </>
                             )}
