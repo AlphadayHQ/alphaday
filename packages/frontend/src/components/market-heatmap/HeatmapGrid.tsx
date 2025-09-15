@@ -1,5 +1,5 @@
 import { type FC, useMemo, useRef, useEffect, useState } from "react";
-import { TCoin } from "src/api/types";
+import { TCoin, TKeyword } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
 
@@ -8,6 +8,7 @@ interface IHeatmapGrid {
     sizeMetric: EHeatmapSizeMetric;
     colorMetric: EHeatmapColorMetric;
     onCoinClick: (coin: TCoin) => void;
+    keywordSearchList: TKeyword[];
 }
 
 export const HeatmapGrid: FC<IHeatmapGrid> = ({
@@ -15,6 +16,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
     sizeMetric,
     colorMetric,
     onCoinClick,
+    keywordSearchList,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
@@ -185,9 +187,16 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                     const { coin, width, height, x, y, color } = item;
                     const colorIntensity = Math.abs(color);
                     const isPositive = color >= 0;
+                    
+                    // Check if coin is in keywords list
+                    const isHighlighted = keywordSearchList.some(keyword => 
+                        keyword.id === coin.id || 
+                        coin.tags?.some(tag => tag.id === keyword.tag.id)
+                    );
+                    const baseOpacity = keywordSearchList.length > 0 ? (isHighlighted ? 1 : 0.3) : 1;
 
                     return (
-                        <g key={coin.id}>
+                        <g key={coin.id} style={{ opacity: baseOpacity }}>
                             <rect
                                 x={x}
                                 y={y}
@@ -199,7 +208,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                         : `hsl(0, ${Math.min(colorIntensity * 20, 120)}%, ${50 + colorIntensity}%)`
                                 }
                                 stroke="#2a2a2a"
-                                strokeWidth="0.5"
+                                strokeWidth={isHighlighted ? "1" : "0.5"}
                                 className="hover:opacity-80 transition-opacity cursor-pointer"
                                 onClick={() => onCoinClick(coin)}
                             />

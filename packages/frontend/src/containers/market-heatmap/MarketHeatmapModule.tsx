@@ -1,7 +1,7 @@
 import { FC, useMemo } from "react";
 import { BaseModuleWrapper, ModuleLoader } from "@alphaday/ui-kit";
 import type { TGetCoinsResponse } from "src/api/services";
-import { TCoin } from "src/api/types";
+import { TCoin, TKeyword } from "src/api/types";
 import { MarketHeatmap } from "src/components/market-heatmap/MarketHeatmap";
 
 interface IMarketHeatmapModule {
@@ -10,6 +10,7 @@ interface IMarketHeatmapModule {
     isError: boolean;
     widgetHeight: number;
     onCoinClick: (coinData: TCoin) => void;
+    keywordSearchList: TKeyword[];
 }
 
 export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
@@ -18,6 +19,7 @@ export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
     isError,
     widgetHeight,
     onCoinClick,
+    keywordSearchList,
 }) => {
     // Transform the data to match TRemoteCoinData structure
     const transformedData = useMemo(() => {
@@ -38,6 +40,7 @@ export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
                     data={transformedData}
                     isLoading={isLoading}
                     onCoinClick={onCoinClick}
+                    keywordSearchList={keywordSearchList}
                 />
             )}
         </BaseModuleWrapper>

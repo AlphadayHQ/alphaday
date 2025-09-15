@@ -1,6 +1,6 @@
 import { type FC, useMemo, useState } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { TCoin } from "src/api/types";
+import { TCoin, TKeyword } from "src/api/types";
 import { HeatmapFilters } from "./HeatmapFilters";
 import { HeatmapGrid } from "./HeatmapGrid";
 import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
@@ -9,12 +9,14 @@ interface IMarketHeatmap {
     data: TCoin[];
     isLoading: boolean;
     onCoinClick: (coin: TCoin) => void;
+    keywordSearchList: TKeyword[];
 }
 
 export const MarketHeatmap: FC<IMarketHeatmap> = ({
     data,
     isLoading,
     onCoinClick,
+    keywordSearchList,
 }) => {
     const [sizeMetric, setSizeMetric] = useState<EHeatmapSizeMetric>(
         EHeatmapSizeMetric.MarketCap
@@ -54,6 +56,7 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
                     sizeMetric={sizeMetric}
                     colorMetric={colorMetric}
                     onCoinClick={onCoinClick}
+                    keywordSearchList={keywordSearchList}
                 />
             </div>
         </div>

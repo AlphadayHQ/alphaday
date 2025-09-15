@@ -62,6 +62,7 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
             isError={isError}
             widgetHeight={widgetHeight}
             onCoinClick={handleCoinClick}
+            keywordSearchList={keywordSearchList}
         />
     );
 };
