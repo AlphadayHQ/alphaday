@@ -94,57 +94,26 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
     );
 
     return (
-        <div className="bg-backgroundVariant100 border-b border-borderLine">
+        <div>
             <div className="p-4">
-                <div className="grid grid-cols-3 gap-6">
-                    {/* Size Metric Control */}
-                    <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-accent" />
-                            <span className="text-sm font-medium text-primaryVariant100">
-                                Size
-                            </span>
-                        </div>
-                        <div className="w-full">
-                            <Select
-                                options={sizeMetricOptions}
-                                selectedOption={selectedSizeMetricOption}
-                                onChange={handleSizeMetricChange}
-                            />
-                        </div>
-                    </div>
+                <div className="flex items-center gap-6">
+                    <Select
+                        options={sizeMetricOptions}
+                        selectedOption={selectedSizeMetricOption}
+                        onChange={handleSizeMetricChange}
+                    />
 
-                    {/* Color Metric Control */}
-                    <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-primaryVariant100">
-                                Color
-                            </span>
-                        </div>
-                        <div className="w-full">
-                            <Select
-                                options={colorMetricOptions}
-                                selectedOption={selectedColorMetricOption}
-                                onChange={handleColorMetricChange}
-                            />
-                        </div>
-                    </div>
+                    <Select
+                        options={colorMetricOptions}
+                        selectedOption={selectedColorMetricOption}
+                        onChange={handleColorMetricChange}
+                    />
 
-                    {/* Items Count Control */}
-                    <div className="space-y-3">
-                        <div className="flex items-center gap-2">
-                            <span className="text-sm font-medium text-primaryVariant100">
-                                Limit
-                            </span>
-                        </div>
-                        <div className="w-full">
-                            <Select
-                                options={maxItemsOptions}
-                                selectedOption={selectedMaxItemsOption}
-                                onChange={handleMaxItemsChange}
-                            />
-                        </div>
-                    </div>
+                    <Select
+                        options={maxItemsOptions}
+                        selectedOption={selectedMaxItemsOption}
+                        onChange={handleMaxItemsChange}
+                    />
                 </div>
             </div>
         </div>

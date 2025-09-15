@@ -1,11 +1,12 @@
-import { type FC, useMemo } from "react";
+import { type FC, useMemo, useRef, useEffect, useState } from "react";
 import type { TRemoteCoinData } from "src/api/services/market/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
+import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
 
 interface IHeatmapGrid {
     data: TRemoteCoinData[];
-    sizeMetric: "market_cap" | "volume";
-    colorMetric: "price_percent_change_24h" | "price_percent_change_7d";
+    sizeMetric: EHeatmapSizeMetric;
+    colorMetric: EHeatmapColorMetric;
     onCoinClick: (coin: TRemoteCoinData) => void;
 }
 
@@ -15,6 +16,29 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
     colorMetric,
     onCoinClick,
 }) => {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (containerRef.current) {
+                const { width, height } =
+                    containerRef.current.getBoundingClientRect();
+                setDimensions({ width: width || 800, height: height || 600 });
+            }
+        };
+
+        updateDimensions();
+
+        const resizeObserver = new ResizeObserver(updateDimensions);
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, []);
     const heatmapItems = useMemo(() => {
         if (!data.length) return [];
 
@@ -31,11 +55,10 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
 
         if (totalSize === 0) return [];
 
-        const containerWidth = 800;
-        const containerHeight = 600;
+        const containerWidth = dimensions.width;
+        const containerHeight = dimensions.height;
 
-        // Treemap layout function
-        const layoutTreemap = (
+        const layoutTreeMap = (
             items: TRemoteCoinData[],
             x: number,
             y: number,
@@ -105,15 +128,15 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
             );
             const leftRatio = leftSum / currentTotal;
 
-            let leftLayout: ReturnType<typeof layoutTreemap>;
-            let rightLayout: ReturnType<typeof layoutTreemap>;
+            let leftLayout: ReturnType<typeof layoutTreeMap>;
+            let rightLayout: ReturnType<typeof layoutTreeMap>;
 
             // Split horizontally or vertically based on aspect ratio
             if (width > height) {
                 // Split vertically
                 const leftWidth = width * leftRatio;
-                leftLayout = layoutTreemap(leftItems, x, y, leftWidth, height);
-                rightLayout = layoutTreemap(
+                leftLayout = layoutTreeMap(leftItems, x, y, leftWidth, height);
+                rightLayout = layoutTreeMap(
                     rightItems,
                     x + leftWidth,
                     y,
@@ -123,8 +146,8 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
             } else {
                 // Split horizontally
                 const leftHeight = height * leftRatio;
-                leftLayout = layoutTreemap(leftItems, x, y, width, leftHeight);
-                rightLayout = layoutTreemap(
+                leftLayout = layoutTreeMap(leftItems, x, y, width, leftHeight);
+                rightLayout = layoutTreeMap(
                     rightItems,
                     x,
                     y + leftHeight,
@@ -136,8 +159,8 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
             return [...leftLayout, ...rightLayout];
         };
 
-        return layoutTreemap(sortedData, 0, 0, containerWidth, containerHeight);
-    }, [data, sizeMetric, colorMetric]);
+        return layoutTreeMap(sortedData, 0, 0, containerWidth, containerHeight);
+    }, [data, sizeMetric, colorMetric, dimensions]);
 
     if (!data.length) {
         return (
@@ -148,8 +171,15 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
     }
 
     return (
-        <div className="relative w-full h-full overflow-hidden bg-backgroundVariant100">
-            <svg width="100%" height="100%" viewBox="0 0 800 600">
+        <div
+            ref={containerRef}
+            className="relative w-full h-full overflow-hidden bg-backgroundVariant100"
+        >
+            <svg
+                width="100%"
+                height="100%"
+                viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+            >
                 <title>Crypto market heatmap</title>
                 {heatmapItems.map((item) => {
                     const { coin, width, height, x, y, color } = item;

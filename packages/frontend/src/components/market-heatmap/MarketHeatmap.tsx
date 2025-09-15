@@ -1,4 +1,5 @@
 import { type FC, useMemo, useState } from "react";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import type { TRemoteCoinData } from "src/api/services/market/types";
 import { HeatmapFilters } from "./HeatmapFilters";
 import { HeatmapGrid } from "./HeatmapGrid";
@@ -32,11 +33,7 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
     }, [data, maxItems]);
 
     if (isLoading) {
-        return (
-            <div className="flex items-center justify-center h-full">
-                <div className="text-primaryVariant100">Loading heatmap...</div>
-            </div>
-        );
+        return <ModuleLoader $height="400px" />;
     }
 
     return (

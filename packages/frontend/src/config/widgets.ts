@@ -50,6 +50,7 @@ const WIDGETS_CONFIG = {
         DEFAULT_INTERVAL: "1W",
         DEFAULT_SELECTED_CASE: { id: "all", name: "All" },
         DEFAULT_DISCLAIMER_ACCEPTED: false,
+        TWO_COL_SUPPORT: true,
     },
     [ETemplateNameRegistry.KasandraTimeline]: {
         WIDGET_HEIGHT: 550,
@@ -194,6 +195,7 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 600,
         POLLING_INTERVAL: 5 * 60, // 5 min
         ADJUSTABLE: true,
+        // TWO_COL_SUPPORT: true,
     },
     [ETemplateNameRegistry.Polls]: {
         ADJUSTABLE: false,
