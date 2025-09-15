@@ -1,6 +1,5 @@
 import { FC, memo, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { useFeatureFlags } from "src/api/hooks";
 import {
     EItemFeedPreference,
     TChartRange,
@@ -9,7 +8,6 @@ import {
     TInsights,
     TKasandraCase,
 } from "src/api/types";
-import { EFeaturesRegistry } from "src/constants";
 import { TMarketMeta } from "../market/types";
 import { CaseSelect } from "./CaseSelect";
 import { CoinSelect } from "./CoinSelect";
@@ -54,21 +52,14 @@ const KasandraTimelineModule: FC<IKasandra> = memo(
         onAcceptDisclaimer,
         selectedChartRange,
     }) {
-        const { enabled: isKasandraHistoryAllowed } = useFeatureFlags(
-            EFeaturesRegistry.KasandraHistory
-        );
-
         const filteredItems = useMemo(() => {
             if (!items) return [];
             const { predictions, history } = items;
             if (selectedCase?.id === "all") {
-                if (!isKasandraHistoryAllowed) {
-                    return predictions;
-                }
                 return [...history, ...predictions];
             }
             return predictions.filter((item) => item.case === selectedCase?.id);
-        }, [items, selectedCase, isKasandraHistoryAllowed]);
+        }, [items, selectedCase]);
 
         return (
             <>

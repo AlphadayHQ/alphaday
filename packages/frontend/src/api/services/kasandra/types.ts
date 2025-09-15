@@ -69,6 +69,7 @@ export type TGetInsightsRequest = {
     coin: string;
     interval: TChartRange;
     limit?: number;
+    type?: "prediction" | "history";
 };
 export type TGetInsightsRawResponse = TPagination & {
     results: TRemoteInsight[];

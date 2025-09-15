@@ -111,7 +111,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             {
                 pollingInterval:
                     CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-                skip: selectedMarket === undefined || !isKasandraHistoryAllowed,
+                skip: selectedMarket === undefined,
             }
         );
 
@@ -132,6 +132,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { data: insights } = useGetInsightsQuery({
         coin: selectedMarket?.slug,
         interval: selectedChartRange,
+        type: isKasandraHistoryAllowed ? undefined : "prediction",
         limit: 30,
     });
 
