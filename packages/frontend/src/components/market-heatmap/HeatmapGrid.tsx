@@ -182,18 +182,21 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                 height="100%"
                 viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
             >
-                <title>Crypto market heatmap</title>
                 {heatmapItems.map((item) => {
                     const { coin, width, height, x, y, color } = item;
                     const colorIntensity = Math.abs(color);
                     const isPositive = color >= 0;
-                    
+
                     // Check if coin is in keywords list
-                    const isHighlighted = keywordSearchList.some(keyword => 
-                        keyword.id === coin.id || 
-                        coin.tags?.some(tag => tag.id === keyword.tag.id)
+                    const isHighlighted = keywordSearchList.some(
+                        (keyword) =>
+                            keyword.id === coin.id ||
+                            coin.tags?.some((tag) => tag.id === keyword.tag.id)
                     );
-                    const baseOpacity = keywordSearchList.length > 0 ? (isHighlighted ? 1 : 0.3) : 1;
+                    let baseOpacity = 1;
+                    if (keywordSearchList.length > 0) {
+                        baseOpacity = isHighlighted ? 1 : 0.3;
+                    }
 
                     return (
                         <g key={coin.id} style={{ opacity: baseOpacity }}>
@@ -212,38 +215,123 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                 className="hover:opacity-80 transition-opacity cursor-pointer"
                                 onClick={() => onCoinClick(coin)}
                             />
+                            {coin.icon && width > 15 && height > 15 && (
+                                <image
+                                    x={
+                                        x +
+                                        width / 2 -
+                                        Math.min(
+                                            width / 4,
+                                            Math.max(width / 8, 8)
+                                        )
+                                    }
+                                    y={
+                                        y +
+                                        height / 2 -
+                                        Math.min(
+                                            height / 4,
+                                            Math.max(height / 8, 8)
+                                        ) -
+                                        (width > 60 && height > 40
+                                            ? (() => {
+                                                  if (
+                                                      width > 150 &&
+                                                      height > 120
+                                                  ) {
+                                                      return Math.min(
+                                                          height / 5,
+                                                          25
+                                                      );
+                                                  }
+                                                  return Math.min(
+                                                      height / 8,
+                                                      12
+                                                  );
+                                              })()
+                                            : 0)
+                                    }
+                                    width={Math.min(
+                                        width / 2,
+                                        Math.max(width / 4, 16)
+                                    )}
+                                    height={Math.min(
+                                        height / 2,
+                                        Math.max(height / 4, 16)
+                                    )}
+                                    href={coin.icon}
+                                    className="pointer-events-none"
+                                />
+                            )}
                             {width > 60 && height > 40 && (
                                 <>
-                                    {coin.icon && width > 120 && height > 100 && (
-                                        <image
-                                            x={x + width / 2 - 10}
-                                            y={y + height / 2 - 40}
-                                            width="20"
-                                            height="20"
-                                            href={coin.icon}
-                                            className="pointer-events-none"
-                                        />
-                                    )}
                                     <text
                                         x={x + width / 2}
-                                        y={coin.icon && width > 120 && height > 100 ? y + height / 2 - 8 : y + height / 2 - 4}
+                                        y={
+                                            coin.icon
+                                                ? y +
+                                                  height / 2 +
+                                                  (width > 150 && height > 120
+                                                      ? Math.min(height / 5, 25)
+                                                      : Math.min(
+                                                            height / 8,
+                                                            12
+                                                        )) +
+                                                  4
+                                                : y + height / 2 - 4
+                                        }
                                         textAnchor="middle"
                                         dominantBaseline="middle"
                                         className="fill-white text-lg font-bold pointer-events-none"
                                         style={{
-                                            fontSize: Math.min(width / 5, 16),
+                                            fontSize:
+                                                width > 150 && height > 120
+                                                    ? Math.min(
+                                                          width / 5,
+                                                          height / 6,
+                                                          18
+                                                      )
+                                                    : Math.min(
+                                                          width / 6,
+                                                          height / 8,
+                                                          14
+                                                      ),
                                         }}
                                     >
                                         {coin.ticker.toUpperCase()}
                                     </text>
                                     <text
                                         x={x + width / 2}
-                                        y={coin.icon && width > 120 && height > 100 ? y + height / 2 + 12 : y + height / 2 + 12}
+                                        y={
+                                            coin.icon
+                                                ? y +
+                                                  height / 2 +
+                                                  (width > 150 && height > 120
+                                                      ? Math.min(height / 5, 25)
+                                                      : Math.min(
+                                                            height / 8,
+                                                            12
+                                                        )) +
+                                                  (width > 150 && height > 120
+                                                      ? 22
+                                                      : 16)
+                                                : y + height / 2 + 12
+                                        }
                                         textAnchor="middle"
                                         dominantBaseline="middle"
                                         className="fill-white text-base font-semibold pointer-events-none"
                                         style={{
-                                            fontSize: Math.min(width / 7, 14),
+                                            fontSize:
+                                                width > 150 && height > 120
+                                                    ? Math.min(
+                                                          width / 7,
+                                                          height / 8,
+                                                          16
+                                                      )
+                                                    : Math.min(
+                                                          width / 8,
+                                                          height / 10,
+                                                          12
+                                                      ),
                                         }}
                                     >
                                         {color > 0 ? "+" : ""}
