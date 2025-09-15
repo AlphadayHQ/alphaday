@@ -1,19 +1,23 @@
-import { type FC, useCallback, useState } from "react";
+import { type FC, Suspense, useCallback, useState } from "react";
+import { ModuleLoader } from "@alphaday/ui-kit";
 import { useWidgetHeight } from "src/api/hooks";
 import { useGlobalSearch } from "src/api/hooks/useGlobalSearch";
 import { useGetCoinsQuery } from "src/api/services";
 import { ETag, TCoin } from "src/api/types";
 import type { IModuleContainer } from "src/types";
+import { EHeatmapMaxItems } from "../../components/market-heatmap/types";
 import { MarketHeatmapModule } from "./MarketHeatmapModule";
 
 const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const widgetHeight = useWidgetHeight(moduleData);
-    const [maxItems] = useState(50);
+    const [maxItems, setMaxItems] = useState<EHeatmapMaxItems>(
+        EHeatmapMaxItems.TwentyFive
+    );
 
     // Fetch market data
     const {
         currentData: data,
-        isLoading,
+        isFetching: isLoading,
         isError,
     } = useGetCoinsQuery({
         limit: maxItems,
@@ -55,15 +59,21 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
         ]
     );
 
+    if (isLoading) {
+        return <ModuleLoader $height={`${widgetHeight}px`} />;
+    }
+
     return (
-        <MarketHeatmapModule
-            data={data}
-            isLoading={isLoading}
-            isError={isError}
-            widgetHeight={widgetHeight}
-            onCoinClick={handleCoinClick}
-            keywordSearchList={keywordSearchList}
-        />
+        <Suspense fallback={<ModuleLoader $height={`${widgetHeight}px`} />}>
+            <MarketHeatmapModule
+                data={data}
+                maxItems={maxItems}
+                isError={isError}
+                onCoinClick={handleCoinClick}
+                keywordSearchList={keywordSearchList}
+                onMaxItemsChange={setMaxItems}
+            />
+        </Suspense>
     );
 };
 

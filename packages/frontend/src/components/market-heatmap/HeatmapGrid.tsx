@@ -98,11 +98,18 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
             let bestRatio = Infinity;
             let bestSplit = 1;
 
-            items.forEach((_, itemIndex) => {
+            // Start from index 1 to ensure we always have at least one item on each side
+            for (let itemIndex = 1; itemIndex < items.length; itemIndex += 1) {
                 const leftSum = items
                     .slice(0, itemIndex)
                     .reduce((sum, item) => sum + (item[sizeMetric] || 0), 0);
                 const rightSum = currentTotal - leftSum;
+
+                // Skip if either side would be empty or have zero size
+                if (leftSum <= 0 || rightSum <= 0) {
+                    // eslint-disable-next-line no-continue
+                    continue;
+                }
 
                 // Calculate aspect ratios for both sides
                 const leftRatio =
@@ -119,7 +126,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                     bestRatio = maxRatio;
                     bestSplit = itemIndex;
                 }
-            });
+            }
 
             const leftItems = items.slice(0, bestSplit);
             const rightItems = items.slice(bestSplit);

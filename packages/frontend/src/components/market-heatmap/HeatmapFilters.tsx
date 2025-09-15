@@ -5,16 +5,16 @@ import {
     EHeatmapSizeMetric,
     EHeatmapColorMetric,
     HEATMAP_MAX_ITEMS_OPTIONS,
-    THeatmapMaxItems,
+    EHeatmapMaxItems,
 } from "./types";
 
 interface IHeatmapFilters {
     sizeMetric: EHeatmapSizeMetric;
     colorMetric: EHeatmapColorMetric;
-    maxItems: THeatmapMaxItems;
+    maxItems: EHeatmapMaxItems;
     onSizeMetricChange: (metric: EHeatmapSizeMetric) => void;
     onColorMetricChange: (metric: EHeatmapColorMetric) => void;
-    onMaxItemsChange: (value: THeatmapMaxItems) => void;
+    onMaxItemsChange: (value: EHeatmapMaxItems) => void;
 }
 
 const sizeMetricOptions = [
@@ -77,7 +77,7 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
         option: SingleValue<{ id: string; name: string }>
     ) => {
         if (option) {
-            onMaxItemsChange(Number(option.id) as THeatmapMaxItems);
+            onMaxItemsChange(Number(option.id) as EHeatmapMaxItems);
         }
     };
 
