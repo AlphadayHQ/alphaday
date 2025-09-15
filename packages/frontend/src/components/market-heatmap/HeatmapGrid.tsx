@@ -205,24 +205,36 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                             />
                             {width > 60 && height > 40 && (
                                 <>
+                                    {coin.icon && width > 120 && height > 100 && (
+                                        <image
+                                            x={x + width / 2 - 10}
+                                            y={y + height / 2 - 40}
+                                            width="20"
+                                            height="20"
+                                            href={coin.icon}
+                                            className="pointer-events-none"
+                                        />
+                                    )}
                                     <text
                                         x={x + width / 2}
-                                        y={y + height / 2 - 8}
+                                        y={coin.icon && width > 120 && height > 100 ? y + height / 2 - 8 : y + height / 2 - 4}
                                         textAnchor="middle"
-                                        className="fill-white text-xs font-semibold pointer-events-none"
+                                        dominantBaseline="middle"
+                                        className="fill-white text-lg font-bold pointer-events-none"
                                         style={{
-                                            fontSize: Math.min(width / 8, 12),
+                                            fontSize: Math.min(width / 5, 16),
                                         }}
                                     >
                                         {coin.ticker.toUpperCase()}
                                     </text>
                                     <text
                                         x={x + width / 2}
-                                        y={y + height / 2 + 8}
+                                        y={coin.icon && width > 120 && height > 100 ? y + height / 2 + 12 : y + height / 2 + 12}
                                         textAnchor="middle"
-                                        className="fill-white text-xs pointer-events-none"
+                                        dominantBaseline="middle"
+                                        className="fill-white text-base font-semibold pointer-events-none"
                                         style={{
-                                            fontSize: Math.min(width / 10, 10),
+                                            fontSize: Math.min(width / 7, 14),
                                         }}
                                     >
                                         {color > 0 ? "+" : ""}
