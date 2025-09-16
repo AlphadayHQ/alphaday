@@ -10,6 +10,8 @@ import {
     TGetInsightsResponse,
     TGetInsightsRequest,
     TGetInsightsRawResponse,
+    TGetFlakeOffDataResponse,
+    TGetFlakeOffDataRequest,
 } from "./types";
 
 const { KASANDRA } = CONFIG.API.DEFAULT.ROUTES;
@@ -79,8 +81,22 @@ const kasandraApi = alphadayApi.injectEndpoints({
                 return mapRemoteInsights(r);
             },
         }),
+        getFlakeOffData: builder.query<
+            TGetFlakeOffDataResponse,
+            TGetFlakeOffDataRequest
+        >({
+            query: (req) => {
+                const route = `${KASANDRA.BASE}${KASANDRA.FLAKE_OFF}?${queryString.stringify(req)}`;
+                Logger.debug("querying", route);
+                return route;
+            },
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetPredictionsQuery, useGetInsightsQuery } = kasandraApi;
+export const {
+    useGetPredictionsQuery,
+    useGetInsightsQuery,
+    useGetFlakeOffDataQuery,
+} = kasandraApi;

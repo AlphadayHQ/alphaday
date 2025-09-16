@@ -75,3 +75,11 @@ export type TGetInsightsRawResponse = TPagination & {
     results: TRemoteInsight[];
 };
 export type TGetInsightsResponse = TInsights;
+
+export type TGetFlakeOffDataRequest = {
+    coin: string;
+    interval: TChartRange;
+    case: EPredictionCase | undefined;
+};
+export type TGetFlakeOffDataRawResponse = TRemotePredictionData;
+export type TGetFlakeOffDataResponse = TRemotePredictionData;
