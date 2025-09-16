@@ -4,6 +4,9 @@ import {
     TPredictions,
     TInsights,
     EPredictionCase,
+    TPredictionData,
+    TFlakeOffData,
+    TPredictionCoin,
 } from "src/api/types";
 import {
     TBaseCoin,
@@ -54,6 +57,32 @@ export type TRemoteInsight = {
     // sources: TRemoteInsightSource[];
 };
 
+export type TRemotePastPrediction = {
+    id: number;
+    case: EPredictionCase;
+    chart_data: TPredictionData[];
+    created_at: number;
+    accuracy_score: number;
+};
+
+export type TRemoteFlakeOffData = {
+    success: boolean;
+    cached: boolean;
+    data: {
+        id: number;
+        coin: TPredictionCoin;
+        interval: TChartRange;
+        timestamp: number;
+        case: EPredictionCase | null;
+        chart_data: {
+            case: null;
+            coin: TPredictionCoin;
+            interval: TChartRange;
+            past_predictions: TRemotePastPrediction[];
+        };
+    };
+};
+
 /**
  * Queries
  */
@@ -81,5 +110,5 @@ export type TGetFlakeOffDataRequest = {
     interval: TChartRange;
     case: EPredictionCase | undefined;
 };
-export type TGetFlakeOffDataRawResponse = TRemotePredictionData;
-export type TGetFlakeOffDataResponse = TRemotePredictionData;
+export type TGetFlakeOffDataRawResponse = TRemoteFlakeOffData;
+export type TGetFlakeOffDataResponse = TFlakeOffData;
