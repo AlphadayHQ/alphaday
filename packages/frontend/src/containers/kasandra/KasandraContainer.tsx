@@ -151,10 +151,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     ? undefined
                     : (selectedCase.id as EPredictionCase),
         },
-        { skip: selectedMarket === undefined }
+        { skip: selectedMarket === undefined || selectedCase.id === "all" }
     );
-
-    console.log("flakeOffData", flakeOffData);
 
     const logData = useMemo(() => {
         return {
@@ -311,6 +309,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     isLoading={isLoadingKasandraCoins}
                     isLoadingHistory={isLoadingHistory}
                     isLoadingPredictions={isLoadingPredictions}
+                    flakeOffData={flakeOffData || undefined}
                     insights={insights || undefined}
                     selectedPredictions={predictions || undefined}
                     selectedMarketHistory={marketHistory}
