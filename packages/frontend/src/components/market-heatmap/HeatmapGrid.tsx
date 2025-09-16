@@ -1,8 +1,8 @@
 import { type FC, useMemo, useRef, useEffect, useState } from "react";
 import { TCoin, TKeyword } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
-import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
 import { HeatmapTooltip } from "./HeatmapTooltip";
+import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
 
 interface IHeatmapGrid {
     data: TCoin[];
@@ -226,7 +226,8 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                 onClick={() => onCoinClick(coin)}
                                 onMouseEnter={(e) => {
                                     setHoveredCoin(coin);
-                                    const rect = containerRef.current?.getBoundingClientRect();
+                                    const rect =
+                                        containerRef.current?.getBoundingClientRect();
                                     if (rect) {
                                         setMousePosition({
                                             x: e.clientX - rect.left,
@@ -235,7 +236,8 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                     }
                                 }}
                                 onMouseMove={(e) => {
-                                    const rect = containerRef.current?.getBoundingClientRect();
+                                    const rect =
+                                        containerRef.current?.getBoundingClientRect();
                                     if (rect) {
                                         setMousePosition({
                                             x: e.clientX - rect.left,
@@ -387,7 +389,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                     position={mousePosition}
                     sizeMetric={sizeMetric}
                     colorMetric={colorMetric}
-                    visible={true}
+                    visible
                     containerDimensions={dimensions}
                 />
             )}

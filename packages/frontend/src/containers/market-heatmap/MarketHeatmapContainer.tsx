@@ -3,7 +3,7 @@ import { ModuleLoader } from "@alphaday/ui-kit";
 import { useWidgetHeight } from "src/api/hooks";
 import { useGlobalSearch } from "src/api/hooks/useGlobalSearch";
 import { useGetCoinsQuery } from "src/api/services";
-import { ETag, TCoin } from "src/api/types";
+import { ETag, TCoin, TKeyword } from "src/api/types";
 import type { IModuleContainer } from "src/types";
 import { EHeatmapMaxItems } from "../../components/market-heatmap/types";
 import { MarketHeatmapModule } from "./MarketHeatmapModule";
@@ -45,11 +45,25 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 },
             };
 
-            // Add the keyword to the board's keyword list
-            const updatedKeywords = [...keywordSearchList, coinKeyword];
+            // Check if keyword already exists in the list
+            const existingKeywordIndex = keywordSearchList.findIndex(
+                (keyword) => keyword.id === coin.id
+            );
+
+            let updatedKeywords: TKeyword[];
+            if (existingKeywordIndex !== -1) {
+                // Remove the keyword if it exists (toggle off)
+                updatedKeywords = keywordSearchList.filter(
+                    (keyword) => keyword.id !== coin.id
+                );
+            } else {
+                // Add the keyword if it doesn't exist (toggle on)
+                updatedKeywords = [...keywordSearchList, coinKeyword];
+                addKeywordToViewWidgets(coinKeyword);
+                setLastSelectedKeyword(coinKeyword);
+            }
+
             setKeywordSearchList(updatedKeywords);
-            addKeywordToViewWidgets(coinKeyword);
-            setLastSelectedKeyword(coinKeyword);
         },
         [
             keywordSearchList,

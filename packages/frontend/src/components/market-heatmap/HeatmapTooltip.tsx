@@ -94,39 +94,53 @@ export const HeatmapTooltip: FC<IHeatmapTooltip> = ({
                         </div>
                     </div>
                 </div>
-                
+
                 <div className="space-y-1 text-xs">
                     <div className="flex justify-between">
                         <span className="text-primaryVariant100">Price:</span>
                         <span className="text-white">
-                            {formatNumber({
-                                value: coin.price,
-                                style: ENumberStyle.Currency,
-                                currency: "USD",
-                            }).value}
+                            {
+                                formatNumber({
+                                    value: coin.price,
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
                         </span>
                     </div>
-                    
+
                     <div className="flex justify-between">
-                        <span className="text-primaryVariant100">{getColorLabel()}:</span>
-                        <span className={colorValue >= 0 ? "text-success" : "text-error"}>
+                        <span className="text-primaryVariant100">
+                            {getColorLabel()}:
+                        </span>
+                        <span
+                            className={
+                                colorValue >= 0 ? "text-success" : "text-error"
+                            }
+                        >
                             {colorValue > 0 ? "+" : ""}
-                            {formatNumber({
-                                value: colorValue,
-                                style: ENumberStyle.Percent,
-                                normalise: true,
-                            }).value}
+                            {
+                                formatNumber({
+                                    value: colorValue,
+                                    style: ENumberStyle.Percent,
+                                    normalise: true,
+                                }).value
+                            }
                         </span>
                     </div>
-                    
+
                     <div className="flex justify-between">
-                        <span className="text-primaryVariant100">{getSizeLabel()}:</span>
+                        <span className="text-primaryVariant100">
+                            {getSizeLabel()}:
+                        </span>
                         <span className="text-white">
-                            {formatNumber({
-                                value: sizeValue || 0,
-                                style: ENumberStyle.Currency,
-                                currency: "USD",
-                            }).value}
+                            {
+                                formatNumber({
+                                    value: sizeValue || 0,
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
                         </span>
                     </div>
                 </div>
