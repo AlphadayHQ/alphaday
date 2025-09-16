@@ -1,5 +1,5 @@
 import { FC, memo, useCallback, useMemo, useState } from "react";
-import { Spinner, themeColors, twMerge } from "@alphaday/ui-kit";
+import { ApexAreaChart, Spinner, themeColors, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { EPredictionCase, TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
@@ -7,7 +7,6 @@ import { maxVal, minVal } from "src/api/utils/helpers";
 import { truncateDataByChartRange } from "src/api/utils/kasandraUtils";
 import { renderToString } from "src/api/utils/textUtils";
 import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
-import FedFundsRateChart from "./FlakeOffChart";
 import KasandraTooltip, { TCustomTooltip } from "./KasandraTooltip";
 
 type TDataPoints = {
@@ -448,14 +447,13 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 "[&_.apexcharts-svg]:h-[404px] [&_.apexcharts-xaxis-annotations_line[id^='SvgjsLine'][stroke='var(--alpha-primary)']]:scale-y-[1.2]"
             )}
         >
-            {/* <ApexAreaChart
+            <ApexAreaChart
                 key={zoomKey}
                 options={options}
                 series={chartSeries}
                 width="100%"
                 height="100%"
-            /> */}
-            <FedFundsRateChart />
+            />
             {showResetZoom && (
                 <ZoomResetSVG onClick={resetZoom} className="zoom-reset" />
             )}
