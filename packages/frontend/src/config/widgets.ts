@@ -195,7 +195,7 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 600,
         POLLING_INTERVAL: 5 * 60, // 5 min
         ADJUSTABLE: true,
-        // TWO_COL_SUPPORT: true,
+        TWO_COL_SUPPORT: true,
     },
     [ETemplateNameRegistry.Polls]: {
         ADJUSTABLE: false,
