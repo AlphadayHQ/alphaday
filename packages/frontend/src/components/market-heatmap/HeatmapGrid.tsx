@@ -2,6 +2,7 @@ import { type FC, useMemo, useRef, useEffect, useState } from "react";
 import { TCoin, TKeyword } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
+import { HeatmapTooltip } from "./HeatmapTooltip";
 
 interface IHeatmapGrid {
     data: TCoin[];
@@ -20,6 +21,8 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
+    const [hoveredCoin, setHoveredCoin] = useState<TCoin | null>(null);
+    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -214,13 +217,35 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                 height={height}
                                 fill={
                                     isPositive
-                                        ? `hsl(130, ${Math.min(colorIntensity * 80, 160)}%, ${50 + colorIntensity}%)`
-                                        : `hsl(0, ${Math.min(colorIntensity * 20, 120)}%, ${50 + colorIntensity}%)`
+                                        ? `hsl(130, ${Math.min(colorIntensity * 80, 160)}%, ${30 + colorIntensity * 0.3}%)`
+                                        : `hsl(0, ${Math.min(colorIntensity * 20, 120)}%, ${30 + colorIntensity * 0.3}%)`
                                 }
                                 stroke="#2a2a2a"
                                 strokeWidth={isHighlighted ? "1" : "0.5"}
                                 className="hover:opacity-80 transition-opacity cursor-pointer"
                                 onClick={() => onCoinClick(coin)}
+                                onMouseEnter={(e) => {
+                                    setHoveredCoin(coin);
+                                    const rect = containerRef.current?.getBoundingClientRect();
+                                    if (rect) {
+                                        setMousePosition({
+                                            x: e.clientX - rect.left,
+                                            y: e.clientY - rect.top,
+                                        });
+                                    }
+                                }}
+                                onMouseMove={(e) => {
+                                    const rect = containerRef.current?.getBoundingClientRect();
+                                    if (rect) {
+                                        setMousePosition({
+                                            x: e.clientX - rect.left,
+                                            y: e.clientY - rect.top,
+                                        });
+                                    }
+                                }}
+                                onMouseLeave={() => {
+                                    setHoveredCoin(null);
+                                }}
                             />
                             {coin.icon && width > 15 && height > 15 && (
                                 <image
@@ -356,6 +381,16 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                     );
                 })}
             </svg>
+            {hoveredCoin && mousePosition && (
+                <HeatmapTooltip
+                    coin={hoveredCoin}
+                    position={mousePosition}
+                    sizeMetric={sizeMetric}
+                    colorMetric={colorMetric}
+                    visible={true}
+                    containerDimensions={dimensions}
+                />
+            )}
         </div>
     );
 };
