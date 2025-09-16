@@ -1,10 +1,4 @@
-import {
-    useState,
-    useEffect,
-    useCallback,
-    useImperativeHandle,
-    useMemo,
-} from "react";
+import { useCallback, useMemo } from "react";
 import { ApexLineChart } from "@alphaday/ui-kit";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 
@@ -1450,7 +1444,7 @@ const baseData = {
     },
 };
 
-const OverlappingPredictionsChart = () => {
+const FlakeOffChart = () => {
     const predictions = FedData.chart_data.past_predictions;
 
     const transformPredictionData = useCallback(() => {
@@ -1677,4 +1671,4 @@ const OverlappingPredictionsChart = () => {
     );
 };
 
-export default OverlappingPredictionsChart;
+export default FlakeOffChart;
