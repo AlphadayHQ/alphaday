@@ -31,6 +31,8 @@ const mapRemoteMarketCoin = (coin: TRemoteMarketCoin) => {
         volume: coin.volume,
         marketCap: coin.market_cap,
         percentChange24h: coin.price_percent_change_24h,
+        percentChange7d: coin.price_percent_change_7d,
+        percentChange30d: coin.price_percent_change_30d,
     };
 };
 
