@@ -12,6 +12,7 @@ import {
     TGetInsightsRawResponse,
     TGetFlakeOffDataResponse,
     TGetFlakeOffDataRequest,
+    TGetFlakeOffDataRawResponse,
 } from "./types";
 
 const { KASANDRA } = CONFIG.API.DEFAULT.ROUTES;
@@ -47,6 +48,23 @@ const mapRemoteInsights = (
         }
     });
     return { predictions, history };
+};
+
+const mapRemoteFlakeOffData = (
+    r: TGetFlakeOffDataRawResponse
+): TGetFlakeOffDataResponse => {
+    return {
+        id: r.data.id,
+        coin: r.data.coin,
+        timestamp: r.data.timestamp,
+        data: r.data.chart_data.past_predictions.map((c) => ({
+            id: c.id,
+            case: c.case,
+            chartData: c.chart_data,
+            createdAt: c.created_at,
+            accuracyScore: c.accuracy_score,
+        })),
+    };
 };
 
 const kasandraApi = alphadayApi.injectEndpoints({
@@ -89,6 +107,11 @@ const kasandraApi = alphadayApi.injectEndpoints({
                 const route = `${KASANDRA.BASE}${KASANDRA.FLAKE_OFF}?${queryString.stringify(req)}`;
                 Logger.debug("querying", route);
                 return route;
+            },
+            transformResponse: (
+                r: TGetFlakeOffDataRawResponse
+            ): TGetFlakeOffDataResponse => {
+                return mapRemoteFlakeOffData(r);
             },
         }),
     }),
