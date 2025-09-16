@@ -10,12 +10,18 @@ import {
     useGetMarketHistoryQuery,
 } from "src/api/services";
 import {
+    useGetFlakeOffDataQuery,
     useGetInsightsQuery,
     useGetPredictionsQuery,
 } from "src/api/services/kasandra/kasandraEndpoints";
 import { selectIsAuthenticated, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { TChartRange, TCoin, TKasandraCase } from "src/api/types";
+import {
+    EPredictionCase,
+    TChartRange,
+    TCoin,
+    TKasandraCase,
+} from "src/api/types";
 
 import KasandraModule from "src/components/kasandra/KasandraModule";
 import { TMarketMeta } from "src/components/kasandra/types";
@@ -135,6 +141,20 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         type: isKasandraHistoryAllowed ? undefined : "prediction",
         limit: 30,
     });
+
+    const { data: flakeOffData } = useGetFlakeOffDataQuery(
+        {
+            coin: selectedMarket?.slug || "bitcoin",
+            interval: selectedChartRange,
+            case:
+                selectedCase.id === "all"
+                    ? undefined
+                    : (selectedCase.id as EPredictionCase),
+        },
+        { skip: selectedMarket === undefined }
+    );
+
+    console.log("flakeOffData", flakeOffData);
 
     const logData = useMemo(() => {
         return {
