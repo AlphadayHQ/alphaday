@@ -151,7 +151,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     ? undefined
                     : (selectedCase.id as EPredictionCase),
         },
-        { skip: selectedMarket === undefined || selectedCase.id === "all" }
+        { skip: selectedMarket === undefined }
     );
 
     const logData = useMemo(() => {
