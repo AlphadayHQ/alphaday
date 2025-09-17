@@ -40,6 +40,21 @@ const colorMetricOptions = [
         name: "Change 7d %",
         icon: null,
     },
+    {
+        id: EHeatmapColorMetric.PriceChange14d,
+        name: "Change 14d %",
+        icon: null,
+    },
+    {
+        id: EHeatmapColorMetric.PriceChange30d,
+        name: "Change 30d %",
+        icon: null,
+    },
+    {
+        id: EHeatmapColorMetric.PriceChange60d,
+        name: "Change 60d %",
+        icon: null,
+    },
 ];
 
 const maxItemsOptions = Object.keys(EHeatmapMaxItems)
