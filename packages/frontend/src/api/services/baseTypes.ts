@@ -113,7 +113,9 @@ export type TBaseCoin = TProtoItem & {
     volume: number;
     price_percent_change_24h: number;
     price_percent_change_7d: number;
+    price_percent_change_14d: number;
     price_percent_change_30d: number;
+    price_percent_change_60d: number;
     tags: TRemoteTagReadOnly[];
 };
 

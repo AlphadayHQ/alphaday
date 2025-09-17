@@ -53,7 +53,9 @@ export type TCoin = {
     price: number;
     percentChange24h: number;
     percentChange7d: number;
+    percentChange14d: number;
     percentChange30d: number;
+    percentChange60d: number;
     marketCap: number;
     volume?: number;
 };
