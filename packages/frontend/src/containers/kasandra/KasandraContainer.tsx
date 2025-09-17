@@ -1,5 +1,9 @@
 import { FC, useEffect, useMemo, useCallback, Suspense } from "react";
-import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
+import {
+    useFeatureFlags,
+    useGlobalSearch,
+    useWidgetHeight,
+} from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import {
     useGetKasandraCoinsQuery,
@@ -17,7 +21,7 @@ import KasandraModule from "src/components/kasandra/KasandraModule";
 import { TMarketMeta } from "src/components/kasandra/types";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import CONFIG from "src/config";
-import { EWidgetSettingsRegistry } from "src/constants";
+import { EFeaturesRegistry, EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
 
 const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
@@ -26,6 +30,10 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (state) => state.widgets.kasandra?.[moduleData.hash]
     );
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
+
+    const { enabled: isKasandraHistoryAllowed } = useFeatureFlags(
+        EFeaturesRegistry.KasandraHistory
+    );
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
     const { logButtonClicked } = useCustomAnalytics();
@@ -123,6 +131,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { data: insights } = useGetInsightsQuery({
         coin: selectedMarket?.slug,
         interval: selectedChartRange,
+        type: isKasandraHistoryAllowed ? undefined : "prediction",
         limit: 30,
     });
 
