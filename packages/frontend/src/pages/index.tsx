@@ -234,6 +234,24 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 row: destination.index,
             };
 
+            // Prevent dropping widgets into two-column widget positions
+            if (twoColWidgets && twoColWidgets.length > 0) {
+                const colType = getColType(windowSize.width);
+                const isTwoColLayout =
+                    colType === EColumnType.TwoCol ||
+                    colType === EColumnType.ThreeCol ||
+                    colType === EColumnType.FourCol;
+
+                if (
+                    isTwoColLayout &&
+                    destPos.row === 0 &&
+                    (destPos.col === 0 || destPos.col === 1)
+                ) {
+                    // Prevent dropping into the first row of the first two columns where two-column widgets are positioned
+                    return;
+                }
+            }
+
             const colType = getColType(windowSize.width);
 
             const draggedWidget = getDraggedWidget(
@@ -278,6 +296,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
             selectedView?.data.max_widgets,
             widgetsCount,
             windowSize.width,
+            twoColWidgets,
         ]
     );
 
