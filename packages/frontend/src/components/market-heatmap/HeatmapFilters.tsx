@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Select } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { SingleValue } from "react-select";
 import {
     EHeatmapSizeMetric,
@@ -16,55 +17,6 @@ interface IHeatmapFilters {
     onMaxItemsChange: (value: EHeatmapMaxItems) => void;
 }
 
-const sizeMetricOptions = [
-    {
-        id: EHeatmapSizeMetric.MarketCap,
-        name: "Market Cap",
-        icon: null,
-    },
-    {
-        id: EHeatmapSizeMetric.Volume,
-        name: "Volume",
-        icon: null,
-    },
-];
-
-const colorMetricOptions = [
-    {
-        id: EHeatmapColorMetric.PriceChange24h,
-        name: "Change 24h %",
-        icon: null,
-    },
-    {
-        id: EHeatmapColorMetric.PriceChange7d,
-        name: "Change 7d %",
-        icon: null,
-    },
-    {
-        id: EHeatmapColorMetric.PriceChange14d,
-        name: "Change 14d %",
-        icon: null,
-    },
-    {
-        id: EHeatmapColorMetric.PriceChange30d,
-        name: "Change 30d %",
-        icon: null,
-    },
-    {
-        id: EHeatmapColorMetric.PriceChange60d,
-        name: "Change 60d %",
-        icon: null,
-    },
-];
-
-const maxItemsOptions = Object.keys(EHeatmapMaxItems)
-    .filter((key) => !isNaN(Number(key)))
-    .map((option) => ({
-        id: option.toString(),
-        name: `Top ${option} coins`,
-        icon: null,
-    }));
-
 export const HeatmapFilters: FC<IHeatmapFilters> = ({
     sizeMetric,
     colorMetric,
@@ -73,6 +25,56 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
     onColorMetricChange,
     onMaxItemsChange,
 }) => {
+    const { t } = useTranslation();
+
+    const sizeMetricOptions = [
+        {
+            id: EHeatmapSizeMetric.MarketCap,
+            name: t("market.heatmap.sizeMetrics.marketCap"),
+            icon: null,
+        },
+        {
+            id: EHeatmapSizeMetric.Volume,
+            name: t("market.heatmap.sizeMetrics.volume"),
+            icon: null,
+        },
+    ];
+
+    const colorMetricOptions = [
+        {
+            id: EHeatmapColorMetric.PriceChange24h,
+            name: t("market.heatmap.colorMetrics.change24h"),
+            icon: null,
+        },
+        {
+            id: EHeatmapColorMetric.PriceChange7d,
+            name: t("market.heatmap.colorMetrics.change7d"),
+            icon: null,
+        },
+        {
+            id: EHeatmapColorMetric.PriceChange14d,
+            name: t("market.heatmap.colorMetrics.change14d"),
+            icon: null,
+        },
+        {
+            id: EHeatmapColorMetric.PriceChange30d,
+            name: t("market.heatmap.colorMetrics.change30d"),
+            icon: null,
+        },
+        {
+            id: EHeatmapColorMetric.PriceChange60d,
+            name: t("market.heatmap.colorMetrics.change60d"),
+            icon: null,
+        },
+    ];
+
+    const maxItemsOptions = Object.keys(EHeatmapMaxItems)
+        .filter((key) => !isNaN(Number(key)))
+        .map((option) => ({
+            id: option.toString(),
+            name: `${t("market.heatmap.maxItems.top")} ${option} ${t("market.heatmap.maxItems.coins")}`,
+            icon: null,
+        }));
     const handleSizeMetricChange = (
         option: SingleValue<{ id: string; name: string }>
     ) => {

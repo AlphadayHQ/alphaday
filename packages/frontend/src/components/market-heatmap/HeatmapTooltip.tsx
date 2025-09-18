@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { TCoin } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { EHeatmapColorMetric, EHeatmapSizeMetric } from "./types";
@@ -20,6 +21,8 @@ export const HeatmapTooltip: FC<IHeatmapTooltip> = ({
     visible,
     containerDimensions,
 }) => {
+    const { t } = useTranslation();
+
     if (!visible) return null;
 
     const sizeValue = coin[sizeMetric];
@@ -49,22 +52,22 @@ export const HeatmapTooltip: FC<IHeatmapTooltip> = ({
     const getSizeLabel = () => {
         switch (sizeMetric) {
             case EHeatmapSizeMetric.MarketCap:
-                return "Market Cap";
+                return t("market.heatmap.tooltip.marketCap");
             case EHeatmapSizeMetric.Volume:
-                return "Volume";
+                return t("market.heatmap.tooltip.volume");
             default:
-                return "Size";
+                return t("market.heatmap.tooltip.size");
         }
     };
 
     const getColorLabel = () => {
         switch (colorMetric) {
             case EHeatmapColorMetric.PriceChange24h:
-                return "24h Change";
+                return t("market.heatmap.tooltip.change24h");
             case EHeatmapColorMetric.PriceChange7d:
-                return "7d Change";
+                return t("market.heatmap.tooltip.change7d");
             default:
-                return "Change";
+                return t("market.heatmap.tooltip.change");
         }
     };
 
@@ -97,7 +100,9 @@ export const HeatmapTooltip: FC<IHeatmapTooltip> = ({
 
                 <div className="space-y-1 text-xs">
                     <div className="flex justify-between">
-                        <span className="text-primaryVariant100">Price:</span>
+                        <span className="text-primaryVariant100">
+                            {t("market.heatmap.tooltip.price")}
+                        </span>
                         <span className="text-white">
                             {
                                 formatNumber({
