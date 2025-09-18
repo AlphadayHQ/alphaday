@@ -38,7 +38,7 @@ import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS } = CONFIG;
+const { UI, VIEWS, WIDGETS } = CONFIG;
 
 function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -233,13 +233,14 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                     colType === EColumnType.TwoCol ||
                     colType === EColumnType.ThreeCol ||
                     colType === EColumnType.FourCol;
+                const destinationWidget =
+                    currLayoutState[destPos.col][destPos.row];
+                const isDestTwoColWidget = destinationWidget
+                    ? isTwoColWidget(destinationWidget?.widget.template.slug)
+                    : false;
 
-                if (
-                    isTwoColLayout &&
-                    destPos.row === 0 &&
-                    (destPos.col === 0 || destPos.col === 1)
-                ) {
-                    // Prevent dropping into the first row of the first two columns where two-column widgets are positioned
+                // prevent dropping into two col widget
+                if (destinationWidget && isTwoColLayout && isDestTwoColWidget) {
                     return;
                 }
             }
@@ -360,26 +361,23 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    {twoColWidgets && twoColWidgets.length > 0 && (
-                        <div className="two-col:grid-cols-2 two-col:absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 two-col:gap-5 two-col:px-4">
-                            {twoColWidgets.map((widgetData) => (
-                                <div
-                                    key={widgetData.hash}
-                                    className="two-col:col-span-2"
-                                >
-                                    <ModuleWrapper
-                                        moduleData={widgetData}
-                                        rowIndex={0}
-                                        colIndex={0}
-                                        fullSizeWidgetConfig={
-                                            fullSizeWidgetConfig
-                                        }
-                                        isDragDisabled
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                    )}
+                    <div
+                        className={
+                            twoColWidgets
+                                ? "absolute two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4"
+                                : ""
+                        }
+                    >
+                        {twoColWidgets?.map((widget) => (
+                            <ModuleWrapper
+                                key={widget.hash}
+                                moduleData={widget}
+                                rowIndex={0}
+                                colIndex={0}
+                            />
+                        ))}
+                    </div>
+
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -390,20 +388,21 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
-                                    // style={{
-                                    //     marginTop:
-                                    //         twoColWidgets &&
-                                    //         twoColWidgets.length > 0 &&
-                                    //         (colIndex === 0 || colIndex === 1)
-                                    //             ? `${(((isTwoColModuleCollapsed ? WIDGETS.KASANDRA.COLLAPSED_WIDGET_HEIGHT : WIDGETS.KASANDRA.WIDGET_HEIGHT) as number) || 0) + 14}px`
-                                    //             : "0px",
-                                    // }}
+                                    className="flex flex-col gap-5"
+                                    style={{
+                                        marginTop:
+                                            twoColWidgets && colIndex < 2
+                                                ? `${(WIDGETS.KASANDRA.WIDGET_HEIGHT + 16) * twoColWidgets.length}px`
+                                                : "0",
+                                    }}
                                 >
-                                    {widgets.map((widget, rowIndex) => (
+                                    {widgets.map((widget, widgetIndex) => (
                                         <ModuleWrapper
                                             key={widget.hash}
                                             moduleData={widget}
-                                            rowIndex={rowIndex}
+                                            rowIndex={Math.floor(
+                                                widgetIndex / 2
+                                            )}
                                             colIndex={colIndex}
                                             fullSizeWidgetConfig={
                                                 fullSizeWidgetConfig

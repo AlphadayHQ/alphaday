@@ -27,7 +27,7 @@ const MainLayout: React.FC<IProps> = ({
 }) => {
     const [isBoardsLibOpen, setIsBoardsLibOpen] = useState(false);
     return (
-        <div className="relative overflow-scroll max-h-screen max-w-screen">
+        <div className="relative max-h-screen max-w-screen">
             <Header
                 hideFeatures={!!hideFeatures}
                 toggleWidgetLib={toggleWidgetLib}
@@ -39,8 +39,8 @@ const MainLayout: React.FC<IProps> = ({
             <WidgetsLibContainer layoutState={layoutState} />
             <div
                 className={twMerge(
-                    "flex bg-background justify-center overflow-y-auto",
-                    !isBoardsLibOpen && "max-h-screen"
+                    "flex bg-background justify-center",
+                    !isBoardsLibOpen && "max-h-screen overflow-y-auto"
                 )}
             >
                 {/* pt-[6.5px] here is to make sure the board arae is exactly 12px away from the views tab */}

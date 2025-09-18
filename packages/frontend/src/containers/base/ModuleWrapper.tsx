@@ -9,7 +9,11 @@ import * as viewsStore from "src/api/store/slices/views";
 import { ETutorialTipId, TUserViewWidget } from "src/api/types";
 // import { getItemStyle } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
-import { buildViewPath, getWidgetName } from "src/api/utils/viewUtils";
+import {
+    buildViewPath,
+    getWidgetName,
+    isTwoColWidget,
+} from "src/api/utils/viewUtils";
 import CONFIG from "src/config";
 import {
     TEMPLATES_DICT,
@@ -37,7 +41,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     colIndex,
     preferredDragTutorialWidget,
     fullSizeWidgetConfig,
-    isDragDisabled = false,
+    isDragDisabled = isTwoColWidget(moduleData.widget?.template.slug),
 }) => {
     const history = useHistory();
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
