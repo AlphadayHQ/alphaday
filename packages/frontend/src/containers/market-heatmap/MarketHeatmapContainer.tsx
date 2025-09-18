@@ -21,6 +21,7 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
         isError,
     } = useGetCoinsQuery({
         limit: maxItems,
+        kasandra_supported: true,
     });
 
     const {
