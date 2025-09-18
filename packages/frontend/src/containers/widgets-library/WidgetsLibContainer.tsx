@@ -4,6 +4,7 @@ import {
     usePagination,
     useView,
     useWidgetLib,
+    useWindowSize,
 } from "src/api/hooks";
 import { ETag, EItemsSortBy, TRemoteWidgetMini } from "src/api/services";
 import {
@@ -13,9 +14,14 @@ import {
 } from "src/api/services/views/viewsEndpoints";
 import { TUserViewWidget, TWidget, TWidgetMini } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
-import { recomputeWidgetsPos } from "src/api/utils/layoutUtils";
+import {
+    recomputeWidgetsPos,
+    getColType,
+    EColumnType,
+} from "src/api/utils/layoutUtils";
 import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
+import { isTwoColWidget } from "src/api/utils/viewUtils";
 import WidgetLibrary from "src/components/widget-library/WidgetLibrary";
 import CONFIG from "src/config/config";
 import { v4 as uuidv4 } from "uuid";
@@ -29,6 +35,7 @@ interface IWidgetLibContainerProps {
 const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     const { selectedView, addWidgetsToCache } = useView();
     const { keywordSearchList } = useGlobalSearch();
+    const windowSize = useWindowSize();
 
     const { showWidgetLib, toggleWidgetLib } = useWidgetLib();
 
@@ -125,9 +132,67 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 );
                 return;
             }
-            const shortestCol = layoutState
+
+            // Check for existing two-column widgets to prevent conflicts
+            const twoColWidgets = selectedView.data.widgets.filter((w) =>
+                isTwoColWidget(w.widget.template.slug)
+            );
+
+            let shortestCol = layoutState
                 .map((a) => a.length)
                 .indexOf(Math.min(...layoutState.map((a) => a.length)));
+
+            // Prevent adding widgets to two-column widget positions
+            if (twoColWidgets && twoColWidgets.length > 0) {
+                const colType = getColType(windowSize.width);
+                const isTwoColLayout =
+                    colType === EColumnType.TwoCol ||
+                    colType === EColumnType.ThreeCol ||
+                    colType === EColumnType.FourCol;
+
+                if (
+                    isTwoColLayout &&
+                    layoutState[shortestCol].length === 0 &&
+                    (shortestCol === 0 || shortestCol === 1)
+                ) {
+                    // Find an alternative column that's not in the first row of first two columns
+                    // Or find the shortest column among non-first-two columns, or use any if all are blocked
+                    let alternativeCol = -1;
+                    for (let i = 0; i < layoutState.length; i += 1) {
+                        if (i !== 0 && i !== 1) {
+                            if (
+                                alternativeCol === -1 ||
+                                layoutState[i].length <
+                                    layoutState[alternativeCol].length
+                            ) {
+                                alternativeCol = i;
+                            }
+                        }
+                    }
+
+                    if (alternativeCol === -1) {
+                        for (let i = 2; i < layoutState.length; i += 1) {
+                            if (
+                                alternativeCol === -1 ||
+                                layoutState[i].length <
+                                    layoutState[alternativeCol].length
+                            ) {
+                                alternativeCol = i;
+                            }
+                        }
+                        if (alternativeCol === -1) {
+                            alternativeCol =
+                                layoutState[0].length <= layoutState[1].length
+                                    ? 1
+                                    : 0;
+                        }
+                    }
+
+                    if (alternativeCol !== -1) {
+                        shortestCol = alternativeCol;
+                    }
+                }
+            }
             const newWidget: TUserViewWidget = {
                 id: 990, // will be replaced on save view - doesn't have to be unique on the frontend
                 hash: uuidv4(), // will be replaced on save view - needs to be unique
@@ -167,6 +232,7 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
         layoutState,
         resolvedWidget,
         selectedView,
+        windowSize,
     ]);
 
     if (

@@ -88,9 +88,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     ) => (
         <BaseContainer
             uiProps={{
-                dragProps: isDragDisabled
-                    ? undefined
-                    : (provided?.dragHandleProps ?? undefined),
+                dragProps: provided?.dragHandleProps ?? undefined,
                 isDragging: isDragging || false,
                 onToggleShowFullSize: (val: "open" | "close") => {
                     if (val === "open") {
