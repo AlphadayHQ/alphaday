@@ -205,7 +205,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [dispatch, logButtonClicked, logData, moduleData.hash]
     );
 
-    const handleselectedTimestamp = useCallback(
+    const handleSelectedTimestamp = useCallback(
         (timestamp: number) => {
             dispatch(
                 setKasandraData({
@@ -291,7 +291,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 onSelectMarket={handleSelectedMarket}
                 contentHeight={contentHeight}
                 selectedTimestamp={selectedTimestamp}
-                onSelectDataPoint={handleselectedTimestamp}
+                onSelectDataPoint={handleSelectedTimestamp}
                 disclaimerAccepted={disclaimerAccepted}
                 onAcceptDisclaimer={handleAcceptDisclaimer}
             />

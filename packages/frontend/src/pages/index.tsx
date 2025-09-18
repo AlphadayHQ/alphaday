@@ -12,7 +12,6 @@ import useMousePosition from "src/api/hooks/useMousePosition";
 import {
     removeWidgetFromView,
     removeWidgetStateFromCache,
-    selectIsMinimised,
     toggleLanguageModal,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
@@ -39,7 +38,7 @@ import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS, WIDGETS } = CONFIG;
+const { UI, VIEWS } = CONFIG;
 
 function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -135,13 +134,6 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
             isTwoColWidget(w.widget.template.slug)
         );
     }, [selectedView?.data.widgets]);
-
-    const isTwoColModuleCollapsed = useAppSelector((state) => {
-        const firstTwoColWidget = twoColWidgets?.[0];
-        return firstTwoColWidget?.hash
-            ? selectIsMinimised(firstTwoColWidget.hash)(state)
-            : false;
-    });
 
     /**
      * The current layout state according to the screen size
@@ -369,11 +361,11 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
                     {twoColWidgets && twoColWidgets.length > 0 && (
-                        <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                        <div className="two-col:grid-cols-2 two-col:absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 two-col:gap-5 two-col:px-4">
                             {twoColWidgets.map((widgetData) => (
                                 <div
                                     key={widgetData.hash}
-                                    className="col-span-2"
+                                    className="two-col:col-span-2"
                                 >
                                     <ModuleWrapper
                                         moduleData={widgetData}
@@ -398,14 +390,14 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
-                                    style={{
-                                        marginTop:
-                                            twoColWidgets &&
-                                            twoColWidgets.length > 0 &&
-                                            (colIndex === 0 || colIndex === 1)
-                                                ? `${(((isTwoColModuleCollapsed ? WIDGETS.KASANDRA.COLLAPSED_WIDGET_HEIGHT : WIDGETS.KASANDRA.WIDGET_HEIGHT) as number) || 0) + 14}px`
-                                                : "0px",
-                                    }}
+                                    // style={{
+                                    //     marginTop:
+                                    //         twoColWidgets &&
+                                    //         twoColWidgets.length > 0 &&
+                                    //         (colIndex === 0 || colIndex === 1)
+                                    //             ? `${(((isTwoColModuleCollapsed ? WIDGETS.KASANDRA.COLLAPSED_WIDGET_HEIGHT : WIDGETS.KASANDRA.WIDGET_HEIGHT) as number) || 0) + 14}px`
+                                    //             : "0px",
+                                    // }}
                                 >
                                     {widgets.map((widget, rowIndex) => (
                                         <ModuleWrapper
