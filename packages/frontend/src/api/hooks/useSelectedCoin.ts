@@ -1,5 +1,6 @@
 import { useMemo, useEffect, useCallback } from "react";
-import { useGlobalSearch } from "src/api/hooks";
+import { useHistory } from "react-router-dom";
+import { useGlobalSearch, useQuery } from "src/api/hooks";
 import { TBaseTag } from "src/api/services";
 import { setSelectedMarket } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
@@ -18,26 +19,80 @@ export const useSelectedCoin = (
     tags?: TBaseTag[]
 ): UseSelectedCoinReturn => {
     const dispatch = useAppDispatch();
+    const history = useHistory();
     const { lastSelectedKeyword } = useGlobalSearch();
+    const query = useQuery();
+    const coinSlugFromUrl = query.get("coin");
 
     const prevSelectedMarketData = useAppSelector(
         (state) => state.widgets.market?.[widgetHash]
     );
 
     const selectedCoin: TCoin | undefined = useMemo(() => {
+        // Priority 1: URL parameter - find coin by slug
+        if (coinSlugFromUrl) {
+            const coinFromUrl = [...pinnedCoins, ...coinsData].find(
+                (c) => c.slug === coinSlugFromUrl
+            );
+            if (coinFromUrl) {
+                return coinFromUrl;
+            }
+        }
+
+        // Priority 2: Redux stored selection
         const storedMarket = [...pinnedCoins, ...coinsData].find(
             (c) => c.id === prevSelectedMarketData?.selectedMarket?.id
         );
+
+        // Priority 3: Fallback to first pinned coin or first available coin
         return storedMarket ?? pinnedCoins[0] ?? coinsData[0] ?? undefined;
-    }, [prevSelectedMarketData?.selectedMarket, coinsData, pinnedCoins]);
+    }, [
+        coinSlugFromUrl,
+        prevSelectedMarketData?.selectedMarket,
+        coinsData,
+        pinnedCoins,
+    ]);
 
     const handleSelectedCoin = useCallback(
         (market: TMarketMeta) => {
             dispatch(setSelectedMarket({ widgetHash, market }));
+
+            // Remove coin URL parameter when user manually selects a coin
+            if (coinSlugFromUrl) {
+                const currentParams = new URLSearchParams(
+                    window.location.search
+                );
+                currentParams.delete("coin");
+                const newSearch = currentParams.toString();
+                const newUrl = `${window.location.pathname}${newSearch ? `?${newSearch}` : ""}`;
+                history.replace(newUrl);
+            }
         },
-        [dispatch, widgetHash]
+        [dispatch, widgetHash, coinSlugFromUrl, history]
     );
 
+    // Sync URL parameter to Redux when coin from URL is found
+    useEffect(() => {
+        if (
+            coinSlugFromUrl &&
+            selectedCoin &&
+            selectedCoin.slug === coinSlugFromUrl
+        ) {
+            // Only update Redux if the current Redux state doesn't match the URL selection
+            if (
+                selectedCoin.id !== prevSelectedMarketData?.selectedMarket?.id
+            ) {
+                handleSelectedCoin(selectedCoin);
+            }
+        }
+    }, [
+        coinSlugFromUrl,
+        selectedCoin,
+        prevSelectedMarketData?.selectedMarket?.id,
+        handleSelectedCoin,
+    ]);
+
+    // Existing useEffect for global search
     useEffect(() => {
         if (
             lastSelectedKeyword &&
