@@ -3,6 +3,8 @@ import { TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
+import { TTemplateSlug } from "src/types";
+import { getWidgetName } from "./viewUtils";
 
 export type TTwoColPlaceholder = {
     type: "TWO_COL_PLACEHOLDER";
@@ -296,4 +298,16 @@ export const recomputeWidgetsPos = (
     }
 
     return widgets;
+};
+
+/**
+ * Retrieves hardcoded widget settings from CONFIG.WIDGETS based on widget object data
+ */
+export const getWidgetSettings = (
+    templateSlug: TTemplateSlug
+): (typeof CONFIG.WIDGETS)[keyof typeof CONFIG.WIDGETS] | undefined => {
+    const widgetName = getWidgetName(templateSlug);
+    if (!widgetName) return undefined;
+
+    return CONFIG.WIDGETS[widgetName];
 };

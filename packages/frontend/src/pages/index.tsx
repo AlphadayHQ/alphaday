@@ -25,6 +25,7 @@ import {
     EColumnType,
     TWidgetOrPlaceholder,
     isTwoColPlaceholder,
+    getWidgetSettings,
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
@@ -40,7 +41,7 @@ import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS, WIDGETS } = CONFIG;
+const { UI, VIEWS } = CONFIG;
 
 function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -395,13 +396,22 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                     );
                                     const colPositionInRow =
                                         twoColWidgetCount % maxTwoColPerRow;
+                                    const settings =
+                                        getWidgetSettings(
+                                            widget.twoColWidget.widget.template
+                                                .slug
+                                        ) ?? {};
+                                    const WIDGET_HEIGHT =
+                                        "WIDGET_HEIGHT" in settings
+                                            ? Number(settings.WIDGET_HEIGHT)
+                                            : 500;
 
                                     renderedElements.push(
                                         <div
                                             key={`two-col-${widget.hash}`}
                                             className="three-col:absolute w-full three-col:grid three-col:grid-cols-3 four-col:grid-cols-4"
                                             style={{
-                                                top: `${rowIndex ? rowIndex * WIDGETS.KASANDRA.WIDGET_HEIGHT + 16 : 0}px`,
+                                                top: `${rowIndex ? rowIndex * WIDGET_HEIGHT + 16 : 0}px`,
                                                 left:
                                                     maxTwoColPerRow > 1 &&
                                                     colPositionInRow === 1
