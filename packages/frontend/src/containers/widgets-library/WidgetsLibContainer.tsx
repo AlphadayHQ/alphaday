@@ -4,7 +4,6 @@ import {
     usePagination,
     useView,
     useWidgetLib,
-    useWindowSize,
 } from "src/api/hooks";
 import { ETag, EItemsSortBy, TRemoteWidgetMini } from "src/api/services";
 import {
@@ -15,6 +14,8 @@ import {
 import { TUserViewWidget, TWidget, TWidgetMini } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
 import {
+    TWidgetOrPlaceholder,
+    isTwoColPlaceholder,
     recomputeWidgetsPos,
 } from "src/api/utils/layoutUtils";
 import { getSortOptionValue } from "src/api/utils/sortOptions";
@@ -27,12 +28,11 @@ const { VIEWS } = CONFIG;
 const INITIAL_PAGE = 1;
 
 interface IWidgetLibContainerProps {
-    layoutState: TUserViewWidget[][] | undefined;
+    layoutState: TWidgetOrPlaceholder[][] | undefined;
 }
 const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     const { selectedView, addWidgetsToCache } = useView();
     const { keywordSearchList } = useGlobalSearch();
-    const windowSize = useWindowSize();
 
     const { showWidgetLib, toggleWidgetLib } = useWidgetLib();
 
@@ -119,9 +119,7 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
             }
             if (widgetsCount >= maxWidgets) {
                 toast(
-                    `A maximum of ${String(
-                        maxWidgets
-                    )} widgets is allowed per board`,
+                    `A maximum of ${String(maxWidgets)} widgets is allowed per board`,
                     {
                         type: EToastRole.Error,
                         status: "alert",
@@ -158,10 +156,12 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 })),
                 sort_order: selectedView.data.widgets.length,
             };
-            // clone previous layout state
+            // clone previous layout state and convert placeholders back to widgets
             const newLayoutState: TUserViewWidget[][] = [[]];
             for (let i = 0; i < layoutState.length; i += 1) {
-                newLayoutState[i] = [...layoutState[i]];
+                newLayoutState[i] = layoutState[i].map((item) =>
+                    isTwoColPlaceholder(item) ? item.twoColWidget : item
+                );
             }
             newLayoutState[shortestCol].push(newWidget);
             addWidgetsToCache(recomputeWidgetsPos(newLayoutState));

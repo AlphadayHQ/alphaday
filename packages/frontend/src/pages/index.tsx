@@ -16,13 +16,15 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
-import { ETutorialTipId, TUserViewWidget } from "src/api/types";
+import { ETutorialTipId } from "src/api/types";
 import {
     computeLayoutGrid,
     getDraggedWidget,
     recomputeWidgetsPos,
     getColType,
     EColumnType,
+    TWidgetOrPlaceholder,
+    isTwoColPlaceholder,
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
@@ -38,7 +40,7 @@ import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS, WIDGETS } = CONFIG;
+const { UI, VIEWS } = CONFIG;
 
 function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -122,18 +124,18 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
         [isFullSize, selectedView?.data.widgets]
     );
 
-    const layoutGrid = useMemo(() => {
-        const filteredWidgets = selectedView?.data.widgets.filter(
-            (widget) => !isTwoColWidget(widget.widget.template.slug)
-        );
-        return computeLayoutGrid(filteredWidgets);
-    }, [selectedView?.data.widgets]);
-
     const twoColWidgets = useMemo(() => {
         return selectedView?.data.widgets.filter((w) =>
             isTwoColWidget(w.widget.template.slug)
         );
     }, [selectedView?.data.widgets]);
+
+    const layoutGrid = useMemo(() => {
+        const filteredWidgets = selectedView?.data.widgets.filter(
+            (widget) => !isTwoColWidget(widget.widget.template.slug)
+        );
+        return computeLayoutGrid(filteredWidgets, twoColWidgets);
+    }, [selectedView?.data.widgets, twoColWidgets]);
 
     /**
      * The current layout state according to the screen size
@@ -141,7 +143,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
      * because an issue after user logout. Namely, views data may not be updated
      * which causes layoutGrid to remain undefined.
      */
-    const layoutState = useMemo<TUserViewWidget[][] | undefined>(() => {
+    const layoutState = useMemo<TWidgetOrPlaceholder[][] | undefined>(() => {
         const colType = getColType(windowSize.width);
         if (colType === EColumnType.SingleCol && layoutGrid?.singleCol) {
             return layoutGrid.singleCol;
@@ -164,7 +166,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const handleOnDragEnd = useCallback(
         (
             result: DropResult,
-            currLayoutState: TUserViewWidget[][] | undefined
+            currLayoutState: TWidgetOrPlaceholder[][] | undefined
         ) => {
             /**
              * result has the following props:
@@ -236,7 +238,12 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 const destinationWidget =
                     currLayoutState[destPos.col][destPos.row];
                 const isDestTwoColWidget = destinationWidget
-                    ? isTwoColWidget(destinationWidget?.widget.template.slug)
+                    ? isTwoColPlaceholder(destinationWidget)
+                        ? isTwoColWidget(
+                              destinationWidget.twoColWidget.widget.template
+                                  .slug
+                          )
+                        : isTwoColWidget(destinationWidget.widget.template.slug)
                     : false;
 
                 // prevent dropping into two col widget
@@ -262,7 +269,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
             }
 
             // clone previous layout state
-            const newLayoutState: TUserViewWidget[][] = [[]];
+            const newLayoutState: TWidgetOrPlaceholder[][] = [[]];
             for (let i = 0; i < currLayoutState.length; i += 1) {
                 newLayoutState[i] = [...currLayoutState[i]];
             }
@@ -361,62 +368,95 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    <div
-                        className={
-                            twoColWidgets
-                                ? "absolute two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4"
-                                : ""
-                        }
-                    >
-                        {twoColWidgets?.map((widget) => (
-                            <ModuleWrapper
-                                key={widget.hash}
-                                moduleData={widget}
-                                rowIndex={0}
-                                colIndex={0}
-                            />
-                        ))}
-                    </div>
+                    {(() => {
+                        const renderedElements: JSX.Element[] = [];
+                        let placeholderCount = 0;
 
-                    {layoutState?.map((widgets, colIndex) => (
-                        <Droppable
-                            // eslint-disable-next-line react/no-array-index-key
-                            key={colIndex.toString()}
-                            droppableId={colIndex.toString()}
-                        >
-                            {(provided) => (
-                                <div
-                                    ref={provided.innerRef}
-                                    {...provided.droppableProps}
-                                    className="flex flex-col gap-5"
-                                    style={{
-                                        marginTop:
-                                            twoColWidgets && colIndex < 2
-                                                ? `${(WIDGETS.KASANDRA.WIDGET_HEIGHT + 16) * twoColWidgets.length}px`
-                                                : "0",
-                                    }}
+                        layoutState?.forEach((widgets, colIndex) => {
+                            // Check if this column has any placeholders
+                            const hasPlaceholder = widgets.some((w) =>
+                                isTwoColPlaceholder(w)
+                            );
+
+                            if (hasPlaceholder) {
+                                // Render two-column widgets before this column group
+                                widgets.forEach((widget) => {
+                                    if (isTwoColPlaceholder(widget)) {
+                                        renderedElements.push(
+                                            <div
+                                                key={`two-col-${widget.hash}`}
+                                                className="absolute w-full mb-5 grid two-col:grid-cols-3"
+                                            >
+                                                <div className="col-span-2">
+                                                    <ModuleWrapper
+                                                        moduleData={
+                                                            widget.twoColWidget
+                                                        }
+                                                        rowIndex={placeholderCount}
+                                                        colIndex={0}
+                                                        fullSizeWidgetConfig={
+                                                            fullSizeWidgetConfig
+                                                        }
+                                                        preferredDragTutorialWidget={
+                                                            preferredDragTutorialWidget
+                                                        }
+                                                    />
+                                                </div>
+                                            </div>
+                                        );
+                                        placeholderCount++;
+                                    }
+                                });
+                            }
+
+                            // Render normal column
+                            renderedElements.push(
+                                <Droppable
+                                    key={colIndex.toString()}
+                                    droppableId={colIndex.toString()}
                                 >
-                                    {widgets.map((widget, widgetIndex) => (
-                                        <ModuleWrapper
-                                            key={widget.hash}
-                                            moduleData={widget}
-                                            rowIndex={Math.floor(
-                                                widgetIndex / 2
+                                    {(provided) => (
+                                        <div
+                                            ref={provided.innerRef}
+                                            {...provided.droppableProps}
+                                            className="flex flex-col gap-5"
+                                        >
+                                            {widgets.map(
+                                                (widget, widgetIndex) => {
+                                                    if (
+                                                        isTwoColPlaceholder(
+                                                            widget
+                                                        )
+                                                    ) {
+                                                        return null; // Skip placeholders in columns
+                                                    }
+                                                    return (
+                                                        <ModuleWrapper
+                                                            key={widget.hash}
+                                                            moduleData={widget}
+                                                            rowIndex={Math.floor(
+                                                                widgetIndex / 2
+                                                            )}
+                                                            colIndex={colIndex}
+                                                            fullSizeWidgetConfig={
+                                                                fullSizeWidgetConfig
+                                                            }
+                                                            preferredDragTutorialWidget={
+                                                                preferredDragTutorialWidget
+                                                            }
+                                                        />
+                                                    );
+                                                }
                                             )}
-                                            colIndex={colIndex}
-                                            fullSizeWidgetConfig={
-                                                fullSizeWidgetConfig
-                                            }
-                                            preferredDragTutorialWidget={
-                                                preferredDragTutorialWidget
-                                            }
-                                        />
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    ))}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            );
+                        });
+
+                        return renderedElements;
+                    })()}
                 </div>
             </DragDropContext>
             <CookieDisclaimerContainer />
