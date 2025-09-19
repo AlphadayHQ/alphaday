@@ -443,7 +443,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
     return (
         <div
             className={twMerge(
-                "w-full [&>div]:-mx-[10px] h-[368px] line-chart",
+                "w-full [&>div]:-mx-[10px] two-col:h-[368px] line-chart",
                 "[&_.apexcharts-svg]:h-[404px] [&_.apexcharts-xaxis-annotations_line[id^='SvgjsLine'][stroke='var(--alpha-primary)']]:scale-y-[1.2]"
             )}
         >

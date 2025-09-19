@@ -101,7 +101,7 @@ const AppRoutes = () => {
                         exact={route.exact}
                         render={() => (
                             <route.component
-                                isFullsize={route.isFullsize}
+                                isFullSize={route.isFullsize}
                                 type={errorCode}
                             />
                         )}

@@ -152,6 +152,32 @@ export const translationEN = {
         historyError: "the ${selectedChartRange} history for this coin",
         marketCap: "Market Cap",
         volume24h: "Volume 24h",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Market Cap",
+                volume: "Volume",
+            },
+            colorMetrics: {
+                change24h: "Change 24h %",
+                change7d: "Change 7d %",
+                change14d: "Change 14d %",
+                change30d: "Change 30d %",
+                change60d: "Change 60d %",
+            },
+            maxItems: {
+                top: "Top",
+                coins: "coins",
+            },
+            tooltip: {
+                price: "Price:",
+                change24h: "24h Change",
+                change7d: "7d Change",
+                change: "Change",
+                marketCap: "Market Cap",
+                volume: "Volume",
+                size: "Size",
+            },
+        },
     },
     podcasts: {
         channels: "Channels",
@@ -554,6 +580,32 @@ export const translationJA: typeof translationEN = {
         historyError: "このコインの${selectedChartRange}履歴",
         marketCap: "時価総額",
         volume24h: "24時間の出来高",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "時価総額",
+                volume: "出来高",
+            },
+            colorMetrics: {
+                change24h: "24時間変動率 %",
+                change7d: "7日変動率 %",
+                change14d: "14日変動率 %",
+                change30d: "30日変動率 %",
+                change60d: "60日変動率 %",
+            },
+            maxItems: {
+                top: "上位",
+                coins: "コイン",
+            },
+            tooltip: {
+                price: "価格:",
+                change24h: "24時間変動",
+                change7d: "7日変動",
+                change: "変動",
+                marketCap: "時価総額",
+                volume: "出来高",
+                size: "サイズ",
+            },
+        },
     },
     podcasts: {
         channels: "チャンネル",
@@ -958,6 +1010,32 @@ export const translationES: typeof translationEN = {
         historyError: "el historial ${selectedChartRange} para esta moneda",
         marketCap: "Capitalización",
         volume24h: "Volumen 24h",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Capitalización",
+                volume: "Volumen",
+            },
+            colorMetrics: {
+                change24h: "Cambio 24h %",
+                change7d: "Cambio 7d %",
+                change14d: "Cambio 14d %",
+                change30d: "Cambio 30d %",
+                change60d: "Cambio 60d %",
+            },
+            maxItems: {
+                top: "Top",
+                coins: "monedas",
+            },
+            tooltip: {
+                price: "Precio:",
+                change24h: "Cambio 24h",
+                change7d: "Cambio 7d",
+                change: "Cambio",
+                marketCap: "Capitalización",
+                volume: "Volumen",
+                size: "Tamaño",
+            },
+        },
     },
     podcasts: {
         channels: "Canales",
@@ -1362,6 +1440,32 @@ export const translationFR: typeof translationEN = {
         historyError: "Historique de ${selectedChartRange} de cette monnaie",
         marketCap: "Capitalisation boursière",
         volume24h: "Volume sur 24h",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Capitalisation boursière",
+                volume: "Volume",
+            },
+            colorMetrics: {
+                change24h: "Variation 24h %",
+                change7d: "Variation 7j %",
+                change14d: "Variation 14j %",
+                change30d: "Variation 30j %",
+                change60d: "Variation 60j %",
+            },
+            maxItems: {
+                top: "Top",
+                coins: "monnaies",
+            },
+            tooltip: {
+                price: "Prix:",
+                change24h: "Variation 24h",
+                change7d: "Variation 7j",
+                change: "Variation",
+                marketCap: "Capitalisation boursière",
+                volume: "Volume",
+                size: "Taille",
+            },
+        },
     },
     podcasts: {
         channels: "Canaux",
@@ -1773,6 +1877,32 @@ export const translationTR: typeof translationEN = {
             "${selectedChartRange} geçmişi bu coin için mevcut değil",
         marketCap: "Piyasa Değeri",
         volume24h: "24 Saatlik Hacim",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Piyasa Değeri",
+                volume: "Hacim",
+            },
+            colorMetrics: {
+                change24h: "24 Saat Değişim %",
+                change7d: "7 Gün Değişim %",
+                change14d: "14 Gün Değişim %",
+                change30d: "30 Gün Değişim %",
+                change60d: "60 Gün Değişim %",
+            },
+            maxItems: {
+                top: "İlk",
+                coins: "coin",
+            },
+            tooltip: {
+                price: "Fiyat:",
+                change24h: "24 Saat Değişim",
+                change7d: "7 Gün Değişim",
+                change: "Değişim",
+                marketCap: "Piyasa Değeri",
+                volume: "Hacim",
+                size: "Boyut",
+            },
+        },
     },
     podcasts: {
         channels: "Kanallar",
@@ -2170,6 +2300,32 @@ export const translationZH: typeof translationEN = {
         historyError: "这个币的${selectedChartRange}历史记录",
         marketCap: "市值",
         volume24h: "24小时交易量",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "市值",
+                volume: "交易量",
+            },
+            colorMetrics: {
+                change24h: "24小时变化 %",
+                change7d: "7天变化 %",
+                change14d: "14天变化 %",
+                change30d: "30天变化 %",
+                change60d: "60天变化 %",
+            },
+            maxItems: {
+                top: "前",
+                coins: "个代币",
+            },
+            tooltip: {
+                price: "价格:",
+                change24h: "24小时变化",
+                change7d: "7天变化",
+                change: "变化",
+                marketCap: "市值",
+                volume: "交易量",
+                size: "大小",
+            },
+        },
     },
     podcasts: {
         channels: "频道",

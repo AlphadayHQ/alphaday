@@ -4,6 +4,7 @@ import {
     usePagination,
     useView,
     useWidgetLib,
+    useWindowSize,
 } from "src/api/hooks";
 import { ETag, EItemsSortBy, TRemoteWidgetMini } from "src/api/services";
 import {
@@ -13,7 +14,9 @@ import {
 } from "src/api/services/views/viewsEndpoints";
 import { TUserViewWidget, TWidget, TWidgetMini } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
-import { recomputeWidgetsPos } from "src/api/utils/layoutUtils";
+import {
+    recomputeWidgetsPos,
+} from "src/api/utils/layoutUtils";
 import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import WidgetLibrary from "src/components/widget-library/WidgetLibrary";
@@ -29,6 +32,7 @@ interface IWidgetLibContainerProps {
 const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     const { selectedView, addWidgetsToCache } = useView();
     const { keywordSearchList } = useGlobalSearch();
+    const windowSize = useWindowSize();
 
     const { showWidgetLib, toggleWidgetLib } = useWidgetLib();
 
@@ -125,9 +129,11 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 );
                 return;
             }
+
             const shortestCol = layoutState
                 .map((a) => a.length)
                 .indexOf(Math.min(...layoutState.map((a) => a.length)));
+
             const newWidget: TUserViewWidget = {
                 id: 990, // will be replaced on save view - doesn't have to be unique on the frontend
                 hash: uuidv4(), // will be replaced on save view - needs to be unique

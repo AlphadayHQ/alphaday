@@ -90,6 +90,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     market_template: lazyRetry(
         () => import("./containers/market/MarketContainer")
     ),
+    market_heatmap_template: lazyRetry(
+        () => import("./containers/market-heatmap/MarketHeatmapContainer")
+    ),
     media_template: lazyRetry(
         () => import("./containers/media/MediaContainer")
     ),

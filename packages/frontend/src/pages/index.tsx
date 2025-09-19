@@ -12,7 +12,6 @@ import useMousePosition from "src/api/hooks/useMousePosition";
 import {
     removeWidgetFromView,
     removeWidgetStateFromCache,
-    selectIsMinimised,
     toggleLanguageModal,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
@@ -27,22 +26,21 @@ import {
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
+import { isTwoColWidget } from "src/api/utils/viewUtils";
 import CONFIG from "src/config/config";
 import { AboutUsModalContainer } from "src/containers/AboutUsModalContainer";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
-import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
-import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug } from "src/types";
 
 const { UI, VIEWS, WIDGETS } = CONFIG;
 
-function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
+function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const dispatch = useAppDispatch();
 
     const {
@@ -110,7 +108,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
           }
         | undefined = useMemo(
         () =>
-            isFullsize
+            isFullSize
                 ? {
                       slug: UI.FULL_SIZE_WIDGET_SLUG as TTemplateSlug,
                       // we should not check the hash if `fullSizeWidgetSlug` is undefined.
@@ -121,30 +119,21 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                       )?.hash,
                   }
                 : undefined,
-        [isFullsize, selectedView?.data.widgets]
+        [isFullSize, selectedView?.data.widgets]
     );
 
-    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
     const layoutGrid = useMemo(() => {
-        return computeLayoutGrid(
-            selectedView?.data.widgets.filter(
-                (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
-            )
+        const filteredWidgets = selectedView?.data.widgets.filter(
+            (widget) => !isTwoColWidget(widget.widget.template.slug)
         );
-    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+        return computeLayoutGrid(filteredWidgets);
+    }, [selectedView?.data.widgets]);
 
-    const kasandraModuleData = useMemo(() => {
-        const widgetData = selectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
+    const twoColWidgets = useMemo(() => {
+        return selectedView?.data.widgets.filter((w) =>
+            isTwoColWidget(w.widget.template.slug)
         );
-        return widgetData;
-    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
-
-    const isKasandraModuleCollapsed = useAppSelector((state) =>
-        kasandraModuleData?.hash
-            ? selectIsMinimised(kasandraModuleData.hash)(state)
-            : false
-    );
+    }, [selectedView?.data.widgets]);
 
     /**
      * The current layout state according to the screen size
@@ -237,6 +226,25 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 row: destination.index,
             };
 
+            // Prevent dropping widgets into two-column widget positions
+            if (twoColWidgets && twoColWidgets.length > 0) {
+                const colType = getColType(windowSize.width);
+                const isTwoColLayout =
+                    colType === EColumnType.TwoCol ||
+                    colType === EColumnType.ThreeCol ||
+                    colType === EColumnType.FourCol;
+                const destinationWidget =
+                    currLayoutState[destPos.col][destPos.row];
+                const isDestTwoColWidget = destinationWidget
+                    ? isTwoColWidget(destinationWidget?.widget.template.slug)
+                    : false;
+
+                // prevent dropping into two col widget
+                if (destinationWidget && isTwoColLayout && isDestTwoColWidget) {
+                    return;
+                }
+            }
+
             const colType = getColType(windowSize.width);
 
             const draggedWidget = getDraggedWidget(
@@ -281,6 +289,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             selectedView?.data.max_widgets,
             widgetsCount,
             windowSize.width,
+            twoColWidgets,
         ]
     );
 
@@ -352,16 +361,23 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    {kasandraModuleData && (
-                        <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                            <div className="col-span-2">
-                                <KasandraContainer
-                                    moduleData={kasandraModuleData}
-                                    toggleAdjustable={() => {}}
-                                />
-                            </div>
-                        </div>
-                    )}
+                    <div
+                        className={
+                            twoColWidgets
+                                ? "absolute two-col:grid-cols-2 three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4"
+                                : ""
+                        }
+                    >
+                        {twoColWidgets?.map((widget) => (
+                            <ModuleWrapper
+                                key={widget.hash}
+                                moduleData={widget}
+                                rowIndex={0}
+                                colIndex={0}
+                            />
+                        ))}
+                    </div>
+
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -372,19 +388,21 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 <div
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
+                                    className="flex flex-col gap-5"
                                     style={{
                                         marginTop:
-                                            kasandraModuleData &&
-                                            (colIndex === 0 || colIndex === 1)
-                                                ? `${(((isKasandraModuleCollapsed ? WIDGETS.KASANDRA.COLLAPSED_WIDGET_HEIGHT : WIDGETS.KASANDRA.WIDGET_HEIGHT) as number) || 0) + 14}px`
-                                                : "0px",
+                                            twoColWidgets && colIndex < 2
+                                                ? `${(WIDGETS.KASANDRA.WIDGET_HEIGHT + 16) * twoColWidgets.length}px`
+                                                : "0",
                                     }}
                                 >
-                                    {widgets.map((widget, rowIndex) => (
+                                    {widgets.map((widget, widgetIndex) => (
                                         <ModuleWrapper
                                             key={widget.hash}
                                             moduleData={widget}
-                                            rowIndex={rowIndex}
+                                            rowIndex={Math.floor(
+                                                widgetIndex / 2
+                                            )}
                                             colIndex={colIndex}
                                             fullSizeWidgetConfig={
                                                 fullSizeWidgetConfig
