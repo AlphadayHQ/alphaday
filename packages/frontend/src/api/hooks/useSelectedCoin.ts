@@ -81,6 +81,10 @@ export const useSelectedCoin = (
 
     // Sync URL parameter to Redux when coin from URL is found
     useEffect(() => {
+        // Add guard for data availability
+        if (!coinsData.length && !pinnedCoins.length) {
+            return; // Wait for data to load
+        }
         if (
             coinSlugFromUrl &&
             selectedCoin &&
@@ -98,6 +102,8 @@ export const useSelectedCoin = (
         selectedCoin,
         prevSelectedMarketData?.selectedMarket?.id,
         handleSelectedCoin,
+        coinsData.length,
+        pinnedCoins.length,
     ]);
 
     // Existing useEffect for global search
