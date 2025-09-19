@@ -40,7 +40,7 @@ import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS } = CONFIG;
+const { UI, VIEWS, WIDGETS } = CONFIG;
 
 function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -237,14 +237,19 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                     colType === EColumnType.FourCol;
                 const destinationWidget =
                     currLayoutState[destPos.col][destPos.row];
-                const isDestTwoColWidget = destinationWidget
-                    ? isTwoColPlaceholder(destinationWidget)
-                        ? isTwoColWidget(
-                              destinationWidget.twoColWidget.widget.template
-                                  .slug
-                          )
-                        : isTwoColWidget(destinationWidget.widget.template.slug)
-                    : false;
+
+                let isDestTwoColWidget = false;
+                if (destinationWidget) {
+                    if (isTwoColPlaceholder(destinationWidget)) {
+                        isDestTwoColWidget = isTwoColWidget(
+                            destinationWidget.twoColWidget.widget.template.slug
+                        );
+                    } else {
+                        isDestTwoColWidget = isTwoColWidget(
+                            destinationWidget.widget.template.slug
+                        );
+                    }
+                }
 
                 // prevent dropping into two col widget
                 if (destinationWidget && isTwoColLayout && isDestTwoColWidget) {
@@ -370,49 +375,71 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
                     {(() => {
                         const renderedElements: JSX.Element[] = [];
-                        let placeholderCount = 0;
+                        const renderedTwoColWidgets = new Set<string>();
+                        let twoColWidgetCount = 0;
+
+                        // Calculate how many two-column widgets can fit per row based on screen size
+                        const colType = getColType(windowSize.width);
+                        const maxTwoColPerRow =
+                            colType === EColumnType.FourCol ? 2 : 1; // FourCol can fit 2 two-column widgets
 
                         layoutState?.forEach((widgets, colIndex) => {
-                            // Check if this column has any placeholders
-                            const hasPlaceholder = widgets.some((w) =>
-                                isTwoColPlaceholder(w)
-                            );
+                            // Check for any two-column widgets in this column and render them first (if not already rendered)
+                            widgets.forEach((widget) => {
+                                if (
+                                    isTwoColPlaceholder(widget) &&
+                                    !renderedTwoColWidgets.has(widget.hash)
+                                ) {
+                                    const rowIndex = Math.floor(
+                                        twoColWidgetCount / maxTwoColPerRow
+                                    );
+                                    const colPositionInRow =
+                                        twoColWidgetCount % maxTwoColPerRow;
 
-                            if (hasPlaceholder) {
-                                // Render two-column widgets before this column group
-                                widgets.forEach((widget) => {
-                                    if (isTwoColPlaceholder(widget)) {
-                                        renderedElements.push(
-                                            <div
-                                                key={`two-col-${widget.hash}`}
-                                                className="absolute w-full mb-5 grid two-col:grid-cols-3"
-                                            >
-                                                <div className="col-span-2">
-                                                    <ModuleWrapper
-                                                        moduleData={
-                                                            widget.twoColWidget
-                                                        }
-                                                        rowIndex={placeholderCount}
-                                                        colIndex={0}
-                                                        fullSizeWidgetConfig={
-                                                            fullSizeWidgetConfig
-                                                        }
-                                                        preferredDragTutorialWidget={
-                                                            preferredDragTutorialWidget
-                                                        }
-                                                    />
-                                                </div>
+                                    renderedElements.push(
+                                        <div
+                                            key={`two-col-${widget.hash}`}
+                                            className="three-col:absolute w-full three-col:grid three-col:grid-cols-3 four-col:grid-cols-4"
+                                            style={{
+                                                top: `${rowIndex ? rowIndex * WIDGETS.KASANDRA.WIDGET_HEIGHT + 16 : 0}px`,
+                                                left:
+                                                    maxTwoColPerRow > 1 &&
+                                                    colPositionInRow === 1
+                                                        ? "50%"
+                                                        : "0",
+                                                width:
+                                                    maxTwoColPerRow > 1
+                                                        ? "50%"
+                                                        : "100%",
+                                            }}
+                                        >
+                                            <div className="three-col:col-span-2 three-col:mx-4">
+                                                <ModuleWrapper
+                                                    moduleData={
+                                                        widget.twoColWidget
+                                                    }
+                                                    rowIndex={rowIndex}
+                                                    colIndex={colPositionInRow}
+                                                    fullSizeWidgetConfig={
+                                                        fullSizeWidgetConfig
+                                                    }
+                                                    preferredDragTutorialWidget={
+                                                        preferredDragTutorialWidget
+                                                    }
+                                                />
                                             </div>
-                                        );
-                                        placeholderCount++;
-                                    }
-                                });
-                            }
+                                        </div>
+                                    );
+                                    renderedTwoColWidgets.add(widget.hash);
+                                    twoColWidgetCount += 1;
+                                }
+                            });
 
                             // Render normal column
                             renderedElements.push(
                                 <Droppable
-                                    key={colIndex.toString()}
+                                    // eslint-disable-next-line react/no-array-index-key
+                                    key={`column-${colIndex}`}
                                     droppableId={colIndex.toString()}
                                 >
                                     {(provided) => (

@@ -128,9 +128,23 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 return;
             }
 
-            const shortestCol = layoutState
-                .map((a) => a.length)
-                .indexOf(Math.min(...layoutState.map((a) => a.length)));
+            // Calculate effective column lengths accounting for two-column widgets
+            const effectiveColumnLengths = layoutState.map((column) => {
+                const normalWidgets = column.filter(
+                    (item) => !isTwoColPlaceholder(item)
+                ).length;
+                const twoColWidgets = column.filter((item) =>
+                    isTwoColPlaceholder(item)
+                ).length;
+
+                // Two-column widgets take up more visual space, so weight them more heavily
+                // Each two-column widget is roughly equivalent to 2 normal widgets in visual space
+                return normalWidgets + twoColWidgets * 2;
+            });
+
+            const shortestCol = effectiveColumnLengths.indexOf(
+                Math.min(...effectiveColumnLengths)
+            );
 
             const newWidget: TUserViewWidget = {
                 id: 990, // will be replaced on save view - doesn't have to be unique on the frontend
