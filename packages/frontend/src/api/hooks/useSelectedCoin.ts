@@ -28,6 +28,15 @@ export const useSelectedCoin = (
         (state) => state.widgets.market?.[widgetHash]
     );
 
+    // Helper function to remove coin parameter from URL
+    const removeCoinFromUrl = useCallback(() => {
+        const currentParams = new URLSearchParams(window.location.search);
+        currentParams.delete("coin");
+        const newSearch = currentParams.toString();
+        const newUrl = `${window.location.pathname}${newSearch ? `?${newSearch}` : ""}`;
+        history.replace(newUrl);
+    }, [history]);
+
     const selectedCoin: TCoin | undefined = useMemo(() => {
         // Priority 1: URL parameter - find coin by slug
         if (coinSlugFromUrl) {
@@ -36,6 +45,10 @@ export const useSelectedCoin = (
             );
             if (coinFromUrl) {
                 return coinFromUrl;
+            }
+            // Clean up URL if coin slug is not found in available coins
+            if (coinsData.length > 0 || pinnedCoins.length > 0) {
+                removeCoinFromUrl();
             }
         }
 
@@ -51,6 +64,7 @@ export const useSelectedCoin = (
         prevSelectedMarketData?.selectedMarket,
         coinsData,
         pinnedCoins,
+        removeCoinFromUrl,
     ]);
 
     const handleSelectedCoin = useCallback(
@@ -59,16 +73,10 @@ export const useSelectedCoin = (
 
             // Remove coin URL parameter when user manually selects a coin
             if (coinSlugFromUrl) {
-                const currentParams = new URLSearchParams(
-                    window.location.search
-                );
-                currentParams.delete("coin");
-                const newSearch = currentParams.toString();
-                const newUrl = `${window.location.pathname}${newSearch ? `?${newSearch}` : ""}`;
-                history.replace(newUrl);
+                removeCoinFromUrl();
             }
         },
-        [dispatch, widgetHash, coinSlugFromUrl, history]
+        [dispatch, widgetHash, coinSlugFromUrl, removeCoinFromUrl]
     );
 
     // Sync URL parameter to Redux when coin from URL is found
