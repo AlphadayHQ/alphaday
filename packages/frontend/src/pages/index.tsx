@@ -384,9 +384,11 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                         const maxTwoColPerRow =
                             colType === EColumnType.FourCol ? 2 : 1; // FourCol can fit 2 two-column widgets
 
-                        layoutState?.forEach((widgets, colIndex) => {
-                            let marginTop = 0;
-                            // Check for any two-column widgets in this column and render them first (if not already rendered)
+                        // Track two-column widget heights for margin calculation
+                        let totalTwoColHeight = 0;
+
+                        // First pass: render all two-column widgets and track their positions
+                        layoutState?.forEach((widgets) => {
                             widgets.forEach((widget) => {
                                 if (
                                     isTwoColPlaceholder(widget) &&
@@ -407,10 +409,16 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                             ? Number(settings.WIDGET_HEIGHT)
                                             : 500;
                                     const topMargin = rowIndex
-                                        ? rowIndex * WIDGET_HEIGHT + 16
+                                        ? rowIndex * (WIDGET_HEIGHT + 20) // Add gap between two-col widgets
                                         : 0;
 
-                                    marginTop += topMargin;
+                                    // Calculate total height needed for all two-column widgets
+                                    const bottomPosition =
+                                        topMargin + WIDGET_HEIGHT + 20;
+                                    totalTwoColHeight = Math.max(
+                                        totalTwoColHeight,
+                                        bottomPosition
+                                    );
 
                                     renderedElements.push(
                                         <div
@@ -450,8 +458,17 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                     twoColWidgetCount += 1;
                                 }
                             });
+                        });
 
-                            // Render normal column
+                        // Second pass: render columns with appropriate margins
+                        layoutState?.forEach((widgets, colIndex) => {
+                            // Only apply margin in two-column layout where two-col widgets are absolutely positioned
+                            // In 3+ column layouts, two-col widgets use CSS grid and don't need margin on normal columns
+                            const columnMargin =
+                                colType === EColumnType.TwoCol
+                                    ? totalTwoColHeight
+                                    : 0;
+
                             renderedElements.push(
                                 <Droppable
                                     // eslint-disable-next-line react/no-array-index-key
@@ -464,7 +481,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                             {...provided.droppableProps}
                                             className="flex flex-col gap-5"
                                             style={{
-                                                marginTop,
+                                                marginTop: columnMargin,
                                             }}
                                         >
                                             {widgets.map(
