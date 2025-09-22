@@ -385,6 +385,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                             colType === EColumnType.FourCol ? 2 : 1; // FourCol can fit 2 two-column widgets
 
                         layoutState?.forEach((widgets, colIndex) => {
+                            let marginTop = 0;
                             // Check for any two-column widgets in this column and render them first (if not already rendered)
                             widgets.forEach((widget) => {
                                 if (
@@ -405,6 +406,8 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                         "WIDGET_HEIGHT" in settings
                                             ? Number(settings.WIDGET_HEIGHT)
                                             : 500;
+
+                                    marginTop += WIDGET_HEIGHT;
 
                                     renderedElements.push(
                                         <div
@@ -457,6 +460,9 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                             ref={provided.innerRef}
                                             {...provided.droppableProps}
                                             className="flex flex-col gap-5"
+                                            style={{
+                                                marginTop,
+                                            }}
                                         >
                                             {widgets.map(
                                                 (widget, widgetIndex) => {
