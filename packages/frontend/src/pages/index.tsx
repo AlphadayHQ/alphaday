@@ -404,10 +404,17 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
 
         // Second pass: render columns with appropriate margins
         layoutState.forEach((widgets, colIndex) => {
+            // Check if this column contains any two-column widget placeholders
+            const hasAnyTwoColInColumn = widgets.some((widget) =>
+                isTwoColPlaceholder(widget)
+            );
+
             // Only apply margin in two-column layout where two-col widgets are absolutely positioned
-            // In 3+ column layouts, two-col widgets use CSS grid and don't need margin on normal columns
+            // OR if this specific column contains two-col widgets in other layouts
             const columnMargin =
-                colType === EColumnType.TwoCol ? totalTwoColHeight : 0;
+                colType === EColumnType.TwoCol || hasAnyTwoColInColumn
+                    ? totalTwoColHeight + 48
+                    : 0;
 
             elements.push(
                 <Droppable
