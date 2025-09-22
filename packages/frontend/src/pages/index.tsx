@@ -406,15 +406,18 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                         "WIDGET_HEIGHT" in settings
                                             ? Number(settings.WIDGET_HEIGHT)
                                             : 500;
+                                    const topMargin = rowIndex
+                                        ? rowIndex * WIDGET_HEIGHT + 16
+                                        : 0;
 
-                                    marginTop += WIDGET_HEIGHT;
+                                    marginTop += topMargin;
 
                                     renderedElements.push(
                                         <div
                                             key={`two-col-${widget.hash}`}
-                                            className="three-col:absolute w-full three-col:grid three-col:grid-cols-3 four-col:grid-cols-4"
+                                            className="two-col:absolute w-full three-col:grid three-col:grid-cols-3 four-col:grid-cols-4"
                                             style={{
-                                                top: `${rowIndex ? rowIndex * WIDGET_HEIGHT + 16 : 0}px`,
+                                                top: `${topMargin}px`,
                                                 left:
                                                     maxTwoColPerRow > 1 &&
                                                     colPositionInRow === 1
@@ -426,7 +429,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                                                         : "100%",
                                             }}
                                         >
-                                            <div className="three-col:col-span-2 three-col:mx-4">
+                                            <div className="two-col:col-span-2 two-col:mx-4">
                                                 <ModuleWrapper
                                                     moduleData={
                                                         widget.twoColWidget
