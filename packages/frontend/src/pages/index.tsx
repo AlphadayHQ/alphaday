@@ -324,6 +324,140 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
 
     useViewUpdater();
 
+    const renderedElements = useMemo(() => {
+        if (!layoutState || layoutState.length === 0) return [];
+
+        const elements: JSX.Element[] = [];
+        const renderedTwoColWidgets = new Set<string>();
+        let twoColWidgetCount = 0;
+
+        // Calculate how many two-column widgets can fit per row based on screen size
+        const colType = getColType(windowSize.width);
+        const maxTwoColPerRow = colType === EColumnType.FourCol ? 2 : 1; // FourCol can fit 2 two-column widgets
+
+        // Track two-column widget heights for margin calculation
+        let totalTwoColHeight = 0;
+
+        // First pass: render all two-column widgets and track their positions
+        layoutState.forEach((widgets) => {
+            widgets.forEach((widget) => {
+                if (
+                    isTwoColPlaceholder(widget) &&
+                    !renderedTwoColWidgets.has(widget.hash)
+                ) {
+                    const rowIndex = Math.floor(
+                        twoColWidgetCount / maxTwoColPerRow
+                    );
+                    const colPositionInRow =
+                        twoColWidgetCount % maxTwoColPerRow;
+                    const settings =
+                        getWidgetSettings(
+                            widget.twoColWidget.widget.template.slug
+                        ) ?? {};
+                    const WIDGET_HEIGHT =
+                        "WIDGET_HEIGHT" in settings
+                            ? Number(settings.WIDGET_HEIGHT)
+                            : 500;
+                    const topMargin = rowIndex
+                        ? rowIndex * (WIDGET_HEIGHT + 20) // Add gap between two-col widgets
+                        : 0;
+
+                    // Calculate total height needed for all two-column widgets
+                    const bottomPosition = topMargin + WIDGET_HEIGHT + 20;
+                    totalTwoColHeight = Math.max(
+                        totalTwoColHeight,
+                        bottomPosition
+                    );
+
+                    elements.push(
+                        <div
+                            key={`two-col-${widget.hash}`}
+                            className="two-col:absolute w-full three-col:grid three-col:grid-cols-3 four-col:grid-cols-4"
+                            style={{
+                                top: `${topMargin}px`,
+                                left:
+                                    maxTwoColPerRow > 1 &&
+                                    colPositionInRow === 1
+                                        ? "50%"
+                                        : "0",
+                                width: maxTwoColPerRow > 1 ? "50%" : "100%",
+                            }}
+                        >
+                            <div className="two-col:col-span-2 two-col:mx-4">
+                                <ModuleWrapper
+                                    moduleData={widget.twoColWidget}
+                                    rowIndex={rowIndex}
+                                    colIndex={colPositionInRow}
+                                    fullSizeWidgetConfig={fullSizeWidgetConfig}
+                                    preferredDragTutorialWidget={
+                                        preferredDragTutorialWidget
+                                    }
+                                />
+                            </div>
+                        </div>
+                    );
+                    renderedTwoColWidgets.add(widget.hash);
+                    twoColWidgetCount += 1;
+                }
+            });
+        });
+
+        // Second pass: render columns with appropriate margins
+        layoutState.forEach((widgets, colIndex) => {
+            // Only apply margin in two-column layout where two-col widgets are absolutely positioned
+            // In 3+ column layouts, two-col widgets use CSS grid and don't need margin on normal columns
+            const columnMargin =
+                colType === EColumnType.TwoCol ? totalTwoColHeight : 0;
+
+            elements.push(
+                <Droppable
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={`column-${colIndex}`}
+                    droppableId={colIndex.toString()}
+                >
+                    {(provided) => (
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                            className="flex flex-col gap-5"
+                            style={{
+                                marginTop: columnMargin,
+                            }}
+                        >
+                            {widgets.map((widget, widgetIndex) => {
+                                if (isTwoColPlaceholder(widget)) {
+                                    return null; // Skip placeholders in columns
+                                }
+                                return (
+                                    <ModuleWrapper
+                                        key={widget.hash}
+                                        moduleData={widget}
+                                        rowIndex={Math.floor(widgetIndex / 2)}
+                                        colIndex={colIndex}
+                                        fullSizeWidgetConfig={
+                                            fullSizeWidgetConfig
+                                        }
+                                        preferredDragTutorialWidget={
+                                            preferredDragTutorialWidget
+                                        }
+                                    />
+                                );
+                            })}
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            );
+        });
+
+        return elements;
+    }, [
+        layoutState,
+        windowSize.width,
+        fullSizeWidgetConfig,
+        preferredDragTutorialWidget,
+    ]);
+
     if (
         subscribedViews.length === 0 &&
         isAuthenticated &&
@@ -374,152 +508,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    {(() => {
-                        const renderedElements: JSX.Element[] = [];
-                        const renderedTwoColWidgets = new Set<string>();
-                        let twoColWidgetCount = 0;
-
-                        // Calculate how many two-column widgets can fit per row based on screen size
-                        const colType = getColType(windowSize.width);
-                        const maxTwoColPerRow =
-                            colType === EColumnType.FourCol ? 2 : 1; // FourCol can fit 2 two-column widgets
-
-                        // Track two-column widget heights for margin calculation
-                        let totalTwoColHeight = 0;
-
-                        // First pass: render all two-column widgets and track their positions
-                        layoutState?.forEach((widgets) => {
-                            widgets.forEach((widget) => {
-                                if (
-                                    isTwoColPlaceholder(widget) &&
-                                    !renderedTwoColWidgets.has(widget.hash)
-                                ) {
-                                    const rowIndex = Math.floor(
-                                        twoColWidgetCount / maxTwoColPerRow
-                                    );
-                                    const colPositionInRow =
-                                        twoColWidgetCount % maxTwoColPerRow;
-                                    const settings =
-                                        getWidgetSettings(
-                                            widget.twoColWidget.widget.template
-                                                .slug
-                                        ) ?? {};
-                                    const WIDGET_HEIGHT =
-                                        "WIDGET_HEIGHT" in settings
-                                            ? Number(settings.WIDGET_HEIGHT)
-                                            : 500;
-                                    const topMargin = rowIndex
-                                        ? rowIndex * (WIDGET_HEIGHT + 20) // Add gap between two-col widgets
-                                        : 0;
-
-                                    // Calculate total height needed for all two-column widgets
-                                    const bottomPosition =
-                                        topMargin + WIDGET_HEIGHT + 20;
-                                    totalTwoColHeight = Math.max(
-                                        totalTwoColHeight,
-                                        bottomPosition
-                                    );
-
-                                    renderedElements.push(
-                                        <div
-                                            key={`two-col-${widget.hash}`}
-                                            className="two-col:absolute w-full three-col:grid three-col:grid-cols-3 four-col:grid-cols-4"
-                                            style={{
-                                                top: `${topMargin}px`,
-                                                left:
-                                                    maxTwoColPerRow > 1 &&
-                                                    colPositionInRow === 1
-                                                        ? "50%"
-                                                        : "0",
-                                                width:
-                                                    maxTwoColPerRow > 1
-                                                        ? "50%"
-                                                        : "100%",
-                                            }}
-                                        >
-                                            <div className="two-col:col-span-2 two-col:mx-4">
-                                                <ModuleWrapper
-                                                    moduleData={
-                                                        widget.twoColWidget
-                                                    }
-                                                    rowIndex={rowIndex}
-                                                    colIndex={colPositionInRow}
-                                                    fullSizeWidgetConfig={
-                                                        fullSizeWidgetConfig
-                                                    }
-                                                    preferredDragTutorialWidget={
-                                                        preferredDragTutorialWidget
-                                                    }
-                                                />
-                                            </div>
-                                        </div>
-                                    );
-                                    renderedTwoColWidgets.add(widget.hash);
-                                    twoColWidgetCount += 1;
-                                }
-                            });
-                        });
-
-                        // Second pass: render columns with appropriate margins
-                        layoutState?.forEach((widgets, colIndex) => {
-                            // Only apply margin in two-column layout where two-col widgets are absolutely positioned
-                            // In 3+ column layouts, two-col widgets use CSS grid and don't need margin on normal columns
-                            const columnMargin =
-                                colType === EColumnType.TwoCol
-                                    ? totalTwoColHeight
-                                    : 0;
-
-                            renderedElements.push(
-                                <Droppable
-                                    // eslint-disable-next-line react/no-array-index-key
-                                    key={`column-${colIndex}`}
-                                    droppableId={colIndex.toString()}
-                                >
-                                    {(provided) => (
-                                        <div
-                                            ref={provided.innerRef}
-                                            {...provided.droppableProps}
-                                            className="flex flex-col gap-5"
-                                            style={{
-                                                marginTop: columnMargin,
-                                            }}
-                                        >
-                                            {widgets.map(
-                                                (widget, widgetIndex) => {
-                                                    if (
-                                                        isTwoColPlaceholder(
-                                                            widget
-                                                        )
-                                                    ) {
-                                                        return null; // Skip placeholders in columns
-                                                    }
-                                                    return (
-                                                        <ModuleWrapper
-                                                            key={widget.hash}
-                                                            moduleData={widget}
-                                                            rowIndex={Math.floor(
-                                                                widgetIndex / 2
-                                                            )}
-                                                            colIndex={colIndex}
-                                                            fullSizeWidgetConfig={
-                                                                fullSizeWidgetConfig
-                                                            }
-                                                            preferredDragTutorialWidget={
-                                                                preferredDragTutorialWidget
-                                                            }
-                                                        />
-                                                    );
-                                                }
-                                            )}
-                                            {provided.placeholder}
-                                        </div>
-                                    )}
-                                </Droppable>
-                            );
-                        });
-
-                        return renderedElements;
-                    })()}
+                    {renderedElements}
                 </div>
             </DragDropContext>
             <CookieDisclaimerContainer />
