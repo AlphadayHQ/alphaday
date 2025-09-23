@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Footer, twMerge } from "@alphaday/ui-kit";
-import { TWidgetOrPlaceholder } from "src/api/utils/layoutUtils";
+import { TUserViewWidget } from "src/api/types";
 import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
 import Header from "./LayoutHeader";
 
@@ -9,7 +9,7 @@ interface IProps {
     hideFeatures?: boolean;
     toggleWidgetLib?: () => void;
     toggleLanguageModal?: () => void;
-    layoutState?: TWidgetOrPlaceholder[][];
+    layoutState?: TUserViewWidget[][];
     children?: React.ReactNode;
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>

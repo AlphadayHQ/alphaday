@@ -3,24 +3,6 @@ import { TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
-import { TTemplateSlug } from "src/types";
-import { getWidgetName } from "./viewUtils";
-
-export type TTwoColPlaceholder = {
-    type: "TWO_COL_PLACEHOLDER";
-    twoColWidget: TUserViewWidget;
-    sort_order: number;
-    hash: string; // For drag-drop compatibility
-};
-
-export type TWidgetOrPlaceholder = TUserViewWidget | TTwoColPlaceholder;
-
-// Type guard to check if an item is a placeholder
-export const isTwoColPlaceholder = (
-    item: TWidgetOrPlaceholder
-): item is TTwoColPlaceholder => {
-    return (item as TTwoColPlaceholder).type === "TWO_COL_PLACEHOLDER";
-};
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
 
@@ -37,18 +19,14 @@ const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
  * w21 = L[1][2]
  */
 export type TLayoutGrid = {
-    singleCol: [TWidgetOrPlaceholder[]];
-    twoCol: [TWidgetOrPlaceholder[], TWidgetOrPlaceholder[]];
-    threeCol: [
-        TWidgetOrPlaceholder[],
-        TWidgetOrPlaceholder[],
-        TWidgetOrPlaceholder[],
-    ];
+    singleCol: [TUserViewWidget[]];
+    twoCol: [TUserViewWidget[], TUserViewWidget[]];
+    threeCol: [TUserViewWidget[], TUserViewWidget[], TUserViewWidget[]];
     fourCol: [
-        TWidgetOrPlaceholder[],
-        TWidgetOrPlaceholder[],
-        TWidgetOrPlaceholder[],
-        TWidgetOrPlaceholder[],
+        TUserViewWidget[],
+        TUserViewWidget[],
+        TUserViewWidget[],
+        TUserViewWidget[],
     ];
 };
 
@@ -105,13 +83,12 @@ const getCoordinates = (sortOrder: number) => {
     };
 };
 
-const shortestCol = (grid: TWidgetOrPlaceholder[][]) =>
+const shortestCol = (grid: TUserViewWidget[][]) =>
     grid.map((a) => a.length).indexOf(Math.min(...grid.map((a) => a.length)));
 
 export const computeLayoutGrid: (
-    viewWidgets: TUserViewWidget[] | undefined,
-    twoColWidgets?: TUserViewWidget[]
-) => TLayoutGrid | undefined = (viewWidgets, twoColWidgets = []) => {
+    viewWidgets: TUserViewWidget[] | undefined
+) => TLayoutGrid | undefined = (viewWidgets) => {
     if (viewWidgets === undefined) return undefined;
     const layout: TLayoutGrid = {
         singleCol: [[]],
@@ -121,37 +98,17 @@ export const computeLayoutGrid: (
     };
     const duplicatePositionWidgets: TduplicatePositionWidgets[] = [];
 
-    // Combine all widgets and sort by sort_order
-    const allWidgets = [...viewWidgets, ...twoColWidgets].sort(
-        (a, b) => a.sort_order - b.sort_order
-    );
-
-    allWidgets.forEach((widget) => {
+    viewWidgets.forEach((widget) => {
         const coords = getCoordinates(widget.sort_order);
-
-        // Check if this is a two-column widget
-        const isTwoCol = twoColWidgets.some((tw) => tw.hash === widget.hash);
-
-        let widgetOrPlaceholder: TWidgetOrPlaceholder;
-
-        if (isTwoCol) {
-            // Create placeholder for two-column widget
-            widgetOrPlaceholder = {
-                type: "TWO_COL_PLACEHOLDER",
-                twoColWidget: widget,
-                sort_order: widget.sort_order,
-                hash: `placeholder-${widget.hash}`,
-            };
-        } else {
-            widgetOrPlaceholder = { ...widget };
-        }
 
         // sort_order already occupied in layout
         if (layout.singleCol[0][coords.singleCol] !== undefined) {
             Logger.warn(
                 `computeLayoutState: widget ${String(
                     widget.widget.name
-                )} has same sort_order as existing widget : ${String(coords.singleCol)}. Reassigning ${String(
+                )} has same sort_order as ${
+                    layout.singleCol[0][coords.singleCol].widget.name
+                } : ${String(coords.singleCol)}. Reassigning ${String(
                     widget.widget.name
                 )} a new sort_order
             `
@@ -159,17 +116,20 @@ export const computeLayoutGrid: (
             duplicatePositionWidgets.push([widget, EColumnType.SingleCol]);
             return;
         }
-
         // Mobile
-        layout.singleCol[0][coords.singleCol] = widgetOrPlaceholder;
+        layout.singleCol[0][coords.singleCol] = { ...widget };
         // Tablet
-        layout.twoCol[coords.twoCol.x][coords.twoCol.y] = widgetOrPlaceholder;
+        layout.twoCol[coords.twoCol.x][coords.twoCol.y] = {
+            ...widget,
+        };
         // Desktop
-        layout.threeCol[coords.threeCol.x][coords.threeCol.y] =
-            widgetOrPlaceholder;
+        layout.threeCol[coords.threeCol.x][coords.threeCol.y] = {
+            ...widget,
+        };
         // Wide
-        layout.fourCol[coords.fourCol.x][coords.fourCol.y] =
-            widgetOrPlaceholder;
+        layout.fourCol[coords.fourCol.x][coords.fourCol.y] = {
+            ...widget,
+        };
     });
 
     // filter off undefined elements from columns
@@ -184,34 +144,26 @@ export const computeLayoutGrid: (
         layout.fourCol[i] = layout.fourCol[i].filter((w) => w !== undefined);
     }
 
-    // handle widgets with duplicate sort_order
+    // handle widgets with uplicated sort_ooder
     duplicatePositionWidgets.forEach((duplicate, i) => {
-        const isTwoCol = twoColWidgets.some(
-            (tw) => tw.hash === duplicate[0].hash
-        );
-
-        let widgetOrPlaceholder: TWidgetOrPlaceholder;
-        if (isTwoCol) {
-            widgetOrPlaceholder = {
-                type: "TWO_COL_PLACEHOLDER",
-                twoColWidget: duplicate[0],
-                sort_order: layout.singleCol[0].length + i,
-                hash: `placeholder-${duplicate[0].hash}`,
-            };
-        } else {
-            widgetOrPlaceholder = {
-                ...duplicate[0],
-                sort_order: layout.singleCol[0].length + i,
-            };
-        }
-
-        layout.singleCol[0].push(widgetOrPlaceholder);
-        layout.twoCol[shortestCol(layout.twoCol)].push(widgetOrPlaceholder);
-        layout.threeCol[shortestCol(layout.threeCol)].push(widgetOrPlaceholder);
-        layout.fourCol[shortestCol(layout.fourCol)].push(widgetOrPlaceholder);
+        layout.singleCol[0].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
+        layout.twoCol[shortestCol(layout.twoCol)].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
+        layout.threeCol[shortestCol(layout.threeCol)].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
+        layout.fourCol[shortestCol(layout.fourCol)].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
     });
 
-    const totalWidgets = viewWidgets.length + twoColWidgets.length;
     const totalElementsInTabletLayout =
         layout.twoCol[0].length + layout.twoCol[1].length;
     const totalElementsInThreeColLayout =
@@ -224,10 +176,10 @@ export const computeLayoutGrid: (
         layout.fourCol[2].length +
         layout.fourCol[3].length;
     if (
-        totalWidgets !== layout.singleCol[0].length ||
-        totalWidgets !== totalElementsInTabletLayout ||
-        totalWidgets !== totalElementsInThreeColLayout ||
-        totalWidgets !== totalElementsInFourColLayout
+        viewWidgets.length !== layout.singleCol[0].length ||
+        viewWidgets.length !== totalElementsInTabletLayout ||
+        viewWidgets.length !== totalElementsInThreeColLayout ||
+        viewWidgets.length !== totalElementsInFourColLayout
     ) {
         Logger.error(
             "layoutUtils::computeLayoutGrid: expected same amount of input elements"
@@ -252,7 +204,7 @@ export const getColType = (windowWidth: number): EColumnType => {
 };
 
 export const getDraggedWidget = (
-    layout: TWidgetOrPlaceholder[][],
+    layout: TUserViewWidget[][],
     sourcePos: { col: number; row: number },
     destPos: { col: number; row: number },
     colType: EColumnType
@@ -263,51 +215,31 @@ export const getDraggedWidget = (
         [EColumnType.ThreeCol]: 3,
         [EColumnType.FourCol]: 4,
     };
-
-    const sourceItem = layout[sourcePos.col][sourcePos.row];
-    const widget = isTwoColPlaceholder(sourceItem)
-        ? sourceItem.twoColWidget
-        : sourceItem;
-
     return {
-        ...widget,
+        ...layout[sourcePos.col][sourcePos.row],
         sort_order: destPos.col * multiplier[colType] + destPos.row,
     };
 };
 
 /**
  *
- * @param layout : TWidgetOrPlaceholder[][]
+ * @param layout : TUserViewWidget[][]
  * Updates individual widget props to reflect their current position on the layout
  *
  * @returns  TUserViewWidget[]
  */
 export const recomputeWidgetsPos = (
-    layout: TWidgetOrPlaceholder[][]
+    layout: TUserViewWidget[][]
 ): TUserViewWidget[] => {
     const widgets: TUserViewWidget[] = [];
     for (let i = 0; i < layout.length; i += 1) {
         for (let j = 0; j < layout[i].length; j += 1) {
-            const item = layout[i][j];
-            const widget = isTwoColPlaceholder(item) ? item.twoColWidget : item;
             widgets.push({
-                ...widget,
+                ...layout[i][j],
                 sort_order: j * layout.length + i,
             });
         }
     }
 
     return widgets;
-};
-
-/**
- * Retrieves hardcoded widget settings from CONFIG.WIDGETS based on widget object data
- */
-export const getWidgetSettings = (
-    templateSlug: TTemplateSlug
-): (typeof CONFIG.WIDGETS)[keyof typeof CONFIG.WIDGETS] | undefined => {
-    const widgetName = getWidgetName(templateSlug);
-    if (!widgetName) return undefined;
-
-    return CONFIG.WIDGETS[widgetName];
 };

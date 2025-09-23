@@ -13,11 +13,7 @@ import {
 } from "src/api/services/views/viewsEndpoints";
 import { TUserViewWidget, TWidget, TWidgetMini } from "src/api/types";
 import { debounce } from "src/api/utils/helpers";
-import {
-    TWidgetOrPlaceholder,
-    isTwoColPlaceholder,
-    recomputeWidgetsPos,
-} from "src/api/utils/layoutUtils";
+import { recomputeWidgetsPos } from "src/api/utils/layoutUtils";
 import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import WidgetLibrary from "src/components/widget-library/WidgetLibrary";
@@ -28,7 +24,7 @@ const { VIEWS } = CONFIG;
 const INITIAL_PAGE = 1;
 
 interface IWidgetLibContainerProps {
-    layoutState: TWidgetOrPlaceholder[][] | undefined;
+    layoutState: TUserViewWidget[][] | undefined;
 }
 const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
     const { selectedView, addWidgetsToCache } = useView();
@@ -128,23 +124,9 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 return;
             }
 
-            // Calculate effective column lengths accounting for two-column widgets
-            const effectiveColumnLengths = layoutState.map((column) => {
-                const normalWidgets = column.filter(
-                    (item) => !isTwoColPlaceholder(item)
-                ).length;
-                const twoColWidgets = column.filter((item) =>
-                    isTwoColPlaceholder(item)
-                ).length;
-
-                // Two-column widgets take up more visual space, so weight them more heavily
-                // Each two-column widget is roughly equivalent to 2 normal widgets in visual space
-                return normalWidgets + twoColWidgets * 2;
-            });
-
-            const shortestCol = effectiveColumnLengths.indexOf(
-                Math.min(...effectiveColumnLengths)
-            );
+            const shortestCol = layoutState
+                .map((a) => a.length)
+                .indexOf(Math.min(...layoutState.map((a) => a.length)));
 
             const newWidget: TUserViewWidget = {
                 id: 990, // will be replaced on save view - doesn't have to be unique on the frontend
@@ -170,12 +152,10 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 })),
                 sort_order: selectedView.data.widgets.length,
             };
-            // clone previous layout state and convert placeholders back to widgets
+            // clone previous layout state
             const newLayoutState: TUserViewWidget[][] = [[]];
             for (let i = 0; i < layoutState.length; i += 1) {
-                newLayoutState[i] = layoutState[i].map((item) =>
-                    isTwoColPlaceholder(item) ? item.twoColWidget : item
-                );
+                newLayoutState[i] = [...layoutState[i]];
             }
             newLayoutState[shortestCol].push(newWidget);
             addWidgetsToCache(recomputeWidgetsPos(newLayoutState));

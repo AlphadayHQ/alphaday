@@ -12,38 +12,37 @@ import useMousePosition from "src/api/hooks/useMousePosition";
 import {
     removeWidgetFromView,
     removeWidgetStateFromCache,
+    selectIsMinimised,
     toggleLanguageModal,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
-import { ETutorialTipId } from "src/api/types";
+import { ETutorialTipId, TUserViewWidget } from "src/api/types";
 import {
     computeLayoutGrid,
     getDraggedWidget,
     recomputeWidgetsPos,
     getColType,
     EColumnType,
-    TWidgetOrPlaceholder,
-    isTwoColPlaceholder,
-    getWidgetSettings,
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
-import { isTwoColWidget } from "src/api/utils/viewUtils";
 import CONFIG from "src/config/config";
 import { AboutUsModalContainer } from "src/containers/AboutUsModalContainer";
 import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
+import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
+import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS } = CONFIG;
+const { UI, VIEWS, WIDGETS } = CONFIG;
 
-function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
+function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
 
     const {
@@ -111,7 +110,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
           }
         | undefined = useMemo(
         () =>
-            isFullSize
+            isFullsize
                 ? {
                       slug: UI.FULL_SIZE_WIDGET_SLUG as TTemplateSlug,
                       // we should not check the hash if `fullSizeWidgetSlug` is undefined.
@@ -122,21 +121,30 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                       )?.hash,
                   }
                 : undefined,
-        [isFullSize, selectedView?.data.widgets]
+        [isFullsize, selectedView?.data.widgets]
     );
 
-    const twoColWidgets = useMemo(() => {
-        return selectedView?.data.widgets.filter((w) =>
-            isTwoColWidget(w.widget.template.slug)
-        );
-    }, [selectedView?.data.widgets]);
-
+    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
     const layoutGrid = useMemo(() => {
-        const filteredWidgets = selectedView?.data.widgets.filter(
-            (widget) => !isTwoColWidget(widget.widget.template.slug)
+        return computeLayoutGrid(
+            selectedView?.data.widgets.filter(
+                (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
+            )
         );
-        return computeLayoutGrid(filteredWidgets, twoColWidgets);
-    }, [selectedView?.data.widgets, twoColWidgets]);
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
+    const kasandraModuleData = useMemo(() => {
+        const widgetData = selectedView?.data.widgets.find(
+            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
+        );
+        return widgetData;
+    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+
+    const isKasandraModuleCollapsed = useAppSelector((state) =>
+        kasandraModuleData?.hash
+            ? selectIsMinimised(kasandraModuleData.hash)(state)
+            : false
+    );
 
     /**
      * The current layout state according to the screen size
@@ -144,7 +152,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
      * because an issue after user logout. Namely, views data may not be updated
      * which causes layoutGrid to remain undefined.
      */
-    const layoutState = useMemo<TWidgetOrPlaceholder[][] | undefined>(() => {
+    const layoutState = useMemo<TUserViewWidget[][] | undefined>(() => {
         const colType = getColType(windowSize.width);
         if (colType === EColumnType.SingleCol && layoutGrid?.singleCol) {
             return layoutGrid.singleCol;
@@ -167,7 +175,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     const handleOnDragEnd = useCallback(
         (
             result: DropResult,
-            currLayoutState: TWidgetOrPlaceholder[][] | undefined
+            currLayoutState: TUserViewWidget[][] | undefined
         ) => {
             /**
              * result has the following props:
@@ -229,35 +237,6 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 row: destination.index,
             };
 
-            // Prevent dropping widgets into two-column widget positions
-            if (twoColWidgets && twoColWidgets.length > 0) {
-                const colType = getColType(windowSize.width);
-                const isTwoColLayout =
-                    colType === EColumnType.TwoCol ||
-                    colType === EColumnType.ThreeCol ||
-                    colType === EColumnType.FourCol;
-                const destinationWidget =
-                    currLayoutState[destPos.col][destPos.row];
-
-                let isDestTwoColWidget = false;
-                if (destinationWidget) {
-                    if (isTwoColPlaceholder(destinationWidget)) {
-                        isDestTwoColWidget = isTwoColWidget(
-                            destinationWidget.twoColWidget.widget.template.slug
-                        );
-                    } else {
-                        isDestTwoColWidget = isTwoColWidget(
-                            destinationWidget.widget.template.slug
-                        );
-                    }
-                }
-
-                // prevent dropping into two col widget
-                if (destinationWidget && isTwoColLayout && isDestTwoColWidget) {
-                    return;
-                }
-            }
-
             const colType = getColType(windowSize.width);
 
             const draggedWidget = getDraggedWidget(
@@ -275,7 +254,7 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
             }
 
             // clone previous layout state
-            const newLayoutState: TWidgetOrPlaceholder[][] = [[]];
+            const newLayoutState: TUserViewWidget[][] = [[]];
             for (let i = 0; i < currLayoutState.length; i += 1) {
                 newLayoutState[i] = [...currLayoutState[i]];
             }
@@ -302,7 +281,6 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
             selectedView?.data.max_widgets,
             widgetsCount,
             windowSize.width,
-            twoColWidgets,
         ]
     );
 
@@ -323,147 +301,6 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
     }, [layoutState]);
 
     useViewUpdater();
-
-    const renderedElements = useMemo(() => {
-        if (!layoutState || layoutState.length === 0) return [];
-
-        const elements: JSX.Element[] = [];
-        const renderedTwoColWidgets = new Set<string>();
-        let twoColWidgetCount = 0;
-
-        // Calculate how many two-column widgets can fit per row based on screen size
-        const colType = getColType(windowSize.width);
-        const maxTwoColPerRow = colType === EColumnType.FourCol ? 2 : 1; // FourCol can fit 2 two-column widgets
-
-        // Track two-column widget heights for margin calculation
-        let totalTwoColHeight = 0;
-
-        // First pass: render all two-column widgets and track their positions
-        layoutState.forEach((widgets) => {
-            widgets.forEach((widget) => {
-                if (
-                    isTwoColPlaceholder(widget) &&
-                    !renderedTwoColWidgets.has(widget.hash)
-                ) {
-                    const rowIndex = Math.floor(
-                        twoColWidgetCount / maxTwoColPerRow
-                    );
-                    const colPositionInRow =
-                        twoColWidgetCount % maxTwoColPerRow;
-                    const settings =
-                        getWidgetSettings(
-                            widget.twoColWidget.widget.template.slug
-                        ) ?? {};
-                    const WIDGET_HEIGHT =
-                        "WIDGET_HEIGHT" in settings
-                            ? Number(settings.WIDGET_HEIGHT)
-                            : 500;
-                    const topMargin = rowIndex
-                        ? rowIndex * (WIDGET_HEIGHT + 20) // Add gap between two-col widgets
-                        : 0;
-
-                    // Calculate total height needed for all two-column widgets
-                    const bottomPosition = topMargin + WIDGET_HEIGHT + 20;
-                    totalTwoColHeight = Math.max(
-                        totalTwoColHeight,
-                        bottomPosition
-                    );
-
-                    elements.push(
-                        <div
-                            key={`two-col-${widget.hash}`}
-                            className="two-col:absolute w-full three-col:grid three-col:grid-cols-3 four-col:grid-cols-4"
-                            style={{
-                                top: `${topMargin}px`,
-                                left:
-                                    maxTwoColPerRow > 1 &&
-                                    colPositionInRow === 1
-                                        ? "50%"
-                                        : "0",
-                                width: maxTwoColPerRow > 1 ? "50%" : "100%",
-                            }}
-                        >
-                            <div className="two-col:col-span-2 two-col:mx-4">
-                                <ModuleWrapper
-                                    moduleData={widget.twoColWidget}
-                                    rowIndex={rowIndex}
-                                    colIndex={colPositionInRow}
-                                    fullSizeWidgetConfig={fullSizeWidgetConfig}
-                                    preferredDragTutorialWidget={
-                                        preferredDragTutorialWidget
-                                    }
-                                />
-                            </div>
-                        </div>
-                    );
-                    renderedTwoColWidgets.add(widget.hash);
-                    twoColWidgetCount += 1;
-                }
-            });
-        });
-
-        // Second pass: render columns with appropriate margins
-        layoutState.forEach((widgets, colIndex) => {
-            // Check if this column contains any two-column widget placeholders
-            const hasAnyTwoColInColumn = widgets.some((widget) =>
-                isTwoColPlaceholder(widget)
-            );
-
-            // Only apply margin in two-column layout where two-col widgets are absolutely positioned
-            // OR if this specific column contains two-col widgets in other layouts
-            const columnMargin =
-                colType === EColumnType.TwoCol || hasAnyTwoColInColumn
-                    ? totalTwoColHeight + 48
-                    : 0;
-
-            elements.push(
-                <Droppable
-                    // eslint-disable-next-line react/no-array-index-key
-                    key={`column-${colIndex}`}
-                    droppableId={colIndex.toString()}
-                >
-                    {(provided) => (
-                        <div
-                            ref={provided.innerRef}
-                            {...provided.droppableProps}
-                            className="flex flex-col gap-5"
-                            style={{
-                                marginTop: columnMargin,
-                            }}
-                        >
-                            {widgets.map((widget, widgetIndex) => {
-                                if (isTwoColPlaceholder(widget)) {
-                                    return null; // Skip placeholders in columns
-                                }
-                                return (
-                                    <ModuleWrapper
-                                        key={widget.hash}
-                                        moduleData={widget}
-                                        rowIndex={Math.floor(widgetIndex / 2)}
-                                        colIndex={colIndex}
-                                        fullSizeWidgetConfig={
-                                            fullSizeWidgetConfig
-                                        }
-                                        preferredDragTutorialWidget={
-                                            preferredDragTutorialWidget
-                                        }
-                                    />
-                                );
-                            })}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
-            );
-        });
-
-        return elements;
-    }, [
-        layoutState,
-        windowSize.width,
-        fullSizeWidgetConfig,
-        preferredDragTutorialWidget,
-    ]);
 
     if (
         subscribedViews.length === 0 &&
@@ -515,7 +352,53 @@ function BasePage({ isFullSize }: { isFullSize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    {renderedElements}
+                    {kasandraModuleData && (
+                        <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                            <div className="col-span-2">
+                                <KasandraContainer
+                                    moduleData={kasandraModuleData}
+                                    toggleAdjustable={() => {}}
+                                />
+                            </div>
+                        </div>
+                    )}
+                    {layoutState?.map((widgets, colIndex) => (
+                        <Droppable
+                            // eslint-disable-next-line react/no-array-index-key
+                            key={colIndex.toString()}
+                            droppableId={colIndex.toString()}
+                        >
+                            {(provided) => (
+                                <div
+                                    ref={provided.innerRef}
+                                    {...provided.droppableProps}
+                                    style={{
+                                        marginTop:
+                                            kasandraModuleData &&
+                                            (colIndex === 0 || colIndex === 1)
+                                                ? `${(((isKasandraModuleCollapsed ? WIDGETS.KASANDRA.COLLAPSED_WIDGET_HEIGHT : WIDGETS.KASANDRA.WIDGET_HEIGHT) as number) || 0) + 14}px`
+                                                : "0px",
+                                    }}
+                                >
+                                    {widgets.map((widget, rowIndex) => (
+                                        <ModuleWrapper
+                                            key={widget.hash}
+                                            moduleData={widget}
+                                            rowIndex={rowIndex}
+                                            colIndex={colIndex}
+                                            fullSizeWidgetConfig={
+                                                fullSizeWidgetConfig
+                                            }
+                                            preferredDragTutorialWidget={
+                                                preferredDragTutorialWidget
+                                            }
+                                        />
+                                    ))}
+                                    {provided.placeholder}
+                                </div>
+                            )}
+                        </Droppable>
+                    ))}
                 </div>
             </DragDropContext>
             <CookieDisclaimerContainer />
