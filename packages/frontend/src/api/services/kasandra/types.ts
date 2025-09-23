@@ -72,7 +72,7 @@ export type TRemoteFlakeOffData = {
         id: number;
         coin: TPredictionCoin;
         interval: TChartRange;
-        timestamp: number;
+        generation_timestamp: number;
         case: EPredictionCase | null;
         chart_data: {
             case: null;
@@ -80,7 +80,7 @@ export type TRemoteFlakeOffData = {
             interval: TChartRange;
             past_predictions: TRemotePastPrediction[];
         };
-    };
+    }[];
 };
 
 /**

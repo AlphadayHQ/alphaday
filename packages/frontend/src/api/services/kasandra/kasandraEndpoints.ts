@@ -1,5 +1,9 @@
 import queryString from "query-string";
-import { THistoryInsightItem, TInsightItem } from "src/api/types";
+import {
+    THistoryInsightItem,
+    TInsightItem,
+    TPastPrediction,
+} from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
@@ -53,18 +57,30 @@ const mapRemoteInsights = (
 const mapRemoteFlakeOffData = (
     r: TGetFlakeOffDataRawResponse
 ): TGetFlakeOffDataResponse => {
-    return {
-        id: r.data.id,
-        coin: r.data.coin,
-        timestamp: r.data.timestamp,
-        data: r.data.chart_data.past_predictions.map((c) => ({
+    const data = r.data.reduce(
+        (acc, c) => ({
             id: c.id,
-            case: c.case,
-            chartData: c.chart_data,
-            createdAt: c.created_at,
-            accuracyScore: c.accuracy_score,
-        })),
-    };
+            coin: c.coin,
+            timestamp: c.generation_timestamp,
+            data: [
+                ...acc.data,
+                ...c.chart_data.past_predictions.map((p) => ({
+                    id: p.id,
+                    case: p.case,
+                    chartData: p.chart_data,
+                    createdAt: p.created_at,
+                    accuracyScore: p.accuracy_score,
+                })),
+            ],
+        }),
+        {
+            id: 0,
+            coin: r.data[0].coin,
+            timestamp: r.data[0].generation_timestamp,
+            data: [] as TPastPrediction[],
+        }
+    );
+    return data;
 };
 
 const kasandraApi = alphadayApi.injectEndpoints({

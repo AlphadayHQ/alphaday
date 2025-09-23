@@ -154,6 +154,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         { skip: selectedMarket === undefined }
     );
 
+    console.log("flakeOffData", flakeOffData);
+
     const logData = useMemo(() => {
         return {
             selectedTimestamp: selectedTimestamp ?? 0,
