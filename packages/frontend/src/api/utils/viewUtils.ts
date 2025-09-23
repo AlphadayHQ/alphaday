@@ -165,20 +165,3 @@ export const getWidgetName = (
 
     return foundEntry;
 };
-
-/**
- * This function checks if a widget supports two-column layout.
- *
- * @param templateSlug
- */
-export const isTwoColWidget = (templateSlug: TTemplateSlug): boolean => {
-    const widgetName = getWidgetName(templateSlug);
-    if (!widgetName) return false;
-
-    const widgetConfig = CONFIG.WIDGETS[widgetName];
-    return (
-        widgetConfig &&
-        "TWO_COL_SUPPORT" in widgetConfig &&
-        widgetConfig?.TWO_COL_SUPPORT === true
-    );
-};

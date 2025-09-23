@@ -22,7 +22,6 @@ import {
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TUserViewWidget } from "src/api/types";
-import { isTwoColWidget } from "src/api/utils/viewUtils";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import BaseContainerHeader from "./BaseContainerHeader";
@@ -178,13 +177,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     }
 
     return (
-        <div
-            className={
-                isTwoColWidget(moduleData.widget.template.slug)
-                    ? "two-col:col-span-2"
-                    : ""
-            }
-        >
+        <div>
             <div
                 id={moduleData.hash}
                 className="flex flex-col [&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
