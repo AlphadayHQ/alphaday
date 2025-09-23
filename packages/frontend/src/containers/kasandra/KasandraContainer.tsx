@@ -23,6 +23,7 @@ import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import CONFIG from "src/config";
 import { EFeaturesRegistry, EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
+import BaseContainer from "../base/BaseContainer";
 
 const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
@@ -271,31 +272,44 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [WIDGET_HEIGHT]);
 
     return (
-        <Suspense
-            fallback={<ModuleLoader $height={contentHeight} />} // 40px is the height of the header
+        <BaseContainer
+            uiProps={{
+                dragProps: undefined,
+                isDragging: false,
+                onToggleShowFullSize: undefined,
+                allowFullSize: false,
+                showFullSize: false,
+                setTutFocusElemRef: undefined,
+            }}
+            moduleData={moduleData}
+            adjustable={false}
         >
-            <KasandraModule
-                isLoading={isLoadingKasandraCoins}
-                isLoadingHistory={isLoadingHistory}
-                isLoadingPredictions={isLoadingPredictions}
-                insights={insights || undefined}
-                selectedPredictions={predictions || undefined}
-                selectedMarketHistory={marketHistory}
-                selectedCase={selectedCase}
-                onSelectCase={handleSelectedCase}
-                selectedChartRange={selectedChartRange}
-                onSelectChartRange={handleSelectedChartRange}
-                selectedMarket={selectedMarket}
-                isAuthenticated={isAuthenticated}
-                supportedCoins={kasandraCoins}
-                onSelectMarket={handleSelectedMarket}
-                contentHeight={contentHeight}
-                selectedTimestamp={selectedTimestamp}
-                onSelectDataPoint={handleSelectedTimestamp}
-                disclaimerAccepted={disclaimerAccepted}
-                onAcceptDisclaimer={handleAcceptDisclaimer}
-            />
-        </Suspense>
+            <Suspense
+                fallback={<ModuleLoader $height={contentHeight} />} // 40px is the height of the header
+            >
+                <KasandraModule
+                    isLoading={isLoadingKasandraCoins}
+                    isLoadingHistory={isLoadingHistory}
+                    isLoadingPredictions={isLoadingPredictions}
+                    insights={insights || undefined}
+                    selectedPredictions={predictions || undefined}
+                    selectedMarketHistory={marketHistory}
+                    selectedCase={selectedCase}
+                    onSelectCase={handleSelectedCase}
+                    selectedChartRange={selectedChartRange}
+                    onSelectChartRange={handleSelectedChartRange}
+                    selectedMarket={selectedMarket}
+                    isAuthenticated={isAuthenticated}
+                    supportedCoins={kasandraCoins}
+                    onSelectMarket={handleSelectedMarket}
+                    contentHeight={contentHeight}
+                    selectedTimestamp={selectedTimestamp}
+                    onSelectDataPoint={handleSelectedTimestamp}
+                    disclaimerAccepted={disclaimerAccepted}
+                    onAcceptDisclaimer={handleAcceptDisclaimer}
+                />
+            </Suspense>
+        </BaseContainer>
     );
 };
 
