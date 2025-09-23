@@ -112,28 +112,24 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
     );
 
     return (
-        <div>
-            <div className="p-4">
-                <div className="flex items-center gap-6">
-                    <Select
-                        options={sizeMetricOptions}
-                        selectedOption={selectedSizeMetricOption}
-                        onChange={handleSizeMetricChange}
-                    />
+        <div className="flex items-center gap-6 pb-1">
+            <Select
+                options={sizeMetricOptions}
+                selectedOption={selectedSizeMetricOption}
+                onChange={handleSizeMetricChange}
+            />
 
-                    <Select
-                        options={colorMetricOptions}
-                        selectedOption={selectedColorMetricOption}
-                        onChange={handleColorMetricChange}
-                    />
+            <Select
+                options={colorMetricOptions}
+                selectedOption={selectedColorMetricOption}
+                onChange={handleColorMetricChange}
+            />
 
-                    <Select
-                        options={maxItemsOptions}
-                        selectedOption={selectedMaxItemsOption}
-                        onChange={handleMaxItemsChange}
-                    />
-                </div>
-            </div>
+            <Select
+                options={maxItemsOptions}
+                selectedOption={selectedMaxItemsOption}
+                onChange={handleMaxItemsChange}
+            />
         </div>
     );
 };
