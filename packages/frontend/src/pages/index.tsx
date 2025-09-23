@@ -43,6 +43,67 @@ import { TTemplateSlug } from "src/types";
 
 const { UI, VIEWS, WIDGETS } = CONFIG;
 
+const TWO_COL_WIDGETS_CONFIG = {
+    kasandra: {
+        templateName: ETemplateNameRegistry.Kasandra,
+        Container: KasandraContainer,
+        widgetConfig: WIDGETS.KASANDRA,
+        hasCollapsedState: true,
+    },
+    marketHeatmap: {
+        templateName: ETemplateNameRegistry.MarketHeatmap,
+        Container: MarketHeatmapContainer,
+        widgetConfig: WIDGETS.MARKET_HEATMAP,
+        hasCollapsedState: true,
+    },
+} as const;
+
+const getTwoColWidgetTemplateSlugs = () => {
+    return Object.values(TWO_COL_WIDGETS_CONFIG).map(
+        (config) => `${config.templateName.toLowerCase()}_template`
+    );
+};
+
+const useTwoColWidgets = (selectedView: any) => {
+    return useMemo(() => {
+        const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
+        const widgets: Record<string, any> = {};
+        const collapsedStates: Record<string, boolean> = {};
+
+        Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+            const templateSlug = `${config.templateName.toLowerCase()}_template`;
+            const widgetData = selectedView?.data.widgets.find(
+                (w: any) => w.widget.template.slug === templateSlug
+            );
+            widgets[key] = widgetData;
+        });
+
+        return { widgets, twoColWidgetSlugs };
+    }, [selectedView?.data.widgets]);
+};
+
+const calculateTwoColWidgetsHeight = (
+    widgets: Record<string, any>,
+    collapsedStates: Record<string, boolean>
+) => {
+    let totalHeight = 0;
+
+    Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+        if (widgets[key]) {
+            if (config.hasCollapsedState && collapsedStates[key]) {
+                totalHeight +=
+                    (config.widgetConfig.COLLAPSED_WIDGET_HEIGHT as number) ||
+                    0;
+            } else {
+                totalHeight +=
+                    (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
+            }
+        }
+    });
+
+    return totalHeight;
+};
+
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
 
@@ -125,47 +186,28 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         [isFullsize, selectedView?.data.widgets]
     );
 
-    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
-    const MarketHeatmapWidgetTemplateSlug = `${ETemplateNameRegistry.MarketHeatmap.toLowerCase()}_template`;
+    const { widgets: twoColWidgets, twoColWidgetSlugs } =
+        useTwoColWidgets(selectedView);
+
     const layoutGrid = useMemo(() => {
         return computeLayoutGrid(
             selectedView?.data.widgets.filter(
-                (w) =>
-                    w.widget.template.slug !== KasandraWidgetTemplateSlug &&
-                    w.widget.template.slug !== MarketHeatmapWidgetTemplateSlug
+                (w) => !twoColWidgetSlugs.includes(w.widget.template.slug)
             )
         );
-    }, [
-        KasandraWidgetTemplateSlug,
-        MarketHeatmapWidgetTemplateSlug,
-        selectedView?.data.widgets,
-    ]);
+    }, [twoColWidgetSlugs, selectedView?.data.widgets]);
 
-    const kasandraModuleData = useMemo(() => {
-        const widgetData = selectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
-        );
-        return widgetData;
-    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
-
-    const marketHeatmapModuleData = useMemo(() => {
-        const widgetData = selectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === MarketHeatmapWidgetTemplateSlug
-        );
-        return widgetData;
-    }, [MarketHeatmapWidgetTemplateSlug, selectedView?.data.widgets]);
-
-    const isKasandraModuleCollapsed = useAppSelector((state) =>
-        kasandraModuleData?.hash
-            ? selectIsMinimised(kasandraModuleData.hash)(state)
-            : false
-    );
-
-    const isMarketHeatmapModuleCollapsed = useAppSelector((state) =>
-        marketHeatmapModuleData?.hash
-            ? selectIsMinimised(marketHeatmapModuleData.hash)(state)
-            : false
-    );
+    const twoColWidgetCollapsedStates = useAppSelector((state) => {
+        const collapsedStates: Record<string, boolean> = {};
+        Object.entries(twoColWidgets).forEach(([key, moduleData]) => {
+            if (moduleData?.hash) {
+                collapsedStates[key] = selectIsMinimised(moduleData.hash)(
+                    state
+                );
+            }
+        });
+        return collapsedStates;
+    });
 
     /**
      * The current layout state according to the screen size
@@ -373,26 +415,24 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    {/* {kasandraModuleData && ( */}
                     <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                        <div className="col-span-2">
-                            {kasandraModuleData && (
-                                <KasandraContainer
-                                    moduleData={kasandraModuleData}
-                                    toggleAdjustable={() => {}}
-                                />
-                            )}
-                        </div>
-                        {marketHeatmapModuleData && (
-                            <div className="col-span-2">
-                                <MarketHeatmapContainer
-                                    moduleData={marketHeatmapModuleData}
-                                    toggleAdjustable={() => {}}
-                                />
-                            </div>
+                        {Object.entries(TWO_COL_WIDGETS_CONFIG).map(
+                            ([key, config]) => {
+                                const moduleData = twoColWidgets[key];
+                                if (!moduleData) return null;
+
+                                const { Container } = config;
+                                return (
+                                    <div key={key} className="col-span-2">
+                                        <Container
+                                            moduleData={moduleData}
+                                            toggleAdjustable={() => {}}
+                                        />
+                                    </div>
+                                );
+                            }
                         )}
                     </div>
-                    {/* )} */}
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -412,24 +452,11 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                                 return "0px";
                                             }
 
-                                            let totalHeight = 0;
-
-                                            if (kasandraModuleData) {
-                                                totalHeight +=
-                                                    ((isKasandraModuleCollapsed
-                                                        ? WIDGETS.KASANDRA
-                                                              .COLLAPSED_WIDGET_HEIGHT
-                                                        : WIDGETS.KASANDRA
-                                                              .WIDGET_HEIGHT) as number) ||
-                                                    0;
-                                            }
-
-                                            if (marketHeatmapModuleData) {
-                                                totalHeight +=
-                                                    (WIDGETS.MARKET_HEATMAP
-                                                        .WIDGET_HEIGHT as number) ||
-                                                    0;
-                                            }
+                                            const totalHeight =
+                                                calculateTwoColWidgetsHeight(
+                                                    twoColWidgets,
+                                                    twoColWidgetCollapsedStates
+                                                );
 
                                             return totalHeight > 0
                                                 ? `${totalHeight + 14}px`
