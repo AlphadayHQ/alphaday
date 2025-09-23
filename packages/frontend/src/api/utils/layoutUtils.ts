@@ -291,6 +291,7 @@ export const calculateTwoColWidgetsHeight = (
     collapsedStates: Record<string, boolean>
 ) => {
     let totalHeight = 0;
+    const defaultMarginBottom = 14;
 
     Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
         if (widgets[key]) {
@@ -302,6 +303,7 @@ export const calculateTwoColWidgetsHeight = (
                 totalHeight +=
                     (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
             }
+            totalHeight += defaultMarginBottom;
         }
     });
 

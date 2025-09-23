@@ -112,7 +112,7 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
     );
 
     return (
-        <div className="flex items-center gap-6 pb-1 [&_.option-label-text]:ml-0.5">
+        <div className="flex items-center gap-6 pl-1 pb-1 [&_.option-label-text]:-ml-0.5">
             <Select
                 options={sizeMetricOptions}
                 selectedOption={selectedSizeMetricOption}

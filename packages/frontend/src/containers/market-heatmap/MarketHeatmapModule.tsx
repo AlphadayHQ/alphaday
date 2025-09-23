@@ -27,7 +27,7 @@ export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
     }, [data]);
 
     return (
-        <div className="h-full">
+        <div className="h-[500px]">
             {isError && (
                 <div className="flex items-center justify-center h-full text-primaryVariant100">
                     Failed to load market data

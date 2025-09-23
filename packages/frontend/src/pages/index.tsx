@@ -354,7 +354,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
+                    <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 px-4">
                         {Object.entries(TWO_COL_WIDGETS_CONFIG).map(
                             ([key, config]) => {
                                 const moduleData = twoColWidgets[key];
@@ -397,8 +397,13 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                                     twoColWidgetCollapsedStates
                                                 );
 
+                                            console.log(
+                                                "totalHeight",
+                                                totalHeight
+                                            );
+
                                             return totalHeight > 0
-                                                ? `${Number(totalHeight) + 14}px`
+                                                ? `${totalHeight}px`
                                                 : "0px";
                                         })(),
                                     }}

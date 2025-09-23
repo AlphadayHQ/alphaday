@@ -192,7 +192,7 @@ const WIDGETS_CONFIG = {
         ADJUSTABLE: false,
     },
     [ETemplateNameRegistry.MarketHeatmap]: {
-        WIDGET_HEIGHT: 600,
+        WIDGET_HEIGHT: 540,
         COLLAPSED_WIDGET_HEIGHT: 45,
         POLLING_INTERVAL: 5 * 60, // 5 min
         ADJUSTABLE: true,

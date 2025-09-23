@@ -1,4 +1,4 @@
-import { type FC, Suspense, useCallback, useState } from "react";
+import { type FC, Suspense, useCallback, useMemo, useState } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { useWidgetHeight } from "src/api/hooks";
 import { useGlobalSearch } from "src/api/hooks/useGlobalSearch";
@@ -75,6 +75,10 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
         ]
     );
 
+    const contentHeight = useMemo(() => {
+        return `${widgetHeight - 40}px`;
+    }, [widgetHeight]);
+
     if (isLoading) {
         return <ModuleLoader $height={`${widgetHeight}px`} />;
     }
@@ -92,7 +96,7 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
             moduleData={moduleData}
             adjustable={false}
         >
-            <Suspense fallback={<ModuleLoader $height={`${widgetHeight}px`} />}>
+            <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
                 <MarketHeatmapModule
                     data={data}
                     maxItems={maxItems}

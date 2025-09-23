@@ -176,7 +176,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
 
     if (!data.length) {
         return (
-            <div className="flex items-center justify-center h-[450px] text-primaryVariant100">
+            <div className="flex items-center justify-center h-full text-primaryVariant100">
                 No data available
             </div>
         );
@@ -185,7 +185,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
     return (
         <div
             ref={containerRef}
-            className="relative w-full h-[450px] overflow-hidden bg-backgroundVariant100"
+            className="relative w-full h-full overflow-hidden bg-backgroundVariant100"
         >
             <svg
                 width="100%"
