@@ -24,6 +24,9 @@ import {
     recomputeWidgetsPos,
     getColType,
     EColumnType,
+    TWO_COL_WIDGETS_CONFIG,
+    useTwoColWidgets,
+    calculateTwoColWidgetsHeight,
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
@@ -33,76 +36,12 @@ import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
-import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
-import MarketHeatmapContainer from "src/containers/market-heatmap/MarketHeatmapContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
-import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS, WIDGETS } = CONFIG;
-
-const TWO_COL_WIDGETS_CONFIG = {
-    kasandra: {
-        templateName: ETemplateNameRegistry.Kasandra,
-        Container: KasandraContainer,
-        widgetConfig: WIDGETS.KASANDRA,
-        hasCollapsedState: true,
-    },
-    marketHeatmap: {
-        templateName: ETemplateNameRegistry.MarketHeatmap,
-        Container: MarketHeatmapContainer,
-        widgetConfig: WIDGETS.MARKET_HEATMAP,
-        hasCollapsedState: true,
-    },
-} as const;
-
-const getTwoColWidgetTemplateSlugs = () => {
-    return Object.values(TWO_COL_WIDGETS_CONFIG).map(
-        (config) => `${config.templateName.toLowerCase()}_template`
-    );
-};
-
-const useTwoColWidgets = (selectedView: any) => {
-    return useMemo(() => {
-        const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
-        const widgets: Record<string, any> = {};
-        const collapsedStates: Record<string, boolean> = {};
-
-        Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
-            const templateSlug = `${config.templateName.toLowerCase()}_template`;
-            const widgetData = selectedView?.data.widgets.find(
-                (w: any) => w.widget.template.slug === templateSlug
-            );
-            widgets[key] = widgetData;
-        });
-
-        return { widgets, twoColWidgetSlugs };
-    }, [selectedView?.data.widgets]);
-};
-
-const calculateTwoColWidgetsHeight = (
-    widgets: Record<string, any>,
-    collapsedStates: Record<string, boolean>
-) => {
-    let totalHeight = 0;
-
-    Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
-        if (widgets[key]) {
-            if (config.hasCollapsedState && collapsedStates[key]) {
-                totalHeight +=
-                    (config.widgetConfig.COLLAPSED_WIDGET_HEIGHT as number) ||
-                    0;
-            } else {
-                totalHeight +=
-                    (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
-            }
-        }
-    });
-
-    return totalHeight;
-};
+const { UI, VIEWS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -459,7 +398,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                                 );
 
                                             return totalHeight > 0
-                                                ? `${totalHeight + 14}px`
+                                                ? `${Number(totalHeight) + 14}px`
                                                 : "0px";
                                         })(),
                                     }}
