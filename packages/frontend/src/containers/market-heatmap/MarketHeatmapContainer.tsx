@@ -6,6 +6,7 @@ import { useGetCoinsQuery } from "src/api/services";
 import { ETag, TCoin, TKeyword } from "src/api/types";
 import type { IModuleContainer } from "src/types";
 import { EHeatmapMaxItems } from "../../components/market-heatmap/types";
+import BaseContainer from "../base/BaseContainer";
 import { MarketHeatmapModule } from "./MarketHeatmapModule";
 
 const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
@@ -79,16 +80,29 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }
 
     return (
-        <Suspense fallback={<ModuleLoader $height={`${widgetHeight}px`} />}>
-            <MarketHeatmapModule
-                data={data}
-                maxItems={maxItems}
-                isError={isError}
-                onCoinClick={handleCoinClick}
-                keywordSearchList={keywordSearchList}
-                onMaxItemsChange={setMaxItems}
-            />
-        </Suspense>
+        <BaseContainer
+            uiProps={{
+                dragProps: undefined,
+                isDragging: false,
+                onToggleShowFullSize: undefined,
+                allowFullSize: false,
+                showFullSize: false,
+                setTutFocusElemRef: undefined,
+            }}
+            moduleData={moduleData}
+            adjustable={false}
+        >
+            <Suspense fallback={<ModuleLoader $height={`${widgetHeight}px`} />}>
+                <MarketHeatmapModule
+                    data={data}
+                    maxItems={maxItems}
+                    isError={isError}
+                    onCoinClick={handleCoinClick}
+                    keywordSearchList={keywordSearchList}
+                    onMaxItemsChange={setMaxItems}
+                />
+            </Suspense>
+        </BaseContainer>
     );
 };
 
