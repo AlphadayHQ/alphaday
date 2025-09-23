@@ -197,6 +197,11 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                     const colorIntensity = Math.abs(color);
                     const isPositive = color >= 0;
 
+                    const coinImage =
+                        coin.ticker === "BTC"
+                            ? "/crypto-logos/bitcoin.avif"
+                            : coin.icon;
+
                     // Check if coin is in keywords list
                     const isHighlighted = keywordSearchList.some(
                         (keyword) =>
@@ -292,7 +297,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                         height / 2,
                                         Math.max(height / 4, 16)
                                     )}
-                                    href={coin.icon}
+                                    href={coinImage}
                                     className="pointer-events-none"
                                 />
                             )}
