@@ -53,7 +53,11 @@ const renderCustomTooltip = () => (props: TCustomTooltip) => {
     if (!dataPoint) return "";
 
     const timestamp = dataPoint.x;
-    const TIMESTAMP_TOLERANCE = 1 * 60 * 1000; // 1 minute in milliseconds
+    const TIME_GAP = Math.abs(
+        w.config.series[1].data[1].x - w.config.series[1].data[2].x
+    );
+
+    const TIMESTAMP_TOLERANCE = TIME_GAP || 5 * 60 * 1000; // 1 minute in milliseconds
 
     // Find all series with data points near this timestamp
     const matchingData: Array<{
@@ -63,8 +67,33 @@ const renderCustomTooltip = () => (props: TCustomTooltip) => {
         isActual: boolean;
         case?: EPredictionCase;
         startDate?: number;
-        accuracy?: number;
+        calculatedAccuracy?: number;
     }> = [];
+
+    // First, find the actual historical price at this timestamp
+    let actualPrice: number | undefined;
+    const actualSeries = w.config.series.find((series) =>
+        series.name.includes("Actual")
+    );
+    if (actualSeries) {
+        const actualPoint = actualSeries.data.find(
+            (point) => Math.abs(point.x - timestamp) <= TIMESTAMP_TOLERANCE
+        );
+        if (actualPoint) {
+            actualPrice = actualPoint.y;
+        }
+    }
+
+    // Helper function to calculate accuracy percentage
+    const calculateAccuracy = (
+        predictedPrice: number,
+        _actualPrice: number
+    ): number => {
+        if (actualPrice === 0) return 0;
+        const percentageError =
+            Math.abs((predictedPrice - _actualPrice) / _actualPrice) * 100;
+        return Math.max(0, Math.min(100, 100 - percentageError));
+    };
 
     // Check all series for matching timestamps
     w.config.series.forEach((series) => {
@@ -76,7 +105,7 @@ const renderCustomTooltip = () => (props: TCustomTooltip) => {
             const isActual = series.name.includes("Actual");
             let caseType: EPredictionCase | undefined;
             let startDate: number | undefined;
-            let accuracy: number | undefined;
+            let calculatedAccuracy: number | undefined;
 
             if (!isActual) {
                 // Extract metadata from series name: "Prediction on {createdAt} ({accuracyScore}% accuracy)"
@@ -85,13 +114,20 @@ const renderCustomTooltip = () => (props: TCustomTooltip) => {
                 );
                 if (nameMatch) {
                     startDate = parseInt(nameMatch[1], 10);
-                    accuracy = parseInt(nameMatch[2], 10);
                 }
 
                 // Find case type by matching color
                 caseType = Object.keys(caseColors).find(
                     (key) => caseColors[key as EPredictionCase] === series.color
                 ) as EPredictionCase;
+
+                // Calculate real-time accuracy if we have actual price data
+                if (actualPrice !== undefined) {
+                    calculatedAccuracy = calculateAccuracy(
+                        matchingPoint.y,
+                        actualPrice
+                    );
+                }
             }
 
             matchingData.push({
@@ -101,7 +137,7 @@ const renderCustomTooltip = () => (props: TCustomTooltip) => {
                 isActual,
                 case: caseType,
                 startDate,
-                accuracy,
+                calculatedAccuracy,
             });
         }
     });
@@ -133,8 +169,6 @@ const renderCustomTooltip = () => (props: TCustomTooltip) => {
                 return "Prediction";
         }
     };
-
-    console.log("matchingData", matchingData);
 
     return renderToString(
         <div className="px-2.5 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant100 border-[0.5px] border-borderLine fontGroup-support text-primary">
@@ -178,9 +212,9 @@ const renderCustomTooltip = () => (props: TCustomTooltip) => {
                                 currency: "USD",
                             }).value
                         }
-                        {data.accuracy && (
+                        {data.calculatedAccuracy !== undefined && (
                             <span className="text-xs text-gray-400 ml-1">
-                                ({data.accuracy}%)
+                                ({data.calculatedAccuracy.toFixed(1)}%)
                             </span>
                         )}
                     </div>
