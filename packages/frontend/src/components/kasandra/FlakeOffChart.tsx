@@ -1,8 +1,17 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { ApexLineChart, twMerge } from "@alphaday/ui-kit";
-import { TCoinMarketHistory, TFlakeOffData } from "src/api/types";
+import {
+    TCoinMarketHistory,
+    TFlakeOffData,
+    EPredictionCase,
+} from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 
+const caseColors = {
+    [EPredictionCase.OPTIMISTIC]: "#48c26b", // Teal
+    [EPredictionCase.BASELINE]: "#FECA57", // amber
+    [EPredictionCase.PESSIMISTIC]: "#FF6B6B", // Red
+};
 type TDataPoint = {
     x: number;
     y: number;
@@ -28,51 +37,8 @@ const FlakeOffChart = ({
     flakeOffData: TFlakeOffData | undefined;
     marketHistory: TCoinMarketHistory | undefined;
 }) => {
-    console.log("flakeOffData", flakeOffData);
-
-    const transformPredictionData = useCallback(() => {
-        const series = [] as TSeries[];
-
-        // Process each prediction
-        flakeOffData?.data?.forEach((prediction, index) => {
-            // Convert chart_data to ApexCharts format
-            const chartPoints = prediction.chartData.map((point) => ({
-                x: point.timestamp, // Already in milliseconds
-                y: point.price,
-                // volatility: point.volatility, // Additional data for tooltip
-            }));
-
-            // Add anchor point if it exists and is different from first point
-            const seriesData = [...chartPoints] as TChartPoint[];
-            // if (
-            //     prediction.anchor_point &&
-            //     prediction.anchor_point.timestamp !== chartPoints[0]?.x
-            // ) {
-            //     seriesData.unshift({
-            //         x: prediction.anchor_point.timestamp,
-            //         y: prediction.anchor_point.price,
-            //         isAnchor: true,
-            //     });
-            // }
-
-            series.push({
-                name: `Prediction on ${prediction.createdAt} (${prediction.accuracyScore}% accuracy)`,
-                data: seriesData,
-                type: "line",
-                color: `hsl(${(index * 50) % 360}, 70%, 60%)`,
-                // color: "#FF9F43",
-                strokeWidth: 2,
-                strokeDashArray: prediction.case === "baseline" ? 0 : 5, // Solid for baseline, dashed for others
-                zIndex: prediction.case === "baseline" ? 10 : 1,
-                opacity: prediction.case === "baseline" ? 1 : 0.8,
-            });
-        });
-
-        return series;
-    }, [flakeOffData]);
-
     // Transform base historical data to ApexCharts format
-    const transformBaseData = useCallback((): TSeries => {
+    const transformedBaseData = useMemo((): TSeries => {
         const coinName = marketHistory?.coin.name;
         const coinTicker = marketHistory?.coin.ticker;
         const chartPoints = marketHistory?.history?.prices?.map(
@@ -93,10 +59,61 @@ const FlakeOffChart = ({
         };
     }, [marketHistory]);
 
+    const transformedPredictionData = useMemo(() => {
+        const series = [] as TSeries[];
+
+        // Process each prediction
+        flakeOffData?.data?.forEach((prediction) => {
+            // Convert chart_data to ApexCharts format
+            const chartPoints = prediction.chartData.map((point) => ({
+                x: point.timestamp, // Already in milliseconds
+                y: point.price,
+            }));
+
+            // insert the closest point from the base data to the prediction data
+            const closestPoint = marketHistory?.history?.prices?.reduce(
+                (closest, current) => {
+                    if (!prediction.chartData?.[0]) return closest;
+
+                    const targetTimestamp = prediction.chartData[0].timestamp;
+                    const currentDiff = Math.abs(current[0] - targetTimestamp);
+                    const closestDiff = closest
+                        ? Math.abs(closest[0] - targetTimestamp)
+                        : Infinity;
+
+                    return currentDiff < closestDiff ? current : closest;
+                },
+                null as [number, number] | null
+            );
+            if (closestPoint) {
+                chartPoints.unshift({
+                    x: closestPoint[0],
+                    y: closestPoint[1],
+                });
+            }
+
+            // Add anchor point if it exists and is different from first point
+            const seriesData = [...chartPoints] as TChartPoint[];
+
+            series.push({
+                name: `Prediction on ${prediction.createdAt} (${prediction.accuracyScore}% accuracy)`,
+                data: seriesData,
+                type: "line",
+                color: caseColors[prediction.case],
+                strokeWidth: 2,
+                zIndex: 1,
+                strokeDashArray: 0,
+                opacity: 0.8,
+            });
+        });
+
+        return series;
+    }, [flakeOffData, marketHistory?.history?.prices]);
+
     const series = useMemo(() => {
-        const dataSeries = [transformBaseData(), ...transformPredictionData()];
+        const dataSeries = [transformedBaseData, ...transformedPredictionData];
         return dataSeries;
-    }, [transformBaseData, transformPredictionData]);
+    }, [transformedBaseData, transformedPredictionData]);
 
     const options = {
         chart: {
@@ -116,31 +133,12 @@ const FlakeOffChart = ({
             },
             redrawOnParentResize: true,
         },
-        colors: [
-            "var(--alpha-primary)",
-            // "#FF6B6B",
-            // "#4ECDC4",
-            // "#45B7D1",
-            // "#96CEB4",
-            // "#FECA57",
-            // "#FF9FF3",
-            // "#54A0FF",
-            // "#5F27CD",
-            // "#00D2D3",
-            "#FF9F43",
-            "#FF9F43",
-            "#FF9F43",
-            "#FF9F43",
-            "#FF9F43",
-            "#FF9F43",
-            "#FF9F43",
-        ],
         dataLabels: {
             enabled: false,
         },
         stroke: {
             curve: "straight",
-            width: [3, ...Array(10).fill(2)], // Thicker line for actual data
+            width: [3], // Thicker line for actual data
         },
         legend: {
             show: false,
@@ -163,7 +161,6 @@ const FlakeOffChart = ({
                     day: "dd MMM",
                     hour: "HH:mm",
                 },
-                // format: "MMM dd", // Add this line for date formatting
                 style: {
                     colors: "var(--alpha-primary-200)",
                     fontSize: "10px",
