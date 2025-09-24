@@ -24,6 +24,9 @@ import {
     recomputeWidgetsPos,
     getColType,
     EColumnType,
+    TWO_COL_WIDGETS_CONFIG,
+    useTwoColWidgets,
+    calculateTwoColWidgetsHeight,
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
@@ -33,14 +36,12 @@ import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
-import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
-import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS, WIDGETS } = CONFIG;
+const { UI, VIEWS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -124,27 +125,28 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         [isFullsize, selectedView?.data.widgets]
     );
 
-    const KasandraWidgetTemplateSlug = `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`;
+    const { widgets: twoColWidgets, twoColWidgetSlugs } =
+        useTwoColWidgets(selectedView);
+
     const layoutGrid = useMemo(() => {
         return computeLayoutGrid(
             selectedView?.data.widgets.filter(
-                (w) => w.widget.template.slug !== KasandraWidgetTemplateSlug
+                (w) => !twoColWidgetSlugs.includes(w.widget.template.slug)
             )
         );
-    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
+    }, [twoColWidgetSlugs, selectedView?.data.widgets]);
 
-    const kasandraModuleData = useMemo(() => {
-        const widgetData = selectedView?.data.widgets.find(
-            (w) => w.widget.template.slug === KasandraWidgetTemplateSlug
-        );
-        return widgetData;
-    }, [KasandraWidgetTemplateSlug, selectedView?.data.widgets]);
-
-    const isKasandraModuleCollapsed = useAppSelector((state) =>
-        kasandraModuleData?.hash
-            ? selectIsMinimised(kasandraModuleData.hash)(state)
-            : false
-    );
+    const twoColWidgetCollapsedStates = useAppSelector((state) => {
+        const collapsedStates: Record<string, boolean> = {};
+        Object.entries(twoColWidgets).forEach(([key, moduleData]) => {
+            if (moduleData?.hash) {
+                collapsedStates[key] = selectIsMinimised(moduleData.hash)(
+                    state
+                );
+            }
+        });
+        return collapsedStates;
+    });
 
     /**
      * The current layout state according to the screen size
@@ -352,16 +354,24 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 }}
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    {kasandraModuleData && (
-                        <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                            <div className="col-span-2">
-                                <KasandraContainer
-                                    moduleData={kasandraModuleData}
-                                    toggleAdjustable={() => {}}
-                                />
-                            </div>
-                        </div>
-                    )}
+                    <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 px-4">
+                        {Object.entries(TWO_COL_WIDGETS_CONFIG).map(
+                            ([key, config]) => {
+                                const moduleData = twoColWidgets[key];
+                                if (!moduleData) return null;
+
+                                const { Container } = config;
+                                return (
+                                    <div key={key} className="col-span-2">
+                                        <Container
+                                            moduleData={moduleData}
+                                            toggleAdjustable={() => {}}
+                                        />
+                                    </div>
+                                );
+                            }
+                        )}
+                    </div>
                     {layoutState?.map((widgets, colIndex) => (
                         <Droppable
                             // eslint-disable-next-line react/no-array-index-key
@@ -373,11 +383,24 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                     ref={provided.innerRef}
                                     {...provided.droppableProps}
                                     style={{
-                                        marginTop:
-                                            kasandraModuleData &&
-                                            (colIndex === 0 || colIndex === 1)
-                                                ? `${(((isKasandraModuleCollapsed ? WIDGETS.KASANDRA.COLLAPSED_WIDGET_HEIGHT : WIDGETS.KASANDRA.WIDGET_HEIGHT) as number) || 0) + 14}px`
-                                                : "0px",
+                                        marginTop: (() => {
+                                            if (
+                                                colIndex !== 0 &&
+                                                colIndex !== 1
+                                            ) {
+                                                return "0px";
+                                            }
+
+                                            const totalHeight =
+                                                calculateTwoColWidgetsHeight(
+                                                    twoColWidgets,
+                                                    twoColWidgetCollapsedStates
+                                                );
+
+                                            return totalHeight > 0
+                                                ? `${totalHeight}px`
+                                                : "0px";
+                                        })(),
                                     }}
                                 >
                                     {widgets.map((widget, rowIndex) => (

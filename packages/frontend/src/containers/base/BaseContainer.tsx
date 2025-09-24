@@ -177,7 +177,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     }
 
     return (
-        <>
+        <div>
             <div
                 id={moduleData.hash}
                 className="flex flex-col [&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
@@ -295,7 +295,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             >
                 <p>Switch to Desktop to get the best experience of {title}</p>
             </Dialog>
-        </>
+        </div>
     );
 };
 

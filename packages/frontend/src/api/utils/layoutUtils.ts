@@ -1,12 +1,30 @@
+import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
-import { TUserViewWidget } from "src/api/types";
+import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import KasandraContainer from "src/containers/kasandra/KasandraContainer";
+import MarketHeatmapContainer from "src/containers/market-heatmap/MarketHeatmapContainer";
 import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
+import { ETemplateNameRegistry } from "src/constants";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
+const { WIDGETS } = CONFIG;
 
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
+
+export const TWO_COL_WIDGETS_CONFIG = {
+    kasandra: {
+        templateName: ETemplateNameRegistry.Kasandra,
+        Container: KasandraContainer,
+        widgetConfig: WIDGETS.KASANDRA,
+    },
+    marketHeatmap: {
+        templateName: ETemplateNameRegistry.MarketHeatmap,
+        Container: MarketHeatmapContainer,
+        widgetConfig: WIDGETS.MARKET_HEATMAP,
+    },
+} as const;
 
 /**
  * Heads up: layout is in the form (col #, row #) or (x, y), starting from the
@@ -242,4 +260,52 @@ export const recomputeWidgetsPos = (
     }
 
     return widgets;
+};
+
+export const getTwoColWidgetTemplateSlugs = () => {
+    return Object.values(TWO_COL_WIDGETS_CONFIG).map(
+        (config) => `${config.templateName.toLowerCase()}_template`
+    );
+};
+
+export const useTwoColWidgets = (selectedView: TCachedView | undefined) => {
+    return useMemo(() => {
+        if (!selectedView) return { widgets: {}, twoColWidgetSlugs: [] };
+        const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
+        const widgets: Record<string, TUserViewWidget> = {};
+
+        Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+            const templateSlug = `${config.templateName.toLowerCase()}_template`;
+            const widgetData = selectedView?.data.widgets.find(
+                (w: TUserViewWidget) => w.widget.template.slug === templateSlug
+            );
+            widgets[key] = widgetData as TUserViewWidget;
+        });
+
+        return { widgets, twoColWidgetSlugs };
+    }, [selectedView]);
+};
+
+export const calculateTwoColWidgetsHeight = (
+    widgets: Record<string, TUserViewWidget>,
+    collapsedStates: Record<string, boolean>
+) => {
+    let totalHeight = 0;
+    const defaultMarginBottom = 14;
+
+    Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+        if (widgets[key]) {
+            if (collapsedStates[key]) {
+                totalHeight +=
+                    (config.widgetConfig.COLLAPSED_WIDGET_HEIGHT as number) ||
+                    0;
+            } else {
+                totalHeight +=
+                    (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
+            }
+            totalHeight += defaultMarginBottom;
+        }
+    });
+
+    return totalHeight;
 };

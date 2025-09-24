@@ -23,6 +23,7 @@ export type TGetCoinsRequest = {
     tags?: string;
     limit?: number;
     page?: number;
+    kasandra_supported?: boolean;
 } | void;
 export type TGetCoinsRawResponse = TPagination & {
     results: TRemoteCoin[];
