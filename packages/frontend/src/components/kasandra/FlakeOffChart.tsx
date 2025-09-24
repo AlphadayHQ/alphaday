@@ -28,6 +28,8 @@ const FlakeOffChart = ({
     flakeOffData: TFlakeOffData | undefined;
     marketHistory: TCoinMarketHistory | undefined;
 }) => {
+    console.log("flakeOffData", flakeOffData);
+
     const transformPredictionData = useCallback(() => {
         const series = [] as TSeries[];
 
