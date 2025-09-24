@@ -39,11 +39,19 @@ export type TInsightItem = {
     title: string;
     rationale: string;
     price: number;
+    type: "prediction";
     // sources: TInsightSource[];
+};
+
+export type THistoryInsightItem = Omit<TInsightItem, "case" | "type"> & {
+    type: "history";
 };
 
 export type TPredictions = {
     [key in EPredictionCase]: TPredictionData[];
 };
 
-export type TInsights = TInsightItem[];
+export type TInsights = {
+    predictions: TInsightItem[];
+    history: THistoryInsightItem[];
+};

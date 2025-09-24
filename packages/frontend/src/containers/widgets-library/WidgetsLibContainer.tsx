@@ -115,9 +115,7 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
             }
             if (widgetsCount >= maxWidgets) {
                 toast(
-                    `A maximum of ${String(
-                        maxWidgets
-                    )} widgets is allowed per board`,
+                    `A maximum of ${String(maxWidgets)} widgets is allowed per board`,
                     {
                         type: EToastRole.Error,
                         status: "alert",
@@ -125,9 +123,11 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
                 );
                 return;
             }
+
             const shortestCol = layoutState
                 .map((a) => a.length)
                 .indexOf(Math.min(...layoutState.map((a) => a.length)));
+
             const newWidget: TUserViewWidget = {
                 id: 990, // will be replaced on save view - doesn't have to be unique on the frontend
                 hash: uuidv4(), // will be replaced on save view - needs to be unique

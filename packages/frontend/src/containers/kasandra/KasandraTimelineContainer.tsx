@@ -1,5 +1,5 @@
 import { FC, useEffect, useCallback, useMemo } from "react";
-import { useView, useWidgetHeight } from "src/api/hooks";
+import { useFeatureFlags, useView, useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import {
     useGetKasandraCoinsQuery,
@@ -15,13 +15,17 @@ import { Logger } from "src/api/utils/logging";
 import KasandraTimelineModule from "src/components/kasandra/KasandraTimelineModule";
 import { TMarketMeta } from "src/components/market/types";
 import CONFIG from "src/config";
-import { ETemplateNameRegistry } from "src/constants";
+import { EFeaturesRegistry, ETemplateNameRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
 
 const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
     const { logButtonClicked } = useCustomAnalytics();
+
+    const { enabled: isKasandraHistoryAllowed } = useFeatureFlags(
+        EFeaturesRegistry.KasandraHistory
+    );
 
     const { selectedView } = useView();
 
@@ -128,7 +132,8 @@ const KasandraTimelineContainer: FC<IModuleContainer> = ({ moduleData }) => {
         useGetInsightsQuery({
             coin: selectedMarket?.slug,
             interval: selectedChartRange,
-            limit: 24,
+            limit: 30,
+            type: isKasandraHistoryAllowed ? undefined : "prediction",
         });
 
     const logData = useMemo(() => {
