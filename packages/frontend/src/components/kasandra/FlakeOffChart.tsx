@@ -1,11 +1,13 @@
 import { useMemo } from "react";
 import { ApexLineChart, twMerge } from "@alphaday/ui-kit";
+import moment from "moment";
 import {
     TCoinMarketHistory,
     TFlakeOffData,
     EPredictionCase,
 } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
+import { renderToString } from "src/api/utils/textUtils";
 
 const caseColors = {
     [EPredictionCase.OPTIMISTIC]: "#48c26b", // Teal
@@ -28,6 +30,164 @@ type TSeries = {
     zIndex: number;
     strokeDashArray?: number;
     opacity?: number;
+};
+
+type TCustomTooltip = {
+    series: number[][];
+    seriesIndex: number;
+    dataPointIndex: number;
+    w: {
+        config: {
+            series: TSeries[];
+        };
+    };
+    flakeOffData: TFlakeOffData | undefined;
+    marketHistory: TCoinMarketHistory | undefined;
+};
+
+const renderCustomTooltip = () => (props: TCustomTooltip) => {
+    const { seriesIndex, dataPointIndex, w } = props;
+    const currentSeries = w.config.series[seriesIndex];
+    const dataPoint = currentSeries.data[dataPointIndex];
+
+    if (!dataPoint) return "";
+
+    const timestamp = dataPoint.x;
+    const TIMESTAMP_TOLERANCE = 1 * 60 * 1000; // 1 minute in milliseconds
+
+    // Find all series with data points near this timestamp
+    const matchingData: Array<{
+        seriesName: string;
+        price: number;
+        color: string;
+        isActual: boolean;
+        case?: EPredictionCase;
+        startDate?: number;
+        accuracy?: number;
+    }> = [];
+
+    // Check all series for matching timestamps
+    w.config.series.forEach((series) => {
+        const matchingPoint = series.data.find(
+            (point) => Math.abs(point.x - timestamp) <= TIMESTAMP_TOLERANCE
+        );
+
+        if (matchingPoint) {
+            const isActual = series.name.includes("Actual");
+            let caseType: EPredictionCase | undefined;
+            let startDate: number | undefined;
+            let accuracy: number | undefined;
+
+            if (!isActual) {
+                // Extract metadata from series name: "Prediction on {createdAt} ({accuracyScore}% accuracy)"
+                const nameMatch = series.name.match(
+                    /Prediction on (\d+) \((\d+)% accuracy\)/
+                );
+                if (nameMatch) {
+                    startDate = parseInt(nameMatch[1], 10);
+                    accuracy = parseInt(nameMatch[2], 10);
+                }
+
+                // Find case type by matching color
+                caseType = Object.keys(caseColors).find(
+                    (key) => caseColors[key as EPredictionCase] === series.color
+                ) as EPredictionCase;
+            }
+
+            matchingData.push({
+                seriesName: series.name,
+                price: matchingPoint.y,
+                color: series.color,
+                isActual,
+                case: caseType,
+                startDate,
+                accuracy,
+            });
+        }
+    });
+
+    // Sort: actual data first, then by case order
+    const caseOrder = [
+        EPredictionCase.OPTIMISTIC,
+        EPredictionCase.BASELINE,
+        EPredictionCase.PESSIMISTIC,
+    ];
+    matchingData.sort((a, b) => {
+        if (a.isActual && !b.isActual) return -1;
+        if (!a.isActual && b.isActual) return 1;
+        if (!a.isActual && !b.isActual && a.case && b.case) {
+            return caseOrder.indexOf(a.case) - caseOrder.indexOf(b.case);
+        }
+        return 0;
+    });
+
+    const getCaseName = (caseType: EPredictionCase) => {
+        switch (caseType) {
+            case EPredictionCase.OPTIMISTIC:
+                return "Optimistic";
+            case EPredictionCase.BASELINE:
+                return "Baseline";
+            case EPredictionCase.PESSIMISTIC:
+                return "Pessimistic";
+            default:
+                return "Prediction";
+        }
+    };
+
+    console.log("matchingData", matchingData);
+
+    return renderToString(
+        <div className="px-2.5 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant100 border-[0.5px] border-borderLine fontGroup-support text-primary">
+            <div className="mb-2 text-white fontGroup-support !font-semibold">
+                {moment(timestamp).format("MMM DD, YYYY")}{" "}
+                {moment(timestamp).format("HH:mm")}
+            </div>
+
+            {matchingData.map((data) => (
+                <div
+                    key={data.seriesName}
+                    className="mb-1 flex justify-between w-full"
+                >
+                    <div className="text-white fontGroup-support inline">
+                        <div
+                            className="inline-flex mr-1.5 mb-0.5 self-start w-1 h-1 rounded-full"
+                            style={{ backgroundColor: data.color }}
+                        />
+                        {data.isActual ? (
+                            "Historical Price:"
+                        ) : (
+                            <span>
+                                {getCaseName(data.case as EPredictionCase)}
+                                {data.startDate && (
+                                    <span className="text-xs text-gray-400 ml-1">
+                                        (Started:{" "}
+                                        {moment(data.startDate).format(
+                                            "MMM DD"
+                                        )}
+                                        )
+                                    </span>
+                                )}
+                            </span>
+                        )}
+                    </div>
+                    <div className="inline ml-1 text-white">
+                        {
+                            formatNumber({
+                                value: data.price,
+                                style: ENumberStyle.Currency,
+                                currency: "USD",
+                            }).value
+                        }
+                        {data.accuracy && (
+                            <span className="text-xs text-gray-400 ml-1">
+                                ({data.accuracy}%)
+                            </span>
+                        )}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
 };
 
 const FlakeOffChart = ({
@@ -230,16 +390,20 @@ const FlakeOffChart = ({
             },
         },
         tooltip: {
-            shared: true,
-            intersect: false,
-            x: {
-                format: "MMM dd, yyyy",
+            title: {
+                formatter: (seriesName: string) => `$${seriesName}`,
             },
             y: {
-                formatter(val: number) {
-                    return `$${val.toFixed(2)}`;
+                formatter: undefined,
+                title: {
+                    formatter: (val: string) => {
+                        return renderToString(
+                            <span className="text-white">${val}:</span>
+                        );
+                    },
                 },
             },
+            custom: renderCustomTooltip(),
         },
         plotOptions: {
             line: {
