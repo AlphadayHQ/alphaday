@@ -195,14 +195,14 @@ const KasandraModule: FC<IKasandraModule> = ({
                             </div>
                         )}
 
-                        <div className="pt-4 pb-10 px-5 w-full border-none single-col:flex single-col:justify-end single-col:items-center">
+                        <div className="pt-4 pb-10 px-5 w-full border-none flex flex-col justify-end items-center two-col:flex-row">
                             <DateRangeBar
                                 selectedChartRange={selectedChartRange}
                                 onSelectChartRange={onSelectChartRange}
                                 selectedChartType={EChartType.Line}
                                 isKasandra
                             />
-                            <div className="w-56 ml-2 -mr-4 [&>.coin-select-indicator]:pr-0">
+                            <div className="w-56 ml-2 -mr-4 [&>.coin-select-indicator]:pr-0 flex justify-end">
                                 <CaseSelect
                                     selectedCase={selectedCase}
                                     onSelect={onSelectCase}
