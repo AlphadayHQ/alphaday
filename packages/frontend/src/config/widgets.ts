@@ -50,6 +50,7 @@ const WIDGETS_CONFIG = {
         DEFAULT_INTERVAL: "1W",
         DEFAULT_SELECTED_CASE: { id: "all", name: "All" },
         DEFAULT_DISCLAIMER_ACCEPTED: false,
+        TWO_COL_SUPPORT: true,
     },
     [ETemplateNameRegistry.KasandraTimeline]: {
         WIDGET_HEIGHT: 550,
@@ -189,6 +190,13 @@ const WIDGETS_CONFIG = {
         POLLING_INTERVAL: 6 * 60 * 60, // 6h
         DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
         ADJUSTABLE: false,
+    },
+    [ETemplateNameRegistry.MarketHeatmap]: {
+        WIDGET_HEIGHT: 540,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        POLLING_INTERVAL: 5 * 60, // 5 min
+        ADJUSTABLE: true,
+        TWO_COL_SUPPORT: true,
     },
     [ETemplateNameRegistry.Polls]: {
         ADJUSTABLE: false,

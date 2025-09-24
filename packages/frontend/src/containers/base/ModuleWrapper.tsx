@@ -1,7 +1,7 @@
 // TODO (xavier-charles): uncomment the commented code
 import { FC, useState, useCallback, memo, Suspense } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable, DraggableProvided } from "react-beautiful-dnd";
 import { useHistory } from "react-router";
 import { useTutorial, useWidgetHeight } from "src/api/hooks";
 import { useAppSelector } from "src/api/store/hooks";
@@ -28,6 +28,7 @@ interface IModuleWrapper {
         slug: TTemplateSlug;
         hash: string | undefined;
     };
+    isDragDisabled?: boolean;
 }
 
 const ModuleWrapper: FC<IModuleWrapper> = ({
@@ -36,6 +37,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     colIndex,
     preferredDragTutorialWidget,
     fullSizeWidgetConfig,
+    isDragDisabled,
 }) => {
     const history = useHistory();
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
@@ -80,6 +82,60 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         colIndex === preferredDragTutorialWidget?.[0] &&
         rowIndex === preferredDragTutorialWidget?.[1];
 
+    const renderContent = (
+        provided?: DraggableProvided,
+        isDragging?: boolean
+    ) => (
+        <BaseContainer
+            uiProps={{
+                dragProps: provided?.dragHandleProps ?? undefined,
+                isDragging: isDragging || false,
+                onToggleShowFullSize: (val: "open" | "close") => {
+                    if (val === "open") {
+                        const fullSizePath =
+                            FULLSIZE_ROUTES_DICT[templateSlug]?.routes[0];
+                        if (viewPath === "/" || fullSizePath === undefined) {
+                            Logger.error(
+                                "ModuleWrapper: could not build full-size widget url, it should never happen. Widget slug:",
+                                templateSlug
+                            );
+                        }
+                        history.push(
+                            `${viewPath}${fullSizePath?.substring(
+                                1 // remove the `/` at the beginning
+                            )}`
+                        );
+                    } else {
+                        history.push(viewPath);
+                    }
+                },
+                allowFullSize,
+                showFullSize,
+                setTutFocusElemRef:
+                    currentTutorial.tip?.id ===
+                        ETutorialTipId.ReArrangeWidget && isDragTutorialWidget
+                        ? setTutFocusElemRef
+                        : undefined,
+            }}
+            moduleData={moduleData}
+            adjustable={isAdjustable}
+        >
+            <Suspense
+                fallback={<ModuleLoader $height={`${WIDGET_HEIGHT}px`} />}
+            >
+                <ModuleContainer
+                    moduleData={moduleData}
+                    showFullSize={showFullSize}
+                    toggleAdjustable={handleAdjustable}
+                />
+            </Suspense>
+        </BaseContainer>
+    );
+
+    if (isDragDisabled) {
+        return renderContent();
+    }
+
     return (
         <Draggable draggableId={moduleData.hash} index={rowIndex}>
             {(provided, { isDragging }) => (
@@ -91,66 +147,10 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                             ? CONFIG.UI.WIDGET_SIZE_TRACKING_ID
                             : ""
                     }
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    // style={{
-                    //     ...getItemStyle(
-                    //         provided.draggableProps.style,
-                    //         isDragging
-                    //     ),
-                    // }}
+                    ref={provided?.innerRef}
+                    {...(provided?.draggableProps || {})}
                 >
-                    <BaseContainer
-                        uiProps={{
-                            dragProps: provided.dragHandleProps ?? undefined,
-                            isDragging,
-                            onToggleShowFullSize: (val: "open" | "close") => {
-                                if (val === "open") {
-                                    const fullSizePath =
-                                        FULLSIZE_ROUTES_DICT[templateSlug]
-                                            ?.routes[0];
-                                    if (
-                                        viewPath === "/" ||
-                                        fullSizePath === undefined
-                                    ) {
-                                        Logger.error(
-                                            "ModuleWrapper: could not build full-size widget url, it should never happen. Widget slug:",
-                                            templateSlug
-                                        );
-                                    }
-                                    history.push(
-                                        `${viewPath}${fullSizePath?.substring(
-                                            1 // remove the `/` at the beginning
-                                        )}`
-                                    );
-                                } else {
-                                    history.push(viewPath);
-                                }
-                            },
-                            allowFullSize,
-                            showFullSize,
-                            setTutFocusElemRef:
-                                currentTutorial.tip?.id ===
-                                    ETutorialTipId.ReArrangeWidget &&
-                                isDragTutorialWidget
-                                    ? setTutFocusElemRef
-                                    : undefined,
-                        }}
-                        moduleData={moduleData}
-                        adjustable={isAdjustable}
-                    >
-                        <Suspense
-                            fallback={
-                                <ModuleLoader $height={`${WIDGET_HEIGHT}px`} />
-                            }
-                        >
-                            <ModuleContainer
-                                moduleData={moduleData}
-                                showFullSize={showFullSize}
-                                toggleAdjustable={handleAdjustable}
-                            />
-                        </Suspense>
-                    </BaseContainer>
+                    {renderContent(provided, isDragging)}
                 </div>
             )}
         </Draggable>
