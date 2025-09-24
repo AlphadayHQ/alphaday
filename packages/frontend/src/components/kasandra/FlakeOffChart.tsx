@@ -45,191 +45,206 @@ type TCustomTooltip = {
     marketHistory: TCoinMarketHistory | undefined;
 };
 
-const renderCustomTooltip = () => (props: TCustomTooltip) => {
-    const { seriesIndex, dataPointIndex, w } = props;
-    const currentSeries = w.config.series[seriesIndex];
-    const dataPoint = currentSeries.data[dataPointIndex];
+const renderCustomTooltip =
+    (selectedCase: EPredictionCase | "all" | undefined) =>
+    (props: TCustomTooltip) => {
+        const { seriesIndex, dataPointIndex, w } = props;
+        const currentSeries = w.config.series[seriesIndex];
+        const dataPoint = currentSeries.data[dataPointIndex];
 
-    if (!dataPoint) return "";
+        if (!dataPoint) return "";
 
-    const timestamp = dataPoint.x;
-    const TIME_GAP = Math.abs(
-        w.config.series[1].data[1].x - w.config.series[1].data[2].x
-    );
-
-    const TIMESTAMP_TOLERANCE = TIME_GAP || 5 * 60 * 1000; // 1 minute in milliseconds
-
-    // Find all series with data points near this timestamp
-    const matchingData: Array<{
-        seriesName: string;
-        price: number;
-        color: string;
-        isActual: boolean;
-        case?: EPredictionCase;
-        startDate?: number;
-        calculatedAccuracy?: number;
-    }> = [];
-
-    // First, find the actual historical price at this timestamp
-    let actualPrice: number | undefined;
-    const actualSeries = w.config.series.find((series) =>
-        series.name.includes("Actual")
-    );
-    if (actualSeries) {
-        const actualPoint = actualSeries.data.find(
-            (point) => Math.abs(point.x - timestamp) <= TIMESTAMP_TOLERANCE
-        );
-        if (actualPoint) {
-            actualPrice = actualPoint.y;
-        }
-    }
-
-    // Helper function to calculate accuracy percentage
-    const calculateAccuracy = (
-        predictedPrice: number,
-        _actualPrice: number
-    ): number => {
-        if (actualPrice === 0) return 0;
-        const percentageError =
-            Math.abs((predictedPrice - _actualPrice) / _actualPrice) * 100;
-        return Math.max(0, Math.min(100, 100 - percentageError));
-    };
-
-    // Check all series for matching timestamps
-    w.config.series.forEach((series) => {
-        const matchingPoint = series.data.find(
-            (point) => Math.abs(point.x - timestamp) <= TIMESTAMP_TOLERANCE
+        const timestamp = dataPoint.x;
+        const TIME_GAP = Math.abs(
+            w.config.series[1].data[1].x - w.config.series[1].data[2].x
         );
 
-        if (matchingPoint) {
-            const isActual = series.name.includes("Actual");
-            let caseType: EPredictionCase | undefined;
-            let startDate: number | undefined;
-            let calculatedAccuracy: number | undefined;
+        const TIMESTAMP_TOLERANCE = TIME_GAP || 5 * 60 * 1000; // 1 minute in milliseconds
 
-            if (!isActual) {
-                // Extract metadata from series name: "Prediction on {createdAt} ({accuracyScore}% accuracy)"
-                const nameMatch = series.name.match(
-                    /Prediction on (\d+) \((\d+)% accuracy\)/
-                );
-                if (nameMatch) {
-                    startDate = parseInt(nameMatch[1], 10);
-                }
+        // Find all series with data points near this timestamp
+        const matchingData: Array<{
+            seriesName: string;
+            price: number;
+            color: string;
+            isActual: boolean;
+            case?: EPredictionCase;
+            startDate?: number;
+            calculatedAccuracy?: number;
+        }> = [];
 
-                // Find case type by matching color
-                caseType = Object.keys(caseColors).find(
-                    (key) => caseColors[key as EPredictionCase] === series.color
-                ) as EPredictionCase;
-
-                // Calculate real-time accuracy if we have actual price data
-                if (actualPrice !== undefined) {
-                    calculatedAccuracy = calculateAccuracy(
-                        matchingPoint.y,
-                        actualPrice
-                    );
-                }
+        // First, find the actual historical price at this timestamp
+        let actualPrice: number | undefined;
+        const actualSeries = w.config.series.find((series) =>
+            series.name.includes("Actual")
+        );
+        if (actualSeries) {
+            const actualPoint = actualSeries.data.find(
+                (point) => Math.abs(point.x - timestamp) <= TIMESTAMP_TOLERANCE
+            );
+            if (actualPoint) {
+                actualPrice = actualPoint.y;
             }
-
-            matchingData.push({
-                seriesName: series.name,
-                price: matchingPoint.y,
-                color: series.color,
-                isActual,
-                case: caseType,
-                startDate,
-                calculatedAccuracy,
-            });
         }
-    });
 
-    // Sort: actual data first, then by case order
-    const caseOrder = [
-        EPredictionCase.OPTIMISTIC,
-        EPredictionCase.BASELINE,
-        EPredictionCase.PESSIMISTIC,
-    ];
-    matchingData.sort((a, b) => {
-        if (a.isActual && !b.isActual) return -1;
-        if (!a.isActual && b.isActual) return 1;
-        if (!a.isActual && !b.isActual && a.case && b.case) {
-            return caseOrder.indexOf(a.case) - caseOrder.indexOf(b.case);
-        }
-        return 0;
-    });
+        // Helper function to calculate accuracy percentage
+        const calculateAccuracy = (
+            predictedPrice: number,
+            _actualPrice: number
+        ): number => {
+            if (actualPrice === 0) return 0;
+            const percentageError =
+                Math.abs((predictedPrice - _actualPrice) / _actualPrice) * 100;
+            return Math.max(0, Math.min(100, 100 - percentageError));
+        };
 
-    const getCaseName = (caseType: EPredictionCase) => {
-        switch (caseType) {
-            case EPredictionCase.OPTIMISTIC:
-                return "Optimistic";
-            case EPredictionCase.BASELINE:
-                return "Baseline";
-            case EPredictionCase.PESSIMISTIC:
-                return "Pessimistic";
-            default:
-                return "Prediction";
-        }
-    };
+        // Check all series for matching timestamps
+        w.config.series.forEach((series) => {
+            const matchingPoint = series.data.find(
+                (point) => Math.abs(point.x - timestamp) <= TIMESTAMP_TOLERANCE
+            );
 
-    return renderToString(
-        <div className="px-2.5 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant100 border-[0.5px] border-borderLine fontGroup-support text-primary">
-            <div className="mb-2 text-white fontGroup-support !font-semibold">
-                {moment(timestamp).format("MMM DD, YYYY")}{" "}
-                {moment(timestamp).format("HH:mm")}
-            </div>
+            if (matchingPoint) {
+                const isActual = series.name.includes("Actual");
+                let caseType: EPredictionCase | undefined;
+                let startDate: number | undefined;
+                let calculatedAccuracy: number | undefined;
 
-            {matchingData.map((data) => (
-                <div
-                    key={data.seriesName}
-                    className="mb-1 flex justify-between w-full"
-                >
-                    <div className="text-white fontGroup-support inline">
-                        <div
-                            className="inline-flex mr-1.5 mb-0.5 self-start w-1 h-1 rounded-full"
-                            style={{ backgroundColor: data.color }}
-                        />
-                        {data.isActual ? (
-                            "Historical Price:"
-                        ) : (
-                            <span>
-                                {getCaseName(data.case as EPredictionCase)}
-                                {data.startDate && (
-                                    <span className="text-xs text-gray-400 ml-1">
-                                        (Started:{" "}
-                                        {moment(data.startDate).format(
-                                            "MMM DD"
-                                        )}
-                                        )
-                                    </span>
-                                )}
-                            </span>
-                        )}
-                    </div>
-                    <div className="inline ml-1 text-white">
-                        {
-                            formatNumber({
-                                value: data.price,
-                                style: ENumberStyle.Currency,
-                                currency: "USD",
-                            }).value
-                        }
-                        {data.calculatedAccuracy !== undefined && (
-                            <span className="text-xs text-gray-400 ml-1">
-                                ({data.calculatedAccuracy.toFixed(1)}%)
-                            </span>
-                        )}
-                    </div>
+                if (!isActual) {
+                    // Extract metadata from series name: "Prediction on {createdAt} ({accuracyScore}% accuracy)"
+                    const nameMatch = series.name.match(
+                        /Prediction on (\d+) \((\d+)% accuracy\)/
+                    );
+                    if (nameMatch) {
+                        startDate = parseInt(nameMatch[1], 10);
+                    }
+
+                    // Find case type by matching color
+                    caseType = Object.keys(caseColors).find(
+                        (key) =>
+                            caseColors[key as EPredictionCase] === series.color
+                    ) as EPredictionCase;
+
+                    // Calculate real-time accuracy if we have actual price data
+                    if (actualPrice !== undefined) {
+                        calculatedAccuracy = calculateAccuracy(
+                            matchingPoint.y,
+                            actualPrice
+                        );
+                    }
+
+                    // Filter by selected case - only show if case matches the current filter
+                    const shouldShowInTooltip =
+                        !selectedCase ||
+                        selectedCase === "all" ||
+                        selectedCase === caseType;
+
+                    if (!shouldShowInTooltip) {
+                        return; // Skip this prediction in tooltip
+                    }
+                }
+
+                matchingData.push({
+                    seriesName: series.name,
+                    price: matchingPoint.y,
+                    color: series.color,
+                    isActual,
+                    case: caseType,
+                    startDate,
+                    calculatedAccuracy,
+                });
+            }
+        });
+
+        // Sort: actual data first, then by case order
+        const caseOrder = [
+            EPredictionCase.OPTIMISTIC,
+            EPredictionCase.BASELINE,
+            EPredictionCase.PESSIMISTIC,
+        ];
+        matchingData.sort((a, b) => {
+            if (a.isActual && !b.isActual) return -1;
+            if (!a.isActual && b.isActual) return 1;
+            if (!a.isActual && !b.isActual && a.case && b.case) {
+                return caseOrder.indexOf(a.case) - caseOrder.indexOf(b.case);
+            }
+            return 0;
+        });
+
+        const getCaseName = (caseType: EPredictionCase) => {
+            switch (caseType) {
+                case EPredictionCase.OPTIMISTIC:
+                    return "Optimistic";
+                case EPredictionCase.BASELINE:
+                    return "Baseline";
+                case EPredictionCase.PESSIMISTIC:
+                    return "Pessimistic";
+                default:
+                    return "Prediction";
+            }
+        };
+
+        return renderToString(
+            <div className="px-2.5 py-2 flex flex-col break-word rounded-[5px] bg-backgroundVariant100 border-[0.5px] border-borderLine fontGroup-support text-primary">
+                <div className="mb-2 text-white fontGroup-support !font-semibold">
+                    {moment(timestamp).format("MMM DD, YYYY")}{" "}
+                    {moment(timestamp).format("HH:mm")}
                 </div>
-            ))}
-        </div>
-    );
-};
+
+                {matchingData.map((data) => (
+                    <div
+                        key={data.seriesName}
+                        className="mb-1 flex justify-between w-full"
+                    >
+                        <div className="text-white fontGroup-support inline">
+                            <div
+                                className="inline-flex mr-1.5 mb-0.5 self-start w-1 h-1 rounded-full"
+                                style={{ backgroundColor: data.color }}
+                            />
+                            {data.isActual ? (
+                                "Historical Price:"
+                            ) : (
+                                <span>
+                                    {getCaseName(data.case as EPredictionCase)}
+                                    {data.startDate && (
+                                        <span className="text-xs text-gray-400 ml-1">
+                                            (Started:{" "}
+                                            {moment(data.startDate).format(
+                                                "MMM DD"
+                                            )}
+                                            )
+                                        </span>
+                                    )}
+                                </span>
+                            )}
+                        </div>
+                        <div className="inline ml-1 text-white">
+                            {
+                                formatNumber({
+                                    value: data.price,
+                                    style: ENumberStyle.Currency,
+                                    currency: "USD",
+                                }).value
+                            }
+                            {data.calculatedAccuracy !== undefined && (
+                                <span className="text-xs text-gray-400 ml-1">
+                                    ({data.calculatedAccuracy.toFixed(1)}%)
+                                </span>
+                            )}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
+    };
 
 const FlakeOffChart = ({
     flakeOffData,
     marketHistory,
+    selectedCase,
 }: {
     flakeOffData: TFlakeOffData | undefined;
     marketHistory: TCoinMarketHistory | undefined;
+    selectedCase: EPredictionCase | "all" | undefined;
 }) => {
     // Transform base historical data to ApexCharts format
     const transformedBaseData = useMemo((): TSeries => {
@@ -258,6 +273,16 @@ const FlakeOffChart = ({
 
         // Process each prediction
         flakeOffData?.data?.forEach((prediction) => {
+            // Filter by selected case - show all if selectedCase is undefined, "all", or matches the prediction case
+            const shouldShowCase =
+                !selectedCase ||
+                selectedCase === "all" ||
+                selectedCase === prediction.case;
+
+            if (!shouldShowCase) {
+                return; // Skip this prediction
+            }
+
             // Convert chart_data to ApexCharts format
             const chartPoints = prediction.chartData.map((point) => ({
                 x: point.timestamp, // Already in milliseconds
@@ -302,7 +327,7 @@ const FlakeOffChart = ({
         });
 
         return series;
-    }, [flakeOffData, marketHistory?.history?.prices]);
+    }, [flakeOffData, marketHistory?.history?.prices, selectedCase]);
 
     const series = useMemo(() => {
         const dataSeries = [transformedBaseData, ...transformedPredictionData];
@@ -437,7 +462,7 @@ const FlakeOffChart = ({
                     },
                 },
             },
-            custom: renderCustomTooltip(),
+            custom: renderCustomTooltip(selectedCase),
         },
         plotOptions: {
             line: {

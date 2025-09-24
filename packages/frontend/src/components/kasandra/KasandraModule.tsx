@@ -227,6 +227,7 @@ const KasandraModule: FC<IKasandraModule> = ({
                     <FlakeOffChart
                         flakeOffData={flakeOffData}
                         marketHistory={selectedMarketHistory}
+                        selectedCase={selectedCase?.id}
                     />
                 </div>
                 <div className="w-full flex py-0 px-4 flex-wrap">
