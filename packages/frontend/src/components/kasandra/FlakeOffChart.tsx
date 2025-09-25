@@ -294,10 +294,12 @@ const FlakeOffChart = ({
             }
 
             // Convert chart_data to ApexCharts format
-            const chartPoints = prediction.chartData.map((point) => ({
-                x: point.timestamp, // Already in milliseconds
-                y: point.price,
-            }));
+            const chartPoints = prediction.chartData
+                .slice(0, 8)
+                .map((point) => ({
+                    x: point.timestamp, // Already in milliseconds
+                    y: point.price,
+                }));
 
             // insert the closest point from the base data to the prediction data
             const closestPoint = marketHistory?.history?.prices?.reduce(
@@ -346,6 +348,16 @@ const FlakeOffChart = ({
         ];
         return dataSeries;
     }, [transformedHistoryData, transformedPredictionData]);
+
+    const minValue = useMemo(() => {
+        const data = series.flatMap((s) => s.data.map((point) => point.y));
+        return Math.min(...data);
+    }, [series]);
+
+    const maxValue = useMemo(() => {
+        const data = series.flatMap((s) => s.data.map((point) => point.y));
+        return Math.max(...data);
+    }, [series]);
 
     const options = {
         chart: {
@@ -409,10 +421,11 @@ const FlakeOffChart = ({
                 //     });
                 // },
             },
-            // convertedCatToNumeric: false,
         },
         yaxis: {
             tickAmount: 3,
+            min: minValue,
+            max: maxValue,
             decimalsInFloat: false,
 
             labels: {
