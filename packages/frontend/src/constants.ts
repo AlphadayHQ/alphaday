@@ -76,6 +76,7 @@ export enum ETemplateNameRegistry {
     PieChart = "PIE_CHART",
     Podcast = "PODCAST",
     Polls = "POLLS",
+    Polymarket = "POLYMARKET",
     Portfolio = "PORTFOLIO",
     Reddit = "REDDIT",
     Reports = "REPORTS",
