@@ -192,6 +192,15 @@ const API_V0 = {
             BASE: "features",
             LIST: "/allowed/",
         },
+        POLYMARKET: {
+            BASE: "polymarkets",
+            EVENTS: "/events/",
+            MARKETS: "/markets/",
+            MARKET_STATS: "/markets/stats/",
+            MARKET_HISTORY: (id: number): string => `/markets/${id}/history/`,
+            EVENT_BY_ID: (id: number): string => `/events/${id}/`,
+            MARKET_BY_ID: (id: number): string => `/markets/${id}/`,
+        },
     },
 };
 
