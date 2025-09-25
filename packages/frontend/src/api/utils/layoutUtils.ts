@@ -14,16 +14,16 @@ const { WIDGETS } = CONFIG;
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
 export const TWO_COL_WIDGETS_CONFIG = {
-	kasandra: {
-		templateName: ETemplateNameRegistry.Kasandra,
-		Container: KasandraContainer,
-		widgetConfig: WIDGETS.KASANDRA,
-	},
-	marketHeatmap: {
-		templateName: ETemplateNameRegistry.MarketHeatmap,
-		Container: MarketHeatmapContainer,
-		widgetConfig: WIDGETS.MARKET_HEATMAP,
-	},
+    kasandra: {
+        templateName: ETemplateNameRegistry.Kasandra,
+        Container: KasandraContainer,
+        widgetConfig: WIDGETS.KASANDRA,
+    },
+    marketHeatmap: {
+        templateName: ETemplateNameRegistry.MarketHeatmap,
+        Container: MarketHeatmapContainer,
+        widgetConfig: WIDGETS.MARKET_HEATMAP,
+    },
 } as const;
 
 /**
@@ -37,44 +37,44 @@ export const TWO_COL_WIDGETS_CONFIG = {
  * w21 = L[1][2]
  */
 export type TLayoutGrid = {
-	singleCol: [TUserViewWidget[]];
-	twoCol: [TUserViewWidget[], TUserViewWidget[]];
-	threeCol: [TUserViewWidget[], TUserViewWidget[], TUserViewWidget[]];
-	fourCol: [
-		TUserViewWidget[],
-		TUserViewWidget[],
-		TUserViewWidget[],
-		TUserViewWidget[],
-	];
+    singleCol: [TUserViewWidget[]];
+    twoCol: [TUserViewWidget[], TUserViewWidget[]];
+    threeCol: [TUserViewWidget[], TUserViewWidget[], TUserViewWidget[]];
+    fourCol: [
+        TUserViewWidget[],
+        TUserViewWidget[],
+        TUserViewWidget[],
+        TUserViewWidget[],
+    ];
 };
 
 export enum EColumnType {
-	SingleCol = "singleCol",
-	TwoCol = "twoCol",
-	ThreeCol = "threeCol",
-	FourCol = "fourCol",
+    SingleCol = "singleCol",
+    TwoCol = "twoCol",
+    ThreeCol = "threeCol",
+    FourCol = "fourCol",
 }
 
 type TduplicatePositionWidgets = [TUserViewWidget, EColumnType];
 
 export const getItemStyle = (
-	draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
-	isDraggingWidget: boolean,
+    draggableStyle: DraggingStyle | NotDraggingStyle | undefined,
+    isDraggingWidget: boolean
 ): DraggingStyle | { zIndex: number } => {
-	if (draggableStyle !== undefined) {
-		return {
-			// styles we need to apply on draggables
-			...draggableStyle,
+    if (draggableStyle !== undefined) {
+        return {
+            // styles we need to apply on draggables
+            ...draggableStyle,
 
-			// override z-index
-			zIndex: isDraggingWidget
-				? Z_INDEX_REGISTRY.DRAGGING
-				: Z_INDEX_REGISTRY.DRAGGABLE,
-		};
-	}
-	return {
-		zIndex: Z_INDEX_REGISTRY.DRAGGABLE,
-	};
+            // override z-index
+            zIndex: isDraggingWidget
+                ? Z_INDEX_REGISTRY.DRAGGING
+                : Z_INDEX_REGISTRY.DRAGGABLE,
+        };
+    }
+    return {
+        zIndex: Z_INDEX_REGISTRY.DRAGGABLE,
+    };
 };
 
 /**
@@ -84,159 +84,159 @@ export const getItemStyle = (
  * @param sortOrder
  */
 const getCoordinates = (sortOrder: number) => {
-	return {
-		[EColumnType.SingleCol]: sortOrder,
-		[EColumnType.TwoCol]: {
-			x: sortOrder % 2,
-			y: Math.floor(sortOrder / 2),
-		},
-		[EColumnType.ThreeCol]: {
-			x: sortOrder % 3,
-			y: Math.floor(sortOrder / 3),
-		},
-		[EColumnType.FourCol]: {
-			x: sortOrder % 4,
-			y: Math.floor(sortOrder / 4),
-		},
-	};
+    return {
+        [EColumnType.SingleCol]: sortOrder,
+        [EColumnType.TwoCol]: {
+            x: sortOrder % 2,
+            y: Math.floor(sortOrder / 2),
+        },
+        [EColumnType.ThreeCol]: {
+            x: sortOrder % 3,
+            y: Math.floor(sortOrder / 3),
+        },
+        [EColumnType.FourCol]: {
+            x: sortOrder % 4,
+            y: Math.floor(sortOrder / 4),
+        },
+    };
 };
 
 const shortestCol = (grid: TUserViewWidget[][]) =>
-	grid.map((a) => a.length).indexOf(Math.min(...grid.map((a) => a.length)));
+    grid.map((a) => a.length).indexOf(Math.min(...grid.map((a) => a.length)));
 
 export const computeLayoutGrid: (
-	viewWidgets: TUserViewWidget[] | undefined,
+    viewWidgets: TUserViewWidget[] | undefined
 ) => TLayoutGrid | undefined = (viewWidgets) => {
-	if (viewWidgets === undefined) return undefined;
-	const layout: TLayoutGrid = {
-		singleCol: [[]],
-		twoCol: [[], []],
-		threeCol: [[], [], []],
-		fourCol: [[], [], [], []],
-	};
-	const duplicatePositionWidgets: TduplicatePositionWidgets[] = [];
+    if (viewWidgets === undefined) return undefined;
+    const layout: TLayoutGrid = {
+        singleCol: [[]],
+        twoCol: [[], []],
+        threeCol: [[], [], []],
+        fourCol: [[], [], [], []],
+    };
+    const duplicatePositionWidgets: TduplicatePositionWidgets[] = [];
 
-	viewWidgets.forEach((widget) => {
-		const coords = getCoordinates(widget.sort_order);
+    viewWidgets.forEach((widget) => {
+        const coords = getCoordinates(widget.sort_order);
 
-		// sort_order already occupied in layout
-		if (layout.singleCol[0][coords.singleCol] !== undefined) {
-			Logger.warn(
-				`computeLayoutState: widget ${String(
-					widget.widget.name,
-				)} has same sort_order as ${
-					layout.singleCol[0][coords.singleCol].widget.name
-				} : ${String(coords.singleCol)}. Reassigning ${String(
-					widget.widget.name,
-				)} a new sort_order
-            `,
-			);
-			duplicatePositionWidgets.push([widget, EColumnType.SingleCol]);
-			return;
-		}
-		// Mobile
-		layout.singleCol[0][coords.singleCol] = { ...widget };
-		// Tablet
-		layout.twoCol[coords.twoCol.x][coords.twoCol.y] = {
-			...widget,
-		};
-		// Desktop
-		layout.threeCol[coords.threeCol.x][coords.threeCol.y] = {
-			...widget,
-		};
-		// Wide
-		layout.fourCol[coords.fourCol.x][coords.fourCol.y] = {
-			...widget,
-		};
-	});
+        // sort_order already occupied in layout
+        if (layout.singleCol[0][coords.singleCol] !== undefined) {
+            Logger.warn(
+                `computeLayoutState: widget ${String(
+                    widget.widget.name
+                )} has same sort_order as ${
+                    layout.singleCol[0][coords.singleCol].widget.name
+                } : ${String(coords.singleCol)}. Reassigning ${String(
+                    widget.widget.name
+                )} a new sort_order
+            `
+            );
+            duplicatePositionWidgets.push([widget, EColumnType.SingleCol]);
+            return;
+        }
+        // Mobile
+        layout.singleCol[0][coords.singleCol] = { ...widget };
+        // Tablet
+        layout.twoCol[coords.twoCol.x][coords.twoCol.y] = {
+            ...widget,
+        };
+        // Desktop
+        layout.threeCol[coords.threeCol.x][coords.threeCol.y] = {
+            ...widget,
+        };
+        // Wide
+        layout.fourCol[coords.fourCol.x][coords.fourCol.y] = {
+            ...widget,
+        };
+    });
 
-	// filter off undefined elements from columns
-	layout.singleCol[0] = layout.singleCol[0].filter((w) => w !== undefined);
-	for (let i = 0; i < 2; i += 1) {
-		layout.twoCol[i] = layout.twoCol[i].filter((w) => w !== undefined);
-	}
-	for (let i = 0; i < 3; i += 1) {
-		layout.threeCol[i] = layout.threeCol[i].filter((w) => w !== undefined);
-	}
-	for (let i = 0; i < 4; i += 1) {
-		layout.fourCol[i] = layout.fourCol[i].filter((w) => w !== undefined);
-	}
+    // filter off undefined elements from columns
+    layout.singleCol[0] = layout.singleCol[0].filter((w) => w !== undefined);
+    for (let i = 0; i < 2; i += 1) {
+        layout.twoCol[i] = layout.twoCol[i].filter((w) => w !== undefined);
+    }
+    for (let i = 0; i < 3; i += 1) {
+        layout.threeCol[i] = layout.threeCol[i].filter((w) => w !== undefined);
+    }
+    for (let i = 0; i < 4; i += 1) {
+        layout.fourCol[i] = layout.fourCol[i].filter((w) => w !== undefined);
+    }
 
-	// handle widgets with uplicated sort_ooder
-	duplicatePositionWidgets.forEach((duplicate, i) => {
-		layout.singleCol[0].push({
-			...duplicate[0],
-			sort_order: layout.singleCol[0].length + i,
-		});
-		layout.twoCol[shortestCol(layout.twoCol)].push({
-			...duplicate[0],
-			sort_order: layout.singleCol[0].length + i,
-		});
-		layout.threeCol[shortestCol(layout.threeCol)].push({
-			...duplicate[0],
-			sort_order: layout.singleCol[0].length + i,
-		});
-		layout.fourCol[shortestCol(layout.fourCol)].push({
-			...duplicate[0],
-			sort_order: layout.singleCol[0].length + i,
-		});
-	});
+    // handle widgets with uplicated sort_ooder
+    duplicatePositionWidgets.forEach((duplicate, i) => {
+        layout.singleCol[0].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
+        layout.twoCol[shortestCol(layout.twoCol)].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
+        layout.threeCol[shortestCol(layout.threeCol)].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
+        layout.fourCol[shortestCol(layout.fourCol)].push({
+            ...duplicate[0],
+            sort_order: layout.singleCol[0].length + i,
+        });
+    });
 
-	const totalElementsInTabletLayout =
-		layout.twoCol[0].length + layout.twoCol[1].length;
-	const totalElementsInThreeColLayout =
-		layout.threeCol[0].length +
-		layout.threeCol[1].length +
-		layout.threeCol[2].length;
-	const totalElementsInFourColLayout =
-		layout.fourCol[0].length +
-		layout.fourCol[1].length +
-		layout.fourCol[2].length +
-		layout.fourCol[3].length;
-	if (
-		viewWidgets.length !== layout.singleCol[0].length ||
-		viewWidgets.length !== totalElementsInTabletLayout ||
-		viewWidgets.length !== totalElementsInThreeColLayout ||
-		viewWidgets.length !== totalElementsInFourColLayout
-	) {
-		Logger.error(
-			"layoutUtils::computeLayoutGrid: expected same amount of input elements",
-		);
-	}
+    const totalElementsInTabletLayout =
+        layout.twoCol[0].length + layout.twoCol[1].length;
+    const totalElementsInThreeColLayout =
+        layout.threeCol[0].length +
+        layout.threeCol[1].length +
+        layout.threeCol[2].length;
+    const totalElementsInFourColLayout =
+        layout.fourCol[0].length +
+        layout.fourCol[1].length +
+        layout.fourCol[2].length +
+        layout.fourCol[3].length;
+    if (
+        viewWidgets.length !== layout.singleCol[0].length ||
+        viewWidgets.length !== totalElementsInTabletLayout ||
+        viewWidgets.length !== totalElementsInThreeColLayout ||
+        viewWidgets.length !== totalElementsInFourColLayout
+    ) {
+        Logger.error(
+            "layoutUtils::computeLayoutGrid: expected same amount of input elements"
+        );
+    }
 
-	return layout;
+    return layout;
 };
 
 export const getColType = (windowWidth: number): EColumnType => {
-	if (windowWidth < twoCol) {
-		return EColumnType.SingleCol;
-	}
-	if (windowWidth >= singleCol && windowWidth < threeCol) {
-		return EColumnType.TwoCol;
-	}
-	if (windowWidth >= twoCol && windowWidth < fourCol) {
-		return EColumnType.ThreeCol;
-	}
+    if (windowWidth < twoCol) {
+        return EColumnType.SingleCol;
+    }
+    if (windowWidth >= singleCol && windowWidth < threeCol) {
+        return EColumnType.TwoCol;
+    }
+    if (windowWidth >= twoCol && windowWidth < fourCol) {
+        return EColumnType.ThreeCol;
+    }
 
-	return EColumnType.FourCol;
+    return EColumnType.FourCol;
 };
 
 export const getDraggedWidget = (
-	layout: TUserViewWidget[][],
-	sourcePos: { col: number; row: number },
-	destPos: { col: number; row: number },
-	colType: EColumnType,
+    layout: TUserViewWidget[][],
+    sourcePos: { col: number; row: number },
+    destPos: { col: number; row: number },
+    colType: EColumnType
 ): TUserViewWidget => {
-	const multiplier = {
-		[EColumnType.SingleCol]: 1,
-		[EColumnType.TwoCol]: 2,
-		[EColumnType.ThreeCol]: 3,
-		[EColumnType.FourCol]: 4,
-	};
-	return {
-		...layout[sourcePos.col][sourcePos.row],
-		sort_order: destPos.col * multiplier[colType] + destPos.row,
-	};
+    const multiplier = {
+        [EColumnType.SingleCol]: 1,
+        [EColumnType.TwoCol]: 2,
+        [EColumnType.ThreeCol]: 3,
+        [EColumnType.FourCol]: 4,
+    };
+    return {
+        ...layout[sourcePos.col][sourcePos.row],
+        sort_order: destPos.col * multiplier[colType] + destPos.row,
+    };
 };
 
 /**
@@ -247,63 +247,65 @@ export const getDraggedWidget = (
  * @returns  TUserViewWidget[]
  */
 export const recomputeWidgetsPos = (
-	layout: TUserViewWidget[][],
+    layout: TUserViewWidget[][]
 ): TUserViewWidget[] => {
-	const widgets: TUserViewWidget[] = [];
-	for (let i = 0; i < layout.length; i += 1) {
-		for (let j = 0; j < layout[i].length; j += 1) {
-			widgets.push({
-				...layout[i][j],
-				sort_order: j * layout.length + i,
-			});
-		}
-	}
+    const widgets: TUserViewWidget[] = [];
+    for (let i = 0; i < layout.length; i += 1) {
+        for (let j = 0; j < layout[i].length; j += 1) {
+            widgets.push({
+                ...layout[i][j],
+                sort_order: j * layout.length + i,
+            });
+        }
+    }
 
-	return widgets;
+    return widgets;
 };
 
 export const getTwoColWidgetTemplateSlugs = () => {
-	return Object.values(TWO_COL_WIDGETS_CONFIG).map(
-		(config) => `${config.templateName.toLowerCase()}_template`,
-	);
+    return Object.values(TWO_COL_WIDGETS_CONFIG).map(
+        (config) => `${config.templateName.toLowerCase()}_template`
+    );
 };
 
 export const useTwoColWidgets = (selectedView: TCachedView | undefined) => {
-	return useMemo(() => {
-		if (!selectedView) return { widgets: {}, twoColWidgetSlugs: [] };
-		const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
-		const widgets: Record<string, TUserViewWidget> = {};
+    return useMemo(() => {
+        if (!selectedView) return { widgets: {}, twoColWidgetSlugs: [] };
+        const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
+        const widgets: Record<string, TUserViewWidget> = {};
 
-		Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
-			const templateSlug = `${config.templateName.toLowerCase()}_template`;
-			const widgetData = selectedView?.data.widgets.find(
-				(w: TUserViewWidget) => w.widget.template.slug === templateSlug,
-			);
-			widgets[key] = widgetData as TUserViewWidget;
-		});
+        Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+            const templateSlug = `${config.templateName.toLowerCase()}_template`;
+            const widgetData = selectedView?.data.widgets.find(
+                (w: TUserViewWidget) => w.widget.template.slug === templateSlug
+            );
+            widgets[key] = widgetData as TUserViewWidget;
+        });
 
-		return { widgets, twoColWidgetSlugs };
-	}, [selectedView]);
+        return { widgets, twoColWidgetSlugs };
+    }, [selectedView]);
 };
 
 export const calculateTwoColWidgetsHeight = (
-	widgets: Record<string, TUserViewWidget>,
-	collapsedStates: Record<string, boolean>,
+    widgets: Record<string, TUserViewWidget>,
+    collapsedStates: Record<string, boolean>
 ) => {
-	let totalHeight = 0;
-	const defaultMarginBottom = 14;
+    let totalHeight = 0;
+    const defaultMarginBottom = 14;
 
-	Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
-		if (widgets[key]) {
-			if (collapsedStates[key]) {
-				totalHeight +=
-					(config.widgetConfig.COLLAPSED_WIDGET_HEIGHT as number) || 0;
-			} else {
-				totalHeight += (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
-			}
-			totalHeight += defaultMarginBottom;
-		}
-	});
+    Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+        if (widgets[key]) {
+            if (collapsedStates[key]) {
+                totalHeight +=
+                    (config.widgetConfig.COLLAPSED_WIDGET_HEIGHT as number) ||
+                    0;
+            } else {
+                totalHeight +=
+                    (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
+            }
+            totalHeight += defaultMarginBottom;
+        }
+    });
 
-	return totalHeight;
+    return totalHeight;
 };
