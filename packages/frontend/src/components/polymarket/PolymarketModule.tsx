@@ -1,16 +1,12 @@
 import { FC, useState } from "react";
-import { ModuleLoader, Button } from "@alphaday/ui-kit";
-import {
-	TPolymarketMarket,
-	TPolymarketEvent,
-} from "src/api/services/polymarket/types";
+import { ModuleLoader, Button, ScrollBar, TabButton } from "@alphaday/ui-kit";
+import { TPolymarketMarket } from "src/api/services/polymarket/types";
 import PolymarketList from "./PolymarketList";
-import { EPolymarketView, EPolymarketFilter } from "./types";
+import { EPolymarketFilter } from "./types";
 
 export interface IPolymarketModule {
 	isLoading?: boolean;
 	markets: TPolymarketMarket[];
-	events: TPolymarketEvent[];
 	onSelectMarket?: (market: TPolymarketMarket) => void;
 	selectedMarket?: TPolymarketMarket;
 	contentHeight: string;
@@ -19,14 +15,10 @@ export interface IPolymarketModule {
 const PolymarketModule: FC<IPolymarketModule> = ({
 	isLoading,
 	markets,
-	events,
 	onSelectMarket,
 	selectedMarket,
 	contentHeight,
 }) => {
-	const [currentView, setCurrentView] = useState<EPolymarketView>(
-		EPolymarketView.Markets,
-	);
 	const [currentFilter, setCurrentFilter] = useState<EPolymarketFilter>(
 		EPolymarketFilter.Active,
 	);
@@ -46,87 +38,45 @@ const PolymarketModule: FC<IPolymarketModule> = ({
 		}
 	});
 
-	const handleViewChange = (view: EPolymarketView) => {
-		setCurrentView(view);
-	};
-
 	const handleFilterChange = (filter: EPolymarketFilter) => {
 		setCurrentFilter(filter);
 	};
 
 	return (
-		<div className="polymarket-widget" style={{ height: contentHeight }}>
-			<div className="flex flex-col h-full">
-				<div className="flex items-center justify-between p-4 border-b border-borderLine">
-					<div className="flex space-x-2">
-						<Button
-							variant={
-								currentView === EPolymarketView.Markets
-									? "primary"
-									: "secondary"
-							}
-							onClick={() => handleViewChange(EPolymarketView.Markets)}
-						>
-							Markets
-						</Button>
-						<Button
-							variant={
-								currentView === EPolymarketView.Events ? "primary" : "secondary"
-							}
-							onClick={() => handleViewChange(EPolymarketView.Events)}
-						>
-							Events
-						</Button>
-					</div>
-
-					{currentView === EPolymarketView.Markets && (
-						<div className="flex space-x-2">
-							<Button
-								variant={
-									currentFilter === EPolymarketFilter.All
-										? "primary"
-										: "secondary"
-								}
-								onClick={() => handleFilterChange(EPolymarketFilter.All)}
-							>
-								All
-							</Button>
-							<Button
-								variant={
-									currentFilter === EPolymarketFilter.Active
-										? "primary"
-										: "secondary"
-								}
-								onClick={() => handleFilterChange(EPolymarketFilter.Active)}
-							>
-								Active
-							</Button>
-							<Button
-								variant={
-									currentFilter === EPolymarketFilter.Resolved
-										? "primary"
-										: "secondary"
-								}
-								onClick={() => handleFilterChange(EPolymarketFilter.Resolved)}
-							>
-								Resolved
-							</Button>
-						</div>
-					)}
-				</div>
-
-				<div className="flex-1 overflow-y-auto">
-					<PolymarketList
-						view={currentView}
-						markets={
-							currentView === EPolymarketView.Markets ? filteredMarkets : []
-						}
-						events={currentView === EPolymarketView.Events ? events : []}
-						onSelectMarket={onSelectMarket}
-						selectedMarket={selectedMarket}
-					/>
+		<div className="flex flex-col h-full pb-4">
+			<div className="flex items-center justify-between px-4 pb-4 border-b border-borderLine">
+				<div className="flex items-center gap-2">
+					<TabButton
+						variant="small"
+						open={currentFilter === EPolymarketFilter.All}
+						onClick={() => handleFilterChange(EPolymarketFilter.All)}
+					>
+						All
+					</TabButton>
+					<TabButton
+						variant="small"
+						open={currentFilter === EPolymarketFilter.Active}
+						onClick={() => handleFilterChange(EPolymarketFilter.Active)}
+					>
+						Active
+					</TabButton>
+					<TabButton
+						variant="small"
+						open={currentFilter === EPolymarketFilter.Resolved}
+						onClick={() => handleFilterChange(EPolymarketFilter.Resolved)}
+					>
+						Resolved
+					</TabButton>
 				</div>
 			</div>
+
+			<ScrollBar>
+				<PolymarketList
+					markets={filteredMarkets}
+					onSelectMarket={onSelectMarket}
+					selectedMarket={selectedMarket}
+				/>
+			</ScrollBar>
 		</div>
 	);
 };
