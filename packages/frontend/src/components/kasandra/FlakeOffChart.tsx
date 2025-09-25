@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { ApexLineChart, twMerge } from "@alphaday/ui-kit";
+import { ApexLineChart, themeColors, twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
 import {
     TCoinMarketHistory,
@@ -247,7 +247,7 @@ const FlakeOffChart = ({
     selectedCase: EPredictionCase | "all" | undefined;
 }) => {
     // Transform base historical data to ApexCharts format
-    const transformedBaseData = useMemo((): TSeries => {
+    const transformedHistoryData = useMemo((): TSeries => {
         const coinName = marketHistory?.coin.name;
         const coinTicker = marketHistory?.coin.ticker;
         const chartPoints = marketHistory?.history?.prices?.map(
@@ -256,12 +256,22 @@ const FlakeOffChart = ({
                 y: price,
             })
         );
+        const lastPrice = chartPoints?.[chartPoints.length - 1]?.y;
+        const startPrice = chartPoints?.[0]?.y;
+
+        const color =
+            (lastPrice &&
+                startPrice &&
+                (lastPrice > startPrice || lastPrice === startPrice
+                    ? themeColors.success
+                    : themeColors.secondaryOrangeSoda)) ||
+            "var(--alpha-primary)";
 
         return {
             name: `${coinName} (${coinTicker}) - Actual`,
             data: chartPoints ?? [],
             type: "line",
-            color: "var(--alpha-primary)",
+            color,
             strokeWidth: 3,
             zIndex: 20, // Highest priority for actual data
             opacity: 1,
@@ -330,9 +340,12 @@ const FlakeOffChart = ({
     }, [flakeOffData, marketHistory?.history?.prices, selectedCase]);
 
     const series = useMemo(() => {
-        const dataSeries = [transformedBaseData, ...transformedPredictionData];
+        const dataSeries = [
+            transformedHistoryData,
+            ...transformedPredictionData,
+        ];
         return dataSeries;
-    }, [transformedBaseData, transformedPredictionData]);
+    }, [transformedHistoryData, transformedPredictionData]);
 
     const options = {
         chart: {
