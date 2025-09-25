@@ -412,14 +412,6 @@ const FlakeOffChart = ({
                     fontWeight: 500,
                     cssClass: "apexcharts-xaxis-label",
                 },
-                // formatter: (value: number) => {
-                //     console.log("value date", value);
-                //     return new Date(value).toLocaleDateString("en-US", {
-                //         month: "short",
-                //         day: "numeric",
-                //         // year: "2-digit",
-                //     });
-                // },
             },
         },
         yaxis: {
