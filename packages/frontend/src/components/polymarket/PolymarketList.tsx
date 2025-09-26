@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TPolymarketMarket } from "src/api/services/polymarket/types";
 import PolymarketCard from "./PolymarketCard";
 
@@ -9,25 +10,25 @@ export interface IPolymarketList {
 }
 
 const PolymarketList: FC<IPolymarketList> = ({ markets, onSelectMarket }) => {
+    const { t } = useTranslation();
+
     if (markets.length === 0) {
         return (
             <CenteredBlock>
-                <p>No markets found</p>
+                <p>{t("No markets found")}</p>
             </CenteredBlock>
         );
     }
 
     return (
         <ScrollBar>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4">
-                {markets.map((market) => (
-                    <PolymarketCard
-                        key={market.id}
-                        market={market}
-                        onSelectMarket={onSelectMarket}
-                    />
-                ))}
-            </div>
+            {markets.map((market) => (
+                <PolymarketCard
+                    key={market.id}
+                    market={market}
+                    onSelectMarket={onSelectMarket}
+                />
+            ))}
         </ScrollBar>
     );
 };

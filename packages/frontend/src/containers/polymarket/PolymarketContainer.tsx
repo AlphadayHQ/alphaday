@@ -17,9 +17,7 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { logButtonClicked } = useCustomAnalytics();
     const { lastSelectedKeyword } = useGlobalSearch();
 
-    const [selectedMarket, setSelectedMarket] = useState<
-        TPolymarketMarket | undefined
-    >();
+    const [, setSelectedMarket] = useState<TPolymarketMarket | undefined>();
 
     const tagsSettings = moduleData.settings.filter(
         (s) =>
@@ -58,6 +56,8 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
+            const polymarketUrl = `https://polymarket.com/market/${market.market_slug}?outcome=${outcome}`;
+            window.open(polymarketUrl, "_blank", "noopener,noreferrer");
         },
         [logButtonClicked, moduleData.name]
     );
@@ -93,7 +93,6 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
             <PolymarketModule
                 isLoading={isLoading}
                 markets={markets}
-                selectedMarket={selectedMarket}
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
             />

@@ -1,7 +1,9 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TPolymarketMarket } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
+import { translateLabels } from "src/api/utils/translationUtils";
 
 interface IPolymarketCard {
     market: TPolymarketMarket;
@@ -9,6 +11,8 @@ interface IPolymarketCard {
 }
 
 const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
+    const { t } = useTranslation();
+
     const topOutcome =
         market.outcomes && market.outcomes.length > 0
             ? market.outcomes.reduce((prev, current) =>
@@ -22,13 +26,13 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
     let statusText = "";
     let statusColor = "";
     if (market.resolved) {
-        statusText = "Resolved";
+        statusText = t("Resolved");
         statusColor = "text-gray-500";
     } else if (isExpired) {
-        statusText = "Expired";
+        statusText = t("Expired");
         statusColor = "text-orange-500";
     } else {
-        statusText = "Active";
+        statusText = t("Active");
         statusColor = "text-green-500";
     }
 
@@ -49,15 +53,9 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
         }
     };
 
-    const handleBuyClick = (e: React.MouseEvent, outcome: string) => {
-        e.stopPropagation();
-        const polymarketUrl = `https://polymarket.com/market/${market.market_slug}?outcome=${outcome}`;
-        window.open(polymarketUrl, "_blank", "noopener,noreferrer");
-    };
-
     return (
         <div
-            className="bg-background border border-borderLine rounded-lg p-4 cursor-pointer hover:bg-backgroundBlue hover:border-accentVariant100 transition-all duration-200"
+            className="bg-background border-b border-borderLine p-4 cursor-pointer hover:bg-backgroundVariant100 active:bg-backgroundVariant200 transition-all duration-200"
             onClick={handleClick}
             role="button"
             tabIndex={0}
@@ -69,7 +67,14 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
             }}
         >
             <div className="flex items-center justify-between mb-3">
-                <h3 className="text-sm font-semibold text-primary line-clamp-2 leading-tight">
+                <h3 className="flex items-center gap-2 text-sm font-semibold text-primary line-clamp-2 leading-tight">
+                    {market.image && (
+                        <img
+                            src={market.image}
+                            alt="Market"
+                            className="w-5 h-5 rounded-full object-cover"
+                        />
+                    )}
                     {market.question}
                 </h3>
                 <span className={twMerge("text-xs font-medium", statusColor)}>
@@ -78,14 +83,28 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
             </div>
 
             {topOutcome && (
-                <div className="mb-3 p-2 bg-backgroundVariant100 rounded-md">
+                <div className="p-2">
                     <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs text-primaryVariant100 font-medium">
-                            {topOutcome.name}
-                        </span>
+                        <div className="flex items-center space-x-3">
+                            <span className="font-medium">
+                                {formatVolume(market.total_volume)}{" "}
+                                {translateLabels("vol")}
+                            </span>
+                            {endDate && !market.resolved && (
+                                <span>
+                                    {computeDuration(endDate.toISOString())}
+                                </span>
+                            )}
+                        </div>
                         <div className="flex items-center space-x-1">
+                            <span className="text-xs text-primaryVariant100 font-medium">
+                                {topOutcome.name}
+                            </span>
                             <span className="text-xs font-bold text-primary">
-                                {Math.round(topOutcome.probability * 100)}%
+                                {Math.round(
+                                    (topOutcome.probability || 0) * 100
+                                )}
+                                %
                             </span>
                             <span className="text-xs text-primaryVariant100">
                                 ${topOutcome.price.toFixed(2)}
@@ -93,51 +112,16 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
                         </div>
                     </div>
                     {market.outcomes && market.outcomes.length >= 2 && (
-                        <div className="flex space-x-2 mt-2">
-                            <button
-                                type="button"
-                                onClick={(e) => handleBuyClick(e, "yes")}
-                                className="flex-1 bg-green-600 hover:bg-green-700 text-white text-xs font-medium py-1.5 px-3 rounded-md transition-colors duration-200"
-                            >
-                                Buy Yes{" "}
-                                {Math.round(
-                                    market.outcomes[0].probability * 100
-                                )}
-                                ¢
-                            </button>
-                            <button
-                                type="button"
-                                onClick={(e) => handleBuyClick(e, "no")}
-                                className="flex-1 bg-red-600 hover:bg-red-700 text-white text-xs font-medium py-1.5 px-3 rounded-md transition-colors duration-200"
-                            >
-                                Buy No{" "}
-                                {Math.round(
-                                    (1 - market.outcomes[0].probability) * 100
-                                )}
-                                ¢
-                            </button>
+                        <div className="flex flex-col gap-2 mt-2 text-primaryVariant100">
+                            {market.outcomes.map((outcome) => (
+                                <div className="text-primaryVariant100">
+                                    {outcome.name ?? outcome.price}
+                                </div>
+                            ))}
                         </div>
                     )}
                 </div>
             )}
-
-            <div className="flex items-center justify-between text-xs text-primaryVariant100">
-                <div className="flex items-center space-x-3">
-                    <span className="font-medium">
-                        {formatVolume(market.total_volume)} vol
-                    </span>
-                    {endDate && !market.resolved && (
-                        <span>{computeDuration(endDate.toISOString())}</span>
-                    )}
-                </div>
-                {market.image && (
-                    <img
-                        src={market.image}
-                        alt="Market"
-                        className="w-5 h-5 rounded-full object-cover"
-                    />
-                )}
-            </div>
         </div>
     );
 };

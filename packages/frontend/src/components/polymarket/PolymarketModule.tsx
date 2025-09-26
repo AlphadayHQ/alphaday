@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
-import { ModuleLoader, ScrollBar, TabButton } from "@alphaday/ui-kit";
+import { ModuleLoader, TabButton } from "@alphaday/ui-kit";
 import { TPolymarketMarket } from "src/api/services/polymarket/types";
+import { translateLabels } from "src/api/utils/translationUtils";
 import PolymarketList from "./PolymarketList";
 import { EPolymarketFilter } from "./types";
 
@@ -8,7 +9,6 @@ export interface IPolymarketModule {
     isLoading?: boolean;
     markets: TPolymarketMarket[];
     onSelectMarket?: (market: TPolymarketMarket) => void;
-    selectedMarket?: TPolymarketMarket;
     contentHeight: string;
 }
 
@@ -16,7 +16,6 @@ const PolymarketModule: FC<IPolymarketModule> = ({
     isLoading,
     markets,
     onSelectMarket,
-    selectedMarket,
     contentHeight,
 }) => {
     const [currentFilter, setCurrentFilter] = useState<EPolymarketFilter>(
@@ -53,7 +52,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
                             handleFilterChange(EPolymarketFilter.All)
                         }
                     >
-                        All
+                        {translateLabels("All")}
                     </TabButton>
                     <TabButton
                         variant="small"
@@ -62,7 +61,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
                             handleFilterChange(EPolymarketFilter.Active)
                         }
                     >
-                        Active
+                        {translateLabels("Active")}
                     </TabButton>
                     <TabButton
                         variant="small"
@@ -71,18 +70,15 @@ const PolymarketModule: FC<IPolymarketModule> = ({
                             handleFilterChange(EPolymarketFilter.Resolved)
                         }
                     >
-                        Resolved
+                        {translateLabels("Resolved")}
                     </TabButton>
                 </div>
             </div>
 
-            <ScrollBar>
-                <PolymarketList
-                    markets={filteredMarkets}
-                    onSelectMarket={onSelectMarket}
-                    selectedMarket={selectedMarket}
-                />
-            </ScrollBar>
+            <PolymarketList
+                markets={filteredMarkets}
+                onSelectMarket={onSelectMarket}
+            />
         </div>
     );
 };
