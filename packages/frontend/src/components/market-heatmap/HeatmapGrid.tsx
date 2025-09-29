@@ -12,6 +12,71 @@ interface IHeatmapGrid {
     keywordSearchList: TKeyword[];
 }
 
+type DisplayMode = "minimal" | "compact" | "comfortable" | "spacious";
+
+const getDisplayMode = (width: number, height: number): DisplayMode => {
+    const area = width * height;
+    if (area < 1600) return "minimal"; // < 40x40
+    if (area < 6400) return "compact"; // < 80x80
+    if (area < 14400) return "comfortable"; // < 120x120
+    return "spacious";
+};
+
+const LAYOUTS = {
+    minimal: { showIcon: true, showTicker: false, showPercent: false },
+    compact: { showIcon: true, showTicker: false, showPercent: true },
+    comfortable: { showIcon: true, showTicker: true, showPercent: true },
+    spacious: { showIcon: true, showTicker: true, showPercent: true },
+};
+
+const SIZES = {
+    iconRatio: {
+        spacious: 0.25,
+        comfortable: 0.25,
+        compact: 0.4,
+        minimal: 0.5,
+    },
+    fontSize: { spacious: 16, comfortable: 12, compact: 10, minimal: 10 },
+    spacing: 6,
+};
+
+const getLayout = (
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    mode: DisplayMode
+) => {
+    const centerX = x + width / 2;
+    const centerY = y + height / 2;
+    const iconRatio = SIZES.iconRatio[mode];
+    // Max icon size is 100px
+    const iconSize = Math.min(Math.min(width, height) * iconRatio, 100);
+    const fontSize = SIZES.fontSize[mode];
+    const { spacing } = SIZES;
+
+    return {
+        centerX,
+        centerY,
+        iconSize,
+        fontSize,
+        spacing,
+        icon: {
+            x: centerX - iconSize / 2,
+            y: centerY - spacing * 2 - iconSize / 2,
+            size: iconSize,
+        },
+        ticker: {
+            x: centerX,
+            y: centerY - spacing / 2,
+        },
+        percent: {
+            x: centerX,
+            y: centerY + spacing * 1.5,
+        },
+    };
+};
+
 export const HeatmapGrid: FC<IHeatmapGrid> = ({
     data,
     sizeMetric,
@@ -254,136 +319,68 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                     setHoveredCoin(null);
                                 }}
                             />
-                            {coin.icon && width > 15 && height > 15 && (
-                                <image
-                                    x={
-                                        x +
-                                        width / 2 -
-                                        Math.min(
-                                            width / 4,
-                                            Math.max(width / 8, 8)
-                                        )
-                                    }
-                                    y={
-                                        y +
-                                        height / 2 -
-                                        Math.min(
-                                            height / 4,
-                                            Math.max(height / 8, 8)
-                                        ) -
-                                        (width > 60 && height > 40
-                                            ? (() => {
-                                                  if (
-                                                      width > 150 &&
-                                                      height > 120
-                                                  ) {
-                                                      return Math.min(
-                                                          height / 5,
-                                                          25
-                                                      );
-                                                  }
-                                                  return Math.min(
-                                                      height / 8,
-                                                      12
-                                                  );
-                                              })()
-                                            : 0)
-                                    }
-                                    width={Math.min(
-                                        width / 2,
-                                        Math.max(width / 4, 16)
-                                    )}
-                                    height={Math.min(
-                                        height / 2,
-                                        Math.max(height / 4, 16)
-                                    )}
-                                    href={coinImage}
-                                    className="pointer-events-none"
-                                />
-                            )}
-                            {width > 60 && height > 40 && (
-                                <>
-                                    <text
-                                        x={x + width / 2}
-                                        y={
-                                            coin.icon
-                                                ? y +
-                                                  height / 2 +
-                                                  (width > 150 && height > 120
-                                                      ? Math.min(height / 5, 25)
-                                                      : Math.min(
-                                                            height / 8,
-                                                            12
-                                                        )) +
-                                                  4
-                                                : y + height / 2 - 4
-                                        }
-                                        textAnchor="middle"
-                                        dominantBaseline="middle"
-                                        className="fill-white text-lg font-bold pointer-events-none"
-                                        style={{
-                                            fontSize:
-                                                width > 150 && height > 120
-                                                    ? Math.min(
-                                                          width / 5,
-                                                          height / 6,
-                                                          18
-                                                      )
-                                                    : Math.min(
-                                                          width / 6,
-                                                          height / 8,
-                                                          14
-                                                      ),
-                                        }}
-                                    >
-                                        {coin.ticker.toUpperCase()}
-                                    </text>
-                                    <text
-                                        x={x + width / 2}
-                                        y={
-                                            coin.icon
-                                                ? y +
-                                                  height / 2 +
-                                                  (width > 150 && height > 120
-                                                      ? Math.min(height / 5, 25)
-                                                      : Math.min(
-                                                            height / 8,
-                                                            12
-                                                        )) +
-                                                  (width > 150 && height > 120
-                                                      ? 22
-                                                      : 16)
-                                                : y + height / 2 + 12
-                                        }
-                                        textAnchor="middle"
-                                        dominantBaseline="middle"
-                                        className="fill-white text-base font-semibold pointer-events-none"
-                                        style={{
-                                            fontSize:
-                                                width > 150 && height > 120
-                                                    ? Math.min(
-                                                          width / 7,
-                                                          height / 8,
-                                                          16
-                                                      )
-                                                    : Math.min(
-                                                          width / 8,
-                                                          height / 10,
-                                                          12
-                                                      ),
-                                        }}
-                                    >
-                                        {color > 0 ? "+" : ""}
-                                        {
-                                            formatNumber({
-                                                value: color,
-                                                style: ENumberStyle.Percent,
-                                                normalise: true,
-                                            }).value
-                                        }
-                                    </text>
-                                </>
-                            )}
+                            {(() => {
+                                const mode = getDisplayMode(width, height);
+                                const layout = getLayout(
+                                    x,
+                                    y,
+                                    width,
+                                    height,
+                                    mode
+                                );
+                                const displayRules = LAYOUTS[mode];
+
+                                return (
+                                    <>
+                                        {displayRules.showIcon && coin.icon && (
+                                            <image
+                                                x={layout.icon.x}
+                                                y={layout.icon.y}
+                                                width={layout.icon.size}
+                                                height={layout.icon.size}
+                                                href={coinImage}
+                                                className="pointer-events-none rounded-full"
+                                            />
+                                        )}
+                                        {displayRules.showTicker && (
+                                            <text
+                                                x={layout.ticker.x}
+                                                y={layout.ticker.y}
+                                                textAnchor="middle"
+                                                dominantBaseline="middle"
+                                                className="fill-white font-bold pointer-events-none"
+                                                style={{
+                                                    fontSize: layout.fontSize,
+                                                }}
+                                            >
+                                                {coin.ticker.toUpperCase()}
+                                            </text>
+                                        )}
+                                        {displayRules.showPercent && (
+                                            <text
+                                                x={layout.percent.x}
+                                                y={layout.percent.y}
+                                                textAnchor="middle"
+                                                dominantBaseline="middle"
+                                                className="fill-white font-semibold pointer-events-none"
+                                                style={{
+                                                    fontSize:
+                                                        layout.fontSize * 0.85,
+                                                }}
+                                            >
+                                                {color > 0 ? "+" : ""}
+                                                {
+                                                    formatNumber({
+                                                        value: color,
+                                                        style: ENumberStyle.Percent,
+                                                        normalise: true,
+                                                    }).value
+                                                }
+                                            </text>
+                                        )}
+                                    </>
+                                );
+                            })()}
                         </g>
                     );
                 })}
