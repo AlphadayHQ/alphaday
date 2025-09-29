@@ -41,6 +41,10 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Image]: {
+        WIDGET_HEIGHT: 500,
+        ADJUSTABLE: false,
+    },
     [ETemplateNameRegistry.Kasandra]: {
         WIDGET_HEIGHT: 599,
         COLLAPSED_WIDGET_HEIGHT: 45,
