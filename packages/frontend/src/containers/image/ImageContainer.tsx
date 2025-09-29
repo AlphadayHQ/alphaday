@@ -69,7 +69,6 @@ const ImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 setTutFocusElemRef: undefined,
             }}
             moduleData={moduleData}
-            adjustable
         >
             <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
                 <ImageModule
