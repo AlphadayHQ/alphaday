@@ -1,4 +1,11 @@
-import { type FC, useMemo, useRef, useEffect, useState } from "react";
+import {
+    type FC,
+    useMemo,
+    useRef,
+    useEffect,
+    useState,
+    useCallback,
+} from "react";
 import { TCoin, TKeyword } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { HeatmapTooltip } from "./HeatmapTooltip";
@@ -151,6 +158,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
     const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
     const [hoveredCoin, setHoveredCoin] = useState<TCoin | null>(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -172,6 +180,22 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
             resizeObserver.disconnect();
         };
     }, []);
+
+    const throttledMouseMove = useCallback((e: React.MouseEvent) => {
+        if (throttleTimeoutRef.current) return;
+
+        throttleTimeoutRef.current = setTimeout(() => {
+            const rect = containerRef.current?.getBoundingClientRect();
+            if (rect) {
+                setMousePosition({
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top,
+                });
+            }
+            throttleTimeoutRef.current = null;
+        }, 16); // ~60fps
+    }, []);
+
     const heatmapItems = useMemo(() => {
         if (!data.length) return [];
 
@@ -368,16 +392,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                         });
                                     }
                                 }}
-                                onMouseMove={(e) => {
-                                    const rect =
-                                        containerRef.current?.getBoundingClientRect();
-                                    if (rect) {
-                                        setMousePosition({
-                                            x: e.clientX - rect.left,
-                                            y: e.clientY - rect.top,
-                                        });
-                                    }
-                                }}
+                                onMouseMove={throttledMouseMove}
                                 onMouseLeave={() => {
                                     setHoveredCoin(null);
                                 }}
