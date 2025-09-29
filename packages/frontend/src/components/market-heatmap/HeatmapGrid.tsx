@@ -80,6 +80,66 @@ const getLayout = (
     };
 };
 
+const renderCoinElements = (
+    coin: TCoin,
+    coinImage: string | undefined,
+    layout: ReturnType<typeof getLayout>,
+    displayRules: {
+        showIcon: boolean;
+        showTicker: boolean;
+        showPercent: boolean;
+    },
+    color: number
+) => (
+    <>
+        {displayRules.showIcon && coin.icon && (
+            <image
+                x={layout.icon.x}
+                y={layout.icon.y}
+                width={layout.icon.size}
+                height={layout.icon.size}
+                href={coinImage}
+                className="pointer-events-none"
+            />
+        )}
+        {displayRules.showTicker && (
+            <text
+                x={layout.ticker.x}
+                y={layout.ticker.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-white font-bold pointer-events-none"
+                style={{
+                    fontSize: layout.fontSize,
+                }}
+            >
+                {coin.ticker.toUpperCase()}
+            </text>
+        )}
+        {displayRules.showPercent && (
+            <text
+                x={layout.percent.x}
+                y={layout.percent.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-white font-semibold pointer-events-none"
+                style={{
+                    fontSize: layout.fontSize * 0.85,
+                }}
+            >
+                {color > 0 ? "+" : ""}
+                {
+                    formatNumber({
+                        value: color,
+                        style: ENumberStyle.Percent,
+                        normalise: true,
+                    }).value
+                }
+            </text>
+        )}
+    </>
+);
+
 export const HeatmapGrid: FC<IHeatmapGrid> = ({
     data,
     sizeMetric,
@@ -324,64 +384,12 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                             />
                             {(() => {
                                 const mode = getDisplayMode(width, height);
-                                const layout = getLayout(
-                                    x,
-                                    y,
-                                    width,
-                                    height,
-                                    mode
-                                );
-                                const displayRules = LAYOUTS[mode];
-
-                                return (
-                                    <>
-                                        {displayRules.showIcon && coin.icon && (
-                                            <image
-                                                x={layout.icon.x}
-                                                y={layout.icon.y}
-                                                width={layout.icon.size}
-                                                height={layout.icon.size}
-                                                href={coinImage}
-                                                className="pointer-events-none rounded-full"
-                                            />
-                                        )}
-                                        {displayRules.showTicker && (
-                                            <text
-                                                x={layout.ticker.x}
-                                                y={layout.ticker.y}
-                                                textAnchor="middle"
-                                                dominantBaseline="middle"
-                                                className="fill-white font-bold pointer-events-none"
-                                                style={{
-                                                    fontSize: layout.fontSize,
-                                                }}
-                                            >
-                                                {coin.ticker.toUpperCase()}
-                                            </text>
-                                        )}
-                                        {displayRules.showPercent && (
-                                            <text
-                                                x={layout.percent.x}
-                                                y={layout.percent.y}
-                                                textAnchor="middle"
-                                                dominantBaseline="middle"
-                                                className="fill-white font-semibold pointer-events-none"
-                                                style={{
-                                                    fontSize:
-                                                        layout.fontSize * 0.85,
-                                                }}
-                                            >
-                                                {color > 0 ? "+" : ""}
-                                                {
-                                                    formatNumber({
-                                                        value: color,
-                                                        style: ENumberStyle.Percent,
-                                                        normalise: true,
-                                                    }).value
-                                                }
-                                            </text>
-                                        )}
-                                    </>
+                                return renderCoinElements(
+                                    coin,
+                                    coinImage || "",
+                                    getLayout(x, y, width, height, mode),
+                                    LAYOUTS[mode],
+                                    color
                                 );
                             })()}
                         </g>
