@@ -37,7 +37,7 @@ const SIZES = {
         minimal: 0.5,
     },
     fontSize: { spacious: 16, comfortable: 12, compact: 10, minimal: 10 },
-    spacing: { spacious: 6, comfortable: 6, compact: 3, minimal: 0 },
+    spacing: { spacious: 8, comfortable: 6, compact: 0, minimal: 0 },
 };
 
 const getLayout = (
@@ -63,16 +63,29 @@ const getLayout = (
         spacing,
         icon: {
             x: centerX - iconSize / 2,
-            y: centerY - spacing * 2 - iconSize / 2,
+            y:
+                mode === "minimal"
+                    ? centerY - iconSize / 2 // Center icon for minimal mode
+                    : centerY - iconSize - spacing * 2, // Stack above text
             size: iconSize,
         },
         ticker: {
             x: centerX,
-            y: centerY - spacing / 2,
+            y: centerY,
+            // +
+            // (mode !== "minimal" && mode !== "compact"
+            //     ? 0
+            //     : iconSize / 2 + spacing),
         },
         percent: {
             x: centerX,
-            y: centerY + spacing * 1.5,
+            y: centerY + fontSize,
+            // centerY +
+            // iconSize / 2 +
+            // spacing +
+            // (mode === "comfortable" || mode === "spacious"
+            //     ? fontSize + spacing
+            //     : 0),
         },
     };
 };
