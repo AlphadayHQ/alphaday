@@ -72,20 +72,10 @@ const getLayout = (
         ticker: {
             x: centerX,
             y: centerY,
-            // +
-            // (mode !== "minimal" && mode !== "compact"
-            //     ? 0
-            //     : iconSize / 2 + spacing),
         },
         percent: {
             x: centerX,
             y: centerY + fontSize,
-            // centerY +
-            // iconSize / 2 +
-            // spacing +
-            // (mode === "comfortable" || mode === "spacious"
-            //     ? fontSize + spacing
-            //     : 0),
         },
     };
 };
