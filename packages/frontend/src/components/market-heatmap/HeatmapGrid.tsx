@@ -37,7 +37,7 @@ const SIZES = {
         minimal: 0.5,
     },
     fontSize: { spacious: 16, comfortable: 12, compact: 10, minimal: 10 },
-    spacing: 6,
+    spacing: { spacious: 6, comfortable: 6, compact: 3, minimal: 0 },
 };
 
 const getLayout = (
@@ -53,7 +53,7 @@ const getLayout = (
     // Max icon size is 100px
     const iconSize = Math.min(Math.min(width, height) * iconRatio, 100);
     const fontSize = SIZES.fontSize[mode];
-    const { spacing } = SIZES;
+    const spacing = SIZES.spacing[mode];
 
     return {
         centerX,
