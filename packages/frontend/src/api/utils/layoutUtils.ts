@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import ImageContainer from "src/containers/image/ImageContainer";
 import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import MarketHeatmapContainer from "src/containers/market-heatmap/MarketHeatmapContainer";
 import { deviceBreakpoints } from "src/globalStyles/breakpoints";
@@ -14,6 +15,11 @@ const { WIDGETS } = CONFIG;
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
 export const TWO_COL_WIDGETS_CONFIG = {
+    image: {
+        templateName: ETemplateNameRegistry.Image,
+        Container: ImageContainer,
+        widgetConfig: WIDGETS.IMAGE,
+    },
     kasandra: {
         templateName: ETemplateNameRegistry.Kasandra,
         Container: KasandraContainer,

@@ -17,12 +17,12 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     const [imageError, setImageError] = useState(false);
 
     if (isLoading) {
-        return <ModuleLoader $height="300px" />;
+        return <ModuleLoader $height="400px" />;
     }
 
     if (!imageUrl || imageError) {
         return (
-            <div style={{ height: "300px" }}>
+            <div style={{ height: "400px" }}>
                 <CenteredBlock>
                     <p className="text-primary fontGroup-highlightSemi">
                         {globalMessages.queries.noMatchFound("image")}
@@ -33,12 +33,12 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     }
 
     return (
-        <div className="flex items-center justify-center w-full h-full min-h-[300px]">
-            {imageLoading && <ModuleLoader $height="300px" />}
+        <div className="flex items-center justify-center w-full h-full min-h-[400px] max-h-[500px]">
+            {imageLoading && <ModuleLoader $height="400px" />}
             <img
                 src={imageUrl}
                 alt={title}
-                className={`max-w-full max-h-full object-contain rounded ${
+                className={`w-full h-full object-contain rounded ${
                     imageLoading ? "hidden" : "block"
                 }`}
                 onLoad={() => setImageLoading(false)}
