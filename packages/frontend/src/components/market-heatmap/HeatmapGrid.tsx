@@ -368,10 +368,12 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                     return (
                         <g key={coin.id} style={{ opacity: baseOpacity }}>
                             <rect
-                                x={x}
-                                y={y}
-                                width={width}
-                                height={height}
+                                x={x + 0.5}
+                                y={y + 0.5}
+                                width={width - 1}
+                                height={height - 1}
+                                rx={2}
+                                ry={2}
                                 fill={
                                     isPositive
                                         ? `hsl(100, ${Math.min(colorIntensity * 80, 70)}%, ${40 + colorIntensity * 0.3}%)`
