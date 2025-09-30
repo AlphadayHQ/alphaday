@@ -381,6 +381,9 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                 strokeWidth={isHighlighted ? "1" : "0.5"}
                                 className="hover:opacity-80 transition-opacity cursor-pointer"
                                 onClick={() => onCoinClick(coin)}
+                                style={{
+                                    opacity: 0.7,
+                                }}
                                 onMouseEnter={(e) => {
                                     setHoveredCoin(coin);
                                     const rect =
