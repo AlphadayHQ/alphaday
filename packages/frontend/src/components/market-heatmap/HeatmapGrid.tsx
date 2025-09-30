@@ -367,10 +367,6 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                 y1="0%"
                                 x2="0%"
                                 y2="100%"
-
-                                // cx="50%"
-                                // cy="50%"
-                                // r="80%"
                             >
                                 <stop offset="0%" stopColor={baseColor} />
                                 <stop offset="100%" stopColor={darkerColor} />
@@ -380,9 +376,6 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                 </defs>
                 {heatmapItems.map((item) => {
                     const { coin, width, height, x, y, color } = item;
-                    const colorIntensity = Math.abs(color);
-                    const isPositive = color >= 0;
-
                     const coinImage =
                         coin.ticker === "BTC"
                             ? "/crypto-logos/bitcoin.avif"
