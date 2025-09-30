@@ -14,6 +14,14 @@ const { WIDGETS } = CONFIG;
 
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
+const TWO_COL_WIDGET_MAX_WIDTHS = {
+    tiny: 1167,
+    singleCol: 1167,
+    twoCol: 1167,
+    threeCol: 1259,
+    fourCol: 1347,
+};
+
 export const TWO_COL_WIDGETS_CONFIG = {
     image: {
         templateName: ETemplateNameRegistry.Image,

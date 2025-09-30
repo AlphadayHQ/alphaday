@@ -59,26 +59,28 @@ const ImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const isLoading = !moduleData;
 
     return (
-        <BaseContainer
-            uiProps={{
-                dragProps: undefined,
-                isDragging: false,
-                onToggleShowFullSize: undefined,
-                allowFullSize: false,
-                showFullSize: false,
-                setTutFocusElemRef: undefined,
-            }}
-            moduleData={moduleData}
-        >
-            <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
-                <ImageModule
-                    imageUrl={imageUrl}
-                    title={moduleData.widget.name}
-                    isLoading={isLoading}
-                    isError={isError}
-                />
-            </Suspense>
-        </BaseContainer>
+        // <BaseContainer
+        //     uiProps={{
+        //         dragProps: undefined,
+        //         isDragging: false,
+        //         onToggleShowFullSize: undefined,
+        //         allowFullSize: false,
+        //         showFullSize: false,
+        //         setTutFocusElemRef: undefined,
+        //     }}
+        //     moduleData={moduleData}
+        // >
+        <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
+            <ImageModule
+                // imageUrl={imageUrl}
+                imageUrl="/eth.jpeg"
+                title={moduleData.widget.name}
+                isLoading={isLoading}
+                // isError={isError}
+                isError={false}
+            />
+        </Suspense>
+        // </BaseContainer>
     );
 };
 

@@ -42,7 +42,8 @@ const WIDGETS_CONFIG = {
         ADJUSTABLE: true,
     },
     [ETemplateNameRegistry.Image]: {
-        WIDGET_HEIGHT: 500,
+        WIDGET_ASPECT_RATIO: 3, // 1500 by 500
+        WIDGET_HEIGHT: 449, // max widget width is 1347px (4-col)
         ADJUSTABLE: false,
         COLLAPSED_WIDGET_HEIGHT: 45,
         TWO_COL_SUPPORT: true,
