@@ -394,8 +394,14 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                             const totalHeight =
                                                 calculateTwoColWidgetsHeight(
                                                     twoColWidgets,
-                                                    twoColWidgetCollapsedStates
+                                                    twoColWidgetCollapsedStates,
+                                                    windowSize.width
                                                 );
+
+                                            Logger.info(
+                                                "totalHeight",
+                                                totalHeight
+                                            );
 
                                             return totalHeight > 0
                                                 ? `${totalHeight}px`

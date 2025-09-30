@@ -6,6 +6,7 @@ interface IImageModule {
     title: string;
     isLoading: boolean;
     isError: boolean;
+    contentHeight: string;
 }
 
 export const ImageModule: FC<IImageModule> = ({
@@ -13,6 +14,7 @@ export const ImageModule: FC<IImageModule> = ({
     title,
     isLoading,
     isError,
+    contentHeight,
 }) => {
     const processedImageUrl = useMemo(() => {
         if (isError || !imageUrl) return "";
@@ -20,7 +22,7 @@ export const ImageModule: FC<IImageModule> = ({
     }, [imageUrl, isError]);
 
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-full" style={{ height: contentHeight }}>
             <ImageWidget
                 imageUrl={processedImageUrl}
                 title={title}

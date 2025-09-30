@@ -33,12 +33,12 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     }
 
     return (
-        <div className="flex items-center justify-center w-full h-[500px]">
+        <div className="flex items-center justify-center w-full h-full">
             {imageLoading && <ModuleLoader $height="500px" />}
             <img
                 src={imageUrl}
                 alt={title}
-                className={`w-full h-[500px] object-cover rounded ${
+                className={`w-full h-full object-cover rounded ${
                     imageLoading ? "hidden" : "block"
                 }`}
                 onLoad={() => setImageLoading(false)}
