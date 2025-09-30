@@ -43,8 +43,8 @@ const SIZES = {
         compact: 0.4,
         minimal: 0.5,
     },
-    fontSize: { spacious: 16, comfortable: 12, compact: 10, minimal: 10 },
-    spacing: { spacious: 8, comfortable: 6, compact: 0, minimal: 0 },
+    fontSize: { spacious: 17, comfortable: 12, compact: 10, minimal: 10 },
+    spacing: { spacious: 10, comfortable: 7, compact: 0, minimal: 0 },
 };
 
 const getLayout = (
@@ -107,6 +107,9 @@ const renderCoinElements = (
                 height={layout.icon.size}
                 href={coinImage}
                 className="pointer-events-none"
+                style={{
+                    filter: "drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2))",
+                }}
             />
         )}
         {displayRules.showTicker && (
