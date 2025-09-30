@@ -1,7 +1,10 @@
 import { type FC, Suspense, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { useWindowSize } from "src/api/hooks";
-import { getColType, EColumnType } from "src/api/utils/layoutUtils";
+import {
+    getColType,
+    TWO_COL_WIDGET_MAX_WIDTHS,
+} from "src/api/utils/layoutUtils";
 import CONFIG from "src/config";
 import type { IModuleContainer } from "src/types";
 import { ImageModule } from "../../components/image/ImageModule";
@@ -61,31 +64,14 @@ const ImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
         if (aspectRatio && windowSize.width) {
             const colType = getColType(windowSize.width);
-            let maxWidth: number;
-
-            switch (colType) {
-                case EColumnType.SingleCol:
-                    maxWidth = 1167;
-                    break;
-                case EColumnType.TwoCol:
-                    maxWidth = 1167;
-                    break;
-                case EColumnType.ThreeCol:
-                    maxWidth = 1259;
-                    break;
-                case EColumnType.FourCol:
-                    maxWidth = 1347;
-                    break;
-                default:
-                    maxWidth = 1167;
-            }
+            const maxWidth = TWO_COL_WIDGET_MAX_WIDTHS[colType];
 
             const calculatedHeight = maxWidth / aspectRatio;
             return `${calculatedHeight}px`;
         }
 
         // Fallback to static height
-        return `${(imageConfig.WIDGET_HEIGHT as number) || 500}px`;
+        return `${imageConfig.WIDGET_HEIGHT || 500}px`;
     }, [windowSize.width]);
 
     const isLoading = !moduleData;

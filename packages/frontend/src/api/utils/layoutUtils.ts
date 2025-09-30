@@ -14,9 +14,9 @@ const { WIDGETS } = CONFIG;
 
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
-const TWO_COL_WIDGET_MAX_WIDTHS = {
-    tiny: 1167,
-    singleCol: 1167,
+export const TWO_COL_WIDGET_MAX_WIDTHS = {
+    tiny: 1167, // not visble because of superfeed
+    singleCol: 1167, // not visible because of superfeed
     twoCol: 1167,
     threeCol: 1259,
     fourCol: 1347,
