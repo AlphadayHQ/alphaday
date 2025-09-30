@@ -61,11 +61,11 @@ export const HeatmapFilters: FC<IHeatmapFilters> = ({
             name: t("market.heatmap.colorMetrics.change30d"),
             icon: null,
         },
-        {
-            id: EHeatmapColorMetric.PriceChange60d,
-            name: t("market.heatmap.colorMetrics.change60d"),
-            icon: null,
-        },
+        // {
+        //     id: EHeatmapColorMetric.PriceChange60d,
+        //     name: t("market.heatmap.colorMetrics.change60d"),
+        //     icon: null,
+        // },
     ];
 
     const maxItemsOptions = Object.keys(EHeatmapMaxItems)
