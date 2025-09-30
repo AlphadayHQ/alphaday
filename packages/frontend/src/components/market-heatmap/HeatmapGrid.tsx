@@ -374,8 +374,8 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                 height={height}
                                 fill={
                                     isPositive
-                                        ? `hsl(130, ${Math.min(colorIntensity * 80, 160)}%, ${30 + colorIntensity * 0.3}%)`
-                                        : `hsl(0, ${Math.min(colorIntensity * 20, 120)}%, ${30 + colorIntensity * 0.3}%)`
+                                        ? `hsl(100, ${Math.min(colorIntensity * 80, 70)}%, ${40 + colorIntensity * 0.3}%)`
+                                        : `hsl(9, ${Math.min(colorIntensity * 80, 90)}%, ${40 + colorIntensity * 0.3}%)`
                                 }
                                 stroke="#2a2a2a"
                                 strokeWidth={isHighlighted ? "1" : "0.5"}
