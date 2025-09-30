@@ -32,7 +32,6 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
 
     return (
         <div className="relative flex flex-col h-full">
-            <div className="absolute top-[37px] h-px mx-1 w-[calc(100%-8px)] bg-borderLine" />
             <HeatmapFilters
                 sizeMetric={sizeMetric}
                 colorMetric={colorMetric}
