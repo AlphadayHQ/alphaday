@@ -4,22 +4,20 @@ import ImageWidget from "./ImageWidget";
 interface IImageModule {
     imageUrl: string | undefined;
     title: string;
-    isLoading: boolean;
-    isError: boolean;
     contentHeight: string;
+    isLoading: boolean;
 }
 
 export const ImageModule: FC<IImageModule> = ({
     imageUrl,
     title,
-    isLoading,
-    isError,
     contentHeight,
+    isLoading,
 }) => {
     const processedImageUrl = useMemo(() => {
-        if (isError || !imageUrl) return "";
+        if (!imageUrl) return "";
         return imageUrl;
-    }, [imageUrl, isError]);
+    }, [imageUrl]);
 
     return (
         <div className="w-full h-full" style={{ height: contentHeight }}>
