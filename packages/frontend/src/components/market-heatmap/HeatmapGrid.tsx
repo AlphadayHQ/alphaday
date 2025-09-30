@@ -347,6 +347,37 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                 height="100%"
                 viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
             >
+                <defs>
+                    {heatmapItems.map((item) => {
+                        const { coin, color } = item;
+                        const colorIntensity = Math.abs(color);
+                        const isPositive = color >= 0;
+                        const baseColor = isPositive
+                            ? `hsl(100, ${Math.min(colorIntensity * 80, 70)}%, ${40 + colorIntensity * 0.3}%)`
+                            : `hsl(9, ${Math.min(colorIntensity * 80, 90)}%, ${40 + colorIntensity * 0.3}%)`;
+                        const darkerColor = isPositive
+                            ? `hsl(100, ${Math.min(colorIntensity * 80, 70)}%, ${35 + colorIntensity * 0.2}%)`
+                            : `hsl(9, ${Math.min(colorIntensity * 80, 90)}%, ${35 + colorIntensity * 0.2}%)`;
+
+                        return (
+                            <linearGradient
+                                key={`gradient-${coin.id}`}
+                                id={`gradient-${coin.id}`}
+                                x1="0%"
+                                y1="0%"
+                                x2="0%"
+                                y2="100%"
+
+                                // cx="50%"
+                                // cy="50%"
+                                // r="80%"
+                            >
+                                <stop offset="0%" stopColor={baseColor} />
+                                <stop offset="100%" stopColor={darkerColor} />
+                            </linearGradient>
+                        );
+                    })}
+                </defs>
                 {heatmapItems.map((item) => {
                     const { coin, width, height, x, y, color } = item;
                     const colorIntensity = Math.abs(color);
@@ -377,17 +408,13 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                 height={height - 1}
                                 rx={2}
                                 ry={2}
-                                fill={
-                                    isPositive
-                                        ? `hsl(100, ${Math.min(colorIntensity * 80, 70)}%, ${40 + colorIntensity * 0.3}%)`
-                                        : `hsl(9, ${Math.min(colorIntensity * 80, 90)}%, ${40 + colorIntensity * 0.3}%)`
-                                }
+                                fill={`url(#gradient-${coin.id})`}
                                 stroke="#2a2a2a"
                                 strokeWidth={isHighlighted ? "1" : "0.5"}
                                 className="hover:opacity-80 transition-opacity cursor-pointer"
                                 onClick={() => onCoinClick(coin)}
                                 style={{
-                                    opacity: 0.7,
+                                    opacity: 0.8,
                                 }}
                                 onMouseEnter={(e) => {
                                     setHoveredCoin(coin);
