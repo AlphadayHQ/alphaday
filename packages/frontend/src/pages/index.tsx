@@ -397,12 +397,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                                     twoColWidgetCollapsedStates,
                                                     windowSize.width
                                                 );
-
-                                            Logger.info(
-                                                "totalHeight",
-                                                totalHeight
-                                            );
-
                                             return totalHeight > 0
                                                 ? `${totalHeight}px`
                                                 : "0px";
