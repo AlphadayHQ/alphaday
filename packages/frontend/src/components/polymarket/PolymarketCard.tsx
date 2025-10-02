@@ -3,7 +3,6 @@ import { twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { TPolymarketMarket } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
-import { translateLabels } from "src/api/utils/translationUtils";
 
 interface IPolymarketCard {
     market: TPolymarketMarket;
@@ -13,26 +12,19 @@ interface IPolymarketCard {
 const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
     const { t } = useTranslation();
 
-    const topOutcome =
-        market.outcomes && market.outcomes.length > 0
-            ? market.outcomes.reduce((prev, current) =>
-                  prev.probability > current.probability ? prev : current
-              )
-            : null;
-
     const endDate = market.end_date ? new Date(market.end_date) : null;
     const isExpired = endDate && endDate < new Date();
 
     let statusText = "";
     let statusColor = "";
     if (market.resolved) {
-        statusText = t("Resolved");
+        statusText = t("polymarket.resolved");
         statusColor = "text-gray-500";
     } else if (isExpired) {
-        statusText = t("Expired");
+        statusText = t("polymarket.expired");
         statusColor = "text-orange-500";
     } else {
-        statusText = t("Active");
+        statusText = t("polymarket.active");
         statusColor = "text-green-500";
     }
 
@@ -66,7 +58,7 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
                 }
             }}
         >
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-1">
                 <h3 className="flex items-center gap-2 text-sm font-semibold text-primary line-clamp-2 leading-tight">
                     {market.image && (
                         <img
@@ -82,46 +74,40 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
                 </span>
             </div>
 
-            {topOutcome && (
-                <div className="p-2">
-                    <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center space-x-3">
-                            <span className="font-medium">
-                                {formatVolume(market.total_volume)}{" "}
-                                {translateLabels("vol")}
+            <div className="p-2">
+                <div className="flex items-center justify-between mb-2 text-xs">
+                    <div className="flex items-center gap-3">
+                        <span className="font-medium">
+                            {formatVolume(market.volume)}{" "}
+                            {t("navigation.general.vol")}
+                        </span>
+                        {endDate && !market.resolved && (
+                            <span className="text-primaryVariant100">
+                                {computeDuration(endDate.toISOString())}
                             </span>
-                            {endDate && !market.resolved && (
-                                <span>
-                                    {computeDuration(endDate.toISOString())}
-                                </span>
-                            )}
-                        </div>
-                        <div className="flex items-center space-x-1">
-                            <span className="text-xs text-primaryVariant100 font-medium">
-                                {topOutcome.name}
-                            </span>
-                            <span className="text-xs font-bold text-primary">
-                                {Math.round(
-                                    (topOutcome.probability || 0) * 100
-                                )}
-                                %
-                            </span>
-                            <span className="text-xs text-primaryVariant100">
-                                ${topOutcome.price.toFixed(2)}
-                            </span>
-                        </div>
+                        )}
                     </div>
-                    {market.outcomes && market.outcomes.length >= 2 && (
-                        <div className="flex flex-col gap-2 mt-2 text-primaryVariant100">
-                            {market.outcomes.map((outcome) => (
-                                <div className="text-primaryVariant100">
-                                    {outcome.name ?? outcome.price}
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </div>
-            )}
+                {market.outcomes && market.outcomes.length > 0 && (
+                    <div className="flex flex-col gap-1.5">
+                        {market.outcomes.map((outcome) => (
+                            <div
+                                key={outcome.id}
+                                className="flex items-center justify-between text-xs"
+                            >
+                                <span className="text-primaryVariant100 truncate">
+                                    {outcome.outcome_name}
+                                </span>
+                                <div className="flex items-center gap-2 shrink-0">
+                                    <span className="text-primary">
+                                        ${outcome.price.toFixed(2)}
+                                    </span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

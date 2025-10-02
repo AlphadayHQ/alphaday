@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { ModuleLoader, TabButton } from "@alphaday/ui-kit";
+import { useTranslation } from "react-i18next";
 import { TPolymarketMarket } from "src/api/services/polymarket/types";
-import { translateLabels } from "src/api/utils/translationUtils";
 import PolymarketList from "./PolymarketList";
 import { EPolymarketFilter } from "./types";
 
@@ -18,6 +18,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
     onSelectMarket,
     contentHeight,
 }) => {
+    const { t } = useTranslation();
     const [currentFilter, setCurrentFilter] = useState<EPolymarketFilter>(
         EPolymarketFilter.Active
     );
@@ -52,7 +53,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
                             handleFilterChange(EPolymarketFilter.All)
                         }
                     >
-                        {translateLabels("All")}
+                        {t("navigation.general.all")}
                     </TabButton>
                     <TabButton
                         variant="small"
@@ -61,7 +62,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
                             handleFilterChange(EPolymarketFilter.Active)
                         }
                     >
-                        {translateLabels("Active")}
+                        {t("polymarket.active")}
                     </TabButton>
                     <TabButton
                         variant="small"
@@ -70,7 +71,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
                             handleFilterChange(EPolymarketFilter.Resolved)
                         }
                     >
-                        {translateLabels("Resolved")}
+                        {t("polymarket.resolved")}
                     </TabButton>
                 </div>
             </div>

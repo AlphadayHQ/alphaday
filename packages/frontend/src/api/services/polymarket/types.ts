@@ -20,12 +20,10 @@ export type TPolymarketEvent = {
 
 export type TPolymarketOutcome = {
     id: number;
-    name: string;
+    outcome_name: string;
     price: number;
-    volume_24h: number;
+    volume: number;
     liquidity: number;
-    outcome_token: string;
-    probability: number;
 };
 
 export type TPolymarketMarket = {
@@ -34,8 +32,7 @@ export type TPolymarketMarket = {
     description: string;
     event: TPolymarketEvent;
     outcomes: TPolymarketOutcome[] | null;
-    total_volume?: number;
-    total_liquidity: number;
+    volume?: number;
     created_at: string;
     updated_at: string;
     end_date: string | null;

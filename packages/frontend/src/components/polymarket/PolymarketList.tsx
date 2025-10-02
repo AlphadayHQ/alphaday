@@ -15,7 +15,7 @@ const PolymarketList: FC<IPolymarketList> = ({ markets, onSelectMarket }) => {
     if (markets.length === 0) {
         return (
             <CenteredBlock>
-                <p>{t("No markets found")}</p>
+                <p>{t("polymarket.noMarketsFound")}</p>
             </CenteredBlock>
         );
     }
