@@ -103,7 +103,7 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
                                         <div
                                             key={outcome.id}
                                             className={twMerge(
-                                                "flex items-center justify-between text-xs py-1.5 px-2",
+                                                "flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
                                                 idx === 0 &&
                                                     `rounded-t-md ${market.outcomes?.length === 2 ? "bg-blue-500/20 [&>span]:text-accentVariant100" : ""}`,
 
