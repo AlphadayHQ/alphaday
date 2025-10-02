@@ -59,7 +59,7 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
             }}
         >
             <div className="flex items-center justify-between">
-                <h3 className="flex gap-4">
+                <div className="flex gap-4 w-full">
                     {market.image && (
                         <img
                             src={market.image}
@@ -125,7 +125,7 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
                             )}
                         </div>
                     </div>
-                </h3>
+                </div>
             </div>
         </div>
     );
