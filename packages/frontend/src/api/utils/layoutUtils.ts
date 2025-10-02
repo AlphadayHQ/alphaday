@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import ImageContainer from "src/containers/image/ImageContainer";
 import KasandraContainer from "src/containers/kasandra/KasandraContainer";
 import MarketHeatmapContainer from "src/containers/market-heatmap/MarketHeatmapContainer";
 import { deviceBreakpoints } from "src/globalStyles/breakpoints";
@@ -13,7 +14,20 @@ const { WIDGETS } = CONFIG;
 
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
+export const TWO_COL_WIDGET_MAX_WIDTHS = {
+    tiny: 1167, // not visble because of superfeed
+    singleCol: 1167, // not visible because of superfeed
+    twoCol: 1167,
+    threeCol: 1259,
+    fourCol: 1347,
+};
+
 export const TWO_COL_WIDGETS_CONFIG = {
+    image: {
+        templateName: ETemplateNameRegistry.Image,
+        Container: ImageContainer,
+        widgetConfig: WIDGETS.IMAGE,
+    },
     kasandra: {
         templateName: ETemplateNameRegistry.Kasandra,
         Container: KasandraContainer,
@@ -286,9 +300,26 @@ export const useTwoColWidgets = (selectedView: TCachedView | undefined) => {
     }, [selectedView]);
 };
 
+const getMaxWidthForScreenSize = (windowWidth: number): number => {
+    const colType = getColType(windowWidth);
+    switch (colType) {
+        case EColumnType.SingleCol:
+            return TWO_COL_WIDGET_MAX_WIDTHS.singleCol;
+        case EColumnType.TwoCol:
+            return TWO_COL_WIDGET_MAX_WIDTHS.twoCol;
+        case EColumnType.ThreeCol:
+            return TWO_COL_WIDGET_MAX_WIDTHS.threeCol;
+        case EColumnType.FourCol:
+            return TWO_COL_WIDGET_MAX_WIDTHS.fourCol;
+        default:
+            return TWO_COL_WIDGET_MAX_WIDTHS.twoCol;
+    }
+};
+
 export const calculateTwoColWidgetsHeight = (
     widgets: Record<string, TUserViewWidget>,
-    collapsedStates: Record<string, boolean>
+    collapsedStates: Record<string, boolean>,
+    windowWidth?: number
 ) => {
     let totalHeight = 0;
     const defaultMarginBottom = 14;
@@ -300,8 +331,18 @@ export const calculateTwoColWidgetsHeight = (
                     (config.widgetConfig.COLLAPSED_WIDGET_HEIGHT as number) ||
                     0;
             } else {
-                totalHeight +=
-                    (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
+                // Check if widget has aspect ratio for dynamic height calculation
+                // @ts-ignore
+                const aspectRatio = config.widgetConfig.WIDGET_ASPECT_RATIO;
+                if (aspectRatio && windowWidth) {
+                    const maxWidth = getMaxWidthForScreenSize(windowWidth);
+                    const calculatedHeight = maxWidth / aspectRatio;
+                    totalHeight += calculatedHeight;
+                } else {
+                    // Fallback to static height
+                    totalHeight +=
+                        (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
+                }
             }
             totalHeight += defaultMarginBottom;
         }

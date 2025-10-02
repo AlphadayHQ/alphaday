@@ -41,6 +41,13 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Image]: {
+        WIDGET_ASPECT_RATIO: 3, // 1500 by 500
+        WIDGET_HEIGHT: 449, // max widget width is 1347px (4-col)
+        ADJUSTABLE: false,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        TWO_COL_SUPPORT: true,
+    },
     [ETemplateNameRegistry.Kasandra]: {
         WIDGET_HEIGHT: 599,
         COLLAPSED_WIDGET_HEIGHT: 45,
