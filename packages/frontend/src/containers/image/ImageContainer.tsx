@@ -2,10 +2,8 @@ import { type FC, Suspense, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { useWindowSize } from "src/api/hooks";
 import { TRemoteCustomData } from "src/api/services";
-import {
-    getColType,
-    TWO_COL_WIDGET_MAX_WIDTHS,
-} from "src/api/utils/layoutUtils";
+import { getColType } from "src/api/utils/layoutUtils";
+import { twoColWidgetMaxWidths } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
 import type { IModuleContainer } from "src/types";
 import { ImageModule } from "../../components/image/ImageModule";
@@ -35,7 +33,7 @@ const ImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
         if (aspectRatio && windowSize.width) {
             const colType = getColType(windowSize.width);
-            const maxWidth = TWO_COL_WIDGET_MAX_WIDTHS[colType];
+            const maxWidth = twoColWidgetMaxWidths[colType];
 
             const calculatedHeight = maxWidth / aspectRatio;
             return `${calculatedHeight}px`;

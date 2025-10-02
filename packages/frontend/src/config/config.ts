@@ -15,7 +15,7 @@ import {
 import UI_CONFIG from "./ui";
 import USER_CONFIG from "./user";
 import VIEWS_CONFIG from "./views";
-import WIDGETS_CONFIG from "./widgets";
+import { WIDGETS_CONFIG, TWO_COL_WIDGETS_CONFIG } from "./widgets";
 
 // order is important here
 export enum EEnvironments {
@@ -86,6 +86,7 @@ const CONFIG = {
     ROUTING: ROUTING_CONFIG,
     UI: UI_CONFIG,
     WIDGETS: WIDGETS_CONFIG,
+    TWO_COL_WIDGETS: TWO_COL_WIDGETS_CONFIG,
     SUPERFEED: SUPERFEED_CONFIG,
     SEO: SEO_CONFIG,
     FIREBASE: FIREBASE_CONFIG,
