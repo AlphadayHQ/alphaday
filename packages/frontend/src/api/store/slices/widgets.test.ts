@@ -69,6 +69,7 @@ beforeEach(() => {
         video: {},
         blog: {},
         kasandra: {},
+        polymarket: {},
         tvl: {
             [tvlWidgetHash]: {
                 selectedProjectType: "chain",
