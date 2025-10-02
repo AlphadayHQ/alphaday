@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
-import { ModuleLoader, TabButton } from "@alphaday/ui-kit";
+import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { TPolymarketMarket } from "src/api/services/polymarket/types";
+import { Logger } from "src/api/utils/logging";
 import PolymarketList from "./PolymarketList";
 import { EPolymarketFilter } from "./types";
 
@@ -19,13 +20,28 @@ const PolymarketModule: FC<IPolymarketModule> = ({
     contentHeight,
 }) => {
     const { t } = useTranslation();
+    const polymarketNavItems = [
+        {
+            label: t("navigation.general.all"),
+            value: EPolymarketFilter.All,
+        },
+        {
+            label: t("polymarket.active"),
+            value: EPolymarketFilter.Active,
+        },
+        {
+            label: t("polymarket.resolved"),
+            value: EPolymarketFilter.Resolved,
+            auth: true,
+        },
+    ];
     const [currentFilter, setCurrentFilter] = useState<EPolymarketFilter>(
         EPolymarketFilter.Active
     );
 
-    if (isLoading) {
-        return <ModuleLoader $height={contentHeight} />;
-    }
+    const NavItemPreference =
+        polymarketNavItems.find((item) => item.value === currentFilter) ||
+        polymarketNavItems[0];
 
     const filteredMarkets = markets.filter((market) => {
         switch (currentFilter) {
@@ -38,49 +54,37 @@ const PolymarketModule: FC<IPolymarketModule> = ({
         }
     });
 
-    const handleFilterChange = (filter: EPolymarketFilter) => {
-        setCurrentFilter(filter);
+    const onTabOptionChange = (value: string) => {
+        const optionItem = polymarketNavItems.find(
+            (item) => item.value === value
+        );
+        if (optionItem === undefined) {
+            Logger.debug("PolymarketModule::Nav option item not found");
+            return;
+        }
+        setCurrentFilter(optionItem.value);
     };
 
     return (
-        <div className="flex flex-col h-full pb-4">
-            <div className="flex items-center justify-between px-4 pb-4 border-b border-borderLine">
-                <div className="flex items-center gap-2">
-                    <TabButton
-                        variant="small"
-                        open={currentFilter === EPolymarketFilter.All}
-                        onClick={() =>
-                            handleFilterChange(EPolymarketFilter.All)
-                        }
-                    >
-                        {t("navigation.general.all")}
-                    </TabButton>
-                    <TabButton
-                        variant="small"
-                        open={currentFilter === EPolymarketFilter.Active}
-                        onClick={() =>
-                            handleFilterChange(EPolymarketFilter.Active)
-                        }
-                    >
-                        {t("polymarket.active")}
-                    </TabButton>
-                    <TabButton
-                        variant="small"
-                        open={currentFilter === EPolymarketFilter.Resolved}
-                        onClick={() =>
-                            handleFilterChange(EPolymarketFilter.Resolved)
-                        }
-                    >
-                        {t("polymarket.resolved")}
-                    </TabButton>
-                </div>
+        <>
+            <div className="mx-2">
+                <TabsBar
+                    options={polymarketNavItems}
+                    onChange={onTabOptionChange}
+                    selectedOption={NavItemPreference}
+                />
             </div>
-
-            <PolymarketList
-                markets={filteredMarkets}
-                onSelectMarket={onSelectMarket}
-            />
-        </div>
+            <div className="flex flex-col h-full pb-4">
+                {isLoading ? (
+                    <ModuleLoader $height={contentHeight} />
+                ) : (
+                    <PolymarketList
+                        markets={filteredMarkets}
+                        onSelectMarket={onSelectMarket}
+                    />
+                )}
+            </div>
+        </>
     );
 };
 
