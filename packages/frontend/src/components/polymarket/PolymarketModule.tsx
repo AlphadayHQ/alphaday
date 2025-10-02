@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { ModuleLoader, TabsBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { TPolymarketMarket } from "src/api/services/polymarket/types";
@@ -11,6 +11,8 @@ export interface IPolymarketModule {
     markets: TPolymarketMarket[];
     onSelectMarket?: (market: TPolymarketMarket) => void;
     contentHeight: string;
+    selectedFilter: EPolymarketFilter;
+    onSetSelectedFilter: (filter: EPolymarketFilter) => void;
 }
 
 const PolymarketModule: FC<IPolymarketModule> = ({
@@ -18,6 +20,8 @@ const PolymarketModule: FC<IPolymarketModule> = ({
     markets,
     onSelectMarket,
     contentHeight,
+    selectedFilter,
+    onSetSelectedFilter,
 }) => {
     const { t } = useTranslation();
     const polymarketNavItems = [
@@ -35,16 +39,13 @@ const PolymarketModule: FC<IPolymarketModule> = ({
             auth: true,
         },
     ];
-    const [currentFilter, setCurrentFilter] = useState<EPolymarketFilter>(
-        EPolymarketFilter.Active
-    );
 
     const NavItemPreference =
-        polymarketNavItems.find((item) => item.value === currentFilter) ||
+        polymarketNavItems.find((item) => item.value === selectedFilter) ||
         polymarketNavItems[0];
 
     const filteredMarkets = markets.filter((market) => {
-        switch (currentFilter) {
+        switch (selectedFilter) {
             case EPolymarketFilter.Active:
                 return !market.resolved;
             case EPolymarketFilter.Resolved:
@@ -62,7 +63,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
             Logger.debug("PolymarketModule::Nav option item not found");
             return;
         }
-        setCurrentFilter(optionItem.value);
+        onSetSelectedFilter(optionItem.value);
     };
 
     return (

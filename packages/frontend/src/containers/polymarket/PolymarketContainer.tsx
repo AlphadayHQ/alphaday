@@ -5,15 +5,24 @@ import { useGetPolymarketMarketsQuery } from "src/api/services";
 
 import type { TPolymarketMarket } from "src/api/services/polymarket/types";
 
+import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
+import {
+    selectPolymarketFilter,
+    setPolymarketFilter,
+} from "src/api/store/slices/widgets";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import PolymarketModule from "src/components/polymarket/PolymarketModule";
+import { EPolymarketFilter } from "src/components/polymarket/types";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import type { IModuleContainer } from "src/types";
 
 const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
-
+    const dispatch = useAppDispatch();
+    const selectedFilter = useAppSelector(
+        selectPolymarketFilter(moduleData.hash)
+    );
     const { logButtonClicked } = useCustomAnalytics();
     const { lastSelectedKeyword } = useGlobalSearch();
 
@@ -86,15 +95,24 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return `${WIDGET_HEIGHT - 55}px`;
     }, [WIDGET_HEIGHT]);
 
-    const isLoading = isLoadingMarkets;
+    const setSelectedFilter = useCallback(
+        (filter: EPolymarketFilter) => {
+            dispatch(
+                setPolymarketFilter({ widgetHash: moduleData.hash, filter })
+            );
+        },
+        [dispatch, moduleData.hash]
+    );
 
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <PolymarketModule
-                isLoading={isLoading}
+                isLoading={isLoadingMarkets}
                 markets={markets}
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
+                selectedFilter={selectedFilter || EPolymarketFilter.Active}
+                onSetSelectedFilter={setSelectedFilter}
             />
         </Suspense>
     );
