@@ -38,7 +38,7 @@ export type TPolymarketMarket = {
     end_date: string | null;
     resolved: boolean;
     winning_outcome: TPolymarketOutcome | null;
-    market_slug: string;
+    slug: string;
     image: string | null;
     tags: TRemoteTagReadOnly[];
 };

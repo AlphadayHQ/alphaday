@@ -56,7 +56,7 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            const polymarketUrl = `https://polymarket.com/market/${market.market_slug}?outcome=${outcome}`;
+            const polymarketUrl = `https://polymarket.com/event/${market.slug}`;
             window.open(polymarketUrl, "_blank", "noopener,noreferrer");
         },
         [logButtonClicked, moduleData.name]
