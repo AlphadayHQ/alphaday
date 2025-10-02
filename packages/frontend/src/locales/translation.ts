@@ -55,6 +55,7 @@ export const translationEN = {
             less: "Less",
             more: "More",
             timeline: "Timeline",
+            vol: "vol",
         },
     },
     widget: {
@@ -424,6 +425,12 @@ export const translationEN = {
         all: "All Cases",
         now: "Now",
     },
+    polymarket: {
+        noMarketsFound: "No markets found",
+        expired: "Expired",
+        resolved: "Resolved",
+        active: "Active",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -483,6 +490,7 @@ export const translationJA: typeof translationEN = {
             less: "少なく",
             more: "もっと",
             timeline: "タイムライン",
+            vol: "出来高",
         },
     },
     widget: {
@@ -854,6 +862,12 @@ export const translationJA: typeof translationEN = {
         all: "すべてのケース",
         now: "今",
     },
+    polymarket: {
+        noMarketsFound: "マーケットが見つかりません",
+        expired: "期限切れ",
+        resolved: "解決済み",
+        active: "アクティブ",
+    },
 };
 
 export const translationES: typeof translationEN = {
@@ -913,6 +927,7 @@ export const translationES: typeof translationEN = {
             less: "Menos",
             more: "Más",
             timeline: "Timeline",
+            vol: "vol",
         },
     },
     widget: {
@@ -1282,6 +1297,12 @@ export const translationES: typeof translationEN = {
         all: "Todos los casos",
         now: "Ahora",
     },
+    polymarket: {
+        noMarketsFound: "No se encontraron mercados",
+        expired: "Expirado",
+        resolved: "Resuelto",
+        active: "Activo",
+    },
 };
 
 export const translationFR: typeof translationEN = {
@@ -1342,6 +1363,7 @@ export const translationFR: typeof translationEN = {
             less: "Moins",
             more: "Plus",
             timeline: "Chronologie",
+            vol: "vol",
         },
     },
     widget: {
@@ -1719,6 +1741,12 @@ export const translationFR: typeof translationEN = {
         all: "Tous les cas",
         now: "Maintenant",
     },
+    polymarket: {
+        noMarketsFound: "Aucun marché trouvé",
+        expired: "Expiré",
+        resolved: "Résolu",
+        active: "Actif",
+    },
 };
 
 export const translationTR: typeof translationEN = {
@@ -1778,6 +1806,7 @@ export const translationTR: typeof translationEN = {
             less: "Daha Az",
             more: "Daha Fazla",
             timeline: "	zaman akışı",
+            vol: "hacim",
         },
     },
     widget: {
@@ -2151,6 +2180,12 @@ export const translationTR: typeof translationEN = {
         all: "Tüm Durumlar",
         now: "Şimdi",
     },
+    polymarket: {
+        noMarketsFound: "Piyasa bulunamadı",
+        expired: "Süresi Dolmuş",
+        resolved: "Çözüldü",
+        active: "Aktif",
+    },
 };
 
 export const translationZH: typeof translationEN = {
@@ -2208,6 +2243,7 @@ export const translationZH: typeof translationEN = {
             less: "更少",
             more: "更多",
             timeline: "时间线",
+            vol: "交易量",
         },
     },
     widget: {
@@ -2566,5 +2602,11 @@ export const translationZH: typeof translationEN = {
         baseline: "中性",
         all: "所有情况",
         now: "现在",
+    },
+    polymarket: {
+        noMarketsFound: "未找到市场",
+        expired: "已过期",
+        resolved: "已解决",
+        active: "活跃",
     },
 };

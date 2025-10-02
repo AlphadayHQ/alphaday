@@ -103,6 +103,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     podcast_template: lazyRetry(
         () => import("./containers/podcast/PodcastContainer")
     ),
+    polymarket_template: lazyRetry(
+        () => import("./containers/polymarket/PolymarketContainer")
+    ),
     portfolio_template: lazyRetry(
         () => import("./containers/portfolio/PortfolioContainer")
     ),

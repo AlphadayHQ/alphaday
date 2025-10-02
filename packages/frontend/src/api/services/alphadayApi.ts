@@ -16,6 +16,10 @@ export const alphadayApi = createApi({
         "PinnedCoins",
         "Superfeed",
         "Lang",
+        "PolymarketEvents",
+        "PolymarketMarkets",
+        "PolymarketStats",
+        "PolymarketHistory",
     ],
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,

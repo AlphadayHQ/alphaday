@@ -129,6 +129,13 @@ export const WIDGETS_CONFIG = {
         DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
         ADJUSTABLE: false,
     },
+    [ETemplateNameRegistry.Polymarket]: {
+        WIDGET_HEIGHT: 600,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        POLLING_INTERVAL: 5 * 60, // 5 min
+        QUERY_HARD_LIMIT: 30,
+        ADJUSTABLE: true,
+    },
     [ETemplateNameRegistry.Portfolio]: {
         DONUT_TOKENS_COUNT: 5,
         POLLING_INTERVAL: 5 * 60, // 5 min
