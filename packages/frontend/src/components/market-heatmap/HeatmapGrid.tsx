@@ -1,4 +1,11 @@
-import { type FC, useMemo, useRef, useEffect, useState } from "react";
+import {
+    type FC,
+    useMemo,
+    useRef,
+    useEffect,
+    useState,
+    useCallback,
+} from "react";
 import { TCoin, TKeyword } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { HeatmapTooltip } from "./HeatmapTooltip";
@@ -12,6 +19,137 @@ interface IHeatmapGrid {
     keywordSearchList: TKeyword[];
 }
 
+type DisplayMode = "minimal" | "compact" | "comfortable" | "spacious";
+
+const getDisplayMode = (width: number, height: number): DisplayMode => {
+    const area = width * height;
+    if (area < 1600) return "minimal"; // < 40x40
+    if (area < 6400) return "compact"; // < 80x80
+    if (area < 14400) return "comfortable"; // < 120x120
+    return "spacious";
+};
+
+const LAYOUTS = {
+    minimal: { showIcon: true, showTicker: false, showPercent: false },
+    compact: { showIcon: true, showTicker: false, showPercent: true },
+    comfortable: { showIcon: true, showTicker: true, showPercent: true },
+    spacious: { showIcon: true, showTicker: true, showPercent: true },
+};
+
+const SIZES = {
+    iconRatio: {
+        spacious: 0.25,
+        comfortable: 0.25,
+        compact: 0.4,
+        minimal: 0.5,
+    },
+    fontSize: { spacious: 17, comfortable: 12, compact: 10, minimal: 10 },
+    spacing: { spacious: 10, comfortable: 7, compact: 0, minimal: 0 },
+};
+
+const getLayout = (
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    mode: DisplayMode
+) => {
+    const centerX = x + width / 2;
+    const centerY = y + height / 2;
+    const iconRatio = SIZES.iconRatio[mode];
+    // Max icon size is 100px
+    const iconSize = Math.min(Math.min(width, height) * iconRatio, 100);
+    const fontSize = SIZES.fontSize[mode];
+    const spacing = SIZES.spacing[mode];
+
+    return {
+        centerX,
+        centerY,
+        iconSize,
+        fontSize,
+        spacing,
+        icon: {
+            x: centerX - iconSize / 2,
+            y:
+                mode === "minimal"
+                    ? centerY - iconSize / 2 // Center icon for minimal mode
+                    : centerY - iconSize - spacing * 2, // Stack above text
+            size: iconSize,
+        },
+        ticker: {
+            x: centerX,
+            y: centerY,
+        },
+        percent: {
+            x: centerX,
+            y: centerY + fontSize,
+        },
+    };
+};
+
+const renderCoinElements = (
+    coin: TCoin,
+    coinImage: string | undefined,
+    layout: ReturnType<typeof getLayout>,
+    displayRules: {
+        showIcon: boolean;
+        showTicker: boolean;
+        showPercent: boolean;
+    },
+    color: number
+) => (
+    <>
+        {displayRules.showIcon && coin.icon && (
+            <image
+                x={layout.icon.x}
+                y={layout.icon.y}
+                width={layout.icon.size}
+                height={layout.icon.size}
+                href={coinImage}
+                className="pointer-events-none"
+                style={{
+                    filter: "drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.2))",
+                }}
+            />
+        )}
+        {displayRules.showTicker && (
+            <text
+                x={layout.ticker.x}
+                y={layout.ticker.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-white font-bold pointer-events-none"
+                style={{
+                    fontSize: layout.fontSize,
+                }}
+            >
+                {coin.ticker.toUpperCase()}
+            </text>
+        )}
+        {displayRules.showPercent && (
+            <text
+                x={layout.percent.x}
+                y={layout.percent.y}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                className="fill-white font-semibold pointer-events-none"
+                style={{
+                    fontSize: layout.fontSize * 0.85,
+                }}
+            >
+                {color > 0 ? "+" : ""}
+                {
+                    formatNumber({
+                        value: color,
+                        style: ENumberStyle.Percent,
+                        normalise: true,
+                    }).value
+                }
+            </text>
+        )}
+    </>
+);
+
 export const HeatmapGrid: FC<IHeatmapGrid> = ({
     data,
     sizeMetric,
@@ -23,6 +161,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
     const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
     const [hoveredCoin, setHoveredCoin] = useState<TCoin | null>(null);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -44,6 +183,22 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
             resizeObserver.disconnect();
         };
     }, []);
+
+    const throttledMouseMove = useCallback((e: React.MouseEvent) => {
+        if (throttleTimeoutRef.current) return;
+
+        throttleTimeoutRef.current = setTimeout(() => {
+            const rect = containerRef.current?.getBoundingClientRect();
+            if (rect) {
+                setMousePosition({
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top,
+                });
+            }
+            throttleTimeoutRef.current = null;
+        }, 16); // ~60fps
+    }, []);
+
     const heatmapItems = useMemo(() => {
         if (!data.length) return [];
 
@@ -192,11 +347,35 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                 height="100%"
                 viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
             >
+                <defs>
+                    {heatmapItems.map((item) => {
+                        const { coin, color } = item;
+                        const colorIntensity = Math.abs(color);
+                        const isPositive = color >= 0;
+                        const baseColor = isPositive
+                            ? `hsl(100, ${Math.min(colorIntensity * 80, 70)}%, ${40 + colorIntensity * 0.3}%)`
+                            : `hsl(9, ${Math.min(colorIntensity * 80, 90)}%, ${40 + colorIntensity * 0.3}%)`;
+                        const darkerColor = isPositive
+                            ? `hsl(100, ${Math.min(colorIntensity * 80, 70)}%, ${35 + colorIntensity * 0.2}%)`
+                            : `hsl(9, ${Math.min(colorIntensity * 80, 90)}%, ${35 + colorIntensity * 0.2}%)`;
+
+                        return (
+                            <linearGradient
+                                key={`gradient-${coin.id}`}
+                                id={`gradient-${coin.id}`}
+                                x1="0%"
+                                y1="0%"
+                                x2="0%"
+                                y2="100%"
+                            >
+                                <stop offset="0%" stopColor={baseColor} />
+                                <stop offset="100%" stopColor={darkerColor} />
+                            </linearGradient>
+                        );
+                    })}
+                </defs>
                 {heatmapItems.map((item) => {
                     const { coin, width, height, x, y, color } = item;
-                    const colorIntensity = Math.abs(color);
-                    const isPositive = color >= 0;
-
                     const coinImage =
                         coin.ticker === "BTC"
                             ? "/crypto-logos/bitcoin.avif"
@@ -216,19 +395,20 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                     return (
                         <g key={coin.id} style={{ opacity: baseOpacity }}>
                             <rect
-                                x={x}
-                                y={y}
-                                width={width}
-                                height={height}
-                                fill={
-                                    isPositive
-                                        ? `hsl(130, ${Math.min(colorIntensity * 80, 160)}%, ${30 + colorIntensity * 0.3}%)`
-                                        : `hsl(0, ${Math.min(colorIntensity * 20, 120)}%, ${30 + colorIntensity * 0.3}%)`
-                                }
+                                x={x + 0.5}
+                                y={y + 0.5}
+                                width={width - 1}
+                                height={height - 1}
+                                rx={2}
+                                ry={2}
+                                fill={`url(#gradient-${coin.id})`}
                                 stroke="#2a2a2a"
                                 strokeWidth={isHighlighted ? "1" : "0.5"}
                                 className="hover:opacity-80 transition-opacity cursor-pointer"
                                 onClick={() => onCoinClick(coin)}
+                                style={{
+                                    opacity: 0.8,
+                                }}
                                 onMouseEnter={(e) => {
                                     setHoveredCoin(coin);
                                     const rect =
@@ -240,150 +420,21 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
                                         });
                                     }
                                 }}
-                                onMouseMove={(e) => {
-                                    const rect =
-                                        containerRef.current?.getBoundingClientRect();
-                                    if (rect) {
-                                        setMousePosition({
-                                            x: e.clientX - rect.left,
-                                            y: e.clientY - rect.top,
-                                        });
-                                    }
-                                }}
+                                onMouseMove={throttledMouseMove}
                                 onMouseLeave={() => {
                                     setHoveredCoin(null);
                                 }}
                             />
-                            {coin.icon && width > 15 && height > 15 && (
-                                <image
-                                    x={
-                                        x +
-                                        width / 2 -
-                                        Math.min(
-                                            width / 4,
-                                            Math.max(width / 8, 8)
-                                        )
-                                    }
-                                    y={
-                                        y +
-                                        height / 2 -
-                                        Math.min(
-                                            height / 4,
-                                            Math.max(height / 8, 8)
-                                        ) -
-                                        (width > 60 && height > 40
-                                            ? (() => {
-                                                  if (
-                                                      width > 150 &&
-                                                      height > 120
-                                                  ) {
-                                                      return Math.min(
-                                                          height / 5,
-                                                          25
-                                                      );
-                                                  }
-                                                  return Math.min(
-                                                      height / 8,
-                                                      12
-                                                  );
-                                              })()
-                                            : 0)
-                                    }
-                                    width={Math.min(
-                                        width / 2,
-                                        Math.max(width / 4, 16)
-                                    )}
-                                    height={Math.min(
-                                        height / 2,
-                                        Math.max(height / 4, 16)
-                                    )}
-                                    href={coinImage}
-                                    className="pointer-events-none"
-                                />
-                            )}
-                            {width > 60 && height > 40 && (
-                                <>
-                                    <text
-                                        x={x + width / 2}
-                                        y={
-                                            coin.icon
-                                                ? y +
-                                                  height / 2 +
-                                                  (width > 150 && height > 120
-                                                      ? Math.min(height / 5, 25)
-                                                      : Math.min(
-                                                            height / 8,
-                                                            12
-                                                        )) +
-                                                  4
-                                                : y + height / 2 - 4
-                                        }
-                                        textAnchor="middle"
-                                        dominantBaseline="middle"
-                                        className="fill-white text-lg font-bold pointer-events-none"
-                                        style={{
-                                            fontSize:
-                                                width > 150 && height > 120
-                                                    ? Math.min(
-                                                          width / 5,
-                                                          height / 6,
-                                                          18
-                                                      )
-                                                    : Math.min(
-                                                          width / 6,
-                                                          height / 8,
-                                                          14
-                                                      ),
-                                        }}
-                                    >
-                                        {coin.ticker.toUpperCase()}
-                                    </text>
-                                    <text
-                                        x={x + width / 2}
-                                        y={
-                                            coin.icon
-                                                ? y +
-                                                  height / 2 +
-                                                  (width > 150 && height > 120
-                                                      ? Math.min(height / 5, 25)
-                                                      : Math.min(
-                                                            height / 8,
-                                                            12
-                                                        )) +
-                                                  (width > 150 && height > 120
-                                                      ? 22
-                                                      : 16)
-                                                : y + height / 2 + 12
-                                        }
-                                        textAnchor="middle"
-                                        dominantBaseline="middle"
-                                        className="fill-white text-base font-semibold pointer-events-none"
-                                        style={{
-                                            fontSize:
-                                                width > 150 && height > 120
-                                                    ? Math.min(
-                                                          width / 7,
-                                                          height / 8,
-                                                          16
-                                                      )
-                                                    : Math.min(
-                                                          width / 8,
-                                                          height / 10,
-                                                          12
-                                                      ),
-                                        }}
-                                    >
-                                        {color > 0 ? "+" : ""}
-                                        {
-                                            formatNumber({
-                                                value: color,
-                                                style: ENumberStyle.Percent,
-                                                normalise: true,
-                                            }).value
-                                        }
-                                    </text>
-                                </>
-                            )}
+                            {(() => {
+                                const mode = getDisplayMode(width, height);
+                                return renderCoinElements(
+                                    coin,
+                                    coinImage || "",
+                                    getLayout(x, y, width, height, mode),
+                                    LAYOUTS[mode],
+                                    color
+                                );
+                            })()}
                         </g>
                     );
                 })}
