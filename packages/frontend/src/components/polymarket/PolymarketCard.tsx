@@ -22,10 +22,10 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
         statusColor = "text-gray-500";
     } else if (isExpired) {
         statusText = t("polymarket.expired");
-        statusColor = "text-orange-500";
+        statusColor = "text-secondaryOrangeSoda";
     } else {
         statusText = t("polymarket.active");
-        statusColor = "text-green-500";
+        statusColor = "text-success";
     }
 
     const formatVolume = (volume?: number) => {
@@ -47,7 +47,7 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
 
     return (
         <div
-            className="bg-background border-b border-borderLine p-4 cursor-pointer hover:bg-backgroundVariant100 active:bg-backgroundVariant200 transition-all duration-200"
+            className="bg-background border-b border-borderLine py-3 px-1 ml-2 mr-[3px] cursor-pointer hover:bg-backgroundVariant100 active:bg-backgroundVariant200 transition-all duration-200"
             onClick={handleClick}
             role="button"
             tabIndex={0}
@@ -58,55 +58,75 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
                 }
             }}
         >
-            <div className="flex items-center justify-between mb-1">
-                <h3 className="flex items-center gap-2 text-sm font-semibold text-primary line-clamp-2 leading-tight">
+            <div className="flex items-center justify-between">
+                <h3 className="flex gap-4">
                     {market.image && (
                         <img
                             src={market.image}
                             alt="Market"
-                            className="w-5 h-5 rounded-full object-cover"
+                            className="w-8 h-8 mt-0.5 rounded-full object-cover self-start"
                         />
                     )}
-                    {market.question}
-                </h3>
-                <span className={twMerge("text-xs font-medium", statusColor)}>
-                    {statusText}
-                </span>
-            </div>
-
-            <div className="p-2">
-                <div className="flex items-center justify-between mb-2 text-xs">
-                    <div className="flex items-center gap-3">
-                        <span className="font-medium">
-                            {formatVolume(market.volume)}{" "}
-                            {t("navigation.general.vol")}
+                    <div className="flex flex-col gap-2 w-full">
+                        <span className="line-clamp-2 fontGroup-highlight">
+                            {market.question}
                         </span>
-                        {endDate && !market.resolved && (
-                            <span className="text-primaryVariant100">
-                                {computeDuration(endDate.toISOString())}
-                            </span>
-                        )}
-                    </div>
-                </div>
-                {market.outcomes && market.outcomes.length > 0 && (
-                    <div className="flex flex-col gap-1.5">
-                        {market.outcomes.map((outcome) => (
-                            <div
-                                key={outcome.id}
-                                className="flex items-center justify-between text-xs"
+                        <p className="fontGroup-mini mb-0">
+                            <span
+                                className={twMerge(
+                                    "fontGroup-mini lastLine",
+                                    statusColor
+                                )}
                             >
-                                <span className="text-primaryVariant100 truncate">
-                                    {outcome.outcome_name}
-                                </span>
-                                <div className="flex items-center gap-2 shrink-0">
-                                    <span className="text-primary">
-                                        ${outcome.price.toFixed(2)}
+                                {statusText}
+                            </span>
+                            <span className="mx-[7px] my-0 self-center">•</span>
+                            <span>
+                                {formatVolume(market.volume)}{" "}
+                                {t("navigation.general.vol")}
+                            </span>
+                            {endDate && !market.resolved && (
+                                <>
+                                    <span className="mx-[7px] my-0 self-center">
+                                        •
                                     </span>
+                                    <span className="text-primaryVariant100">
+                                        {computeDuration(endDate.toISOString())}
+                                    </span>
+                                </>
+                            )}
+                        </p>
+                        <div className="">
+                            {market.outcomes && market.outcomes.length > 0 && (
+                                <div className="flex flex-col gap-1">
+                                    {market.outcomes.map((outcome, idx) => (
+                                        <div
+                                            key={outcome.id}
+                                            className={twMerge(
+                                                "flex items-center justify-between text-xs py-1.5 px-2 rounded-md",
+                                                market.outcomes?.length === 2 &&
+                                                    idx === 0 &&
+                                                    "bg-blue-500/20 [&>span]:text-accentVariant100",
+                                                market.outcomes?.length === 2 &&
+                                                    idx === 1 &&
+                                                    "bg-orange-400/20 [&>span]:text-secondaryOrange"
+                                            )}
+                                        >
+                                            <span className="text-blue-600 fontGroup-highlightSemi truncate">
+                                                {outcome.outcome_name}
+                                            </span>
+                                            <div className="flex items-center gap-2 shrink-0">
+                                                <span className="text-primary">
+                                                    ${outcome.price.toFixed(2)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            </div>
-                        ))}
+                            )}
+                        </div>
                     </div>
-                )}
+                </h3>
             </div>
         </div>
     );
