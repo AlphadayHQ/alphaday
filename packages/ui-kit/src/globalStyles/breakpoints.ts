@@ -9,6 +9,14 @@ export const breakpoints = {
     FourColMaxWidth: 2725,
 };
 
+export const twoColWidgetMaxWidths = {
+    tiny: 1167, // not visble because of superfeed
+    singleCol: 1167, // not visible because of superfeed
+    twoCol: 1167,
+    threeCol: 1259,
+    fourCol: 1347,
+};
+
 export const deviceBreakpoints = {
     tiny: breakpoints.tiny,
     singleCol: breakpoints.SingleColMinWidth,

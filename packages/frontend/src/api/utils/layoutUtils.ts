@@ -2,43 +2,16 @@ import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
-import ImageContainer from "src/containers/image/ImageContainer";
-import KasandraContainer from "src/containers/kasandra/KasandraContainer";
-import MarketHeatmapContainer from "src/containers/market-heatmap/MarketHeatmapContainer";
-import { deviceBreakpoints } from "src/globalStyles/breakpoints";
+import {
+    deviceBreakpoints,
+    twoColWidgetMaxWidths,
+} from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
-import { ETemplateNameRegistry } from "src/constants";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
-const { WIDGETS } = CONFIG;
+const { TWO_COL_WIDGETS } = CONFIG;
 
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
-
-export const TWO_COL_WIDGET_MAX_WIDTHS = {
-    tiny: 1167, // not visble because of superfeed
-    singleCol: 1167, // not visible because of superfeed
-    twoCol: 1167,
-    threeCol: 1259,
-    fourCol: 1347,
-};
-
-export const TWO_COL_WIDGETS_CONFIG = {
-    image: {
-        templateName: ETemplateNameRegistry.Image,
-        Container: ImageContainer,
-        widgetConfig: WIDGETS.IMAGE,
-    },
-    kasandra: {
-        templateName: ETemplateNameRegistry.Kasandra,
-        Container: KasandraContainer,
-        widgetConfig: WIDGETS.KASANDRA,
-    },
-    marketHeatmap: {
-        templateName: ETemplateNameRegistry.MarketHeatmap,
-        Container: MarketHeatmapContainer,
-        widgetConfig: WIDGETS.MARKET_HEATMAP,
-    },
-} as const;
 
 /**
  * Heads up: layout is in the form (col #, row #) or (x, y), starting from the
@@ -277,7 +250,7 @@ export const recomputeWidgetsPos = (
 };
 
 export const getTwoColWidgetTemplateSlugs = () => {
-    return Object.values(TWO_COL_WIDGETS_CONFIG).map(
+    return Object.values(TWO_COL_WIDGETS).map(
         (config) => `${config.templateName.toLowerCase()}_template`
     );
 };
@@ -288,7 +261,7 @@ export const useTwoColWidgets = (selectedView: TCachedView | undefined) => {
         const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
         const widgets: Record<string, TUserViewWidget> = {};
 
-        Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+        Object.entries(TWO_COL_WIDGETS).forEach(([key, config]) => {
             const templateSlug = `${config.templateName.toLowerCase()}_template`;
             const widgetData = selectedView?.data.widgets.find(
                 (w: TUserViewWidget) => w.widget.template.slug === templateSlug
@@ -304,15 +277,15 @@ const getMaxWidthForScreenSize = (windowWidth: number): number => {
     const colType = getColType(windowWidth);
     switch (colType) {
         case EColumnType.SingleCol:
-            return TWO_COL_WIDGET_MAX_WIDTHS.singleCol;
+            return twoColWidgetMaxWidths.singleCol;
         case EColumnType.TwoCol:
-            return TWO_COL_WIDGET_MAX_WIDTHS.twoCol;
+            return twoColWidgetMaxWidths.twoCol;
         case EColumnType.ThreeCol:
-            return TWO_COL_WIDGET_MAX_WIDTHS.threeCol;
+            return twoColWidgetMaxWidths.threeCol;
         case EColumnType.FourCol:
-            return TWO_COL_WIDGET_MAX_WIDTHS.fourCol;
+            return twoColWidgetMaxWidths.fourCol;
         default:
-            return TWO_COL_WIDGET_MAX_WIDTHS.twoCol;
+            return twoColWidgetMaxWidths.twoCol;
     }
 };
 
@@ -324,7 +297,7 @@ export const calculateTwoColWidgetsHeight = (
     let totalHeight = 0;
     const defaultMarginBottom = 14;
 
-    Object.entries(TWO_COL_WIDGETS_CONFIG).forEach(([key, config]) => {
+    Object.entries(TWO_COL_WIDGETS).forEach(([key, config]) => {
         if (widgets[key]) {
             if (collapsedStates[key]) {
                 totalHeight +=

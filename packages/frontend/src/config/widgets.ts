@@ -3,7 +3,7 @@ import { ETemplateNameRegistry } from "src/constants";
 
 const DEFAULT_WIDGET_HEIGHT = 500;
 
-const WIDGETS_CONFIG = {
+export const WIDGETS_CONFIG = {
     COMMON: {
         HEADER_HEIGHT: 42,
         DEFAULT_WIDGET_HEIGHT,
@@ -254,4 +254,20 @@ const WIDGETS_CONFIG = {
     },
 } as const;
 
-export default WIDGETS_CONFIG;
+export const TWO_COL_WIDGETS_CONFIG = {
+    image: {
+        templateSlug: "image_template",
+        templateName: ETemplateNameRegistry.Image,
+        widgetConfig: WIDGETS_CONFIG.IMAGE,
+    },
+    kasandra: {
+        templateSlug: "kasandra_template",
+        templateName: ETemplateNameRegistry.Kasandra,
+        widgetConfig: WIDGETS_CONFIG.KASANDRA,
+    },
+    marketHeatmap: {
+        templateSlug: "market_heatmap_template",
+        templateName: ETemplateNameRegistry.MarketHeatmap,
+        widgetConfig: WIDGETS_CONFIG.MARKET_HEATMAP,
+    },
+} as const;
