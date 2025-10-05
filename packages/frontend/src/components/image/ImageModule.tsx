@@ -21,8 +21,6 @@ export const ImageModule: FC<IImageModule> = ({
         return imageUrl;
     }, [imageUrl]);
 
-    console.log("contentHeight", contentHeight);
-
     return (
         <div className="w-full h-full mb-4" style={{ height: contentHeight }}>
             <ImageWidget

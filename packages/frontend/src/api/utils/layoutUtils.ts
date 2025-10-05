@@ -2,10 +2,7 @@ import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
-import {
-    deviceBreakpoints,
-    twoColWidgetMaxWidths,
-} from "src/globalStyles/breakpoints";
+import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
@@ -271,22 +268,6 @@ export const useTwoColWidgets = (selectedView: TCachedView | undefined) => {
 
         return { widgets, twoColWidgetSlugs };
     }, [selectedView]);
-};
-
-const getMaxWidthForScreenSize = (windowWidth: number): number => {
-    const colType = getColType(windowWidth);
-    switch (colType) {
-        case EColumnType.SingleCol:
-            return twoColWidgetMaxWidths.singleCol;
-        case EColumnType.TwoCol:
-            return twoColWidgetMaxWidths.twoCol;
-        case EColumnType.ThreeCol:
-            return twoColWidgetMaxWidths.threeCol;
-        case EColumnType.FourCol:
-            return twoColWidgetMaxWidths.fourCol;
-        default:
-            return twoColWidgetMaxWidths.twoCol;
-    }
 };
 
 export const calculateTwoColWidgetsHeight = (

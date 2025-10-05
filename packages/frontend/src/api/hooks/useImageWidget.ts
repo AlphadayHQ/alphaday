@@ -1,12 +1,15 @@
 import { useCallback, useState, useMemo } from "react";
-import { useImageWidgetSize } from "./useWidgetSize";
-import { useTwoColWidgets } from "../utils/layoutUtils";
 import { TCachedView } from "../types";
+import { useTwoColWidgets } from "../utils/layoutUtils";
+import { useImageWidgetSize } from "./useWidgetSize";
 
 interface IImageWidgetReturn {
     imageWidgetSize: { width: number; height: number } | undefined;
     aspectRatios: Record<string, number>;
-    handleAspectRatioDetected: (widgetHash: string, aspectRatio: number) => void;
+    handleAspectRatioDetected: (
+        widgetHash: string,
+        aspectRatio: number
+    ) => void;
 }
 
 /**

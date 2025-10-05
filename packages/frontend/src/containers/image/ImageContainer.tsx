@@ -58,13 +58,6 @@ const ImageContainer: FC<IModuleContainer> = ({
         return `${imageConfig.WIDGET_HEIGHT || 500}px`;
     }, [imageWidgetSize?.width, detectedAspectRatio]);
 
-    console.log(
-        "contentHeight",
-        contentHeight,
-        "imageWidgetSize",
-        imageWidgetSize
-    );
-
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <ImageModule

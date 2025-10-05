@@ -21,14 +21,6 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
         const img = e.currentTarget;
         const aspectRatio = img.naturalWidth / img.naturalHeight;
-        console.log(
-            "aspectRatio",
-            aspectRatio,
-            "naturalWidth",
-            img.naturalWidth,
-            "naturalHeight",
-            img.naturalHeight
-        );
 
         if (onAspectRatioDetected && aspectRatio > 0) {
             onAspectRatioDetected(aspectRatio);
