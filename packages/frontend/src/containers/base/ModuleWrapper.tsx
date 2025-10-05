@@ -1,5 +1,5 @@
 // TODO (xavier-charles): uncomment the commented code
-import { FC, useState, useCallback, memo, Suspense } from "react";
+import { FC, useState, useCallback, memo, Suspense, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { Draggable, DraggableProvided } from "react-beautiful-dnd";
 import { useHistory } from "react-router";
@@ -57,6 +57,26 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     );
 
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
+
+    // Find the first non-two-column widget for size tracking
+    const firstTrackableSingleColWidgetHash = useMemo(() => {
+        const widgets = selectedView?.data.widgets;
+        if (!widgets) return undefined;
+
+        const twoColTemplateSlugs = Object.values(CONFIG.TWO_COL_WIDGETS).map(
+            (config) => config.templateSlug
+        );
+
+        const firstTrackableWidget = widgets.find(
+            (widget) =>
+                widget.widget?.template.slug &&
+                !twoColTemplateSlugs.find(
+                    (slug) => slug === widget.widget.template.slug
+                )
+        );
+
+        return firstTrackableWidget?.hash;
+    }, [selectedView?.data.widgets]);
 
     /**
      * The registered container component for this widget
@@ -144,9 +164,8 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
             {(provided, { isDragging }) => (
                 <div
                     id={
-                        // track only the widgetSize of the first element
-                        selectedView?.data.widgets?.[0]?.hash ===
-                        moduleData.hash
+                        // track only the widgetSize of the first non-two-column widget
+                        firstTrackableSingleColWidgetHash === moduleData.hash
                             ? CONFIG.UI.WIDGET_SIZE_TRACKING_ID
                             : ""
                     }
