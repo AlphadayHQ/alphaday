@@ -8,12 +8,7 @@ import {
 import { useGetFlakeOffDataQuery } from "src/api/services/kasandra/kasandraEndpoints";
 import { selectIsAuthenticated, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import {
-    EPredictionCase,
-    TChartRange,
-    TCoin,
-    TKasandraCase,
-} from "src/api/types";
+import { TChartRange, TCoin, TKasandraCase } from "src/api/types";
 import KasandraFlakeOffModule from "src/components/kasandra/KasandraFlakeOffModule";
 import { TMarketMeta } from "src/components/kasandra/types";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
@@ -111,10 +106,7 @@ const KasandraFlakeOffContainer: FC<IModuleContainer> = ({ moduleData }) => {
         {
             coin: selectedMarket?.slug || "bitcoin",
             interval: selectedChartRange,
-            case:
-                selectedCase.id === "all"
-                    ? undefined
-                    : (selectedCase.id as EPredictionCase),
+            case: selectedCase.id === "all" ? undefined : selectedCase.id,
         },
         { skip: selectedMarket === undefined }
     );
