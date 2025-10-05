@@ -29,6 +29,7 @@ interface IModuleWrapper {
         hash: string | undefined;
     };
     isDragDisabled?: boolean;
+    onAspectRatioDetected?: (widgetHash: string, aspectRatio: number) => void;
 }
 
 const ModuleWrapper: FC<IModuleWrapper> = ({
@@ -38,6 +39,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     preferredDragTutorialWidget,
     fullSizeWidgetConfig,
     isDragDisabled,
+    onAspectRatioDetected,
 }) => {
     const history = useHistory();
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
@@ -127,6 +129,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                     moduleData={moduleData}
                     showFullSize={showFullSize}
                     toggleAdjustable={handleAdjustable}
+                    onAspectRatioDetected={onAspectRatioDetected}
                 />
             </Suspense>
         </BaseContainer>

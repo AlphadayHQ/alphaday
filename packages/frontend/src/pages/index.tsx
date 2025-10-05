@@ -147,6 +147,28 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         return collapsedStates;
     });
 
+    // Track detected aspect ratios for two-column widgets
+    const [twoColWidgetAspectRatios, setTwoColWidgetAspectRatios] = useState<
+        Record<string, number>
+    >({});
+
+    const handleAspectRatioDetected = useCallback(
+        (widgetHash: string, aspectRatio: number) => {
+            // Find which two-col widget this hash belongs to
+            const widgetKey = Object.keys(twoColWidgets).find(
+                (key) => twoColWidgets[key]?.hash === widgetHash
+            );
+
+            if (widgetKey && aspectRatio > 0) {
+                setTwoColWidgetAspectRatios((prev) => ({
+                    ...prev,
+                    [widgetKey]: aspectRatio,
+                }));
+            }
+        },
+        [twoColWidgets]
+    );
+
     /**
      * The current layout state according to the screen size
      * IMPORTANT: checking that layoutGrid.<layout> != null is necessary
@@ -398,7 +420,8 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                                 calculateTwoColWidgetsHeight(
                                                     twoColWidgets,
                                                     twoColWidgetCollapsedStates,
-                                                    windowSize.width
+                                                    windowSize.width,
+                                                    twoColWidgetAspectRatios
                                                 );
                                             return totalHeight > 0
                                                 ? `${totalHeight}px`
@@ -417,6 +440,9 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                             }
                                             preferredDragTutorialWidget={
                                                 preferredDragTutorialWidget
+                                            }
+                                            onAspectRatioDetected={
+                                                handleAspectRatioDetected
                                             }
                                         />
                                     ))}

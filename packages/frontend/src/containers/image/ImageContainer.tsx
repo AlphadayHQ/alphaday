@@ -18,7 +18,10 @@ const validateCustomData = (
     return { imageUrl };
 };
 
-const ImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const ImageContainer: FC<IModuleContainer> = ({
+    moduleData,
+    onAspectRatioDetected,
+}) => {
     const windowSize = useWindowSize();
     const [detectedAspectRatio, setDetectedAspectRatio] = useState<
         number | null
@@ -26,9 +29,16 @@ const ImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const { imageUrl } = validateCustomData(moduleData.widget.custom_data);
 
-    const handleAspectRatioDetected = useCallback((aspectRatio: number) => {
-        setDetectedAspectRatio(aspectRatio);
-    }, []);
+    const handleAspectRatioDetected = useCallback(
+        (aspectRatio: number) => {
+            setDetectedAspectRatio(aspectRatio);
+            // Report to parent for layout calculations
+            if (onAspectRatioDetected && moduleData.hash) {
+                onAspectRatioDetected(moduleData.hash, aspectRatio);
+            }
+        },
+        [onAspectRatioDetected, moduleData.hash]
+    );
 
     const contentHeight = useMemo(() => {
         const { WIDGETS } = CONFIG;
