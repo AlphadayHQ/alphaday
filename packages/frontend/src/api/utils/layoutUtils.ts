@@ -40,7 +40,7 @@ export const TWO_COL_WIDGETS_CONFIG = {
     kasandraFlakeOff: {
         templateName: ETemplateNameRegistry.KasandraFlakeOff,
         Container: KasandraFlakeOffContainer,
-        widgetConfig: WIDGETS.KASANDRA,
+        widgetConfig: WIDGETS.KASANDRA_FLAKEOFF,
     },
     marketHeatmap: {
         templateName: ETemplateNameRegistry.MarketHeatmap,
