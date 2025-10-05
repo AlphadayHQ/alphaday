@@ -1,5 +1,5 @@
 // TODO (xavier-charles): uncomment the commented code
-import { FC, useState, useCallback, memo, Suspense, useMemo } from "react";
+import { FC, useState, useCallback, memo, Suspense } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { Draggable, DraggableProvided } from "react-beautiful-dnd";
 import { useHistory } from "react-router";
@@ -29,7 +29,6 @@ interface IModuleWrapper {
         hash: string | undefined;
     };
     isDragDisabled?: boolean;
-    onAspectRatioDetected?: (widgetHash: string, aspectRatio: number) => void;
 }
 
 const ModuleWrapper: FC<IModuleWrapper> = ({
@@ -39,7 +38,6 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     preferredDragTutorialWidget,
     fullSizeWidgetConfig,
     isDragDisabled,
-    onAspectRatioDetected,
 }) => {
     const history = useHistory();
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
@@ -57,40 +55,6 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
     );
 
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
-
-    // Find the first single-col widget and first image widget for size tracking
-    const { firstSingleColWidgetHash, firstImageWidgetHash } = useMemo(() => {
-        const widgets = selectedView?.data.widgets;
-        if (!widgets) {
-            return {
-                firstSingleColWidgetHash: undefined,
-                firstImageWidgetHash: undefined,
-            };
-        }
-
-        const twoColTemplateSlugs = Object.values(CONFIG.TWO_COL_WIDGETS).map(
-            (config) => config.templateSlug
-        );
-
-        const firstSingleCol = widgets.find(
-            (widget) =>
-                widget.widget?.template.slug &&
-                !twoColTemplateSlugs.find(
-                    (slug) => slug === widget.widget.template.slug
-                )
-        );
-
-        const firstImage = widgets.find(
-            (widget) =>
-                widget.widget?.template.slug ===
-                CONFIG.TWO_COL_WIDGETS.image.templateSlug
-        );
-
-        return {
-            firstSingleColWidgetHash: firstSingleCol?.hash,
-            firstImageWidgetHash: firstImage?.hash,
-        };
-    }, [selectedView?.data.widgets]);
 
     /**
      * The registered container component for this widget
@@ -163,7 +127,6 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                     moduleData={moduleData}
                     showFullSize={showFullSize}
                     toggleAdjustable={handleAdjustable}
-                    onAspectRatioDetected={onAspectRatioDetected}
                 />
             </Suspense>
         </BaseContainer>
@@ -173,21 +136,17 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         return renderContent();
     }
 
-    const getTrackingId = (hash: string) => {
-        if (firstSingleColWidgetHash === hash) {
-            return CONFIG.UI.WIDGET_SIZE_TRACKING_ID;
-        }
-        if (firstImageWidgetHash === hash) {
-            return CONFIG.UI.IMAGE_WIDGET_SIZE_TRACKING_ID;
-        }
-        return "";
-    };
-
     return (
         <Draggable draggableId={moduleData.hash} index={rowIndex}>
             {(provided, { isDragging }) => (
                 <div
-                    id={getTrackingId(moduleData.hash)}
+                    id={
+                        // track only the widgetSize of the first element
+                        selectedView?.data.widgets?.[0]?.hash ===
+                        moduleData.hash
+                            ? CONFIG.UI.WIDGET_SIZE_TRACKING_ID
+                            : ""
+                    }
                     ref={provided?.innerRef}
                     {...(provided?.draggableProps || {})}
                 >
