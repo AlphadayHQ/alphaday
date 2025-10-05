@@ -6,7 +6,6 @@ import type {
     TChartRange,
     TCoin,
     TCoinMarketHistory,
-    TFlakeOffData,
     TInsights,
     TKasandraCase,
     TPredictions,
@@ -18,7 +17,6 @@ import MarketsList from "../market/MarketsList";
 import { EChartType, TMarketMeta } from "../market/types";
 import { CaseSelect } from "./CaseSelect";
 import Disclaimer from "./Disclaimer";
-import FlakeOffChart from "./FlakeOffChart";
 import LineChart from "./LineChart";
 
 // check if prediction date is today or in the future
@@ -36,7 +34,6 @@ export interface IKasandraModule {
     isLoading?: boolean;
     isLoadingHistory: boolean;
     isLoadingPredictions: boolean;
-    flakeOffData: TFlakeOffData | undefined;
     selectedMarketHistory: TCoinMarketHistory | undefined;
     selectedPredictions: TPredictions | undefined;
     insights: TInsights | undefined;
@@ -59,7 +56,6 @@ const KasandraModule: FC<IKasandraModule> = ({
     isLoading,
     isLoadingHistory,
     isLoadingPredictions,
-    flakeOffData,
     selectedMarketHistory,
     selectedPredictions,
     insights,
@@ -214,7 +210,7 @@ const KasandraModule: FC<IKasandraModule> = ({
                             </div>
                         </div>
                     </div>
-                    {/* <LineChart
+                    <LineChart
                         selectedChartRange={selectedChartRange}
                         historyData={priceHistoryData ?? [[0], [1]]}
                         predictionData={predictionData}
@@ -222,11 +218,6 @@ const KasandraModule: FC<IKasandraModule> = ({
                         isLoading={isLoadingHistory || isLoadingPredictions}
                         selectedTimestamp={selectedTimestamp}
                         onSelectDataPoint={onSelectDataPoint}
-                        selectedCase={selectedCase?.id}
-                    /> */}
-                    <FlakeOffChart
-                        flakeOffData={flakeOffData}
-                        marketHistory={selectedMarketHistory}
                         selectedCase={selectedCase?.id}
                     />
                 </div>
