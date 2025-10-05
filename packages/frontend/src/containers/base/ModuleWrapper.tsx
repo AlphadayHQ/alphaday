@@ -58,16 +58,21 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
 
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
 
-    // Find the first non-two-column widget for size tracking
-    const firstTrackableSingleColWidgetHash = useMemo(() => {
+    // Find the first single-col widget and first image widget for size tracking
+    const { firstSingleColWidgetHash, firstImageWidgetHash } = useMemo(() => {
         const widgets = selectedView?.data.widgets;
-        if (!widgets) return undefined;
+        if (!widgets) {
+            return {
+                firstSingleColWidgetHash: undefined,
+                firstImageWidgetHash: undefined,
+            };
+        }
 
         const twoColTemplateSlugs = Object.values(CONFIG.TWO_COL_WIDGETS).map(
             (config) => config.templateSlug
         );
 
-        const firstTrackableWidget = widgets.find(
+        const firstSingleCol = widgets.find(
             (widget) =>
                 widget.widget?.template.slug &&
                 !twoColTemplateSlugs.find(
@@ -75,7 +80,16 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                 )
         );
 
-        return firstTrackableWidget?.hash;
+        const firstImage = widgets.find(
+            (widget) =>
+                widget.widget?.template.slug ===
+                CONFIG.TWO_COL_WIDGETS.image.templateSlug
+        );
+
+        return {
+            firstSingleColWidgetHash: firstSingleCol?.hash,
+            firstImageWidgetHash: firstImage?.hash,
+        };
     }, [selectedView?.data.widgets]);
 
     /**
@@ -159,16 +173,21 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         return renderContent();
     }
 
+    const getTrackingId = (hash: string) => {
+        if (firstSingleColWidgetHash === hash) {
+            return CONFIG.UI.WIDGET_SIZE_TRACKING_ID;
+        }
+        if (firstImageWidgetHash === hash) {
+            return CONFIG.UI.IMAGE_WIDGET_SIZE_TRACKING_ID;
+        }
+        return "";
+    };
+
     return (
         <Draggable draggableId={moduleData.hash} index={rowIndex}>
             {(provided, { isDragging }) => (
                 <div
-                    id={
-                        // track only the widgetSize of the first non-two-column widget
-                        firstTrackableSingleColWidgetHash === moduleData.hash
-                            ? CONFIG.UI.WIDGET_SIZE_TRACKING_ID
-                            : ""
-                    }
+                    id={getTrackingId(moduleData.hash)}
                     ref={provided?.innerRef}
                     {...(provided?.draggableProps || {})}
                 >
