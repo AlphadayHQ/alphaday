@@ -24,7 +24,7 @@ export const ImageModule: FC<IImageModule> = ({
     console.log("contentHeight", contentHeight);
 
     return (
-        <div className="w-full h-full" style={{ height: contentHeight }}>
+        <div className="w-full h-full mb-4" style={{ height: contentHeight }}>
             <ImageWidget
                 imageUrl={processedImageUrl}
                 title={title}

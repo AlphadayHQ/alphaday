@@ -7,6 +7,7 @@ import {
     useViewUpdater,
     useTutorial,
     useWindowSize,
+    useImageWidgetSize,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -69,6 +70,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
 
     const windowSize = useWindowSize();
+    const imageWidgetSize = useImageWidgetSize();
     const { showTutorial } = useTutorial();
 
     const [isDraggedWidgetInView, setIsDraggedWidgetInView] = useState(false);
@@ -434,7 +436,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                                 calculateTwoColWidgetsHeight(
                                                     twoColWidgets,
                                                     twoColWidgetCollapsedStates,
-                                                    windowSize.width,
+                                                    imageWidgetSize?.width,
                                                     twoColWidgetAspectRatios
                                                 );
                                             return totalHeight > 0
