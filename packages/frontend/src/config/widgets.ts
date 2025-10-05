@@ -284,6 +284,11 @@ export const TWO_COL_WIDGETS_CONFIG = {
         templateName: ETemplateNameRegistry.Kasandra,
         widgetConfig: WIDGETS_CONFIG.KASANDRA,
     },
+    kasandraFlakeOff: {
+        templateSlug: "kasandra_flakeoff_template",
+        templateName: ETemplateNameRegistry.KasandraFlakeOff,
+        widgetConfig: WIDGETS_CONFIG.KASANDRA_FLAKEOFF,
+    },
     marketHeatmap: {
         templateSlug: "market_heatmap_template",
         templateName: ETemplateNameRegistry.MarketHeatmap,
