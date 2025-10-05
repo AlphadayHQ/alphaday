@@ -1,19 +1,11 @@
 import { FC, useEffect, useMemo, useCallback, Suspense } from "react";
-import {
-    useFeatureFlags,
-    useGlobalSearch,
-    useWidgetHeight,
-} from "src/api/hooks";
+import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import {
     useGetKasandraCoinsQuery,
     useGetMarketHistoryQuery,
 } from "src/api/services";
-import {
-    useGetFlakeOffDataQuery,
-    useGetInsightsQuery,
-    useGetPredictionsQuery,
-} from "src/api/services/kasandra/kasandraEndpoints";
+import { useGetFlakeOffDataQuery } from "src/api/services/kasandra/kasandraEndpoints";
 import { selectIsAuthenticated, setKasandraData } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import {
@@ -22,25 +14,20 @@ import {
     TCoin,
     TKasandraCase,
 } from "src/api/types";
-
-import KasandraModule from "src/components/kasandra/KasandraModule";
+import KasandraFlakeOffModule from "src/components/kasandra/KasandraFlakeOffModule";
 import { TMarketMeta } from "src/components/kasandra/types";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import CONFIG from "src/config";
-import { EFeaturesRegistry, EWidgetSettingsRegistry } from "src/constants";
+import { EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
 import BaseContainer from "../base/BaseContainer";
 
-const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const KasandraFlakeOffContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const prevSelectedMarketData = useAppSelector(
         (state) => state.widgets.kasandra?.[moduleData.hash]
     );
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
-
-    const { enabled: isKasandraHistoryAllowed } = useFeatureFlags(
-        EFeaturesRegistry.KasandraHistory
-    );
 
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
     const { logButtonClicked } = useCustomAnalytics();
@@ -108,39 +95,17 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return storedMarket ?? kasandraCoins[0] ?? undefined;
     }, [prevSelectedMarketData?.selectedMarket, kasandraCoins]);
 
-    const { currentData: marketHistory, isFetching: isLoadingHistory } =
-        useGetMarketHistoryQuery(
-            {
-                coin: selectedMarket?.slug,
-                interval: selectedChartRange,
-            },
-            {
-                pollingInterval:
-                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-                skip: selectedMarket === undefined,
-            }
-        );
-
-    const { currentData: predictions, isFetching: isLoadingPredictions } =
-        useGetPredictionsQuery(
-            {
-                coin: selectedMarket?.slug,
-                interval: selectedChartRange,
-                limit: 1000,
-            },
-            {
-                pollingInterval:
-                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
-                skip: selectedMarket === undefined,
-            }
-        );
-
-    const { data: insights } = useGetInsightsQuery({
-        coin: selectedMarket?.slug,
-        interval: selectedChartRange,
-        type: isKasandraHistoryAllowed ? undefined : "prediction",
-        limit: 30,
-    });
+    const { currentData: marketHistory } = useGetMarketHistoryQuery(
+        {
+            coin: selectedMarket?.slug,
+            interval: selectedChartRange,
+        },
+        {
+            pollingInterval:
+                CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+            skip: selectedMarket === undefined,
+        }
+    );
 
     const { data: flakeOffData } = useGetFlakeOffDataQuery(
         {
@@ -224,25 +189,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [dispatch, logButtonClicked, logData, moduleData.hash]
     );
 
-    const handleselectedTimestamp = useCallback(
-        (timestamp: number) => {
-            dispatch(
-                setKasandraData({
-                    widgetHash: moduleData.hash,
-                    timestamp,
-                })
-            );
-            logButtonClicked({
-                buttonName: "kasandra-datapoint",
-                data: {
-                    ...logData,
-                    selectedTimestamp: timestamp,
-                },
-            });
-        },
-        [dispatch, logButtonClicked, logData, moduleData.hash]
-    );
-
     const handleAcceptDisclaimer = useCallback(() => {
         dispatch(
             setKasandraData({
@@ -305,13 +251,9 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             <Suspense
                 fallback={<ModuleLoader $height={contentHeight} />} // 40px is the height of the header
             >
-                <KasandraModule
+                <KasandraFlakeOffModule
                     isLoading={isLoadingKasandraCoins}
-                    isLoadingHistory={isLoadingHistory}
-                    isLoadingPredictions={isLoadingPredictions}
                     flakeOffData={flakeOffData || undefined}
-                    insights={insights || undefined}
-                    selectedPredictions={predictions || undefined}
                     selectedMarketHistory={marketHistory}
                     selectedCase={selectedCase}
                     onSelectCase={handleSelectedCase}
@@ -322,8 +264,6 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     supportedCoins={kasandraCoins}
                     onSelectMarket={handleSelectedMarket}
                     contentHeight={contentHeight}
-                    selectedTimestamp={selectedTimestamp}
-                    onSelectDataPoint={handleselectedTimestamp}
                     disclaimerAccepted={disclaimerAccepted}
                     onAcceptDisclaimer={handleAcceptDisclaimer}
                 />
@@ -332,4 +272,4 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     );
 };
 
-export default KasandraContainer;
+export default KasandraFlakeOffContainer;
