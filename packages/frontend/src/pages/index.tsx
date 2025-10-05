@@ -386,8 +386,19 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 ] as FC<IModuleContainer>;
                                 if (!Container) return null;
 
+                                const isImageWidget =
+                                    config.templateSlug === "image_template";
+
                                 return (
-                                    <div key={key} className="col-span-2">
+                                    <div
+                                        id={
+                                            isImageWidget
+                                                ? UI.IMAGE_WIDGET_SIZE_TRACKING_ID
+                                                : ""
+                                        }
+                                        key={key}
+                                        className="col-span-2"
+                                    >
                                         <Container
                                             moduleData={moduleData}
                                             toggleAdjustable={() => {}}
