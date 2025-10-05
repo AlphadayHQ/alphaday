@@ -391,6 +391,9 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                         <Container
                                             moduleData={moduleData}
                                             toggleAdjustable={() => {}}
+                                            onAspectRatioDetected={
+                                                handleAspectRatioDetected
+                                            }
                                         />
                                     </div>
                                 );
@@ -440,9 +443,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                             }
                                             preferredDragTutorialWidget={
                                                 preferredDragTutorialWidget
-                                            }
-                                            onAspectRatioDetected={
-                                                handleAspectRatioDetected
                                             }
                                         />
                                     ))}
