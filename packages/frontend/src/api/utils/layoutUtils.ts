@@ -2,16 +2,52 @@ import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import ImageContainer from "src/containers/image/ImageContainer";
+import KasandraContainer from "src/containers/kasandra/KasandraContainer";
+import KasandraFlakeOffContainer from "src/containers/kasandra/KasandraFlakeOffContainer";
+import MarketHeatmapContainer from "src/containers/market-heatmap/MarketHeatmapContainer";
 import {
     deviceBreakpoints,
     twoColWidgetMaxWidths,
 } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
+import { ETemplateNameRegistry } from "src/constants";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
-const { TWO_COL_WIDGETS } = CONFIG;
+const { TWO_COL_WIDGETS, WIDGETS } = CONFIG;
 
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
+
+export const TWO_COL_WIDGET_MAX_WIDTHS = {
+    tiny: 1167, // not visble because of superfeed
+    singleCol: 1167, // not visible because of superfeed
+    twoCol: 1167,
+    threeCol: 1259,
+    fourCol: 1347,
+};
+
+export const TWO_COL_WIDGETS_CONFIG = {
+    image: {
+        templateName: ETemplateNameRegistry.Image,
+        Container: ImageContainer,
+        widgetConfig: WIDGETS.IMAGE,
+    },
+    kasandra: {
+        templateName: ETemplateNameRegistry.Kasandra,
+        Container: KasandraContainer,
+        widgetConfig: WIDGETS.KASANDRA,
+    },
+    kasandraFlakeOff: {
+        templateName: ETemplateNameRegistry.KasandraFlakeOff,
+        Container: KasandraFlakeOffContainer,
+        widgetConfig: WIDGETS.KASANDRA,
+    },
+    marketHeatmap: {
+        templateName: ETemplateNameRegistry.MarketHeatmap,
+        Container: MarketHeatmapContainer,
+        widgetConfig: WIDGETS.MARKET_HEATMAP,
+    },
+} as const;
 
 /**
  * Heads up: layout is in the form (col #, row #) or (x, y), starting from the

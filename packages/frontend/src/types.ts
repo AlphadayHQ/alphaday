@@ -77,6 +77,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     kasandra_template: lazyRetry(
         () => import("./containers/kasandra/KasandraContainer")
     ),
+    kasandra_flakeoff_template: lazyRetry(
+        () => import("./containers/kasandra/KasandraFlakeOffContainer")
+    ),
     kasandra_timeline_template: lazyRetry(
         () => import("./containers/kasandra/KasandraTimelineContainer")
     ),
