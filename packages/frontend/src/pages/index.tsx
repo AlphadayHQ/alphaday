@@ -7,7 +7,7 @@ import {
     useViewUpdater,
     useTutorial,
     useWindowSize,
-    useImageWidgetSize,
+    useImageWidget,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -70,7 +70,11 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
 
     const windowSize = useWindowSize();
-    const imageWidgetSize = useImageWidgetSize();
+    const {
+        imageWidgetSize,
+        aspectRatios: twoColWidgetAspectRatios,
+        handleAspectRatioDetected,
+    } = useImageWidget(selectedView);
     const { showTutorial } = useTutorial();
 
     const [isDraggedWidgetInView, setIsDraggedWidgetInView] = useState(false);
@@ -148,28 +152,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         });
         return collapsedStates;
     });
-
-    // Track detected aspect ratios for two-column widgets
-    const [twoColWidgetAspectRatios, setTwoColWidgetAspectRatios] = useState<
-        Record<string, number>
-    >({});
-
-    const handleAspectRatioDetected = useCallback(
-        (widgetHash: string, aspectRatio: number) => {
-            // Find which two-col widget this hash belongs to
-            const widgetKey = Object.keys(twoColWidgets).find(
-                (key) => twoColWidgets[key]?.hash === widgetHash
-            );
-
-            if (widgetKey && aspectRatio > 0) {
-                setTwoColWidgetAspectRatios((prev) => ({
-                    ...prev,
-                    [widgetKey]: aspectRatio,
-                }));
-            }
-        },
-        [twoColWidgets]
-    );
 
     /**
      * The current layout state according to the screen size
