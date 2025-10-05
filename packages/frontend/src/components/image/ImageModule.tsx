@@ -6,6 +6,7 @@ interface IImageModule {
     title: string;
     contentHeight: string;
     isLoading: boolean;
+    onAspectRatioDetected?: (aspectRatio: number) => void;
 }
 
 export const ImageModule: FC<IImageModule> = ({
@@ -13,11 +14,14 @@ export const ImageModule: FC<IImageModule> = ({
     title,
     contentHeight,
     isLoading,
+    onAspectRatioDetected,
 }) => {
     const processedImageUrl = useMemo(() => {
         if (!imageUrl) return "";
         return imageUrl;
     }, [imageUrl]);
+
+    console.log("contentHeight", contentHeight);
 
     return (
         <div className="w-full h-full" style={{ height: contentHeight }}>
@@ -25,6 +29,7 @@ export const ImageModule: FC<IImageModule> = ({
                 imageUrl={processedImageUrl}
                 title={title}
                 isLoading={isLoading}
+                onAspectRatioDetected={onAspectRatioDetected}
             />
         </div>
     );

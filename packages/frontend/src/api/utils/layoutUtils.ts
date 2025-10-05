@@ -292,7 +292,8 @@ const getMaxWidthForScreenSize = (windowWidth: number): number => {
 export const calculateTwoColWidgetsHeight = (
     widgets: Record<string, TUserViewWidget>,
     collapsedStates: Record<string, boolean>,
-    windowWidth?: number
+    windowWidth?: number,
+    aspectRatioOverrides?: Record<string, number>
 ) => {
     let totalHeight = 0;
     const defaultMarginBottom = 14;
@@ -305,8 +306,10 @@ export const calculateTwoColWidgetsHeight = (
                     0;
             } else {
                 // Check if widget has aspect ratio for dynamic height calculation
-                // @ts-ignore
-                const aspectRatio = config.widgetConfig.WIDGET_ASPECT_RATIO;
+                // Use override if provided, otherwise use config
+                const aspectRatio =
+                    aspectRatioOverrides?.[key] || // @ts-ignore
+                    config.widgetConfig.WIDGET_ASPECT_RATIO;
                 if (aspectRatio && windowWidth) {
                     const maxWidth = getMaxWidthForScreenSize(windowWidth);
                     const calculatedHeight = maxWidth / aspectRatio;
