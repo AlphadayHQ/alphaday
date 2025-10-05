@@ -285,7 +285,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
         legend: {
             show: false,
         },
-        annotation: {
+        annotations: {
             xaxis: [
                 {
                     x: lastHistoryDataPoint[0], // TODO use Now date
