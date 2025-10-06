@@ -6,15 +6,28 @@ interface IImageWidget {
     title: string;
     imageUrl: string;
     isLoading: boolean;
+    onAspectRatioDetected?: (aspectRatio: number) => void;
 }
 
 const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     title,
     imageUrl,
     isLoading,
+    onAspectRatioDetected,
 }) {
     const [imageLoading, setImageLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
+
+    const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+        const img = e.currentTarget;
+        const aspectRatio = img.naturalWidth / img.naturalHeight;
+
+        if (onAspectRatioDetected && aspectRatio > 0) {
+            onAspectRatioDetected(aspectRatio);
+        }
+
+        setImageLoading(false);
+    };
 
     if (isLoading) {
         return <ModuleLoader $height="400px" />;
@@ -41,7 +54,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
                 className={`w-full h-full object-cover rounded ${
                     imageLoading ? "hidden" : "block"
                 }`}
-                onLoad={() => setImageLoading(false)}
+                onLoad={handleImageLoad}
                 onError={() => {
                     setImageLoading(false);
                     setImageError(true);

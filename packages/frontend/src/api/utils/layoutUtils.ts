@@ -2,10 +2,7 @@ import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
-import {
-    deviceBreakpoints,
-    twoColWidgetMaxWidths,
-} from "src/globalStyles/breakpoints";
+import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
@@ -273,26 +270,11 @@ export const useTwoColWidgets = (selectedView: TCachedView | undefined) => {
     }, [selectedView]);
 };
 
-const getMaxWidthForScreenSize = (windowWidth: number): number => {
-    const colType = getColType(windowWidth);
-    switch (colType) {
-        case EColumnType.SingleCol:
-            return twoColWidgetMaxWidths.singleCol;
-        case EColumnType.TwoCol:
-            return twoColWidgetMaxWidths.twoCol;
-        case EColumnType.ThreeCol:
-            return twoColWidgetMaxWidths.threeCol;
-        case EColumnType.FourCol:
-            return twoColWidgetMaxWidths.fourCol;
-        default:
-            return twoColWidgetMaxWidths.twoCol;
-    }
-};
-
 export const calculateTwoColWidgetsHeight = (
     widgets: Record<string, TUserViewWidget>,
     collapsedStates: Record<string, boolean>,
-    windowWidth?: number
+    imageWidgetWidth?: number,
+    aspectRatioOverrides?: Record<string, number>
 ) => {
     let totalHeight = 0;
     const defaultMarginBottom = 14;
@@ -305,11 +287,14 @@ export const calculateTwoColWidgetsHeight = (
                     0;
             } else {
                 // Check if widget has aspect ratio for dynamic height calculation
-                // @ts-ignore
-                const aspectRatio = config.widgetConfig.WIDGET_ASPECT_RATIO;
-                if (aspectRatio && windowWidth) {
-                    const maxWidth = getMaxWidthForScreenSize(windowWidth);
-                    const calculatedHeight = maxWidth / aspectRatio;
+                // Use override if provided, otherwise use config
+                const configAspectRatio =
+                    // @ts-ignore
+                    config.widgetConfig.WIDGET_ASPECT_RATIO;
+                const aspectRatio =
+                    aspectRatioOverrides?.[key] || configAspectRatio;
+                if (aspectRatio && imageWidgetWidth) {
+                    const calculatedHeight = imageWidgetWidth / aspectRatio;
                     totalHeight += calculatedHeight;
                 } else {
                     // Fallback to static height
