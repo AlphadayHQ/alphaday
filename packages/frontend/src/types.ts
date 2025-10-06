@@ -20,6 +20,7 @@ export interface IModuleContainer<T = unknown> {
     showFullSize?: boolean;
     moduleData: TUserViewWidget<T>;
     toggleAdjustable(): void;
+    onAspectRatioDetected?: (widgetHash: string, aspectRatio: number) => void;
 }
 
 export type TTemplateSlug = `${Lowercase<ETemplateNameRegistry>}_template`;
