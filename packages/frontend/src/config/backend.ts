@@ -55,6 +55,7 @@ const API_V0 = {
             BASE: "kasandra",
             INSIGHTS: "/insights/",
             PREDICTIONS: "/predictions/",
+            FLAKE_OFF: "/flake_off_charts/cached/",
         },
         KEYWORDS: {
             BASE: "keywords",
