@@ -72,7 +72,7 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/items/ItemsContainer")
     ),
     gas_template: lazyRetry(() => import("./containers/gas/GasContainer")),
-    image_template: lazyRetry(
+    two_col_image_template: lazyRetry(
         () => import("./containers/image/ImageContainer")
     ),
     kasandra_template: lazyRetry(

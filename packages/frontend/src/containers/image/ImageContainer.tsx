@@ -42,7 +42,7 @@ const ImageContainer: FC<IModuleContainer> = ({
 
     const contentHeight = useMemo(() => {
         const { WIDGETS } = CONFIG;
-        const imageConfig = WIDGETS.IMAGE;
+        const imageConfig = WIDGETS.TWO_COL_IMAGE;
 
         // Use detected aspect ratio if available, otherwise use config
         // @ts-ignore
