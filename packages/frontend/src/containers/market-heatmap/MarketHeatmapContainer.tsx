@@ -36,7 +36,7 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const handleCoinClick = useCallback(
         (coin: TCoin) => {
             // Create a keyword object for the coin
-            const coinTag = coin.tags?.[0];
+            const coinTag = coin.tags?.find((tag) => tag.slug !== "coin");
             if (!coinTag) return;
             const coinKeyword = {
                 id: coin.id,
