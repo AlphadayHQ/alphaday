@@ -38,7 +38,8 @@ const Z_INDEX_REGISTRY = {
 };
 
 const UI_CONFIG = {
-    WIDGET_SIZE_TRACKING_ID: "widget-size-tracking-id", // ID to get size of one widget
+    WIDGET_SIZE_TRACKING_ID: "widget-size-tracking-id", // ID to get size of one single-col widget
+    IMAGE_WIDGET_SIZE_TRACKING_ID: "image-widget-size-tracking-id", // ID to get size of first image widget
     FULL_SIZE_WIDGET_SLUG: "calendar_template",
     SMALL_NUM_DECIMAL_PLACES: 4, // typically for n < 1
     BASE_DECIMAL_PLACES: 2,

@@ -59,6 +59,18 @@ export const WIDGETS_CONFIG = {
         DEFAULT_DISCLAIMER_ACCEPTED: false,
         TWO_COL_SUPPORT: true,
     },
+    // copy from Kasandra
+    [ETemplateNameRegistry.KasandraFlakeOff]: {
+        WIDGET_HEIGHT: 599,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        ADJUSTABLE: false,
+        PREDICTIONS_LIMIT: 72,
+        COINS_QUERY_HARD_LIMIT: 30 * 60, // 15 min
+        DEFAULT_INTERVAL: "1W",
+        DEFAULT_SELECTED_CASE: { id: "all", name: "All" },
+        DEFAULT_DISCLAIMER_ACCEPTED: false,
+        TWO_COL_SUPPORT: true,
+    },
     [ETemplateNameRegistry.KasandraTimeline]: {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
@@ -271,6 +283,11 @@ export const TWO_COL_WIDGETS_CONFIG = {
         templateSlug: "kasandra_template",
         templateName: ETemplateNameRegistry.Kasandra,
         widgetConfig: WIDGETS_CONFIG.KASANDRA,
+    },
+    kasandraFlakeOff: {
+        templateSlug: "kasandra_flakeoff_template",
+        templateName: ETemplateNameRegistry.KasandraFlakeOff,
+        widgetConfig: WIDGETS_CONFIG.KASANDRA_FLAKEOFF,
     },
     marketHeatmap: {
         templateSlug: "market_heatmap_template",

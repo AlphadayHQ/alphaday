@@ -10,6 +10,10 @@ const widgetsSize = {
     width: 800,
     height: 900,
 };
+const imageWidgetSize = {
+    width: 1200,
+    height: 400,
+};
 const windowSize = {
     width: 2000,
     height: 1000,
@@ -17,8 +21,10 @@ const windowSize = {
 const DimensionsProvider: FC<{ children: React.ReactNode }> = ({
     children,
 }) => (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <DimensionsContext.Provider value={{ widgetsSize, windowSize }}>
+    <DimensionsContext.Provider
+        // eslint-disable-next-line react/jsx-no-constructed-context-values
+        value={{ widgetsSize, imageWidgetSize, windowSize }}
+    >
         {children}
     </DimensionsContext.Provider>
 );
