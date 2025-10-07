@@ -63,7 +63,7 @@ export enum ETemplateNameRegistry {
     FAQ = "FAQ",
     Forum = "FORUM",
     Gas = "GAS",
-    Image = "IMAGE",
+    Two_Col_Image = "TWO_COL_IMAGE",
     Kasandra = "KASANDRA",
     KasandraFlakeOff = "KASANDRA_FLAKEOFF",
     KasandraTimeline = "KASANDRA_TIMELINE",

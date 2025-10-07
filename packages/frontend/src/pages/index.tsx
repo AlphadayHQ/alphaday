@@ -371,7 +371,8 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 if (!Container) return null;
 
                                 const isImageWidget =
-                                    config.templateSlug === "image_template";
+                                    config.templateSlug ===
+                                    "two_col_image_template";
 
                                 return (
                                     <div

@@ -41,7 +41,7 @@ export const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
     },
-    [ETemplateNameRegistry.Image]: {
+    [ETemplateNameRegistry.Two_Col_Image]: {
         WIDGET_ASPECT_RATIO: 3, // 1500 by 500
         WIDGET_HEIGHT: 449, // max widget width is 1347px (4-col)
         ADJUSTABLE: false,
@@ -274,10 +274,10 @@ export const WIDGETS_CONFIG = {
 } as const;
 
 export const TWO_COL_WIDGETS_CONFIG = {
-    image: {
-        templateSlug: "image_template",
-        templateName: ETemplateNameRegistry.Image,
-        widgetConfig: WIDGETS_CONFIG.IMAGE,
+    two_col_image: {
+        templateSlug: "two_col_image_template",
+        templateName: ETemplateNameRegistry.Two_Col_Image,
+        widgetConfig: WIDGETS_CONFIG.TWO_COL_IMAGE,
     },
     kasandra: {
         templateSlug: "kasandra_template",
