@@ -68,7 +68,7 @@ export const Select = ({
             classNames={{
                 container: () =>
                     "w-full max-w-[160px] hover:bg-backgroundVariant200 rounded-md",
-                control: () => "w-full rounded-md",
+                control: () => "w-full rounded-md control-class",
                 menu: () =>
                     "w-full bg-background border border-borderLine shadow-sm rounded-b-md",
                 option: () => "w-full",

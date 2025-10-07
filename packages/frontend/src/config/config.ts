@@ -15,7 +15,7 @@ import {
 import UI_CONFIG from "./ui";
 import USER_CONFIG from "./user";
 import VIEWS_CONFIG from "./views";
-import WIDGETS_CONFIG from "./widgets";
+import { WIDGETS_CONFIG, TWO_COL_WIDGETS_CONFIG } from "./widgets";
 
 // order is important here
 export enum EEnvironments {
@@ -86,6 +86,7 @@ const CONFIG = {
     ROUTING: ROUTING_CONFIG,
     UI: UI_CONFIG,
     WIDGETS: WIDGETS_CONFIG,
+    TWO_COL_WIDGETS: TWO_COL_WIDGETS_CONFIG,
     SUPERFEED: SUPERFEED_CONFIG,
     SEO: SEO_CONFIG,
     FIREBASE: FIREBASE_CONFIG,
@@ -104,7 +105,7 @@ const CONFIG = {
     APP: {
         VERSION: import.meta.env.VITE_VERSION || "",
         STORAGE_KEY: "alphaday",
-        STORAGE_VERSION: 108,
+        STORAGE_VERSION: 109,
         COMMIT: import.meta.env.VITE_COMMIT,
         COMMIT_TIMESTAMP: import.meta.env.VITE_COMMIT_TS || "",
         X_APP_ID: import.meta.env.VITE_X_APP_ID || "",

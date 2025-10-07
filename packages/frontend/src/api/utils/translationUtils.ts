@@ -21,6 +21,9 @@ export enum ETranslationValues {
     chains = "Chains",
     protocols = "Protocols",
     timeline = "Timeline",
+    Active = "Active",
+    Resolved = "Resolved",
+    vol = "vol",
 }
 
 export type TTranslationValues = `${ETranslationValues}`;

@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useRef, memo } from "react";
+import { useCallback, useState, useMemo, useRef, memo, FC } from "react";
 import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
 import {
     useView,
@@ -7,6 +7,7 @@ import {
     useViewUpdater,
     useTutorial,
     useWindowSize,
+    useImageWidget,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -24,7 +25,6 @@ import {
     recomputeWidgetsPos,
     getColType,
     EColumnType,
-    TWO_COL_WIDGETS_CONFIG,
     useTwoColWidgets,
     calculateTwoColWidgetsHeight,
 } from "src/api/utils/layoutUtils";
@@ -39,9 +39,9 @@ import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnec
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
-import { TTemplateSlug } from "src/types";
+import { TTemplateSlug, TEMPLATES_DICT, IModuleContainer } from "src/types";
 
-const { UI, VIEWS } = CONFIG;
+const { UI, VIEWS, TWO_COL_WIDGETS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -70,6 +70,11 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
 
     const windowSize = useWindowSize();
+    const {
+        imageWidgetSize,
+        aspectRatios: twoColWidgetAspectRatios,
+        handleAspectRatioDetected,
+    } = useImageWidget(selectedView);
     const { showTutorial } = useTutorial();
 
     const [isDraggedWidgetInView, setIsDraggedWidgetInView] = useState(false);
@@ -355,17 +360,36 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             >
                 <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
                     <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 px-4">
-                        {Object.entries(TWO_COL_WIDGETS_CONFIG).map(
+                        {Object.entries(TWO_COL_WIDGETS).map(
                             ([key, config]) => {
                                 const moduleData = twoColWidgets[key];
                                 if (!moduleData) return null;
 
-                                const { Container } = config;
+                                const Container = TEMPLATES_DICT[
+                                    config.templateSlug
+                                ] as FC<IModuleContainer>;
+                                if (!Container) return null;
+
+                                const isImageWidget =
+                                    config.templateSlug ===
+                                    "two_col_image_template";
+
                                 return (
-                                    <div key={key} className="col-span-2">
+                                    <div
+                                        id={
+                                            isImageWidget
+                                                ? UI.IMAGE_WIDGET_SIZE_TRACKING_ID
+                                                : ""
+                                        }
+                                        key={key}
+                                        className="col-span-2"
+                                    >
                                         <Container
                                             moduleData={moduleData}
                                             toggleAdjustable={() => {}}
+                                            onAspectRatioDetected={
+                                                handleAspectRatioDetected
+                                            }
                                         />
                                     </div>
                                 );
@@ -394,9 +418,10 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                             const totalHeight =
                                                 calculateTwoColWidgetsHeight(
                                                     twoColWidgets,
-                                                    twoColWidgetCollapsedStates
+                                                    twoColWidgetCollapsedStates,
+                                                    imageWidgetSize?.width,
+                                                    twoColWidgetAspectRatios
                                                 );
-
                                             return totalHeight > 0
                                                 ? `${totalHeight}px`
                                                 : "0px";

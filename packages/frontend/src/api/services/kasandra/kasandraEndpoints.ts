@@ -1,5 +1,9 @@
 import queryString from "query-string";
-import { THistoryInsightItem, TInsightItem } from "src/api/types";
+import {
+    THistoryInsightItem,
+    TInsightItem,
+    TPastPrediction,
+} from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
@@ -10,6 +14,9 @@ import {
     TGetInsightsResponse,
     TGetInsightsRequest,
     TGetInsightsRawResponse,
+    TGetFlakeOffDataResponse,
+    TGetFlakeOffDataRequest,
+    TGetFlakeOffDataRawResponse,
 } from "./types";
 
 const { KASANDRA } = CONFIG.API.DEFAULT.ROUTES;
@@ -47,6 +54,35 @@ const mapRemoteInsights = (
     return { predictions, history };
 };
 
+const mapRemoteFlakeOffData = (
+    r: TGetFlakeOffDataRawResponse
+): TGetFlakeOffDataResponse => {
+    const data = r.data.reduce(
+        (acc, c) => ({
+            id: c.id,
+            coin: c.coin,
+            timestamp: c.generation_timestamp,
+            data: [
+                ...acc.data,
+                ...c.chart_data.past_predictions.map((p) => ({
+                    id: p.id,
+                    case: p.case,
+                    chartData: p.chart_data,
+                    createdAt: p.created_at,
+                    accuracyScore: p.accuracy_score,
+                })),
+            ],
+        }),
+        {
+            id: 0,
+            coin: r.data[0].coin,
+            timestamp: r.data[0].generation_timestamp,
+            data: [] as TPastPrediction[],
+        }
+    );
+    return data;
+};
+
 const kasandraApi = alphadayApi.injectEndpoints({
     endpoints: (builder) => ({
         getPredictions: builder.query<
@@ -79,8 +115,27 @@ const kasandraApi = alphadayApi.injectEndpoints({
                 return mapRemoteInsights(r);
             },
         }),
+        getFlakeOffData: builder.query<
+            TGetFlakeOffDataResponse,
+            TGetFlakeOffDataRequest
+        >({
+            query: (req) => {
+                const route = `${KASANDRA.BASE}${KASANDRA.FLAKE_OFF}?${queryString.stringify(req)}`;
+                Logger.debug("querying", route);
+                return route;
+            },
+            transformResponse: (
+                r: TGetFlakeOffDataRawResponse
+            ): TGetFlakeOffDataResponse => {
+                return mapRemoteFlakeOffData(r);
+            },
+        }),
     }),
     overrideExisting: false,
 });
 
-export const { useGetPredictionsQuery, useGetInsightsQuery } = kasandraApi;
+export const {
+    useGetPredictionsQuery,
+    useGetInsightsQuery,
+    useGetFlakeOffDataQuery,
+} = kasandraApi;

@@ -3,7 +3,7 @@ import { ETemplateNameRegistry } from "src/constants";
 
 const DEFAULT_WIDGET_HEIGHT = 500;
 
-const WIDGETS_CONFIG = {
+export const WIDGETS_CONFIG = {
     COMMON: {
         HEADER_HEIGHT: 42,
         DEFAULT_WIDGET_HEIGHT,
@@ -41,7 +41,26 @@ const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Two_Col_Image]: {
+        WIDGET_ASPECT_RATIO: 3, // 1500 by 500
+        WIDGET_HEIGHT: 449, // max widget width is 1347px (4-col)
+        ADJUSTABLE: false,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        TWO_COL_SUPPORT: true,
+    },
     [ETemplateNameRegistry.Kasandra]: {
+        WIDGET_HEIGHT: 599,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        ADJUSTABLE: false,
+        PREDICTIONS_LIMIT: 72,
+        COINS_QUERY_HARD_LIMIT: 30 * 60, // 15 min
+        DEFAULT_INTERVAL: "1W",
+        DEFAULT_SELECTED_CASE: { id: "all", name: "All" },
+        DEFAULT_DISCLAIMER_ACCEPTED: false,
+        TWO_COL_SUPPORT: true,
+    },
+    // copy from Kasandra
+    [ETemplateNameRegistry.KasandraFlakeOff]: {
         WIDGET_HEIGHT: 599,
         COLLAPSED_WIDGET_HEIGHT: 45,
         ADJUSTABLE: false,
@@ -121,6 +140,13 @@ const WIDGETS_CONFIG = {
         POLLING_INTERVAL: 6 * 60 * 60, // 6h
         DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
         ADJUSTABLE: false,
+    },
+    [ETemplateNameRegistry.Polymarket]: {
+        WIDGET_HEIGHT: 600,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        POLLING_INTERVAL: 5 * 60, // 5 min
+        QUERY_HARD_LIMIT: 30,
+        ADJUSTABLE: true,
     },
     [ETemplateNameRegistry.Portfolio]: {
         DONUT_TOKENS_COUNT: 5,
@@ -247,4 +273,25 @@ const WIDGETS_CONFIG = {
     },
 } as const;
 
-export default WIDGETS_CONFIG;
+export const TWO_COL_WIDGETS_CONFIG = {
+    two_col_image: {
+        templateSlug: "two_col_image_template",
+        templateName: ETemplateNameRegistry.Two_Col_Image,
+        widgetConfig: WIDGETS_CONFIG.TWO_COL_IMAGE,
+    },
+    kasandra: {
+        templateSlug: "kasandra_template",
+        templateName: ETemplateNameRegistry.Kasandra,
+        widgetConfig: WIDGETS_CONFIG.KASANDRA,
+    },
+    kasandraFlakeOff: {
+        templateSlug: "kasandra_flakeoff_template",
+        templateName: ETemplateNameRegistry.KasandraFlakeOff,
+        widgetConfig: WIDGETS_CONFIG.KASANDRA_FLAKEOFF,
+    },
+    marketHeatmap: {
+        templateSlug: "market_heatmap_template",
+        templateName: ETemplateNameRegistry.MarketHeatmap,
+        widgetConfig: WIDGETS_CONFIG.MARKET_HEATMAP,
+    },
+} as const;

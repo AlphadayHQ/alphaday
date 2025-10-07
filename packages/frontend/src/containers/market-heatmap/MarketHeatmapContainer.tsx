@@ -36,7 +36,7 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const handleCoinClick = useCallback(
         (coin: TCoin) => {
             // Create a keyword object for the coin
-            const coinTag = coin.tags?.[0];
+            const coinTag = coin.tags?.find((tag) => tag.slug !== "coin");
             if (!coinTag) return;
             const coinKeyword = {
                 id: coin.id,
@@ -79,10 +79,6 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return `${widgetHeight - 40}px`;
     }, [widgetHeight]);
 
-    if (isLoading) {
-        return <ModuleLoader $height={`${widgetHeight}px`} />;
-    }
-
     return (
         <BaseContainer
             uiProps={{
@@ -96,16 +92,20 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
             moduleData={moduleData}
             adjustable={false}
         >
-            <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
-                <MarketHeatmapModule
-                    data={data}
-                    maxItems={maxItems}
-                    isError={isError}
-                    onCoinClick={handleCoinClick}
-                    keywordSearchList={keywordSearchList}
-                    onMaxItemsChange={setMaxItems}
-                />
-            </Suspense>
+            {isLoading ? (
+                <ModuleLoader $height={contentHeight} />
+            ) : (
+                <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
+                    <MarketHeatmapModule
+                        data={data}
+                        maxItems={maxItems}
+                        isError={isError}
+                        onCoinClick={handleCoinClick}
+                        keywordSearchList={keywordSearchList}
+                        onMaxItemsChange={setMaxItems}
+                    />
+                </Suspense>
+            )}
         </BaseContainer>
     );
 };

@@ -41,3 +41,9 @@ export const useWidgetSize: (
 
     return getWidgetSize(widgetsSize?.width, breakpoints);
 };
+
+export const useImageWidgetSize = () => {
+    const { imageWidgetSize } = useContext(DimensionsContext);
+
+    return imageWidgetSize;
+};

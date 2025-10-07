@@ -55,6 +55,7 @@ const API_V0 = {
             BASE: "kasandra",
             INSIGHTS: "/insights/",
             PREDICTIONS: "/predictions/",
+            FLAKE_OFF: "/flake_off_charts/cached/",
         },
         KEYWORDS: {
             BASE: "keywords",
@@ -191,6 +192,15 @@ const API_V0 = {
         FEATURES: {
             BASE: "features",
             LIST: "/allowed/",
+        },
+        POLYMARKET: {
+            BASE: "polymarkets",
+            EVENTS: "/events/",
+            MARKETS: "/markets/",
+            MARKET_STATS: "/markets/stats/",
+            MARKET_HISTORY: (id: number): string => `/markets/${id}/history/`,
+            EVENT_BY_ID: (id: number): string => `/events/${id}/`,
+            MARKET_BY_ID: (id: number): string => `/markets/${id}/`,
         },
     },
 };
