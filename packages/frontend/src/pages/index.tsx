@@ -7,6 +7,7 @@ import {
     useViewUpdater,
     useTutorial,
     useWindowSize,
+    useImageWidget,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -69,6 +70,11 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
 
     const windowSize = useWindowSize();
+    const {
+        imageWidgetSize,
+        aspectRatios: twoColWidgetAspectRatios,
+        handleAspectRatioDetected,
+    } = useImageWidget(selectedView);
     const { showTutorial } = useTutorial();
 
     const [isDraggedWidgetInView, setIsDraggedWidgetInView] = useState(false);
@@ -364,11 +370,26 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                 ] as FC<IModuleContainer>;
                                 if (!Container) return null;
 
+                                const isImageWidget =
+                                    config.templateSlug ===
+                                    "two_col_image_template";
+
                                 return (
-                                    <div key={key} className="col-span-2">
+                                    <div
+                                        id={
+                                            isImageWidget
+                                                ? UI.IMAGE_WIDGET_SIZE_TRACKING_ID
+                                                : ""
+                                        }
+                                        key={key}
+                                        className="col-span-2"
+                                    >
                                         <Container
                                             moduleData={moduleData}
                                             toggleAdjustable={() => {}}
+                                            onAspectRatioDetected={
+                                                handleAspectRatioDetected
+                                            }
                                         />
                                     </div>
                                 );
@@ -398,7 +419,8 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                                                 calculateTwoColWidgetsHeight(
                                                     twoColWidgets,
                                                     twoColWidgetCollapsedStates,
-                                                    windowSize.width
+                                                    imageWidgetSize?.width,
+                                                    twoColWidgetAspectRatios
                                                 );
                                             return totalHeight > 0
                                                 ? `${totalHeight}px`

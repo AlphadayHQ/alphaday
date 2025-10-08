@@ -6,6 +6,7 @@ interface IImageModule {
     title: string;
     contentHeight: string;
     isLoading: boolean;
+    onAspectRatioDetected?: (aspectRatio: number) => void;
 }
 
 export const ImageModule: FC<IImageModule> = ({
@@ -13,6 +14,7 @@ export const ImageModule: FC<IImageModule> = ({
     title,
     contentHeight,
     isLoading,
+    onAspectRatioDetected,
 }) => {
     const processedImageUrl = useMemo(() => {
         if (!imageUrl) return "";
@@ -20,11 +22,12 @@ export const ImageModule: FC<IImageModule> = ({
     }, [imageUrl]);
 
     return (
-        <div className="w-full h-full" style={{ height: contentHeight }}>
+        <div className="w-full h-full mb-4" style={{ height: contentHeight }}>
             <ImageWidget
                 imageUrl={processedImageUrl}
                 title={title}
                 isLoading={isLoading}
+                onAspectRatioDetected={onAspectRatioDetected}
             />
         </div>
     );

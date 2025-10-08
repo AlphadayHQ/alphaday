@@ -20,6 +20,7 @@ export interface IModuleContainer<T = unknown> {
     showFullSize?: boolean;
     moduleData: TUserViewWidget<T>;
     toggleAdjustable(): void;
+    onAspectRatioDetected?: (widgetHash: string, aspectRatio: number) => void;
 }
 
 export type TTemplateSlug = `${Lowercase<ETemplateNameRegistry>}_template`;
@@ -71,11 +72,14 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/items/ItemsContainer")
     ),
     gas_template: lazyRetry(() => import("./containers/gas/GasContainer")),
-    image_template: lazyRetry(
+    two_col_image_template: lazyRetry(
         () => import("./containers/image/ImageContainer")
     ),
     kasandra_template: lazyRetry(
         () => import("./containers/kasandra/KasandraContainer")
+    ),
+    kasandra_flakeoff_template: lazyRetry(
+        () => import("./containers/kasandra/KasandraFlakeOffContainer")
     ),
     kasandra_timeline_template: lazyRetry(
         () => import("./containers/kasandra/KasandraTimelineContainer")
