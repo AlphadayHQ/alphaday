@@ -38,7 +38,7 @@ export type TPolymarketMarket = {
     end_date: string | null;
     resolved: boolean;
     winning_outcome: TPolymarketOutcome | null;
-    slug: string;
+    url: string;
     image: string | null;
     tags: TRemoteTagReadOnly[];
 };
@@ -75,8 +75,7 @@ export type TGetPolymarketEventsResponse = TPagination & {
 export type TGetPolymarketMarketsRequest = {
     page?: number;
     limit?: number;
-    event?: number;
-    resolved?: boolean;
+    active?: boolean;
     tags?: string;
     search?: string;
     ordering?: string;
@@ -85,22 +84,6 @@ export type TGetPolymarketMarketsRequest = {
 export type TGetPolymarketMarketsResponse = TPagination & {
     results: TPolymarketMarket[];
 };
-
-export type TGetPolymarketMarketStatsRequest = {
-    days?: number;
-    market_id?: number;
-};
-
-export type TPolymarketMarketStats = {
-    total_volume: number;
-    total_markets: number;
-    active_markets: number;
-    resolved_markets: number;
-    volume_24h: number;
-    volume_change_24h: number;
-};
-
-export type TGetPolymarketMarketStatsResponse = TPolymarketMarketStats;
 
 export type TGetPolymarketMarketHistoryRequest = {
     market_id: number;
