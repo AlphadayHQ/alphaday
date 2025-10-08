@@ -28,6 +28,7 @@ const OneColImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 imageUrl={imageUrl}
                 title={moduleData.widget.name}
                 isLoading={!moduleData}
+                type="one_col_image"
             />
         </Suspense>
     );

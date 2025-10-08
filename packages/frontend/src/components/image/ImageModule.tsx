@@ -1,4 +1,5 @@
 import { FC, useMemo } from "react";
+import { twMerge } from "@alphaday/ui-kit";
 import ImageWidget from "./ImageWidget";
 
 interface IImageModule {
@@ -6,6 +7,7 @@ interface IImageModule {
     title: string;
     contentHeight?: string;
     isLoading: boolean;
+    type?: "one_col_image" | "two_col_image";
     onAspectRatioDetected?: (aspectRatio: number) => void;
 }
 
@@ -14,6 +16,7 @@ export const ImageModule: FC<IImageModule> = ({
     title,
     contentHeight,
     isLoading,
+    type,
     onAspectRatioDetected,
 }) => {
     const processedImageUrl = useMemo(() => {
@@ -23,7 +26,10 @@ export const ImageModule: FC<IImageModule> = ({
 
     return (
         <div
-            className="w-full h-full mb-4"
+            className={twMerge(
+                "w-full h-full mb-4",
+                type === "one_col_image" && "mb-0"
+            )}
             style={{ height: contentHeight || "100%" }}
         >
             <ImageWidget
