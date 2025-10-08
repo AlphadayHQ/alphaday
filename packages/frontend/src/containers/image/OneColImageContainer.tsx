@@ -1,6 +1,6 @@
 import { type FC, Suspense, useMemo, useState, useCallback } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { useImageWidgetSize } from "src/api/hooks";
+import { useWidgetSize } from "src/api/hooks";
 import { TRemoteCustomData } from "src/api/services";
 import CONFIG from "src/config";
 import type { IModuleContainer } from "src/types";
@@ -20,7 +20,7 @@ const OneColImageContainer: FC<IModuleContainer> = ({
     moduleData,
     onAspectRatioDetected,
 }) => {
-    const imageWidgetSize = useImageWidgetSize();
+    const imageWidgetWidth = useWidgetSize([600], true);
     const [detectedAspectRatio, setDetectedAspectRatio] = useState<
         number | null
     >(null);
@@ -49,14 +49,14 @@ const OneColImageContainer: FC<IModuleContainer> = ({
         const aspectRatio =
             detectedAspectRatio || imageConfig.WIDGET_ASPECT_RATIO;
 
-        if (aspectRatio && imageWidgetSize?.width) {
-            const calculatedHeight = imageWidgetSize.width / aspectRatio;
+        if (aspectRatio && typeof imageWidgetWidth === "number") {
+            const calculatedHeight = imageWidgetWidth / aspectRatio;
             return `${calculatedHeight}px`;
         }
 
         // Fallback to static height
-        return `${imageConfig.WIDGET_HEIGHT || 500}px`;
-    }, [imageWidgetSize?.width, detectedAspectRatio]);
+        return `${imageConfig.WIDGET_HEIGHT || 600}px`;
+    }, [imageWidgetWidth, detectedAspectRatio]);
 
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>

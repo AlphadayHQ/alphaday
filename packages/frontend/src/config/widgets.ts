@@ -120,11 +120,10 @@ export const WIDGETS_CONFIG = {
         ADJUSTABLE: true,
     },
     [ETemplateNameRegistry.One_Col_Image]: {
-        WIDGET_ASPECT_RATIO: 3, // 1500 by 500
-        WIDGET_HEIGHT: 449, // max widget width is 1347px (4-col)
+        WIDGET_ASPECT_RATIO: 0.75, // 1500 by 500
+        WIDGET_HEIGHT: 600,
         ADJUSTABLE: false,
         COLLAPSED_WIDGET_HEIGHT: 45,
-        TWO_COL_SUPPORT: true,
     },
     [ETemplateNameRegistry.Blog]: {
         TAG_ITEM_TYPE: "blog",

@@ -35,9 +35,14 @@ const getWidgetSize = (
  */
 
 export const useWidgetSize: (
-    breakpoints: TBreakpoints
-) => TWidgetSize | undefined = (breakpoints) => {
+    breakpoints: TBreakpoints,
+    onlyWidth?: boolean
+) => TWidgetSize | undefined | number = (breakpoints, onlyWidth) => {
     const { widgetsSize } = useContext(DimensionsContext);
+
+    if (onlyWidth) {
+        return widgetsSize?.width;
+    }
 
     return getWidgetSize(widgetsSize?.width, breakpoints);
 };
