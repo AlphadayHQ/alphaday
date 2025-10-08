@@ -39,6 +39,7 @@ import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnec
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
+import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug, TEMPLATES_DICT, IModuleContainer } from "src/types";
 
 const { UI, VIEWS, TWO_COL_WIDGETS } = CONFIG;
@@ -372,7 +373,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
 
                                 const isImageWidget =
                                     config.templateSlug ===
-                                    "two_col_image_template";
+                                    `${ETemplateNameRegistry.Two_Col_Image.toLowerCase()}_template`;
 
                                 return (
                                     <div
