@@ -1,6 +1,5 @@
-import { type FC, Suspense, useMemo, useState, useCallback } from "react";
+import { type FC, Suspense, useMemo } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { useWidgetSize } from "src/api/hooks";
 import { TRemoteCustomData } from "src/api/services";
 import CONFIG from "src/config";
 import type { IModuleContainer } from "src/types";
@@ -16,56 +15,19 @@ const validateCustomData = (
     return { imageUrl };
 };
 
-const OneColImageContainer: FC<IModuleContainer> = ({
-    moduleData,
-    onAspectRatioDetected,
-}) => {
-    const imageWidgetWidth = useWidgetSize();
-    const [detectedAspectRatio, setDetectedAspectRatio] = useState<
-        number | null
-    >(null);
-
+const OneColImageContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { imageUrl } = validateCustomData(moduleData.widget.custom_data);
 
-    const handleAspectRatioDetected = useCallback(
-        (aspectRatio: number) => {
-            // Round aspect ratio to 1 decimal place
-            const roundedAspectRatio = Math.round(aspectRatio * 10) / 10;
-            setDetectedAspectRatio(roundedAspectRatio);
-            // Report to parent for layout calculations
-            if (onAspectRatioDetected && moduleData.hash) {
-                onAspectRatioDetected(moduleData.hash, roundedAspectRatio);
-            }
-        },
-        [onAspectRatioDetected, moduleData.hash]
-    );
-
     const contentHeight = useMemo(() => {
-        const { WIDGETS } = CONFIG;
-        const imageConfig = WIDGETS.ONE_COL_IMAGE;
-
-        // Use detected aspect ratio if available, otherwise use config
-        // @ts-ignore
-        const aspectRatio =
-            detectedAspectRatio || imageConfig.WIDGET_ASPECT_RATIO;
-
-        if (aspectRatio && typeof imageWidgetWidth === "number") {
-            const calculatedHeight = imageWidgetWidth / aspectRatio;
-            return `${calculatedHeight}px`;
-        }
-
-        // Fallback to static height
-        return `${imageConfig.WIDGET_HEIGHT || 600}px`;
-    }, [imageWidgetWidth, detectedAspectRatio]);
+        return `${CONFIG.WIDGETS.ONE_COL_IMAGE.WIDGET_HEIGHT || 600}px`;
+    }, []);
 
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <ImageModule
                 imageUrl={imageUrl}
                 title={moduleData.widget.name}
-                contentHeight={contentHeight}
                 isLoading={!moduleData}
-                onAspectRatioDetected={handleAspectRatioDetected}
             />
         </Suspense>
     );
