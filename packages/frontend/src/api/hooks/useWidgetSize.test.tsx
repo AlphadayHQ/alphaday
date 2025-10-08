@@ -29,7 +29,7 @@ const DimensionsProvider: FC<{ children: React.ReactNode }> = ({
     </DimensionsContext.Provider>
 );
 
-describe("useWidgetSize", () => {
+describe("useWidgetBreakpoints", () => {
     it("should return the correct size when the element is defined", () => {
         const clientWidth = 800;
         const getElementByIdSpy = vi.spyOn(document, "getElementById");
