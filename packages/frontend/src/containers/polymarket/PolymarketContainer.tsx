@@ -1,15 +1,14 @@
-import { FC, useEffect, useMemo, useCallback, Suspense, useState } from "react";
-import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
+import { FC, useMemo, useCallback, Suspense, useState } from "react";
+import { useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketMarketsQuery } from "src/api/services";
-
 import type { TPolymarketMarket } from "src/api/services/polymarket/types";
-
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import {
     selectPolymarketFilter,
     setPolymarketFilter,
 } from "src/api/store/slices/widgets";
+import * as filterUtils from "src/api/utils/filterUtils";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import PolymarketModule from "src/components/polymarket/PolymarketModule";
 import { EPolymarketFilter } from "src/components/polymarket/types";
@@ -24,7 +23,6 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
         selectPolymarketFilter(moduleData.hash)
     );
     const { logButtonClicked } = useCustomAnalytics();
-    const { lastSelectedKeyword } = useGlobalSearch();
 
     const [, setSelectedMarket] = useState<TPolymarketMarket | undefined>();
 
@@ -44,8 +42,9 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
         useGetPolymarketMarketsQuery(
             {
                 limit: CONFIG.WIDGETS.POLYMARKET.QUERY_HARD_LIMIT,
-                resolved: false, // Default to showing active markets
+                active: true, // Default to showing active markets
                 ordering: "-total_volume", // Order by volume descending
+                tags: tags ? filterUtils.filteringListToStr(tags) : undefined,
             },
             {
                 pollingInterval,
@@ -65,31 +64,10 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            const polymarketUrl = `https://polymarket.com/event/${market.slug}`;
-            window.open(polymarketUrl, "_blank", "noopener,noreferrer");
+            window.open(market.url, "_blank", "noopener,noreferrer");
         },
         [logButtonClicked, moduleData.name]
     );
-
-    /**
-     * if user searches for some keyword and tags are included, automatically set the selected market
-     * to some market that matches this new keyword, if any.
-     */
-    useEffect(() => {
-        if (
-            lastSelectedKeyword &&
-            tags?.find((t) => t.id === lastSelectedKeyword.tag.id)
-        ) {
-            const newMarketFromSearch = markets.find((market) => {
-                return market.tags?.find(
-                    (t) => t.id === lastSelectedKeyword.tag.id
-                );
-            });
-            if (newMarketFromSearch) {
-                setSelectedMarket(newMarketFromSearch);
-            }
-        }
-    }, [lastSelectedKeyword, markets, tags]);
 
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT - 55}px`;

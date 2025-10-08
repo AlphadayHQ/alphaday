@@ -6,8 +6,6 @@ import type {
     TGetPolymarketEventsResponse,
     TGetPolymarketMarketsRequest,
     TGetPolymarketMarketsResponse,
-    TGetPolymarketMarketStatsRequest,
-    TGetPolymarketMarketStatsResponse,
     TGetPolymarketMarketHistoryRequest,
     TGetPolymarketMarketHistoryResponse,
     TPolymarketEvent,
@@ -51,22 +49,13 @@ const polymarketApi = alphadayApi.injectEndpoints({
             TGetPolymarketMarketsResponse,
             TGetPolymarketMarketsRequest
         >({
-            query: ({
-                page,
-                limit,
-                event,
-                resolved,
-                tags,
-                search,
-                ordering,
-            }) => {
+            query: ({ page, limit, active, tags, search, ordering }) => {
                 const params = queryString.stringify({
                     page,
                     limit:
                         limit ||
                         CONFIG.API.DEFAULT.DEFAULT_PARAMS.RESPONSE_LIMIT,
-                    event,
-                    resolved,
+                    active,
                     tags,
                     search,
                     ordering,
@@ -75,7 +64,6 @@ const polymarketApi = alphadayApi.injectEndpoints({
             },
             providesTags: ["PolymarketMarkets"],
         }),
-
         getPolymarketMarketById: builder.query<
             TPolymarketMarket,
             { id: number }
@@ -86,21 +74,6 @@ const polymarketApi = alphadayApi.injectEndpoints({
                 { type: "PolymarketMarkets", id },
             ],
         }),
-
-        getPolymarketMarketStats: builder.query<
-            TGetPolymarketMarketStatsResponse,
-            TGetPolymarketMarketStatsRequest
-        >({
-            query: ({ days, market_id }) => {
-                const params = queryString.stringify({
-                    days,
-                    market_id,
-                });
-                return `${POLYMARKET.BASE}${POLYMARKET.MARKET_STATS}?${params}`;
-            },
-            providesTags: ["PolymarketStats"],
-        }),
-
         getPolymarketMarketHistory: builder.query<
             TGetPolymarketMarketHistoryResponse,
             TGetPolymarketMarketHistoryRequest
@@ -124,7 +97,6 @@ export const {
     useGetPolymarketEventByIdQuery,
     useGetPolymarketMarketsQuery,
     useGetPolymarketMarketByIdQuery,
-    useGetPolymarketMarketStatsQuery,
     useGetPolymarketMarketHistoryQuery,
 } = polymarketApi;
 
