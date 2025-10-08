@@ -20,7 +20,7 @@ const OneColImageContainer: FC<IModuleContainer> = ({
     moduleData,
     onAspectRatioDetected,
 }) => {
-    const imageWidgetWidth = useWidgetSize([600], true);
+    const imageWidgetWidth = useWidgetSize();
     const [detectedAspectRatio, setDetectedAspectRatio] = useState<
         number | null
     >(null);

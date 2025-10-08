@@ -34,17 +34,18 @@ const getWidgetSize = (
  * @returns widgetSize lg|sm|xs
  */
 
-export const useWidgetSize: (
-    breakpoints: TBreakpoints,
-    onlyWidth?: boolean
-) => TWidgetSize | undefined | number = (breakpoints, onlyWidth) => {
+export const useWidgetBreakpoints: (
+    breakpoints: TBreakpoints
+) => TWidgetSize | undefined = (breakpoints) => {
     const { widgetsSize } = useContext(DimensionsContext);
 
-    if (onlyWidth) {
-        return widgetsSize?.width;
-    }
-
     return getWidgetSize(widgetsSize?.width, breakpoints);
+};
+
+export const useWidgetSize = () => {
+    const { widgetsSize } = useContext(DimensionsContext);
+
+    return widgetsSize;
 };
 
 export const useImageWidgetSize = () => {

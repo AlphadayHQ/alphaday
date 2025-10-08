@@ -1,7 +1,7 @@
 import { FC, useMemo } from "react";
 import { CollapseListItem } from "@alphaday/ui-kit";
 import moment from "moment-with-locales-es6";
-import { useWidgetSize } from "src/api/hooks";
+import { useWidgetBreakpoints } from "src/api/hooks";
 import { Logger } from "src/api/utils/logging";
 import { REMARK_URL_REGEX, remarkRegex } from "src/api/utils/textUtils";
 import { useDynamicWidgetItem } from "../hooks/useDynamicWidgetItem";
@@ -34,7 +34,7 @@ const RoadmapItem: FC<IList> = ({
         [descHeight]
     ); // 5px comes from padding top in style
 
-    const widgetSize = useWidgetSize([450]);
+    const widgetSize = useWidgetBreakpoints([450]);
     const dateField = (() => {
         if (!date) return "TBD";
         try {
