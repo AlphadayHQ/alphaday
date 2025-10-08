@@ -16,7 +16,7 @@ const validateCustomData = (
     return { imageUrl };
 };
 
-const ImageContainer: FC<IModuleContainer> = ({
+const TwoColImageContainer: FC<IModuleContainer> = ({
     moduleData,
     onAspectRatioDetected,
 }) => {
@@ -71,4 +71,4 @@ const ImageContainer: FC<IModuleContainer> = ({
     );
 };
 
-export default ImageContainer;
+export default TwoColImageContainer;
