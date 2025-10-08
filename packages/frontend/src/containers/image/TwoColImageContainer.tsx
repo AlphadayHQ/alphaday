@@ -1,6 +1,6 @@
 import { type FC, Suspense, useMemo, useState, useCallback } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { useImageWidgetSize } from "src/api/hooks";
+import { useTwoColImageWidgetSize } from "src/api/hooks";
 import { TRemoteCustomData } from "src/api/services";
 import CONFIG from "src/config";
 import type { IModuleContainer } from "src/types";
@@ -20,7 +20,7 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
     moduleData,
     onAspectRatioDetected,
 }) => {
-    const imageWidgetSize = useImageWidgetSize();
+    const imageWidgetSize = useTwoColImageWidgetSize();
     const [detectedAspectRatio, setDetectedAspectRatio] = useState<
         number | null
     >(null);

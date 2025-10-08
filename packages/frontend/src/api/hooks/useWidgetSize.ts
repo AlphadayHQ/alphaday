@@ -48,7 +48,7 @@ export const useWidgetSize = () => {
     return widgetsSize;
 };
 
-export const useImageWidgetSize = () => {
+export const useTwoColImageWidgetSize = () => {
     const { imageWidgetSize } = useContext(DimensionsContext);
 
     return imageWidgetSize;

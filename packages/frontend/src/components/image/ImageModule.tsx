@@ -4,7 +4,7 @@ import ImageWidget from "./ImageWidget";
 interface IImageModule {
     imageUrl: string | undefined;
     title: string;
-    contentHeight: string;
+    contentHeight?: string;
     isLoading: boolean;
     onAspectRatioDetected?: (aspectRatio: number) => void;
 }
@@ -22,7 +22,10 @@ export const ImageModule: FC<IImageModule> = ({
     }, [imageUrl]);
 
     return (
-        <div className="w-full h-full mb-4" style={{ height: contentHeight }}>
+        <div
+            className="w-full h-full mb-4"
+            style={{ height: contentHeight || "100%" }}
+        >
             <ImageWidget
                 imageUrl={processedImageUrl}
                 title={title}
