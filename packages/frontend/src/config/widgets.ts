@@ -41,13 +41,6 @@ export const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 550,
         ADJUSTABLE: true,
     },
-    [ETemplateNameRegistry.Two_Col_Image]: {
-        WIDGET_ASPECT_RATIO: 3, // 1500 by 500
-        WIDGET_HEIGHT: 449, // max widget width is 1347px (4-col)
-        ADJUSTABLE: false,
-        COLLAPSED_WIDGET_HEIGHT: 45,
-        TWO_COL_SUPPORT: true,
-    },
     [ETemplateNameRegistry.Kasandra]: {
         WIDGET_HEIGHT: 599,
         COLLAPSED_WIDGET_HEIGHT: 45,
@@ -126,6 +119,12 @@ export const WIDGETS_CONFIG = {
         DEFAULT_FEED_PREFERENCE: EItemFeedPreference.Last,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.One_Col_Image]: {
+        WIDGET_ASPECT_RATIO: 0.75, // 1500 by 500
+        WIDGET_HEIGHT: 600,
+        ADJUSTABLE: false,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+    },
     [ETemplateNameRegistry.Blog]: {
         TAG_ITEM_TYPE: "blog",
         MAX_PAGE_NUMBER: 10,
@@ -179,6 +178,13 @@ export const WIDGETS_CONFIG = {
         MAX_PAGE_NUMBER: 10,
         WIDGET_HEIGHT: 400,
         ADJUSTABLE: true,
+    },
+    [ETemplateNameRegistry.Two_Col_Image]: {
+        WIDGET_ASPECT_RATIO: 3, // 1500 by 500
+        WIDGET_HEIGHT: 449, // max widget width is 1347px (4-col)
+        ADJUSTABLE: false,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        TWO_COL_SUPPORT: true,
     },
     [ETemplateNameRegistry.CustomCard]: {
         MAX_PAGE_NUMBER: 10,

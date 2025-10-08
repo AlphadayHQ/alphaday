@@ -1,7 +1,7 @@
 import { useCallback, useState, useMemo } from "react";
 import { TCachedView } from "../types";
 import { useTwoColWidgets } from "../utils/layoutUtils";
-import { useImageWidgetSize } from "./useWidgetSize";
+import { useTwoColImageWidgetSize } from "./useWidgetSize";
 
 interface IImageWidgetReturn {
     imageWidgetSize: { width: number; height: number } | undefined;
@@ -22,7 +22,7 @@ interface IImageWidgetReturn {
 export const useImageWidget = (
     selectedView: TCachedView | undefined
 ): IImageWidgetReturn => {
-    const imageWidgetSize = useImageWidgetSize();
+    const imageWidgetSize = useTwoColImageWidgetSize();
     const { widgets: twoColWidgets } = useTwoColWidgets(selectedView);
 
     // Track detected aspect ratios for two-column widgets

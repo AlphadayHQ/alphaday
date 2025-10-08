@@ -26,7 +26,7 @@ const getWidgetSize = (
  * @param breakpoints [lg, sm] or [lg, sm, xs]
  *
  *  @example
- *  const widgetSize = useWidgetSize([800, 600]);
+ *  const widgetSize = useWidgetBreakpoints([800, 600]);
  *  If widgets width is 900, widgetSize will be 'lg'
  *  If widgets width is 700, widgetSize will be 'sm'
  *  If widgets width is 500, widgetSize will be 'xs'
@@ -34,7 +34,7 @@ const getWidgetSize = (
  * @returns widgetSize lg|sm|xs
  */
 
-export const useWidgetSize: (
+export const useWidgetBreakpoints: (
     breakpoints: TBreakpoints
 ) => TWidgetSize | undefined = (breakpoints) => {
     const { widgetsSize } = useContext(DimensionsContext);
@@ -42,7 +42,13 @@ export const useWidgetSize: (
     return getWidgetSize(widgetsSize?.width, breakpoints);
 };
 
-export const useImageWidgetSize = () => {
+/**
+ * @description
+ * Returns the size of the two-column image widget
+ *
+ * @returns imageWidgetSize { width: number; height: number }
+ */
+export const useTwoColImageWidgetSize = () => {
     const { imageWidgetSize } = useContext(DimensionsContext);
 
     return imageWidgetSize;

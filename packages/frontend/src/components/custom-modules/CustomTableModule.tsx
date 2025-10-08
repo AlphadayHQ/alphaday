@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { useWidgetSize } from "src/api/hooks";
+import { useWidgetBreakpoints } from "src/api/hooks";
 import {
     TCustomLayoutEntry,
     TCustomRowProps,
@@ -36,7 +36,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     setWidgetHeight,
 }) => {
     const { t } = useTranslation();
-    const widgetSize = useWidgetSize([500]);
+    const widgetSize = useWidgetBreakpoints([500]);
     const isCompactMode =
         widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
