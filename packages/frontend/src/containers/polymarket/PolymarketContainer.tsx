@@ -3,10 +3,10 @@ import { useWidgetHeight, usePagination } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketMarketsQuery } from "src/api/services";
 import type { TPolymarketMarket } from "src/api/services/polymarket/types";
-import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
+import { useAppSelector } from "src/api/store/hooks";
 import {
     selectPolymarketFilter,
-    setPolymarketFilter,
+    // setPolymarketFilter,
 } from "src/api/store/slices/widgets";
 import * as filterUtils from "src/api/utils/filterUtils";
 import { buildUniqueItemList } from "src/api/utils/itemUtils";
@@ -19,7 +19,7 @@ import type { IModuleContainer } from "src/types";
 
 const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
     const selectedFilter = useAppSelector(
         selectPolymarketFilter(moduleData.hash)
     );
@@ -116,14 +116,14 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return `${WIDGET_HEIGHT - 55}px`;
     }, [WIDGET_HEIGHT]);
 
-    const setSelectedFilter = useCallback(
-        (filter: EPolymarketFilter) => {
-            dispatch(
-                setPolymarketFilter({ widgetHash: moduleData.hash, filter })
-            );
-        },
-        [dispatch, moduleData.hash]
-    );
+    // const setSelectedFilter = useCallback(
+    //     (filter: EPolymarketFilter) => {
+    //         dispatch(
+    //             setPolymarketFilter({ widgetHash: moduleData.hash, filter })
+    //         );
+    //     },
+    //     [dispatch, moduleData.hash]
+    // );
 
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
@@ -133,7 +133,7 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
                 selectedFilter={selectedFilter || EPolymarketFilter.Active}
-                onSetSelectedFilter={setSelectedFilter}
+                // onSetSelectedFilter={setSelectedFilter}
                 handlePaginate={handleNextPage}
             />
         </Suspense>
