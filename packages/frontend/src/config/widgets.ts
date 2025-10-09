@@ -145,6 +145,7 @@ export const WIDGETS_CONFIG = {
         COLLAPSED_WIDGET_HEIGHT: 45,
         POLLING_INTERVAL: 5 * 60, // 5 min
         QUERY_HARD_LIMIT: 30,
+        MAX_PAGE_NUMBER: 10,
         ADJUSTABLE: true,
     },
     [ETemplateNameRegistry.Portfolio]: {

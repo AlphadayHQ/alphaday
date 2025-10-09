@@ -430,6 +430,7 @@ export const translationEN = {
         expired: "Expired",
         resolved: "Resolved",
         active: "Active",
+        live: "Live",
     },
 };
 
@@ -867,6 +868,7 @@ export const translationJA: typeof translationEN = {
         expired: "期限切れ",
         resolved: "解決済み",
         active: "アクティブ",
+        live: "ライブ",
     },
 };
 
@@ -1302,6 +1304,7 @@ export const translationES: typeof translationEN = {
         expired: "Expirado",
         resolved: "Resuelto",
         active: "Activo",
+        live: "En Vivo",
     },
 };
 
@@ -1746,6 +1749,7 @@ export const translationFR: typeof translationEN = {
         expired: "Expiré",
         resolved: "Résolu",
         active: "Actif",
+        live: "En Direct",
     },
 };
 
@@ -2185,6 +2189,7 @@ export const translationTR: typeof translationEN = {
         expired: "Süresi Dolmuş",
         resolved: "Çözüldü",
         active: "Aktif",
+        live: "Canlı",
     },
 };
 
@@ -2608,5 +2613,6 @@ export const translationZH: typeof translationEN = {
         expired: "已过期",
         resolved: "已解决",
         active: "活跃",
+        live: "直播",
     },
 };
