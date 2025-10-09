@@ -70,13 +70,13 @@ const PolymarketModule: FC<IPolymarketModule> = ({
 
     return (
         <>
-            <div className="mx-2">
+            {/*<div className="mx-2">
                 <TabsBar
                     options={polymarketNavItems}
                     onChange={onTabOptionChange}
                     selectedOption={NavItemPreference}
                 />
-            </div>
+            </div>*/}
             <div className="flex flex-col h-full pb-4">
                 {isLoading ? (
                     <ModuleLoader $height={contentHeight} />
