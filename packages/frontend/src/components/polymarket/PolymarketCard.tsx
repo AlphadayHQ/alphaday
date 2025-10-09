@@ -24,7 +24,7 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
         statusText = t("polymarket.expired");
         statusColor = "text-secondaryOrangeSoda";
     } else {
-        statusText = t("polymarket.active");
+        statusText = t("polymarket.live");
         statusColor = "text-success";
     }
 
@@ -99,28 +99,33 @@ const PolymarketCard: FC<IPolymarketCard> = ({ market, onSelectMarket }) => {
                         <div className="">
                             {market.outcomes && market.outcomes.length > 0 && (
                                 <div className="flex flex-col gap-1">
-                                    {market.outcomes.map((outcome, idx) => (
-                                        <div
-                                            key={outcome.id}
-                                            className={twMerge(
-                                                "flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
-                                                idx === 0 &&
-                                                    `rounded-t-md ${market.outcomes?.length === 2 ? "bg-blue-500/20 [&>span]:text-accentVariant100" : ""}`,
+                                    {market.outcomes.map((outcome, idx) => {
+                                        const chance = Number.parseFloat(
+                                            (outcome.price * 100).toPrecision(2)
+                                        );
+                                        return (
+                                            <div
+                                                key={outcome.id}
+                                                className={twMerge(
+                                                    "flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
+                                                    idx === 0 &&
+                                                        `rounded-t-md ${market.outcomes?.length === 2 ? "bg-blue-500/20 [&>span]:text-accentVariant100" : ""}`,
 
-                                                idx === 1 &&
-                                                    `rounded-b-md ${market.outcomes?.length === 2 ? "bg-orange-400/20 [&>span]:text-secondaryOrange" : ""}`
-                                            )}
-                                        >
-                                            <span className="text-blue-600 fontGroup-highlightSemi truncate">
-                                                {outcome.outcome_name}
-                                            </span>
-                                            <div className="flex items-center gap-2 shrink-0">
-                                                <span className="text-primary">
-                                                    ${outcome.price.toFixed(2)}
+                                                    idx === 1 &&
+                                                        `rounded-b-md ${market.outcomes?.length === 2 ? "bg-orange-400/20 [&>span]:text-secondaryOrange" : ""}`
+                                                )}
+                                            >
+                                                <span className="text-blue-600 fontGroup-highlightSemi truncate">
+                                                    {outcome.outcome_name}
                                                 </span>
+                                                <div className="flex items-center gap-2 shrink-0">
+                                                    <span className="text-primary">
+                                                        {Math.ceil(chance)}%
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             )}
                         </div>

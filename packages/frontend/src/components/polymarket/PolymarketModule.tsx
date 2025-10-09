@@ -13,6 +13,7 @@ export interface IPolymarketModule {
     contentHeight: string;
     selectedFilter: EPolymarketFilter;
     onSetSelectedFilter: (filter: EPolymarketFilter) => void;
+    handlePaginate: (type: "next" | "previous") => void;
 }
 
 const PolymarketModule: FC<IPolymarketModule> = ({
@@ -22,6 +23,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
     contentHeight,
     selectedFilter,
     onSetSelectedFilter,
+    handlePaginate,
 }) => {
     const { t } = useTranslation();
     const polymarketNavItems = [
@@ -82,6 +84,7 @@ const PolymarketModule: FC<IPolymarketModule> = ({
                     <PolymarketList
                         markets={filteredMarkets}
                         onSelectMarket={onSelectMarket}
+                        handlePaginate={handlePaginate}
                     />
                 )}
             </div>
