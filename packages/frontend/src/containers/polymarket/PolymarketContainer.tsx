@@ -4,10 +4,7 @@ import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketMarketsQuery } from "src/api/services";
 import type { TPolymarketMarket } from "src/api/services/polymarket/types";
 import { useAppSelector } from "src/api/store/hooks";
-import {
-    selectPolymarketFilter,
-    // setPolymarketFilter,
-} from "src/api/store/slices/widgets";
+import { selectPolymarketFilter } from "src/api/store/slices/widgets";
 import * as filterUtils from "src/api/utils/filterUtils";
 import { buildUniqueItemList } from "src/api/utils/itemUtils";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
@@ -116,15 +113,6 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return `${WIDGET_HEIGHT - 55}px`;
     }, [WIDGET_HEIGHT]);
 
-    // const setSelectedFilter = useCallback(
-    //     (filter: EPolymarketFilter) => {
-    //         dispatch(
-    //             setPolymarketFilter({ widgetHash: moduleData.hash, filter })
-    //         );
-    //     },
-    //     [dispatch, moduleData.hash]
-    // );
-
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <PolymarketModule
@@ -133,7 +121,6 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
                 selectedFilter={selectedFilter || EPolymarketFilter.Active}
-                // onSetSelectedFilter={setSelectedFilter}
                 handlePaginate={handleNextPage}
             />
         </Suspense>
