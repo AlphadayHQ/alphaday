@@ -36,6 +36,11 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const tags =
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
+    const tagsString = useMemo(
+        () => (tags ? filterUtils.filteringListToStr(tags) : undefined),
+        [tags]
+    );
+
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.POLYMARKET.POLLING_INTERVAL) * 1000;
@@ -50,7 +55,7 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
             limit: CONFIG.API.DEFAULT.DEFAULT_PARAMS.RESPONSE_LIMIT,
             active: true, // Default to showing active markets
             ordering: "-volume_num", // Order by volume descending
-            tags: tags ? filterUtils.filteringListToStr(tags) : undefined,
+            tags: tagsString,
         },
         {
             pollingInterval,
@@ -87,11 +92,13 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [nextPage]);
 
-    // Reset markets when filter changes
+    // Reset markets when selected filter or tags change
     useEffect(() => {
-        setMarkets(undefined);
-        setCurrentPage(undefined);
-    }, [selectedFilter]);
+        if (selectedFilter !== undefined || tagsString !== undefined) {
+            setMarkets(undefined);
+            setCurrentPage(undefined);
+        }
+    }, [selectedFilter, tagsString]);
 
     const handleSelectMarket = useCallback(
         (market: TPolymarketMarket) => {
