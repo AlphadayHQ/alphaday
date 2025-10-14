@@ -1,15 +1,12 @@
-import { FC, useEffect, useMemo, useCallback, Suspense, useState } from "react";
-import { useGlobalSearch, useWidgetHeight } from "src/api/hooks";
+import { FC, useMemo, useCallback, Suspense, useState, useEffect } from "react";
+import { useWidgetHeight, usePagination } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketMarketsQuery } from "src/api/services";
-
 import type { TPolymarketMarket } from "src/api/services/polymarket/types";
-
-import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import {
-    selectPolymarketFilter,
-    setPolymarketFilter,
-} from "src/api/store/slices/widgets";
+import { useAppSelector } from "src/api/store/hooks";
+import { selectPolymarketFilter } from "src/api/store/slices/widgets";
+import * as filterUtils from "src/api/utils/filterUtils";
+import { buildUniqueItemList } from "src/api/utils/itemUtils";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import PolymarketModule from "src/components/polymarket/PolymarketModule";
 import { EPolymarketFilter } from "src/components/polymarket/types";
@@ -19,14 +16,17 @@ import type { IModuleContainer } from "src/types";
 
 const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
     const selectedFilter = useAppSelector(
         selectPolymarketFilter(moduleData.hash)
     );
     const { logButtonClicked } = useCustomAnalytics();
-    const { lastSelectedKeyword } = useGlobalSearch();
 
     const [, setSelectedMarket] = useState<TPolymarketMarket | undefined>();
+    const [currentPage, setCurrentPage] = useState<number | undefined>(
+        undefined
+    );
+    const [markets, setMarkets] = useState<TPolymarketMarket[] | undefined>();
 
     const tagsSettings = moduleData.settings.filter(
         (s) =>
@@ -36,23 +36,69 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const tags =
         tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
 
+    const tagsString = useMemo(
+        () => (tags ? filterUtils.filteringListToStr(tags) : undefined),
+        [tags]
+    );
+
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.POLYMARKET.POLLING_INTERVAL) * 1000;
 
-    const { data: marketsData, isLoading: isLoadingMarkets } =
-        useGetPolymarketMarketsQuery(
-            {
-                limit: CONFIG.WIDGETS.POLYMARKET.QUERY_HARD_LIMIT,
-                resolved: false, // Default to showing active markets
-                ordering: "-total_volume", // Order by volume descending
-            },
-            {
-                pollingInterval,
-            }
-        );
+    const {
+        data: marketsData,
+        isLoading: isLoadingMarkets,
+        isSuccess,
+    } = useGetPolymarketMarketsQuery(
+        {
+            page: currentPage,
+            limit: CONFIG.API.DEFAULT.DEFAULT_PARAMS.RESPONSE_LIMIT,
+            active: true, // Default to showing active markets
+            ordering: "-volume_num", // Order by volume descending
+            tags: tagsString,
+        },
+        {
+            pollingInterval,
+        }
+    );
 
-    const markets = useMemo(() => marketsData?.results || [], [marketsData]);
+    useEffect(() => {
+        const data = marketsData?.results;
+        if (data !== undefined) {
+            setMarkets((prevMarkets) => {
+                if (prevMarkets) {
+                    return buildUniqueItemList([...prevMarkets, ...data]);
+                }
+                return data;
+            });
+        }
+    }, [marketsData?.results]);
+
+    const { nextPage, handleNextPage } = usePagination(
+        marketsData?.links,
+        CONFIG.WIDGETS.POLYMARKET.MAX_PAGE_NUMBER,
+        isSuccess
+    );
+
+    useEffect(() => {
+        if (nextPage === undefined) {
+            return () => null;
+        }
+        const timeout = setTimeout(() => {
+            setCurrentPage(nextPage);
+        }, 350);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [nextPage]);
+
+    // Reset markets when selected filter or tags change
+    useEffect(() => {
+        if (selectedFilter !== undefined || tagsString !== undefined) {
+            setMarkets(undefined);
+            setCurrentPage(undefined);
+        }
+    }, [selectedFilter, tagsString]);
 
     const handleSelectMarket = useCallback(
         (market: TPolymarketMarket) => {
@@ -65,54 +111,24 @@ const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            const polymarketUrl = `https://polymarket.com/event/${market.slug}`;
-            window.open(polymarketUrl, "_blank", "noopener,noreferrer");
+            window.open(market.url, "_blank", "noopener,noreferrer");
         },
         [logButtonClicked, moduleData.name]
     );
-
-    /**
-     * if user searches for some keyword and tags are included, automatically set the selected market
-     * to some market that matches this new keyword, if any.
-     */
-    useEffect(() => {
-        if (
-            lastSelectedKeyword &&
-            tags?.find((t) => t.id === lastSelectedKeyword.tag.id)
-        ) {
-            const newMarketFromSearch = markets.find((market) => {
-                return market.tags?.find(
-                    (t) => t.id === lastSelectedKeyword.tag.id
-                );
-            });
-            if (newMarketFromSearch) {
-                setSelectedMarket(newMarketFromSearch);
-            }
-        }
-    }, [lastSelectedKeyword, markets, tags]);
 
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT - 55}px`;
     }, [WIDGET_HEIGHT]);
 
-    const setSelectedFilter = useCallback(
-        (filter: EPolymarketFilter) => {
-            dispatch(
-                setPolymarketFilter({ widgetHash: moduleData.hash, filter })
-            );
-        },
-        [dispatch, moduleData.hash]
-    );
-
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <PolymarketModule
                 isLoading={isLoadingMarkets}
-                markets={markets}
+                markets={markets || marketsData?.results || []}
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
                 selectedFilter={selectedFilter || EPolymarketFilter.Active}
-                onSetSelectedFilter={setSelectedFilter}
+                handlePaginate={handleNextPage}
             />
         </Suspense>
     );

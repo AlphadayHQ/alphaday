@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { BaseModuleHeader, TabButton } from "@alphaday/ui-kit";
+import { FC, useMemo } from "react";
+import { BaseModuleHeader, TabButton, twMerge } from "@alphaday/ui-kit";
 import { TBaseTag } from "src/api/services";
 import { TUserViewWidget } from "src/api/types";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
@@ -19,6 +19,7 @@ interface IBaseContainerHeader {
     showFullSize: boolean | undefined;
     allowFullSize: boolean | undefined;
     moduleData: TUserViewWidget<unknown>;
+    hideHeader?: boolean;
 }
 const BaseContainerHeader: FC<IBaseContainerHeader> = ({
     headerRef,
@@ -34,20 +35,84 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
     moduleData,
     showFullSize,
     allowFullSize,
+    hideHeader,
 }) => {
+    const renderMenu = useMemo(() => {
+        if (hideHeader) {
+            return null;
+        }
+        if (showFullSize) {
+            return (
+                <div
+                    className="fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center pr-1.5"
+                    onClick={handleShowFullSize}
+                    role="button"
+                    title="Close full-size view"
+                    tabIndex={0}
+                >
+                    <CloseSVG />
+                </div>
+            );
+        }
+        return (
+            <BaseContainerMenu
+                widgetDescription={widgetDescription}
+                // Having a collapsed widget options should never happen, so this is safe
+                toggleSettings={
+                    moduleData.settings.length === 0
+                        ? undefined
+                        : toggleSettings
+                }
+                toggleMaximize={allowFullSize ? handleShowFullSize : undefined}
+                toggleExpand={alreadyCollapsed ? toggleCollapse : undefined}
+                toggleMinimize={
+                    alreadyCollapsed
+                        ? undefined
+                        : (showFullSize && handleShowFullSize) || toggleCollapse
+                }
+                takeScreenshot={undefined}
+                removeWidget={removeWidget}
+            />
+        );
+    }, [
+        widgetDescription,
+        toggleSettings,
+        moduleData.settings.length,
+        toggleCollapse,
+        showFullSize,
+        allowFullSize,
+        alreadyCollapsed,
+        removeWidget,
+        handleShowFullSize,
+        hideHeader,
+    ]);
+
     return (
-        <BaseModuleHeader ref={headerRef}>
-            <div className="flex w-full items-start justify-between">
+        <BaseModuleHeader className={hideHeader ? "py-0" : ""} ref={headerRef}>
+            <div
+                className={twMerge(
+                    "flex w-full items-start justify-between",
+                    hideHeader && "absolute left-0 py-3"
+                )}
+            >
                 <div
                     role="button"
                     tabIndex={0}
                     onClick={toggleCollapse}
-                    className="flex h-[inherit] w-full pb-0.5 focus-visible:outline-none"
+                    className={twMerge(
+                        "flex h-[inherit] w-full pb-0.5 focus-visible:outline-none",
+                        hideHeader && ""
+                    )}
                 >
-                    <h6 className="text-primaryVariant100 fontGroup-highlightSemi m-0 inline-flex uppercase">
+                    <h6
+                        className={twMerge(
+                            "text-primaryVariant100 fontGroup-highlightSemi m-0 inline-flex uppercase",
+                            hideHeader && "text-transparent"
+                        )}
+                    >
                         {title}
                     </h6>
-                    {tags && (
+                    {tags && !hideHeader && (
                         <span
                             data-testid="module-search-tags"
                             className="leading-[18px]"
@@ -82,41 +147,7 @@ const BaseContainerHeader: FC<IBaseContainerHeader> = ({
                         </span>
                     )}
                 </div>
-                {showFullSize ? (
-                    <div
-                        className="fill-primaryVariant100 flex h-[30px] cursor-pointer items-center self-center pr-1.5"
-                        onClick={handleShowFullSize}
-                        role="button"
-                        title="Close full-size view"
-                        tabIndex={0}
-                    >
-                        <CloseSVG />
-                    </div>
-                ) : (
-                    <BaseContainerMenu
-                        widgetDescription={widgetDescription}
-                        // Having a collapsed widget options should never happen, so this is safe
-                        toggleSettings={
-                            moduleData.settings.length === 0
-                                ? undefined
-                                : toggleSettings
-                        }
-                        toggleMaximize={
-                            allowFullSize ? handleShowFullSize : undefined
-                        }
-                        toggleExpand={
-                            alreadyCollapsed ? toggleCollapse : undefined
-                        }
-                        toggleMinimize={
-                            alreadyCollapsed
-                                ? undefined
-                                : (showFullSize && handleShowFullSize) ||
-                                  toggleCollapse
-                        }
-                        takeScreenshot={undefined}
-                        removeWidget={removeWidget}
-                    />
-                )}
+                {renderMenu}
             </div>
         </BaseModuleHeader>
     );

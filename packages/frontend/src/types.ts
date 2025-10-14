@@ -60,6 +60,18 @@ export type TTemplatesDict = {
 export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     alphagpt_template: lazyRetry(() => import("./containers/qna/QnAContainer")),
     blog_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    calendar_template: lazyRetry(
+        () => import("./containers/calendar/CalendarContainer")
+    ),
+    countdown_template: lazyRetry(
+        () => import("./containers/countdown/CountdownContainer")
+    ),
+    custom_card_template: lazyRetry(
+        () => import("./containers/custom-modules/CustomCardContainer")
+    ),
+    custom_chart_template: lazyRetry(
+        () => import("./containers/custom-modules/CustomChartContainer")
+    ),
     custom_table_template: lazyRetry(
         () => import("./containers/custom-modules/CustomTableContainer")
     ),
@@ -72,9 +84,6 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/items/ItemsContainer")
     ),
     gas_template: lazyRetry(() => import("./containers/gas/GasContainer")),
-    two_col_image_template: lazyRetry(
-        () => import("./containers/image/ImageContainer")
-    ),
     kasandra_template: lazyRetry(
         () => import("./containers/kasandra/KasandraContainer")
     ),
@@ -104,6 +113,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/media/MediaContainer")
     ),
     news_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    one_col_image_template: lazyRetry(
+        () => import("./containers/image/OneColImageContainer")
+    ),
     podcast_template: lazyRetry(
         () => import("./containers/podcast/PodcastContainer")
     ),
@@ -129,6 +141,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/dynamic/AgendaContainer")
     ),
     tvl_template: lazyRetry(() => import("./containers/tvl/TvlContainer")),
+    two_col_image_template: lazyRetry(
+        () => import("./containers/image/TwoColImageContainer")
+    ),
     uniswap_template: lazyRetry(
         () => import("./containers/uniswap/SwapContainer")
     ),
@@ -138,20 +153,8 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     video_template: lazyRetry(
         () => import("./containers/video/VideoContainer")
     ),
-    calendar_template: lazyRetry(
-        () => import("./containers/calendar/CalendarContainer")
-    ),
-    countdown_template: lazyRetry(
-        () => import("./containers/countdown/CountdownContainer")
-    ),
     verasity_tokenomics_template: lazyRetry(
         () => import("./containers/client/VerasityTokenomicsContainer")
-    ),
-    custom_chart_template: lazyRetry(
-        () => import("./containers/custom-modules/CustomChartContainer")
-    ),
-    custom_card_template: lazyRetry(
-        () => import("./containers/custom-modules/CustomCardContainer")
     ),
 };
 

@@ -2,7 +2,7 @@ import "src/mocks/libraryMocks";
 import { FC } from "react";
 import { renderHook } from "@testing-library/react-hooks";
 import { DimensionsContext } from "../store/providers/dimensions-context";
-import { useWidgetSize } from "./useWidgetSize";
+import { useWidgetBreakpoints } from "./useWidgetSize";
 
 global.ResizeObserver = require("resize-observer-polyfill");
 
@@ -29,7 +29,7 @@ const DimensionsProvider: FC<{ children: React.ReactNode }> = ({
     </DimensionsContext.Provider>
 );
 
-describe("useWidgetSize", () => {
+describe("useWidgetBreakpoints", () => {
     it("should return the correct size when the element is defined", () => {
         const clientWidth = 800;
         const getElementByIdSpy = vi.spyOn(document, "getElementById");
@@ -37,7 +37,7 @@ describe("useWidgetSize", () => {
             clientWidth,
         } as unknown as HTMLElement);
 
-        const { result } = renderHook(() => useWidgetSize([768, 320]), {
+        const { result } = renderHook(() => useWidgetBreakpoints([768, 320]), {
             wrapper: DimensionsProvider,
         });
         expect(result.current).toEqual("lg");
@@ -49,7 +49,7 @@ describe("useWidgetSize", () => {
         const getElementByIdSpy = vi.spyOn(document, "getElementById");
         getElementByIdSpy.mockReturnValueOnce(null);
 
-        const { result } = renderHook(() => useWidgetSize([768, 320]));
+        const { result } = renderHook(() => useWidgetBreakpoints([768, 320]));
         expect(result.current).toBeUndefined();
 
         getElementByIdSpy.mockRestore();

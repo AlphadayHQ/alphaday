@@ -7,7 +7,7 @@ import {
     twMerge,
 } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { useWidgetSize } from "src/api/hooks";
+import { useWidgetBreakpoints } from "src/api/hooks";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import { makeRepeated } from "src/api/utils/itemUtils";
 import { getAssetPrefix } from "src/api/utils/portfolioUtils";
@@ -60,7 +60,7 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 
     const { t } = useTranslation();
 
-    const widgetSize = useWidgetSize([450, 330]);
+    const widgetSize = useWidgetBreakpoints([450, 330]);
 
     const assets = useMemo<TPortfolioDataForAddress["assets"]>(
         () =>
