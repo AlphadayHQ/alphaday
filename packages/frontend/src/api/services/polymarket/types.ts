@@ -103,3 +103,16 @@ export type TGetPolymarketMarketHistoryResponse = {
         [outcome_id: string]: TPolymarketPricePoint[];
     };
 };
+
+export type TGetPolymarketMarketByTopVolumeRequest = {
+    page?: number;
+    limit?: number;
+    active?: boolean;
+    tags?: string;
+    search?: string;
+    ordering?: string;
+};
+
+export type TGetPolymarketMarketByTopVolumeResponse = TPagination & {
+    results: TPolymarketMarket[];
+};

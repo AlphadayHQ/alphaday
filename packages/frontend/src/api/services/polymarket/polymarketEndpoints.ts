@@ -10,6 +10,8 @@ import type {
     TGetPolymarketMarketHistoryResponse,
     TPolymarketEvent,
     TPolymarketMarket,
+    TGetPolymarketMarketByTopVolumeResponse,
+    TGetPolymarketMarketByTopVolumeRequest,
 } from "./types";
 
 const { POLYMARKET } = CONFIG.API.DEFAULT.ROUTES;
@@ -89,6 +91,22 @@ const polymarketApi = alphadayApi.injectEndpoints({
                 { type: "PolymarketHistory", id: market_id },
             ],
         }),
+        getPolymarketMarketByTopVolume: builder.query<
+            TGetPolymarketMarketByTopVolumeResponse,
+            TGetPolymarketMarketByTopVolumeRequest
+        >({
+            query: ({ page, limit, active, tags, search, ordering }) => {
+                const params = queryString.stringify({
+                    page,
+                    limit,
+                    active,
+                    tags,
+                    search,
+                    ordering,
+                });
+                return `${POLYMARKET.BASE}${POLYMARKET.TOP_VOLUME}?${params}`;
+            },
+        }),
     }),
 });
 
@@ -98,6 +116,7 @@ export const {
     useGetPolymarketMarketsQuery,
     useGetPolymarketMarketByIdQuery,
     useGetPolymarketMarketHistoryQuery,
+    useGetPolymarketMarketByTopVolumeQuery,
 } = polymarketApi;
 
 export default polymarketApi;
