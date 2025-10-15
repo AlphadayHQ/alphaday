@@ -1,17 +1,13 @@
-import { FC, useMemo, useCallback, Suspense, useState, useEffect } from "react";
-import { useWidgetHeight, usePagination } from "src/api/hooks";
+import { FC, useMemo, useCallback, Suspense } from "react";
+import { useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
-import {
-    useGetPolymarketMarketByTopVolumeQuery,
-    useGetPolymarketMarketsQuery,
-} from "src/api/services";
+import { useGetPolymarketMarketByTopVolumeQuery } from "src/api/services";
 import type { TPolymarketMarket } from "src/api/services/polymarket/types";
 import { useAppSelector } from "src/api/store/hooks";
 import { selectPolymarketFilter } from "src/api/store/slices/widgets";
 import * as filterUtils from "src/api/utils/filterUtils";
-import { buildUniqueItemList } from "src/api/utils/itemUtils";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
-import PolymarketModule from "src/components/polymarket/PolymarketModule";
+import PolymarketTopVolumeModule from "src/components/polymarket/PolymarketTopVolumeModule";
 import { EPolymarketFilter } from "src/components/polymarket/types";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
@@ -19,17 +15,10 @@ import type { IModuleContainer } from "src/types";
 
 const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
-    // const dispatch = useAppDispatch();
     const selectedFilter = useAppSelector(
         selectPolymarketFilter(moduleData.hash)
     );
     const { logButtonClicked } = useCustomAnalytics();
-
-    const [, setSelectedMarket] = useState<TPolymarketMarket | undefined>();
-    const [currentPage, setCurrentPage] = useState<number | undefined>(
-        undefined
-    );
-    const [markets, setMarkets] = useState<TPolymarketMarket[] | undefined>();
 
     const tagsSettings = moduleData.settings.filter(
         (s) =>
@@ -48,24 +37,7 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.POLYMARKET.POLLING_INTERVAL) * 1000;
 
-    const {
-        data: marketsData,
-        isLoading: isLoadingMarkets,
-        isSuccess,
-    } = useGetPolymarketMarketsQuery(
-        {
-            page: currentPage,
-            limit: CONFIG.API.DEFAULT.DEFAULT_PARAMS.RESPONSE_LIMIT,
-            active: true, // Default to showing active markets
-            ordering: "-volume_num", // Order by volume descending
-            tags: tagsString,
-        },
-        {
-            pollingInterval,
-        }
-    );
-
-    const { data: topVolumeData, isLoading: isLoadingTopVolume } =
+    const { data: marketGroupData, isLoading: isLoadingTopVolume } =
         useGetPolymarketMarketByTopVolumeQuery(
             {
                 page: 1,
@@ -78,51 +50,12 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
             }
         );
 
-    console.log("topVolumeData", topVolumeData);
-
-    useEffect(() => {
-        const data = marketsData?.results;
-        if (data !== undefined) {
-            setMarkets((prevMarkets) => {
-                if (prevMarkets) {
-                    return buildUniqueItemList([...prevMarkets, ...data]);
-                }
-                return data;
-            });
-        }
-    }, [marketsData?.results]);
-
-    const { nextPage, handleNextPage } = usePagination(
-        marketsData?.links,
-        CONFIG.WIDGETS.POLYMARKET.MAX_PAGE_NUMBER,
-        isSuccess
-    );
-
-    useEffect(() => {
-        if (nextPage === undefined) {
-            return () => null;
-        }
-        const timeout = setTimeout(() => {
-            setCurrentPage(nextPage);
-        }, 350);
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [nextPage]);
-
-    // Reset markets when selected filter or tags change
-    useEffect(() => {
-        if (selectedFilter !== undefined || tagsString !== undefined) {
-            setMarkets(undefined);
-            setCurrentPage(undefined);
-        }
-    }, [selectedFilter, tagsString]);
+    console.log("marketGroupData", marketGroupData);
 
     const handleSelectMarket = useCallback(
         (market: TPolymarketMarket) => {
-            setSelectedMarket(market);
             logButtonClicked({
-                buttonName: "polymarket-market",
+                buttonName: "polymarket-top-volume",
                 data: {
                     widgetName: moduleData.name,
                     marketId: market.id,
@@ -140,13 +73,12 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
-            <PolymarketModule
-                isLoading={isLoadingMarkets}
-                markets={markets || marketsData?.results || []}
+            <PolymarketTopVolumeModule
+                isLoading={isLoadingTopVolume}
+                marketGroupData={marketGroupData}
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
                 selectedFilter={selectedFilter || EPolymarketFilter.Active}
-                handlePaginate={handleNextPage}
             />
         </Suspense>
     );

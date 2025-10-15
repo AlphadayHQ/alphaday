@@ -56,6 +56,24 @@ export type TPolymarketMarketCard = {
     top_outcome: TPolymarketOutcome | null;
 };
 
+export type TPolymarketMarketGroup = {
+    id: number;
+    eventId: string;
+    title: string;
+    description: string;
+    slug: string;
+    url: string;
+    image: string;
+    icon: string;
+    category: string | null;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    marketsCount: number;
+    volume: number;
+    markets: TPolymarketMarket[];
+};
+
 /**
  * API Request/Response types
  */
@@ -131,20 +149,4 @@ export type TRawGetPolymarketMarketByTopVolumeResponse = {
     markets: TPolymarketMarket[];
 };
 
-export type TGetPolymarketMarketByTopVolumeResponse = {
-    id: number;
-    eventId: string;
-    title: string;
-    description: string;
-    slug: string;
-    url: string;
-    image: string;
-    icon: string;
-    category: string | null;
-    active: boolean;
-    createdAt: string;
-    updatedAt: string;
-    marketsCount: number;
-    volume: number;
-    markets: TPolymarketMarket[];
-};
+export type TGetPolymarketMarketByTopVolumeResponse = TPolymarketMarketGroup;
