@@ -108,11 +108,43 @@ export type TGetPolymarketMarketByTopVolumeRequest = {
     page?: number;
     limit?: number;
     active?: boolean;
-    tags?: string;
+    // tags?: string;
     search?: string;
     ordering?: string;
 };
 
-export type TGetPolymarketMarketByTopVolumeResponse = TPagination & {
-    results: TPolymarketMarket[];
+export type TRawGetPolymarketMarketByTopVolumeResponse = {
+    id: number;
+    event_id: string;
+    title: string;
+    description: string;
+    slug: string;
+    url: string;
+    image: string;
+    icon: string;
+    category: string | null;
+    active: boolean;
+    created_at: string;
+    updated_at: string;
+    markets_count: number;
+    volume: number;
+    markets: TPolymarketMarket[];
+};
+
+export type TGetPolymarketMarketByTopVolumeResponse = {
+    id: number;
+    eventId: string;
+    title: string;
+    description: string;
+    slug: string;
+    url: string;
+    image: string;
+    icon: string;
+    category: string | null;
+    active: boolean;
+    createdAt: string;
+    updatedAt: string;
+    marketsCount: number;
+    volume: number;
+    markets: TPolymarketMarket[];
 };

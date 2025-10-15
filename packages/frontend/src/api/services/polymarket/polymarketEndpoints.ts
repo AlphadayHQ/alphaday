@@ -10,11 +10,41 @@ import type {
     TGetPolymarketMarketHistoryResponse,
     TPolymarketEvent,
     TPolymarketMarket,
-    TGetPolymarketMarketByTopVolumeResponse,
+    TRawGetPolymarketMarketByTopVolumeResponse,
     TGetPolymarketMarketByTopVolumeRequest,
+    TGetPolymarketMarketByTopVolumeResponse,
 } from "./types";
 
 const { POLYMARKET } = CONFIG.API.DEFAULT.ROUTES;
+
+const mapRawGetPolymarketMarketByTopVolumeResponse = (
+    response: TRawGetPolymarketMarketByTopVolumeResponse
+) => {
+    return {
+        id: response.id,
+        title: response.title,
+        description: response.description,
+        slug: response.slug,
+        url: response.url,
+        image: response.image,
+        icon: response.icon,
+        category: response.category,
+        active: response.active,
+        eventId: response.event_id,
+        createdAt: response.created_at,
+        updatedAt: response.updated_at,
+        marketsCount: response.markets_count,
+        volume: response.volume,
+        markets: response.markets,
+        // markets: response.markets.map((market) => ({
+        //     ...market,
+        //     id: market.id,
+        //     eventId: market.event_id,
+        //     createdAt: market.created_at,
+        //     updatedAt: market.updated_at,
+        // })),
+    };
+};
 
 const polymarketApi = alphadayApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -95,16 +125,21 @@ const polymarketApi = alphadayApi.injectEndpoints({
             TGetPolymarketMarketByTopVolumeResponse,
             TGetPolymarketMarketByTopVolumeRequest
         >({
-            query: ({ page, limit, active, tags, search, ordering }) => {
+            query: ({ page, limit, active, search, ordering }) => {
                 const params = queryString.stringify({
                     page,
                     limit,
                     active,
-                    tags,
+                    // tags,
                     search,
                     ordering,
                 });
                 return `${POLYMARKET.BASE}${POLYMARKET.TOP_VOLUME}?${params}`;
+            },
+            transformResponse: (
+                response: TRawGetPolymarketMarketByTopVolumeResponse
+            ) => {
+                return mapRawGetPolymarketMarketByTopVolumeResponse(response);
             },
         }),
     }),
