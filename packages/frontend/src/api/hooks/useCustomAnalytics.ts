@@ -12,7 +12,8 @@ export type TButtonClickEventPayload = {
         | "kasandra-date-range"
         | "kasandra-disclaimer"
         | "kasandra-datapoint"
-        | "polymarket-market";
+        | "polymarket-market"
+        | "polymarket-top-volume";
     data?: JSONValue;
 };
 
