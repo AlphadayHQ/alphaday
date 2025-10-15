@@ -13,13 +13,14 @@ import type {
     TRawGetPolymarketMarketByTopVolumeResponse,
     TGetPolymarketMarketByTopVolumeRequest,
     TGetPolymarketMarketByTopVolumeResponse,
+    TPolymarketMarketGroup,
 } from "./types";
 
 const { POLYMARKET } = CONFIG.API.DEFAULT.ROUTES;
 
 const mapRawGetPolymarketMarketByTopVolumeResponse = (
     response: TRawGetPolymarketMarketByTopVolumeResponse
-) => {
+): TPolymarketMarketGroup => {
     return {
         id: response.id,
         title: response.title,
@@ -35,14 +36,27 @@ const mapRawGetPolymarketMarketByTopVolumeResponse = (
         updatedAt: response.updated_at,
         marketsCount: response.markets_count,
         volume: response.volume,
-        markets: response.markets,
-        // markets: response.markets.map((market) => ({
-        //     ...market,
-        //     id: market.id,
-        //     eventId: market.event_id,
-        //     createdAt: market.created_at,
-        //     updatedAt: market.updated_at,
-        // })),
+        markets: response.markets.map((market) => ({
+            id: market.id,
+            marketId: market.market_id,
+            question: market.question,
+            active: market.active,
+            closed: market.closed,
+            archived: market.archived,
+            volume: market.volume_num,
+            liquidity: market.liquidity_num,
+            image: market.image,
+            category: market.category,
+            endDate: market.end_date,
+            outcomes: market.outcomes.map((outcome) => ({
+                id: outcome.id,
+                outcomeName: outcome.outcome_name,
+                outcomeId: outcome.outcome_id,
+                price: outcome.price,
+                volume: outcome.volume,
+                liquidity: outcome.liquidity,
+            })),
+        })),
     };
 };
 

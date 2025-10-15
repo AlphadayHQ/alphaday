@@ -1,11 +1,14 @@
 import { FC } from "react";
 import { CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { TPolymarketMarket } from "src/api/services/polymarket/types";
-import PolymarketCard from "./PolymarketCard";
+import {
+    TPolymarketMarket,
+    TPolymarketMarketGroup,
+} from "src/api/services/polymarket/types";
+import PolymarketTopVolumeCard from "./PolymarketTopVolumeCard";
 
 export interface IPolymarketList {
-    markets: TPolymarketMarket[];
+    markets: TPolymarketMarketGroup["markets"];
     onSelectMarket?: (market: TPolymarketMarket) => void;
 }
 
@@ -23,7 +26,7 @@ const PolymarketList: FC<IPolymarketList> = ({ markets, onSelectMarket }) => {
     return (
         <ScrollBar>
             {markets.map((market) => (
-                <PolymarketCard
+                <PolymarketTopVolumeCard
                     key={market.id}
                     market={market}
                     onSelectMarket={onSelectMarket}

@@ -27,9 +27,9 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
     const filteredMarkets = marketGroupData.markets.filter((market) => {
         switch (selectedFilter) {
             case EPolymarketFilter.Active:
-                return !market.resolved;
+                return !market.closed;
             case EPolymarketFilter.Resolved:
-                return market.resolved;
+                return market.closed;
             default:
                 return true;
         }
