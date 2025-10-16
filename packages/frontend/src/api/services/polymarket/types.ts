@@ -306,7 +306,7 @@ export type TGetPolymarketMarketByTopVolumeRequest = {
     page?: number;
     limit?: number;
     active?: boolean;
-    // tags?: string;
+    tags?: string;
     search?: string;
     ordering?: string;
 };

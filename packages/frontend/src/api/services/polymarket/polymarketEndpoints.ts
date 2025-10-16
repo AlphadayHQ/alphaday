@@ -139,12 +139,12 @@ const polymarketApi = alphadayApi.injectEndpoints({
             TGetPolymarketMarketByTopVolumeResponse,
             TGetPolymarketMarketByTopVolumeRequest
         >({
-            query: ({ page, limit, active, search, ordering }) => {
+            query: ({ page, tags, limit, active, search, ordering }) => {
                 const params = queryString.stringify({
                     page,
                     limit,
                     active,
-                    // tags,
+                    tags,
                     search,
                     ordering,
                 });
