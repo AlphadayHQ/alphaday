@@ -1,4 +1,4 @@
-import { FC, memo, useState } from "react";
+import { FC, memo, useRef, useState } from "react";
 import { CenteredBlock, ModuleLoader } from "@alphaday/ui-kit";
 import globalMessages from "src/globalMessages";
 
@@ -17,6 +17,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
 }) {
     const [imageLoading, setImageLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
+    const previousImageUrl = useRef(imageUrl);
 
     const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
         const img = e.currentTarget;
@@ -31,6 +32,12 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
 
     if (isLoading) {
         return <ModuleLoader $height="400px" />;
+    }
+
+    if (previousImageUrl.current !== imageUrl) {
+        setImageLoading(true);
+        setImageError(false);
+        previousImageUrl.current = imageUrl;
     }
 
     if (!imageUrl || imageError) {
