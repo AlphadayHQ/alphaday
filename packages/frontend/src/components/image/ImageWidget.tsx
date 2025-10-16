@@ -6,6 +6,7 @@ interface IImageWidget {
     title: string;
     imageUrl: string;
     isLoading: boolean;
+    showImage: boolean;
     onAspectRatioDetected?: (aspectRatio: number) => void;
 }
 
@@ -13,6 +14,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     title,
     imageUrl,
     isLoading,
+    showImage,
     onAspectRatioDetected,
 }) {
     const [imageLoading, setImageLoading] = useState(true);
@@ -59,7 +61,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
                 src={imageUrl}
                 alt={title}
                 className={`w-full h-full object-cover rounded ${
-                    imageLoading ? "hidden" : "block"
+                    imageLoading || !showImage ? "hidden" : "block"
                 }`}
                 onLoad={handleImageLoad}
                 onError={() => {

@@ -78,6 +78,7 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
                 title={moduleData.widget.name}
                 contentHeight={contentHeight}
                 isLoading={!moduleData}
+                showImage={detectedAspectRatio !== null}
                 onAspectRatioDetected={handleAspectRatioDetected}
             />
         </Suspense>
