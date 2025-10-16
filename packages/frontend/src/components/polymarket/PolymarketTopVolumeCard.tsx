@@ -56,7 +56,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
 
     return (
         <div
-            className="bg-background border-b border-borderLine py-3 px-1 ml-2 mr-[3px] cursor-pointer hover:bg-backgroundVariant100 active:bg-backgroundVariant200 transition-all duration-200"
+            className="bg-background border-b border-borderLine py-3 pl-3 pr-1 cursor-pointer hover:bg-backgroundVariant100 active:bg-backgroundVariant200 transition-all duration-200"
             onClick={handleClick}
             role="button"
             tabIndex={0}
@@ -68,97 +68,88 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
             }}
         >
             <div className="flex items-center justify-between">
-                <div className="flex gap-4 w-full">
-                    {market.image && (
-                        <img
-                            src={market.image}
-                            alt="Market"
-                            className="w-8 h-8 mt-0.5 rounded-full object-cover self-start"
-                        />
-                    )}
-                    <div className="flex flex-col gap-2 w-full">
-                        <span className="line-clamp-2 fontGroup-highlight">
-                            {market.question}
+                <div className="flex flex-col gap-2 w-full">
+                    <span className="line-clamp-2 fontGroup-normal">
+                        {market.question}
+                    </span>
+                    <p className="fontGroup-mini mb-0">
+                        <span
+                            className={twMerge(
+                                "fontGroup-mini lastLine",
+                                statusColor
+                            )}
+                        >
+                            {statusText}
                         </span>
-                        <p className="fontGroup-mini mb-0">
-                            <span
-                                className={twMerge(
-                                    "fontGroup-mini lastLine",
-                                    statusColor
-                                )}
-                            >
-                                {statusText}
-                            </span>
-                            <span className="mx-[7px] my-0 self-center">•</span>
-                            <span>
-                                {formatVolume(market.volume)}{" "}
-                                {t("navigation.general.vol")}
-                            </span>
-                            {endDate && !market.closed && (
-                                <>
-                                    <span className="mx-[7px] my-0 self-center">
-                                        •
-                                    </span>
-                                    <span className="text-primaryVariant100">
-                                        {computeDuration(endDate.toISOString())}
-                                    </span>
-                                </>
-                            )}
-                        </p>
-                        <div className="">
-                            {market.outcomes && market.outcomes.length > 0 && (
-                                <div className="flex flex-col gap-1">
-                                    {market.outcomes.map((outcome, idx) => {
-                                        const chance = Number.parseFloat(
-                                            (outcome.price * 100).toPrecision(2)
-                                        );
-                                        const price = formatNumber({
-                                            value: outcome.price,
-                                            style: ENumberStyle.Currency,
-                                            currency: "USD",
-                                        }).value;
-                                        //     = Number.parseFloat(
-                                        //     outcome.price.toPrecision(2)
-                                        // );
-                                        return (
-                                            <div
-                                                key={outcome.id}
-                                                className={twMerge(
-                                                    "flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
-                                                    idx === 0 &&
-                                                        `rounded-t-md ${market.outcomes?.length === 2 ? "bg-blue-500/20 [&>span]:text-accentVariant100" : ""}`,
+                        <span className="mx-[7px] my-0 self-center">•</span>
+                        <span>
+                            {formatVolume(market.volume)}{" "}
+                            {t("navigation.general.vol")}
+                        </span>
+                        {endDate && !market.closed && (
+                            <>
+                                <span className="mx-[7px] my-0 self-center">
+                                    •
+                                </span>
+                                <span className="text-primaryVariant100">
+                                    {computeDuration(endDate.toISOString())}
+                                </span>
+                            </>
+                        )}
+                    </p>
+                    <div className="">
+                        {market.outcomes && market.outcomes.length > 0 && (
+                            <div className="flex flex-col gap-1">
+                                {market.outcomes.map((outcome, idx) => {
+                                    const chance = Number.parseFloat(
+                                        (outcome.price * 100).toPrecision(2)
+                                    );
+                                    const price = formatNumber({
+                                        value: outcome.price,
+                                        style: ENumberStyle.Currency,
+                                        currency: "USD",
+                                    }).value;
+                                    //     = Number.parseFloat(
+                                    //     outcome.price.toPrecision(2)
+                                    // );
+                                    return (
+                                        <div
+                                            key={outcome.id}
+                                            className={twMerge(
+                                                "flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
+                                                idx === 0 &&
+                                                    `rounded-t-md ${market.outcomes?.length === 2 ? "bg-blue-500/20 [&>span]:text-accentVariant100" : ""}`,
 
-                                                    idx === 1 &&
-                                                        `rounded-b-md ${market.outcomes?.length === 2 ? "bg-orange-400/20 [&>span]:text-secondaryOrange" : ""}`
-                                                )}
-                                            >
-                                                <span className="text-blue-600 fontGroup-highlightSemi truncate">
-                                                    {outcome.outcomeName}
+                                                idx === 1 &&
+                                                    `rounded-b-md ${market.outcomes?.length === 2 ? "bg-orange-400/20 [&>span]:text-secondaryOrange" : ""}`
+                                            )}
+                                        >
+                                            <span className="text-blue-600 fontGroup-highlightSemi truncate">
+                                                {outcome.outcomeName}
+                                            </span>
+                                            <div className="flex items-center gap-2 shrink-0 fontGroup-normal">
+                                                <span className="text-primary">
+                                                    {Math.ceil(chance)}%
                                                 </span>
-                                                <div className="flex items-center gap-2 shrink-0 fontGroup-normal">
-                                                    <span className="text-primary">
-                                                        {Math.ceil(chance)}%
-                                                    </span>
-                                                    <span
-                                                        className={twMerge(
-                                                            t(
-                                                                "ml-0.5 text-primary py-0.5 px-1 rounded-md fontGroup-supportBold"
-                                                            ),
-                                                            idx === 0 &&
-                                                                "bg-blue-500/20",
-                                                            idx === 1 &&
-                                                                "bg-orange-400/20"
-                                                        )}
-                                                    >
-                                                        {price}
-                                                    </span>
-                                                </div>
+                                                <span
+                                                    className={twMerge(
+                                                        t(
+                                                            "ml-0.5 text-primary py-0.5 px-1 rounded-md fontGroup-supportBold"
+                                                        ),
+                                                        idx === 0 &&
+                                                            "bg-blue-500/20",
+                                                        idx === 1 &&
+                                                            "bg-orange-400/20"
+                                                    )}
+                                                >
+                                                    {price}
+                                                </span>
                                             </div>
-                                        );
-                                    })}
-                                </div>
-                            )}
-                        </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

@@ -24,7 +24,7 @@ const PolymarketList: FC<IPolymarketList> = ({ markets, onSelectMarket }) => {
     }
 
     return (
-        <ScrollBar>
+        <ScrollBar className="pl-10 pr-[2px]">
             {markets.map((market) => (
                 <PolymarketTopVolumeCard
                     key={market.id}
