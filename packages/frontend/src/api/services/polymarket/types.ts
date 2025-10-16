@@ -82,7 +82,6 @@ export type TPolymarketMarketGroup = {
         liquidity: number;
         image: string;
         category: string | null;
-        // tags: not our usual tags
         endDate: string | null;
         outcomes: {
             id: number;
@@ -337,7 +336,6 @@ export type TRawGetPolymarketMarketByTopVolumeResponse = {
         liquidity_num: number;
         image: string;
         category: string | null;
-        // tags: not our usual tags
         end_date: string | null;
         outcomes: {
             id: number;
