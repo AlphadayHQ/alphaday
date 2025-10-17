@@ -1,4 +1,11 @@
-import { type FC, Suspense, useMemo, useState, useCallback } from "react";
+import {
+    type FC,
+    Suspense,
+    useMemo,
+    useState,
+    useCallback,
+    useRef,
+} from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { useTwoColImageWidgetSize } from "src/api/hooks";
 import { TRemoteCustomData } from "src/api/services";
@@ -26,6 +33,12 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
     >(null);
 
     const { imageUrl } = validateCustomData(moduleData.widget.custom_data);
+    const previousImageUrl = useRef<string | undefined>(imageUrl);
+
+    if (previousImageUrl.current !== imageUrl) {
+        setDetectedAspectRatio(null);
+        previousImageUrl.current = imageUrl;
+    }
 
     const handleAspectRatioDetected = useCallback(
         (aspectRatio: number) => {
@@ -65,6 +78,7 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
                 title={moduleData.widget.name}
                 contentHeight={contentHeight}
                 isLoading={!moduleData}
+                showImage={detectedAspectRatio !== null}
                 onAspectRatioDetected={handleAspectRatioDetected}
             />
         </Suspense>

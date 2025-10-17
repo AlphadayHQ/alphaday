@@ -7,6 +7,7 @@ interface IImageModule {
     title: string;
     contentHeight?: string;
     isLoading: boolean;
+    showImage: boolean;
     type?: "one_col_image" | "two_col_image";
     onAspectRatioDetected?: (aspectRatio: number) => void;
 }
@@ -16,6 +17,7 @@ export const ImageModule: FC<IImageModule> = ({
     title,
     contentHeight,
     isLoading,
+    showImage,
     type,
     onAspectRatioDetected,
 }) => {
@@ -37,6 +39,7 @@ export const ImageModule: FC<IImageModule> = ({
                 title={title}
                 isLoading={isLoading}
                 onAspectRatioDetected={onAspectRatioDetected}
+                showImage={showImage}
             />
         </div>
     );

@@ -1,4 +1,4 @@
-import { FC, memo, useState } from "react";
+import { FC, memo, useRef, useState } from "react";
 import { CenteredBlock, ModuleLoader } from "@alphaday/ui-kit";
 import globalMessages from "src/globalMessages";
 
@@ -6,6 +6,7 @@ interface IImageWidget {
     title: string;
     imageUrl: string;
     isLoading: boolean;
+    showImage: boolean;
     onAspectRatioDetected?: (aspectRatio: number) => void;
 }
 
@@ -13,10 +14,12 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     title,
     imageUrl,
     isLoading,
+    showImage,
     onAspectRatioDetected,
 }) {
     const [imageLoading, setImageLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
+    const previousImageUrl = useRef(imageUrl);
 
     const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
         const img = e.currentTarget;
@@ -31,6 +34,12 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
 
     if (isLoading) {
         return <ModuleLoader $height="400px" />;
+    }
+
+    if (previousImageUrl.current !== imageUrl) {
+        setImageLoading(true);
+        setImageError(false);
+        previousImageUrl.current = imageUrl;
     }
 
     if (!imageUrl || imageError) {
@@ -52,7 +61,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
                 src={imageUrl}
                 alt={title}
                 className={`w-full h-full object-cover rounded ${
-                    imageLoading ? "hidden" : "block"
+                    imageLoading || !showImage ? "hidden" : "block"
                 }`}
                 onLoad={handleImageLoad}
                 onError={() => {
