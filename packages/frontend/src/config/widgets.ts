@@ -148,6 +148,14 @@ export const WIDGETS_CONFIG = {
         MAX_PAGE_NUMBER: 10,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.PolymarketTopVolume]: {
+        WIDGET_HEIGHT: 600,
+        COLLAPSED_WIDGET_HEIGHT: 45,
+        POLLING_INTERVAL: 5 * 60, // 5 min
+        QUERY_HARD_LIMIT: 30,
+        MAX_PAGE_NUMBER: 10,
+        ADJUSTABLE: true,
+    },
     [ETemplateNameRegistry.Portfolio]: {
         DONUT_TOKENS_COUNT: 5,
         POLLING_INTERVAL: 5 * 60, // 5 min

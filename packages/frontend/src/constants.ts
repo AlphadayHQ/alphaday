@@ -79,6 +79,7 @@ export enum ETemplateNameRegistry {
     Podcast = "PODCAST",
     Polls = "POLLS",
     Polymarket = "POLYMARKET",
+    PolymarketTopVolume = "POLYMARKET_TOP_VOLUME",
     Portfolio = "PORTFOLIO",
     Reddit = "REDDIT",
     Reports = "REPORTS",

@@ -10,9 +10,55 @@ import type {
     TGetPolymarketMarketHistoryResponse,
     TPolymarketEvent,
     TPolymarketMarket,
+    TRawGetPolymarketMarketByTopVolumeResponse,
+    TGetPolymarketMarketByTopVolumeRequest,
+    TGetPolymarketMarketByTopVolumeResponse,
+    TPolymarketMarketGroup,
 } from "./types";
 
 const { POLYMARKET } = CONFIG.API.DEFAULT.ROUTES;
+
+const mapRawGetPolymarketMarketByTopVolumeResponse = (
+    response: TRawGetPolymarketMarketByTopVolumeResponse
+): TPolymarketMarketGroup => {
+    return {
+        id: response.id,
+        title: response.title,
+        description: response.description,
+        slug: response.slug,
+        url: response.url,
+        image: response.image,
+        icon: response.icon,
+        category: response.category,
+        active: response.active,
+        eventId: response.event_id,
+        createdAt: response.created_at,
+        updatedAt: response.updated_at,
+        marketsCount: response.markets_count,
+        volume: response.volume,
+        markets: response.markets.map((market) => ({
+            id: market.id,
+            marketId: market.market_id,
+            question: market.question,
+            active: market.active,
+            closed: market.closed,
+            archived: market.archived,
+            volume: market.volume_num,
+            liquidity: market.liquidity_num,
+            image: market.image,
+            category: market.category,
+            endDate: market.end_date,
+            outcomes: market.outcomes.map((outcome) => ({
+                id: outcome.id,
+                outcomeName: outcome.outcome_name,
+                outcomeId: outcome.outcome_id,
+                price: outcome.price,
+                volume: outcome.volume,
+                liquidity: outcome.liquidity,
+            })),
+        })),
+    };
+};
 
 const polymarketApi = alphadayApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -89,6 +135,27 @@ const polymarketApi = alphadayApi.injectEndpoints({
                 { type: "PolymarketHistory", id: market_id },
             ],
         }),
+        getPolymarketMarketByTopVolume: builder.query<
+            TGetPolymarketMarketByTopVolumeResponse,
+            TGetPolymarketMarketByTopVolumeRequest
+        >({
+            query: ({ page, tags, limit, active, search, ordering }) => {
+                const params = queryString.stringify({
+                    page,
+                    limit,
+                    active,
+                    tags,
+                    search,
+                    ordering,
+                });
+                return `${POLYMARKET.BASE}${POLYMARKET.TOP_VOLUME}?${params}`;
+            },
+            transformResponse: (
+                response: TRawGetPolymarketMarketByTopVolumeResponse
+            ) => {
+                return mapRawGetPolymarketMarketByTopVolumeResponse(response);
+            },
+        }),
     }),
 });
 
@@ -98,6 +165,7 @@ export const {
     useGetPolymarketMarketsQuery,
     useGetPolymarketMarketByIdQuery,
     useGetPolymarketMarketHistoryQuery,
+    useGetPolymarketMarketByTopVolumeQuery,
 } = polymarketApi;
 
 export default polymarketApi;

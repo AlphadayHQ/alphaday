@@ -197,6 +197,7 @@ const API_V0 = {
             BASE: "polymarkets",
             EVENTS: "/events/",
             MARKETS: "/markets/",
+            TOP_VOLUME: "/events/top-volume/",
             MARKET_STATS: "/markets/stats/",
             MARKET_HISTORY: (id: number): string => `/markets/${id}/history/`,
             EVENT_BY_ID: (id: number): string => `/events/${id}/`,
