@@ -125,6 +125,7 @@ export type TPolymarketMarketGroup = {
 export type TGetPolymarketEventsRequest = {
     page?: number;
     limit?: number;
+    active?: boolean;
     category?: string;
     tags?: string;
     search?: string;
