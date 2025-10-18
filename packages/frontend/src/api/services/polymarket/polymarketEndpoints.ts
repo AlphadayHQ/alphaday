@@ -13,14 +13,15 @@ import type {
     TRawGetPolymarketMarketByTopVolumeResponse,
     TGetPolymarketMarketByTopVolumeRequest,
     TGetPolymarketMarketByTopVolumeResponse,
-    TPolymarketMarketGroup,
+    TRawPolymarketMarketEvent,
+    TRawGetPolymarketMarketEventsResponse,
 } from "./types";
 
 const { POLYMARKET } = CONFIG.API.DEFAULT.ROUTES;
 
-const mapRawGetPolymarketMarketByTopVolumeResponse = (
-    response: TRawGetPolymarketMarketByTopVolumeResponse
-): TPolymarketMarketGroup => {
+const mapRawGetPolymarketEvent = (
+    response: TRawPolymarketMarketEvent
+): TPolymarketEvent => {
     return {
         id: response.id,
         title: response.title,
@@ -109,6 +110,17 @@ const polymarketApi = alphadayApi.injectEndpoints({
                 return `${POLYMARKET.BASE}${POLYMARKET.MARKETS}?${params}`;
             },
             providesTags: ["PolymarketMarkets"],
+            transformResponse: (
+                response: TRawGetPolymarketMarketEventsResponse
+            ) => {
+                const events = response.results.map((event) =>
+                    mapRawGetPolymarketEvent(event)
+                );
+                return {
+                    ...response,
+                    results: events,
+                };
+            },
         }),
         getPolymarketMarketById: builder.query<
             TPolymarketMarket,
@@ -153,7 +165,7 @@ const polymarketApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 response: TRawGetPolymarketMarketByTopVolumeResponse
             ) => {
-                return mapRawGetPolymarketMarketByTopVolumeResponse(response);
+                return mapRawGetPolymarketEvent(response);
             },
         }),
     }),
