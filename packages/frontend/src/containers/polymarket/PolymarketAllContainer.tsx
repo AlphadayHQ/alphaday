@@ -10,7 +10,7 @@ import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import type { IModuleContainer } from "src/types";
 
-const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const PolymarketAllContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
     const { logButtonClicked } = useCustomAnalytics();
 
@@ -29,7 +29,7 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
-            CONFIG.WIDGETS.POLYMARKET_TOP_VOLUME.POLLING_INTERVAL) * 1000;
+            CONFIG.WIDGETS.POLYMARKET_ALL.POLLING_INTERVAL) * 1000;
 
     const { data: marketGroupData, isLoading: isLoadingTopVolume } =
         useGetPolymarketMarketByTopVolumeQuery(
@@ -54,9 +54,9 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            window.open(marketGroupData?.url, "_blank", "noopener,noreferrer");
+            window.open(market.url, "_blank", "noopener,noreferrer");
         },
-        [logButtonClicked, marketGroupData?.url, moduleData.name]
+        [logButtonClicked, moduleData.name]
     );
 
     const contentHeight = useMemo(() => {
@@ -75,4 +75,4 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
     );
 };
 
-export default PolymarketTopVolumeContainer;
+export default PolymarketAllContainer;

@@ -122,6 +122,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     polymarket_template: lazyRetry(
         () => import("./containers/polymarket/PolymarketContainer")
     ),
+    polymarket_all_template: lazyRetry(
+        () => import("./containers/polymarket/PolymarketAllContainer")
+    ),
     polymarket_top_volume_template: lazyRetry(
         () => import("./containers/polymarket/PolymarketTopVolumeContainer")
     ),
