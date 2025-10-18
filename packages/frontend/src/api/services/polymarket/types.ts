@@ -126,6 +126,7 @@ export type TGetPolymarketEventsRequest = {
     page?: number;
     limit?: number;
     active?: boolean;
+    ordering?: string;
     category?: string;
     tags?: string;
     search?: string;
