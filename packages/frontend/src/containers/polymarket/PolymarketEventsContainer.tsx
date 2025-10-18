@@ -10,7 +10,7 @@ import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
 import type { IModuleContainer } from "src/types";
 
-const PolymarketAllContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
     const { logButtonClicked } = useCustomAnalytics();
 
@@ -29,7 +29,7 @@ const PolymarketAllContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
-            CONFIG.WIDGETS.POLYMARKET_ALL.POLLING_INTERVAL) * 1000;
+            CONFIG.WIDGETS.POLYMARKET_EVENTS.POLLING_INTERVAL) * 1000;
 
     const { data: marketGroupData, isLoading: isLoadingTopVolume } =
         useGetPolymarketMarketByTopVolumeQuery(
@@ -75,4 +75,4 @@ const PolymarketAllContainer: FC<IModuleContainer> = ({ moduleData }) => {
     );
 };
 
-export default PolymarketAllContainer;
+export default PolymarketEventsContainer;

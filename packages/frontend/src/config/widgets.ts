@@ -148,7 +148,7 @@ export const WIDGETS_CONFIG = {
         MAX_PAGE_NUMBER: 10,
         ADJUSTABLE: true,
     },
-    [ETemplateNameRegistry.PolymarketAll]: {
+    [ETemplateNameRegistry.PolymarketEvents]: {
         WIDGET_HEIGHT: 600,
         COLLAPSED_WIDGET_HEIGHT: 45,
         POLLING_INTERVAL: 5 * 60, // 5 min
