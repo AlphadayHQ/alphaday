@@ -80,6 +80,17 @@ const polymarketApi = alphadayApi.injectEndpoints({
                 return `${POLYMARKET.BASE}${POLYMARKET.EVENTS}?${params}`;
             },
             providesTags: ["PolymarketEvents"],
+            transformResponse: (
+                response: TRawGetPolymarketMarketEventsResponse
+            ) => {
+                const events = response.results.map((event) =>
+                    mapRawGetPolymarketEvent(event)
+                );
+                return {
+                    ...response,
+                    results: events,
+                };
+            },
         }),
 
         getPolymarketEventById: builder.query<TPolymarketEvent, { id: number }>(
@@ -110,17 +121,6 @@ const polymarketApi = alphadayApi.injectEndpoints({
                 return `${POLYMARKET.BASE}${POLYMARKET.MARKETS}?${params}`;
             },
             providesTags: ["PolymarketMarkets"],
-            transformResponse: (
-                response: TRawGetPolymarketMarketEventsResponse
-            ) => {
-                const events = response.results.map((event) =>
-                    mapRawGetPolymarketEvent(event)
-                );
-                return {
-                    ...response,
-                    results: events,
-                };
-            },
         }),
         getPolymarketMarketById: builder.query<
             TPolymarketMarket,

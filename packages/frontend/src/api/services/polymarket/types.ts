@@ -146,7 +146,7 @@ export type TGetPolymarketMarketsRequest = {
 };
 
 export type TGetPolymarketMarketsResponse = TPagination & {
-    results: TPolymarketEvent[];
+    results: TPolymarketMarket[];
 };
 
 export type TGetPolymarketMarketHistoryRequest = {
