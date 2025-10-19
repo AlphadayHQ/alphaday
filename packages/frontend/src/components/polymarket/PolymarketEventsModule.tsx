@@ -129,7 +129,7 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
         [events, statusColor, statusText, t, endDate, onSelectMarket]
     );
 
-    if (!events) return null;
+    if (!events && !isLoading) return null;
 
     return (
         <div className="flex flex-col h-full">
