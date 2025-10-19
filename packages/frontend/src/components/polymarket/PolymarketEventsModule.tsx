@@ -1,32 +1,40 @@
-import { FC, useCallback } from "react";
-import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
+import { FC, FormEvent, useCallback } from "react";
+import { ModuleLoader, ScrollBar, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import {
     TPolymarketMarket,
     TPolymarketEvent,
 } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
-import PolymarketTopVolumeList from "./PolymarketTopVolumeList";
+import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import PolymarketEvents from "./PolymarketEvents";
 
 export interface IPolymarketEventsModule {
     isLoading?: boolean;
-    eventsData: TPolymarketEvent[] | undefined;
-    onSelectEvent?: (event: TPolymarketEvent) => void;
+    events: TPolymarketEvent[] | undefined;
+    // onSelectEvent?: (event: TPolymarketEvent) => void;
     onSelectMarket?: (market: TPolymarketMarket) => void;
     contentHeight: string;
+    handlePaginate: (type: "next" | "previous") => void;
 }
 
 const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
     isLoading,
-    eventsData,
-    onSelectEvent,
+    events,
+    // onSelectEvent,
     onSelectMarket,
     contentHeight,
+    handlePaginate,
 }) => {
     const { t } = useTranslation();
+    const handleScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
+        if (shouldFetchMoreItems(currentTarget)) {
+            handlePaginate("next");
+        }
+    };
 
     // enddate it endate of furthest enddate in marketGroupData.markets
-    const endDate = eventsData?.reduce((max, event) => {
+    const endDate = events?.reduce((max, event) => {
         return Math.max(
             max,
             event.createdAt ? new Date(event.createdAt).getTime() : 0
@@ -34,7 +42,7 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
     }, 0);
     const isExpired = endDate ? new Date(endDate) < new Date() : false;
     // is all markets closed
-    const isAllEventsClosed = eventsData?.every((event) => event.active);
+    const isAllEventsClosed = events?.every((event) => event.active);
 
     let statusText = t("polymarket.live");
     let statusColor = "text-success";
@@ -59,8 +67,8 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
 
     const renderEvents = useCallback(
         () =>
-            eventsData?.map((event) => (
-                <div className="h-full pb-14 ml-2" role="button">
+            events?.map((event) => (
+                <div className="ml-2" role="button">
                     <div className="flex items-center justify-between px-1 pb-2 mr-[3px]">
                         <div className="flex gap-4 w-full">
                             {event.image && (
@@ -111,24 +119,24 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
                             </div>
                         </div>
                     </div>
-                    <PolymarketTopVolumeList
+                    <PolymarketEvents
                         markets={event.markets}
                         onSelectMarket={onSelectMarket}
                     />
-                    <div className="w-full h-10" />
+                    <div className="w-full h-3" />
                 </div>
             )),
-        [eventsData, statusColor, statusText, t, endDate, onSelectMarket]
+        [events, statusColor, statusText, t, endDate, onSelectMarket]
     );
 
-    if (!eventsData) return null;
+    if (!events) return null;
 
     return (
         <div className="flex flex-col h-full">
             {isLoading ? (
                 <ModuleLoader $height={contentHeight} />
             ) : (
-                renderEvents()
+                <ScrollBar onScroll={handleScroll}>{renderEvents()}</ScrollBar>
             )}
         </div>
     );

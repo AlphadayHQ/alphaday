@@ -55,7 +55,7 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
             page: currentPage,
             limit: 10,
             active: true,
-            tags: tagsString,
+            search: tagsString,
             ordering: "-volume_num", // Order by volume descending
         },
         {
@@ -116,18 +116,18 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [logButtonClicked, moduleData.name]
     );
 
-    const handleSelectEvent = useCallback(
-        (event: TPolymarketEvent) => {
-            logButtonClicked({
-                buttonName: "polymarket-event",
-                data: {
-                    widgetName: moduleData.name,
-                    eventId: event.id,
-                },
-            });
-        },
-        [logButtonClicked, moduleData.name]
-    );
+    // const handleSelectEvent = useCallback(
+    //     (event: TPolymarketEvent) => {
+    //         logButtonClicked({
+    //             buttonName: "polymarket-event",
+    //             data: {
+    //                 widgetName: moduleData.name,
+    //                 eventId: event.id,
+    //             },
+    //         });
+    //     },
+    //     [logButtonClicked, moduleData.name]
+    // );
 
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT - 55}px`;
@@ -137,8 +137,8 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <PolymarketEventsModule
                 isLoading={isLoadingEvents}
-                eventsData={events}
-                onSelectEvent={handleSelectEvent}
+                events={events}
+                // onSelectEvent={handleSelectEvent}
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
                 handlePaginate={handleNextPage}
