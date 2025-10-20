@@ -48,7 +48,6 @@ const mapRawGetPolymarketMarketByTopVolumeResponse = (
             image: market.image,
             category: market.category,
             endDate: market.end_date,
-            url: market.url,
             outcomes: market.outcomes.map((outcome) => ({
                 id: outcome.id,
                 outcomeName: outcome.outcome_name,
