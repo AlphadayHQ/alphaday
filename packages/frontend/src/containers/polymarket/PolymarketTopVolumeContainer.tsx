@@ -54,9 +54,9 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            window.open(market.url, "_blank", "noopener,noreferrer");
+            window.open(marketGroupData?.url, "_blank", "noopener,noreferrer");
         },
-        [logButtonClicked, moduleData.name]
+        [logButtonClicked, marketGroupData?.url, moduleData.name]
     );
 
     const contentHeight = useMemo(() => {
