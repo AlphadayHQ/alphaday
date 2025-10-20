@@ -6,7 +6,6 @@ import {
     TPolymarketMarketGroup,
 } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
-import { ENumberStyle, formatNumber } from "src/api/utils/format";
 
 interface IPolymarketTopVolumeCard {
     market: TPolymarketMarketGroup["markets"][0];
@@ -26,13 +25,13 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
     let statusColor = "";
     if (market.closed) {
         statusText = t("polymarket.resolved");
-        statusColor = "text-gray-500";
+        statusColor = "bg-gray-500";
     } else if (isExpired) {
         statusText = t("polymarket.expired");
-        statusColor = "text-secondaryOrangeSoda";
+        statusColor = "bg-secondaryOrangeSoda";
     } else {
         statusText = t("polymarket.live");
-        statusColor = "text-success";
+        statusColor = "bg-success";
     }
 
     const formatVolume = (volume?: number) => {
@@ -75,7 +74,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                     <p className="fontGroup-mini mb-0">
                         <span
                             className={twMerge(
-                                "fontGroup-mini lastLine",
+                                "fontGroup-supportBold lastLine px-1 text-background rounded-sm",
                                 statusColor
                             )}
                         >
@@ -104,19 +103,19 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                     const chance = Number.parseFloat(
                                         (outcome.price * 100).toPrecision(2)
                                     );
-                                    const price = formatNumber({
-                                        value: outcome.price,
-                                        style: ENumberStyle.Currency,
-                                        currency: "USD",
-                                    }).value;
-                                    //     = Number.parseFloat(
-                                    //     outcome.price.toPrecision(2)
-                                    // );
+                                    let barWidth;
+                                    if (chance === 0) {
+                                        barWidth = 0;
+                                    } else if (chance < 2) {
+                                        barWidth = 2;
+                                    } else {
+                                        barWidth = chance;
+                                    }
                                     return (
                                         <div
                                             key={outcome.id}
                                             className={twMerge(
-                                                "flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
+                                                "relative flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
                                                 idx === 0 &&
                                                     `rounded-t-md ${market.outcomes?.length === 2 ? "bg-blue-500/20 [&>span]:text-accentVariant100" : ""}`,
 
@@ -124,6 +123,18 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                                     `rounded-b-md ${market.outcomes?.length === 2 ? "bg-orange-400/20 [&>span]:text-secondaryOrange" : ""}`
                                             )}
                                         >
+                                            <div
+                                                style={{
+                                                    width: `${barWidth}%`,
+                                                }}
+                                                className={twMerge(
+                                                    "absolute left-0 h-full w-full bg-red-500/25",
+                                                    idx === 0 &&
+                                                        "bg-blue-500/20",
+                                                    idx === 1 &&
+                                                        "bg-orange-500/20"
+                                                )}
+                                            />
                                             <span className="text-blue-600 fontGroup-highlightSemi truncate">
                                                 {outcome.outcomeName}
                                             </span>
@@ -131,7 +142,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                                 <span className="text-primary">
                                                     {Math.ceil(chance)}%
                                                 </span>
-                                                <span
+                                                {/* <span
                                                     className={twMerge(
                                                         t(
                                                             "ml-0.5 text-primary py-0.5 px-1 rounded-md fontGroup-supportBold"
@@ -143,8 +154,9 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                                     )}
                                                 >
                                                     {price}
-                                                </span>
+                                                </span> */}
                                             </div>
+                                            {/* <div className="absolute left-0 h-full w-20 bg-red-500" /> */}
                                         </div>
                                     );
                                 })}
