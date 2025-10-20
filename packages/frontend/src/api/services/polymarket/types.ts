@@ -83,6 +83,7 @@ export type TPolymarketMarketGroup = {
         image: string;
         category: string | null;
         endDate: string | null;
+        url: string;
         outcomes: {
             id: number;
             outcomeName: string;
@@ -337,6 +338,7 @@ export type TRawGetPolymarketMarketByTopVolumeResponse = {
         image: string;
         category: string | null;
         end_date: string | null;
+        url: string;
         outcomes: {
             id: number;
             outcome_name: string;
