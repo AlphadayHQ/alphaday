@@ -130,9 +130,9 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                                 className={twMerge(
                                                     "absolute left-0 h-full w-full bg-red-500/25",
                                                     idx === 0 &&
-                                                        "bg-blue-500/20",
+                                                        "bg-blue-500/20 rounded-tl-md",
                                                     idx === 1 &&
-                                                        "bg-orange-500/20"
+                                                        "bg-orange-500/20 rounded-bl-md"
                                                 )}
                                             />
                                             <span className="text-blue-600 fontGroup-highlightSemi truncate">
