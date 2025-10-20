@@ -142,21 +142,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                                 <span className="text-primary">
                                                     {Math.ceil(chance)}%
                                                 </span>
-                                                {/* <span
-                                                    className={twMerge(
-                                                        t(
-                                                            "ml-0.5 text-primary py-0.5 px-1 rounded-md fontGroup-supportBold"
-                                                        ),
-                                                        idx === 0 &&
-                                                            "bg-blue-500/20",
-                                                        idx === 1 &&
-                                                            "bg-orange-400/20"
-                                                    )}
-                                                >
-                                                    {price}
-                                                </span> */}
                                             </div>
-                                            {/* <div className="absolute left-0 h-full w-20 bg-red-500" /> */}
                                         </div>
                                     );
                                 })}
