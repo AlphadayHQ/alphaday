@@ -29,7 +29,7 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
-            CONFIG.WIDGETS.POLYMARKET.POLLING_INTERVAL) * 1000;
+            CONFIG.WIDGETS.POLYMARKET_TOP_VOLUME.POLLING_INTERVAL) * 1000;
 
     const { data: marketGroupData, isLoading: isLoadingTopVolume } =
         useGetPolymarketMarketByTopVolumeQuery(

@@ -16,7 +16,6 @@ import type { IModuleContainer } from "src/types";
 
 const PolymarketContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
-    // const dispatch = useAppDispatch();
     const selectedFilter = useAppSelector(
         selectPolymarketFilter(moduleData.hash)
     );
