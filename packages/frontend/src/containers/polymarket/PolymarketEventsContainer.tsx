@@ -1,13 +1,16 @@
-import { FC, useMemo, useCallback, Suspense, useState, useEffect } from "react";
+import {
+    FC,
+    useMemo,
+    useCallback,
+    Suspense,
+    useState,
+    useEffect,
+    useRef,
+} from "react";
 import { usePagination, useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketEventsQuery } from "src/api/services";
-import type {
-    TPolymarketEvent,
-    TPolymarketMarket,
-} from "src/api/services/polymarket/types";
-import { useAppSelector } from "src/api/store/hooks";
-import { selectPolymarketFilter } from "src/api/store/slices/widgets";
+import type { TPolymarketEvent } from "src/api/services/polymarket/types";
 import * as filterUtils from "src/api/utils/filterUtils";
 import { buildUniqueItemList } from "src/api/utils/itemUtils";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
@@ -20,27 +23,22 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const WIDGET_HEIGHT = useWidgetHeight(moduleData);
     const { logButtonClicked } = useCustomAnalytics();
 
-    const selectedFilter = useAppSelector(
-        selectPolymarketFilter(moduleData.hash)
-    );
-
     const [currentPage, setCurrentPage] = useState<number | undefined>(
         undefined
     );
     const [events, setEvents] = useState<TPolymarketEvent[] | undefined>();
 
-    const tagsSettings = moduleData.settings.filter(
-        (s) =>
-            s.widget_setting.setting.slug ===
-            EWidgetSettingsRegistry.IncludedTags
-    );
-    const tags =
-        tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
-
-    const tagsString = useMemo(
-        () => (tags ? filterUtils.filteringListToStr(tags) : undefined),
-        [tags]
-    );
+    const tagsString = useMemo(() => {
+        const tagsSettings = moduleData.settings.filter(
+            (s) =>
+                s.widget_setting.setting.slug ===
+                EWidgetSettingsRegistry.IncludedTags
+        );
+        const tags =
+            tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
+        return tags ? filterUtils.filteringListToStr(tags) : undefined;
+    }, [moduleData.settings]);
+    const tagStringRef = useRef<string | undefined>(tagsString);
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
@@ -55,7 +53,7 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
             page: currentPage,
             limit: 10,
             active: true,
-            search: tagsString,
+            tags: tagsString,
             ordering: "-volume_num", // Order by volume descending
         },
         {
@@ -95,39 +93,27 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     // Reset markets when selected filter or tags change
     useEffect(() => {
-        if (selectedFilter !== undefined || tagsString !== undefined) {
+        if (tagsString !== tagStringRef.current) {
             setEvents(undefined);
             setCurrentPage(undefined);
         }
-    }, [selectedFilter, tagsString]);
+        tagStringRef.current = tagsString;
+    }, [tagsString]);
 
-    const handleSelectMarket = useCallback(
-        (market: TPolymarketMarket) => {
+    const handleSelectEvent = useCallback(
+        (event: TPolymarketEvent) => {
             logButtonClicked({
-                buttonName: "polymarket-top-volume",
+                buttonName: "polymarket-event",
                 data: {
                     widgetName: moduleData.name,
-                    marketId: market.id,
-                    question: market.question,
+                    eventId: event.id,
+                    eventTitle: event.title,
                 },
             });
-            window.open(market.url, "_blank", "noopener,noreferrer");
+            window.open(event.url, "_blank", "noopener,noreferrer");
         },
         [logButtonClicked, moduleData.name]
     );
-
-    // const handleSelectEvent = useCallback(
-    //     (event: TPolymarketEvent) => {
-    //         logButtonClicked({
-    //             buttonName: "polymarket-event",
-    //             data: {
-    //                 widgetName: moduleData.name,
-    //                 eventId: event.id,
-    //             },
-    //         });
-    //     },
-    //     [logButtonClicked, moduleData.name]
-    // );
 
     const contentHeight = useMemo(() => {
         return `${WIDGET_HEIGHT - 55}px`;
@@ -138,8 +124,7 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
             <PolymarketEventsModule
                 isLoading={isLoadingEvents}
                 events={events}
-                // onSelectEvent={handleSelectEvent}
-                onSelectMarket={handleSelectMarket}
+                onSelectEvent={handleSelectEvent}
                 contentHeight={contentHeight}
                 handlePaginate={handleNextPage}
             />

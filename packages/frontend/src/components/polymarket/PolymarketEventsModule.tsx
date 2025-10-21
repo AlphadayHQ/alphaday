@@ -6,10 +6,7 @@ import {
     twMerge,
 } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import {
-    TPolymarketMarket,
-    TPolymarketEvent,
-} from "src/api/services/polymarket/types";
+import { TPolymarketEvent } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
@@ -18,8 +15,7 @@ import PolymarketEvents from "./PolymarketEvents";
 export interface IPolymarketEventsModule {
     isLoading?: boolean;
     events: TPolymarketEvent[] | undefined;
-    // onSelectEvent?: (event: TPolymarketEvent) => void;
-    onSelectMarket?: (market: TPolymarketMarket) => void;
+    onSelectEvent: (event: TPolymarketEvent) => void;
     contentHeight: string;
     handlePaginate: (type: "next" | "previous") => void;
 }
@@ -27,8 +23,7 @@ export interface IPolymarketEventsModule {
 const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
     isLoading,
     events,
-    // onSelectEvent,
-    onSelectMarket,
+    onSelectEvent,
     contentHeight,
     handlePaginate,
 }) => {
@@ -127,12 +122,13 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
                     </div>
                     <PolymarketEvents
                         markets={event.markets}
-                        onSelectMarket={onSelectMarket}
+                        onSelectMarket={() => onSelectEvent(event)}
+                        onSelectEvent={() => onSelectEvent(event)}
                     />
                     <div className="w-full h-3" />
                 </div>
             )),
-        [events, statusColor, statusText, t, endDate, onSelectMarket]
+        [events, statusColor, statusText, t, endDate, onSelectEvent]
     );
 
     if (!events && !isLoading) {

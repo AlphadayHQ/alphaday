@@ -9,12 +9,14 @@ import PolymarketTopVolumeCard from "./PolymarketTopVolumeCard";
 
 export interface IPolymarketEvents {
     markets: TPolymarketMarketGroup["markets"];
-    onSelectMarket?: (market: TPolymarketMarket) => void;
+    onSelectMarket: (market: TPolymarketMarket) => void;
+    onSelectEvent: () => void;
 }
 
 const PolymarketEvents: FC<IPolymarketEvents> = ({
     markets,
     onSelectMarket,
+    onSelectEvent,
 }) => {
     const { t } = useTranslation();
 
@@ -27,7 +29,7 @@ const PolymarketEvents: FC<IPolymarketEvents> = ({
     }
 
     return (
-        <div className="pl-10 pr-[2px]">
+        <div className="relative pl-10 pr-[2px]">
             {markets.slice(0, 3).map((market) => (
                 <PolymarketTopVolumeCard
                     key={market.id}
@@ -35,6 +37,17 @@ const PolymarketEvents: FC<IPolymarketEvents> = ({
                     onSelectMarket={onSelectMarket}
                 />
             ))}
+            {markets.length > 3 && (
+                <div className="-bottom-2 absolute -translate-x-1/2 left-1/2 flex items-center justify-center">
+                    <button
+                        type="button"
+                        className="text-accentVariant100 px-2 bg-background"
+                        onClick={() => onSelectEvent?.()}
+                    >
+                        {t("navigation.general.more")}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };
