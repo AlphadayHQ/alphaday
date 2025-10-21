@@ -1,5 +1,10 @@
 import { FC, FormEvent, useCallback } from "react";
-import { ModuleLoader, ScrollBar, twMerge } from "@alphaday/ui-kit";
+import {
+    CenteredBlock,
+    ModuleLoader,
+    ScrollBar,
+    twMerge,
+} from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import {
     TPolymarketMarket,
@@ -7,6 +12,7 @@ import {
 } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
+import globalMessages from "src/globalMessages";
 import PolymarketEvents from "./PolymarketEvents";
 
 export interface IPolymarketEventsModule {
@@ -129,7 +135,13 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
         [events, statusColor, statusText, t, endDate, onSelectMarket]
     );
 
-    if (!events && !isLoading) return null;
+    if (!events && !isLoading) {
+        return (
+            <CenteredBlock>
+                <p>{globalMessages.queries.noMatchFound("markets")}</p>
+            </CenteredBlock>
+        );
+    }
 
     return (
         <div className="flex flex-col h-full">
