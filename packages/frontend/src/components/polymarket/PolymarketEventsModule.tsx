@@ -45,13 +45,13 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
     const isAllEventsClosed = events?.every((event) => event.active);
 
     let statusText = t("polymarket.live");
-    let statusColor = "text-success";
+    let statusColor = "bg-success";
     if (isAllEventsClosed) {
         statusText = t("polymarket.resolved");
-        statusColor = "text-gray-500";
+        statusColor = "bg-gray-500";
     } else if (isExpired) {
         statusText = t("polymarket.expired");
-        statusColor = "text-secondaryOrangeSoda";
+        statusColor = "bg-secondaryOrangeSoda";
     }
 
     const formatVolume = (volume?: number) => {
@@ -85,7 +85,7 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
                                 <p className="fontGroup-mini mb-0">
                                     <span
                                         className={twMerge(
-                                            "fontGroup-mini lastLine",
+                                            "fontGroup-supportBold lastLine px-1 text-background rounded-sm",
                                             statusColor
                                         )}
                                     >
