@@ -31,18 +31,21 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.POLYMARKET_TOP_VOLUME.POLLING_INTERVAL) * 1000;
 
-    const { data: marketGroupData, isLoading: isLoadingTopVolume } =
-        useGetPolymarketMarketByTopVolumeQuery(
-            {
-                page: 1,
-                limit: 1,
-                active: true,
-                tags: tagsString,
-            },
-            {
-                pollingInterval,
-            }
-        );
+    const {
+        // data: marketGroupData,
+        currentData: marketGroupData,
+        isFetching: isLoadingTopVolume,
+    } = useGetPolymarketMarketByTopVolumeQuery(
+        {
+            page: 1,
+            limit: 1,
+            active: true,
+            tags: tagsString,
+        },
+        {
+            pollingInterval,
+        }
+    );
 
     const handleSelectMarket = useCallback(
         (market: TPolymarketMarket) => {
