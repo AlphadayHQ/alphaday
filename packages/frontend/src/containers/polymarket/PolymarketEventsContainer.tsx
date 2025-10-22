@@ -1,12 +1,4 @@
-import {
-    FC,
-    useMemo,
-    useCallback,
-    Suspense,
-    useState,
-    useEffect,
-    useRef,
-} from "react";
+import { FC, useMemo, useCallback, Suspense, useState, useEffect } from "react";
 import { usePagination, useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketEventsQuery } from "src/api/services";
@@ -28,30 +20,31 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
     );
     const [events, setEvents] = useState<TPolymarketEvent[] | undefined>();
 
-    const tagsString = useMemo(() => {
-        const tagsSettings = moduleData.settings.filter(
-            (s) =>
-                s.widget_setting.setting.slug ===
-                EWidgetSettingsRegistry.IncludedTags
-        );
-        const tags =
-            tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
-        return tags ? filterUtils.filteringListToStr(tags) : undefined;
-    }, [moduleData.settings]);
-    const tagStringRef = useRef<string | undefined>(tagsString);
+    const tagsSettings = moduleData.settings.filter(
+        (s) =>
+            s.widget_setting.setting.slug ===
+            EWidgetSettingsRegistry.IncludedTags
+    );
+    const tags =
+        tagsSettings[0] !== undefined ? tagsSettings[0].tags : undefined;
+
+    const tagsString = useMemo(
+        () => (tags ? filterUtils.filteringListToStr(tags) : undefined),
+        [tags]
+    );
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.POLYMARKET_EVENTS.POLLING_INTERVAL) * 1000;
 
     const {
-        data: eventsData,
+        currentData: eventsData,
         isLoading: isLoadingEvents,
         isSuccess,
     } = useGetPolymarketEventsQuery(
         {
             page: currentPage,
-            limit: 10,
+            limit: CONFIG.API.DEFAULT.DEFAULT_PARAMS.RESPONSE_LIMIT,
             active: true,
             tags: tagsString,
             ordering: "-volume_num", // Order by volume descending
@@ -91,13 +84,12 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [nextPage]);
 
-    // Reset markets when selected filter or tags change
+    // Reset events when tags change
     useEffect(() => {
-        if (tagsString !== tagStringRef.current) {
+        if (tagsString !== undefined) {
             setEvents(undefined);
             setCurrentPage(undefined);
         }
-        tagStringRef.current = tagsString;
     }, [tagsString]);
 
     const handleSelectEvent = useCallback(
@@ -122,8 +114,8 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <PolymarketEventsModule
-                isLoading={isLoadingEvents}
-                events={events}
+                isLoading={isLoadingEvents || eventsData?.results === undefined}
+                events={events || eventsData?.results || []}
                 onSelectEvent={handleSelectEvent}
                 contentHeight={contentHeight}
                 handlePaginate={handleNextPage}

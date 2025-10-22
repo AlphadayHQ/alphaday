@@ -41,18 +41,14 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
             event.createdAt ? new Date(event.createdAt).getTime() : 0
         );
     }, 0);
-    const isExpired = endDate ? new Date(endDate) < new Date() : false;
     // is all markets closed
-    const isAllEventsClosed = events?.every((event) => event.active);
+    const isAllEventsClosed = events?.every((event) => !event.active);
 
     let statusText = t("polymarket.live");
     let statusColor = "bg-success";
     if (isAllEventsClosed) {
         statusText = t("polymarket.resolved");
         statusColor = "bg-gray-500";
-    } else if (isExpired) {
-        statusText = t("polymarket.expired");
-        statusColor = "bg-secondaryOrangeSoda";
     }
 
     const formatVolume = (volume?: number) => {
@@ -131,7 +127,7 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
         [events, statusColor, statusText, t, endDate, onSelectEvent]
     );
 
-    if (!events && !isLoading) {
+    if ((!events || events.length === 0) && !isLoading) {
         return (
             <CenteredBlock>
                 <p>{globalMessages.queries.noMatchFound("markets")}</p>

@@ -26,7 +26,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
     if (market.closed) {
         statusText = t("polymarket.resolved");
         statusColor = "bg-gray-500";
-    } else if (isExpired) {
+    } else if (isExpired && !market.active) {
         statusText = t("polymarket.expired");
         statusColor = "bg-secondaryOrangeSoda";
     } else {

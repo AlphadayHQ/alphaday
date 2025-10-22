@@ -1,4 +1,4 @@
-import { FC, useMemo, useCallback, Suspense } from "react";
+import { FC, useMemo, useCallback, Suspense, useEffect, useRef } from "react";
 import { useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketMarketByTopVolumeQuery } from "src/api/services";
@@ -27,22 +27,35 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
         [tags]
     );
 
+    const tagsStringRef = useRef<string | undefined>(tagsString);
+
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.POLYMARKET_TOP_VOLUME.POLLING_INTERVAL) * 1000;
 
-    const { data: marketGroupData, isLoading: isLoadingTopVolume } =
-        useGetPolymarketMarketByTopVolumeQuery(
-            {
-                page: 1,
-                limit: 1,
-                active: true,
-                tags: tagsString,
-            },
-            {
-                pollingInterval,
-            }
-        );
+    const {
+        data: marketGroupData,
+        isLoading: isLoadingTopVolume,
+        refetch,
+    } = useGetPolymarketMarketByTopVolumeQuery(
+        {
+            page: 1,
+            limit: 1,
+            active: true,
+            tags: tagsString,
+        },
+        {
+            pollingInterval,
+        }
+    );
+
+    // Refetch data when tags change
+    useEffect(() => {
+        if (tagsString !== tagsStringRef.current) {
+            refetch();
+        }
+        tagsStringRef.current = tagsString;
+    }, [tagsString, refetch]);
 
     const handleSelectMarket = useCallback(
         (market: TPolymarketMarket) => {
