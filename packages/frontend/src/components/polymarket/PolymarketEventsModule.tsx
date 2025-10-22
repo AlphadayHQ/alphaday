@@ -136,7 +136,11 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
         [events, t, onSelectEvent]
     );
 
-    if ((!events || events.length === 0) && !isLoading) {
+    if (!events || isLoading) {
+        return <ModuleLoader $height={contentHeight} />;
+    }
+
+    if (events.length === 0) {
         return (
             <CenteredBlock>
                 <p>{globalMessages.queries.noMatchFound("markets")}</p>

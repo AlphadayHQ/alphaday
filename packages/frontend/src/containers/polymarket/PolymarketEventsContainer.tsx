@@ -1,11 +1,10 @@
-import { FC, useMemo, useCallback, Suspense, useState, useEffect } from "react";
+import { FC, useMemo, useCallback, useState, useEffect, useRef } from "react";
 import { usePagination, useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketEventsQuery } from "src/api/services";
 import type { TPolymarketEvent } from "src/api/services/polymarket/types";
 import * as filterUtils from "src/api/utils/filterUtils";
 import { buildUniqueItemList } from "src/api/utils/itemUtils";
-import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import PolymarketEventsModule from "src/components/polymarket/PolymarketEventsModule";
 import CONFIG from "src/config";
 import { EWidgetSettingsRegistry } from "src/constants";
@@ -32,6 +31,7 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
         () => (tags ? filterUtils.filteringListToStr(tags) : undefined),
         [tags]
     );
+    const tagsStringRef = useRef(tagsString);
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
@@ -86,10 +86,11 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     // Reset events when tags change
     useEffect(() => {
-        if (tagsString !== undefined) {
+        if (tagsString !== tagsStringRef.current) {
             setEvents(undefined);
             setCurrentPage(undefined);
         }
+        tagsStringRef.current = tagsString;
     }, [tagsString]);
 
     const handleSelectEvent = useCallback(
@@ -112,15 +113,13 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [WIDGET_HEIGHT]);
 
     return (
-        <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
-            <PolymarketEventsModule
-                isLoading={isLoadingEvents || eventsData?.results === undefined}
-                events={events || eventsData?.results || []}
-                onSelectEvent={handleSelectEvent}
-                contentHeight={contentHeight}
-                handlePaginate={handleNextPage}
-            />
-        </Suspense>
+        <PolymarketEventsModule
+            isLoading={isLoadingEvents}
+            events={events || eventsData?.results}
+            onSelectEvent={handleSelectEvent}
+            contentHeight={contentHeight}
+            handlePaginate={handleNextPage}
+        />
     );
 };
 
