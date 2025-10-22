@@ -35,6 +35,7 @@ const PolymarketEvents: FC<IPolymarketEvents> = ({
                     key={market.id}
                     market={market}
                     onSelectMarket={onSelectMarket}
+                    isSingleMarket={markets.length === 1}
                 />
             ))}
             {markets.length > 3 && (

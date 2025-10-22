@@ -9,12 +9,14 @@ import { computeDuration } from "src/api/utils/dateUtils";
 
 interface IPolymarketTopVolumeCard {
     market: TPolymarketMarketGroup["markets"][0];
+    isSingleMarket: boolean;
     onSelectMarket?: (market: TPolymarketMarket) => void;
 }
 
 const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
     market,
     onSelectMarket,
+    isSingleMarket,
 }) => {
     const { t } = useTranslation();
 
@@ -26,7 +28,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
     if (market.closed) {
         statusText = t("polymarket.resolved");
         statusColor = "bg-gray-500";
-    } else if (isExpired && !market.active) {
+    } else if (isExpired) {
         statusText = t("polymarket.expired");
         statusColor = "bg-secondaryOrangeSoda";
     } else {
@@ -68,34 +70,43 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
         >
             <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-2 w-full">
-                    <span className="line-clamp-2 fontGroup-normal">
-                        {market.question}
-                    </span>
-                    <p className="fontGroup-mini mb-0">
-                        <span
-                            className={twMerge(
-                                "fontGroup-supportBold lastLine px-1 text-background rounded-sm",
-                                statusColor
-                            )}
-                        >
-                            {statusText}
-                        </span>
-                        <span className="mx-[7px] my-0 self-center">•</span>
-                        <span>
-                            {formatVolume(market.volume)}{" "}
-                            {t("navigation.general.vol")}
-                        </span>
-                        {endDate && !market.closed && (
-                            <>
+                    {!isSingleMarket && (
+                        <>
+                            {" "}
+                            <span className="line-clamp-2 fontGroup-normal">
+                                {market.question}
+                            </span>
+                            <p className="fontGroup-mini mb-0">
+                                <span
+                                    className={twMerge(
+                                        "fontGroup-supportBold lastLine px-1 text-background rounded-sm",
+                                        statusColor
+                                    )}
+                                >
+                                    {statusText}
+                                </span>
                                 <span className="mx-[7px] my-0 self-center">
                                     •
                                 </span>
-                                <span className="text-primaryVariant100">
-                                    {computeDuration(endDate.toISOString())}
+                                <span>
+                                    {formatVolume(market.volume)}{" "}
+                                    {t("navigation.general.vol")}
                                 </span>
-                            </>
-                        )}
-                    </p>
+                                {endDate && !market.closed && (
+                                    <>
+                                        <span className="mx-[7px] my-0 self-center">
+                                            •
+                                        </span>
+                                        <span className="text-primaryVariant100">
+                                            {computeDuration(
+                                                endDate.toISOString()
+                                            )}
+                                        </span>
+                                    </>
+                                )}
+                            </p>
+                        </>
+                    )}
                     <div className="">
                         {market.outcomes && market.outcomes.length > 0 && (
                             <div className="flex flex-col gap-1">
