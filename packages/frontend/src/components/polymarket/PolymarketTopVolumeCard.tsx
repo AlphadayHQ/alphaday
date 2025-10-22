@@ -9,7 +9,7 @@ import { computeDuration } from "src/api/utils/dateUtils";
 
 interface IPolymarketTopVolumeCard {
     market: TPolymarketMarketGroup["markets"][0];
-    isSingleMarket: boolean;
+    isSingleMarket?: boolean;
     onSelectMarket?: (market: TPolymarketMarket) => void;
 }
 
@@ -70,7 +70,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
         >
             <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-2 w-full">
-                    {!isSingleMarket && (
+                    {isSingleMarket !== true && (
                         <>
                             {" "}
                             <span className="line-clamp-2 fontGroup-normal">
