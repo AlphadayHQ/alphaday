@@ -55,10 +55,6 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
                         market.endDate ? new Date(market.endDate).getTime() : 0
                     );
                 }, 0);
-                const isExpired = endDate
-                    ? new Date(endDate) < new Date()
-                    : false;
-                // is all markets closed
                 const isAllMarketsClosed = event.markets?.every(
                     (market) => !market.active
                 );
@@ -68,9 +64,6 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
                 if (isAllMarketsClosed) {
                     statusText = t("polymarket.resolved");
                     statusColor = "bg-gray-500";
-                } else if (isExpired) {
-                    statusText = t("polymarket.expired");
-                    statusColor = "bg-secondaryOrangeSoda";
                 }
                 return (
                     <div className="ml-2" role="button">
