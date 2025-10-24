@@ -29,20 +29,23 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const pollingInterval =
         (moduleData.widget.refresh_interval ||
-            CONFIG.WIDGETS.POLYMARKET.POLLING_INTERVAL) * 1000;
+            CONFIG.WIDGETS.POLYMARKET_TOP_VOLUME.POLLING_INTERVAL) * 1000;
 
-    const { data: marketGroupData, isLoading: isLoadingTopVolume } =
-        useGetPolymarketMarketByTopVolumeQuery(
-            {
-                page: 1,
-                limit: 1,
-                active: true,
-                tags: tagsString,
-            },
-            {
-                pollingInterval,
-            }
-        );
+    const {
+        // data: marketGroupData,
+        currentData: marketGroupData,
+        isFetching: isLoadingTopVolume,
+    } = useGetPolymarketMarketByTopVolumeQuery(
+        {
+            page: 1,
+            limit: 1,
+            active: true,
+            tags: tagsString,
+        },
+        {
+            pollingInterval,
+        }
+    );
 
     const handleSelectMarket = useCallback(
         (market: TPolymarketMarket) => {
@@ -54,9 +57,9 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            window.open(market.url, "_blank", "noopener,noreferrer");
+            window.open(marketGroupData?.url, "_blank", "noopener,noreferrer");
         },
-        [logButtonClicked, moduleData.name]
+        [logButtonClicked, marketGroupData?.url, moduleData.name]
     );
 
     const contentHeight = useMemo(() => {

@@ -6,33 +6,30 @@ import {
     TPolymarketMarketGroup,
 } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
-import { ENumberStyle, formatNumber } from "src/api/utils/format";
 
 interface IPolymarketTopVolumeCard {
     market: TPolymarketMarketGroup["markets"][0];
+    isSingleMarket?: boolean;
     onSelectMarket?: (market: TPolymarketMarket) => void;
 }
 
 const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
     market,
     onSelectMarket,
+    isSingleMarket,
 }) => {
     const { t } = useTranslation();
 
     const endDate = market.endDate ? new Date(market.endDate) : null;
-    const isExpired = endDate && endDate < new Date();
 
     let statusText = "";
     let statusColor = "";
     if (market.closed) {
         statusText = t("polymarket.resolved");
-        statusColor = "text-gray-500";
-    } else if (isExpired) {
-        statusText = t("polymarket.expired");
-        statusColor = "text-secondaryOrangeSoda";
+        statusColor = "bg-gray-500";
     } else {
         statusText = t("polymarket.live");
-        statusColor = "text-success";
+        statusColor = "bg-success";
     }
 
     const formatVolume = (volume?: number) => {
@@ -69,34 +66,43 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
         >
             <div className="flex items-center justify-between">
                 <div className="flex flex-col gap-2 w-full">
-                    <span className="line-clamp-2 fontGroup-normal">
-                        {market.question}
-                    </span>
-                    <p className="fontGroup-mini mb-0">
-                        <span
-                            className={twMerge(
-                                "fontGroup-mini lastLine",
-                                statusColor
-                            )}
-                        >
-                            {statusText}
-                        </span>
-                        <span className="mx-[7px] my-0 self-center">•</span>
-                        <span>
-                            {formatVolume(market.volume)}{" "}
-                            {t("navigation.general.vol")}
-                        </span>
-                        {endDate && !market.closed && (
-                            <>
+                    {isSingleMarket !== true && (
+                        <>
+                            {" "}
+                            <span className="line-clamp-2 fontGroup-normal">
+                                {market.question}
+                            </span>
+                            <p className="fontGroup-mini mb-0">
+                                <span
+                                    className={twMerge(
+                                        "fontGroup-supportBold lastLine px-1 text-background rounded-sm",
+                                        statusColor
+                                    )}
+                                >
+                                    {statusText}
+                                </span>
                                 <span className="mx-[7px] my-0 self-center">
                                     •
                                 </span>
-                                <span className="text-primaryVariant100">
-                                    {computeDuration(endDate.toISOString())}
+                                <span>
+                                    {formatVolume(market.volume)}{" "}
+                                    {t("navigation.general.vol")}
                                 </span>
-                            </>
-                        )}
-                    </p>
+                                {endDate && !market.closed && (
+                                    <>
+                                        <span className="mx-[7px] my-0 self-center">
+                                            •
+                                        </span>
+                                        <span className="text-primaryVariant100">
+                                            {computeDuration(
+                                                endDate.toISOString()
+                                            )}
+                                        </span>
+                                    </>
+                                )}
+                            </p>
+                        </>
+                    )}
                     <div className="">
                         {market.outcomes && market.outcomes.length > 0 && (
                             <div className="flex flex-col gap-1">
@@ -104,19 +110,19 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                     const chance = Number.parseFloat(
                                         (outcome.price * 100).toPrecision(2)
                                     );
-                                    const price = formatNumber({
-                                        value: outcome.price,
-                                        style: ENumberStyle.Currency,
-                                        currency: "USD",
-                                    }).value;
-                                    //     = Number.parseFloat(
-                                    //     outcome.price.toPrecision(2)
-                                    // );
+                                    let barWidth;
+                                    if (chance === 0) {
+                                        barWidth = 0;
+                                    } else if (chance < 2) {
+                                        barWidth = 2;
+                                    } else {
+                                        barWidth = chance;
+                                    }
                                     return (
                                         <div
                                             key={outcome.id}
                                             className={twMerge(
-                                                "flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
+                                                "relative flex items-center justify-between text-xs bg-gray-500/20 [&>span]:text-primaryVariant100 py-1.5 px-2",
                                                 idx === 0 &&
                                                     `rounded-t-md ${market.outcomes?.length === 2 ? "bg-blue-500/20 [&>span]:text-accentVariant100" : ""}`,
 
@@ -124,25 +130,24 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
                                                     `rounded-b-md ${market.outcomes?.length === 2 ? "bg-orange-400/20 [&>span]:text-secondaryOrange" : ""}`
                                             )}
                                         >
+                                            <div
+                                                style={{
+                                                    width: `${barWidth}%`,
+                                                }}
+                                                className={twMerge(
+                                                    "absolute left-0 h-full w-full bg-red-500/25",
+                                                    idx === 0 &&
+                                                        "bg-blue-500/20 rounded-tl-md",
+                                                    idx === 1 &&
+                                                        "bg-orange-500/20 rounded-bl-md"
+                                                )}
+                                            />
                                             <span className="text-blue-600 fontGroup-highlightSemi truncate">
                                                 {outcome.outcomeName}
                                             </span>
                                             <div className="flex items-center gap-2 shrink-0 fontGroup-normal">
                                                 <span className="text-primary">
                                                     {Math.ceil(chance)}%
-                                                </span>
-                                                <span
-                                                    className={twMerge(
-                                                        t(
-                                                            "ml-0.5 text-primary py-0.5 px-1 rounded-md fontGroup-supportBold"
-                                                        ),
-                                                        idx === 0 &&
-                                                            "bg-blue-500/20",
-                                                        idx === 1 &&
-                                                            "bg-orange-400/20"
-                                                    )}
-                                                >
-                                                    {price}
                                                 </span>
                                             </div>
                                         </div>

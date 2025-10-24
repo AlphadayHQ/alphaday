@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { ModuleLoader, twMerge } from "@alphaday/ui-kit";
+import { CenteredBlock, ModuleLoader, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import {
     TPolymarketMarketGroup,
     TPolymarketMarket,
 } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
+import globalMessages from "src/globalMessages";
 import PolymarketTopVolumeList from "./PolymarketTopVolumeList";
 
 export interface IPolymarketTopVolumeModule {
@@ -23,7 +24,17 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
 }) => {
     const { t } = useTranslation();
 
-    if (!marketGroupData) return null;
+    if (isLoading) {
+        return <ModuleLoader $height={contentHeight} />;
+    }
+
+    if (!marketGroupData || marketGroupData.markets.length === 0) {
+        return (
+            <CenteredBlock>
+                <p>{globalMessages.queries.noMatchFound("markets")}</p>
+            </CenteredBlock>
+        );
+    }
 
     // enddate it endate of furthest enddate in marketGroupData.markets
     const endDate = marketGroupData.markets.reduce((max, market) => {
@@ -39,13 +50,13 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
     );
 
     let statusText = t("polymarket.live");
-    let statusColor = "text-success";
+    let statusColor = "bg-success";
     if (isAllMarketsClosed) {
         statusText = t("polymarket.resolved");
-        statusColor = "text-gray-500";
+        statusColor = "bg-gray-500";
     } else if (isExpired) {
         statusText = t("polymarket.expired");
-        statusColor = "text-secondaryOrangeSoda";
+        statusColor = "bg-secondaryOrangeSoda";
     }
 
     const formatVolume = (volume?: number) => {
@@ -61,67 +72,63 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
 
     return (
         <div className="flex flex-col h-full">
-            {isLoading ? (
-                <ModuleLoader $height={contentHeight} />
-            ) : (
-                <div className="h-full pb-14 ml-2" role="button">
-                    <div className="flex items-center justify-between px-1 pb-2 mr-[3px]">
-                        <div className="flex gap-4 w-full">
-                            {marketGroupData.image && (
-                                <img
-                                    src={marketGroupData.image}
-                                    alt="Market"
-                                    className="w-8 h-8 mt-0.5 rounded-full object-cover self-start"
-                                />
-                            )}
-                            <div className="flex flex-col gap-2 w-full">
-                                <span className="line-clamp-2 fontGroup-highlight">
-                                    {marketGroupData.title}
+            <div className="h-full pb-14 ml-2" role="button">
+                <div className="flex items-center justify-between px-1 pb-2 mr-[3px]">
+                    <div className="flex gap-4 w-full">
+                        {marketGroupData.image && (
+                            <img
+                                src={marketGroupData.image}
+                                alt="Market"
+                                className="w-8 h-8 mt-0.5 rounded-full object-cover self-start"
+                            />
+                        )}
+                        <div className="flex flex-col gap-2 w-full">
+                            <span className="line-clamp-2 fontGroup-highlight">
+                                {marketGroupData.title}
+                            </span>
+                            <p className="fontGroup-mini mb-0">
+                                <span
+                                    className={twMerge(
+                                        "fontGroup-supportBold lastLine px-1 text-background rounded-sm",
+                                        statusColor
+                                    )}
+                                >
+                                    {statusText}
                                 </span>
-                                <p className="fontGroup-mini mb-0">
-                                    <span
-                                        className={twMerge(
-                                            "fontGroup-mini lastLine",
-                                            statusColor
-                                        )}
-                                    >
-                                        {statusText}
-                                    </span>
-                                    <span className="mx-[7px] my-0 self-center">
-                                        •
-                                    </span>
-                                    <span>
-                                        {formatVolume(marketGroupData.volume)}{" "}
-                                        {t("navigation.general.vol")}
-                                    </span>
-                                    {endDate &&
-                                        !marketGroupData.markets.every(
-                                            (market) => market.closed
-                                        ) && (
-                                            <>
-                                                <span className="mx-[7px] my-0 self-center">
-                                                    •
-                                                </span>
-                                                <span className="text-primaryVariant100">
-                                                    {computeDuration(
-                                                        new Date(
-                                                            endDate
-                                                        ).toISOString()
-                                                    )}
-                                                </span>
-                                            </>
-                                        )}
-                                </p>
-                            </div>
+                                <span className="mx-[7px] my-0 self-center">
+                                    •
+                                </span>
+                                <span>
+                                    {formatVolume(marketGroupData.volume)}{" "}
+                                    {t("navigation.general.vol")}
+                                </span>
+                                {endDate &&
+                                    !marketGroupData.markets.every(
+                                        (market) => market.closed
+                                    ) && (
+                                        <>
+                                            <span className="mx-[7px] my-0 self-center">
+                                                •
+                                            </span>
+                                            <span className="text-primaryVariant100">
+                                                {computeDuration(
+                                                    new Date(
+                                                        endDate
+                                                    ).toISOString()
+                                                )}
+                                            </span>
+                                        </>
+                                    )}
+                            </p>
                         </div>
                     </div>
-                    <PolymarketTopVolumeList
-                        markets={marketGroupData.markets}
-                        onSelectMarket={onSelectMarket}
-                    />
-                    <div className="w-full h-10" />
                 </div>
-            )}
+                <PolymarketTopVolumeList
+                    markets={marketGroupData.markets}
+                    onSelectMarket={onSelectMarket}
+                />
+                <div className="w-full h-10" />
+            </div>
         </div>
     );
 };
