@@ -1,4 +1,4 @@
-import { FC, FormEvent, useCallback } from "react";
+import { FC, FormEvent, KeyboardEvent, useCallback } from "react";
 import {
     CenteredBlock,
     ModuleLoader,
@@ -58,7 +58,20 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
                 const isAllMarketsClosed = event.markets?.every(
                     (market) => !market.active
                 );
-
+                const singleMarketProps =
+                    event.markets?.length === 1
+                        ? {
+                              role: "button",
+                              tabIndex: 0,
+                              onClick: () => onSelectEvent(event),
+                              onKeyDown: (e: KeyboardEvent<HTMLElement>) => {
+                                  if (e.key === "Enter" || e.key === " ") {
+                                      e.preventDefault();
+                                      onSelectEvent(event);
+                                  }
+                              },
+                          }
+                        : {};
                 let statusText = t("polymarket.live");
                 let statusColor = "bg-success";
                 if (isAllMarketsClosed) {
@@ -66,7 +79,7 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
                     statusColor = "bg-gray-500";
                 }
                 return (
-                    <div className="ml-2" role="button">
+                    <div className="ml-2" {...singleMarketProps}>
                         <div className="flex items-center justify-between px-1 pb-2 mr-[3px]">
                             <div className="flex gap-4 w-full">
                                 {event.image && (
