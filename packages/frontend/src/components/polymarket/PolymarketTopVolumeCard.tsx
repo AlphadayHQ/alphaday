@@ -21,16 +21,12 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
     const { t } = useTranslation();
 
     const endDate = market.endDate ? new Date(market.endDate) : null;
-    const isExpired = endDate && endDate < new Date();
 
     let statusText = "";
     let statusColor = "";
     if (market.closed) {
         statusText = t("polymarket.resolved");
         statusColor = "bg-gray-500";
-    } else if (isExpired) {
-        statusText = t("polymarket.expired");
-        statusColor = "bg-secondaryOrangeSoda";
     } else {
         statusText = t("polymarket.live");
         statusColor = "bg-success";
