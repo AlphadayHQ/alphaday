@@ -8,15 +8,16 @@ interface IEndpointInput {
     onClose: () => void;
 }
 
-const validateUrl = (url: string): boolean => {
+const validateUrl = (string: string): boolean => {
+    let url;
+
     try {
-        if (URL.parse(url)) {
-            return true;
-        }
-        return false;
-    } catch (error) {
+        url = new URL(string);
+    } catch (_) {
         return false;
     }
+
+    return url.protocol === "http:" || url.protocol === "https:";
 };
 
 const EndpointInput: FC<IEndpointInput> = ({
