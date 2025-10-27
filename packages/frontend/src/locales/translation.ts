@@ -309,6 +309,11 @@ export const translationEN = {
         ytd: "ytd",
         yy: "y",
     },
+    dune: {
+        enterEndpointURL: "Enter a Dune endpoint URL",
+        endpointInputPlaceholder:
+            "Enter a Dune endpoint URL (e.g. https://dune.com/queries/1234567890)",
+    },
     gas: {
         title: "Gas Price",
         latestGasPrice: "Latest Gas price",
@@ -748,6 +753,11 @@ export const translationJA: typeof translationEN = {
         yy: "年",
         ytd: "今年",
     },
+    dune: {
+        enterEndpointURL: "Dune エンドポイント URL を入力",
+        endpointInputPlaceholder:
+            "Dune エンドポイント URL を入力 (例: https://dune.com/queries/1234567890)",
+    },
     gas: {
         title: "ガス価格",
         latestGasPrice: "最新のガス価格",
@@ -1184,6 +1194,11 @@ export const translationES: typeof translationEN = {
         y: "y",
         ytd: "ytd",
         yy: "y",
+    },
+    dune: {
+        enterEndpointURL: "Introduce una URL de endpoint de Dune",
+        endpointInputPlaceholder:
+            "Introduce una URL de endpoint de Dune (p. ej. https://dune.com/queries/1234567890)",
     },
     gas: {
         title: "Precio gas",
@@ -1627,6 +1642,11 @@ export const translationFR: typeof translationEN = {
         y: "a",
         ytd: "aad",
         yy: "a",
+    },
+    dune: {
+        enterEndpointURL: "Entrez une URL de point de terminaison Dune",
+        endpointInputPlaceholder:
+            "Entrez une URL de point de terminaison Dune (ex. : https://dune.com/queries/1234567890)",
     },
     gas: {
         title: "Prix du gaz",
@@ -2072,6 +2092,12 @@ export const translationTR: typeof translationEN = {
         ytd: "yt",
         yy: "y",
     },
+    dune: {
+        enterEndpointURL: "Bir Dune uç nokta URL’si girin",
+        endpointInputPlaceholder:
+            "Bir Dune uç nokta URL’si girin (ör. https://dune.com/queries/1234567890)",
+    },
+
     gas: {
         title: "Gas Fiyatı",
         latestGasPrice: "Son Gaz Fiyatı",
@@ -2500,6 +2526,12 @@ export const translationZH: typeof translationEN = {
         ytd: "今年至今",
         yy: "年",
     },
+    dune: {
+        enterEndpointURL: "输入 Dune 接口 URL",
+        endpointInputPlaceholder:
+            "输入 Dune 接口 URL（例如：https://dune.com/queries/1234567890）",
+    },
+
     gas: {
         title: "燃气价格",
         latestGasPrice: "最新燃气价格",

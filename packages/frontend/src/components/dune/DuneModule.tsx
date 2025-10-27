@@ -14,21 +14,12 @@ import {
     TableRow,
 } from "src/components/custom-modules/TableComponents";
 import CONFIG from "src/config";
-import AddressInput from "./EndpointInput";
+import EndpointInput from "./EndpointInput";
 
 const { WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
 const HEADER_HEIGHT = 22;
 // allow standard layout for tables of up to STD_LAYOUT_MAX_SIZE columns
 const STD_LAYOUT_MAX_SIZE = 4;
-
-const validateUrl = (url: string): boolean => {
-    try {
-        URL.parse(url);
-        return true;
-    } catch (error) {
-        return false;
-    }
-};
 
 interface IDuneModuleProps {
     items: TCustomItem[] | undefined;
@@ -85,11 +76,6 @@ const DuneModule: FC<IDuneModuleProps> = ({
 
     const addLinkColumn = rowProps?.uri_ref !== undefined;
     const [showEnterAddress, setShowEnterAddress] = useState(false);
-    const [disableAddAddressInput, setDisableAddAddressInput] = useState(true);
-
-    const onInputChange = (addr: string) =>
-        setDisableAddAddressInput(!validateUrl(addr));
-
     if (isLoadingItems) {
         return <ModuleLoader $height={`${widgetHeight}px`} />;
     }
@@ -106,12 +92,10 @@ const DuneModule: FC<IDuneModuleProps> = ({
                     >
                         {t("buttons.enterEndpointURL")}
                     </Button>
-                    <AddressInput
-                        onChange={onInputChange}
-                        onAddAddress={onSetEndpointUrl}
+                    <EndpointInput
+                        onSetEndpointUrl={onSetEndpointUrl}
                         show={showEnterAddress}
                         onClose={() => setShowEnterAddress(false)}
-                        disabled={disableAddAddressInput}
                     />
                 </div>
             </div>
