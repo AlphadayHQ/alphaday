@@ -60,6 +60,7 @@ export enum ETemplateNameRegistry {
     CustomTable = "CUSTOM_TABLE",
     Dao = "DAO",
     Discord = "DISCORD",
+    Dune = "DUNE",
     FAQ = "FAQ",
     Forum = "FORUM",
     Gas = "GAS",

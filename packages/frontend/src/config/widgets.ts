@@ -30,6 +30,11 @@ export const WIDGETS_CONFIG = {
         POLLING_INTERVAL: 15 * 60, // 15 min
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Dune]: {
+        MAX_PAGE_NUMBER: 10,
+        WIDGET_HEIGHT: 400,
+        ADJUSTABLE: true,
+    },
     [ETemplateNameRegistry.Forum]: {
         TAG_ITEM_TYPE: "forum",
         MAX_PAGE_NUMBER: 10,
