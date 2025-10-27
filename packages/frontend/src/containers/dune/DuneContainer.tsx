@@ -1,18 +1,18 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { useWidgetHeight } from "src/api/hooks";
-import { EWidgetData, useGetCustomItemsQuery } from "src/api/services";
+import { useGetCustomItemsQuery } from "src/api/services";
 import { setWidgetHeight } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
-import { Logger } from "src/api/utils/logging";
-import CustomTableModule from "src/components/custom-modules/CustomTableModule";
+import DuneModule from "src/components/dune/DuneModule";
 import { IModuleContainer } from "src/types";
 
 const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
 
+    const [endpointUrl, setEndpointUrl] = useState<string>("");
+
     /* eslint-disable @typescript-eslint/naming-convention */
-    const { custom_data, custom_meta, endpoint_url, data_type } =
-        moduleData.widget;
+    const { custom_meta } = moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
     const widgetHeight = useWidgetHeight(moduleData);
@@ -27,29 +27,19 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const { data, isLoading } = useGetCustomItemsQuery(
         {
-            endpointUrl: endpoint_url || "",
+            endpointUrl,
         },
         {
-            skip: data_type === EWidgetData.Static,
+            skip: endpointUrl === "",
         }
     );
 
     const items = useMemo(() => {
-        if (data_type === EWidgetData.Static) {
-            if (!custom_data || !custom_meta) {
-                Logger.error("DuneContainer: missing data or meta");
-                return [];
-            }
-            if (custom_meta.layout_type !== "table") {
-                Logger.error(
-                    "DuneContainer: invalid layout type, expected table"
-                );
-                return [];
-            }
-            return custom_data;
+        if (endpointUrl === "") {
+            return undefined;
         }
         return data?.results ?? [];
-    }, [custom_data, custom_meta, data?.results, data_type]);
+    }, [data?.results, endpointUrl]);
 
     const meta = useMemo(() => {
         if (custom_meta?.layout_type === "table") {
@@ -64,8 +54,12 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [custom_meta]);
 
+    const handleSetEndpointUrl = (url: string) => {
+        setEndpointUrl(url);
+    };
+
     return (
-        <CustomTableModule
+        <DuneModule
             items={items}
             columns={meta.columns}
             rowProps={meta.row_props}
@@ -73,6 +67,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             handlePaginate={() => ({})}
             widgetHeight={widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
+            onSetEndpointUrl={handleSetEndpointUrl}
         />
     );
 };
