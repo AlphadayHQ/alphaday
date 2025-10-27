@@ -82,13 +82,12 @@ const DuneModule: FC<IDuneModuleProps> = ({
 
     if (!items) {
         return (
-            <div className="flex my-4 mx-auto justify-center">
+            <div className="flex my-[18px] mx-auto justify-center">
                 <div className="flex w-[315px] justify-center tiny:scale-95">
                     <Button
                         variant="primaryXL"
                         title="Enter a Dune endpoint URL"
                         onClick={() => setShowEnterAddress(true)}
-                        className=" max-w-[49%]"
                     >
                         {t("buttons.enterEndpointURL")}
                     </Button>
