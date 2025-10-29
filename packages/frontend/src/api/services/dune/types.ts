@@ -6,8 +6,9 @@ export type TImportDuneRequest = {
     cached?: boolean;
 };
 
-export type TImportDuneResponse = TPagination & {
-    results: TCustomItem[];
+export type TImportDuneResponse = {
+    id: number;
+    data: TCustomItem[];
 };
 
 export type TGetDatasetByIdRequest = {
