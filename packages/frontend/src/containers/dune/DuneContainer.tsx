@@ -46,11 +46,8 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [endpointUrl, importDune]);
 
     const items = useMemo(() => {
-        if (endpointUrl === "") {
-            return custom_data;
-        }
         return data?.results ?? [];
-    }, [custom_data, data?.results, endpointUrl]);
+    }, [data?.results]);
 
     const meta = useMemo(() => {
         if (custom_meta?.layout_type === "table") {
