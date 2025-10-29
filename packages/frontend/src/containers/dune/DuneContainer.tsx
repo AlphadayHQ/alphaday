@@ -4,6 +4,7 @@ import { useImportDuneMutation } from "src/api/services";
 import { setWidgetHeight } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 import { extractDuneQueryId } from "src/api/utils/duneUtils";
+import { Logger } from "src/api/utils/logging";
 import DuneModule from "src/components/dune/DuneModule";
 import { IModuleContainer } from "src/types";
 
@@ -34,7 +35,12 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 importDune({
                     query_id: queryId,
                     cached: true,
-                });
+                }).catch((err) =>
+                    Logger.error(
+                        "DuneContainer::importDune: Failed to import Dune query",
+                        err
+                    )
+                );
             }
         }
     }, [endpointUrl, importDune]);
