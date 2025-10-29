@@ -15,7 +15,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [importDune, { data, isLoading }] = useImportDuneMutation();
 
     /* eslint-disable @typescript-eslint/naming-convention */
-    const { custom_meta, custom_data } = moduleData.widget;
+    const { custom_meta } = moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
     const widgetHeight = useWidgetHeight(moduleData);
@@ -29,25 +29,22 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     };
 
     useEffect(() => {
-        if (endpointUrl !== "") {
-            const queryId = extractDuneQueryId(endpointUrl);
-            if (queryId) {
-                importDune({
-                    query_id: queryId,
-                    cached: true,
-                }).catch((err) =>
-                    Logger.error(
-                        "DuneContainer::importDune: Failed to import Dune query",
-                        err
-                    )
-                );
-            }
+        const queryId = extractDuneQueryId(endpointUrl);
+        if (queryId) {
+            Logger.info("DuneContainer::importDune: Importing Dune query", {
+                queryId,
+            });
+            importDune({
+                query_id: queryId,
+                cached: true,
+            }).catch((err) =>
+                Logger.error(
+                    "DuneContainer::importDune: Failed to import Dune query",
+                    err
+                )
+            );
         }
-    }, [endpointUrl, importDune]);
-
-    const items = useMemo(() => {
-        return data?.results ?? [];
-    }, [data?.results]);
+    }, [importDune, endpointUrl]);
 
     const meta = useMemo(() => {
         if (custom_meta?.layout_type === "table") {
@@ -68,7 +65,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     return (
         <DuneModule
-            items={items}
+            items={data?.results}
             columns={meta.columns}
             rowProps={meta.row_props}
             isLoadingItems={isLoading}
