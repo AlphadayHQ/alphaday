@@ -203,6 +203,11 @@ const API_V0 = {
             EVENT_BY_ID: (id: number): string => `/events/${id}/`,
             MARKET_BY_ID: (id: number): string => `/markets/${id}/`,
         },
+        DATASETS: {
+            BASE: "datasets",
+            IMPORT_DUNE: "/import_dune/",
+            BY_ID: (id: number): string => `/${id}/`,
+        },
     },
 };
 

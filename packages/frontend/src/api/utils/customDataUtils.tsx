@@ -8,6 +8,7 @@ import {
     TRemoteCustomMeta,
     TCustomMetaChart,
     TCustomMetaCard,
+    TRemoteCustomLayoutEntry,
 } from "src/api/services";
 import { TCustomItem, TCustomSeries } from "src/api/types";
 import { getErrorMessage } from "src/api/utils/errorHandling";
@@ -452,8 +453,40 @@ export const getYSeries: (
 };
 
 /**
- * Attemtps to extract the Card fields `title` and `value` from a custom_data and custom_meta objects.
+ * Infers column layout from the first row of data when no columns are explicitly defined.
+ * Generates sensible defaults for format, width, and template based on data types.
  */
+export const generateColumnsFromRowData: (
+    items: TRemoteCustomData
+) => TRemoteCustomLayoutEntry[] = (items) => {
+    if (items.length === 0) {
+        return [];
+    }
+
+    const firstRow = items[0];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...dataFields } = firstRow;
+
+    return Object.entries(dataFields).map(([key, value], index) => {
+        let format: TRemoteFormat = "plain-text";
+
+        // Infer format from value type
+        if (typeof value === "number") {
+            format = Number.isInteger(value) ? "number" : "decimal";
+        } else if (typeof value === "boolean") {
+            format = "checkmark";
+        }
+
+        return {
+            id: index,
+            title: key,
+            template: key,
+            format,
+            width: 1,
+        };
+    });
+};
+
 export const customDataAsCardData: (
     customData: TRemoteCustomData,
     customMeta: TCustomMetaCard | undefined,
