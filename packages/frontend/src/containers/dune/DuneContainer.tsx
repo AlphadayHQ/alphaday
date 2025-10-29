@@ -65,7 +65,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     return (
         <DuneModule
-            items={data?.results}
+            items={data?.data}
             columns={meta.columns}
             rowProps={meta.row_props}
             isLoadingItems={isLoading}
