@@ -82,9 +82,11 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     }
 
     return (
-        <div className="h-25">
+        <div className="h-25 overflow-x-auto">
             {!isCompactMode && (
-                <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
+                <div className="min-w-fit">
+                    <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
+                </div>
             )}
             <ScrollBar
                 onScroll={handleScroll}
@@ -94,23 +96,25 @@ const CustomTableModule: FC<ICustomTableProps> = ({
                     height: widgetHeight - HEADER_HEIGHT,
                 }}
             >
-                {items.map((item) => {
-                    return isCompactMode ? (
-                        <CompactTableRow
-                            columnsLayout={columns}
-                            rowData={item}
-                            rowProps={rowProps}
-                            key={item.id}
-                        />
-                    ) : (
-                        <TableRow
-                            columnsLayout={columns}
-                            rowData={item}
-                            rowProps={rowProps}
-                            key={item.id}
-                        />
-                    );
-                })}
+                <div className="min-w-fit">
+                    {items.map((item) => {
+                        return isCompactMode ? (
+                            <CompactTableRow
+                                columnsLayout={columns}
+                                rowData={item}
+                                rowProps={rowProps}
+                                key={item.id}
+                            />
+                        ) : (
+                            <TableRow
+                                columnsLayout={columns}
+                                rowData={item}
+                                rowProps={rowProps}
+                                key={item.id}
+                            />
+                        );
+                    })}
+                </div>
             </ScrollBar>
         </div>
     );

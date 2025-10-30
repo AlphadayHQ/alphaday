@@ -60,13 +60,13 @@ export const TableCell: React.FC<ITableCellProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-1 mr-2.5 [&>p]:mb-0",
+                "flex flex-1 mr-2.5 [&>p]:mb-0 min-w-[100px]",
                 format && getColumnJustification(format, justify),
                 href && "cursor-pointer",
                 isHeader && "fontGroup-normal text-primaryVariant100",
                 !isCompactMode && "items-center"
             )}
-            {...(width && { style: { display: "flex", flex: width } })}
+            {...(width && { style: { display: "flex", flex: width, minWidth: "100px" } })}
             {...(href && { onClick: handleOnClick })}
         >
             {href !== undefined && !hasRowLink && (
@@ -87,7 +87,7 @@ export const TableHeader: React.FC<{
     addExtraColumn?: boolean;
 }> = ({ layout, addExtraColumn }) => {
     return (
-        <div className="flex flex-row pt-1 px-5">
+        <div className="flex flex-row pt-1 px-5 min-w-fit">
             {layout.map((columnLayout) => (
                 <TableCell
                     key={columnLayout.id}
@@ -128,7 +128,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-row py-2 px-5 hover:bg-background",
+                "flex flex-row py-2 px-5 hover:bg-background min-w-fit",
                 rowLink && "cursor-pointer"
             )}
             {...(rowLink && { onClick: handleOnClick })}
