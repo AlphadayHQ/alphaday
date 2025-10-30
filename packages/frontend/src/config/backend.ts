@@ -153,7 +153,8 @@ const API_V0 = {
             WIDGETS: "/widgets/",
             VIEW_WIDGETS_BY_ID: (id: number): string => `/views/${id}/widgets/`,
             WIDGET_BY_ID: (id: number): string => `/widgets/${id}/`,
-            WIDGET_SET_DATASET: (id: number): string => `/widgets/${id}/set_dataset/`,
+            WIDGET_SET_DATASET: (id: number): string =>
+                `/widgets/${id}/set_dataset/`,
             WIDGET_CATEGORIES: "/widget_categories/",
             WALLET_VIEW: "/views/smart_board/",
         },
