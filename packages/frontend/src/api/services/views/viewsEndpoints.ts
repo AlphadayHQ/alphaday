@@ -42,8 +42,8 @@ import type {
     TViewByIdRawResponse,
     TViewByHashOrSlugRawResponse,
     TViewForWalletRawResponse,
-    TSetWidgetDatasetRequest,
-    TSetWidgetDatasetResponse,
+    TUpdateWidgetSettingsRequest,
+    TUpdateWidgetSettingsResponse,
 } from "./types";
 
 const { VIEWS } = CONFIG.API.DEFAULT.ROUTES;
@@ -284,14 +284,19 @@ const viewsApi = alphadayApi.injectEndpoints({
                 return path;
             },
         }),
-        setWidgetDataset: builder.mutation<
-            TSetWidgetDatasetResponse,
-            TSetWidgetDatasetRequest
+        updateWidgetSettings: builder.mutation<
+            TUpdateWidgetSettingsResponse,
+            TUpdateWidgetSettingsRequest
         >({
             query: (req) => ({
-                url: `${VIEWS.BASE}${VIEWS.WIDGET_SET_DATASET(req.id)}`,
+                url: `${VIEWS.BASE}${VIEWS.WIDGET_SETTINGS_UPDATE_BY_HASH(
+                    req.widget_hash
+                )}`,
                 method: "POST",
-                body: { dataset_id: req.dataset_id },
+                body: {
+                    setting_slug: req.setting_slug,
+                    selected_dataset: req.selected_dataset,
+                },
             }),
             invalidatesTags: ["Views", "CurrentView"],
         }),
@@ -314,5 +319,5 @@ export const {
     useGetViewByHashQuery,
     useGetWidgetsCategoryQuery,
     useGetViewForWalletQuery,
-    useSetWidgetDatasetMutation,
+    useUpdateWidgetSettingsMutation,
 } = viewsApi;

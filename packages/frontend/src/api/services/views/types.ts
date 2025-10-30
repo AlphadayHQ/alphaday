@@ -444,10 +444,11 @@ export type TWidgetsCategoryResponse = TPagination & {
     results: ReadonlyArray<TRemoteWidgetCategory>;
 };
 
-export type TSetWidgetDatasetRequest = {
-    id: number;
-    dataset_id: number;
+export type TUpdateWidgetSettingsRequest = {
+    widget_hash: string;
+    setting_slug: string;
+    selected_dataset: number;
 };
-export type TSetWidgetDatasetResponse = {
+export type TUpdateWidgetSettingsResponse = {
     success: boolean;
 };

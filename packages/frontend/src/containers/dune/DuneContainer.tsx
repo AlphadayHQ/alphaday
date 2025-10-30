@@ -2,7 +2,7 @@ import { FC, useMemo, useState, useEffect } from "react";
 import { useWidgetHeight } from "src/api/hooks";
 import {
     useImportDuneMutation,
-    useSetWidgetDatasetMutation,
+    useUpdateWidgetSettingsMutation,
 } from "src/api/services";
 import { setWidgetHeight } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
@@ -16,7 +16,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const [endpointUrl, setEndpointUrl] = useState<string>("");
     const [importDune, { data, isLoading }] = useImportDuneMutation();
-    const [setWidgetDataset] = useSetWidgetDatasetMutation();
+    const [updateWidgetSettings] = useUpdateWidgetSettingsMutation();
 
     /* eslint-disable @typescript-eslint/naming-convention */
     const { custom_meta } = moduleData.widget;
@@ -45,18 +45,19 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 .then((res) => {
                     if ("data" in res && res.data) {
                         Logger.info(
-                            "DuneContainer::setWidgetDataset: Setting widget dataset",
+                            "DuneContainer::updateWidgetSettings: Setting widget dataset",
                             {
-                                widgetId: moduleData.widget.id,
+                                widgetHash: moduleData.hash,
                                 datasetId: res.data.id,
                             }
                         );
-                        setWidgetDataset({
-                            id: moduleData.widget.id,
-                            dataset_id: res.data.id,
+                        updateWidgetSettings({
+                            widget_hash: moduleData.hash,
+                            setting_slug: "widget_dataset_setting",
+                            selected_dataset: res.data.id,
                         }).catch((err) =>
                             Logger.error(
-                                "DuneContainer::setWidgetDataset: Failed to set widget dataset",
+                                "DuneContainer::updateWidgetSettings: Failed to update widget settings",
                                 err
                             )
                         );
@@ -69,7 +70,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     )
                 );
         }
-    }, [importDune, setWidgetDataset, endpointUrl, moduleData.widget.id]);
+    }, [importDune, updateWidgetSettings, endpointUrl, moduleData.hash]);
 
     const meta = useMemo(() => {
         if (custom_meta?.layout_type === "table") {
