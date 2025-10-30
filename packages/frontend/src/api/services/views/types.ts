@@ -443,3 +443,11 @@ export type TWidgetsCategoryRequest = {
 export type TWidgetsCategoryResponse = TPagination & {
     results: ReadonlyArray<TRemoteWidgetCategory>;
 };
+
+export type TSetWidgetDatasetRequest = {
+    id: number;
+    dataset_id: number;
+};
+export type TSetWidgetDatasetResponse = {
+    success: boolean;
+};
