@@ -85,7 +85,10 @@ const CustomTableModule: FC<ICustomTableProps> = ({
         <div className="h-25 overflow-x-auto">
             {!isCompactMode && (
                 <div className="min-w-fit">
-                    <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
+                    <TableHeader
+                        layout={columns}
+                        addExtraColumn={addLinkColumn}
+                    />
                 </div>
             )}
             <ScrollBar

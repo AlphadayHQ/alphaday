@@ -66,7 +66,9 @@ export const TableCell: React.FC<ITableCellProps> = ({
                 isHeader && "fontGroup-normal text-primaryVariant100",
                 !isCompactMode && "items-center"
             )}
-            {...(width && { style: { display: "flex", flex: width, minWidth: "100px" } })}
+            {...(width && {
+                style: { display: "flex", flex: width, minWidth: "100px" },
+            })}
             {...(href && { onClick: handleOnClick })}
         >
             {href !== undefined && !hasRowLink && (
