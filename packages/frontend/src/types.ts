@@ -80,9 +80,6 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/items/ItemsContainer")
     ),
     dune_template: lazyRetry(() => import("./containers/dune/DuneContainer")),
-    dune_item_template: lazyRetry(
-        () => import("./containers/dune/DuneItemContainer")
-    ),
     faq_template: lazyRetry(() => import("./containers/dynamic/FaqContainer")),
     forum_template: lazyRetry(
         () => import("./containers/items/ItemsContainer")

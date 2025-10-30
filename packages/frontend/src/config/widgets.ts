@@ -35,11 +35,6 @@ export const WIDGETS_CONFIG = {
         WIDGET_HEIGHT: 400,
         ADJUSTABLE: false,
     },
-    [ETemplateNameRegistry.DuneItem]: {
-        MAX_PAGE_NUMBER: 10,
-        WIDGET_HEIGHT: 400,
-        ADJUSTABLE: false,
-    },
     [ETemplateNameRegistry.Forum]: {
         TAG_ITEM_TYPE: "forum",
         MAX_PAGE_NUMBER: 10,
