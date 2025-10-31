@@ -73,6 +73,7 @@ const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             handlePaginate={() => ({})}
             widgetHeight={widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
+            isHeaderOnlyMode={moduleData.widget.slug.includes("dune_")}
         />
     );
 };

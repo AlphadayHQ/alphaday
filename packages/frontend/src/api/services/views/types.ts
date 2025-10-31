@@ -443,3 +443,12 @@ export type TWidgetsCategoryRequest = {
 export type TWidgetsCategoryResponse = TPagination & {
     results: ReadonlyArray<TRemoteWidgetCategory>;
 };
+
+export type TUpdateWidgetSettingsRequest = {
+    widget_hash: string;
+    setting_slug: string;
+    selected_dataset: number;
+};
+export type TUpdateWidgetSettingsResponse = {
+    success: boolean;
+};
