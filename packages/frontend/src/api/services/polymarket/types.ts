@@ -80,43 +80,43 @@ export type TPolymarketMarketCard = {
     top_outcome: TPolymarketOutcome | null;
 };
 
-export type TPolymarketMarketGroup = {
-    id: number;
-    eventId: string;
-    title: string;
-    description: string;
-    slug: string;
-    url: string;
-    image: string;
-    icon: string;
-    category: string | null;
-    active: boolean;
-    createdAt: string;
-    updatedAt: string;
-    marketsCount: number;
-    volume: number;
-    markets: {
-        id: number;
-        marketId: string;
-        question: string;
-        active: boolean;
-        closed: boolean;
-        archived: boolean;
-        volume: number;
-        liquidity: number;
-        image: string;
-        category: string | null;
-        endDate: string | null;
-        outcomes: {
-            id: number;
-            outcomeName: string;
-            outcomeId: string;
-            price: number;
-            volume: number;
-            liquidity: number;
-        }[];
-    }[];
-};
+// export type TPolymarketMarketGroup = {
+//     id: number;
+//     eventId: string;
+//     title: string;
+//     description: string;
+//     slug: string;
+//     url: string;
+//     image: string;
+//     icon: string;
+//     category: string | null;
+//     active: boolean;
+//     createdAt: string;
+//     updatedAt: string;
+//     marketsCount: number;
+//     volume: number;
+//     markets: {
+//         id: number;
+//         marketId: string;
+//         question: string;
+//         active: boolean;
+//         closed: boolean;
+//         archived: boolean;
+//         volume: number;
+//         liquidity: number;
+//         image: string;
+//         category: string | null;
+//         endDate: string | null;
+//         outcomes: {
+//             id: number;
+//             outcomeName: string;
+//             outcomeId: string;
+//             price: number;
+//             volume: number;
+//             liquidity: number;
+//         }[];
+//     }[];
+// };
 
 /**
  * API Request/Response types

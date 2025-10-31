@@ -1,16 +1,13 @@
 import { FC } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import {
-    TPolymarketMarket,
-    TPolymarketMarketGroup,
-} from "src/api/services/polymarket/types";
+import { TPolymarketEvent } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
 
 interface IPolymarketTopVolumeCard {
-    market: TPolymarketMarketGroup["markets"][0];
+    market: TPolymarketEvent["markets"][0];
     isSingleMarket?: boolean;
-    onSelectMarket?: (market: TPolymarketMarket) => void;
+    onSelectMarket?: (market: TPolymarketEvent["markets"][0]) => void;
 }
 
 const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
@@ -47,7 +44,7 @@ const PolymarketTopVolumeCard: FC<IPolymarketTopVolumeCard> = ({
         if (onSelectMarket) {
             // TODO(xavier-charles): fix this
             // @ts-ignore
-            onSelectMarket(market as TPolymarketMarket);
+            onSelectMarket(market);
         }
     };
 
