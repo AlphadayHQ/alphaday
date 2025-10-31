@@ -22,6 +22,7 @@ interface ICustomTableProps {
     rowProps: TCustomRowProps | undefined;
     widgetHeight: number;
     isLoadingItems: boolean;
+    isHeaderOnlyMode?: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     setWidgetHeight: (size: number) => void;
 }
@@ -34,11 +35,13 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     isLoadingItems,
     handlePaginate,
     setWidgetHeight,
+    isHeaderOnlyMode,
 }) => {
     const { t } = useTranslation();
     const widgetSize = useWidgetBreakpoints([500]);
-    const isCompactMode =
-        widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
+    const isCompactMode = isHeaderOnlyMode
+        ? false
+        : widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const prevScrollRef = useRef<HTMLElement | undefined>();
 

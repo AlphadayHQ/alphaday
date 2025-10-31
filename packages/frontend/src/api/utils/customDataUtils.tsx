@@ -265,8 +265,26 @@ export const formatCustomDataField: (
             };
         }
         if (format === "date") {
+            const parsedDate = moment(rawField, [
+                moment.ISO_8601,
+                "YYYY-MM-DD HH:mm:ss.SSS UTC",
+                "YYYY-MM-DD HH:mm:ss UTC",
+                "YYYY-MM-DD HH:mm:ss.SSS",
+                "YYYY-MM-DD HH:mm:ss",
+            ]);
+
+            if (!parsedDate.isValid()) {
+                Logger.warn(
+                    `formatCustomDataField: Invalid date format for "${rawField}"`
+                );
+                return {
+                    field: rawField,
+                    error: "Invalid date format",
+                };
+            }
+
             return {
-                field: moment(rawField).format("YYYY-MM-DDTHH:mmZ").toString(),
+                field: parsedDate.format("YYYY-MM-DDTHH:mmZ").toString(),
                 error: undefined,
             };
         }
