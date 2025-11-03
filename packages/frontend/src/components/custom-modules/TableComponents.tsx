@@ -202,127 +202,13 @@ export const TableRow: React.FC<ITableRowProps> = ({
     );
 };
 
-interface ITableColumnProps {
-    columnLayout: TRemoteCustomLayoutEntry;
-    items: TCustomItem[];
-}
-
-export const TableColumn: React.FC<ITableColumnProps> = ({
-    columnLayout,
-    items,
-}) => {
-    if (columnLayout.hidden) return null;
-
-    return (
-        <div className="flex flex-col w-fit">
-            {/* Column Header */}
-            <div className="flex flex-row pt-1 px-5 pb-2">
-                <div
-                    className={twMerge(
-                        "fontGroup-normal text-primaryVariant100 whitespace-nowrap",
-                        columnLayout.format &&
-                            getColumnJustification(
-                                columnLayout.format,
-                                columnLayout.justify
-                            )
-                    )}
-                >
-                    {columnLayout.title}
-                </div>
-            </div>
-
-            {/* Column Cells */}
-            {items.map((item) => {
-                const rawValue =
-                    columnLayout.template !== undefined
-                        ? evaluateTranslationTemplate(
-                              columnLayout.template,
-                              item
-                          )
-                        : undefined;
-                const formattedValue =
-                    rawValue !== undefined
-                        ? formatCustomDataField({
-                              rawField: rawValue,
-                              format: columnLayout.format,
-                          })
-                        : undefined;
-
-                const href =
-                    columnLayout.uri_ref &&
-                    item[columnLayout.uri_ref] !== undefined
-                        ? String(item[columnLayout.uri_ref])
-                        : undefined;
-
-                const imageUri =
-                    columnLayout.image_uri_ref &&
-                    item[columnLayout.image_uri_ref]
-                        ? String(item[columnLayout.image_uri_ref])
-                        : undefined;
-
-                return (
-                    <div
-                        key={item.id}
-                        className={twMerge(
-                            "flex px-5 py-2 hover:bg-background whitespace-nowrap border-b border-borderLine",
-                            columnLayout.format &&
-                                getColumnJustification(
-                                    columnLayout.format,
-                                    columnLayout.justify
-                                )
-                        )}
-                    >
-                        {columnLayout.format === "image" && imageUri ? (
-                            <img
-                                src={imageUri}
-                                alt=""
-                                onError={handleTableImgError(imageUri)}
-                                className="w-8 h-8 rounded-full"
-                            />
-                        ) : (
-                            <div className="flex items-center">
-                                {href !== undefined && (
-                                    <LinkSVG
-                                        className={twMerge(
-                                            "shrink-0 w-2 h-2 mr-2",
-                                            href === "" && "invisible"
-                                        )}
-                                    />
-                                )}
-                                {formattedValue?.field}
-                            </div>
-                        )}
-                    </div>
-                );
-            })}
-        </div>
-    );
-};
-
-interface IColumnBasedTableProps {
+interface IGridBasedTableProps {
     columnsLayout: TRemoteCustomLayoutEntry[];
     items: TCustomItem[];
     rowProps: TRemoteCustomRowProps | undefined;
 }
 
-// export const ColumnBasedTable: React.FC<IColumnBasedTableProps> = ({
-//     columnsLayout,
-//     items,
-// }) => {
-//     return (
-//         <div className="flex flex-row overflow-x-auto">
-//             {columnsLayout.map((column) => (
-//                 <TableColumn
-//                     key={column.id}
-//                     columnLayout={column}
-//                     items={items}
-//                 />
-//             ))}
-//         </div>
-//     );
-// };
-
-export const ColumnBasedTable: React.FC<IColumnBasedTableProps> = ({
+export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
     columnsLayout,
     items,
 }) => {
