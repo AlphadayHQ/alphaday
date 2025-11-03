@@ -305,19 +305,101 @@ interface IColumnBasedTableProps {
     rowProps: TRemoteCustomRowProps | undefined;
 }
 
+// export const ColumnBasedTable: React.FC<IColumnBasedTableProps> = ({
+//     columnsLayout,
+//     items,
+// }) => {
+//     return (
+//         <div className="flex flex-row overflow-x-auto">
+//             {columnsLayout.map((column) => (
+//                 <TableColumn
+//                     key={column.id}
+//                     columnLayout={column}
+//                     items={items}
+//                 />
+//             ))}
+//         </div>
+//     );
+// };
+
 export const ColumnBasedTable: React.FC<IColumnBasedTableProps> = ({
     columnsLayout,
     items,
 }) => {
+    const visibleColumns = columnsLayout.filter((col) => !col.hidden);
+
     return (
-        <div className="flex flex-row overflow-x-auto">
-            {columnsLayout.map((column) => (
-                <TableColumn
-                    key={column.id}
-                    columnLayout={column}
-                    items={items}
-                />
+        <div
+            className="grid overflow-x-auto"
+            style={{
+                gridTemplateColumns: `repeat(${visibleColumns.length}, max-content)`,
+                gridTemplateRows: `auto repeat(${items.length}, 1fr)`,
+            }}
+        >
+            {/* Headers */}
+            {visibleColumns.map((column) => (
+                <div
+                    key={`header-${column.id}`}
+                    className="px-5 py-2 font-medium"
+                >
+                    {column.title}
+                </div>
             ))}
+
+            {/* Cells */}
+            {items.map((item) =>
+                visibleColumns.map((column) => {
+                    const rawValue =
+                        column.template !== undefined
+                            ? evaluateTranslationTemplate(column.template, item)
+                            : undefined;
+                    const formattedValue =
+                        rawValue !== undefined
+                            ? formatCustomDataField({
+                                  rawField: rawValue,
+                                  format: column.format,
+                              })
+                            : undefined;
+
+                    const href =
+                        column.uri_ref && item[column.uri_ref] !== undefined
+                            ? String(item[column.uri_ref])
+                            : undefined;
+
+                    const imageUri =
+                        column.image_uri_ref && item[column.image_uri_ref]
+                            ? String(item[column.image_uri_ref])
+                            : undefined;
+                    return (
+                        <div
+                            key={`${item.id}-${column.id}`}
+                            className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px]"
+                        >
+                            {/* Your cell content rendering logic */}
+                            {column.format === "image" && imageUri ? (
+                                <img
+                                    src={imageUri}
+                                    alt=""
+                                    onError={handleTableImgError(imageUri)}
+                                    className="w-8 h-8 rounded-full"
+                                />
+                            ) : (
+                                <div className="flex items-center break-all min-w-0">
+                                    {href !== undefined && (
+                                        <LinkSVG
+                                            className={twMerge(
+                                                "shrink-0 w-2 h-2 mr-2",
+                                                href === "" && "invisible"
+                                            )}
+                                        />
+                                    )}
+                                    {formattedValue?.field}
+                                </div>
+                            )}
+                        </div>
+                    );
+                })
+            )}
         </div>
     );
 };
