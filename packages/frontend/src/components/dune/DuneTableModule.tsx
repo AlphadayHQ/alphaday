@@ -7,8 +7,8 @@ import {
     TCustomItem,
 } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
-import { ColumnBasedTable } from "src/components/custom-modules/TableComponents";
 import CONFIG from "src/config";
+import { GridBasedTable } from "../custom-modules/TableComponents";
 
 const { WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
 const HEADER_HEIGHT = 22;
@@ -84,7 +84,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
                     height: widgetHeight,
                 }}
             >
-                <ColumnBasedTable
+                <GridBasedTable
                     columnsLayout={columns}
                     items={items}
                     rowProps={rowProps}

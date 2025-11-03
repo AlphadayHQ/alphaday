@@ -64,8 +64,6 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [custom_meta]);
 
-    console.log("items", moduleData.widget.name, items);
-
     return (
         <DuneTableModule
             items={items}
