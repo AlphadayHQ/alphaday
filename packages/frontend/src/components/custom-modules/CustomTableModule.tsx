@@ -85,7 +85,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     }
 
     return (
-        <div className="h-25 overflow-x-auto">
+        <div className="h-25 overflow-x-auto overflow-y-hidden">
             {!isCompactMode && (
                 <div className="min-w-fit">
                     <TableHeader
@@ -96,7 +96,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
             )}
             <ScrollBar
                 onScroll={handleScroll}
-                className="divide-y divide-solid divide-borderLine pl-2 pr-[3px]"
+                className="divide-y divide-solid divide-borderLine pl-2 pr-[3px] overflow-x-visible"
                 containerRef={setScrollRef}
                 style={{
                     height: widgetHeight - HEADER_HEIGHT,
@@ -104,14 +104,15 @@ const CustomTableModule: FC<ICustomTableProps> = ({
             >
                 <div className="min-w-fit">
                     {items.map((item) => {
-                        return isCompactMode ? (
-                            <CompactTableRow
-                                columnsLayout={columns}
-                                rowData={item}
-                                rowProps={rowProps}
-                                key={item.id}
-                            />
-                        ) : (
+                        return (
+                            // return !isCompactMode ? (
+                            //     <CompactTableRow
+                            //         columnsLayout={columns}
+                            //         rowData={item}
+                            //         rowProps={rowProps}
+                            //         key={item.id}
+                            //     />
+                            // ) : (
                             <TableRow
                                 columnsLayout={columns}
                                 rowData={item}

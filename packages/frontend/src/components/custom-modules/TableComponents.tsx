@@ -130,7 +130,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-row py-2 px-5 hover:bg-background min-w-fit",
+                "flex flex-row py-2 px-5 hover:bg-background min-w-fit overflow-x-auto",
                 rowLink && "cursor-pointer"
             )}
             {...(rowLink && { onClick: handleOnClick })}
