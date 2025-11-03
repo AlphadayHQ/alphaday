@@ -64,8 +64,6 @@ const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [custom_meta]);
 
-    console.log("items", moduleData.widget.name, items);
-
     return (
         <CustomTableModule
             items={items}
