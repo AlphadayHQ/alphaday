@@ -9,7 +9,12 @@ import {
 } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import CONFIG from "src/config";
-import { CompactTableRow, TableHeader, TableRow } from "./TableComponents";
+import {
+    CompactTableRow,
+    TableHeader,
+    TableRow,
+    ColumnBasedTable,
+} from "./TableComponents";
 
 const { WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
 const HEADER_HEIGHT = 22;
@@ -23,6 +28,7 @@ interface ICustomTableProps {
     widgetHeight: number;
     isLoadingItems: boolean;
     isHeaderOnlyMode?: boolean;
+    useColumnLayout?: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     setWidgetHeight: (size: number) => void;
 }
@@ -36,6 +42,7 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     handlePaginate,
     setWidgetHeight,
     isHeaderOnlyMode,
+    useColumnLayout = false,
 }) => {
     const { t } = useTranslation();
     const widgetSize = useWidgetBreakpoints([500]);
@@ -84,47 +91,68 @@ const CustomTableModule: FC<ICustomTableProps> = ({
         );
     }
 
+    // if (useColumnLayout) {
     return (
         <div className="h-25 overflow-x-auto overflow-y-hidden">
-            {!isCompactMode && (
-                <div className="min-w-fit">
-                    <TableHeader
-                        layout={columns}
-                        addExtraColumn={addLinkColumn}
-                    />
-                </div>
-            )}
             <ScrollBar
                 onScroll={handleScroll}
-                className="divide-y divide-solid divide-borderLine pl-2 pr-[3px] overflow-x-visible"
+                className="pl-2 pr-[3px]"
                 containerRef={setScrollRef}
                 style={{
-                    height: widgetHeight - HEADER_HEIGHT,
+                    height: widgetHeight,
                 }}
             >
-                <div className="min-w-fit">
-                    {items.map((item) => {
-                        return (
-                            // return !isCompactMode ? (
-                            //     <CompactTableRow
-                            //         columnsLayout={columns}
-                            //         rowData={item}
-                            //         rowProps={rowProps}
-                            //         key={item.id}
-                            //     />
-                            // ) : (
-                            <TableRow
-                                columnsLayout={columns}
-                                rowData={item}
-                                rowProps={rowProps}
-                                key={item.id}
-                            />
-                        );
-                    })}
-                </div>
+                <ColumnBasedTable
+                    columnsLayout={columns}
+                    items={items}
+                    rowProps={rowProps}
+                />
             </ScrollBar>
         </div>
     );
+    // }
+
+    // return (
+    //     <div className="h-25 overflow-x-auto overflow-y-hidden">
+    //         {!isCompactMode && (
+    //             <div className="min-w-fit">
+    //                 <TableHeader
+    //                     layout={columns}
+    //                     addExtraColumn={addLinkColumn}
+    //                 />
+    //             </div>
+    //         )}
+    //         <ScrollBar
+    //             onScroll={handleScroll}
+    //             className="divide-y divide-solid divide-borderLine pl-2 pr-[3px] overflow-x-visible"
+    //             containerRef={setScrollRef}
+    //             style={{
+    //                 height: widgetHeight - HEADER_HEIGHT,
+    //             }}
+    //         >
+    //             <div className="min-w-fit">
+    //                 {items.map((item) => {
+    //                     return (
+    //                         // return !isCompactMode ? (
+    //                         //     <CompactTableRow
+    //                         //         columnsLayout={columns}
+    //                         //         rowData={item}
+    //                         //         rowProps={rowProps}
+    //                         //         key={item.id}
+    //                         //     />
+    //                         // ) : (
+    //                         <TableRow
+    //                             columnsLayout={columns}
+    //                             rowData={item}
+    //                             rowProps={rowProps}
+    //                             key={item.id}
+    //                         />
+    //                     );
+    //                 })}
+    //             </div>
+    //         </ScrollBar>
+    //     </div>
+    // );
 };
 
 export default CustomTableModule;
