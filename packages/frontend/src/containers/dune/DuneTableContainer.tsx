@@ -37,12 +37,12 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const items = useMemo(() => {
         if (data_type === EWidgetData.Static) {
             if (!custom_data || !custom_meta) {
-                Logger.error("CustomTableContainer: missing data or meta");
+                Logger.error("DuneTableContainer: missing data or meta");
                 return [];
             }
             if (custom_meta.layout_type !== "table") {
                 Logger.error(
-                    "CustomTableContainer: invalid layout type, expected table"
+                    "DuneTableContainer: invalid layout type, expected table"
                 );
                 return [];
             }
