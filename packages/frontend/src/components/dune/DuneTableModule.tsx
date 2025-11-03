@@ -73,22 +73,23 @@ const DuneTableModule: FC<IDuneTableProps> = ({
         );
     }
 
-    // if (useColumnLayout) {
     return (
-        <div className="h-25 overflow-x-auto overflow-y-hidden">
+        <div className="h-25 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primaryVariant100 scrollbar-thumb-rounded">
             <ScrollBar
                 onScroll={handleScroll}
-                className="pl-2 pr-[3px]"
+                className="pl-2 pr-[3px] !overflow-x-visible !overflow-y-auto"
                 containerRef={setScrollRef}
                 style={{
                     height: widgetHeight,
                 }}
             >
-                <GridBasedTable
-                    columnsLayout={columns}
-                    items={items}
-                    rowProps={rowProps}
-                />
+                <div className="min-w-fit">
+                    <GridBasedTable
+                        columnsLayout={columns}
+                        items={items}
+                        rowProps={rowProps}
+                    />
+                </div>
             </ScrollBar>
         </div>
     );
