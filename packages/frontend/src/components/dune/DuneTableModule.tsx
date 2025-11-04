@@ -1,6 +1,15 @@
-import { FC, FormEvent, useEffect, useRef, useState } from "react";
+import {
+    FC,
+    FormEvent,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
+import { DimensionsContext } from "src/api/store/providers/dimensions-context";
 import {
     TCustomLayoutEntry,
     TCustomRowProps,
@@ -32,6 +41,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
     handlePaginate,
     setWidgetHeight,
 }) => {
+    const { widgetsSize } = useContext(DimensionsContext);
     const { t } = useTranslation();
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const prevScrollRef = useRef<HTMLElement | undefined>();
@@ -61,6 +71,14 @@ const DuneTableModule: FC<IDuneTableProps> = ({
         }
     };
 
+    const minCellSize = useMemo(
+        () =>
+            widgetsSize?.width !== undefined
+                ? widgetsSize.width / columns.length - 16 // 16 here is a magic number needs futher testing
+                : undefined,
+        [columns.length, widgetsSize?.width]
+    );
+
     if (isLoadingItems) {
         return <ModuleLoader $height={`${widgetHeight}px`} />;
     }
@@ -88,6 +106,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
                         columnsLayout={columns}
                         items={items}
                         rowProps={rowProps}
+                        minCellSize={minCellSize}
                     />
                 </div>
             </ScrollBar>

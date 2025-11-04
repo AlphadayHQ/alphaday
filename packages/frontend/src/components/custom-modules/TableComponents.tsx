@@ -206,11 +206,13 @@ interface IGridBasedTableProps {
     columnsLayout: TRemoteCustomLayoutEntry[];
     items: TCustomItem[];
     rowProps: TRemoteCustomRowProps | undefined;
+    minCellSize: number | undefined;
 }
 
 export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
     columnsLayout,
     items,
+    minCellSize,
 }) => {
     const visibleColumns = columnsLayout.filter((col) => !col.hidden);
 
@@ -260,6 +262,7 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                         <div
                             key={`${item.id}-${column.id}`}
                             className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px]"
+                            style={{ minWidth: `${minCellSize}px` }}
                         >
                             {/* Your cell content rendering logic */}
                             {column.format === "image" && imageUri ? (
