@@ -1,7 +1,6 @@
 import { FC, useMemo } from "react";
 import { useAuth, useWidgetHeight } from "src/api/hooks";
 import {
-    EWidgetData,
     useImportDuneMutation,
     useUpdateWidgetSettingsMutation,
 } from "src/api/services";
@@ -20,7 +19,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [updateWidgetSettings] = useUpdateWidgetSettingsMutation();
 
     /* eslint-disable @typescript-eslint/naming-convention */
-    const { custom_meta, custom_data, data_type } = moduleData.widget;
+    const { custom_meta, custom_data } = moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
     const widgetHeight = useWidgetHeight(moduleData);
@@ -47,21 +46,18 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [custom_meta]);
 
     const items = useMemo(() => {
-        if (data_type === EWidgetData.Static) {
-            if (!custom_data || !custom_meta) {
-                Logger.error("DuneTableContainer: missing data or meta");
-                return [];
-            }
-            if (custom_meta.layout_type !== "table") {
-                Logger.error(
-                    "DuneTableContainer: invalid layout type, expected table"
-                );
-                return [];
-            }
-            return custom_data;
+        if (!custom_data || !custom_meta) {
+            Logger.error("DuneTableContainer: missing data or meta");
+            return undefined;
         }
-        return [];
-    }, [custom_data, custom_meta, data_type]);
+        if (custom_meta.layout_type !== "table") {
+            Logger.error(
+                "DuneTableContainer: invalid layout type, expected table"
+            );
+            return undefined;
+        }
+        return Array.isArray(custom_data) ? custom_data : undefined;
+    }, [custom_data, custom_meta]);
 
     const handleSetEndpointUrl = (url: string) => {
         const queryId = extractDuneQueryId(url);
