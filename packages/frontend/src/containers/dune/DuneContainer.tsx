@@ -1,5 +1,6 @@
 import { FC, useMemo } from "react";
 import { useAuth, useWidgetHeight } from "src/api/hooks";
+import { useView } from "src/api/hooks/useView";
 import {
     useImportDuneMutation,
     useUpdateWidgetSettingsMutation,
@@ -14,6 +15,7 @@ import { IModuleContainer } from "src/types";
 const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
     const { isAuthenticated } = useAuth();
+    const { selectedView } = useView();
 
     const [importDune, { isLoading }] = useImportDuneMutation();
     const [updateWidgetSettings] = useUpdateWidgetSettingsMutation();
@@ -71,7 +73,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             })
                 .then((res) => {
                     if ("data" in res && res.data) {
-                        if (isAuthenticated) {
+                        if (isAuthenticated && !selectedView?.isReadOnly) {
                             Logger.info(
                                 "DuneContainer::updateWidgetSettings: Setting widget dataset",
                                 {
