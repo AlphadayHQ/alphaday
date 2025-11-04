@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react";
 import { useWidgetHeight } from "src/api/hooks";
-import { EWidgetData, useGetCustomItemsQuery } from "src/api/services";
+import { EWidgetData } from "src/api/services";
 import { setWidgetHeight } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 import { Logger } from "src/api/utils/logging";
@@ -11,8 +11,7 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
 
     /* eslint-disable @typescript-eslint/naming-convention */
-    const { custom_data, custom_meta, endpoint_url, data_type } =
-        moduleData.widget;
+    const { custom_data, custom_meta, data_type } = moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
     const widgetHeight = useWidgetHeight(moduleData);
@@ -24,15 +23,6 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             })
         );
     };
-
-    const { data, isLoading } = useGetCustomItemsQuery(
-        {
-            endpointUrl: endpoint_url || "",
-        },
-        {
-            skip: data_type === EWidgetData.Static,
-        }
-    );
 
     const items = useMemo(() => {
         if (data_type === EWidgetData.Static) {
@@ -48,8 +38,8 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             }
             return custom_data;
         }
-        return data?.results ?? [];
-    }, [custom_data, custom_meta, data?.results, data_type]);
+        return [];
+    }, [custom_data, custom_meta, data_type]);
 
     const meta = useMemo(() => {
         if (custom_meta?.layout_type === "table") {
@@ -69,7 +59,7 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             items={items}
             columns={meta.columns}
             rowProps={meta.row_props}
-            isLoadingItems={isLoading}
+            isLoadingItems={false}
             handlePaginate={() => ({})}
             widgetHeight={widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}

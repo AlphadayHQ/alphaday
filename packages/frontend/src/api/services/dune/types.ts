@@ -1,5 +1,6 @@
 import { TCustomItem } from "src/api/types";
 import { TPagination } from "../baseTypes";
+import { TRemoteCustomMeta } from "../views/types";
 
 export type TImportDuneRequest = {
     query_id: string;
@@ -9,6 +10,7 @@ export type TImportDuneRequest = {
 export type TImportDuneResponse = {
     id: number;
     data: TCustomItem[];
+    meta: TRemoteCustomMeta;
 };
 
 export type TGetDatasetByIdRequest = {

@@ -1,10 +1,11 @@
-import { FC, useMemo, useState, useEffect } from "react";
-import { useWidgetHeight } from "src/api/hooks";
+import { FC, useMemo } from "react";
+import { useAuth, useWidgetHeight } from "src/api/hooks";
 import {
+    EWidgetData,
     useImportDuneMutation,
     useUpdateWidgetSettingsMutation,
 } from "src/api/services";
-import { setWidgetHeight } from "src/api/store";
+import { setWidgetHeight, updateWidgetCustomDataMeta } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 import { extractDuneQueryId } from "src/api/utils/duneUtils";
 import { Logger } from "src/api/utils/logging";
@@ -13,13 +14,13 @@ import { IModuleContainer } from "src/types";
 
 const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
+    const { isAuthenticated } = useAuth();
 
-    const [endpointUrl, setEndpointUrl] = useState<string>("");
-    const [importDune, { data, isLoading }] = useImportDuneMutation();
+    const [importDune, { isLoading }] = useImportDuneMutation();
     const [updateWidgetSettings] = useUpdateWidgetSettingsMutation();
 
     /* eslint-disable @typescript-eslint/naming-convention */
-    const { custom_meta } = moduleData.widget;
+    const { custom_meta, custom_data, data_type } = moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
     const widgetHeight = useWidgetHeight(moduleData);
@@ -31,46 +32,6 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             })
         );
     };
-
-    useEffect(() => {
-        const queryId = extractDuneQueryId(endpointUrl);
-        if (queryId) {
-            Logger.info("DuneContainer::importDune: Importing Dune query", {
-                queryId,
-            });
-            importDune({
-                query_id: queryId,
-                cached: true,
-            })
-                .then((res) => {
-                    if ("data" in res && res.data) {
-                        Logger.info(
-                            "DuneContainer::updateWidgetSettings: Setting widget dataset",
-                            {
-                                widgetHash: moduleData.hash,
-                                datasetId: res.data.id,
-                            }
-                        );
-                        updateWidgetSettings({
-                            widget_hash: moduleData.hash,
-                            setting_slug: "widget_dataset_setting",
-                            selected_dataset: res.data.id,
-                        }).catch((err) =>
-                            Logger.error(
-                                "DuneContainer::updateWidgetSettings: Failed to update widget settings",
-                                err
-                            )
-                        );
-                    }
-                })
-                .catch((err) =>
-                    Logger.error(
-                        "DuneContainer::importDune: Failed to import Dune query",
-                        err
-                    )
-                );
-        }
-    }, [importDune, updateWidgetSettings, endpointUrl, moduleData.hash]);
 
     const meta = useMemo(() => {
         if (custom_meta?.layout_type === "table") {
@@ -85,13 +46,82 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [custom_meta]);
 
+    const items = useMemo(() => {
+        if (data_type === EWidgetData.Static) {
+            if (!custom_data || !custom_meta) {
+                Logger.error("DuneTableContainer: missing data or meta");
+                return [];
+            }
+            if (custom_meta.layout_type !== "table") {
+                Logger.error(
+                    "DuneTableContainer: invalid layout type, expected table"
+                );
+                return [];
+            }
+            return custom_data;
+        }
+        return [];
+    }, [custom_data, custom_meta, data_type]);
+
     const handleSetEndpointUrl = (url: string) => {
-        setEndpointUrl(url);
+        const queryId = extractDuneQueryId(url);
+        if (queryId) {
+            Logger.info("DuneContainer::importDune: Importing Dune query", {
+                queryId,
+            });
+            importDune({
+                query_id: queryId,
+                cached: true,
+            })
+                .then((res) => {
+                    if ("data" in res && res.data) {
+                        if (isAuthenticated) {
+                            Logger.info(
+                                "DuneContainer::updateWidgetSettings: Setting widget dataset",
+                                {
+                                    widgetHash: moduleData.hash,
+                                    datasetId: res.data.id,
+                                }
+                            );
+                            updateWidgetSettings({
+                                widget_hash: moduleData.hash,
+                                setting_slug: "widget_dataset_setting",
+                                selected_dataset: res.data.id,
+                            }).catch((err) =>
+                                Logger.error(
+                                    "DuneContainer::updateWidgetSettings: Failed to update widget settings",
+                                    err
+                                )
+                            );
+                        } else {
+                            Logger.info(
+                                "DuneContainer::updateWidgetCustomDataMeta: Setting widget custom data and meta",
+                                {
+                                    widgetHash: moduleData.hash,
+                                }
+                            );
+                            dispatch(
+                                updateWidgetCustomDataMeta({
+                                    widgetHash: moduleData.hash,
+                                    custom_data: res.data.data,
+                                    custom_meta: res.data.meta,
+                                })
+                            );
+                        }
+                    }
+                })
+                .catch((err) =>
+                    Logger.error(
+                        "DuneContainer::importDune: Failed to import Dune query",
+                        err
+                    )
+                );
+        }
     };
 
     return (
         <DuneModule
-            items={data?.data}
+            items={items}
             columns={meta.columns}
             rowProps={meta.row_props}
             isLoadingItems={isLoading}
