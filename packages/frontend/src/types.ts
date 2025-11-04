@@ -79,6 +79,10 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     discord_template: lazyRetry(
         () => import("./containers/items/ItemsContainer")
     ),
+    dune_template: lazyRetry(() => import("./containers/dune/DuneContainer")),
+    dune_table_template: lazyRetry(
+        () => import("./containers/dune/DuneTableContainer")
+    ),
     faq_template: lazyRetry(() => import("./containers/dynamic/FaqContainer")),
     forum_template: lazyRetry(
         () => import("./containers/items/ItemsContainer")

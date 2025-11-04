@@ -8,6 +8,7 @@ import {
     TRemoteCustomMeta,
     TCustomMetaChart,
     TCustomMetaCard,
+    TRemoteCustomLayoutEntry,
 } from "src/api/services";
 import { TCustomItem, TCustomSeries } from "src/api/types";
 import { getErrorMessage } from "src/api/utils/errorHandling";
@@ -264,8 +265,26 @@ export const formatCustomDataField: (
             };
         }
         if (format === "date") {
+            const parsedDate = moment(rawField, [
+                moment.ISO_8601,
+                "YYYY-MM-DD HH:mm:ss.SSS UTC",
+                "YYYY-MM-DD HH:mm:ss UTC",
+                "YYYY-MM-DD HH:mm:ss.SSS",
+                "YYYY-MM-DD HH:mm:ss",
+            ]);
+
+            if (!parsedDate.isValid()) {
+                Logger.warn(
+                    `formatCustomDataField: Invalid date format for "${rawField}"`
+                );
+                return {
+                    field: rawField,
+                    error: "Invalid date format",
+                };
+            }
+
             return {
-                field: moment(rawField).format("YYYY-MM-DDTHH:mmZ").toString(),
+                field: parsedDate.format("YYYY-MM-DDTHH:mmZ").toString(),
                 error: undefined,
             };
         }
@@ -452,8 +471,40 @@ export const getYSeries: (
 };
 
 /**
- * Attemtps to extract the Card fields `title` and `value` from a custom_data and custom_meta objects.
+ * Infers column layout from the first row of data when no columns are explicitly defined.
+ * Generates sensible defaults for format, width, and template based on data types.
  */
+export const generateColumnsFromRowData: (
+    items: TRemoteCustomData
+) => TRemoteCustomLayoutEntry[] = (items) => {
+    if (items.length === 0) {
+        return [];
+    }
+
+    const firstRow = items[0];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...dataFields } = firstRow;
+
+    return Object.entries(dataFields).map(([key, value], index) => {
+        let format: TRemoteFormat = "plain-text";
+
+        // Infer format from value type
+        if (typeof value === "number") {
+            format = Number.isInteger(value) ? "number" : "decimal";
+        } else if (typeof value === "boolean") {
+            format = "checkmark";
+        }
+
+        return {
+            id: index,
+            title: key,
+            template: key,
+            format,
+            width: 1,
+        };
+    });
+};
+
 export const customDataAsCardData: (
     customData: TRemoteCustomData,
     customMeta: TCustomMetaCard | undefined,

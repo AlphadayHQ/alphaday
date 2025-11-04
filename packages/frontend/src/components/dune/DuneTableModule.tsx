@@ -1,7 +1,15 @@
-import { FC, FormEvent, useEffect, useRef, useState } from "react";
+import {
+    FC,
+    FormEvent,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { useWidgetBreakpoints } from "src/api/hooks";
+import { DimensionsContext } from "src/api/store/providers/dimensions-context";
 import {
     TCustomLayoutEntry,
     TCustomRowProps,
@@ -9,25 +17,22 @@ import {
 } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import CONFIG from "src/config";
-import { CompactTableRow, TableHeader, TableRow } from "./TableComponents";
+import { GridBasedTable } from "../custom-modules/TableComponents";
 
 const { WIDGET_HEIGHT: DEFAULT_WIDGET_HEIGHT } = CONFIG.WIDGETS.TABLE;
 const HEADER_HEIGHT = 22;
-// allow standard layout for tables of up to STD_LAYOUT_MAX_SIZE columns
-const STD_LAYOUT_MAX_SIZE = 4;
 
-interface ICustomTableProps {
+interface IDuneTableProps {
     items: TCustomItem[];
     columns: TCustomLayoutEntry[];
     rowProps: TCustomRowProps | undefined;
     widgetHeight: number;
     isLoadingItems: boolean;
-    isHeaderOnlyMode?: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     setWidgetHeight: (size: number) => void;
 }
 
-const CustomTableModule: FC<ICustomTableProps> = ({
+const DuneTableModule: FC<IDuneTableProps> = ({
     items,
     columns,
     rowProps,
@@ -35,13 +40,9 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     isLoadingItems,
     handlePaginate,
     setWidgetHeight,
-    isHeaderOnlyMode,
 }) => {
+    const { widgetsSize } = useContext(DimensionsContext);
     const { t } = useTranslation();
-    const widgetSize = useWidgetBreakpoints([500]);
-    const isCompactMode = isHeaderOnlyMode
-        ? false
-        : widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const prevScrollRef = useRef<HTMLElement | undefined>();
 
@@ -70,7 +71,13 @@ const CustomTableModule: FC<ICustomTableProps> = ({
         }
     };
 
-    const addLinkColumn = rowProps?.uri_ref !== undefined;
+    const minCellSize = useMemo(
+        () =>
+            widgetsSize?.width !== undefined
+                ? widgetsSize.width / columns.length - 16 // 16 here is a magic number needs futher testing
+                : undefined,
+        [columns.length, widgetsSize?.width]
+    );
 
     if (isLoadingItems) {
         return <ModuleLoader $height={`${widgetHeight}px`} />;
@@ -85,45 +92,26 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     }
 
     return (
-        <div className="h-25 overflow-x-auto">
-            {!isCompactMode && (
-                <div className="min-w-fit">
-                    <TableHeader
-                        layout={columns}
-                        addExtraColumn={addLinkColumn}
-                    />
-                </div>
-            )}
+        <div className="h-25 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primaryVariant100 scrollbar-thumb-rounded">
             <ScrollBar
                 onScroll={handleScroll}
-                className="divide-y divide-solid divide-borderLine pl-2 pr-[3px]"
+                className="pl-2 pr-[3px] !overflow-x-visible !overflow-y-auto"
                 containerRef={setScrollRef}
                 style={{
-                    height: widgetHeight - HEADER_HEIGHT,
+                    height: widgetHeight,
                 }}
             >
                 <div className="min-w-fit">
-                    {items.map((item) => {
-                        return isCompactMode ? (
-                            <CompactTableRow
-                                columnsLayout={columns}
-                                rowData={item}
-                                rowProps={rowProps}
-                                key={item.id}
-                            />
-                        ) : (
-                            <TableRow
-                                columnsLayout={columns}
-                                rowData={item}
-                                rowProps={rowProps}
-                                key={item.id}
-                            />
-                        );
-                    })}
+                    <GridBasedTable
+                        columnsLayout={columns}
+                        items={items}
+                        rowProps={rowProps}
+                        minCellSize={minCellSize}
+                    />
                 </div>
             </ScrollBar>
         </div>
     );
 };
 
-export default CustomTableModule;
+export default DuneTableModule;

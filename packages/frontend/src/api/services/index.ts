@@ -84,6 +84,9 @@ export * from "./superfeed/types";
 export * from "./polymarket/polymarketEndpoints";
 export * from "./polymarket/types";
 
+export * from "./dune/duneEndpoints";
+export * from "./dune/types";
+
 /**
  * alphadayApi export should be last
  */
