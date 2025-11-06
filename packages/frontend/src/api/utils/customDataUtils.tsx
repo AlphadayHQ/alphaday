@@ -216,7 +216,7 @@ export const evaluateTranslationTemplate: (
     template: string,
     data: TCustomItem
 ) => string = (template, data) => {
-    const TEMPLATE_REGEX = /\{\{(\w+)\}\}/g;
+    const TEMPLATE_REGEX = /\{\{([^\}]+)\}\}/g;
     if (!TEMPLATE_REGEX.test(template)) {
         const value = getValueByPath(data, template);
         if (value === undefined) {
