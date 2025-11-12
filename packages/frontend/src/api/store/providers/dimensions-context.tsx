@@ -76,6 +76,10 @@ export const DimensionsProvider: FC<{ children?: React.ReactNode }> = ({
             const elem = document.getElementById(WIDGET_SIZE_TRACKING_ID);
             if (elem) {
                 previousElement.current = elem;
+                setWidgetSize({
+                    width: elem.clientWidth,
+                    height: elem.clientHeight,
+                });
                 resizeObserver.observe(elem);
                 mutationObserver.disconnect();
             }
@@ -119,6 +123,10 @@ export const DimensionsProvider: FC<{ children?: React.ReactNode }> = ({
             const elem = document.getElementById(IMAGE_WIDGET_SIZE_TRACKING_ID);
             if (elem) {
                 previousImageElement.current = elem;
+                setWidgetSize({
+                    width: elem.clientWidth,
+                    height: elem.clientHeight,
+                });
                 imageResizeObserver.observe(elem);
                 imageMutationObserver.disconnect();
             }

@@ -8,6 +8,7 @@ import { useAppSelector } from "src/api/store/hooks";
 import * as viewsStore from "src/api/store/slices/views";
 import { ETutorialTipId, TUserViewWidget } from "src/api/types";
 // import { getItemStyle } from "src/api/utils/layoutUtils";
+import { useTwoColWidgets } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { buildViewPath, getWidgetName } from "src/api/utils/viewUtils";
 import CONFIG from "src/config";
@@ -41,6 +42,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
 }) => {
     const history = useHistory();
     const selectedView = useAppSelector(viewsStore.selectedViewSelector);
+    const { twoColWidgetSlugs } = useTwoColWidgets(selectedView);
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
 
     const templateSlug = moduleData.widget?.template.slug;
@@ -132,6 +134,10 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
         </BaseContainer>
     );
 
+    const singleColWidgets = selectedView?.data?.widgets.filter(
+        (w) => !twoColWidgetSlugs.includes(w.widget.template.slug)
+    );
+
     if (isDragDisabled) {
         return renderContent();
     }
@@ -142,8 +148,7 @@ const ModuleWrapper: FC<IModuleWrapper> = ({
                 <div
                     id={
                         // track only the widgetSize of the first element
-                        selectedView?.data.widgets?.[0]?.hash ===
-                        moduleData.hash
+                        singleColWidgets?.[0]?.hash === moduleData.hash
                             ? CONFIG.UI.WIDGET_SIZE_TRACKING_ID
                             : ""
                     }
