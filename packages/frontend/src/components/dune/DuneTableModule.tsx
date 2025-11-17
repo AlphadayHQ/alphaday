@@ -31,7 +31,7 @@ interface IDuneTableProps {
     isLoadingItems: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     setWidgetHeight: (size: number) => void;
-    duneMeta: {
+    duneMeta?: {
         widgetName: string;
         duneQueryURL: string;
         importTime: string;
