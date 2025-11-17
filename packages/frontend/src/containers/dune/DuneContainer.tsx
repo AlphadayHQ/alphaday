@@ -22,8 +22,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [updateWidgetSettings] = useUpdateWidgetSettingsMutation();
 
     /* eslint-disable @typescript-eslint/naming-convention */
-    const { custom_meta, custom_data, endpoint_url, data_type } =
-        moduleData.widget;
+    const { custom_meta, custom_data, endpoint_url } = moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
     const widgetHeight = useWidgetHeight(moduleData);
