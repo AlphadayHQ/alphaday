@@ -107,6 +107,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
                         items={items}
                         rowProps={rowProps}
                         minCellSize={minCellSize}
+                        options={{ dateformat: "MMM DD, YYYY" }}
                     />
                 </div>
             </ScrollBar>

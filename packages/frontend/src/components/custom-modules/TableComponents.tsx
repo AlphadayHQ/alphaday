@@ -207,12 +207,14 @@ interface IGridBasedTableProps {
     items: TCustomItem[];
     rowProps: TRemoteCustomRowProps | undefined;
     minCellSize: number | undefined;
+    options?: { dateformat?: string };
 }
 
 export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
     columnsLayout,
     items,
     minCellSize,
+    options,
 }) => {
     const visibleColumns = columnsLayout.filter((col) => !col.hidden);
 
@@ -246,6 +248,8 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                             ? formatCustomDataField({
                                   rawField: rawValue,
                                   format: column.format,
+                                  dateFormat:
+                                      options?.dateformat || column.date_format,
                               })
                             : undefined;
 

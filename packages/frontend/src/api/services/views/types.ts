@@ -107,6 +107,7 @@ export type TRemoteCustomLayoutEntry = {
      */
     template?: string;
     format?: TRemoteFormat;
+    date_format?: string; // moment.js format string for date formatting (e.g., "YYYY-MM-DD", "MMM DD, YYYY")
     width?: number;
     uri_ref?: string; // should point to data field entry
     image_uri_ref?: string; // should point to data field entry
