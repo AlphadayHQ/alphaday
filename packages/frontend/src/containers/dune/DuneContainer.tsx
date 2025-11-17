@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { useAuth, useWidgetHeight } from "src/api/hooks";
 import { useView } from "src/api/hooks/useView";
 import {
@@ -19,6 +19,17 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const [importDune, { isLoading }] = useImportDuneMutation();
     const [updateWidgetSettings] = useUpdateWidgetSettingsMutation();
+
+    // Todo remove placeholder when backend is ready
+    const [duneMeta, setDuneMeta] = useState<{
+        widgetName: string;
+        duneQueryURL: string;
+        importTime: string;
+    } | null>({
+        widgetName: "Top DEXs",
+        duneQueryURL: "https://www.google.com",
+        importTime: "2024-05-22T21:04:49.675000+00:00",
+    });
 
     /* eslint-disable @typescript-eslint/naming-convention */
     const { custom_meta, custom_data } = moduleData.widget;
@@ -61,11 +72,17 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return Array.isArray(custom_data) ? custom_data : undefined;
     }, [custom_data, custom_meta]);
 
-    const handleSetEndpointUrl = (url: string) => {
-        const queryId = extractDuneQueryId(url);
+    const handleSetDuneMeta = (data: {
+        widgetName: string;
+        duneQueryURL: string;
+        importTime: string;
+    }) => {
+        const queryId = extractDuneQueryId(data.duneQueryURL);
         if (queryId) {
             Logger.info("DuneContainer::importDune: Importing Dune query", {
                 queryId,
+                widgetName: data.widgetName,
+                importTime: data.importTime,
             });
             importDune({
                 query_id: queryId,
@@ -107,6 +124,8 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
                             );
                         }
                     }
+                    // TODO remove once backend is ready.
+                    setDuneMeta(data);
                 })
                 .catch((err) =>
                     Logger.error(
@@ -126,7 +145,8 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             handlePaginate={() => ({})}
             widgetHeight={widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
-            onSetEndpointUrl={handleSetEndpointUrl}
+            onSetDuneMeta={handleSetDuneMeta}
+            duneMeta={duneMeta}
         />
     );
 };

@@ -17,7 +17,16 @@ interface IDuneModuleProps {
     isLoadingItems: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     setWidgetHeight: (size: number) => void;
-    onSetEndpointUrl: (url: string) => void;
+    onSetDuneMeta: (data: {
+        widgetName: string;
+        duneQueryURL: string;
+        importTime: string;
+    }) => void;
+    duneMeta: {
+        widgetName: string;
+        duneQueryURL: string;
+        importTime: string;
+    } | null;
 }
 
 const DuneModule: FC<IDuneModuleProps> = ({
@@ -28,7 +37,8 @@ const DuneModule: FC<IDuneModuleProps> = ({
     isLoadingItems,
     handlePaginate,
     setWidgetHeight,
-    onSetEndpointUrl,
+    onSetDuneMeta,
+    duneMeta,
 }) => {
     const { t } = useTranslation();
     const [showEnterAddress, setShowEnterAddress] = useState(false);
@@ -49,7 +59,7 @@ const DuneModule: FC<IDuneModuleProps> = ({
                         {t("buttons.enterEndpointURL")}
                     </Button>
                     <EndpointInput
-                        onSetEndpointUrl={onSetEndpointUrl}
+                        onSetDuneMeta={onSetDuneMeta}
                         show={showEnterAddress}
                         onClose={() => setShowEnterAddress(false)}
                     />
@@ -67,6 +77,7 @@ const DuneModule: FC<IDuneModuleProps> = ({
             handlePaginate={handlePaginate}
             setWidgetHeight={setWidgetHeight}
             widgetHeight={widgetHeight}
+            duneMeta={duneMeta}
         />
     );
 };
