@@ -1,6 +1,5 @@
 import { useRef, FC, FormEvent, useCallback } from "react";
 import { twMerge, ModuleLoader } from "@alphaday/ui-kit";
-import { IonFab, IonList } from "@ionic/react";
 import { useOnScreen } from "src/api/hooks";
 import { TSuperfeedItem } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
@@ -55,7 +54,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
 
     return (
         <>
-            <IonList
+            <div
                 onScroll={handleScrollEvent}
                 className="w-full px-3.5 pt-4 bg-transparent overflow-y-auto overscroll-contain h-full"
             >
@@ -90,13 +89,10 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                         onClick={() => onClickItem(item)}
                     />
                 ))}
-            </IonList>
-            <IonFab
-                slot="fixed"
-                horizontal="end"
-                vertical="bottom"
+            </div>
+            <div
                 className={twMerge(
-                    "fixed",
+                    "fixed right-0 bottom-0",
                     isFiltersVisible && "hidden delay-0"
                 )}
             >
@@ -108,7 +104,7 @@ const SuperfeedModule: FC<ISuperfeedModule> = ({
                 >
                     <Settings2SVG className="w-6 text-primary" />
                 </button>
-            </IonFab>
+            </div>
         </>
     );
 };
