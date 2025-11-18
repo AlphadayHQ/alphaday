@@ -15,6 +15,7 @@ import {
     removeWidgetStateFromCache,
     selectIsMinimised,
     toggleLanguageModal,
+    toggleRecipeModal,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
@@ -65,6 +66,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     );
 
     const onToggleLanguageModal = () => dispatch(toggleLanguageModal());
+    const onToggleRecipeModal = () => dispatch(toggleRecipeModal());
 
     const { toggleWidgetLib } = useWidgetLib();
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
@@ -336,6 +338,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         <MainLayout
             toggleWidgetLib={toggleWidgetLib}
             toggleLanguageModal={onToggleLanguageModal}
+            toggleRecipeModal={onToggleRecipeModal}
             layoutState={layoutState}
             hideFooter={
                 (showTutorial && !!availableViews?.length) || // do not show the tutorial if there are no views
