@@ -72,7 +72,6 @@ export const Dialog: FC<IDialog> = ({
                 </h6>
                 {showXButton && (
                     <button
-                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         onClick={handleCloseDialog}
                         title="close"
                         type="button"
