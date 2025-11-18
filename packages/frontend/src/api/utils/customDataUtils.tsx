@@ -290,8 +290,12 @@ export const formatCustomDataField: (
         }
         if (format === "decimal" || format === "number") {
             // Handle null or invalid numeric values
-            if (rawField === null || rawField === undefined || rawField === "" || 
-                (typeof rawField === "string" && isNaN(parseFloat(rawField)))) {
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
                 return {
                     field: "-",
                     error: undefined,
@@ -304,8 +308,12 @@ export const formatCustomDataField: (
         }
         if (format === "currency") {
             // Handle null or invalid numeric values
-            if (rawField === null || rawField === undefined || rawField === "" || 
-                (typeof rawField === "string" && isNaN(parseFloat(rawField)))) {
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
                 return {
                     field: "-",
                     error: undefined,
@@ -322,8 +330,12 @@ export const formatCustomDataField: (
         }
         if (format === "percentage") {
             // Handle null or invalid numeric values
-            if (rawField === null || rawField === undefined || rawField === "" || 
-                (typeof rawField === "string" && isNaN(parseFloat(rawField)))) {
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
                 return {
                     field: "-",
                     error: undefined,

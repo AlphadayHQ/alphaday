@@ -39,10 +39,11 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
         }
     );
 
-    const {
-        nextPage,
-        handleNextPage,
-    } = usePagination(apiData?.links, MAX_PAGE_NUMBER, isSuccess);
+    const { nextPage, handleNextPage } = usePagination(
+        apiData?.links,
+        MAX_PAGE_NUMBER,
+        isSuccess
+    );
 
     const handlePaginate = useCallback(() => {
         handleNextPage("next");
@@ -51,7 +52,7 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
     // Set current page after next page is determined
     useEffect(() => {
         if (nextPage === undefined) {
-            return;
+            return undefined;
         }
         const timeout = setTimeout(() => {
             setCurrentPage(nextPage);
