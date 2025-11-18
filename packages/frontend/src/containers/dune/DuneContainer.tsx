@@ -21,20 +21,16 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const [importDune, { isLoading: isImporting }] = useImportDuneMutation();
     const [updateWidgetSettings] = useUpdateWidgetSettingsMutation();
 
-    // Todo remove placeholder when backend is ready
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const { custom_meta, custom_data, endpoint_url } = moduleData.widget;
+    /* eslint-enable @typescript-eslint/naming-convention */
+
+    // State to track Dune query metadata (widget name, URL, import time)
     const [duneMeta, setDuneMeta] = useState<{
         widgetName: string;
         duneQueryURL: string;
         importTime: string;
-    } | null>({
-        widgetName: "Top DEXs",
-        duneQueryURL: "https://www.google.com",
-        importTime: "2024-05-22T21:04:49.675000+00:00",
-    });
-
-    /* eslint-disable @typescript-eslint/naming-convention */
-    const { custom_meta, custom_data, endpoint_url } = moduleData.widget;
-    /* eslint-enable @typescript-eslint/naming-convention */
+    } | null>(null);
 
     const widgetHeight = useWidgetHeight(moduleData);
 
@@ -114,11 +110,11 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             Logger.info("DuneContainer::importDune: Importing Dune query", {
                 queryId,
                 widgetName: data.widgetName,
-                importTime: data.importTime,
             });
             importDune({
                 query_id: queryId,
                 cached: true,
+                widget_name: data.widgetName,
             })
                 .then((res) => {
                     if ("data" in res && res.data) {
@@ -155,9 +151,9 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
                                 })
                             );
                         }
+                        // Update the duneMeta state with the actual data
+                        setDuneMeta(data);
                     }
-                    // TODO remove once backend is ready.
-                    setDuneMeta(data);
                 })
                 .catch((err) =>
                     Logger.error(
