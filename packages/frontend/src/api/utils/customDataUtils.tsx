@@ -289,12 +289,36 @@ export const formatCustomDataField: (
             };
         }
         if (format === "decimal" || format === "number") {
+            // Handle null or invalid numeric values
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
+                return {
+                    field: "-",
+                    error: undefined,
+                };
+            }
             return {
                 field: formatNumber({ value: rawField }).value,
                 error: undefined,
             };
         }
         if (format === "currency") {
+            // Handle null or invalid numeric values
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
+                return {
+                    field: "-",
+                    error: undefined,
+                };
+            }
             return {
                 field: formatNumber({
                     value: rawField,
@@ -305,6 +329,18 @@ export const formatCustomDataField: (
             };
         }
         if (format === "percentage") {
+            // Handle null or invalid numeric values
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
+                return {
+                    field: "-",
+                    error: undefined,
+                };
+            }
             return {
                 field: formatNumber({
                     value: rawField,
