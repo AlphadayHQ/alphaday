@@ -1,5 +1,5 @@
-import { FC, useMemo, useState } from "react";
-import { useAuth, useWidgetHeight } from "src/api/hooks";
+import { FC, useMemo, useState, useEffect, useCallback } from "react";
+import { useAuth, usePagination, useWidgetHeight } from "src/api/hooks";
 import { useView } from "src/api/hooks/useView";
 import {
     useImportDuneMutation,
@@ -8,10 +8,15 @@ import {
 } from "src/api/services";
 import { setWidgetHeight, updateWidgetCustomDataMeta } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
+import { TCustomItem } from "src/api/types";
 import { extractDuneQueryId } from "src/api/utils/duneUtils";
+import { buildUniqueItemList } from "src/api/utils/itemUtils";
 import { Logger } from "src/api/utils/logging";
 import DuneModule from "src/components/dune/DuneModule";
+import CONFIG from "src/config";
 import { IModuleContainer } from "src/types";
+
+const { MAX_PAGE_NUMBER } = CONFIG.WIDGETS.DUNE;
 
 const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const dispatch = useAppDispatch();
@@ -34,14 +39,72 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const widgetHeight = useWidgetHeight(moduleData);
 
-    const { data: apiData, isLoading: isLoadingApi } = useGetCustomItemsQuery(
+    const [currentPage, setCurrentPage] = useState<number | undefined>(
+        undefined
+    );
+    const [items, setItems] = useState<TCustomItem[] | undefined>();
+
+    const {
+        data: apiData,
+        isLoading: isLoadingApi,
+        isSuccess,
+    } = useGetCustomItemsQuery(
         {
             endpointUrl: endpoint_url || "",
+            page: currentPage,
         },
         {
             skip: !endpoint_url,
         }
     );
+
+    const {
+        nextPage,
+        handleNextPage,
+        reset: resetPagination,
+    } = usePagination(apiData?.links, MAX_PAGE_NUMBER, isSuccess);
+
+    const handlePaginate = useCallback(() => {
+        handleNextPage("next");
+    }, [handleNextPage]);
+
+    // Set current page after next page is determined
+    useEffect(() => {
+        if (nextPage === undefined) {
+            return () => null;
+        }
+        const timeout = setTimeout(() => {
+            setCurrentPage(nextPage);
+        }, 350);
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [nextPage]);
+
+    // Reset pagination when endpoint changes
+    useEffect(() => {
+        if (endpoint_url) {
+            setItems(undefined);
+            setCurrentPage(undefined);
+            resetPagination();
+        }
+    }, [endpoint_url, resetPagination]);
+
+    // Build unique items list when new data arrives
+    useEffect(() => {
+        const newItems = apiData?.results;
+        if (newItems) {
+            setItems((prevItems) => {
+                if (prevItems) {
+                    return buildUniqueItemList<TCustomItem>([
+                        ...prevItems,
+                        ...newItems,
+                    ]);
+                }
+                return newItems;
+            });
+        }
+    }, [apiData?.results]);
 
     const handleSetWidgetHeight = (height: number) => {
         dispatch(
@@ -65,18 +128,11 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [custom_meta]);
 
-    const items = useMemo(() => {
-        // Use API data when endpoint_url is set and data_type is not Static
+    const displayItems = useMemo(() => {
+        // Use accumulated items from API when endpoint_url is set
         if (endpoint_url) {
-            const apiResults = apiData?.results;
-            if (apiResults && !Array.isArray(apiResults)) {
-                Logger.error(
-                    "DuneContainer: API results is not an array",
-                    apiResults
-                );
-                return undefined;
-            }
-            return apiResults ?? [];
+            // Use accumulated items if available, otherwise fall back to current API data
+            return items || apiData?.results || [];
         }
 
         // Use static custom_data
@@ -96,7 +152,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             return undefined;
         }
         return custom_data;
-    }, [custom_data, custom_meta, apiData?.results, endpoint_url]);
+    }, [custom_data, custom_meta, items, endpoint_url, apiData?.results]);
 
     const isLoading = isImporting || isLoadingApi;
 
@@ -166,11 +222,11 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     return (
         <DuneModule
-            items={items}
+            items={displayItems}
             columns={meta.columns}
             rowProps={meta.row_props}
             isLoadingItems={isLoading}
-            handlePaginate={() => ({})}
+            handlePaginate={handlePaginate}
             widgetHeight={widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
             onSetDuneMeta={handleSetDuneMeta}
