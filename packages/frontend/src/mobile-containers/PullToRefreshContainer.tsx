@@ -63,6 +63,7 @@ const PullToRefreshContainer: React.FC<PullToRefreshContainerProps> = ({
             }, 1000);
             return () => clearTimeout(timer);
         }
+        return undefined;
     }, [isRefreshing]);
 
     return (
@@ -84,7 +85,6 @@ const PullToRefreshContainer: React.FC<PullToRefreshContainerProps> = ({
             )}
             <div
                 ref={containerRef}
-                role="feed"
                 className="h-full overflow-y-auto overscroll-contain"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}

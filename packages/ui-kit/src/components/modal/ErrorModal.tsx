@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { Button } from "../buttons/Button";
 import {
@@ -27,10 +27,8 @@ export const ErrorModal: FC<IModal> = ({
     isHidden,
     ...restProps
 }) => {
-    const modalRef = useRef<HTMLIonModalElement>(null);
-    const handleCloseModal = async () => {
+    const handleCloseModal = () => {
         onClose?.();
-        await modalRef.current?.dismiss();
     };
     return (
         <Modal showModal={!isHidden} onClose={onClose} {...restProps}>
