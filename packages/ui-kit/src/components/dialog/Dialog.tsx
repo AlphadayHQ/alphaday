@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC } from "react";
 import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
 import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
@@ -40,15 +40,11 @@ export const Dialog: FC<IDialog> = ({
     closeButtonProps,
     ...restProps
 }) => {
-    const modalRef = useRef<HTMLIonModalElement>(null);
-
-    const handleCloseDialog = async () => {
+    const handleCloseDialog = () => {
         onClose?.();
-        await modalRef.current?.dismiss();
     };
     const handleSaveDialog = async () => {
         await onSave?.();
-        await modalRef.current?.dismiss();
     };
 
     const showSaveButton = onSave && saveButtonText;
@@ -84,7 +80,7 @@ export const Dialog: FC<IDialog> = ({
                         className="border-borderLine bg-background flex h-[34px] w-[34px] items-center justify-center rounded-[50%] border-2 border-solid"
                         {...closeButtonProps}
                     >
-                        <CloseSVG className="h-[8.4px] w-[8.4px] text-borderLine outline-none  text-primaryVariant200" />
+                        <CloseSVG className="h-[8.4px] w-[8.4px] text-borderLine outline-none" />
                     </button>
                 )}
             </div>
