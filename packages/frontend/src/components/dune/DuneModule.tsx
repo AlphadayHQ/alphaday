@@ -43,7 +43,7 @@ const DuneModule: FC<IDuneModuleProps> = ({
     const { t } = useTranslation();
     const [showEnterAddress, setShowEnterAddress] = useState(false);
 
-    if (isLoadingItems) {
+    if (isLoadingItems && !items) {
         return <ModuleLoader $height={`${widgetHeight}px`} />;
     }
 

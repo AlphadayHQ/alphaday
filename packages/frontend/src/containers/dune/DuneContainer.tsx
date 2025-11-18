@@ -39,10 +39,8 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const widgetHeight = useWidgetHeight(moduleData);
 
-    const [currentPage, setCurrentPage] = useState<number | undefined>(
-        undefined
-    );
-    const [items, setItems] = useState<TCustomItem[] | undefined>();
+    const [currentPage, setCurrentPage] = useState<number | undefined>(1);
+    const [items, setItems] = useState<TCustomItem[]>([]);
 
     const {
         data: apiData,
@@ -52,17 +50,18 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
         {
             endpointUrl: endpoint_url || "",
             page: currentPage,
+            limit: 20,
         },
         {
             skip: !endpoint_url,
         }
     );
 
-    const {
-        nextPage,
-        handleNextPage,
-        reset: resetPagination,
-    } = usePagination(apiData?.links, MAX_PAGE_NUMBER, isSuccess);
+    const { nextPage, handleNextPage } = usePagination(
+        apiData?.links,
+        MAX_PAGE_NUMBER,
+        isSuccess
+    );
 
     const handlePaginate = useCallback(() => {
         handleNextPage("next");
@@ -81,30 +80,25 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [nextPage]);
 
-    // Reset pagination when endpoint changes
-    useEffect(() => {
-        if (endpoint_url) {
-            setItems(undefined);
-            setCurrentPage(undefined);
-            resetPagination();
-        }
-    }, [endpoint_url, resetPagination]);
-
     // Build unique items list when new data arrives
     useEffect(() => {
         const newItems = apiData?.results;
-        if (newItems) {
+        if (newItems && newItems.length > 0) {
             setItems((prevItems) => {
-                if (prevItems) {
-                    return buildUniqueItemList<TCustomItem>([
-                        ...prevItems,
-                        ...newItems,
-                    ]);
-                }
-                return newItems;
+                // For Dune data without IDs, generate unique IDs based on page and index
+                const itemsWithIds = newItems.map((item, index) => ({
+                    ...item,
+                    id: item.id ?? `${currentPage}-${index}`,
+                }));
+
+                const combined = buildUniqueItemList<TCustomItem>([
+                    ...prevItems,
+                    ...itemsWithIds,
+                ]);
+                return combined;
             });
         }
-    }, [apiData?.results]);
+    }, [apiData?.results, currentPage]);
 
     const handleSetWidgetHeight = (height: number) => {
         dispatch(
@@ -131,8 +125,12 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const displayItems = useMemo(() => {
         // Use accumulated items from API when endpoint_url is set
         if (endpoint_url) {
-            // Use accumulated items if available, otherwise fall back to current API data
-            return items || apiData?.results || [];
+            // If still loading first page, return undefined to show loader
+            if (items.length === 0 && isLoadingApi) {
+                return undefined;
+            }
+            // Return items (could be empty array if no results)
+            return items;
         }
 
         // Use static custom_data
@@ -152,9 +150,10 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             return undefined;
         }
         return custom_data;
-    }, [custom_data, custom_meta, items, endpoint_url, apiData?.results]);
+    }, [custom_data, custom_meta, items, endpoint_url, isLoadingApi]);
 
-    const isLoading = isImporting || isLoadingApi;
+    // Only show loader on initial load, not when paginating
+    const isLoading = isImporting || (isLoadingApi && items.length === 0);
 
     const handleSetDuneMeta = (data: {
         widgetName: string;
