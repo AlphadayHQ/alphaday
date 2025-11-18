@@ -153,13 +153,16 @@ const RouterChild = () => {
                 )}
                 <Link
                     to={EMobileTabRoutePaths.Portfolio}
-                    className={`flex-1 ${
-                        !IS_DEV
-                            ? "pointer-events-none opacity-50"
-                            : pathname === EMobileTabRoutePaths.Portfolio
-                              ? "text-primary"
-                              : "text-primaryVariant100"
-                    }`}
+                    className={(() => {
+                        if (!IS_DEV) {
+                            return "flex-1 pointer-events-none opacity-50";
+                        }
+                        return `flex-1 ${
+                            pathname === EMobileTabRoutePaths.Portfolio
+                                ? "text-primary"
+                                : "text-primaryVariant100"
+                        }`;
+                    })()}
                 >
                     <CustomNavTab
                         label="Portfolio"
