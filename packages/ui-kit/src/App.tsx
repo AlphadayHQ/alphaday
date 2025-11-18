@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { setupIonicReact } from "@ionic/react";
 import { Arrow } from "./components/arrow/Arrow";
 import { Button } from "./components/buttons/Button";
 import { IconButton } from "./components/buttons/IconButton";
@@ -11,15 +10,13 @@ import {
     FormTextArea,
 } from "./mobile-components/form-elements/FormElements";
 
-setupIonicReact();
-
 function App() {
     const [name, setName] = useState("");
     const [checked, setChecked] = useState(false);
     return (
         <div className="flex h-screen w-screen flex-col items-center justify-center">
             <h1 className="text-primary text-lg font-semibold">
-                Vite + React + Ionic + Tailwind
+                Vite + React + Tailwind
             </h1>
             <div className="max-w-md w-full">
                 <div className="m-1">

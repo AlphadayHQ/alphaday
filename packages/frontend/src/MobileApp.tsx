@@ -1,13 +1,12 @@
 import { memo } from "react";
 import {
-    IonApp,
-    IonRouterOutlet,
-    IonTabBar,
-    IonTabButton,
-    IonTabs,
-} from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
-import { Redirect, Route, useHistory, useLocation } from "react-router-dom";
+    BrowserRouter,
+    Link,
+    Redirect,
+    Route,
+    useHistory,
+    useLocation,
+} from "react-router-dom";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
@@ -15,7 +14,6 @@ import { useAuth, useViewRoute } from "./api/hooks";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
 import "@alphaday/ui-kit/global.scss";
-import "./customIonicStyles.scss";
 import {
     EMobileRoutePaths,
     EMobileTabRoutePaths,
@@ -89,8 +87,8 @@ const RouterChild = () => {
     }
 
     return (
-        <IonTabs>
-            <IonRouterOutlet ionPage>
+        <div className="flex flex-col h-screen">
+            <div className="flex-1 overflow-hidden">
                 {mobileRoutes.map((route) => {
                     return (
                         <Route
@@ -124,40 +122,53 @@ const RouterChild = () => {
                     )}
                     exact
                 />
-            </IonRouterOutlet>
-            <IonTabBar
+            </div>
+            <nav
+                className="fixed bottom-0 w-full p-2 bg-background border-t border-borderLine"
                 style={{
                     display: isTabBarHidden ? "none" : "flex",
                 }}
-                slot="bottom"
             >
-                <IonTabButton
-                    tab="superfeed"
-                    href={EMobileTabRoutePaths.Superfeed}
+                <Link
+                    to={EMobileTabRoutePaths.Superfeed}
+                    className={`flex-1 ${
+                        pathname === EMobileTabRoutePaths.Superfeed
+                            ? "text-primary"
+                            : "text-primaryVariant100"
+                    }`}
                 >
                     <CustomNavTab label="Superfeed" Icon={SuperfeedSVG} />
-                </IonTabButton>
+                </Link>
                 {IS_DEV && (
-                    <IonTabButton
-                        tab="market"
-                        href={EMobileTabRoutePaths.Market}
+                    <Link
+                        to={EMobileTabRoutePaths.Market}
+                        className={`flex-1 ${
+                            pathname === EMobileTabRoutePaths.Market
+                                ? "text-primary"
+                                : "text-primaryVariant100"
+                        }`}
                     >
                         <CustomNavTab label="Market" Icon={MarketsSVG} />
-                    </IonTabButton>
+                    </Link>
                 )}
-                <IonTabButton
-                    tab="portfolio"
-                    href={EMobileTabRoutePaths.Portfolio}
-                    disabled={!IS_DEV}
+                <Link
+                    to={EMobileTabRoutePaths.Portfolio}
+                    className={`flex-1 ${
+                        !IS_DEV
+                            ? "pointer-events-none opacity-50"
+                            : pathname === EMobileTabRoutePaths.Portfolio
+                              ? "text-primary"
+                              : "text-primaryVariant100"
+                    }`}
                 >
                     <CustomNavTab
                         label="Portfolio"
                         Icon={PortfolioSVG}
                         disabled={!IS_DEV}
                     />
-                </IonTabButton>
-            </IonTabBar>
-        </IonTabs>
+                </Link>
+            </nav>
+        </div>
     );
 };
 
@@ -168,17 +179,17 @@ const RouterChild = () => {
  */
 const MobileApp: React.FC = () => {
     return (
-        <IonApp className="theme-dark">
-            <IonReactRouter>
+        <div className="theme-dark mobile-app">
+            <BrowserRouter>
                 <RouterChild />
-            </IonReactRouter>
+            </BrowserRouter>
             <ToastContainer
                 position="bottom-center"
                 duration={CONFIG.UI.TOAST_DURATION}
                 className="fontGroup-supportBold"
                 containerClassName="last:mb-20"
             />
-        </IonApp>
+        </div>
     );
 };
 

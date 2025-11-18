@@ -1,6 +1,5 @@
 import "./polyfills";
 import { Suspense } from "react";
-import { setupIonicReact } from "@ionic/react";
 import * as Sentry from "@sentry/react";
 import { createRoot } from "react-dom/client";
 import { clarity } from "react-microsoft-clarity";
@@ -22,8 +21,6 @@ import PreloaderPage from "./pages/preloader";
 
 const MobileApp = lazyRetry(() => import("./MobileApp"));
 const App = lazyRetry(() => import("./App"));
-
-setupIonicReact();
 
 /**
  * Enable automatic page reload.

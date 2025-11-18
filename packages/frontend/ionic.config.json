@@ -1,7 +1,0 @@
-{
-  "name": "alphaday",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}

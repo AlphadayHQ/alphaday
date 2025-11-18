@@ -1,9 +1,7 @@
 import { Suspense, memo, useMemo } from "react";
 import { ErrorModal } from "@alphaday/ui-kit";
-import { IonApp, IonRouterOutlet } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
 import { Web3Modal } from "@web3modal/react";
-import { Redirect, Route } from "react-router-dom";
+import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
 import ToastContainer from "src/containers/toasts/ToastContainer";
 import {
@@ -117,24 +115,22 @@ const App: React.FC = () => {
 
     if (!isCookieEnabled()) {
         return (
-            <IonApp className="theme-dark">
+            <div className="theme-dark app-container">
                 <ErrorModal
                     title="Cookie Error"
                     onClose={goToLandingPage}
                     errorMessage="Cookies must be enabled to use Alphaday."
                     size="sm"
                 />
-            </IonApp>
+            </div>
         );
     }
 
     return (
-        <IonApp className="theme-dark">
-            <IonReactRouter>
-                <IonRouterOutlet>
-                    <AppRoutes />
-                </IonRouterOutlet>
-            </IonReactRouter>
+        <div className="theme-dark app-container">
+            <BrowserRouter>
+                <AppRoutes />
+            </BrowserRouter>
             <Web3Modal
                 projectId={CONFIG.WALLET_CONNECT.PROJECT_ID}
                 ethereumClient={walletConnectProvider}
@@ -152,7 +148,7 @@ const App: React.FC = () => {
                 duration={CONFIG.UI.TOAST_DURATION}
                 className="fontGroup-supportBold"
             />
-        </IonApp>
+        </div>
     );
 };
 
