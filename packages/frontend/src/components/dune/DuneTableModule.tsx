@@ -111,16 +111,6 @@ const DuneTableModule: FC<IDuneTableProps> = ({
                             "MMM DD, YYYY HH:mm"
                         )}
                     </span>
-                    {" | "}
-
-                    <a
-                        href={duneMeta.duneQueryURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="underline text-primaryVariant200"
-                    >
-                        dune.com/queries...
-                    </a>
                 </div>
             )}
             <ScrollBar
