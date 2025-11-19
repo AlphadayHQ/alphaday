@@ -20,7 +20,7 @@ interface IProps {
     isLoading?: boolean;
 }
 
-type CategoryType = "recipes" | "templates" | undefined;
+type CategoryType = "recipes" | "templates";
 
 export const RecipeModal: FC<IProps> = ({
     showModal,
@@ -30,7 +30,7 @@ export const RecipeModal: FC<IProps> = ({
     isLoading = false,
 }) => {
     const [selectedCategory, setSelectedCategory] =
-        useState<CategoryType>(undefined);
+        useState<CategoryType>("recipes");
     const [searchFilter, setSearchFilter] = useState("");
 
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,21 +60,19 @@ export const RecipeModal: FC<IProps> = ({
     }, [templates, searchFilter]);
 
     const displayItems = useMemo(() => {
-        if (selectedCategory === "recipes") return filteredRecipes;
-        if (selectedCategory === "templates") return filteredTemplates;
-        return [...filteredRecipes, ...filteredTemplates];
+        return selectedCategory === "recipes"
+            ? filteredRecipes
+            : filteredTemplates;
     }, [selectedCategory, filteredRecipes, filteredTemplates]);
 
     const getCategoryLabel = () => {
-        if (selectedCategory === "recipes") return "Recipes";
-        if (selectedCategory === "templates") return "Templates";
-        return "Items";
+        return selectedCategory === "recipes" ? "Recipes" : "Templates";
     };
 
     const getEmptyMessage = () => {
-        if (selectedCategory === "recipes") return "No recipes found";
-        if (selectedCategory === "templates") return "No templates found";
-        return "No items found";
+        return selectedCategory === "recipes"
+            ? "No recipes found"
+            : "No templates found";
     };
 
     const handleSelectRecipe = (item: TRecipe | TRecipeTemplate) => {
@@ -154,20 +152,6 @@ export const RecipeModal: FC<IProps> = ({
 
                 <div className="flex bg-background h-full">
                     <ScrollBar className="min-w-[250px] bg-background fontGroup-highlightSemi pt-1.5">
-                        <div
-                            role="button"
-                            tabIndex={0}
-                            className={twMerge(
-                                "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg",
-                                !selectedCategory &&
-                                    "bg-backgroundBlue text-primary fontGroup-highlightSemi",
-                                "hover:text-primary cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]"
-                            )}
-                            onClick={() => setSelectedCategory(undefined)}
-                        >
-                            <RecipeSVG />
-                            All Items
-                        </div>
                         <div
                             role="button"
                             tabIndex={0}
