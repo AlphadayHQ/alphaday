@@ -239,6 +239,7 @@ export type TRemoteUserViewWidgetSetting = {
     };
     tags: TRemoteTagReadOnly[];
     toggle_value: boolean | null;
+    json_value?: Record<string, unknown>;
 };
 
 export type TRemoteBaseUserViewWidget = {
@@ -447,8 +448,11 @@ export type TWidgetsCategoryResponse = TPagination & {
 
 export type TUpdateWidgetSettingsRequest = {
     widget_hash: string;
-    setting_slug: string;
-    selected_dataset: number;
+    settings: {
+        setting_slug: string;
+        selected_dataset?: number;
+        json_value?: Record<string, unknown>;
+    }[];
 };
 export type TUpdateWidgetSettingsResponse = {
     success: boolean;

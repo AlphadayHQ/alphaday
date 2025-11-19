@@ -1,4 +1,4 @@
-import { FC, useMemo, useState, useEffect, useCallback } from "react";
+import { type FC, useMemo, useState, useEffect, useCallback } from "react";
 import { useAuth, usePagination, useWidgetHeight } from "src/api/hooks";
 import { useView } from "src/api/hooks/useView";
 import {
@@ -8,13 +8,14 @@ import {
 } from "src/api/services";
 import { setWidgetHeight, updateWidgetCustomDataMeta } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
-import { TCustomItem } from "src/api/types";
+import type { TCustomItem } from "src/api/types";
 import { extractDuneQueryId } from "src/api/utils/duneUtils";
 import { buildUniqueItemList } from "src/api/utils/itemUtils";
 import { Logger } from "src/api/utils/logging";
 import DuneModule from "src/components/dune/DuneModule";
 import CONFIG from "src/config";
-import { IModuleContainer } from "src/types";
+import { EWidgetSettingsRegistry } from "src/constants";
+import type { IModuleContainer } from "src/types";
 
 const { MAX_PAGE_NUMBER } = CONFIG.WIDGETS.DUNE;
 
@@ -30,12 +31,34 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const { custom_meta, custom_data, endpoint_url } = moduleData.widget;
     /* eslint-enable @typescript-eslint/naming-convention */
 
+    // Read widget_json_setting from widget settings
+    const widgetJsonSetting = moduleData.settings.find(
+        (s) =>
+            s.widget_setting.setting.slug === EWidgetSettingsRegistry.WidgetJson
+    )?.json_value as
+        | {
+              widget_name?: string;
+              dune_query_url?: string;
+              import_time?: string;
+          }
+        | undefined;
+
     // State to track Dune query metadata (widget name, URL, import time)
     const [duneMeta, setDuneMeta] = useState<{
         widgetName: string;
         duneQueryURL: string;
         importTime: string;
-    } | null>(null);
+    } | null>(
+        widgetJsonSetting?.widget_name &&
+            widgetJsonSetting?.dune_query_url &&
+            widgetJsonSetting?.import_time
+            ? {
+                  widgetName: widgetJsonSetting.widget_name,
+                  duneQueryURL: widgetJsonSetting.dune_query_url,
+                  importTime: widgetJsonSetting.import_time,
+              }
+            : null
+    );
 
     const widgetHeight = useWidgetHeight(moduleData);
 
@@ -183,14 +206,36 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
                             );
                             updateWidgetSettings({
                                 widget_hash: moduleData.hash,
-                                setting_slug: "widget_dataset_setting",
-                                selected_dataset: res.data.id,
-                            }).catch((err) =>
-                                Logger.error(
-                                    "DuneContainer::updateWidgetSettings: Failed to update widget settings",
-                                    err
-                                )
-                            );
+                                settings: [
+                                    {
+                                        setting_slug: "widget_dataset_setting",
+                                        selected_dataset: res.data.id,
+                                    },
+                                    {
+                                        setting_slug: "widget_json_setting",
+                                        json_value: {
+                                            widget_name: data.widgetName,
+                                            dune_query_url: data.duneQueryURL,
+                                            import_time: data.importTime,
+                                        },
+                                    },
+                                ],
+                            })
+                                .then(() => {
+                                    dispatch(
+                                        updateWidgetCustomDataMeta({
+                                            widgetHash: moduleData.hash,
+                                            custom_data: res.data.data,
+                                            custom_meta: res.data.meta,
+                                        })
+                                    );
+                                })
+                                .catch((err) =>
+                                    Logger.error(
+                                        "DuneContainer::updateWidgetSettings: Failed to update widget settings",
+                                        err
+                                    )
+                                );
                         } else {
                             Logger.info(
                                 "DuneContainer::updateWidgetCustomDataMeta: Setting widget custom data and meta",
