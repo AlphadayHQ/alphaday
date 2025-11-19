@@ -2,7 +2,7 @@ import {
     useGetRecipesQuery,
     useGetRecipeTemplatesQuery,
 } from "src/api/services/recipes/recipeEndpoints";
-import { toggleLanguageModal } from "src/api/store";
+import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 
 import { RecipeModal } from "src/components/RecipeModal";
@@ -10,7 +10,7 @@ import { RecipeModal } from "src/components/RecipeModal";
 export const RecipeModalContainer = () => {
     const dispatch = useAppDispatch();
     const showModal = useAppSelector((state) => state.ui.showRecipeModal);
-    const toggleModal = () => dispatch(toggleLanguageModal());
+    const toggleModal = () => dispatch(toggleRecipeModal());
 
     const { data: recipesData, isLoading: recipesLoading } = useGetRecipesQuery(
         {}
