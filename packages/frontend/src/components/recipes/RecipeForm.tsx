@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FC, useState, ChangeEvent } from "react";
 import { Input, ScrollBar } from "@alphaday/ui-kit";
-import { TRecipeTemplate } from "src/api/services/recipes/types";
+import { TRecipe, TRecipeTemplate } from "src/api/services/recipes/types";
 import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
 
 const TIMEZONES = [
@@ -48,26 +48,50 @@ const parseCron = (cron: string) => {
 };
 
 interface IRecipeFormProps {
-    template: TRecipeTemplate;
+    template?: TRecipeTemplate;
+    recipe?: TRecipe;
     onBack: () => void;
-    onCreate: (data: {
+    onCreate?: (data: {
         name: string;
         description?: string;
         schedule: string;
         timezone?: string;
     }) => void;
+    onUpdate?: (data: {
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+    }) => void;
+    onToggleActivation?: (recipeId: string, isActive: boolean) => void;
 }
 
-const RecipeForm: FC<IRecipeFormProps> = ({ template, onCreate, onBack }) => {
+const RecipeForm: FC<IRecipeFormProps> = ({
+    template,
+    recipe,
+    onCreate,
+    onUpdate,
+    onBack,
+    onToggleActivation,
+}) => {
+    const isEditMode = !!recipe;
+
     const [formData, setFormData] = useState({
-        name: "",
-        description: template.description || "",
-        schedule: template.templateConfig.schedule || "0 9 * * *",
-        timezone: template.templateConfig.timezone || "UTC",
+        name: recipe?.name || "",
+        description: recipe?.description || template?.description || "",
+        schedule:
+            recipe?.schedule ||
+            template?.templateConfig.schedule ||
+            "0 9 * * *",
+        timezone:
+            recipe?.timezone || template?.templateConfig.timezone || "UTC",
+        isActive: recipe?.isActive ?? true,
     });
 
     const [scheduleConfig, setScheduleConfig] = useState(
-        parseCron(template.templateConfig.schedule || "0 9 * * *")
+        parseCron(
+            recipe?.schedule || template?.templateConfig.schedule || "0 9 * * *"
+        )
     );
 
     const handleInputChange = (
@@ -97,7 +121,23 @@ const RecipeForm: FC<IRecipeFormProps> = ({ template, onCreate, onBack }) => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onCreate(formData);
+        if (isEditMode && onUpdate) {
+            onUpdate(formData);
+            // Handle activation change if status has changed
+            if (
+                recipe &&
+                onToggleActivation &&
+                formData.isActive !== recipe.isActive
+            ) {
+                onToggleActivation(recipe.id, recipe.isActive);
+            }
+        } else if (onCreate) {
+            onCreate(formData);
+        }
+    };
+
+    const handleToggleChange = () => {
+        setFormData((prev) => ({ ...prev, isActive: !prev.isActive }));
     };
 
     return (
@@ -111,27 +151,66 @@ const RecipeForm: FC<IRecipeFormProps> = ({ template, onCreate, onBack }) => {
                             className="inline-flex text-primaryVariant100"
                         >
                             <ArrowSVG className="self-center mr-[5px] w-3 h-3 fill-primary" />{" "}
-                            Back to Templates
+                            {isEditMode
+                                ? "Back to Recipes"
+                                : "Back to Templates"}
                         </button>
                         <h3 className="text-primary fontGroup-highlight mt-2">
-                            {template.name}
+                            {isEditMode
+                                ? "Edit Recipe"
+                                : template?.name || "Create Recipe"}
                         </h3>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <div>
-                            <label className="block text-primary fontGroup-highlightSemi mb-2">
-                                Recipe Name *
-                                <Input
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleInputChange}
-                                    required
-                                    placeholder="Enter recipe name"
-                                    className="w-full bg-backgroundVariant200 mt-2"
-                                />
-                            </label>
+                        <div className="grid grid-cols-[1fr_auto] gap-4 items-end">
+                            <div>
+                                <label className="block text-primary fontGroup-highlightSemi mb-2">
+                                    Recipe Name *
+                                    <Input
+                                        id="name"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleInputChange}
+                                        required
+                                        placeholder="Enter recipe name"
+                                        className="w-full bg-backgroundVariant200 mt-2"
+                                    />
+                                </label>
+                            </div>
+                            {isEditMode && (
+                                <div className="flex items-center space-x-3 pb-1">
+                                    <label className="flex items-center cursor-pointer">
+                                        <div className="relative">
+                                            <input
+                                                type="checkbox"
+                                                checked={formData.isActive}
+                                                onChange={handleToggleChange}
+                                                className="sr-only"
+                                            />
+                                            <div
+                                                className={`block w-14 h-8 rounded-full transition-colors ${
+                                                    formData.isActive
+                                                        ? "bg-green-600"
+                                                        : "bg-gray-600"
+                                                }`}
+                                            />
+                                            <div
+                                                className={`absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${
+                                                    formData.isActive
+                                                        ? "transform translate-x-6"
+                                                        : ""
+                                                }`}
+                                            />
+                                        </div>
+                                        <span className="ml-3 text-primary fontGroup-highlightSemi whitespace-nowrap">
+                                            {formData.isActive
+                                                ? "Active"
+                                                : "Inactive"}
+                                        </span>
+                                    </label>
+                                </div>
+                            )}
                         </div>
 
                         <div>
@@ -259,7 +338,7 @@ const RecipeForm: FC<IRecipeFormProps> = ({ template, onCreate, onBack }) => {
                                 type="submit"
                                 className="w-full bg-backgroundBlue hover:bg-backgroundBlue100 text-primary fontGroup-highlightSemi py-3 px-4 rounded"
                             >
-                                Create Recipe
+                                {isEditMode ? "Update Recipe" : "Create Recipe"}
                             </button>
                         </div>
                     </form>

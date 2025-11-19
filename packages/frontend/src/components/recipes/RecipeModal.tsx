@@ -35,10 +35,29 @@ interface IProps {
             deliveryChannels?: Record<string, unknown>;
         }>;
     }) => void;
+    onUpdateRecipe?: (recipe: {
+        id: string;
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+        sources: Array<{
+            sourceCategory: string;
+            filters?: Record<string, unknown>;
+            maxItems?: number;
+        }>;
+        outputs: Array<{
+            outputFormat: number;
+            promptTemplate: number;
+            deliveryChannels?: Record<string, unknown>;
+        }>;
+    }) => void;
+    onActivateRecipe?: (recipeId: string) => void;
+    onDeactivateRecipe?: (recipeId: string) => void;
 }
 
 type CategoryType = "recipes" | "templates";
-type ViewType = "list" | "create-from-template";
+type ViewType = "list" | "create-from-template" | "edit-recipe";
 
 export const RecipeModal: FC<IProps> = ({
     showModal,
@@ -47,6 +66,9 @@ export const RecipeModal: FC<IProps> = ({
     templates = [],
     isLoading = false,
     onCreateRecipe,
+    onUpdateRecipe,
+    onActivateRecipe,
+    onDeactivateRecipe,
 }) => {
     const [selectedCategory, setSelectedCategory] =
         useState<CategoryType>("recipes");
@@ -54,6 +76,7 @@ export const RecipeModal: FC<IProps> = ({
     const [currentView, setCurrentView] = useState<ViewType>("list");
     const [selectedTemplate, setSelectedTemplate] =
         useState<TRecipeTemplate | null>(null);
+    const [selectedRecipe, setSelectedRecipe] = useState<TRecipe | null>(null);
 
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchFilter(e.target.value);
@@ -99,8 +122,9 @@ export const RecipeModal: FC<IProps> = ({
 
     const handleSelectRecipe = (item: TRecipe | TRecipeTemplate) => {
         if (selectedCategory === "recipes") {
-            // TODO: Handle recipe selection (e.g., view/edit)
-            console.log("Selected recipe:", item);
+            // Recipe selected - show edit form
+            setSelectedRecipe(item as TRecipe);
+            setCurrentView("edit-recipe");
         } else {
             // Template selected - show create form
             setSelectedTemplate(item as TRecipeTemplate);
@@ -111,6 +135,11 @@ export const RecipeModal: FC<IProps> = ({
     const handleBackToTemplates = () => {
         setCurrentView("list");
         setSelectedTemplate(null);
+    };
+
+    const handleBackToRecipes = () => {
+        setCurrentView("list");
+        setSelectedRecipe(null);
     };
 
     const handleCreateRecipe = (recipeData: {
@@ -141,6 +170,44 @@ export const RecipeModal: FC<IProps> = ({
         setSelectedCategory("recipes");
         setCurrentView("list");
         setSelectedTemplate(null);
+    };
+
+    const handleUpdateRecipe = (recipeData: {
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+    }) => {
+        if (!selectedRecipe || !onUpdateRecipe) return;
+
+        onUpdateRecipe({
+            id: selectedRecipe.id,
+            ...recipeData,
+            sources:
+                selectedRecipe.recipeSources?.map((source) => ({
+                    sourceCategory: source.sourceCategory,
+                    filters: source.filters,
+                    maxItems: source.maxItems,
+                })) || [],
+            outputs:
+                selectedRecipe.recipeOutputs?.map((output) => ({
+                    outputFormat: output.outputFormat,
+                    promptTemplate: output.promptTemplate,
+                    deliveryChannels: output.deliveryChannels,
+                })) || [],
+        });
+
+        // Navigate back to recipes view
+        setCurrentView("list");
+        setSelectedRecipe(null);
+    };
+
+    const handleToggleActivation = (recipeId: string, isActive: boolean) => {
+        if (isActive && onDeactivateRecipe) {
+            onDeactivateRecipe(recipeId);
+        } else if (!isActive && onActivateRecipe) {
+            onActivateRecipe(recipeId);
+        }
     };
 
     const renderContent = () => {
@@ -189,6 +256,19 @@ export const RecipeModal: FC<IProps> = ({
                 template={selectedTemplate}
                 onBack={handleBackToTemplates}
                 onCreate={handleCreateRecipe}
+            />
+        );
+    };
+
+    const renderEditRecipe = () => {
+        if (!selectedRecipe) return null;
+
+        return (
+            <RecipeForm
+                recipe={selectedRecipe}
+                onBack={handleBackToRecipes}
+                onUpdate={handleUpdateRecipe}
+                onToggleActivation={handleToggleActivation}
             />
         );
     };
@@ -271,9 +351,11 @@ export const RecipeModal: FC<IProps> = ({
                             </div>
                         )}
                         <div className="w-full h-[550px]">
-                            {currentView === "list"
-                                ? renderContent()
-                                : renderCreateFromTemplate()}
+                            {currentView === "list" && renderContent()}
+                            {currentView === "create-from-template" &&
+                                renderCreateFromTemplate()}
+                            {currentView === "edit-recipe" &&
+                                renderEditRecipe()}
                         </div>
                     </div>
                 </div>
