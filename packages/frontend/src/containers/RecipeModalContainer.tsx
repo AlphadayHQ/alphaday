@@ -5,7 +5,7 @@ import {
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 
-import { RecipeModal } from "src/components/RecipeModal";
+import { RecipeModal } from "src/components/recipes/RecipeModal";
 
 export const RecipeModalContainer = () => {
     const dispatch = useAppDispatch();

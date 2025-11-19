@@ -11,6 +11,7 @@ import { TRecipe, TRecipeTemplate } from "src/api/services/recipes/types";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as RecipeSVG } from "src/assets/icons/grid.svg";
 import { ReactComponent as TemplateSVG } from "src/assets/icons/other.svg";
+import RecipeForm from "./RecipeForm";
 
 interface IProps {
     showModal: boolean;
@@ -18,9 +19,26 @@ interface IProps {
     recipes?: TRecipe[];
     templates?: TRecipeTemplate[];
     isLoading?: boolean;
+    onCreateRecipe?: (recipe: {
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+        sources: Array<{
+            sourceCategory: string;
+            filters?: Record<string, unknown>;
+            maxItems?: number;
+        }>;
+        outputs: Array<{
+            outputFormat: number;
+            promptTemplate: number;
+            deliveryChannels?: Record<string, unknown>;
+        }>;
+    }) => void;
 }
 
 type CategoryType = "recipes" | "templates";
+type ViewType = "list" | "create-from-template";
 
 export const RecipeModal: FC<IProps> = ({
     showModal,
@@ -28,10 +46,14 @@ export const RecipeModal: FC<IProps> = ({
     recipes = [],
     templates = [],
     isLoading = false,
+    onCreateRecipe,
 }) => {
     const [selectedCategory, setSelectedCategory] =
         useState<CategoryType>("recipes");
     const [searchFilter, setSearchFilter] = useState("");
+    const [currentView, setCurrentView] = useState<ViewType>("list");
+    const [selectedTemplate, setSelectedTemplate] =
+        useState<TRecipeTemplate | null>(null);
 
     const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchFilter(e.target.value);
@@ -76,8 +98,49 @@ export const RecipeModal: FC<IProps> = ({
     };
 
     const handleSelectRecipe = (item: TRecipe | TRecipeTemplate) => {
-        // TODO: Handle recipe/template selection
-        console.log("Selected:", item);
+        if (selectedCategory === "recipes") {
+            // TODO: Handle recipe selection (e.g., view/edit)
+            console.log("Selected recipe:", item);
+        } else {
+            // Template selected - show create form
+            setSelectedTemplate(item as TRecipeTemplate);
+            setCurrentView("create-from-template");
+        }
+    };
+
+    const handleBackToTemplates = () => {
+        setCurrentView("list");
+        setSelectedTemplate(null);
+    };
+
+    const handleCreateRecipe = (recipeData: {
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+    }) => {
+        if (!selectedTemplate || !onCreateRecipe) return;
+
+        const { templateConfig } = selectedTemplate;
+
+        onCreateRecipe({
+            ...recipeData,
+            sources: templateConfig.sources.map((source) => ({
+                sourceCategory: source.source_category,
+                filters: source.filters,
+                maxItems: source.max_items,
+            })),
+            outputs: templateConfig.outputs.map((output) => ({
+                outputFormat: output.output_format_type as unknown as number,
+                promptTemplate: output.prompt_template_id || 0,
+                deliveryChannels: output.delivery_channels,
+            })),
+        });
+
+        // Navigate back to recipes view
+        setSelectedCategory("recipes");
+        setCurrentView("list");
+        setSelectedTemplate(null);
     };
 
     const renderContent = () => {
@@ -118,6 +181,18 @@ export const RecipeModal: FC<IProps> = ({
         );
     };
 
+    const renderCreateFromTemplate = () => {
+        if (!selectedTemplate) return null;
+
+        return (
+            <RecipeForm
+                template={selectedTemplate}
+                onBack={handleBackToTemplates}
+                onCreate={handleCreateRecipe}
+            />
+        );
+    };
+
     return (
         <Modal onClose={onClose} showModal={showModal}>
             <div className="flex flex-col w-full h-full">
@@ -128,16 +203,19 @@ export const RecipeModal: FC<IProps> = ({
                                 Recipe Library
                             </h6>
                         </div>
-                        <div className="fontGroup-normal max-w-[370px] w-[80%]">
-                            <Input
-                                onChange={handleFilterChange}
-                                id="recipe-search"
-                                name="recipe-search"
-                                placeholder="Search recipes and templates..."
-                                height="28px"
-                                className="outline-none border-none focus:outline-none focus:border-none bg-backgroundVariant200"
-                            />
-                        </div>
+                        {currentView === "list" && (
+                            <div className="fontGroup-normal max-w-[370px] w-[80%]">
+                                <Input
+                                    onChange={handleFilterChange}
+                                    id="recipe-search"
+                                    name="recipe-search"
+                                    placeholder="Search recipes and templates..."
+                                    height="28px"
+                                    className="outline-none border-none focus:outline-none focus:border-none bg-backgroundVariant200"
+                                />
+                            </div>
+                        )}
+
                         <div
                             className="fill-primaryVariant100 cursor-pointer h-[30px] self-center flex items-center"
                             role="button"
@@ -165,6 +243,7 @@ export const RecipeModal: FC<IProps> = ({
                             <RecipeSVG />
                             My Recipes ({recipes.length})
                         </div>
+
                         <div
                             role="button"
                             tabIndex={0}
@@ -181,15 +260,20 @@ export const RecipeModal: FC<IProps> = ({
                     </ScrollBar>
 
                     <div className="w-full overflow-hidden h-full">
-                        <div className="flex justify-between items-center px-3 pt-3 pb-2 text-primary font-normal">
-                            <div className="fontGroup-highlightSemi">
-                                <span>
-                                    {displayItems.length} {getCategoryLabel()}
-                                </span>
+                        {currentView === "list" && (
+                            <div className="flex justify-between items-center px-3 pt-3 pb-2 text-primary font-normal">
+                                <div className="fontGroup-highlightSemi">
+                                    <span>
+                                        {displayItems.length}{" "}
+                                        {getCategoryLabel()}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
+                        )}
                         <div className="w-full h-[550px]">
-                            {renderContent()}
+                            {currentView === "list"
+                                ? renderContent()
+                                : renderCreateFromTemplate()}
                         </div>
                     </div>
                 </div>

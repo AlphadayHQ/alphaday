@@ -4,6 +4,7 @@ import Feedback from "../feedback/feedback";
 
 interface IInputProps {
     className?: string;
+    required?: boolean;
     type?: string;
     feedbackText?: string;
     readonly?: boolean;
@@ -38,6 +39,7 @@ export const Input: FC<IInputProps> = ({
     showState,
     showErrorOnly,
     className,
+    required,
     ...restProps
 }) => {
     return (
@@ -51,6 +53,7 @@ export const Input: FC<IInputProps> = ({
                 onBlur={onBlur}
                 value={value}
                 readOnly={readonly}
+                required={required}
                 className={twMerge(
                     `${state === "error" && "border-danger"}`,
                     "bg-backgroundVariant200 text-primary flex flex-row  items-start rounded-lg p-3",
