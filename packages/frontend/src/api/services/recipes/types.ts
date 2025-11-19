@@ -82,33 +82,6 @@ export type TGetRecipeTemplatesResponse = {
     results: TRecipeTemplate[];
 };
 
-export type TCreateRecipeTemplateRequest = {
-    name: string;
-    description: string;
-    category?: ERecipeTemplateCategory | string;
-    author?: number;
-    isPublic?: boolean;
-    isFeatured?: boolean;
-    templateConfig: TRecipeTemplateConfig;
-    previewImage?: string;
-    tags?: TRecipeTemplateTags;
-};
-
-export type TCreateRecipeTemplateRequestRaw = {
-    name: string;
-    description: string;
-    category?: string;
-    author?: number;
-    is_public?: boolean;
-    is_featured?: boolean;
-    template_config: TRecipeTemplateConfig;
-    preview_image?: string;
-    tags?: TRecipeTemplateTags;
-};
-
-export type TCreateRecipeTemplateResponse = TRecipeTemplate;
-export type TCreateRecipeTemplateRawResponse = TRecipeTemplateRaw;
-
 // Recipe Types
 export type TRecipeFilters = Record<string, unknown>;
 

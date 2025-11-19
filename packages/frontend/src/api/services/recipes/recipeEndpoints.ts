@@ -6,10 +6,6 @@ import {
     TGetRecipeTemplatesRequest,
     TGetRecipeTemplatesRawResponse,
     TGetRecipeTemplatesResponse,
-    TCreateRecipeTemplateRequest,
-    TCreateRecipeTemplateRequestRaw,
-    TCreateRecipeTemplateResponse,
-    TCreateRecipeTemplateRawResponse,
     TRecipeTemplate,
     TRecipeTemplateRaw,
     TGetRecipesRequest,
@@ -117,34 +113,6 @@ const recipesApi = alphadayApi.injectEndpoints({
                 results: r.results.map(transformRecipeTemplate),
             }),
             keepUnusedDataFor: 0,
-        }),
-        createRecipeTemplate: builder.mutation<
-            TCreateRecipeTemplateResponse,
-            TCreateRecipeTemplateRequest
-        >({
-            query: (req: TCreateRecipeTemplateRequest) => {
-                const body: TCreateRecipeTemplateRequestRaw = {
-                    name: req.name,
-                    description: req.description,
-                    category: req.category,
-                    author: req.author,
-                    is_public: req.isPublic,
-                    is_featured: req.isFeatured,
-                    template_config: req.templateConfig,
-                    preview_image: req.previewImage,
-                    tags: req.tags,
-                };
-                const path = `${RECIPES.BASE}${RECIPES.TEMPLATES}`;
-                Logger.debug("createRecipeTemplate: querying", path);
-                return {
-                    url: path,
-                    method: "POST",
-                    body,
-                };
-            },
-            transformResponse: (
-                r: TCreateRecipeTemplateRawResponse
-            ): TCreateRecipeTemplateResponse => transformRecipeTemplate(r),
         }),
         getRecipes: builder.query<TGetRecipesResponse, TGetRecipesRequest>({
             query: (req) => {
@@ -284,7 +252,6 @@ const recipesApi = alphadayApi.injectEndpoints({
 
 export const {
     useGetRecipeTemplatesQuery,
-    useCreateRecipeTemplateMutation,
     useGetRecipesQuery,
     useGetRecipeQuery,
     useCreateRecipeMutation,
