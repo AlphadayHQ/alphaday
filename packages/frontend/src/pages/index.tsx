@@ -38,6 +38,7 @@ import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDi
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
+import { RecipeModalContainer } from "src/containers/RecipeModalContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { ETemplateNameRegistry } from "src/constants";
@@ -459,6 +460,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             <WalletConnectionDialogContainer />
             <AboutUsModalContainer />
             <LanguageModalContainer />
+            <RecipeModalContainer />
         </MainLayout>
     );
 }
