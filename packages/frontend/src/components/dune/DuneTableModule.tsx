@@ -70,7 +70,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
             }
             prevScrollRef.current = scrollRef;
         }
-    }, [scrollRef, prevScrollRef, setWidgetHeight]);
+    }, [scrollRef, setWidgetHeight]);
 
     const handleScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
         if (shouldFetchMoreItems(currentTarget)) {
@@ -121,7 +121,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
                     height: widgetHeight,
                 }}
             >
-                <div className="min-w-fit">
+                <div className="min-w-fit h-full min-h-0">
                     <GridBasedTable
                         columnsLayout={columns}
                         items={items}
