@@ -1,6 +1,7 @@
 import { FC, memo } from "react";
 import { ModuleLoader, Button } from "@alphaday/ui-kit";
 import { TRecipe, TRecipeTemplate } from "src/api/services/recipes/types";
+import RecipeItem from "./RecipeItem";
 
 interface IRecipeModule {
     recipes: TRecipe[] | undefined;
@@ -8,6 +9,14 @@ interface IRecipeModule {
     isLoadingRecipes: boolean;
     widgetHeight: number;
     onOpenLibrary: () => void;
+    onUpdateRecipe?: (recipeData: {
+        id: string;
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+    }) => void;
+    onToggleActivation?: (recipeId: string, isActive: boolean) => void;
 }
 
 const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
@@ -16,6 +25,8 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
     isLoadingRecipes,
     widgetHeight,
     onOpenLibrary,
+    onUpdateRecipe,
+    onToggleActivation,
 }) {
     if (isLoadingRecipes || recipes === undefined) {
         return <ModuleLoader $height={`${widgetHeight}px`} />;
@@ -70,33 +81,12 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
                         </p>
                         <div className="space-y-2">
                             {recipes.slice(0, 3).map((recipe) => (
-                                <div
+                                <RecipeItem
                                     key={recipe.id}
-                                    className="bg-backgroundVariant100 rounded-lg p-4 border border-borderLine"
-                                >
-                                    <div
-                                        key={recipe.id}
-                                        className="flex justify-between items-center pb-2"
-                                    >
-                                        <span className="fontGroup-normal text-primary truncate">
-                                            {recipe.name}
-                                        </span>
-                                        <span
-                                            className={`fontGroup-mini px-2 py-1 rounded ${
-                                                recipe.isActive
-                                                    ? "bg-accentVariant100 text-accentVariant400"
-                                                    : "bg-backgroundVariant200 text-primaryVariant100"
-                                            }`}
-                                        >
-                                            {recipe.isActive
-                                                ? "Active"
-                                                : "Inactive"}
-                                        </span>
-                                    </div>
-                                    <p className="fontGroup-normal text-primaryVariant200">
-                                        {recipe.description}
-                                    </p>
-                                </div>
+                                    recipe={recipe}
+                                    onUpdate={onUpdateRecipe}
+                                    onToggleActivation={onToggleActivation}
+                                />
                             ))}
                         </div>
                     </div>
