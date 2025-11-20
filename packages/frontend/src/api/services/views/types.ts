@@ -95,7 +95,8 @@ export type TRemoteFormat =
     | "decimal"
     | "currency"
     | "percentage"
-    | "checkmark";
+    | "checkmark"
+    | "auto";
 
 // types to define the layout of a table column
 export type TRemoteCustomLayoutEntry = {

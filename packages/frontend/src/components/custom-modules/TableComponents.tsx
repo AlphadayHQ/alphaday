@@ -9,6 +9,7 @@ import {
     formatCustomDataField,
     evaluateTranslationTemplate,
     getColumnJustification,
+    resolveCellFormat,
 } from "src/api/utils/customDataUtils";
 import { handleTableImgError } from "src/api/utils/errorHandling";
 import { ReactComponent as LinkSVG } from "src/assets/icons/external-link.svg";
@@ -141,11 +142,15 @@ export const TableRow: React.FC<ITableRowProps> = ({
                     column.template !== undefined
                         ? evaluateTranslationTemplate(column.template, rowData)
                         : undefined;
+                const cellFormat =
+                    column.format === "auto"
+                        ? resolveCellFormat(column, rowData, rawValue)
+                        : column.format;
                 const formattedValue =
                     rawValue !== undefined
                         ? formatCustomDataField({
                               rawField: rawValue,
-                              format: column.format,
+                              format: cellFormat,
                           })
                         : undefined;
                 /**
@@ -220,17 +225,21 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
 
     return (
         <div
-            className="grid overflow-x-auto"
+            className="grid overflow-visible h-full min-h-0"
             style={{
                 gridTemplateColumns: `repeat(${visibleColumns.length}, max-content)`,
-                gridTemplateRows: `auto repeat(${items.length}, 1fr)`,
+                gridTemplateRows: `auto repeat(${items.length}, minmax(0, 1fr))`,
             }}
         >
             {/* Headers */}
             {visibleColumns.map((column) => (
                 <div
                     key={`header-${column.id}`}
-                    className="px-5 py-2 font-medium text-primaryVariant200"
+                    className={
+                        column.title
+                            ? "px-5 py-2 font-medium text-primaryVariant200"
+                            : ""
+                    }
                 >
                     {column.title}
                 </div>
@@ -243,11 +252,15 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                         column.template !== undefined
                             ? evaluateTranslationTemplate(column.template, item)
                             : undefined;
+                    const cellFormat =
+                        column.format === "auto"
+                            ? resolveCellFormat(column, item, rawValue)
+                            : column.format;
                     const formattedValue =
                         rawValue !== undefined
                             ? formatCustomDataField({
                                   rawField: rawValue,
-                                  format: column.format,
+                                  format: cellFormat,
                                   dateFormat:
                                       options?.dateformat || column.date_format,
                               })
@@ -265,7 +278,7 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                     return (
                         <div
                             key={`${item.id}-${column.id}`}
-                            className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px]"
+                            className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px] h-full min-h-0"
                             style={{ minWidth: `${minCellSize}px` }}
                         >
                             {/* Your cell content rendering logic */}
@@ -277,7 +290,7 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                                     className="w-8 h-8 rounded-full"
                                 />
                             ) : (
-                                <div className="flex items-center break-all min-w-0">
+                                <div className="flex items-center break-all min-w-0 h-full">
                                     {href !== undefined && (
                                         <LinkSVG
                                             className={twMerge(
@@ -355,11 +368,15 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                                   rowData
                               )
                             : undefined;
+                    const cellFormat =
+                        column.format === "auto"
+                            ? resolveCellFormat(column, rowData, rawValue)
+                            : column.format;
                     const formattedValue =
                         rawValue !== undefined
                             ? formatCustomDataField({
                                   rawField: rawValue,
-                                  format: column.format,
+                                  format: cellFormat,
                               })
                             : undefined;
                     const href =
