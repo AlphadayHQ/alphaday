@@ -24,28 +24,26 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
     const totalRecipes = recipes.length;
 
     return (
-        <div className="flex flex-col h-full p-4">
+        <div className="flex flex-col h-full p-4 pt-2">
             <div className="flex-1 flex flex-col justify-center gap-6">
-                <div className="bg-backgroundVariant100 rounded-lg p-6 border border-borderLine">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <p className="fontGroup-normal text-primaryVariant100 m-0 mb-1">
-                                Total Recipes
-                            </p>
-                            <p className="fontGroup-highlightSemi text-primary text-3xl m-0">
+                <div className="flex gap-4">
+                    <div className="flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
+                        <h6 className="fontGroup-support text-center uppercase mb-2 text-primaryVariant100">
+                            Your Recipes
+                        </h6>
+                        <div className="whitespace-nowrap text-center">
+                            <p className="fontGroup-major text-primary mb-0 text-center">
                                 {totalRecipes}
                             </p>
                         </div>
                     </div>
-                </div>
 
-                <div className="bg-backgroundVariant100 rounded-lg p-6 border border-borderLine">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <p className="fontGroup-normal text-primaryVariant100 m-0 mb-1">
-                                Active Recipes
-                            </p>
-                            <p className="fontGroup-highlightSemi text-primary text-3xl m-0">
+                    <div className="flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
+                        <h6 className="fontGroup-support text-center uppercase mb-2 text-success">
+                            Active Recipes
+                        </h6>
+                        <div className="whitespace-nowrap text-center">
+                            <p className="fontGroup-major text-primary mb-0 text-center">
                                 {activeRecipes.length}
                             </p>
                         </div>
@@ -53,30 +51,38 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
                 </div>
 
                 {totalRecipes > 0 && (
-                    <div className="bg-backgroundVariant100 rounded-lg p-4 border border-borderLine">
-                        <p className="fontGroup-normal text-primaryVariant100 m-0 mb-2">
+                    <div className="">
+                        <p className="fontGroup-normal text-primaryVariant200 m-0 mb-2">
                             Recent Recipes
                         </p>
                         <div className="space-y-2">
                             {recipes.slice(0, 3).map((recipe) => (
                                 <div
                                     key={recipe.id}
-                                    className="flex justify-between items-center py-2"
+                                    className="bg-backgroundVariant100 rounded-lg p-4 border border-borderLine"
                                 >
-                                    <span className="fontGroup-normal text-primary truncate">
-                                        {recipe.name}
-                                    </span>
-                                    <span
-                                        className={`fontGroup-mini px-2 py-1 rounded ${
-                                            recipe.isActive
-                                                ? "bg-accentVariant100 text-accentVariant400"
-                                                : "bg-backgroundVariant200 text-primaryVariant100"
-                                        }`}
+                                    <div
+                                        key={recipe.id}
+                                        className="flex justify-between items-center pb-2"
                                     >
-                                        {recipe.isActive
-                                            ? "Active"
-                                            : "Inactive"}
-                                    </span>
+                                        <span className="fontGroup-normal text-primary truncate">
+                                            {recipe.name}
+                                        </span>
+                                        <span
+                                            className={`fontGroup-mini px-2 py-1 rounded ${
+                                                recipe.isActive
+                                                    ? "bg-accentVariant100 text-accentVariant400"
+                                                    : "bg-backgroundVariant200 text-primaryVariant100"
+                                            }`}
+                                        >
+                                            {recipe.isActive
+                                                ? "Active"
+                                                : "Inactive"}
+                                        </span>
+                                    </div>
+                                    <p className="fontGroup-normal text-primaryVariant200">
+                                        {recipe.description}
+                                    </p>
                                 </div>
                             ))}
                         </div>
@@ -90,7 +96,7 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
                     className="w-full"
                     variant="primary"
                 >
-                    Open Recipe Library
+                    Add A Recipe
                 </Button>
             </div>
         </div>
