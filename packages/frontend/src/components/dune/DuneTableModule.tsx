@@ -121,7 +121,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
                     height: widgetHeight,
                 }}
             >
-                <div className="min-w-fit h-full min-h-0">
+                <div className="min-w-fit min-h-0">
                     <GridBasedTable
                         columnsLayout={columns}
                         items={items}

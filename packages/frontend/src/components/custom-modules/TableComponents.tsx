@@ -225,10 +225,11 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
 
     return (
         <div
-            className="grid overflow-visible h-full min-h-0"
+            className="grid overflow-visible min-h-0"
             style={{
                 gridTemplateColumns: `repeat(${visibleColumns.length}, max-content)`,
-                gridTemplateRows: `auto repeat(${items.length}, minmax(0, 1fr))`,
+                gridTemplateRows: `auto repeat(${items.length}, auto)`,
+                gridAutoRows: "min-content",
             }}
         >
             {/* Headers */}
@@ -278,7 +279,7 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                     return (
                         <div
                             key={`${item.id}-${column.id}`}
-                            className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px] h-full min-h-0"
+                            className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px] min-h-0"
                             style={{ minWidth: `${minCellSize}px` }}
                         >
                             {/* Your cell content rendering logic */}
@@ -290,7 +291,7 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                                     className="w-8 h-8 rounded-full"
                                 />
                             ) : (
-                                <div className="flex items-center break-all min-w-0 h-full">
+                                <div className="flex items-center break-all min-w-0">
                                     {href !== undefined && (
                                         <LinkSVG
                                             className={twMerge(
