@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
 import { ModuleLoader, Button } from "@alphaday/ui-kit";
-import { TRecipe } from "src/api/services/recipes/types";
-import { ReactComponent as RecipeSVG } from "src/assets/icons/grid.svg";
+import { TRecipe, TRecipeTemplate } from "src/api/services/recipes/types";
 
 interface IRecipeModule {
     recipes: TRecipe[] | undefined;
+    templates: TRecipeTemplate[] | undefined;
     isLoadingRecipes: boolean;
     widgetHeight: number;
     onOpenLibrary: () => void;
@@ -12,6 +12,7 @@ interface IRecipeModule {
 
 const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
     recipes,
+    templates,
     isLoadingRecipes,
     widgetHeight,
     onOpenLibrary,
@@ -22,13 +23,14 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
 
     const activeRecipes = recipes.filter((recipe) => recipe.isActive);
     const totalRecipes = recipes.length;
+    const totalTemplates = templates?.length || 0;
 
     return (
         <div className="flex flex-col h-full p-4 pt-2">
             <div className="flex-1 flex flex-col justify-center gap-6">
                 <div className="flex gap-4">
                     <div className="flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
-                        <h6 className="fontGroup-support text-center uppercase mb-2 text-primaryVariant100">
+                        <h6 className="fontGroup-support text-center uppercase mb-2 text-secondaryOrange">
                             Your Recipes
                         </h6>
                         <div className="whitespace-nowrap text-center">
@@ -45,6 +47,17 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
                         <div className="whitespace-nowrap text-center">
                             <p className="fontGroup-major text-primary mb-0 text-center">
                                 {activeRecipes.length}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
+                        <h6 className="fontGroup-support text-center uppercase mb-2 text-primaryVariant100">
+                            Templates
+                        </h6>
+                        <div className="whitespace-nowrap text-center">
+                            <p className="fontGroup-major text-primary mb-0 text-center">
+                                {totalTemplates}
                             </p>
                         </div>
                     </div>

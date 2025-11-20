@@ -1,6 +1,9 @@
 import { FC } from "react";
 
-import { useGetRecipesQuery } from "src/api/services/recipes/recipeEndpoints";
+import {
+    useGetRecipesQuery,
+    useGetRecipeTemplatesQuery,
+} from "src/api/services/recipes/recipeEndpoints";
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 
@@ -16,6 +19,8 @@ const RecipeContainer: FC<IModuleContainer> = () => {
     const { data: recipesData, isLoading: recipesLoading } = useGetRecipesQuery(
         {}
     );
+    const { data: templatesData, isLoading: templatesLoading } =
+        useGetRecipeTemplatesQuery({});
 
     const handleOpenLibrary = () => {
         toggleModal();
@@ -24,7 +29,8 @@ const RecipeContainer: FC<IModuleContainer> = () => {
     return (
         <RecipeModule
             recipes={recipesData?.results}
-            isLoadingRecipes={recipesLoading}
+            templates={templatesData?.results}
+            isLoadingRecipes={recipesLoading || templatesLoading}
             widgetHeight={
                 WIDGETS_CONFIG[ETemplateNameRegistry.Recipe].WIDGET_HEIGHT
             }
