@@ -9,6 +9,7 @@ import {
     formatCustomDataField,
     evaluateTranslationTemplate,
     getColumnJustification,
+    resolveCellFormat,
 } from "src/api/utils/customDataUtils";
 import { handleTableImgError } from "src/api/utils/errorHandling";
 import { ReactComponent as LinkSVG } from "src/assets/icons/external-link.svg";
@@ -141,11 +142,15 @@ export const TableRow: React.FC<ITableRowProps> = ({
                     column.template !== undefined
                         ? evaluateTranslationTemplate(column.template, rowData)
                         : undefined;
+                const cellFormat =
+                    column.format === "auto"
+                        ? resolveCellFormat(column, rowData, rawValue)
+                        : column.format;
                 const formattedValue =
                     rawValue !== undefined
                         ? formatCustomDataField({
                               rawField: rawValue,
-                              format: column.format,
+                              format: cellFormat,
                           })
                         : undefined;
                 /**
@@ -243,11 +248,15 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                         column.template !== undefined
                             ? evaluateTranslationTemplate(column.template, item)
                             : undefined;
+                    const cellFormat =
+                        column.format === "auto"
+                            ? resolveCellFormat(column, item, rawValue)
+                            : column.format;
                     const formattedValue =
                         rawValue !== undefined
                             ? formatCustomDataField({
                                   rawField: rawValue,
-                                  format: column.format,
+                                  format: cellFormat,
                                   dateFormat:
                                       options?.dateformat || column.date_format,
                               })
@@ -355,11 +364,15 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
                                   rowData
                               )
                             : undefined;
+                    const cellFormat =
+                        column.format === "auto"
+                            ? resolveCellFormat(column, rowData, rawValue)
+                            : column.format;
                     const formattedValue =
                         rawValue !== undefined
                             ? formatCustomDataField({
                                   rawField: rawValue,
-                                  format: column.format,
+                                  format: cellFormat,
                               })
                             : undefined;
                     const href =
