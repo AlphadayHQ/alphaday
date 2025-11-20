@@ -22,7 +22,7 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const widgetHeight = useWidgetHeight(moduleData);
 
     const [currentPage, setCurrentPage] = useState<number | undefined>(1);
-    const [items, setItems] = useState<TCustomItem[] | undefined>();
+    const [items, setItems] = useState<TCustomItem[]>([]);
 
     const {
         data: apiData,
@@ -65,18 +65,22 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
     // Build unique items list when new data arrives
     useEffect(() => {
         const newItems = apiData?.results;
-        if (newItems) {
+        if (newItems && newItems.length > 0) {
             setItems((prevItems) => {
-                if (prevItems) {
-                    return buildUniqueItemList<TCustomItem>([
-                        ...prevItems,
-                        ...newItems,
-                    ]);
-                }
-                return newItems;
+                // For Dune data without IDs, generate unique IDs based on page and index
+                const itemsWithIds = newItems.map((item, index) => ({
+                    ...item,
+                    id: item.id ?? `${currentPage}-${index}`,
+                }));
+
+                const combined = buildUniqueItemList<TCustomItem>([
+                    ...prevItems,
+                    ...itemsWithIds,
+                ]);
+                return combined;
             });
         }
-    }, [apiData?.results]);
+    }, [apiData?.results, currentPage]);
 
     const handleSetWidgetHeight = (height: number) => {
         dispatch(
@@ -90,8 +94,8 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const displayItems = useMemo(() => {
         // Use accumulated items from API when endpoint_url is set
         if (endpoint_url) {
-            // Use accumulated items if available, otherwise fall back to current API data
-            return items || apiData?.results || [];
+            // Return items (could be empty array if no results)
+            return items;
         }
 
         // Use static custom_data
@@ -106,7 +110,7 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             return [];
         }
         return custom_data;
-    }, [custom_data, custom_meta, items, endpoint_url, apiData?.results]);
+    }, [custom_data, custom_meta, items, endpoint_url]);
 
     const meta = useMemo(() => {
         if (custom_meta?.layout_type === "table") {
@@ -121,12 +125,15 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
         };
     }, [custom_meta]);
 
+    // Only show loader on initial load, not when paginating
+    const isLoading = isLoadingApi && items.length === 0;
+
     return (
         <DuneTableModule
             items={displayItems}
             columns={meta.columns}
             rowProps={meta.row_props}
-            isLoadingItems={isLoadingApi}
+            isLoadingItems={isLoading}
             handlePaginate={handlePaginate}
             widgetHeight={widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}

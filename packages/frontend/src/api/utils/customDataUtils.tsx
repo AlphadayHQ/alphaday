@@ -249,6 +249,7 @@ export type TFormatCustomDataFieldInput = {
     rawField: string;
     format: TRemoteFormat | undefined;
     uri?: string;
+    dateFormat?: string;
 };
 export type TFormatCustomDataFieldOutput = {
     field: string | React.ReactNode;
@@ -256,7 +257,11 @@ export type TFormatCustomDataFieldOutput = {
 };
 export const formatCustomDataField: (
     req: TFormatCustomDataFieldInput
-) => TFormatCustomDataFieldOutput = ({ rawField, format = "plain-text" }) => {
+) => TFormatCustomDataFieldOutput = ({
+    rawField,
+    format = "plain-text",
+    dateFormat,
+}) => {
     try {
         if (format === "plain-text" || format === "link") {
             return {
@@ -283,8 +288,9 @@ export const formatCustomDataField: (
                 };
             }
 
+            const outputFormat = dateFormat || "YYYY-MM-DDTHH:mmZ";
             return {
-                field: parsedDate.format("YYYY-MM-DDTHH:mmZ").toString(),
+                field: parsedDate.format(outputFormat).toString(),
                 error: undefined,
             };
         }
