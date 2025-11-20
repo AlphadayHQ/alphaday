@@ -235,7 +235,11 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
             {visibleColumns.map((column) => (
                 <div
                     key={`header-${column.id}`}
-                    className="px-5 py-2 font-medium text-primaryVariant200"
+                    className={
+                        column.title
+                            ? "px-5 py-2 font-medium text-primaryVariant200"
+                            : ""
+                    }
                 >
                     {column.title}
                 </div>
