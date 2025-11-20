@@ -25,13 +25,6 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
 
     return (
         <div className="flex flex-col h-full p-4">
-            <div className="flex items-center justify-between mb-6">
-                <h3 className="fontGroup-highlightSemi text-primary m-0">
-                    Recipe Summary
-                </h3>
-                <RecipeSVG className="w-6 h-6 fill-primaryVariant100" />
-            </div>
-
             <div className="flex-1 flex flex-col justify-center gap-6">
                 <div className="bg-backgroundVariant100 rounded-lg p-6 border border-borderLine">
                     <div className="flex justify-between items-center">
