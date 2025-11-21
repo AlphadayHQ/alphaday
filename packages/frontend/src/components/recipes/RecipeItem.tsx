@@ -32,6 +32,32 @@ const TIMEZONES = [
     "Pacific/Auckland",
 ];
 
+const DAYS_OF_WEEK = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+];
+
+// Convert cron to human readable format
+const cronToHumanReadable = (cron: string): string => {
+    const parts = cron.split(" ");
+    const minute = parts[0] || "0";
+    const hour = parts[1] || "9";
+    const dayOfWeek = parts[4] || "*";
+
+    const time = `${hour.padStart(2, "0")}:${minute.padStart(2, "0")}`;
+
+    if (dayOfWeek === "*") {
+        return `Daily at ${time}`;
+    }
+    const dayName = DAYS_OF_WEEK[parseInt(dayOfWeek, 10)] || dayOfWeek;
+    return `Weekly on ${dayName} at ${time}`;
+};
+
 // Parse existing cron to extract time and frequency
 const parseCron = (cron: string) => {
     const parts = cron.split(" ");
@@ -305,7 +331,7 @@ const RecipeItem: FC<IRecipeItem> = ({
                                     Schedule
                                 </p>
                                 <p className="fontGroup-normal text-primary m-0 mt-1">
-                                    {recipe.schedule}
+                                    {cronToHumanReadable(recipe.schedule)}
                                 </p>
                             </div>
                             <div>
