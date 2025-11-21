@@ -220,6 +220,13 @@ export type TDeactivateRecipeRequest = {
 export type TDeactivateRecipeResponse = TRecipe;
 export type TDeactivateRecipeRawResponse = TRecipeRaw;
 
+export type TTriggerRecipeRequest = {
+    id: string;
+};
+
+export type TTriggerRecipeResponse = TRecipe;
+export type TTriggerRecipeRawResponse = TRecipeRaw;
+
 // Output Formats Types
 export type TOutputFormatRaw = {
     id: string;

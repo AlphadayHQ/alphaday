@@ -46,6 +46,7 @@ interface IRecipeItem {
         outputFormat?: string;
     }) => void;
     onToggleActivation?: (recipeId: string, isActive: boolean) => void;
+    onTrigger?: (recipeId: string) => void;
 }
 
 const RecipeItem: FC<IRecipeItem> = ({
@@ -53,6 +54,7 @@ const RecipeItem: FC<IRecipeItem> = ({
     outputFormats = [],
     onUpdate,
     onToggleActivation,
+    onTrigger,
 }) => {
     const [openAccordion, setOpenAccordion] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -119,6 +121,12 @@ const RecipeItem: FC<IRecipeItem> = ({
     const handleToggleActivation = () => {
         if (onToggleActivation) {
             onToggleActivation(recipe.id, recipe.isActive);
+        }
+    };
+
+    const handleTrigger = () => {
+        if (onTrigger) {
+            onTrigger(recipe.id);
         }
     };
 
@@ -421,6 +429,12 @@ const RecipeItem: FC<IRecipeItem> = ({
                                     {recipe.isActive
                                         ? "Deactivate"
                                         : "Activate"}
+                                </Button>
+                                <Button
+                                    onClick={handleTrigger}
+                                    variant="secondary"
+                                >
+                                    Test
                                 </Button>
                             </div>
                         </div>

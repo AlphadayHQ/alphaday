@@ -19,6 +19,7 @@ interface IRecipeModule {
         outputFormat?: string;
     }) => void;
     onToggleActivation: (recipeId: string, isActive: boolean) => void;
+    onTrigger: (recipeId: string) => void;
 }
 
 const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
@@ -30,6 +31,7 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
     onOpenLibrary,
     onUpdateRecipe,
     onToggleActivation,
+    onTrigger,
 }) {
     if (isLoadingRecipes || recipes === undefined) {
         return <ModuleLoader $height={`${widgetHeight}px`} />;
@@ -90,6 +92,7 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
                                     outputFormats={outputFormats}
                                     onUpdate={onUpdateRecipe}
                                     onToggleActivation={onToggleActivation}
+                                    onTrigger={onTrigger}
                                 />
                             ))}
                         </div>

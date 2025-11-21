@@ -34,6 +34,9 @@ import {
     TDeactivateRecipeRequest,
     TDeactivateRecipeResponse,
     TDeactivateRecipeRawResponse,
+    TTriggerRecipeRequest,
+    TTriggerRecipeResponse,
+    TTriggerRecipeRawResponse,
     TRecipeRaw,
     TRecipeSourceRaw,
     TRecipeOutputRaw,
@@ -265,6 +268,23 @@ const recipesApi = alphadayApi.injectEndpoints({
                 r: TDeactivateRecipeRawResponse
             ): TDeactivateRecipeResponse => transformRecipe(r),
         }),
+        triggerRecipe: builder.mutation<
+            TTriggerRecipeResponse,
+            TTriggerRecipeRequest
+        >({
+            query: (req: TTriggerRecipeRequest) => {
+                const path = `${RECIPES.BASE}${RECIPES.TRIGGER(req.id)}`;
+                Logger.debug("triggerRecipe: querying", path);
+                return {
+                    url: path,
+                    method: "POST",
+                    body: {},
+                };
+            },
+            transformResponse: (
+                r: TTriggerRecipeRawResponse
+            ): TTriggerRecipeResponse => transformRecipe(r),
+        }),
         getOutputFormats: builder.query<
             TGetOutputFormatsResponse,
             TGetOutputFormatsRequest
@@ -295,5 +315,6 @@ export const {
     useUpdateRecipeMutation,
     useActivateRecipeMutation,
     useDeactivateRecipeMutation,
+    useTriggerRecipeMutation,
     useGetOutputFormatsQuery,
 } = recipesApi;

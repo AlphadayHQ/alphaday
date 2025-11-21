@@ -7,6 +7,7 @@ import {
     useUpdateRecipeMutation,
     useActivateRecipeMutation,
     useDeactivateRecipeMutation,
+    useTriggerRecipeMutation,
     useGetOutputFormatsQuery,
 } from "src/api/services/recipes/recipeEndpoints";
 import { toggleRecipeModal } from "src/api/store";
@@ -42,6 +43,7 @@ const RecipeContainer: FC<IModuleContainer> = () => {
     const [updateRecipe] = useUpdateRecipeMutation();
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
+    const [triggerRecipe] = useTriggerRecipeMutation();
 
     const handleOpenLibrary = () => {
         toggleModal();
@@ -129,6 +131,27 @@ const RecipeContainer: FC<IModuleContainer> = () => {
         }
     };
 
+    const handleTrigger = async (recipeId: string) => {
+        if (!isAuthenticated) {
+            toast(globalMessages.callToAction.signUpToBookmark("recipes"));
+            return;
+        }
+        try {
+            await triggerRecipe({ id: recipeId }).unwrap();
+            toast("Recipe triggered successfully!", {
+                type: EToastRole.Success,
+            });
+        } catch (error) {
+            Logger.error(
+                "RecipeContainer::handleTrigger::Failed to trigger recipe:",
+                error
+            );
+            toast("Failed to trigger recipe. Please try again.", {
+                type: EToastRole.Error,
+            });
+        }
+    };
+
     console.log("recipeData", recipesData);
     console.log("templateData", templatesData);
 
@@ -144,6 +167,7 @@ const RecipeContainer: FC<IModuleContainer> = () => {
             onOpenLibrary={handleOpenLibrary}
             onUpdateRecipe={handleUpdateRecipe}
             onToggleActivation={handleToggleActivation}
+            onTrigger={handleTrigger}
         />
     );
 };
