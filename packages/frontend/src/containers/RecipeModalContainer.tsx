@@ -1,3 +1,4 @@
+import { useRecipeModalHash } from "src/api/hooks";
 import {
     useGetRecipesQuery,
     useGetRecipeTemplatesQuery,
@@ -9,13 +10,12 @@ import {
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
-import { useRecipeModalHash } from "src/api/hooks";
 import { TRecipeInput } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { RecipeModal } from "src/components/recipes/RecipeModal";
-import globalMessages from "src/globalMessages";
 import CONFIG from "src/config/config";
+import globalMessages from "src/globalMessages";
 
 const useRecipeModalState = () => {
     const dispatch = useAppDispatch();
@@ -78,24 +78,6 @@ export const RecipeModalContainer = () => {
             });
         }
     };
-
-    // const onUpdateRecipe = async (recipe: {
-    //     id: string;
-    //     name: string;
-    //     description?: string;
-    //     schedule: string;
-    //     timezone?: string;
-    //     sources: Array<{
-    //         sourceCategory: string;
-    //         filters?: Record<string, unknown>;
-    //         maxItems?: number;
-    //     }>;
-    //     outputs: Array<{
-    //         outputFormat: number;
-    //         promptTemplate: number;
-    //         deliveryChannels?: Record<string, unknown>;
-    //     }>;
-    // }) => {
 
     const onUpdateRecipe = async (recipe: TRecipeInput) => {
         if (!isAuthenticated) {
