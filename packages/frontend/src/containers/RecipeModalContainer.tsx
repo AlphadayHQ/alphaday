@@ -9,7 +9,9 @@ import {
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
-import { toast } from "src/api/utils/toastUtils";
+import { TRecipeInput } from "src/api/types";
+import { Logger } from "src/api/utils/logging";
+import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { RecipeModal } from "src/components/recipes/RecipeModal";
 import globalMessages from "src/globalMessages";
 
@@ -38,68 +40,69 @@ export const RecipeModalContainer = () => {
         }
     };
 
-    const onCreateRecipe = async (recipe: {
-        name: string;
-        description?: string;
-        schedule: string;
-        timezone?: string;
-        sources: Array<{
-            sourceCategory: string;
-            filters?: Record<string, unknown>;
-            maxItems?: number;
-        }>;
-        outputs: Array<{
-            outputFormat: number;
-            promptTemplate: number;
-            deliveryChannels?: Record<string, unknown>;
-        }>;
-    }) => {
+    const onCreateRecipe = async (recipe: TRecipeInput) => {
         if (!isAuthenticated) {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        await createRecipe({
-            name: recipe.name,
-            description: recipe.description,
-            schedule: recipe.schedule,
-            timezone: recipe.timezone,
-            sources: recipe.sources,
-            outputs: recipe.outputs,
-        });
-        refetchRecipes();
+        try {
+            await createRecipe({
+                name: recipe.name,
+                description: recipe.description,
+                schedule: recipe.schedule,
+                timezone: recipe.timezone,
+                sources: recipe.sources,
+                outputs: recipe.outputs,
+            }).unwrap();
+            refetchRecipes();
+        } catch (error) {
+            Logger.error("RecipeModalContainer::onCreateRecipe", error);
+            toast("Failed to create recipe. Please try again.", {
+                type: EToastRole.Error,
+            });
+        }
     };
 
-    const onUpdateRecipe = async (recipe: {
-        id: string;
-        name: string;
-        description?: string;
-        schedule: string;
-        timezone?: string;
-        sources: Array<{
-            sourceCategory: string;
-            filters?: Record<string, unknown>;
-            maxItems?: number;
-        }>;
-        outputs: Array<{
-            outputFormat: number;
-            promptTemplate: number;
-            deliveryChannels?: Record<string, unknown>;
-        }>;
-    }) => {
+    // const onUpdateRecipe = async (recipe: {
+    //     id: string;
+    //     name: string;
+    //     description?: string;
+    //     schedule: string;
+    //     timezone?: string;
+    //     sources: Array<{
+    //         sourceCategory: string;
+    //         filters?: Record<string, unknown>;
+    //         maxItems?: number;
+    //     }>;
+    //     outputs: Array<{
+    //         outputFormat: number;
+    //         promptTemplate: number;
+    //         deliveryChannels?: Record<string, unknown>;
+    //     }>;
+    // }) => {
+
+    const onUpdateRecipe = async (recipe: TRecipeInput) => {
         if (!isAuthenticated) {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        await updateRecipe({
-            id: recipe.id,
-            name: recipe.name,
-            description: recipe.description,
-            schedule: recipe.schedule,
-            timezone: recipe.timezone,
-            sources: recipe.sources,
-            outputs: recipe.outputs,
-        });
-        refetchRecipes();
+        try {
+            await updateRecipe({
+                id: recipe.id,
+                name: recipe.name,
+                description: recipe.description,
+                schedule: recipe.schedule,
+                timezone: recipe.timezone,
+                sources: recipe.sources,
+                outputs: recipe.outputs,
+            }).unwrap();
+            refetchRecipes();
+        } catch (error) {
+            Logger.error("RecipeModalContainer::onUpdateRecipe", error);
+            toast("Failed to update recipe. Please try again.", {
+                type: EToastRole.Error,
+            });
+        }
     };
 
     const onActivateRecipe = async (recipeId: string) => {
@@ -107,8 +110,15 @@ export const RecipeModalContainer = () => {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        await activateRecipe({ id: recipeId });
-        refetchRecipes();
+        try {
+            await activateRecipe({ id: recipeId }).unwrap();
+            refetchRecipes();
+        } catch (error) {
+            Logger.error("RecipeModalContainer::onActivateRecipe", error);
+            toast("Failed to activate recipe. Please try again.", {
+                type: EToastRole.Error,
+            });
+        }
     };
 
     const onDeactivateRecipe = async (recipeId: string) => {
@@ -116,8 +126,15 @@ export const RecipeModalContainer = () => {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        await deactivateRecipe({ id: recipeId });
-        refetchRecipes();
+        try {
+            await deactivateRecipe({ id: recipeId }).unwrap();
+            refetchRecipes();
+        } catch (error) {
+            Logger.error("RecipeModalContainer::onDeactivateRecipe", error);
+            toast("Failed to deactivate recipe. Please try again.", {
+                type: EToastRole.Error,
+            });
+        }
     };
 
     return (

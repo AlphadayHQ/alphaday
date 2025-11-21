@@ -1,46 +1,11 @@
-export type TRecipeTemplateConfig = {
-    schedule: string;
-    timezone: string;
-    sources: Array<{
-        source_category: string;
-        filters: Record<string, unknown>;
-        max_items: number;
-    }>;
-    outputs: Array<{
-        output_format_type: string;
-        prompt_template_id: number | null;
-        delivery_channels: Record<string, unknown>;
-    }>;
-};
-
-export type TRecipeTemplateTags = string[];
-
-export enum ERecipeTemplateCategory {
-    News = "news",
-    Market = "market",
-    Social = "social",
-    Portfolio = "portfolio",
-    Custom = "custom",
-    Research = "research",
-    Alert = "alert",
-}
-
-export type TRecipeTemplate = {
-    id: string;
-    name: string;
-    description: string;
-    category?: ERecipeTemplateCategory | string;
-    author?: number | null;
-    authorEmail?: string;
-    isPublic: boolean;
-    isFeatured: boolean;
-    usageCount: number;
-    templateConfig: TRecipeTemplateConfig;
-    previewImage?: string;
-    tags?: TRecipeTemplateTags;
-    created: string;
-    modified: string;
-};
+import {
+    TRecipe,
+    TRecipeDeliveryChannels,
+    TRecipeFilters,
+    TRecipeTemplate,
+    TRecipeTemplateConfig,
+    TRecipeTemplateTags,
+} from "src/api/types";
 
 export type TRecipeTemplateRaw = {
     id: string;
@@ -83,19 +48,6 @@ export type TGetRecipeTemplatesResponse = {
 };
 
 // Recipe Types
-export type TRecipeFilters = Record<string, unknown>;
-
-export type TRecipeDeliveryChannels = Record<string, unknown>;
-
-export type TRecipeSource = {
-    id?: string;
-    sourceCategory: string;
-    filters?: TRecipeFilters;
-    maxItems?: number;
-    priorityScoreThreshold?: number;
-    created?: string;
-    modified?: string;
-};
 
 export type TRecipeSourceRaw = {
     id?: string;
@@ -103,18 +55,6 @@ export type TRecipeSourceRaw = {
     filters?: TRecipeFilters;
     max_items?: number;
     priority_score_threshold?: number;
-    created?: string;
-    modified?: string;
-};
-
-export type TRecipeOutput = {
-    id?: string;
-    outputFormat: number;
-    outputFormatName?: string;
-    promptTemplate: number;
-    promptTemplateName?: string;
-    userPromptOverride?: string;
-    deliveryChannels?: TRecipeDeliveryChannels;
     created?: string;
     modified?: string;
 };
@@ -129,23 +69,6 @@ export type TRecipeOutputRaw = {
     delivery_channels?: TRecipeDeliveryChannels;
     created?: string;
     modified?: string;
-};
-
-export type TRecipe = {
-    id: string;
-    user?: number;
-    userEmail?: string;
-    name: string;
-    description?: string;
-    isActive: boolean;
-    schedule: string;
-    lastRun?: string | null;
-    timezone?: string;
-    version?: number;
-    recipeSources?: TRecipeSource[];
-    recipeOutputs?: TRecipeOutput[];
-    created: string;
-    modified: string;
 };
 
 export type TRecipeRaw = {

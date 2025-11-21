@@ -7,10 +7,11 @@ import {
     ScrollBar,
     twMerge,
 } from "@alphaday/ui-kit";
-import { TRecipe, TRecipeTemplate } from "src/api/services/recipes/types";
+import { TRecipe, TRecipeInput, TRecipeTemplate } from "src/api/types";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as RecipeSVG } from "src/assets/icons/grid.svg";
 import { ReactComponent as TemplateSVG } from "src/assets/icons/other.svg";
+import { v4 as uuidv4 } from "uuid";
 import RecipeForm from "./RecipeForm";
 
 interface IProps {
@@ -19,39 +20,8 @@ interface IProps {
     recipes?: TRecipe[];
     templates?: TRecipeTemplate[];
     isLoading?: boolean;
-    onCreateRecipe: (recipe: {
-        name: string;
-        description?: string;
-        schedule: string;
-        timezone?: string;
-        sources: Array<{
-            sourceCategory: string;
-            filters?: Record<string, unknown>;
-            maxItems?: number;
-        }>;
-        outputs: Array<{
-            outputFormat: number;
-            promptTemplate: number;
-            deliveryChannels?: Record<string, unknown>;
-        }>;
-    }) => void;
-    onUpdateRecipe: (recipe: {
-        id: string;
-        name: string;
-        description?: string;
-        schedule: string;
-        timezone?: string;
-        sources: Array<{
-            sourceCategory: string;
-            filters?: Record<string, unknown>;
-            maxItems?: number;
-        }>;
-        outputs: Array<{
-            outputFormat: number;
-            promptTemplate: number;
-            deliveryChannels?: Record<string, unknown>;
-        }>;
-    }) => void;
+    onCreateRecipe: (recipe: TRecipeInput) => void;
+    onUpdateRecipe: (recipe: TRecipeInput) => void;
     onActivateRecipe: (recipeId: string) => void;
     onDeactivateRecipe: (recipeId: string) => void;
 }
@@ -153,6 +123,7 @@ export const RecipeModal: FC<IProps> = ({
         const { templateConfig } = selectedTemplate;
 
         onCreateRecipe({
+            id: uuidv4(),
             ...recipeData,
             sources: templateConfig.sources.map((source) => ({
                 sourceCategory: source.source_category,

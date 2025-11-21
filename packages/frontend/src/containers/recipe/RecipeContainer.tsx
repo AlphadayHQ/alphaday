@@ -11,7 +11,7 @@ import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
 import { Logger } from "src/api/utils/logging";
-import { toast } from "src/api/utils/toastUtils";
+import { EToastRole, toast } from "src/api/utils/toastUtils";
 
 import RecipeModule from "src/components/recipes/RecipeModule";
 import { WIDGETS_CONFIG } from "src/config/widgets";
@@ -86,6 +86,9 @@ const RecipeContainer: FC<IModuleContainer> = () => {
                 "RecipeContainer::handleUpdateRecipe::Failed to update recipe:",
                 error
             );
+            toast("Failed to update recipe. Please try again.", {
+                type: EToastRole.Error,
+            });
         }
     };
 
@@ -106,9 +109,12 @@ const RecipeContainer: FC<IModuleContainer> = () => {
             refetchRecipes();
         } catch (error) {
             Logger.error(
-                "RecipeContainer::handleUpdateRecipe::Failed to toggle recipe activation:",
+                "RecipeContainer::handleToggleActivation::Failed to toggle recipe activation:",
                 error
             );
+            toast("Failed to toggle recipe activation. Please try again.", {
+                type: EToastRole.Error,
+            });
         }
     };
 

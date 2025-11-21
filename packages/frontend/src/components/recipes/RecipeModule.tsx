@@ -1,6 +1,6 @@
 import { FC, memo } from "react";
 import { ModuleLoader, Button } from "@alphaday/ui-kit";
-import { TRecipe, TRecipeTemplate } from "src/api/services/recipes/types";
+import { TRecipe, TRecipeTemplate } from "src/api/types";
 import RecipeItem from "./RecipeItem";
 
 interface IRecipeModule {

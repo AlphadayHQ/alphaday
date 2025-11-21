@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FC, useState } from "react";
 import { twMerge, Button, Input } from "@alphaday/ui-kit";
-import { TRecipe } from "src/api/services/recipes/types";
+import { TRecipe } from "src/api/types";
 
 const TIMEZONES = [
     "UTC",

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FC, useState, ChangeEvent } from "react";
 import { Input, ScrollBar } from "@alphaday/ui-kit";
-import { TRecipe, TRecipeTemplate } from "src/api/services/recipes/types";
+import { TRecipe, TRecipeTemplate } from "src/api/types";
 import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
 
 const TIMEZONES = [

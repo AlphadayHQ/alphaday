@@ -1,4 +1,10 @@
 import queryString from "query-string";
+import {
+    TRecipe,
+    TRecipeOutput,
+    TRecipeSource,
+    TRecipeTemplate,
+} from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "../../../config/config";
 import { alphadayApi } from "../alphadayApi";
@@ -6,7 +12,6 @@ import {
     TGetRecipeTemplatesRequest,
     TGetRecipeTemplatesRawResponse,
     TGetRecipeTemplatesResponse,
-    TRecipeTemplate,
     TRecipeTemplateRaw,
     TGetRecipesRequest,
     TGetRecipesRawResponse,
@@ -28,11 +33,8 @@ import {
     TDeactivateRecipeRequest,
     TDeactivateRecipeResponse,
     TDeactivateRecipeRawResponse,
-    TRecipe,
     TRecipeRaw,
-    TRecipeSource,
     TRecipeSourceRaw,
-    TRecipeOutput,
     TRecipeOutputRaw,
 } from "./types";
 
