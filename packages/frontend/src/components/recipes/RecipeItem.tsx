@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FC, useState } from "react";
 import { twMerge, Button, Input } from "@alphaday/ui-kit";
-import { TRecipe } from "src/api/types";
+import { TRecipe, TOutputFormat } from "src/api/types";
 
 const TIMEZONES = [
     "UTC",
@@ -74,18 +74,21 @@ const parseCron = (cron: string) => {
 
 interface IRecipeItem {
     recipe: TRecipe;
+    outputFormats?: TOutputFormat[];
     onUpdate?: (recipeData: {
         id: string;
         name: string;
         description?: string;
         schedule: string;
         timezone?: string;
+        outputFormat?: string;
     }) => void;
     onToggleActivation?: (recipeId: string, isActive: boolean) => void;
 }
 
 const RecipeItem: FC<IRecipeItem> = ({
     recipe,
+    outputFormats = [],
     onUpdate,
     onToggleActivation,
 }) => {
@@ -100,6 +103,9 @@ const RecipeItem: FC<IRecipeItem> = ({
     );
     const [scheduleConfig, setScheduleConfig] = useState(
         parseCron(recipe.schedule)
+    );
+    const [editedOutputFormat, setEditedOutputFormat] = useState(
+        recipe.recipeOutputs?.[0]?.outputFormat
     );
 
     const toggleAccordion = () => {
@@ -116,6 +122,7 @@ const RecipeItem: FC<IRecipeItem> = ({
         setEditedDescription(recipe.description || "");
         setScheduleConfig(parseCron(recipe.schedule));
         setEditedTimezone(recipe.timezone || "UTC");
+        setEditedOutputFormat(recipe.recipeOutputs?.[0]?.outputFormat);
     };
 
     const handleScheduleChange = (
@@ -141,6 +148,7 @@ const RecipeItem: FC<IRecipeItem> = ({
                 description: editedDescription,
                 schedule: cronExpression,
                 timezone: editedTimezone,
+                outputFormat: editedOutputFormat,
             });
         }
         setIsEditing(false);
@@ -151,6 +159,8 @@ const RecipeItem: FC<IRecipeItem> = ({
             onToggleActivation(recipe.id, recipe.isActive);
         }
     };
+
+    console.log("outputformat", outputFormats);
 
     return (
         <div className="bg-backgroundVariant100 rounded-lg border border-borderLine">
@@ -304,6 +314,35 @@ const RecipeItem: FC<IRecipeItem> = ({
                                 </div>
                             </div>
 
+                            {outputFormats.length > 0 && (
+                                <div>
+                                    <label className="fontGroup-support text-primaryVariant100 block mb-1">
+                                        Output Format
+                                    </label>
+                                    <select
+                                        title="output format"
+                                        value={editedOutputFormat}
+                                        onChange={(e) =>
+                                            setEditedOutputFormat(
+                                                e.target.value
+                                            )
+                                        }
+                                        className="w-full bg-backgroundVariant200 text-primary fontGroup-normal p-2 rounded border border-backgroundVariant100"
+                                    >
+                                        {outputFormats
+                                            .filter((f) => f.isActive)
+                                            .map((format) => (
+                                                <option
+                                                    key={format.id}
+                                                    value={format.id}
+                                                >
+                                                    {format.name}
+                                                </option>
+                                            ))}
+                                    </select>
+                                </div>
+                            )}
+
                             <div className="flex gap-2">
                                 <Button onClick={handleSave} variant="primary">
                                     Save
@@ -331,15 +370,8 @@ const RecipeItem: FC<IRecipeItem> = ({
                                     Schedule
                                 </p>
                                 <p className="fontGroup-normal text-primary m-0 mt-1">
-                                    {cronToHumanReadable(recipe.schedule)}
-                                </p>
-                            </div>
-                            <div>
-                                <p className="fontGroup-support text-primaryVariant100 m-0">
-                                    Timezone
-                                </p>
-                                <p className="fontGroup-normal text-primary m-0 mt-1">
-                                    {recipe.timezone || "Not set"}
+                                    {cronToHumanReadable(recipe.schedule)} (
+                                    {recipe.timezone || "UTC"})
                                 </p>
                             </div>
                             {recipe.recipeOutputs &&

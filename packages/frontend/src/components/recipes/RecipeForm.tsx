@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FC, useState, ChangeEvent } from "react";
 import { Input, ScrollBar, Toggle, twMerge } from "@alphaday/ui-kit";
-import { TRecipe, TRecipeTemplate } from "src/api/types";
+import { TRecipe, TRecipeTemplate, TOutputFormat } from "src/api/types";
 import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
 
 const TIMEZONES = [
@@ -50,18 +50,21 @@ const parseCron = (cron: string) => {
 interface IRecipeFormProps {
     template?: TRecipeTemplate;
     recipe?: TRecipe;
+    outputFormats?: TOutputFormat[];
     onBack: () => void;
     onCreate?: (data: {
         name: string;
         description?: string;
         schedule: string;
         timezone?: string;
+        outputFormat?: string;
     }) => void;
     onUpdate?: (data: {
         name: string;
         description?: string;
         schedule: string;
         timezone?: string;
+        outputFormat?: string;
     }) => void;
     onToggleActivation?: (recipeId: string, isActive: boolean) => void;
 }
@@ -69,6 +72,7 @@ interface IRecipeFormProps {
 const RecipeForm: FC<IRecipeFormProps> = ({
     template,
     recipe,
+    outputFormats = [],
     onCreate,
     onUpdate,
     onBack,
@@ -86,6 +90,7 @@ const RecipeForm: FC<IRecipeFormProps> = ({
         timezone:
             recipe?.timezone || template?.templateConfig.timezone || "UTC",
         isActive: recipe?.isActive ?? true,
+        outputFormat: recipe?.recipeOutputs?.[0]?.outputFormat,
     });
 
     const [scheduleConfig, setScheduleConfig] = useState(
@@ -322,6 +327,37 @@ const RecipeForm: FC<IRecipeFormProps> = ({
                                     </label>
                                 </div>
                             </div>
+
+                            {outputFormats.length > 0 && (
+                                <div>
+                                    <label className="block text-primary fontGroup-highlightSemi mb-2">
+                                        Output Format
+                                        <select
+                                            name="outputFormat"
+                                            value={formData.outputFormat}
+                                            onChange={(e) =>
+                                                setFormData((prev) => ({
+                                                    ...prev,
+                                                    outputFormat:
+                                                        e.target.value,
+                                                }))
+                                            }
+                                            className="w-full bg-backgroundVariant200 text-primary fontGroup-normal p-3 rounded border border-backgroundVariant100 mt-2"
+                                        >
+                                            {outputFormats
+                                                .filter((f) => f.isActive)
+                                                .map((format) => (
+                                                    <option
+                                                        key={format.id}
+                                                        value={format.id}
+                                                    >
+                                                        {format.name}
+                                                    </option>
+                                                ))}
+                                        </select>
+                                    </label>
+                                </div>
+                            )}
                         </div>
 
                         <div className="pt-4">

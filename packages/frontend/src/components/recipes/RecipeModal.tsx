@@ -7,7 +7,12 @@ import {
     ScrollBar,
     twMerge,
 } from "@alphaday/ui-kit";
-import { TRecipe, TRecipeInput, TRecipeTemplate } from "src/api/types";
+import {
+    TRecipe,
+    TRecipeInput,
+    TRecipeTemplate,
+    TOutputFormat,
+} from "src/api/types";
 import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
 import { ReactComponent as RecipeSVG } from "src/assets/icons/grid.svg";
 import { ReactComponent as TemplateSVG } from "src/assets/icons/other.svg";
@@ -19,6 +24,7 @@ interface IProps {
     onClose: () => void;
     recipes?: TRecipe[];
     templates?: TRecipeTemplate[];
+    outputFormats?: TOutputFormat[];
     isLoading?: boolean;
     onCreateRecipe: (recipe: TRecipeInput) => void;
     onUpdateRecipe: (recipe: TRecipeInput) => void;
@@ -34,6 +40,7 @@ export const RecipeModal: FC<IProps> = ({
     onClose,
     recipes = [],
     templates = [],
+    outputFormats = [],
     isLoading = false,
     onCreateRecipe,
     onUpdateRecipe,
@@ -131,7 +138,7 @@ export const RecipeModal: FC<IProps> = ({
                 maxItems: source.max_items,
             })),
             outputs: templateConfig.outputs.map((output) => ({
-                outputFormat: output.output_format_type as unknown as number,
+                outputFormat: output.output_format_type,
                 promptTemplate: output.prompt_template_id || 0,
                 deliveryChannels: output.delivery_channels,
             })),
@@ -225,6 +232,7 @@ export const RecipeModal: FC<IProps> = ({
         return (
             <RecipeForm
                 template={selectedTemplate}
+                outputFormats={outputFormats}
                 onBack={handleBackToTemplates}
                 onCreate={handleCreateRecipe}
             />
@@ -237,6 +245,7 @@ export const RecipeModal: FC<IProps> = ({
         return (
             <RecipeForm
                 recipe={selectedRecipe}
+                outputFormats={outputFormats}
                 onBack={handleBackToRecipes}
                 onUpdate={handleUpdateRecipe}
                 onToggleActivation={handleToggleActivation}
