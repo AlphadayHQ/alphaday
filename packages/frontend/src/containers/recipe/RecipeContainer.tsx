@@ -8,16 +8,20 @@ import {
     useDeactivateRecipeMutation,
 } from "src/api/services/recipes/recipeEndpoints";
 import { toggleRecipeModal } from "src/api/store";
-import { useAppDispatch } from "src/api/store/hooks";
+import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
+import { selectIsAuthenticated } from "src/api/store/slices/user";
 import { Logger } from "src/api/utils/logging";
+import { toast } from "src/api/utils/toastUtils";
 
 import RecipeModule from "src/components/recipes/RecipeModule";
 import { WIDGETS_CONFIG } from "src/config/widgets";
 import { ETemplateNameRegistry } from "src/constants";
+import globalMessages from "src/globalMessages";
 import { IModuleContainer } from "src/types";
 
 const RecipeContainer: FC<IModuleContainer> = () => {
     const dispatch = useAppDispatch();
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
     const toggleModal = () => dispatch(toggleRecipeModal());
 
     const {
@@ -43,6 +47,10 @@ const RecipeContainer: FC<IModuleContainer> = () => {
         schedule: string;
         timezone?: string;
     }) => {
+        if (!isAuthenticated) {
+            toast(globalMessages.callToAction.signUpToBookmark("recipes"));
+            return;
+        }
         try {
             // Get the existing recipe to preserve sources and outputs
             const existingRecipe = recipesData?.results.find(
@@ -85,6 +93,10 @@ const RecipeContainer: FC<IModuleContainer> = () => {
         recipeId: string,
         isActive: boolean
     ) => {
+        if (!isAuthenticated) {
+            toast(globalMessages.callToAction.signUpToBookmark("recipes"));
+            return;
+        }
         try {
             if (isActive) {
                 await deactivateRecipe({ id: recipeId }).unwrap();
