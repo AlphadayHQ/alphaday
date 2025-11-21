@@ -155,6 +155,7 @@ export const RecipeModal: FC<IProps> = ({
         description?: string;
         schedule: string;
         timezone?: string;
+        outputFormat?: string;
     }) => {
         if (!selectedRecipe || !onUpdateRecipe) return;
 
@@ -169,7 +170,8 @@ export const RecipeModal: FC<IProps> = ({
                 })) || [],
             outputs:
                 selectedRecipe.recipeOutputs?.map((output) => ({
-                    outputFormat: output.outputFormat,
+                    outputFormat:
+                        recipeData.outputFormat || output.outputFormat,
                     promptTemplate: output.promptTemplate,
                     deliveryChannels: output.deliveryChannels,
                 })) || [],
