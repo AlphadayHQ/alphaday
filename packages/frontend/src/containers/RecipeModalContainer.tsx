@@ -9,17 +9,39 @@ import {
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
+import { useRecipeModalHash } from "src/api/hooks";
 import { TRecipeInput } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { RecipeModal } from "src/components/recipes/RecipeModal";
 import globalMessages from "src/globalMessages";
+import CONFIG from "src/config/config";
+
+const useRecipeModalState = () => {
+    const dispatch = useAppDispatch();
+    const reduxShowModal = useAppSelector((state) => state.ui.showRecipeModal);
+    const hashState = useRecipeModalHash();
+
+    if (CONFIG.UI.USE_URL_HASH_FOR_RECIPE_MODAL) {
+        return {
+            showModal: hashState.showModal,
+            onClose: hashState.closeModal,
+        };
+    }
+
+    return {
+        showModal: reduxShowModal,
+        onClose: () => {
+            if (reduxShowModal) {
+                dispatch(toggleRecipeModal());
+            }
+        },
+    };
+};
 
 export const RecipeModalContainer = () => {
-    const dispatch = useAppDispatch();
-    const showModal = useAppSelector((state) => state.ui.showRecipeModal);
+    const { showModal, onClose } = useRecipeModalState();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
-    const toggleModal = () => dispatch(toggleRecipeModal());
 
     const {
         data: recipesData,
@@ -33,12 +55,6 @@ export const RecipeModalContainer = () => {
     const [updateRecipe] = useUpdateRecipeMutation();
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
-
-    const onClose = () => {
-        if (showModal) {
-            toggleModal();
-        }
-    };
 
     const onCreateRecipe = async (recipe: TRecipeInput) => {
         if (!isAuthenticated) {

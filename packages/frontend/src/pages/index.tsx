@@ -8,6 +8,7 @@ import {
     useTutorial,
     useWindowSize,
     useImageWidget,
+    useRecipeModalHash,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -67,7 +68,10 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     );
 
     const onToggleLanguageModal = () => dispatch(toggleLanguageModal());
-    const onToggleRecipeModal = () => dispatch(toggleRecipeModal());
+    const { toggleModal: hashToggleRecipeModal } = useRecipeModalHash();
+    const onToggleRecipeModal = UI.USE_URL_HASH_FOR_RECIPE_MODAL
+        ? hashToggleRecipeModal
+        : () => dispatch(toggleRecipeModal());
 
     const { toggleWidgetLib } = useWidgetLib();
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
