@@ -217,6 +217,7 @@ const API_V0 = {
             BY_ID: (id: string): string => `/recipes/${id}/`,
             ACTIVATE: (id: string): string => `/recipes/${id}/activate/`,
             DEACTIVATE: (id: string): string => `/recipes/${id}/deactivate/`,
+            OUTPUT_FORMATS: "/output-formats/",
         },
     },
 };

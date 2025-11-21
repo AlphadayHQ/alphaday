@@ -1,4 +1,5 @@
 import {
+    TOutputFormat,
     TRecipe,
     TRecipeDeliveryChannels,
     TRecipeFilters,
@@ -61,7 +62,7 @@ export type TRecipeSourceRaw = {
 
 export type TRecipeOutputRaw = {
     id?: string;
-    output_format: number;
+    output_format: string;
     output_format_name?: string;
     prompt_template: number;
     prompt_template_name?: string;
@@ -124,7 +125,7 @@ export type TCreateRecipeRequest = {
         priorityScoreThreshold?: number;
     }>;
     outputs: Array<{
-        outputFormat: number;
+        outputFormat: string;
         promptTemplate: number;
         userPromptOverride?: string;
         deliveryChannels?: TRecipeDeliveryChannels;
@@ -144,7 +145,7 @@ export type TCreateRecipeRequestRaw = {
         priority_score_threshold?: number;
     }>;
     outputs: Array<{
-        output_format: number;
+        output_format: string;
         prompt_template: number;
         user_prompt_override?: string;
         delivery_channels?: TRecipeDeliveryChannels;
@@ -175,7 +176,7 @@ export type TUpdateRecipeRequest = {
         priorityScoreThreshold?: number;
     }>;
     outputs: Array<{
-        outputFormat: number;
+        outputFormat: string;
         promptTemplate: number;
         userPromptOverride?: string;
         deliveryChannels?: TRecipeDeliveryChannels;
@@ -195,7 +196,7 @@ export type TUpdateRecipeRequestRaw = {
         priority_score_threshold?: number;
     }>;
     outputs: Array<{
-        output_format: number;
+        output_format: string;
         prompt_template: number;
         user_prompt_override?: string;
         delivery_channels?: TRecipeDeliveryChannels;
@@ -218,3 +219,39 @@ export type TDeactivateRecipeRequest = {
 
 export type TDeactivateRecipeResponse = TRecipe;
 export type TDeactivateRecipeRawResponse = TRecipeRaw;
+
+// Output Formats Types
+export type TOutputFormatRaw = {
+    id: number;
+    type: string;
+    name: string;
+    description?: string;
+    template: string;
+    cost_multiplier: number;
+    is_active: boolean;
+    created: string;
+    modified: string;
+};
+
+export type TGetOutputFormatsRequest = {
+    page?: number;
+    limit?: number;
+};
+
+export type TGetOutputFormatsRawResponse = {
+    total: number;
+    links: {
+        next: string | null;
+        previous: string | null;
+    };
+    results: TOutputFormatRaw[];
+};
+
+export type TGetOutputFormatsResponse = {
+    total: number;
+    links: {
+        next: string | null;
+        previous: string | null;
+    };
+    results: TOutputFormat[];
+};

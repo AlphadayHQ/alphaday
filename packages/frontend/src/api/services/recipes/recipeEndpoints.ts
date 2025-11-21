@@ -1,5 +1,6 @@
 import queryString from "query-string";
 import {
+    TOutputFormat,
     TRecipe,
     TRecipeOutput,
     TRecipeSource,
@@ -36,6 +37,10 @@ import {
     TRecipeRaw,
     TRecipeSourceRaw,
     TRecipeOutputRaw,
+    TGetOutputFormatsRequest,
+    TGetOutputFormatsRawResponse,
+    TGetOutputFormatsResponse,
+    TOutputFormatRaw,
 } from "./types";
 
 const { RECIPES } = CONFIG.API.DEFAULT.ROUTES;
@@ -75,6 +80,18 @@ const transformRecipeOutput = (raw: TRecipeOutputRaw): TRecipeOutput => ({
     promptTemplateName: raw.prompt_template_name,
     userPromptOverride: raw.user_prompt_override,
     deliveryChannels: raw.delivery_channels,
+    created: raw.created,
+    modified: raw.modified,
+});
+
+const transformOutputFormat = (raw: TOutputFormatRaw): TOutputFormat => ({
+    id: raw.id,
+    type: raw.type,
+    name: raw.name,
+    description: raw.description,
+    template: raw.template,
+    costMultiplier: raw.cost_multiplier,
+    isActive: raw.is_active,
     created: raw.created,
     modified: raw.modified,
 });
@@ -248,6 +265,24 @@ const recipesApi = alphadayApi.injectEndpoints({
                 r: TDeactivateRecipeRawResponse
             ): TDeactivateRecipeResponse => transformRecipe(r),
         }),
+        getOutputFormats: builder.query<
+            TGetOutputFormatsResponse,
+            TGetOutputFormatsRequest
+        >({
+            query: (req) => {
+                const params: string = queryString.stringify(req);
+                const path = `${RECIPES.BASE}${RECIPES.OUTPUT_FORMATS}?${params}`;
+                Logger.debug("getOutputFormats: querying", path);
+                return path;
+            },
+            transformResponse: (
+                r: TGetOutputFormatsRawResponse
+            ): TGetOutputFormatsResponse => ({
+                ...r,
+                results: r.results.map(transformOutputFormat),
+            }),
+            keepUnusedDataFor: 300,
+        }),
     }),
     overrideExisting: false,
 });
@@ -260,4 +295,5 @@ export const {
     useUpdateRecipeMutation,
     useActivateRecipeMutation,
     useDeactivateRecipeMutation,
+    useGetOutputFormatsQuery,
 } = recipesApi;

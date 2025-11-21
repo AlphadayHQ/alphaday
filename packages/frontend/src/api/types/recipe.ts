@@ -14,7 +14,7 @@ export type TRecipeSource = {
 
 export type TRecipeOutput = {
     id?: string;
-    outputFormat: number;
+    outputFormat: string;
     outputFormatName?: string;
     promptTemplate: number;
     promptTemplateName?: string;
@@ -53,7 +53,7 @@ export type TRecipeInput = {
         maxItems?: number;
     }>;
     outputs: Array<{
-        outputFormat: number;
+        outputFormat: string;
         promptTemplate: number;
         deliveryChannels?: Record<string, unknown>;
     }>;
@@ -85,6 +85,18 @@ export enum ERecipeTemplateCategory {
     Research = "research",
     Alert = "alert",
 }
+
+export type TOutputFormat = {
+    id: number;
+    type: string;
+    name: string;
+    description?: string;
+    template: string;
+    costMultiplier: number;
+    isActive: boolean;
+    created: string;
+    modified: string;
+};
 
 export type TRecipeTemplate = {
     id: string;
