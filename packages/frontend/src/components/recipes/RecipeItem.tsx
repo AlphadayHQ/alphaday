@@ -316,6 +316,38 @@ const RecipeItem: FC<IRecipeItem> = ({
                                     {recipe.timezone || "Not set"}
                                 </p>
                             </div>
+                            {recipe.recipeOutputs &&
+                                recipe.recipeOutputs.length > 0 && (
+                                    <div>
+                                        <p className="fontGroup-support text-primaryVariant100 m-0">
+                                            Delivery Channels
+                                        </p>
+                                        <p className="fontGroup-normal text-primary m-0 mt-1">
+                                            {recipe.recipeOutputs
+                                                .flatMap((output) =>
+                                                    output.deliveryChannels
+                                                        ? Object.keys(
+                                                              output.deliveryChannels
+                                                          )
+                                                        : []
+                                                )
+                                                .filter(
+                                                    (v, i, a) =>
+                                                        a.indexOf(v) === i
+                                                )
+                                                .map((channel) =>
+                                                    typeof channel === "string"
+                                                        ? channel
+                                                              .charAt(0)
+                                                              .toUpperCase() +
+                                                          channel.slice(1)
+                                                        : ""
+                                                )
+                                                .filter(Boolean)
+                                                .join(", ") || "None"}
+                                        </p>
+                                    </div>
+                                )}
                             {recipe.recipeSources &&
                                 recipe.recipeSources.length > 0 && (
                                     <div>
