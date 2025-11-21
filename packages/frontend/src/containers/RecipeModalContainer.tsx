@@ -58,83 +58,91 @@ export const RecipeModalContainer = () => {
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
 
-    const onCreateRecipe = async (recipe: TRecipeInput) => {
+    const onCreateRecipe = (recipe: TRecipeInput) => {
         if (!isAuthenticated) {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        try {
-            await createRecipe({
-                name: recipe.name,
-                description: recipe.description,
-                schedule: recipe.schedule,
-                timezone: recipe.timezone,
-                sources: recipe.sources,
-                outputs: recipe.outputs,
-            }).unwrap();
-            refetchRecipes();
-        } catch (error) {
-            Logger.error("RecipeModalContainer::onCreateRecipe", error);
-            toast("Failed to create recipe. Please try again.", {
-                type: EToastRole.Error,
+        createRecipe({
+            name: recipe.name,
+            description: recipe.description,
+            schedule: recipe.schedule,
+            timezone: recipe.timezone,
+            sources: recipe.sources,
+            outputs: recipe.outputs,
+        })
+            .unwrap()
+            .then(() => {
+                refetchRecipes();
+            })
+            .catch((error) => {
+                Logger.error("RecipeModalContainer::onCreateRecipe", error);
+                toast("Failed to create recipe. Please try again.", {
+                    type: EToastRole.Error,
+                });
             });
-        }
     };
 
-    const onUpdateRecipe = async (recipe: TRecipeInput) => {
+    const onUpdateRecipe = (recipe: TRecipeInput) => {
         if (!isAuthenticated) {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        try {
-            await updateRecipe({
-                id: recipe.id,
-                name: recipe.name,
-                description: recipe.description,
-                schedule: recipe.schedule,
-                timezone: recipe.timezone,
-                sources: recipe.sources,
-                outputs: recipe.outputs,
-            }).unwrap();
-            refetchRecipes();
-        } catch (error) {
-            Logger.error("RecipeModalContainer::onUpdateRecipe", error);
-            toast("Failed to update recipe. Please try again.", {
-                type: EToastRole.Error,
+        updateRecipe({
+            id: recipe.id,
+            name: recipe.name,
+            description: recipe.description,
+            schedule: recipe.schedule,
+            timezone: recipe.timezone,
+            sources: recipe.sources,
+            outputs: recipe.outputs,
+        })
+            .unwrap()
+            .then(() => {
+                refetchRecipes();
+            })
+            .catch((error) => {
+                Logger.error("RecipeModalContainer::onUpdateRecipe", error);
+                toast("Failed to update recipe. Please try again.", {
+                    type: EToastRole.Error,
+                });
             });
-        }
     };
 
-    const onActivateRecipe = async (recipeId: string) => {
+    const onActivateRecipe = (recipeId: string) => {
         if (!isAuthenticated) {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        try {
-            await activateRecipe({ id: recipeId }).unwrap();
-            refetchRecipes();
-        } catch (error) {
-            Logger.error("RecipeModalContainer::onActivateRecipe", error);
-            toast("Failed to activate recipe. Please try again.", {
-                type: EToastRole.Error,
+        activateRecipe({ id: recipeId })
+            .unwrap()
+            .then(() => {
+                refetchRecipes();
+            })
+            .catch((error) => {
+                Logger.error("RecipeModalContainer::onActivateRecipe", error);
+                toast("Failed to activate recipe. Please try again.", {
+                    type: EToastRole.Error,
+                });
             });
-        }
     };
 
-    const onDeactivateRecipe = async (recipeId: string) => {
+    const onDeactivateRecipe = (recipeId: string) => {
         if (!isAuthenticated) {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
             return;
         }
-        try {
-            await deactivateRecipe({ id: recipeId }).unwrap();
-            refetchRecipes();
-        } catch (error) {
-            Logger.error("RecipeModalContainer::onDeactivateRecipe", error);
-            toast("Failed to deactivate recipe. Please try again.", {
-                type: EToastRole.Error,
+        deactivateRecipe({ id: recipeId })
+            .unwrap()
+            .then(() => {
+                refetchRecipes();
+            })
+            .catch((error) => {
+                Logger.error("RecipeModalContainer::onDeactivateRecipe", error);
+                toast("Failed to deactivate recipe. Please try again.", {
+                    type: EToastRole.Error,
+                });
             });
-        }
     };
 
     return (

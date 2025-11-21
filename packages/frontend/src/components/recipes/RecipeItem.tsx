@@ -130,8 +130,6 @@ const RecipeItem: FC<IRecipeItem> = ({
         }
     };
 
-    console.log("outputformat", outputFormats);
-
     return (
         <div className="bg-backgroundVariant100 rounded-lg border border-borderLine">
             <div
