@@ -2,45 +2,7 @@
 import { FC, useState } from "react";
 import { twMerge, Button, Input } from "@alphaday/ui-kit";
 import { TRecipe, TOutputFormat } from "src/api/types";
-
-const TIMEZONES = [
-    "UTC",
-    "America/New_York",
-    "America/Chicago",
-    "America/Denver",
-    "America/Los_Angeles",
-    "America/Toronto",
-    "America/Vancouver",
-    "Europe/London",
-    "Europe/Paris",
-    "Europe/Berlin",
-    "Europe/Madrid",
-    "Europe/Rome",
-    "Europe/Amsterdam",
-    "Europe/Brussels",
-    "Europe/Vienna",
-    "Europe/Zurich",
-    "Asia/Dubai",
-    "Asia/Singapore",
-    "Asia/Hong_Kong",
-    "Asia/Tokyo",
-    "Asia/Seoul",
-    "Asia/Shanghai",
-    "Asia/Kolkata",
-    "Australia/Sydney",
-    "Australia/Melbourne",
-    "Pacific/Auckland",
-];
-
-const DAYS_OF_WEEK = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-];
+import { TIMEZONES, DAYS_OF_WEEK } from "src/api/utils/dateUtils";
 
 // Convert cron to human readable format
 const cronToHumanReadable = (cron: string): string => {

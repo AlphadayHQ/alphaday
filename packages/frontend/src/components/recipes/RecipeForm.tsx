@@ -2,36 +2,8 @@
 import { FC, useState, ChangeEvent } from "react";
 import { Input, ScrollBar, Toggle, twMerge } from "@alphaday/ui-kit";
 import { TRecipe, TRecipeTemplate, TOutputFormat } from "src/api/types";
+import { TIMEZONES } from "src/api/utils/dateUtils";
 import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
-
-const TIMEZONES = [
-    "UTC",
-    "America/New_York",
-    "America/Chicago",
-    "America/Denver",
-    "America/Los_Angeles",
-    "America/Toronto",
-    "America/Vancouver",
-    "Europe/London",
-    "Europe/Paris",
-    "Europe/Berlin",
-    "Europe/Madrid",
-    "Europe/Rome",
-    "Europe/Amsterdam",
-    "Europe/Brussels",
-    "Europe/Vienna",
-    "Europe/Zurich",
-    "Asia/Dubai",
-    "Asia/Singapore",
-    "Asia/Hong_Kong",
-    "Asia/Tokyo",
-    "Asia/Seoul",
-    "Asia/Shanghai",
-    "Asia/Kolkata",
-    "Australia/Sydney",
-    "Australia/Melbourne",
-    "Pacific/Auckland",
-];
 
 // Parse existing cron to extract time and frequency
 const parseCron = (cron: string) => {

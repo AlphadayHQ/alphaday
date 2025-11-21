@@ -28,3 +28,41 @@ export const computeDuration = (date: string | Date): string => {
 
     return String(moment.duration(moment(date).diff(moment())).humanize(true));
 };
+
+export const TIMEZONES = [
+    "(GMT-11) Pacific/Midway",
+    "(GMT-10) Pacific/Honolulu",
+    "(GMT-9) America/Anchorage",
+    "(GMT-8) America/Los_Angeles",
+    "(GMT-7) America/Denver",
+    "(GMT-6) America/Chicago",
+    "(GMT-5) America/New_York",
+    "(GMT-4) America/Santiago",
+    "(GMT-3) America/Sao_Paulo",
+    "(GMT-2) Atlantic/South_Georgia",
+    "(GMT-1) Atlantic/Azores",
+    "(GMT+0) Europe/London",
+    "(GMT+1) Europe/Paris",
+    "(GMT+2) Europe/Athens",
+    "(GMT+3) Europe/Moscow",
+    "(GMT+4) Asia/Dubai",
+    "(GMT+5) Asia/Karachi",
+    "(GMT+5:30) Asia/Kolkata",
+    "(GMT+6) Asia/Dhaka",
+    "(GMT+7) Asia/Bangkok",
+    "(GMT+8) Asia/Singapore",
+    "(GMT+9) Asia/Tokyo",
+    "(GMT+10) Australia/Sydney",
+    "(GMT+11) Pacific/Noumea",
+    "(GMT+12) Pacific/Fiji",
+];
+
+export const DAYS_OF_WEEK = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+];
