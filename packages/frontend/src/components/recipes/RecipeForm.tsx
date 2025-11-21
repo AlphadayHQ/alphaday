@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FC, useState, ChangeEvent } from "react";
-import { Input, ScrollBar } from "@alphaday/ui-kit";
+import { Input, ScrollBar, Toggle, twMerge } from "@alphaday/ui-kit";
 import { TRecipe, TRecipeTemplate } from "src/api/types";
 import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
 
@@ -163,7 +163,7 @@ const RecipeForm: FC<IRecipeFormProps> = ({
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="grid grid-cols-[1fr_auto] gap-4 items-end">
+                        <div className="grid grid-cols-[1fr_1fr] gap-4 items-end">
                             <div>
                                 <label className="block text-primary fontGroup-highlightSemi mb-2">
                                     Recipe Name *
@@ -179,35 +179,26 @@ const RecipeForm: FC<IRecipeFormProps> = ({
                                 </label>
                             </div>
                             {isEditMode && (
-                                <div className="flex items-center space-x-3 pb-1">
-                                    <label className="flex items-center cursor-pointer">
-                                        <div className="relative">
-                                            <input
-                                                type="checkbox"
-                                                checked={formData.isActive}
+                                <div className="self-start">
+                                    <label className="block text-primary fontGroup-highlightSemi">
+                                        Activate / Deactivate Recipe
+                                        <div className="flex items-center h-12 mt-1">
+                                            <Toggle
+                                                enabled={formData.isActive}
                                                 onChange={handleToggleChange}
-                                                className="sr-only"
                                             />
-                                            <div
-                                                className={`block w-14 h-8 rounded-full transition-colors ${
-                                                    formData.isActive
-                                                        ? "bg-green-600"
-                                                        : "bg-gray-600"
-                                                }`}
-                                            />
-                                            <div
-                                                className={`absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform ${
-                                                    formData.isActive
-                                                        ? "transform translate-x-6"
-                                                        : ""
-                                                }`}
-                                            />
+                                            <span
+                                                className={twMerge(
+                                                    "ml-2 text-primaryVariant200 fontGroup-highlightSemi whitespace-nowrap",
+                                                    formData.isActive &&
+                                                        "text-primary"
+                                                )}
+                                            >
+                                                {formData.isActive
+                                                    ? "Active"
+                                                    : "Inactive"}
+                                            </span>
                                         </div>
-                                        <span className="ml-3 text-primary fontGroup-highlightSemi whitespace-nowrap">
-                                            {formData.isActive
-                                                ? "Active"
-                                                : "Inactive"}
-                                        </span>
                                     </label>
                                 </div>
                             )}
