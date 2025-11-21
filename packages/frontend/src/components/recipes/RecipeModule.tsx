@@ -9,14 +9,14 @@ interface IRecipeModule {
     isLoadingRecipes: boolean;
     widgetHeight: number;
     onOpenLibrary: () => void;
-    onUpdateRecipe?: (recipeData: {
+    onUpdateRecipe: (recipeData: {
         id: string;
         name: string;
         description?: string;
         schedule: string;
         timezone?: string;
     }) => void;
-    onToggleActivation?: (recipeId: string, isActive: boolean) => void;
+    onToggleActivation: (recipeId: string, isActive: boolean) => void;
 }
 
 const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({

@@ -19,7 +19,7 @@ interface IProps {
     recipes?: TRecipe[];
     templates?: TRecipeTemplate[];
     isLoading?: boolean;
-    onCreateRecipe?: (recipe: {
+    onCreateRecipe: (recipe: {
         name: string;
         description?: string;
         schedule: string;
@@ -35,7 +35,7 @@ interface IProps {
             deliveryChannels?: Record<string, unknown>;
         }>;
     }) => void;
-    onUpdateRecipe?: (recipe: {
+    onUpdateRecipe: (recipe: {
         id: string;
         name: string;
         description?: string;
@@ -52,8 +52,8 @@ interface IProps {
             deliveryChannels?: Record<string, unknown>;
         }>;
     }) => void;
-    onActivateRecipe?: (recipeId: string) => void;
-    onDeactivateRecipe?: (recipeId: string) => void;
+    onActivateRecipe: (recipeId: string) => void;
+    onDeactivateRecipe: (recipeId: string) => void;
 }
 
 type CategoryType = "recipes" | "templates";

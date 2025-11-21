@@ -9,6 +9,7 @@ import {
 } from "src/api/services/recipes/recipeEndpoints";
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
+import { Logger } from "src/api/utils/logging";
 
 import RecipeModule from "src/components/recipes/RecipeModule";
 import { WIDGETS_CONFIG } from "src/config/widgets";
@@ -73,7 +74,10 @@ const RecipeContainer: FC<IModuleContainer> = () => {
             }).unwrap();
             refetchRecipes();
         } catch (error) {
-            console.error("Failed to update recipe:", error);
+            Logger.error(
+                "RecipeContainer::handleUpdateRecipe::Failed to update recipe:",
+                error
+            );
         }
     };
 
@@ -89,7 +93,10 @@ const RecipeContainer: FC<IModuleContainer> = () => {
             }
             refetchRecipes();
         } catch (error) {
-            console.error("Failed to toggle recipe activation:", error);
+            Logger.error(
+                "RecipeContainer::handleUpdateRecipe::Failed to toggle recipe activation:",
+                error
+            );
         }
     };
 
