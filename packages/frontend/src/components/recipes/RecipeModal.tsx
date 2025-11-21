@@ -124,6 +124,7 @@ export const RecipeModal: FC<IProps> = ({
         description?: string;
         schedule: string;
         timezone?: string;
+        outputFormat: string;
     }) => {
         if (!selectedTemplate || !onCreateRecipe) return;
 
@@ -138,7 +139,7 @@ export const RecipeModal: FC<IProps> = ({
                 maxItems: source.max_items,
             })),
             outputs: templateConfig.outputs.map((output) => ({
-                outputFormat: output.output_format_type,
+                outputFormat: recipeData.outputFormat,
                 promptTemplate: output.prompt_template_id || 0,
                 deliveryChannels: output.delivery_channels,
             })),

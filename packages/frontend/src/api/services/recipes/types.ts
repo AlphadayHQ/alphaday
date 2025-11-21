@@ -222,7 +222,7 @@ export type TDeactivateRecipeRawResponse = TRecipeRaw;
 
 // Output Formats Types
 export type TOutputFormatRaw = {
-    id: number;
+    id: string;
     type: string;
     name: string;
     description?: string;

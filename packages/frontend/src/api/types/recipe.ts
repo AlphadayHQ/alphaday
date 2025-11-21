@@ -87,7 +87,7 @@ export enum ERecipeTemplateCategory {
 }
 
 export type TOutputFormat = {
-    id: number;
+    id: string;
     type: string;
     name: string;
     description?: string;

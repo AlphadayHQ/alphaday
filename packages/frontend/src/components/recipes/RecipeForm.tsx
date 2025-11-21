@@ -57,7 +57,7 @@ interface IRecipeFormProps {
         description?: string;
         schedule: string;
         timezone?: string;
-        outputFormat?: string;
+        outputFormat: string;
     }) => void;
     onUpdate?: (data: {
         name: string;
@@ -90,7 +90,8 @@ const RecipeForm: FC<IRecipeFormProps> = ({
         timezone:
             recipe?.timezone || template?.templateConfig.timezone || "UTC",
         isActive: recipe?.isActive ?? true,
-        outputFormat: recipe?.recipeOutputs?.[0]?.outputFormat,
+        outputFormat:
+            recipe?.recipeOutputs?.[0]?.outputFormat || outputFormats[0].id,
     });
 
     const [scheduleConfig, setScheduleConfig] = useState(
