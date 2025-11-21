@@ -6,6 +6,7 @@ import {
     useUpdateRecipeMutation,
     useActivateRecipeMutation,
     useDeactivateRecipeMutation,
+    useGetOutputFormatsQuery,
 } from "src/api/services/recipes/recipeEndpoints";
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
@@ -50,6 +51,7 @@ export const RecipeModalContainer = () => {
     } = useGetRecipesQuery({});
     const { data: templatesData, isLoading: templatesLoading } =
         useGetRecipeTemplatesQuery({});
+    const { data: outputFormatsData } = useGetOutputFormatsQuery({});
 
     const [createRecipe] = useCreateRecipeMutation();
     const [updateRecipe] = useUpdateRecipeMutation();
@@ -141,6 +143,7 @@ export const RecipeModalContainer = () => {
             onClose={onClose}
             recipes={recipesData?.results}
             templates={templatesData?.results}
+            outputFormats={outputFormatsData?.results}
             isLoading={recipesLoading || templatesLoading}
             onCreateRecipe={onCreateRecipe}
             onUpdateRecipe={onUpdateRecipe}

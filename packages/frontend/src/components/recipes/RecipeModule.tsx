@@ -1,11 +1,12 @@
 import { FC, memo } from "react";
 import { ModuleLoader, Button } from "@alphaday/ui-kit";
-import { TRecipe, TRecipeTemplate } from "src/api/types";
+import { TRecipe, TRecipeTemplate, TOutputFormat } from "src/api/types";
 import RecipeItem from "./RecipeItem";
 
 interface IRecipeModule {
     recipes: TRecipe[] | undefined;
     templates: TRecipeTemplate[] | undefined;
+    outputFormats?: TOutputFormat[];
     isLoadingRecipes: boolean;
     widgetHeight: number;
     onOpenLibrary: () => void;
@@ -15,6 +16,7 @@ interface IRecipeModule {
         description?: string;
         schedule: string;
         timezone?: string;
+        outputFormat?: string;
     }) => void;
     onToggleActivation: (recipeId: string, isActive: boolean) => void;
 }
@@ -22,6 +24,7 @@ interface IRecipeModule {
 const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
     recipes,
     templates,
+    outputFormats,
     isLoadingRecipes,
     widgetHeight,
     onOpenLibrary,
@@ -77,13 +80,14 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
                 {totalRecipes > 0 && (
                     <div className="">
                         <p className="fontGroup-normal text-primaryVariant200 m-0 mb-2">
-                            Recent Recipes
+                            All Recipes
                         </p>
                         <div className="space-y-2">
-                            {recipes.slice(0, 3).map((recipe) => (
+                            {recipes.map((recipe) => (
                                 <RecipeItem
                                     key={recipe.id}
                                     recipe={recipe}
+                                    outputFormats={outputFormats}
                                     onUpdate={onUpdateRecipe}
                                     onToggleActivation={onToggleActivation}
                                 />

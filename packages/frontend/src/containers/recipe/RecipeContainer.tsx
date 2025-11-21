@@ -1,11 +1,13 @@
 import { FC } from "react";
 
+import { useRecipeModalHash } from "src/api/hooks";
 import {
     useGetRecipesQuery,
     useGetRecipeTemplatesQuery,
     useUpdateRecipeMutation,
     useActivateRecipeMutation,
     useDeactivateRecipeMutation,
+    useGetOutputFormatsQuery,
 } from "src/api/services/recipes/recipeEndpoints";
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
@@ -14,6 +16,7 @@ import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 
 import RecipeModule from "src/components/recipes/RecipeModule";
+import CONFIG from "src/config/config";
 import { WIDGETS_CONFIG } from "src/config/widgets";
 import { ETemplateNameRegistry } from "src/constants";
 import globalMessages from "src/globalMessages";
@@ -22,7 +25,10 @@ import { IModuleContainer } from "src/types";
 const RecipeContainer: FC<IModuleContainer> = () => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
-    const toggleModal = () => dispatch(toggleRecipeModal());
+    const { openModal: hashOpenModal } = useRecipeModalHash();
+    const toggleModal = CONFIG.UI.USE_URL_HASH_FOR_RECIPE_MODAL
+        ? hashOpenModal
+        : () => dispatch(toggleRecipeModal());
 
     const {
         data: recipesData,
@@ -31,6 +37,7 @@ const RecipeContainer: FC<IModuleContainer> = () => {
     } = useGetRecipesQuery({});
     const { data: templatesData, isLoading: templatesLoading } =
         useGetRecipeTemplatesQuery({});
+    const { data: outputFormatsData } = useGetOutputFormatsQuery({});
 
     const [updateRecipe] = useUpdateRecipeMutation();
     const [activateRecipe] = useActivateRecipeMutation();
@@ -46,6 +53,7 @@ const RecipeContainer: FC<IModuleContainer> = () => {
         description?: string;
         schedule: string;
         timezone?: string;
+        outputFormat?: string;
     }) => {
         if (!isAuthenticated) {
             toast(globalMessages.callToAction.signUpToBookmark("recipes"));
@@ -73,8 +81,11 @@ const RecipeContainer: FC<IModuleContainer> = () => {
                         priorityScoreThreshold: source.priorityScoreThreshold,
                     })) || [],
                 outputs:
-                    existingRecipe.recipeOutputs?.map((output) => ({
-                        outputFormat: output.outputFormat,
+                    existingRecipe.recipeOutputs?.map((output, index) => ({
+                        outputFormat:
+                            index === 0 && recipeData.outputFormat
+                                ? recipeData.outputFormat
+                                : output.outputFormat,
                         promptTemplate: output.promptTemplate,
                         userPromptOverride: output.userPromptOverride,
                         deliveryChannels: output.deliveryChannels,
@@ -118,10 +129,14 @@ const RecipeContainer: FC<IModuleContainer> = () => {
         }
     };
 
+    console.log("recipeData", recipesData);
+    console.log("templateData", templatesData);
+
     return (
         <RecipeModule
             recipes={recipesData?.results}
             templates={templatesData?.results}
+            outputFormats={outputFormatsData?.results}
             isLoadingRecipes={recipesLoading || templatesLoading}
             widgetHeight={
                 WIDGETS_CONFIG[ETemplateNameRegistry.Recipe].WIDGET_HEIGHT
