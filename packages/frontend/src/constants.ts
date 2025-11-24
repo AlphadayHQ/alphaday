@@ -1,6 +1,7 @@
 export enum EWidgetSettingsRegistry {
     IncludedTags = "included_tags_setting",
     PinnedCoins = "pinned_coins_setting",
+    WidgetJson = "widget_json_setting",
     // ...add other settings here
 }
 
@@ -60,6 +61,8 @@ export enum ETemplateNameRegistry {
     CustomTable = "CUSTOM_TABLE",
     Dao = "DAO",
     Discord = "DISCORD",
+    Dune = "DUNE",
+    DuneTable = "DUNE_TABLE",
     FAQ = "FAQ",
     Forum = "FORUM",
     Gas = "GAS",

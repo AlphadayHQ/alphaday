@@ -1,24 +1,21 @@
 import { FC } from "react";
 import { CenteredBlock, ModuleLoader, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import {
-    TPolymarketMarketGroup,
-    TPolymarketMarket,
-} from "src/api/services/polymarket/types";
+import { TPolymarketEvent } from "src/api/services/polymarket/types";
 import { computeDuration } from "src/api/utils/dateUtils";
 import globalMessages from "src/globalMessages";
 import PolymarketTopVolumeList from "./PolymarketTopVolumeList";
 
 export interface IPolymarketTopVolumeModule {
     isLoading?: boolean;
-    marketGroupData: TPolymarketMarketGroup | undefined;
-    onSelectMarket?: (market: TPolymarketMarket) => void;
+    event: TPolymarketEvent | undefined;
+    onSelectMarket?: (market: TPolymarketEvent["markets"][0]) => void;
     contentHeight: string;
 }
 
 const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
     isLoading,
-    marketGroupData,
+    event,
     onSelectMarket,
     contentHeight,
 }) => {
@@ -28,7 +25,7 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
         return <ModuleLoader $height={contentHeight} />;
     }
 
-    if (!marketGroupData || marketGroupData.markets.length === 0) {
+    if (!event || event.markets.length === 0) {
         return (
             <CenteredBlock>
                 <p>{globalMessages.queries.noMatchFound("markets")}</p>
@@ -37,7 +34,7 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
     }
 
     // enddate it endate of furthest enddate in marketGroupData.markets
-    const endDate = marketGroupData.markets.reduce((max, market) => {
+    const endDate = event.markets.reduce((max, market) => {
         return Math.max(
             max,
             market.endDate ? new Date(market.endDate).getTime() : 0
@@ -45,9 +42,7 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
     }, 0);
     const isExpired = endDate ? new Date(endDate) < new Date() : false;
     // is all markets closed
-    const isAllMarketsClosed = marketGroupData.markets.every(
-        (market) => market.closed
-    );
+    const isAllMarketsClosed = event.markets.every((market) => market.closed);
 
     let statusText = t("polymarket.live");
     let statusColor = "bg-success";
@@ -75,16 +70,16 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
             <div className="h-full pb-14 ml-2" role="button">
                 <div className="flex items-center justify-between px-1 pb-2 mr-[3px]">
                     <div className="flex gap-4 w-full">
-                        {marketGroupData.image && (
+                        {event.image && (
                             <img
-                                src={marketGroupData.image}
+                                src={event.image}
                                 alt="Market"
                                 className="w-8 h-8 mt-0.5 rounded-full object-cover self-start"
                             />
                         )}
                         <div className="flex flex-col gap-2 w-full">
                             <span className="line-clamp-2 fontGroup-highlight">
-                                {marketGroupData.title}
+                                {event.title}
                             </span>
                             <p className="fontGroup-mini mb-0">
                                 <span
@@ -99,11 +94,11 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
                                     •
                                 </span>
                                 <span>
-                                    {formatVolume(marketGroupData.volume)}{" "}
+                                    {formatVolume(event.volume)}{" "}
                                     {t("navigation.general.vol")}
                                 </span>
                                 {endDate &&
-                                    !marketGroupData.markets.every(
+                                    !event.markets.every(
                                         (market) => market.closed
                                     ) && (
                                         <>
@@ -124,7 +119,7 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
                     </div>
                 </div>
                 <PolymarketTopVolumeList
-                    markets={marketGroupData.markets}
+                    markets={event.markets}
                     onSelectMarket={onSelectMarket}
                 />
                 <div className="w-full h-10" />

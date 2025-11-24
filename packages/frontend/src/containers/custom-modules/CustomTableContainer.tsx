@@ -46,9 +46,26 @@ const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 );
                 return [];
             }
+            if (!Array.isArray(custom_data)) {
+                Logger.error(
+                    "CustomTableContainer: custom_data is not an array",
+                    custom_data
+                );
+                return [];
+            }
             return custom_data;
         }
-        return data?.results ?? [];
+
+        // Validate API response
+        const apiResults = data?.results;
+        if (apiResults && !Array.isArray(apiResults)) {
+            Logger.error(
+                "CustomTableContainer: API results is not an array",
+                apiResults
+            );
+            return [];
+        }
+        return apiResults ?? [];
     }, [custom_data, custom_meta, data?.results, data_type]);
 
     const meta = useMemo(() => {
@@ -73,6 +90,7 @@ const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             handlePaginate={() => ({})}
             widgetHeight={widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
+            isHeaderOnlyMode={moduleData.widget.slug.includes("dune_")}
         />
     );
 };
