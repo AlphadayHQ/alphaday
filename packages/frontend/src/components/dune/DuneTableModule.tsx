@@ -8,6 +8,7 @@ import {
     useState,
 } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { DimensionsContext } from "src/api/store/providers/dimensions-context";
 import {
@@ -30,6 +31,11 @@ interface IDuneTableProps {
     isLoadingItems: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     setWidgetHeight: (size: number) => void;
+    duneMeta?: {
+        widgetName: string;
+        duneQueryURL: string;
+        importTime: string;
+    } | null;
 }
 
 const DuneTableModule: FC<IDuneTableProps> = ({
@@ -40,6 +46,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
     isLoadingItems,
     handlePaginate,
     setWidgetHeight,
+    duneMeta,
 }) => {
     const { widgetsSize } = useContext(DimensionsContext);
     const { t } = useTranslation();
@@ -63,7 +70,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
             }
             prevScrollRef.current = scrollRef;
         }
-    }, [scrollRef, prevScrollRef, setWidgetHeight]);
+    }, [scrollRef, setWidgetHeight]);
 
     const handleScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
         if (shouldFetchMoreItems(currentTarget)) {
@@ -93,6 +100,19 @@ const DuneTableModule: FC<IDuneTableProps> = ({
 
     return (
         <div className="h-25 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primaryVariant100 scrollbar-thumb-rounded">
+            {duneMeta && (
+                <div className="px-4 pb-2 text-center text-xs text-primaryVariant200">
+                    <span className="font-semibold text-primary">
+                        {duneMeta.widgetName}
+                    </span>
+                    {" | "}
+                    <span>
+                        {moment(duneMeta.importTime).format(
+                            "MMM DD, YYYY HH:mm"
+                        )}
+                    </span>
+                </div>
+            )}
             <ScrollBar
                 onScroll={handleScroll}
                 className="pl-2 pr-[3px] !overflow-x-visible !overflow-y-auto"
@@ -101,12 +121,13 @@ const DuneTableModule: FC<IDuneTableProps> = ({
                     height: widgetHeight,
                 }}
             >
-                <div className="min-w-fit">
+                <div className="min-w-fit min-h-0">
                     <GridBasedTable
                         columnsLayout={columns}
                         items={items}
                         rowProps={rowProps}
                         minCellSize={minCellSize}
+                        options={{ dateformat: "MMM DD, YYYY" }}
                     />
                 </div>
             </ScrollBar>

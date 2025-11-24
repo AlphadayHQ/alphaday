@@ -1,6 +1,7 @@
 export enum EWidgetSettingsRegistry {
     IncludedTags = "included_tags_setting",
     PinnedCoins = "pinned_coins_setting",
+    WidgetJson = "widget_json_setting",
     // ...add other settings here
 }
 
