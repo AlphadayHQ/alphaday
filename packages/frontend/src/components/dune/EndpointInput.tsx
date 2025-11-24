@@ -3,7 +3,11 @@ import { Dialog, Input } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 
 interface IEndpointInput {
-    onSetEndpointUrl: (url: string) => void;
+    onSetDuneMeta: (data: {
+        widgetName: string;
+        duneQueryURL: string;
+        importTime: string;
+    }) => void;
     show: boolean;
     onClose: () => void;
 }
@@ -21,18 +25,24 @@ const validateUrl = (string: string): boolean => {
 };
 
 const EndpointInput: FC<IEndpointInput> = ({
-    onSetEndpointUrl,
+    onSetDuneMeta,
     show,
     onClose,
 }) => {
     const { t } = useTranslation();
-    const [value, setValue] = useState("");
+    const [url, setUrl] = useState("");
+    const [name, setName] = useState("");
 
     const handleSave = () => {
-        if (validateUrl(value)) {
-            onSetEndpointUrl(value);
+        if (validateUrl(url) && name !== "") {
+            onSetDuneMeta({
+                widgetName: name,
+                duneQueryURL: url,
+                importTime: new Date().toISOString(),
+            });
         }
-        setValue("");
+        setUrl("");
+        setName("");
         onClose();
     };
 
@@ -44,14 +54,23 @@ const EndpointInput: FC<IEndpointInput> = ({
             saveButtonText={t("buttons.save")}
             showXButton
             onSave={handleSave}
-            disableSave={!validateUrl(value)}
+            disableSave={!validateUrl(url)}
             size="sm"
         >
-            <div className="flex justify-center w-full tiny:[&>input]:min-w-[200px] tiny:[&>input]:w-[calc(100vw_-_45px)]">
+            <div className="flex flex-col gap-4 w-full tiny:[&>input]:min-w-[200px] tiny:[&>input]:w-[calc(100vw_-_45px)]">
                 <Input
-                    value={value}
+                    value={name}
                     onChange={(e) => {
-                        setValue(e.target.value);
+                        setName(e.target.value);
+                    }}
+                    id="data-import-name"
+                    name="DataImportName"
+                    placeholder="Data import name e.g Top 10 DEXs"
+                />
+                <Input
+                    value={url}
+                    onChange={(e) => {
+                        setUrl(e.target.value);
                     }}
                     id="endpoint-input"
                     name="endpointInput"
