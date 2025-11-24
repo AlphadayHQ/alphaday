@@ -4,6 +4,7 @@ import { TPagination } from "../baseTypes";
 export type TGetCustomItemsRequest = {
     page?: number;
     tags?: string;
+    limit?: number;
     endpointUrl: string;
 };
 
