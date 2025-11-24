@@ -1,14 +1,19 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { HRElement, CenteredBlock, ScrollBar } from "@alphaday/ui-kit";
 import moment from "moment";
-import { TChartRange, TCoin, TInsightItem } from "src/api/types";
+import type {
+    TChartRange,
+    TCoin,
+    THistoryInsightItem,
+    TInsightItem,
+} from "src/api/types";
 import globalMessages from "src/globalMessages";
 import KasandraItem from "./KasandraItem";
 
 const SCROLL_OFFSET = 100;
 
 interface IKasandraItemList {
-    timelineItems: TInsightItem[] | undefined;
+    timelineItems: (TInsightItem | THistoryInsightItem)[] | undefined;
     selectedMarket: TCoin | undefined;
     onClick?: (id: number) => MaybeAsync<void>;
     selectedTimestamp: number | undefined;
@@ -16,7 +21,7 @@ interface IKasandraItemList {
     selectedChartRange: TChartRange;
 }
 
-const groupItemsByDate = (items: TInsightItem[]) => {
+const groupItemsByDate = (items: (TInsightItem | THistoryInsightItem)[]) => {
     return items.reduce(
         (acc, item) => {
             const date = moment(item.timestamp).format("YYYY-MM-DD");
@@ -25,7 +30,7 @@ const groupItemsByDate = (items: TInsightItem[]) => {
                 [date]: [...(acc[date] ?? []), item],
             };
         },
-        {} as Record<string, TInsightItem[]>
+        {} as Record<string, (TInsightItem | THistoryInsightItem)[]>
     );
 };
 
@@ -55,7 +60,7 @@ const DateDisplay: FC<{ date: number; selectedChartRange: TChartRange }> = ({
 };
 
 const GroupedKasandraItems: FC<{
-    items: TInsightItem[];
+    items: (TInsightItem | THistoryInsightItem)[];
     selectedTimestamp: number | undefined;
     selectedMarket: TCoin | undefined;
     setItemRef: (ref: HTMLDivElement | null) => void;

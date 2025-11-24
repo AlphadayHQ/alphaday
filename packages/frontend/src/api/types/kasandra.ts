@@ -39,11 +39,33 @@ export type TInsightItem = {
     title: string;
     rationale: string;
     price: number;
-    // sources: TInsightSource[];
+    type: "prediction";
+};
+
+export type TPastPrediction = {
+    id: number;
+    case: EPredictionCase;
+    chartData: TPredictionData[];
+    createdAt: number;
+    accuracyScore: number;
+};
+
+export type THistoryInsightItem = Omit<TInsightItem, "case" | "type"> & {
+    type: "history";
 };
 
 export type TPredictions = {
     [key in EPredictionCase]: TPredictionData[];
 };
 
-export type TInsights = TInsightItem[];
+export type TInsights = {
+    predictions: TInsightItem[];
+    history: THistoryInsightItem[];
+};
+
+export type TFlakeOffData = {
+    id: number;
+    coin: TPredictionCoin;
+    timestamp: number;
+    data: TPastPrediction[];
+};

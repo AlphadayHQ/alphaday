@@ -1,6 +1,10 @@
 import assert from "assert";
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
-import { TRemoteUserView } from "src/api/services";
+import {
+    TRemoteUserView,
+    TRemoteCustomData,
+    TRemoteCustomMeta,
+} from "src/api/services";
 import { logout } from "src/api/services/user/userEndpoints";
 import { RootState } from "src/api/store/store";
 import {
@@ -481,6 +485,56 @@ const viewsSlice = createSlice({
                 "slices::views::includeTagInViewWidget: widget tags have been updated"
             );
         },
+        updateWidgetCustomDataMeta(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                custom_data?: TRemoteCustomData | undefined;
+                custom_meta?: TRemoteCustomMeta | undefined;
+            }>
+        ) {
+            /* eslint-disable @typescript-eslint/naming-convention */
+            const { widgetHash, custom_data, custom_meta } = action.payload;
+            /* eslint-enable @typescript-eslint/naming-convention */
+            const selectedView = getSelectedViewRefFromDraft(draft);
+            if (selectedView === undefined) {
+                Logger.error(
+                    "slices::views::updateWidgetCustomDataMeta: selectedView is undefined, should never happen"
+                );
+                return;
+            }
+            const widget = selectedView.data.widgets.find(
+                (w) => w.hash === widgetHash
+            );
+            if (widget === undefined) {
+                Logger.error(
+                    "slices::views::updateWidgetCustomDataMeta: could not find widget. Should never happen"
+                );
+                return;
+            }
+            if (custom_data !== undefined) {
+                widget.widget.custom_data = custom_data;
+            }
+            if (custom_meta !== undefined) {
+                widget.widget.custom_meta = custom_meta;
+            }
+            selectedView.lastModified = new Date().toISOString();
+            if (
+                draft.subscribedViewsCache !== undefined &&
+                draft.subscribedViewsCache[selectedView.data.id] !== undefined
+            ) {
+                draft.subscribedViewsCache[selectedView.data.id].lastModified =
+                    selectedView.lastModified;
+            } else if (!selectedView.isReadOnly) {
+                Logger.warn(
+                    "slices::views::updateWidgetCustomDataMeta: could not find subscribed view in cache"
+                );
+            }
+            Logger.debug(
+                "slices::views::updateWidgetCustomDataMeta: widget custom_data/custom_meta updated",
+                { widgetHash }
+            );
+        },
         removeTagFromAllWidgets(
             draft,
             action: PayloadAction<{ tagId: number }>
@@ -703,6 +757,7 @@ export const {
     removeTagFromViewWidget,
     removeTagFromAllWidgets,
     includeTagInViewWidget,
+    updateWidgetCustomDataMeta,
     addWidgetsToView,
     removeWidgetFromView,
     updateSubscribedViewsCache,

@@ -20,6 +20,7 @@ export interface IModuleContainer<T = unknown> {
     showFullSize?: boolean;
     moduleData: TUserViewWidget<T>;
     toggleAdjustable(): void;
+    onAspectRatioDetected?: (widgetHash: string, aspectRatio: number) => void;
 }
 
 export type TTemplateSlug = `${Lowercase<ETemplateNameRegistry>}_template`;
@@ -59,12 +60,28 @@ export type TTemplatesDict = {
 export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     alphagpt_template: lazyRetry(() => import("./containers/qna/QnAContainer")),
     blog_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    calendar_template: lazyRetry(
+        () => import("./containers/calendar/CalendarContainer")
+    ),
+    countdown_template: lazyRetry(
+        () => import("./containers/countdown/CountdownContainer")
+    ),
+    custom_card_template: lazyRetry(
+        () => import("./containers/custom-modules/CustomCardContainer")
+    ),
+    custom_chart_template: lazyRetry(
+        () => import("./containers/custom-modules/CustomChartContainer")
+    ),
     custom_table_template: lazyRetry(
         () => import("./containers/custom-modules/CustomTableContainer")
     ),
     dao_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
     discord_template: lazyRetry(
         () => import("./containers/items/ItemsContainer")
+    ),
+    dune_template: lazyRetry(() => import("./containers/dune/DuneContainer")),
+    dune_table_template: lazyRetry(
+        () => import("./containers/dune/DuneTableContainer")
     ),
     faq_template: lazyRetry(() => import("./containers/dynamic/FaqContainer")),
     forum_template: lazyRetry(
@@ -73,6 +90,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     gas_template: lazyRetry(() => import("./containers/gas/GasContainer")),
     kasandra_template: lazyRetry(
         () => import("./containers/kasandra/KasandraContainer")
+    ),
+    kasandra_flakeoff_template: lazyRetry(
+        () => import("./containers/kasandra/KasandraFlakeOffContainer")
     ),
     kasandra_timeline_template: lazyRetry(
         () => import("./containers/kasandra/KasandraTimelineContainer")
@@ -90,12 +110,24 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     market_template: lazyRetry(
         () => import("./containers/market/MarketContainer")
     ),
+    market_heatmap_template: lazyRetry(
+        () => import("./containers/market-heatmap/MarketHeatmapContainer")
+    ),
     media_template: lazyRetry(
         () => import("./containers/media/MediaContainer")
     ),
     news_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    one_col_image_template: lazyRetry(
+        () => import("./containers/image/OneColImageContainer")
+    ),
     podcast_template: lazyRetry(
         () => import("./containers/podcast/PodcastContainer")
+    ),
+    polymarket_events_template: lazyRetry(
+        () => import("./containers/polymarket/PolymarketEventsContainer")
+    ),
+    polymarket_top_volume_template: lazyRetry(
+        () => import("./containers/polymarket/PolymarketTopVolumeContainer")
     ),
     portfolio_template: lazyRetry(
         () => import("./containers/portfolio/PortfolioContainer")
@@ -116,6 +148,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/dynamic/AgendaContainer")
     ),
     tvl_template: lazyRetry(() => import("./containers/tvl/TvlContainer")),
+    two_col_image_template: lazyRetry(
+        () => import("./containers/image/TwoColImageContainer")
+    ),
     uniswap_template: lazyRetry(
         () => import("./containers/uniswap/SwapContainer")
     ),
@@ -125,20 +160,8 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     video_template: lazyRetry(
         () => import("./containers/video/VideoContainer")
     ),
-    calendar_template: lazyRetry(
-        () => import("./containers/calendar/CalendarContainer")
-    ),
-    countdown_template: lazyRetry(
-        () => import("./containers/countdown/CountdownContainer")
-    ),
     verasity_tokenomics_template: lazyRetry(
         () => import("./containers/client/VerasityTokenomicsContainer")
-    ),
-    custom_chart_template: lazyRetry(
-        () => import("./containers/custom-modules/CustomChartContainer")
-    ),
-    custom_card_template: lazyRetry(
-        () => import("./containers/custom-modules/CustomCardContainer")
     ),
 };
 

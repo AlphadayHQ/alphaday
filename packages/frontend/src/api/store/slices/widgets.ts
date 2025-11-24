@@ -7,6 +7,7 @@ import {
 } from "src/api/types";
 import { ECalendarType } from "src/components/calendar/types";
 import { EChartType, TMarketMeta } from "src/components/market/types";
+import { EPolymarketFilter } from "src/components/polymarket/types";
 import { TEventCategory } from "src/components/types";
 import type { RootState } from "../store";
 
@@ -36,6 +37,10 @@ export interface INewsWidgetState {
 }
 export interface IBlogWidgetState {
     feedPreference: EItemFeedPreference;
+}
+
+export interface IPolymarketWidgetState {
+    filter: EPolymarketFilter;
 }
 export interface IKasandraWidgetState {
     feedPreference: EItemFeedPreference;
@@ -69,6 +74,7 @@ export interface IWidgetsState {
     video: Record<string, IVideosWidgetState>;
     tvl: Record<string, ITvlWidgetState>;
     kasandra: Record<string, IKasandraWidgetState>;
+    polymarket: Record<string, IPolymarketWidgetState>;
 }
 
 const initialState: IWidgetsState = {
@@ -82,6 +88,7 @@ const initialState: IWidgetsState = {
     blog: {},
     tvl: {},
     kasandra: {},
+    polymarket: {},
 };
 
 const widgetsSlice = createSlice({
@@ -398,6 +405,21 @@ const widgetsSlice = createSlice({
                 selectedProjectType: projectType,
             };
         },
+        setPolymarketFilter(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                filter: EPolymarketFilter;
+            }>
+        ) {
+            const {
+                payload: { widgetHash, filter },
+            } = action;
+            draft.polymarket[widgetHash] = {
+                ...draft.polymarket[widgetHash],
+                filter,
+            };
+        },
     },
 });
 
@@ -420,6 +442,7 @@ export const {
     removeWidgetStateFromCache,
     setWidgetHeight,
     setSelectedTvlProjectType,
+    setPolymarketFilter,
 } = widgetsSlice.actions;
 export default widgetsSlice.reducer;
 
@@ -451,6 +474,11 @@ export const selectBlogFeedPreference =
     (widgetHash: string) =>
     (state: RootState): EItemFeedPreference | undefined =>
         state.widgets.blog[widgetHash]?.feedPreference;
+
+export const selectPolymarketFilter =
+    (widgetHash: string) =>
+    (state: RootState): EPolymarketFilter | undefined =>
+        state.widgets.polymarket[widgetHash]?.filter;
 
 export const selectVideoFeedPreference =
     (widgetHash: string) =>

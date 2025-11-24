@@ -1,10 +1,12 @@
+import { useMemo } from "react";
 import { DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
-import { TUserViewWidget } from "src/api/types";
+import { TCachedView, TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import CONFIG from "src/config";
 
 const { Z_INDEX_REGISTRY } = CONFIG.UI;
+const { TWO_COL_WIDGETS } = CONFIG;
 
 const { singleCol, twoCol, threeCol, fourCol } = deviceBreakpoints;
 
@@ -242,4 +244,67 @@ export const recomputeWidgetsPos = (
     }
 
     return widgets;
+};
+
+export const getTwoColWidgetTemplateSlugs = () => {
+    return Object.values(TWO_COL_WIDGETS).map(
+        (config) => `${config.templateName.toLowerCase()}_template`
+    );
+};
+
+export const useTwoColWidgets = (selectedView: TCachedView | undefined) => {
+    return useMemo(() => {
+        if (!selectedView) return { widgets: {}, twoColWidgetSlugs: [] };
+        const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
+        const widgets: Record<string, TUserViewWidget> = {};
+
+        Object.entries(TWO_COL_WIDGETS).forEach(([key, config]) => {
+            const templateSlug = `${config.templateName.toLowerCase()}_template`;
+            const widgetData = selectedView?.data.widgets.find(
+                (w: TUserViewWidget) => w.widget.template.slug === templateSlug
+            );
+            widgets[key] = widgetData as TUserViewWidget;
+        });
+
+        return { widgets, twoColWidgetSlugs };
+    }, [selectedView]);
+};
+
+export const calculateTwoColWidgetsHeight = (
+    widgets: Record<string, TUserViewWidget>,
+    collapsedStates: Record<string, boolean>,
+    imageWidgetWidth?: number,
+    aspectRatioOverrides?: Record<string, number>
+) => {
+    let totalHeight = 0;
+    const defaultMarginBottom = 14;
+
+    Object.entries(TWO_COL_WIDGETS).forEach(([key, config]) => {
+        if (widgets[key]) {
+            if (collapsedStates[key]) {
+                totalHeight +=
+                    (config.widgetConfig.COLLAPSED_WIDGET_HEIGHT as number) ||
+                    0;
+            } else {
+                // Check if widget has aspect ratio for dynamic height calculation
+                // Use override if provided, otherwise use config
+                const configAspectRatio =
+                    // @ts-ignore
+                    config.widgetConfig.WIDGET_ASPECT_RATIO;
+                const aspectRatio =
+                    aspectRatioOverrides?.[key] || configAspectRatio;
+                if (aspectRatio && imageWidgetWidth) {
+                    const calculatedHeight = imageWidgetWidth / aspectRatio;
+                    totalHeight += calculatedHeight;
+                } else {
+                    // Fallback to static height
+                    totalHeight +=
+                        (config.widgetConfig.WIDGET_HEIGHT as number) || 0;
+                }
+            }
+            totalHeight += defaultMarginBottom;
+        }
+    });
+
+    return totalHeight;
 };

@@ -2,6 +2,8 @@ import ReactSelect, { SingleValue } from "react-select";
 import { ReactComponent as CheckMarkSVG } from "../../assets/svg/checkmark.svg";
 import { ReactComponent as ChevronUpDownSVG } from "../../assets/svg/chevron-up-down.svg";
 
+// ?? option-label-text ClassName is used in the Select component to style the option label text
+
 type TSelect = { id: string; name: string; icon: React.ReactNode };
 const Option =
     (selectedOption: TSelect | undefined) =>
@@ -22,7 +24,7 @@ const Option =
             {...innerProps}
         >
             {coin.icon}
-            <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
+            <span className="option-label-text ml-3 block truncate font-normal group-data-selected:font-semibold">
                 {coin.name}
             </span>
             {coin.id === selectedOption?.id && (
@@ -66,7 +68,7 @@ export const Select = ({
             classNames={{
                 container: () =>
                     "w-full max-w-[160px] hover:bg-backgroundVariant200 rounded-md",
-                control: () => "w-full rounded-md",
+                control: () => "w-full rounded-md control-class",
                 menu: () =>
                     "w-full bg-background border border-borderLine shadow-sm rounded-b-md",
                 option: () => "w-full",
@@ -83,7 +85,7 @@ export const Select = ({
                 >
                     <div className="flex items-center">
                         {option.icon}
-                        <span className="ml-3 block truncate font-normal group-data-selected:font-semibold">
+                        <span className="option-label-text ml-3 block truncate font-normal group-data-selected:font-semibold">
                             {option.name}
                         </span>
                     </div>

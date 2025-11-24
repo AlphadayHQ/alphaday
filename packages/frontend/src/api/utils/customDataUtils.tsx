@@ -8,6 +8,7 @@ import {
     TRemoteCustomMeta,
     TCustomMetaChart,
     TCustomMetaCard,
+    TRemoteCustomLayoutEntry,
 } from "src/api/services";
 import { TCustomItem, TCustomSeries } from "src/api/types";
 import { getErrorMessage } from "src/api/utils/errorHandling";
@@ -215,7 +216,7 @@ export const evaluateTranslationTemplate: (
     template: string,
     data: TCustomItem
 ) => string = (template, data) => {
-    const TEMPLATE_REGEX = /\{\{(\w+)\}\}/g;
+    const TEMPLATE_REGEX = /\{\{([^}]+)\}\}/g;
     if (!TEMPLATE_REGEX.test(template)) {
         const value = getValueByPath(data, template);
         if (value === undefined) {
@@ -248,6 +249,7 @@ export type TFormatCustomDataFieldInput = {
     rawField: string;
     format: TRemoteFormat | undefined;
     uri?: string;
+    dateFormat?: string;
 };
 export type TFormatCustomDataFieldOutput = {
     field: string | React.ReactNode;
@@ -255,7 +257,11 @@ export type TFormatCustomDataFieldOutput = {
 };
 export const formatCustomDataField: (
     req: TFormatCustomDataFieldInput
-) => TFormatCustomDataFieldOutput = ({ rawField, format = "plain-text" }) => {
+) => TFormatCustomDataFieldOutput = ({
+    rawField,
+    format = "plain-text",
+    dateFormat,
+}) => {
     try {
         if (format === "plain-text" || format === "link") {
             return {
@@ -264,18 +270,61 @@ export const formatCustomDataField: (
             };
         }
         if (format === "date") {
+            const parsedDate = moment(rawField, [
+                moment.ISO_8601,
+                "YYYY-MM-DD HH:mm:ss.SSS UTC",
+                "YYYY-MM-DD HH:mm:ss UTC",
+                "YYYY-MM-DD HH:mm:ss.SSS",
+                "YYYY-MM-DD HH:mm:ss",
+            ]);
+
+            if (!parsedDate.isValid()) {
+                Logger.warn(
+                    `formatCustomDataField: Invalid date format for "${rawField}"`
+                );
+                return {
+                    field: rawField,
+                    error: "Invalid date format",
+                };
+            }
+
+            const outputFormat = dateFormat || "YYYY-MM-DDTHH:mmZ";
             return {
-                field: moment(rawField).format("YYYY-MM-DDTHH:mmZ").toString(),
+                field: parsedDate.format(outputFormat).toString(),
                 error: undefined,
             };
         }
         if (format === "decimal" || format === "number") {
+            // Handle null or invalid numeric values
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
+                return {
+                    field: "-",
+                    error: undefined,
+                };
+            }
             return {
                 field: formatNumber({ value: rawField }).value,
                 error: undefined,
             };
         }
         if (format === "currency") {
+            // Handle null or invalid numeric values
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
+                return {
+                    field: "-",
+                    error: undefined,
+                };
+            }
             return {
                 field: formatNumber({
                     value: rawField,
@@ -286,6 +335,18 @@ export const formatCustomDataField: (
             };
         }
         if (format === "percentage") {
+            // Handle null or invalid numeric values
+            if (
+                rawField === null ||
+                rawField === undefined ||
+                rawField === "" ||
+                (typeof rawField === "string" && isNaN(parseFloat(rawField)))
+            ) {
+                return {
+                    field: "-",
+                    error: undefined,
+                };
+            }
             return {
                 field: formatNumber({
                     value: rawField,
@@ -315,6 +376,130 @@ export const formatCustomDataField: (
             error: getErrorMessage(error),
         };
     }
+};
+
+/**
+ * Resolve the format for a given column and row when column.format is "auto".
+ * Priority:
+ * 1. Check row-specific overrides: item[`${key}_format`] or item.format key(s)
+ * 2. If none found, attempt to infer from the rawField value (number, boolean, date, percentage)
+ */
+export const resolveCellFormat: (
+    column: TRemoteCustomLayoutEntry,
+    item: TRemoteCustomDatum,
+    rawField: string | number | boolean | null | undefined
+) => TRemoteFormat = (column, item, rawField) => {
+    const VALID_FORMATS: TRemoteFormat[] = [
+        "plain-text",
+        "date",
+        "link",
+        "image",
+        "icon",
+        "markdown",
+        "number",
+        "decimal",
+        "currency",
+        "percentage",
+        "checkmark",
+        "auto",
+    ];
+
+    const isValidFormat = (f: unknown): f is TRemoteFormat =>
+        typeof f === "string" &&
+        VALID_FORMATS.indexOf(f as TRemoteFormat) !== -1;
+
+    const tryGetFieldKeysFromTemplate = (): string[] => {
+        if (!column.template) return [];
+        const TEMPLATE_REGEX = /\{\{([^}]+)\}\}/g;
+        const matches = column.template.match(TEMPLATE_REGEX);
+        if (matches === null) return [column.template];
+        const keys: string[] = [];
+        for (let i = 0; i < matches.length; i += 1) {
+            const key = matches[i].replace(/\{\{|\}\}/g, "").trim();
+            if (key) keys.push(key);
+        }
+        return keys.length ? keys : [column.template];
+    };
+
+    // If column is not auto, return it
+    if (column.format !== "auto") {
+        return column.format ?? "plain-text";
+    }
+
+    // 1/ Row-specific overrides
+    const fieldKeys = tryGetFieldKeysFromTemplate();
+    // prefer array iteration to `for...of` to satisfy eslint no-restricted-syntax rule
+    let foundFormat: TRemoteFormat | undefined;
+    fieldKeys.some((key) => {
+        const k1 = `${key}_format`;
+        const k2 = `${key}__format`;
+        if (item != null && typeof item === "object") {
+            const itemRecord = item as Record<
+                string,
+                string | number | boolean | null | Record<string, unknown>
+            >;
+            const f1 = itemRecord[k1];
+            if (isValidFormat(f1)) {
+                foundFormat = f1;
+                return true;
+            }
+            const f2 = itemRecord[k2];
+            if (isValidFormat(f2)) {
+                foundFormat = f2;
+                return true;
+            }
+            if (isValidFormat(itemRecord[key])) {
+                foundFormat = itemRecord[key] as TRemoteFormat;
+                return true;
+            }
+            // check `.format` top-level field
+            const topFormat = itemRecord.format;
+            if (isValidFormat(topFormat)) {
+                foundFormat = topFormat;
+                return true;
+            }
+            // if top-level `format` is an object mapping, check for field-specific format
+            if (topFormat && typeof topFormat === "object") {
+                const mapped = topFormat[key];
+                if (isValidFormat(mapped)) {
+                    foundFormat = mapped;
+                    return true; // break out of some()
+                }
+            }
+        }
+        return false;
+    });
+    if (foundFormat) return foundFormat;
+
+    // 2/ Try to infer from rawField
+    if (rawField === undefined || rawField === null) return "plain-text";
+    // boolean
+    if (rawField === true || rawField === false) return "checkmark";
+    if (
+        typeof rawField === "string" &&
+        (rawField.toLowerCase() === "true" ||
+            rawField.toLowerCase() === "false")
+    ) {
+        return "checkmark";
+    }
+    // percentage
+    if (String(rawField).trim().endsWith("%")) return "percentage";
+    // number
+    const parsedNumber = Number(String(rawField).replace(/[^0-9.-]+/g, ""));
+    if (!Number.isNaN(parsedNumber)) {
+        // if value contains a decimal point, pick decimal else number
+        if (String(rawField).indexOf(".") !== -1) return "decimal";
+        return "number";
+    }
+    // date
+    const parsedDate = moment(
+        rawField,
+        [moment.ISO_8601, "YYYY-MM-DD", "YYYY-MM-DD HH:mm:ss"],
+        true
+    );
+    if (parsedDate.isValid()) return "date";
+
+    return "plain-text";
 };
 
 // these correspond to tailwind jargon
@@ -452,8 +637,40 @@ export const getYSeries: (
 };
 
 /**
- * Attemtps to extract the Card fields `title` and `value` from a custom_data and custom_meta objects.
+ * Infers column layout from the first row of data when no columns are explicitly defined.
+ * Generates sensible defaults for format, width, and template based on data types.
  */
+export const generateColumnsFromRowData: (
+    items: TRemoteCustomData
+) => TRemoteCustomLayoutEntry[] = (items) => {
+    if (items.length === 0) {
+        return [];
+    }
+
+    const firstRow = items[0];
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { id, ...dataFields } = firstRow;
+
+    return Object.entries(dataFields).map(([key, value], index) => {
+        let format: TRemoteFormat = "plain-text";
+
+        // Infer format from value type
+        if (typeof value === "number") {
+            format = Number.isInteger(value) ? "number" : "decimal";
+        } else if (typeof value === "boolean") {
+            format = "checkmark";
+        }
+
+        return {
+            id: index,
+            title: key,
+            template: key,
+            format,
+            width: 1,
+        };
+    });
+};
+
 export const customDataAsCardData: (
     customData: TRemoteCustomData,
     customMeta: TCustomMetaCard | undefined,

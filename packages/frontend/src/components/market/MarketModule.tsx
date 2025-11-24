@@ -76,7 +76,7 @@ const MarketModule: FC<IMarketModule> = ({
         );
     } else if (priceHistoryData === undefined && !isLoadingHistory) {
         chartComponent = (
-            <div className="flex items-center justify-center top-[220px] h-[200px] text-primaryVariant100">
+            <div className="flex items-center justify-center top-[220px] h-[200px] text-primaryVariant100 p-4 text-center max-w-sm mx-auto">
                 {globalMessages.error.requestFailed(
                     evaluateTranslationTemplate(t("market.historyError"), {
                         selectedChartRange,

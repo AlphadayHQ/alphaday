@@ -1,7 +1,7 @@
 import { FC, FormEvent, useEffect, useRef, useState } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { useWidgetSize } from "src/api/hooks";
+import { useWidgetBreakpoints } from "src/api/hooks";
 import {
     TCustomLayoutEntry,
     TCustomRowProps,
@@ -22,6 +22,7 @@ interface ICustomTableProps {
     rowProps: TCustomRowProps | undefined;
     widgetHeight: number;
     isLoadingItems: boolean;
+    isHeaderOnlyMode?: boolean;
     handlePaginate: (type: "next" | "previous") => void;
     setWidgetHeight: (size: number) => void;
 }
@@ -34,11 +35,13 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     isLoadingItems,
     handlePaginate,
     setWidgetHeight,
+    isHeaderOnlyMode,
 }) => {
     const { t } = useTranslation();
-    const widgetSize = useWidgetSize([500]);
-    const isCompactMode =
-        widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
+    const widgetSize = useWidgetBreakpoints([500]);
+    const isCompactMode = isHeaderOnlyMode
+        ? false
+        : widgetSize === "sm" || columns.length > STD_LAYOUT_MAX_SIZE;
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
     const prevScrollRef = useRef<HTMLElement | undefined>();
 
@@ -82,9 +85,14 @@ const CustomTableModule: FC<ICustomTableProps> = ({
     }
 
     return (
-        <div className="h-25">
+        <div className="h-25 overflow-x-auto">
             {!isCompactMode && (
-                <TableHeader layout={columns} addExtraColumn={addLinkColumn} />
+                <div className="min-w-fit">
+                    <TableHeader
+                        layout={columns}
+                        addExtraColumn={addLinkColumn}
+                    />
+                </div>
             )}
             <ScrollBar
                 onScroll={handleScroll}
@@ -94,23 +102,25 @@ const CustomTableModule: FC<ICustomTableProps> = ({
                     height: widgetHeight - HEADER_HEIGHT,
                 }}
             >
-                {items.map((item) => {
-                    return isCompactMode ? (
-                        <CompactTableRow
-                            columnsLayout={columns}
-                            rowData={item}
-                            rowProps={rowProps}
-                            key={item.id}
-                        />
-                    ) : (
-                        <TableRow
-                            columnsLayout={columns}
-                            rowData={item}
-                            rowProps={rowProps}
-                            key={item.id}
-                        />
-                    );
-                })}
+                <div className="min-w-fit">
+                    {items.map((item) => {
+                        return isCompactMode ? (
+                            <CompactTableRow
+                                columnsLayout={columns}
+                                rowData={item}
+                                rowProps={rowProps}
+                                key={item.id}
+                            />
+                        ) : (
+                            <TableRow
+                                columnsLayout={columns}
+                                rowData={item}
+                                rowProps={rowProps}
+                                key={item.id}
+                            />
+                        );
+                    })}
+                </div>
             </ScrollBar>
         </div>
     );

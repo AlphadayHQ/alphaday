@@ -55,6 +55,7 @@ export const translationEN = {
             less: "Less",
             more: "More",
             timeline: "Timeline",
+            vol: "vol",
         },
     },
     widget: {
@@ -80,6 +81,7 @@ export const translationEN = {
         addWallet: "Add New Wallet",
         disconnectWallet: "Disconnect_Wallet",
         enterAddress: "Enter Address",
+        enterEndpointURL: "Enter a Dune endpoint URL",
         save: "Save",
         notNow: "Not Now",
         next: "Next",
@@ -152,6 +154,32 @@ export const translationEN = {
         historyError: "the ${selectedChartRange} history for this coin",
         marketCap: "Market Cap",
         volume24h: "Volume 24h",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Market Cap",
+                volume: "Volume",
+            },
+            colorMetrics: {
+                change24h: "Change 24h %",
+                change7d: "Change 7d %",
+                change14d: "Change 14d %",
+                change30d: "Change 30d %",
+                change60d: "Change 60d %",
+            },
+            maxItems: {
+                top: "Top",
+                coins: "coins",
+            },
+            tooltip: {
+                price: "Price:",
+                change24h: "24h Change",
+                change7d: "7d Change",
+                change: "Change",
+                marketCap: "Market Cap",
+                volume: "Volume",
+                size: "Size",
+            },
+        },
     },
     podcasts: {
         channels: "Channels",
@@ -281,6 +309,11 @@ export const translationEN = {
         ytd: "ytd",
         yy: "y",
     },
+    dune: {
+        enterEndpointURL: "Enter a Dune endpoint URL",
+        endpointInputPlaceholder:
+            "Enter a Dune endpoint URL (e.g. https://dune.com/queries/1234567890)",
+    },
     gas: {
         title: "Gas Price",
         latestGasPrice: "Latest Gas price",
@@ -398,6 +431,13 @@ export const translationEN = {
         all: "All Cases",
         now: "Now",
     },
+    polymarket: {
+        noMarketsFound: "No markets found",
+        expired: "Expired",
+        resolved: "Resolved",
+        active: "Active",
+        live: "Live",
+    },
 };
 
 export const translationJA: typeof translationEN = {
@@ -457,6 +497,7 @@ export const translationJA: typeof translationEN = {
             less: "少なく",
             more: "もっと",
             timeline: "タイムライン",
+            vol: "出来高",
         },
     },
     widget: {
@@ -482,6 +523,7 @@ export const translationJA: typeof translationEN = {
         addWallet: "新しいウォレットを追加",
         disconnectWallet: "ウォレットを切断",
         enterAddress: "アドレスを入力",
+        enterEndpointURL: "Dune エンドポイント URL を入力",
         save: "保存",
         notNow: "今はしない",
         next: "次へ",
@@ -554,6 +596,32 @@ export const translationJA: typeof translationEN = {
         historyError: "このコインの${selectedChartRange}履歴",
         marketCap: "時価総額",
         volume24h: "24時間の出来高",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "時価総額",
+                volume: "出来高",
+            },
+            colorMetrics: {
+                change24h: "24時間変動率 %",
+                change7d: "7日変動率 %",
+                change14d: "14日変動率 %",
+                change30d: "30日変動率 %",
+                change60d: "60日変動率 %",
+            },
+            maxItems: {
+                top: "上位",
+                coins: "コイン",
+            },
+            tooltip: {
+                price: "価格:",
+                change24h: "24時間変動",
+                change7d: "7日変動",
+                change: "変動",
+                marketCap: "時価総額",
+                volume: "出来高",
+                size: "サイズ",
+            },
+        },
     },
     podcasts: {
         channels: "チャンネル",
@@ -685,6 +753,11 @@ export const translationJA: typeof translationEN = {
         yy: "年",
         ytd: "今年",
     },
+    dune: {
+        enterEndpointURL: "Dune エンドポイント URL を入力",
+        endpointInputPlaceholder:
+            "Dune エンドポイント URL を入力 (例: https://dune.com/queries/1234567890)",
+    },
     gas: {
         title: "ガス価格",
         latestGasPrice: "最新のガス価格",
@@ -802,6 +875,13 @@ export const translationJA: typeof translationEN = {
         all: "すべてのケース",
         now: "今",
     },
+    polymarket: {
+        noMarketsFound: "マーケットが見つかりません",
+        expired: "期限切れ",
+        resolved: "解決済み",
+        active: "アクティブ",
+        live: "ライブ",
+    },
 };
 
 export const translationES: typeof translationEN = {
@@ -861,6 +941,7 @@ export const translationES: typeof translationEN = {
             less: "Menos",
             more: "Más",
             timeline: "Timeline",
+            vol: "vol",
         },
     },
     widget: {
@@ -886,6 +967,7 @@ export const translationES: typeof translationEN = {
         addWallet: "Añadir nueva wallet",
         disconnectWallet: "Desconectar Wallet",
         enterAddress: "Introducir Address",
+        enterEndpointURL: "Introducir URL d'endpoint de Dune",
         save: "Guardar",
         notNow: "No ahora",
         next: "Siguiente",
@@ -958,6 +1040,32 @@ export const translationES: typeof translationEN = {
         historyError: "el historial ${selectedChartRange} para esta moneda",
         marketCap: "Capitalización",
         volume24h: "Volumen 24h",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Capitalización",
+                volume: "Volumen",
+            },
+            colorMetrics: {
+                change24h: "Cambio 24h %",
+                change7d: "Cambio 7d %",
+                change14d: "Cambio 14d %",
+                change30d: "Cambio 30d %",
+                change60d: "Cambio 60d %",
+            },
+            maxItems: {
+                top: "Top",
+                coins: "monedas",
+            },
+            tooltip: {
+                price: "Precio:",
+                change24h: "Cambio 24h",
+                change7d: "Cambio 7d",
+                change: "Cambio",
+                marketCap: "Capitalización",
+                volume: "Volumen",
+                size: "Tamaño",
+            },
+        },
     },
     podcasts: {
         channels: "Canales",
@@ -1087,6 +1195,11 @@ export const translationES: typeof translationEN = {
         ytd: "ytd",
         yy: "y",
     },
+    dune: {
+        enterEndpointURL: "Introduce una URL de endpoint de Dune",
+        endpointInputPlaceholder:
+            "Introduce una URL de endpoint de Dune (p. ej. https://dune.com/queries/1234567890)",
+    },
     gas: {
         title: "Precio gas",
         latestGasPrice: "Último precio de gas",
@@ -1204,6 +1317,13 @@ export const translationES: typeof translationEN = {
         all: "Todos los casos",
         now: "Ahora",
     },
+    polymarket: {
+        noMarketsFound: "No se encontraron mercados",
+        expired: "Expirado",
+        resolved: "Resuelto",
+        active: "Activo",
+        live: "En Vivo",
+    },
 };
 
 export const translationFR: typeof translationEN = {
@@ -1264,6 +1384,7 @@ export const translationFR: typeof translationEN = {
             less: "Moins",
             more: "Plus",
             timeline: "Chronologie",
+            vol: "vol",
         },
     },
     widget: {
@@ -1289,6 +1410,7 @@ export const translationFR: typeof translationEN = {
         addWallet: "Ajouter un nouveau portefeuille",
         disconnectWallet: "Déconnecter le portefeuille",
         enterAddress: "Entrer une adresse",
+        enterEndpointURL: "Entrer une URL d'endpoint de Dune",
         save: "Enregistrer",
         notNow: "Pas maintenant",
         next: "Suivant",
@@ -1362,6 +1484,32 @@ export const translationFR: typeof translationEN = {
         historyError: "Historique de ${selectedChartRange} de cette monnaie",
         marketCap: "Capitalisation boursière",
         volume24h: "Volume sur 24h",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Capitalisation boursière",
+                volume: "Volume",
+            },
+            colorMetrics: {
+                change24h: "Variation 24h %",
+                change7d: "Variation 7j %",
+                change14d: "Variation 14j %",
+                change30d: "Variation 30j %",
+                change60d: "Variation 60j %",
+            },
+            maxItems: {
+                top: "Top",
+                coins: "monnaies",
+            },
+            tooltip: {
+                price: "Prix:",
+                change24h: "Variation 24h",
+                change7d: "Variation 7j",
+                change: "Variation",
+                marketCap: "Capitalisation boursière",
+                volume: "Volume",
+                size: "Taille",
+            },
+        },
     },
     podcasts: {
         channels: "Canaux",
@@ -1495,6 +1643,11 @@ export const translationFR: typeof translationEN = {
         ytd: "aad",
         yy: "a",
     },
+    dune: {
+        enterEndpointURL: "Entrez une URL de point de terminaison Dune",
+        endpointInputPlaceholder:
+            "Entrez une URL de point de terminaison Dune (ex. : https://dune.com/queries/1234567890)",
+    },
     gas: {
         title: "Prix du gaz",
         latestGasPrice: "Dernier prix du gaz",
@@ -1615,6 +1768,13 @@ export const translationFR: typeof translationEN = {
         all: "Tous les cas",
         now: "Maintenant",
     },
+    polymarket: {
+        noMarketsFound: "Aucun marché trouvé",
+        expired: "Expiré",
+        resolved: "Résolu",
+        active: "Actif",
+        live: "En Direct",
+    },
 };
 
 export const translationTR: typeof translationEN = {
@@ -1674,6 +1834,7 @@ export const translationTR: typeof translationEN = {
             less: "Daha Az",
             more: "Daha Fazla",
             timeline: "	zaman akışı",
+            vol: "hacim",
         },
     },
     widget: {
@@ -1699,6 +1860,7 @@ export const translationTR: typeof translationEN = {
         addWallet: "Yeni Cüzdan Ekle",
         disconnectWallet: "Cüzdanı Bağlantıdan Kaldır",
         enterAddress: "Adres Girin",
+        enterEndpointURL: "Dune Endpoint URL Girin",
         save: "Kaydet",
         notNow: "Şimdi Değil",
         next: "İleri",
@@ -1773,6 +1935,32 @@ export const translationTR: typeof translationEN = {
             "${selectedChartRange} geçmişi bu coin için mevcut değil",
         marketCap: "Piyasa Değeri",
         volume24h: "24 Saatlik Hacim",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "Piyasa Değeri",
+                volume: "Hacim",
+            },
+            colorMetrics: {
+                change24h: "24 Saat Değişim %",
+                change7d: "7 Gün Değişim %",
+                change14d: "14 Gün Değişim %",
+                change30d: "30 Gün Değişim %",
+                change60d: "60 Gün Değişim %",
+            },
+            maxItems: {
+                top: "İlk",
+                coins: "coin",
+            },
+            tooltip: {
+                price: "Fiyat:",
+                change24h: "24 Saat Değişim",
+                change7d: "7 Gün Değişim",
+                change: "Değişim",
+                marketCap: "Piyasa Değeri",
+                volume: "Hacim",
+                size: "Boyut",
+            },
+        },
     },
     podcasts: {
         channels: "Kanallar",
@@ -1904,6 +2092,12 @@ export const translationTR: typeof translationEN = {
         ytd: "yt",
         yy: "y",
     },
+    dune: {
+        enterEndpointURL: "Bir Dune uç nokta URL’si girin",
+        endpointInputPlaceholder:
+            "Bir Dune uç nokta URL’si girin (ör. https://dune.com/queries/1234567890)",
+    },
+
     gas: {
         title: "Gas Fiyatı",
         latestGasPrice: "Son Gaz Fiyatı",
@@ -2021,6 +2215,13 @@ export const translationTR: typeof translationEN = {
         all: "Tüm Durumlar",
         now: "Şimdi",
     },
+    polymarket: {
+        noMarketsFound: "Piyasa bulunamadı",
+        expired: "Süresi Dolmuş",
+        resolved: "Çözüldü",
+        active: "Aktif",
+        live: "Canlı",
+    },
 };
 
 export const translationZH: typeof translationEN = {
@@ -2078,6 +2279,7 @@ export const translationZH: typeof translationEN = {
             less: "更少",
             more: "更多",
             timeline: "时间线",
+            vol: "交易量",
         },
     },
     widget: {
@@ -2103,6 +2305,7 @@ export const translationZH: typeof translationEN = {
         addWallet: "添加新钱包",
         disconnectWallet: "断开钱包",
         enterAddress: "输入地址",
+        enterEndpointURL: "输入Dune端点URL",
         save: "保存",
         notNow: "稍后",
         next: "下一步",
@@ -2170,6 +2373,32 @@ export const translationZH: typeof translationEN = {
         historyError: "这个币的${selectedChartRange}历史记录",
         marketCap: "市值",
         volume24h: "24小时交易量",
+        heatmap: {
+            sizeMetrics: {
+                marketCap: "市值",
+                volume: "交易量",
+            },
+            colorMetrics: {
+                change24h: "24小时变化 %",
+                change7d: "7天变化 %",
+                change14d: "14天变化 %",
+                change30d: "30天变化 %",
+                change60d: "60天变化 %",
+            },
+            maxItems: {
+                top: "前",
+                coins: "个代币",
+            },
+            tooltip: {
+                price: "价格:",
+                change24h: "24小时变化",
+                change7d: "7天变化",
+                change: "变化",
+                marketCap: "市值",
+                volume: "交易量",
+                size: "大小",
+            },
+        },
     },
     podcasts: {
         channels: "频道",
@@ -2297,6 +2526,12 @@ export const translationZH: typeof translationEN = {
         ytd: "今年至今",
         yy: "年",
     },
+    dune: {
+        enterEndpointURL: "输入 Dune 接口 URL",
+        endpointInputPlaceholder:
+            "输入 Dune 接口 URL（例如：https://dune.com/queries/1234567890）",
+    },
+
     gas: {
         title: "燃气价格",
         latestGasPrice: "最新燃气价格",
@@ -2410,5 +2645,12 @@ export const translationZH: typeof translationEN = {
         baseline: "中性",
         all: "所有情况",
         now: "现在",
+    },
+    polymarket: {
+        noMarketsFound: "未找到市场",
+        expired: "已过期",
+        resolved: "已解决",
+        active: "活跃",
+        live: "直播",
     },
 };

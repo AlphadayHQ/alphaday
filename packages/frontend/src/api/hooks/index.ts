@@ -33,3 +33,5 @@ export * from "./useValueWatcher";
 export * from "./useOnScreen";
 export * from "./usePullToRefresh";
 export * from "./useHistory";
+export * from "./useSelectedCoin";
+export * from "./useImageWidget";

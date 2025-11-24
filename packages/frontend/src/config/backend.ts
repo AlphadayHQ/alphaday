@@ -55,6 +55,7 @@ const API_V0 = {
             BASE: "kasandra",
             INSIGHTS: "/insights/",
             PREDICTIONS: "/predictions/",
+            FLAKE_OFF: "/flake_off_charts/cached/",
         },
         KEYWORDS: {
             BASE: "keywords",
@@ -152,6 +153,8 @@ const API_V0 = {
             WIDGETS: "/widgets/",
             VIEW_WIDGETS_BY_ID: (id: number): string => `/views/${id}/widgets/`,
             WIDGET_BY_ID: (id: number): string => `/widgets/${id}/`,
+            WIDGET_SETTINGS_UPDATE_BY_HASH: (hash: string): string =>
+                `/widget_settings/update_by_hash/${hash}/`,
             WIDGET_CATEGORIES: "/widget_categories/",
             WALLET_VIEW: "/views/smart_board/",
         },
@@ -191,6 +194,21 @@ const API_V0 = {
         FEATURES: {
             BASE: "features",
             LIST: "/allowed/",
+        },
+        POLYMARKET: {
+            BASE: "polymarkets",
+            EVENTS: "/events/",
+            MARKETS: "/markets/",
+            TOP_VOLUME: "/events/top-volume/",
+            MARKET_STATS: "/markets/stats/",
+            MARKET_HISTORY: (id: number): string => `/markets/${id}/history/`,
+            EVENT_BY_ID: (id: number): string => `/events/${id}/`,
+            MARKET_BY_ID: (id: number): string => `/markets/${id}/`,
+        },
+        DATASETS: {
+            BASE: "datasets",
+            IMPORT_DUNE: "/import_dune/",
+            BY_ID: (id: number): string => `/${id}/`,
         },
     },
 };

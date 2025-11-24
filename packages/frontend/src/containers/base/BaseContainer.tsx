@@ -23,7 +23,7 @@ import {
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { TUserViewWidget } from "src/api/types";
 import CONFIG from "src/config";
-import { EWidgetSettingsRegistry } from "src/constants";
+import { ETemplateNameRegistry, EWidgetSettingsRegistry } from "src/constants";
 import BaseContainerHeader from "./BaseContainerHeader";
 import BaseContainerOptions from "./BaseContainerOptions";
 
@@ -108,6 +108,10 @@ const BaseContainer: FC<IBaseContainerProps> = ({
         if (onToggleCollapse != null) onToggleCollapse();
     }, [dispatch, moduleData.hash, onToggleCollapse]);
 
+    const isOneColImageWidgetHeaderHidden =
+        moduleData.widget.template.slug ===
+        `${ETemplateNameRegistry.One_Col_Image.toLowerCase()}_template`;
+
     const toggleSettings = useCallback(() => {
         // widget options uses the height of the widget. The widget must be expanded before the options can be shown
         if (isCollapsed) {
@@ -177,7 +181,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
     }
 
     return (
-        <>
+        <div>
             <div
                 id={moduleData.hash}
                 className="flex flex-col [&>div:only-child:not(:empty)]:rounded-bl-none [&>div:only-child:not(:empty)]:rounded-br-none"
@@ -217,6 +221,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
                                     moduleData={moduleData}
                                     showFullSize={showFullSize}
                                     allowFullSize={allowFullSize}
+                                    hideHeader={isOneColImageWidgetHeaderHidden}
                                 />
                             </div>
                             {!alreadyCollapsed && !showFullSize && (
@@ -295,7 +300,7 @@ const BaseContainer: FC<IBaseContainerProps> = ({
             >
                 <p>Switch to Desktop to get the best experience of {title}</p>
             </Dialog>
-        </>
+        </div>
     );
 };
 

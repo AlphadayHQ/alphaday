@@ -95,7 +95,8 @@ export type TRemoteFormat =
     | "decimal"
     | "currency"
     | "percentage"
-    | "checkmark";
+    | "checkmark"
+    | "auto";
 
 // types to define the layout of a table column
 export type TRemoteCustomLayoutEntry = {
@@ -107,6 +108,7 @@ export type TRemoteCustomLayoutEntry = {
      */
     template?: string;
     format?: TRemoteFormat;
+    date_format?: string; // moment.js format string for date formatting (e.g., "YYYY-MM-DD", "MMM DD, YYYY")
     width?: number;
     uri_ref?: string; // should point to data field entry
     image_uri_ref?: string; // should point to data field entry
@@ -238,6 +240,7 @@ export type TRemoteUserViewWidgetSetting = {
     };
     tags: TRemoteTagReadOnly[];
     toggle_value: boolean | null;
+    json_value?: Record<string, unknown>;
 };
 
 export type TRemoteBaseUserViewWidget = {
@@ -442,4 +445,16 @@ export type TWidgetsCategoryRequest = {
 } | void;
 export type TWidgetsCategoryResponse = TPagination & {
     results: ReadonlyArray<TRemoteWidgetCategory>;
+};
+
+export type TUpdateWidgetSettingsRequest = {
+    widget_hash: string;
+    settings: {
+        setting_slug: string;
+        selected_dataset?: number;
+        json_value?: Record<string, unknown>;
+    }[];
+};
+export type TUpdateWidgetSettingsResponse = {
+    success: boolean;
 };
