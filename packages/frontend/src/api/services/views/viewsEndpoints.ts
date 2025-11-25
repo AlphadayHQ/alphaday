@@ -294,8 +294,7 @@ const viewsApi = alphadayApi.injectEndpoints({
                 )}`,
                 method: "POST",
                 body: {
-                    setting_slug: req.setting_slug,
-                    selected_dataset: req.selected_dataset,
+                    settings: req.settings,
                 },
             }),
             invalidatesTags: ["Views", "CurrentView"],

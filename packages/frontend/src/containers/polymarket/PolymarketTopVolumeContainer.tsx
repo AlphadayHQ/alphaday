@@ -1,8 +1,10 @@
 import { FC, useMemo, useCallback, Suspense } from "react";
 import { useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
-import { useGetPolymarketMarketByTopVolumeQuery } from "src/api/services";
-import type { TPolymarketMarket } from "src/api/services/polymarket/types";
+import {
+    TPolymarketEvent,
+    useGetPolymarketMarketByTopVolumeQuery,
+} from "src/api/services";
 import * as filterUtils from "src/api/utils/filterUtils";
 import { ModuleLoader } from "src/components/moduleLoader/ModuleLoader";
 import PolymarketTopVolumeModule from "src/components/polymarket/PolymarketTopVolumeModule";
@@ -31,24 +33,21 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
         (moduleData.widget.refresh_interval ||
             CONFIG.WIDGETS.POLYMARKET_TOP_VOLUME.POLLING_INTERVAL) * 1000;
 
-    const {
-        // data: marketGroupData,
-        currentData: marketGroupData,
-        isFetching: isLoadingTopVolume,
-    } = useGetPolymarketMarketByTopVolumeQuery(
-        {
-            page: 1,
-            limit: 1,
-            active: true,
-            tags: tagsString,
-        },
-        {
-            pollingInterval,
-        }
-    );
+    const { currentData: event, isFetching: isLoadingTopVolume } =
+        useGetPolymarketMarketByTopVolumeQuery(
+            {
+                page: 1,
+                limit: 1,
+                active: true,
+                tags: tagsString,
+            },
+            {
+                pollingInterval,
+            }
+        );
 
     const handleSelectMarket = useCallback(
-        (market: TPolymarketMarket) => {
+        (market: TPolymarketEvent["markets"][0]) => {
             logButtonClicked({
                 buttonName: "polymarket-top-volume",
                 data: {
@@ -57,9 +56,9 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            window.open(marketGroupData?.url, "_blank", "noopener,noreferrer");
+            window.open(event?.url, "_blank", "noopener,noreferrer");
         },
-        [logButtonClicked, marketGroupData?.url, moduleData.name]
+        [logButtonClicked, event?.url, moduleData.name]
     );
 
     const contentHeight = useMemo(() => {
@@ -70,7 +69,7 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <PolymarketTopVolumeModule
                 isLoading={isLoadingTopVolume}
-                marketGroupData={marketGroupData}
+                event={event}
                 onSelectMarket={handleSelectMarket}
                 contentHeight={contentHeight}
             />
