@@ -22,6 +22,7 @@ interface IProps {
     hideFeatures: boolean;
     toggleWidgetLib: (() => void) | undefined;
     toggleLanguageModal: (() => void) | undefined;
+    toggleRecipeModal: (() => void) | undefined;
     isBoardsLibOpen: boolean;
     setIsBoardsLibOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setTutFocusElemRef?:
@@ -33,6 +34,7 @@ const LayoutHeader: FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
     toggleLanguageModal,
+    toggleRecipeModal,
     setTutFocusElemRef,
     isBoardsLibOpen,
     setIsBoardsLibOpen,
@@ -76,6 +78,19 @@ const LayoutHeader: FC<IProps> = ({
                                 <HeaderNavRight className="p-0">
                                     <HeaderNavElement className="mx-3">
                                         <SyncIndicatorContainer />
+                                    </HeaderNavElement>
+                                    <HeaderNavElement className="mr-1 three-col:mr-3 [&_svg]:fill-none hidden two-col:block [&_span]:hidden three-col:[&_span]:block [&_svg]:mr-0 three-col:[&_svg]:mr-1.5">
+                                        <NavTabButton
+                                            variant="recipes"
+                                            open={false}
+                                            uppercase={false}
+                                            onClick={toggleRecipeModal}
+                                            title={t("navigation.recipes")}
+                                        >
+                                            <span>
+                                                {t("navigation.recipes")}
+                                            </span>
+                                        </NavTabButton>
                                     </HeaderNavElement>
                                     <HeaderNavElement className="mr-1 three-col:mr-3 [&_svg]:fill-none hidden two-col:block [&_span]:hidden three-col:[&_span]:block [&_svg]:mr-0 three-col:[&_svg]:mr-1.5">
                                         <NavTabButton

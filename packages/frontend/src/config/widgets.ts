@@ -182,6 +182,10 @@ export const WIDGETS_CONFIG = {
         SMALL_PRICE_CUTOFF_SM: 6, // display a max. of 8 digits for small numbers like $0.0000012
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Recipe]: {
+        WIDGET_HEIGHT: 538,
+        ADJUSTABLE: false,
+    },
     [ETemplateNameRegistry.Reddit]: {
         TAG_ITEM_TYPE: "reddit",
         MAX_PAGE_NUMBER: 10,

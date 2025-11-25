@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { ReactComponent as CloseSVG } from "../../assets/svg/close.svg";
 import { ReactComponent as LanguageSVG } from "../../assets/svg/language.svg";
+import { ReactComponent as RecipesSVG } from "../../assets/svg/recipes.svg";
 import { ReactComponent as ViewsSVG } from "../../assets/svg/views.svg";
 import { ReactComponent as WidgetsSVG } from "../../assets/svg/widgets.svg";
 import { TabButton } from "./TabButton";
 
 interface ButtonProps {
-    variant: "views" | "modules" | "language";
+    variant: "views" | "modules" | "language" | "recipes";
     open: boolean;
     disabled?: boolean;
     uppercase?: boolean;
@@ -31,9 +32,15 @@ export const NavTabButton: FC<ButtonProps> = ({
             disabled={disabled}
             uppercase={uppercase}
             aria-label={label}
-            className="fontGroup-supportBold bg-transparent border-none hover:bg-backgroundVariant200 px-4"
+            className="fontGroup-supportBold bg-transparent border-none hover:bg-backgroundVariant200 px-2 three-col:px-4"
             {...restProps}
         >
+            {variant === "recipes" &&
+                (open ? (
+                    <CloseSVG className="fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
+                ) : (
+                    <RecipesSVG className="widgets fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
+                ))}
             {variant === "language" &&
                 (open ? (
                     <CloseSVG className="fill-primary mr-1.5 h-3.5 w-3.5 self-center" />
