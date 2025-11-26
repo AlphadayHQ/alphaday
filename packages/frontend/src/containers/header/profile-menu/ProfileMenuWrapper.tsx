@@ -76,7 +76,7 @@ const ProfileMenuWrapper: React.FC<IProps> = ({
 
     const dropdownContent = (
         <div className="mx-2">
-            <div className="flex justify-start px-2 pb-5 pt-0">
+            <div className="flex justify-start sm:px-2 pb-2 sm:pb-5 pt-4 sm:pt-0">
                 <span className="flex-shrink-0">
                     <DropdownAvatar />
                 </span>
@@ -95,10 +95,7 @@ const ProfileMenuWrapper: React.FC<IProps> = ({
                 data-testid={walletMenuOption.dataTestId}
                 onClick={() => {
                     walletMenuOption.handler()?.catch((err) => {
-                        Logger.error(
-                            "profile-menu:ProfileMenuWrapper",
-                            err
-                        );
+                        Logger.error("profile-menu:ProfileMenuWrapper", err);
                     });
                 }}
             >
