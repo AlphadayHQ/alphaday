@@ -9,6 +9,7 @@ import {
     twMerge,
 } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router";
 import { TUserProfile } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
@@ -46,6 +47,7 @@ const ProfileMenuWrapper: React.FC<IProps> = ({
     profile,
     isMobile = false,
 }) => {
+    const history = useHistory();
     const { t } = useTranslation();
     const [toggleTutorialState, setToggleTutorialState] = useState(false);
 
@@ -89,6 +91,16 @@ const ProfileMenuWrapper: React.FC<IProps> = ({
                     {profile?.user.username || profile?.user.email}
                 </p>
             </div>
+            <Divider />
+            <DropdownItem
+                onClick={() => {
+                    history.push("/boards");
+                }}
+            >
+                <span title={walletMenuOption.title}>
+                    {t("navigation.boards")}
+                </span>
+            </DropdownItem>
             <Divider />
             <DropdownItem
                 key={walletMenuOption.dataTestId}
