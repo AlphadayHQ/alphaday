@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/react";
 import { createRoot } from "react-dom/client";
 import { clarity } from "react-microsoft-clarity";
 import { Provider } from "react-redux";
-import { useIsMobile } from "src/api/hooks";
+// import { useIsMobile } from "src/api/hooks";
 import { registerSW } from "virtual:pwa-register";
 import { WagmiConfig } from "wagmi";
 import { AppContextProvider } from "./api/store/providers/app-context-provider";
@@ -19,7 +19,7 @@ import CONFIG from "./config";
 import SeoContainer from "./containers/seo/SeoContainer";
 import PreloaderPage from "./pages/preloader";
 
-const MobileApp = lazyRetry(() => import("./MobileApp"));
+// const MobileApp = lazyRetry(() => import("./MobileApp"));
 const App = lazyRetry(() => import("./App"));
 
 /**
@@ -84,10 +84,11 @@ if (CONFIG.CLARITY.ENABLE) {
 }
 
 const AppSwitcher = () => {
-    const isMobileApp = useIsMobile();
+    // const isMobileApp = useIsMobile();
     return (
         <Suspense fallback={<PreloaderPage />}>
-            {isMobileApp ? <MobileApp /> : isMobileApp !== undefined && <App />}
+            {/* {isMobileApp ? <MobileApp /> : isMobileApp !== undefined && <App />} */}
+            <App />
         </Suspense>
     );
 };
