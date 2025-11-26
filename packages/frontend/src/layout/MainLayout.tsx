@@ -47,7 +47,7 @@ const MainLayout: React.FC<IProps> = ({
                 )}
             >
                 {/* pt-[6.5px] here is to make sure the board arae is exactly 12px away from the views tab */}
-                <div className="m-0 mt-[60px] p-0 pb-10 pt-[10.5px] bg-background min-h-[calc(100vh_-_31px)] w-screen two-col:mt-[110px] four-col:max-w-[2725px]">
+                <div className="m-0 mt-16 p-0 pb-10 bg-background min-h-[calc(100vh_-_64px)] w-screen two-col:mt-[110px] four-col:max-w-[2725px]">
                     {children}
                 </div>
             </div>
