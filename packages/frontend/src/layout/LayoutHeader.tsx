@@ -202,20 +202,7 @@ const LayoutHeader: FC<IProps> = ({
                                 <div className="mx-2.5 my-auto flex w-full flex-row items-center justify-center">
                                     <HeaderSearchContainer />
                                 </div>
-
-                                {/* <h3 className="two-col:pl-4 two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
-                                    {t("navigation.boards")}
-                                </h3> */}
-
                                 <ProfileMenuContainer isMobile />
-
-                                {/* <ViewsTabContainer
-                                    mobileOpen
-                                    isBoardsLibOpen={isBoardsLibOpen}
-                                    onToggleBoardsLib={toggleBoardsLib}
-                                    headerRef={headerRef}
-                                    handleMobileOpen={handleMobileOpen}
-                                /> */}
                             </>
                         )}
 
