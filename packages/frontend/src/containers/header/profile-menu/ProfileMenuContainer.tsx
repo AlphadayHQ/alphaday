@@ -5,9 +5,13 @@ import { useTutorial } from "src/api/hooks/useTutorial";
 import { toggleAboutModal, toggleLanguageModal } from "src/api/store";
 import { useAppDispatch } from "src/api/store/hooks";
 import { ETutorialTipId } from "src/api/types";
-import ProfileDropdownWrapper from "./ProfileDropdownWrapper";
+import ProfileMenuWrapper from "./ProfileMenuWrapper";
 
-const ProfileDropdownContainer: FC = () => {
+interface IProps {
+    isMobile?: boolean;
+}
+
+const ProfileMenuContainer: FC<IProps> = ({ isMobile = false }) => {
     const dispatch = useAppDispatch();
     const { openAuthModal, isAuthenticated, logout } = useAuth();
     const { userProfile } = useAccount();
@@ -22,7 +26,7 @@ const ProfileDropdownContainer: FC = () => {
     const onToggleLanguageModal = () => dispatch(toggleLanguageModal());
 
     return (
-        <ProfileDropdownWrapper
+        <ProfileMenuWrapper
             onSignOut={logout}
             onSignUpSignIn={openAuthModal}
             onToggleLanguageModal={onToggleLanguageModal}
@@ -36,8 +40,9 @@ const ProfileDropdownContainer: FC = () => {
                     : undefined
             }
             profile={userProfile}
+            isMobile={isMobile}
         />
     );
 };
 
-export default ProfileDropdownContainer;
+export default ProfileMenuContainer;
