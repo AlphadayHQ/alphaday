@@ -74,6 +74,7 @@ export enum EDesktopRoutePaths {
     CalendarEvent = "/b/:slug/calendar/event/:eventId/:eventTitle",
     FallBack = "*",
     Superfeed = "/superfeed",
+    BoardsLibrary = `/boards`,
 }
 
 /**
@@ -113,6 +114,12 @@ export const desktopRoutes: TRoute[] = [
         component: DashboardPage,
         exact: true,
     },
+    {
+        type: "regular",
+        path: EDesktopRoutePaths.BoardsLibrary,
+        component: BoardsPage,
+        exact: true,
+    },
 ];
 
 /**
@@ -141,7 +148,6 @@ export enum EMobileTabRoutePaths {
 export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
     Boards = EDesktopRoutePaths.Boards,
-    BoardsLibrary = `${BASE_TABS_ROUTE}boards`,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
     Search = `${BASE_TABS_ROUTE}superfeed/search/:tags`,
     UserSettings = `${BASE_TABS_ROUTE}superfeed/user-settings`,
@@ -171,12 +177,6 @@ export const mobileRoutes: TMobileRoute[] = [
     {
         path: EMobileRoutePaths.Superfeed,
         component: SuperfeedPage,
-        exact: true,
-        type: "regular",
-    },
-    {
-        path: EMobileRoutePaths.BoardsLibrary,
-        component: BoardsPage,
         exact: true,
         type: "regular",
     },

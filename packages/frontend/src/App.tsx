@@ -37,14 +37,20 @@ const AppRoutes = () => {
     });
 
     const resolvedView = useResolvedView();
-    const { pathContainsHashOrSlug, isRoot, isSuperfeed } = useViewRoute();
+    const { pathContainsHashOrSlug, isRoot, isSuperfeed, isBoardsLibrary } =
+        useViewRoute();
 
     const errorCode = useMemo<number | undefined>(() => {
         /**
          * At this moment, we do not support any other routes than the root and the hash/slug routes
          * If the path does not contain a hash or slug, we show the 404 error page
          */
-        if (!pathContainsHashOrSlug && !isRoot && !isSuperfeed) {
+        if (
+            !pathContainsHashOrSlug &&
+            !isRoot &&
+            !isSuperfeed &&
+            !isBoardsLibrary
+        ) {
             return 404;
         }
         const errorInfo = error ?? resolvedView.error;
@@ -53,6 +59,7 @@ const AppRoutes = () => {
         pathContainsHashOrSlug,
         isRoot,
         isSuperfeed,
+        isBoardsLibrary,
         error,
         resolvedView.error,
     ]);
