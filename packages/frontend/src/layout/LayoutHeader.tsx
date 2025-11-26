@@ -13,8 +13,7 @@ import { useWindowSize, useRecipes } from "src/api/hooks";
 import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
-import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
-import ProfileDropdownContainerMobile from "src/containers/header/profile-dropdown/ProfileDropdownContainerMobile";
+import ProfileMenuContainer from "src/containers/header/profile-menu/ProfileMenuContainer";
 import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
@@ -160,7 +159,7 @@ const LayoutHeader: FC<IProps> = ({
                                         ]}
                                     /> */}
                                     <HeaderNavElement className="single-col:ml-1 ml-[8px] mr-4">
-                                        <ProfileDropdownContainer />
+                                        <ProfileMenuContainer />
                                     </HeaderNavElement>
                                 </HeaderNavRight>
                             </>
@@ -208,7 +207,7 @@ const LayoutHeader: FC<IProps> = ({
                                     {t("navigation.boards")}
                                 </h3> */}
 
-                                <ProfileDropdownContainerMobile />
+                                <ProfileMenuContainer isMobile />
 
                                 {/* <ViewsTabContainer
                                     mobileOpen
@@ -231,7 +230,7 @@ const LayoutHeader: FC<IProps> = ({
                                             ml={["8px", "1px", "1px", "16px"]}
                                         /> */}
                                     <HeaderNavElement className="single-col:ml-4 ml-[8px]">
-                                        <ProfileDropdownContainer />
+                                        <ProfileMenuContainer />
                                     </HeaderNavElement>
                                 </>
                             )}
