@@ -14,6 +14,7 @@ import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
+import ProfileDropdownContainerMobile from "src/containers/header/profile-dropdown/ProfileDropdownContainerMobile";
 import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
@@ -203,17 +204,19 @@ const LayoutHeader: FC<IProps> = ({
                                     <HeaderSearchContainer />
                                 </div>
 
-                                <h3 className="two-col:pl-4 two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
+                                {/* <h3 className="two-col:pl-4 two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
                                     {t("navigation.boards")}
-                                </h3>
+                                </h3> */}
 
-                                <ViewsTabContainer
+                                <ProfileDropdownContainerMobile />
+
+                                {/* <ViewsTabContainer
                                     mobileOpen
                                     isBoardsLibOpen={isBoardsLibOpen}
                                     onToggleBoardsLib={toggleBoardsLib}
                                     headerRef={headerRef}
                                     handleMobileOpen={handleMobileOpen}
-                                />
+                                /> */}
                             </>
                         )}
 
