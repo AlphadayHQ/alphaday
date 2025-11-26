@@ -11,6 +11,7 @@ const ErrorPage = lazyRetry(() => import("./pages/error"));
  * Mobile pages
  */
 const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
+const BoardsPage = lazyRetry(() => import("./mobile-pages/boards"));
 const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
 const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
 const UserFiltersPage = lazyRetry(() => import("./mobile-pages/user-filters"));
@@ -140,6 +141,7 @@ export enum EMobileTabRoutePaths {
 export enum EMobileRoutePaths {
     Base = BASE_TABS_ROUTE,
     Boards = EDesktopRoutePaths.Boards,
+    BoardsLibrary = `${BASE_TABS_ROUTE}boards`,
     Superfeed = `${BASE_TABS_ROUTE}superfeed`,
     Search = `${BASE_TABS_ROUTE}superfeed/search/:tags`,
     UserSettings = `${BASE_TABS_ROUTE}superfeed/user-settings`,
@@ -169,6 +171,12 @@ export const mobileRoutes: TMobileRoute[] = [
     {
         path: EMobileRoutePaths.Superfeed,
         component: SuperfeedPage,
+        exact: true,
+        type: "regular",
+    },
+    {
+        path: EMobileRoutePaths.BoardsLibrary,
+        component: BoardsPage,
         exact: true,
         type: "regular",
     },
