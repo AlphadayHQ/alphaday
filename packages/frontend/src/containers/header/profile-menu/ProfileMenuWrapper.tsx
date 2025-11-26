@@ -145,7 +145,7 @@ const ProfileMenuWrapper: React.FC<IProps> = ({
     if (isMobile) {
         return (
             <div
-                className="w-full px-2.5 py-2"
+                className="w-full px-2.5 py-2 border-b rounded-md border-borderLine"
                 data-testid="profile-menu-mobile"
             >
                 {dropdownContent}

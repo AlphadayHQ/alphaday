@@ -179,7 +179,7 @@ const LayoutHeader: FC<IProps> = ({
                     className={isBoardsLibOpen ? "static mb-[-110px]" : ""}
                 >
                     <HeaderNavbar mobileOpen={mobileOpen}>
-                        <div className="flex w-full flex-row items-center justify-between py-5">
+                        <div className="flex w-full flex-row items-center justify-between py-4">
                             <Logo />
                             {!hideFeatures && (
                                 <HeaderNavRight>
