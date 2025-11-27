@@ -200,19 +200,30 @@ export const RecipeModal: FC<IProps> = ({
             return (
                 <ScrollBar>
                     <div className="grid grid-cols-3 gap-2.5 pl-3">
-                        {displayItems.map((item) => (
-                            <div key={item.id} className="w-min max-w-min">
-                                <ModulePreview
-                                    previewImg={item.icon}
-                                    title={item.name}
-                                    description={item.description || ""}
-                                    onClick={() => handleSelectRecipe(item)}
-                                    selected={false}
-                                    count={0}
-                                    isMaxed={false}
-                                />
-                            </div>
-                        ))}
+                        {displayItems.map((item) => {
+                            let recipeState: "active" | "inactive" | undefined;
+                            if ("isActive" in item) {
+                                recipeState = item.isActive
+                                    ? "active"
+                                    : "inactive";
+                            }
+
+                            return (
+                                <div key={item.id} className="w-min max-w-min">
+                                    <ModulePreview
+                                        previewImg={item.icon}
+                                        title={item.name}
+                                        description={item.description || ""}
+                                        onClick={() => handleSelectRecipe(item)}
+                                        selected={false}
+                                        count={0}
+                                        isMaxed={false}
+                                        hidePlusIcon
+                                        recipeState={recipeState}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                     <div className="w-full h-10" />
                 </ScrollBar>
