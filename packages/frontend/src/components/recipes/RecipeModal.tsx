@@ -203,10 +203,7 @@ export const RecipeModal: FC<IProps> = ({
                         {displayItems.map((item) => (
                             <div key={item.id} className="w-min max-w-min">
                                 <ModulePreview
-                                    previewImg={
-                                        (item as TRecipeTemplate)
-                                            .previewImage || item.name
-                                    }
+                                    previewImg={item.icon}
                                     title={item.name}
                                     description={item.description || ""}
                                     onClick={() => handleSelectRecipe(item)}
