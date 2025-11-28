@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useRecipeModalHash, useView } from "src/api/hooks";
 import {
     useGetRecipesQuery,
@@ -46,19 +47,8 @@ const useRecipeModalState = () => {
     };
 };
 
-export const RecipeModalContainer = () => {
-    const { showModal, onClose } = useRecipeModalState();
-    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+const useAddRecipeWidget = () => {
     const { selectedView, addWidgetsToCache } = useView();
-
-    const {
-        data: recipesData,
-        isLoading: recipesLoading,
-        refetch: refetchRecipes,
-    } = useGetRecipesQuery({});
-    const { data: templatesData, isLoading: templatesLoading } =
-        useGetRecipeTemplatesQuery({});
-    const { data: outputFormatsData } = useGetOutputFormatsQuery({});
 
     // Fetch recipe widget to add to board when first recipe is created
     const { data: recipeWidgetsData } = useGetWidgetsQuery({
@@ -74,70 +64,119 @@ export const RecipeModalContainer = () => {
         }
     );
 
+    // Track if we should add the recipe widget (set to true after first recipe is created)
+    const [shouldAddRecipeWidget, setShouldAddRecipeWidget] = useState(false);
+    // Track if we've already added the widget to prevent duplicates
+    const [hasAddedRecipeWidget, setHasAddedRecipeWidget] = useState(false);
+
+    // Effect to add recipe widget when resolved and flagged to be added
+    useEffect(() => {
+        if (
+            shouldAddRecipeWidget &&
+            !hasAddedRecipeWidget &&
+            selectedView &&
+            resolvedRecipeWidget
+        ) {
+            const recipeWidget = resolvedRecipeWidget;
+
+            // Check if recipe widget already exists on the board
+            const hasRecipeWidget = selectedView.data.widgets.some(
+                (w) => w.widget.slug === recipeWidget.slug
+            );
+
+            if (hasRecipeWidget) {
+                Logger.debug(
+                    "RecipeModalContainer: Recipe widget already exists on board, skipping addition"
+                );
+                setHasAddedRecipeWidget(true);
+                setShouldAddRecipeWidget(false);
+                return;
+            }
+
+            const widgetsCount = selectedView.data.widgets.length;
+            const maxWidgets =
+                selectedView.data.max_widgets ?? CONFIG.VIEWS.MAX_WIDGETS;
+
+            if (widgetsCount >= maxWidgets) {
+                Logger.debug(
+                    "RecipeModalContainer: Board is at max widgets, not adding recipe widget"
+                );
+                setShouldAddRecipeWidget(false);
+                return;
+            }
+
+            const newWidget: TUserViewWidget = {
+                id: 990,
+                hash: uuidv4(),
+                name: recipeWidget.name,
+                widget: recipeWidget,
+                settings: recipeWidget.settings.map(({ setting }, id) => ({
+                    widget_setting: {
+                        setting: {
+                            id: Number(id) + 1,
+                            slug: setting.slug,
+                            name: setting.slug,
+                            setting_type: "tags",
+                        },
+                        default_toggle_value: null,
+                        sort_order: 0,
+                    },
+                    tags: [],
+                    toggle_value: false,
+                })),
+                sort_order: selectedView.data.widgets.length,
+            };
+
+            // Create a simple layout with 3 columns and add to the shortest
+            const layoutState: TUserViewWidget[][] = [[], [], []];
+            selectedView.data.widgets.forEach((widget, index) => {
+                layoutState[index % 3].push(widget);
+            });
+
+            const shortestCol = layoutState
+                .map((a) => a.length)
+                .indexOf(Math.min(...layoutState.map((a) => a.length)));
+
+            layoutState[shortestCol].push(newWidget);
+            addWidgetsToCache(recomputeWidgetsPos(layoutState));
+
+            Logger.debug("RecipeModalContainer: Recipe widget added to board");
+
+            // Mark as added and reset flag
+            setHasAddedRecipeWidget(true);
+            setShouldAddRecipeWidget(false);
+        }
+    }, [
+        shouldAddRecipeWidget,
+        hasAddedRecipeWidget,
+        selectedView,
+        resolvedRecipeWidget,
+        addWidgetsToCache,
+    ]);
+
+    return {
+        triggerAddRecipeWidget: () => setShouldAddRecipeWidget(true),
+    };
+};
+
+export const RecipeModalContainer = () => {
+    const { showModal, onClose } = useRecipeModalState();
+    const { triggerAddRecipeWidget } = useAddRecipeWidget();
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
+    const {
+        data: recipesData,
+        isLoading: recipesLoading,
+        refetch: refetchRecipes,
+    } = useGetRecipesQuery({});
+    const { data: templatesData, isLoading: templatesLoading } =
+        useGetRecipeTemplatesQuery({});
+    const { data: outputFormatsData } = useGetOutputFormatsQuery({});
+
     const [createRecipe] = useCreateRecipeMutation();
     const [updateRecipe] = useUpdateRecipeMutation();
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
-
-    const addRecipeWidgetToBoard = () => {
-        if (!selectedView || !resolvedRecipeWidget) {
-            Logger.warn(
-                "RecipeModalContainer::addRecipeWidgetToBoard: Cannot add widget - no selected view or recipe widget not resolved"
-            );
-            return;
-        }
-
-        const recipeWidget = resolvedRecipeWidget;
-        const widgetsCount = selectedView.data.widgets.length;
-        const maxWidgets =
-            selectedView.data.max_widgets ?? CONFIG.VIEWS.MAX_WIDGETS;
-
-        if (widgetsCount >= maxWidgets) {
-            Logger.debug(
-                "RecipeModalContainer::addRecipeWidgetToBoard: Board is at max widgets, not adding recipe widget"
-            );
-            return;
-        }
-
-        const newWidget: TUserViewWidget = {
-            id: 990,
-            hash: uuidv4(),
-            name: recipeWidget.name,
-            widget: recipeWidget,
-            settings: recipeWidget.settings.map(({ setting }, id) => ({
-                widget_setting: {
-                    setting: {
-                        id: Number(id) + 1,
-                        slug: setting.slug,
-                        name: setting.slug,
-                        setting_type: "tags",
-                    },
-                    default_toggle_value: null,
-                    sort_order: 0,
-                },
-                tags: [],
-                toggle_value: false,
-            })),
-            sort_order: selectedView.data.widgets.length,
-        };
-
-        // Create a simple layout with 3 columns and add to the shortest
-        const layoutState: TUserViewWidget[][] = [[], [], []];
-        selectedView.data.widgets.forEach((widget, index) => {
-            layoutState[index % 3].push(widget);
-        });
-
-        const shortestCol = layoutState
-            .map((a) => a.length)
-            .indexOf(Math.min(...layoutState.map((a) => a.length)));
-
-        layoutState[shortestCol].push(newWidget);
-        addWidgetsToCache(recomputeWidgetsPos(layoutState));
-
-        Logger.debug(
-            "RecipeModalContainer::addRecipeWidgetToBoard: Recipe widget added to board"
-        );
-    };
 
     const onCreateRecipe = (recipe: TRecipeInput) => {
         if (!isAuthenticated) {
@@ -160,7 +199,8 @@ export const RecipeModalContainer = () => {
             .then(() => {
                 refetchRecipes();
                 if (isFirstRecipe) {
-                    addRecipeWidgetToBoard();
+                    // Trigger widget addition via useEffect
+                    triggerAddRecipeWidget();
                     toast("Recipe created and added to your board!", {
                         type: EToastRole.Success,
                     });
