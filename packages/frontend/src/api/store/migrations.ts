@@ -44,7 +44,7 @@ type RootStateV110 = PersistedRootState;
 type RootStateV109 =
     | (PersistedState &
           Omit<RootState, "ui"> & {
-              ui: Omit<IUIState, "showRecipeModal">;
+              ui: Omit<IUIState, "showRecipeLibrary">;
           })
     | undefined;
 
@@ -351,7 +351,7 @@ const migrations: TMigrations = {
             ...s,
             ui: {
                 ...s.ui,
-                showRecipeModal: false,
+                showRecipeLibrary: false,
             },
         };
     },

@@ -9,7 +9,7 @@ interface IProps {
     hideFeatures?: boolean;
     toggleWidgetLib?: () => void;
     toggleLanguageModal?: () => void;
-    toggleRecipeModal?: () => void;
+    toggleRecipeLibrary?: () => void;
     layoutState?: TUserViewWidget[][];
     children?: React.ReactNode;
     setTutFocusElemRef?:
@@ -23,7 +23,7 @@ const MainLayout: React.FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
     toggleLanguageModal,
-    toggleRecipeModal,
+    toggleRecipeLibrary,
     layoutState,
     setTutFocusElemRef,
 }) => {
@@ -34,7 +34,7 @@ const MainLayout: React.FC<IProps> = ({
                 hideFeatures={!!hideFeatures}
                 toggleWidgetLib={toggleWidgetLib}
                 toggleLanguageModal={toggleLanguageModal}
-                toggleRecipeModal={toggleRecipeModal}
+                toggleRecipeLibrary={toggleRecipeLibrary}
                 setTutFocusElemRef={setTutFocusElemRef}
                 isBoardsLibOpen={isBoardsLibOpen}
                 setIsBoardsLibOpen={setIsBoardsLibOpen}

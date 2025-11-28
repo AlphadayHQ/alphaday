@@ -22,7 +22,7 @@ interface IProps {
     hideFeatures: boolean;
     toggleWidgetLib: (() => void) | undefined;
     toggleLanguageModal: (() => void) | undefined;
-    toggleRecipeModal: (() => void) | undefined;
+    toggleRecipeLibrary: (() => void) | undefined;
     isBoardsLibOpen: boolean;
     setIsBoardsLibOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setTutFocusElemRef?:
@@ -34,7 +34,7 @@ const LayoutHeader: FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
     toggleLanguageModal,
-    toggleRecipeModal,
+    toggleRecipeLibrary,
     setTutFocusElemRef,
     isBoardsLibOpen,
     setIsBoardsLibOpen,
@@ -84,7 +84,7 @@ const LayoutHeader: FC<IProps> = ({
                                             variant="recipes"
                                             open={false}
                                             uppercase={false}
-                                            onClick={toggleRecipeModal}
+                                            onClick={toggleRecipeLibrary}
                                             title={t("navigation.recipes")}
                                         >
                                             <span>
