@@ -48,7 +48,7 @@ export const RecipeLibrary: FC<IProps> = ({
     onDeactivateRecipe,
 }) => {
     const [selectedCategory, setSelectedCategory] =
-        useState<CategoryType>("recipes");
+        useState<CategoryType>("templates");
     const [searchFilter, setSearchFilter] = useState("");
     const [currentView, setCurrentView] = useState<ViewType>("list");
     const [selectedTemplate, setSelectedTemplate] =
@@ -312,23 +312,6 @@ export const RecipeLibrary: FC<IProps> = ({
                             role="button"
                             tabIndex={0}
                             className={twMerge(
-                                "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
-                                selectedCategory === "recipes" &&
-                                    "bg-backgroundBlue hover:bg-backgroundBlue text-primary fontGroup-highlightSemi"
-                            )}
-                            onClick={() => {
-                                setSelectedCategory("recipes");
-                                setCurrentView("list");
-                            }}
-                        >
-                            <RecipeSVG />
-                            My Recipes ({recipes.length})
-                        </div>
-
-                        <div
-                            role="button"
-                            tabIndex={0}
-                            className={twMerge(
                                 "mt-2 flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
                                 selectedCategory === "templates" &&
                                     "bg-backgroundBlue hover:bg-backgroundBlue text-primary fontGroup-highlightSemi"
@@ -340,6 +323,22 @@ export const RecipeLibrary: FC<IProps> = ({
                         >
                             <TemplateSVG />
                             Templates ({templates.length})
+                        </div>
+                        <div
+                            role="button"
+                            tabIndex={0}
+                            className={twMerge(
+                                "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
+                                selectedCategory === "recipes" &&
+                                    "bg-backgroundBlue hover:bg-backgroundBlue text-primary fontGroup-highlightSemi"
+                            )}
+                            onClick={() => {
+                                setSelectedCategory("recipes");
+                                setCurrentView("list");
+                            }}
+                        >
+                            <RecipeSVG />
+                            My Recipes ({recipes.length})
                         </div>
                     </ScrollBar>
 
