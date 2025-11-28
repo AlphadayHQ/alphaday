@@ -199,6 +199,13 @@ export const RecipeModal: FC<IProps> = ({
         if (displayItems.length > 0) {
             return (
                 <ScrollBar>
+                    <div className="w-full px-4 py-2 ">
+                        <h6 className="fontGroup-normal text-primaryVariant100">
+                            {selectedCategory === "recipes"
+                                ? "These are your saved recipes you edit them here. To create a new recipe, select a template from the Templates tab."
+                                : "These are the available recipe templates you can use to create new recipes. Select a template to get started."}
+                        </h6>
+                    </div>
                     <div className="grid grid-cols-3 gap-2.5 pl-3">
                         {displayItems.map((item) => {
                             let recipeState: "active" | "inactive" | undefined;
