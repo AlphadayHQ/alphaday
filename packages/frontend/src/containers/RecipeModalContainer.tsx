@@ -8,7 +8,10 @@ import {
     useDeactivateRecipeMutation,
     useGetOutputFormatsQuery,
 } from "src/api/services/recipes/recipeEndpoints";
-import { useGetWidgetsQuery } from "src/api/services/views/viewsEndpoints";
+import {
+    useGetWidgetsQuery,
+    useGetWidgetByIdQuery,
+} from "src/api/services/views/viewsEndpoints";
 import { toggleRecipeModal } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
@@ -63,20 +66,28 @@ export const RecipeModalContainer = () => {
         limit: 1,
     });
 
+    // Fetch full recipe widget details when needed
+    const { currentData: resolvedRecipeWidget } = useGetWidgetByIdQuery(
+        { id: recipeWidgetsData?.results?.[0]?.id ?? 0 },
+        {
+            skip: recipeWidgetsData?.results?.[0] === undefined,
+        }
+    );
+
     const [createRecipe] = useCreateRecipeMutation();
     const [updateRecipe] = useUpdateRecipeMutation();
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
 
     const addRecipeWidgetToBoard = () => {
-        if (!selectedView || !recipeWidgetsData?.results?.[0]) {
+        if (!selectedView || !resolvedRecipeWidget) {
             Logger.warn(
-                "RecipeModalContainer::addRecipeWidgetToBoard: Cannot add widget - no selected view or recipe widget not found"
+                "RecipeModalContainer::addRecipeWidgetToBoard: Cannot add widget - no selected view or recipe widget not resolved"
             );
             return;
         }
 
-        const recipeWidget = recipeWidgetsData.results[0];
+        const recipeWidget = resolvedRecipeWidget;
         const widgetsCount = selectedView.data.widgets.length;
         const maxWidgets =
             selectedView.data.max_widgets ?? CONFIG.VIEWS.MAX_WIDGETS;
