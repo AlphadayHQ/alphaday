@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecipeModalHash, useView } from "src/api/hooks";
+import { useRecipeLibraryHash, useView } from "src/api/hooks";
 import {
     useGetRecipesQuery,
     useGetRecipeTemplatesQuery,
@@ -13,22 +13,24 @@ import {
     useGetWidgetsQuery,
     useGetWidgetByIdQuery,
 } from "src/api/services/views/viewsEndpoints";
-import { toggleRecipeModal } from "src/api/store";
+import { toggleRecipeLibrary } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
 import { TRecipeInput, TUserViewWidget } from "src/api/types";
 import { recomputeWidgetsPos } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
-import { RecipeModal } from "src/components/recipes/RecipeModal";
+import { RecipeLibrary } from "src/components/recipes/RecipeLibrary";
 import CONFIG from "src/config/config";
 import { v4 as uuidv4 } from "uuid";
 import globalMessages from "src/globalMessages";
 
-const useRecipeModalState = () => {
+const useRecipeLibraryState = () => {
     const dispatch = useAppDispatch();
-    const reduxShowModal = useAppSelector((state) => state.ui.showRecipeModal);
-    const hashState = useRecipeModalHash();
+    const reduxShowModal = useAppSelector(
+        (state) => state.ui.showRecipeLibrary
+    );
+    const hashState = useRecipeLibraryHash();
 
     if (CONFIG.UI.USE_URL_HASH_FOR_RECIPE_MODAL) {
         return {
@@ -41,7 +43,7 @@ const useRecipeModalState = () => {
         showModal: reduxShowModal,
         onClose: () => {
             if (reduxShowModal) {
-                dispatch(toggleRecipeModal());
+                dispatch(toggleRecipeLibrary());
             }
         },
     };
@@ -86,7 +88,7 @@ const useAddRecipeWidget = () => {
 
             if (hasRecipeWidget) {
                 Logger.debug(
-                    "RecipeModalContainer: Recipe widget already exists on board, skipping addition"
+                    "RecipeLibraryContainer: Recipe widget already exists on board, skipping addition"
                 );
                 setHasAddedRecipeWidget(true);
                 setShouldAddRecipeWidget(false);
@@ -99,7 +101,7 @@ const useAddRecipeWidget = () => {
 
             if (widgetsCount >= maxWidgets) {
                 Logger.debug(
-                    "RecipeModalContainer: Board is at max widgets, not adding recipe widget"
+                    "RecipeLibraryContainer: Board is at max widgets, not adding recipe widget"
                 );
                 setShouldAddRecipeWidget(false);
                 return;
@@ -140,7 +142,9 @@ const useAddRecipeWidget = () => {
             layoutState[shortestCol].push(newWidget);
             addWidgetsToCache(recomputeWidgetsPos(layoutState));
 
-            Logger.debug("RecipeModalContainer: Recipe widget added to board");
+            Logger.debug(
+                "RecipeLibraryContainer: Recipe widget added to board"
+            );
 
             // Mark as added and reset flag
             setHasAddedRecipeWidget(true);
@@ -159,8 +163,8 @@ const useAddRecipeWidget = () => {
     };
 };
 
-export const RecipeModalContainer = () => {
-    const { showModal, onClose } = useRecipeModalState();
+export const RecipeLibraryContainer = () => {
+    const { showModal, onClose } = useRecipeLibraryState();
     const { triggerAddRecipeWidget } = useAddRecipeWidget();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
@@ -207,7 +211,7 @@ export const RecipeModalContainer = () => {
                 }
             })
             .catch((error) => {
-                Logger.error("RecipeModalContainer::onCreateRecipe", error);
+                Logger.error("RecipeLibraryContainer::onCreateRecipe", error);
                 toast("Failed to create recipe. Please try again.", {
                     type: EToastRole.Error,
                 });
@@ -233,7 +237,7 @@ export const RecipeModalContainer = () => {
                 refetchRecipes();
             })
             .catch((error) => {
-                Logger.error("RecipeModalContainer::onUpdateRecipe", error);
+                Logger.error("RecipeLibraryContainer::onUpdateRecipe", error);
                 toast("Failed to update recipe. Please try again.", {
                     type: EToastRole.Error,
                 });
@@ -251,7 +255,7 @@ export const RecipeModalContainer = () => {
                 refetchRecipes();
             })
             .catch((error) => {
-                Logger.error("RecipeModalContainer::onActivateRecipe", error);
+                Logger.error("RecipeLibraryContainer::onActivateRecipe", error);
                 toast("Failed to activate recipe. Please try again.", {
                     type: EToastRole.Error,
                 });
@@ -269,7 +273,10 @@ export const RecipeModalContainer = () => {
                 refetchRecipes();
             })
             .catch((error) => {
-                Logger.error("RecipeModalContainer::onDeactivateRecipe", error);
+                Logger.error(
+                    "RecipeLibraryContainer::onDeactivateRecipe",
+                    error
+                );
                 toast("Failed to deactivate recipe. Please try again.", {
                     type: EToastRole.Error,
                 });
@@ -277,7 +284,7 @@ export const RecipeModalContainer = () => {
     };
 
     return (
-        <RecipeModal
+        <RecipeLibrary
             showModal={showModal}
             onClose={onClose}
             recipes={recipesData?.results}

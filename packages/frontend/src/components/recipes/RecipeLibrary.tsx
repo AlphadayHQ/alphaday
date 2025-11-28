@@ -35,7 +35,7 @@ interface IProps {
 type CategoryType = "recipes" | "templates";
 type ViewType = "list" | "create-from-template" | "edit-recipe";
 
-export const RecipeModal: FC<IProps> = ({
+export const RecipeLibrary: FC<IProps> = ({
     showModal,
     onClose,
     recipes = [],
