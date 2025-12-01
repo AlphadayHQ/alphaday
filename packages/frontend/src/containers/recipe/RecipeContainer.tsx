@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { useRecipeModalHash } from "src/api/hooks";
+import { useRecipeLibraryHash } from "src/api/hooks";
 import {
     useGetRecipesQuery,
     useGetRecipeTemplatesQuery,
@@ -10,7 +10,7 @@ import {
     useTriggerRecipeMutation,
     useGetOutputFormatsQuery,
 } from "src/api/services/recipes/recipeEndpoints";
-import { toggleRecipeModal } from "src/api/store";
+import { toggleRecipeLibrary } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import { selectIsAuthenticated } from "src/api/store/slices/user";
 import { Logger } from "src/api/utils/logging";
@@ -26,10 +26,10 @@ import { IModuleContainer } from "src/types";
 const RecipeContainer: FC<IModuleContainer> = () => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
-    const { openModal: hashOpenModal } = useRecipeModalHash();
+    const { openModal: hashOpenModal } = useRecipeLibraryHash();
     const toggleModal = CONFIG.UI.USE_URL_HASH_FOR_RECIPE_MODAL
         ? hashOpenModal
-        : () => dispatch(toggleRecipeModal());
+        : () => dispatch(toggleRecipeLibrary());
 
     const {
         data: recipesData,

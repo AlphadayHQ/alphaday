@@ -11,6 +11,7 @@ import {
 export type TRecipeTemplateRaw = {
     id: string;
     name: string;
+    icon: string;
     description: string;
     category?: string;
     author?: number | null;
@@ -77,6 +78,7 @@ export type TRecipeRaw = {
     user?: number;
     user_email?: string;
     name: string;
+    icon: string;
     description?: string;
     is_active: boolean;
     schedule: string;

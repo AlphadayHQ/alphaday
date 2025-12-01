@@ -29,6 +29,7 @@ export type TRecipe = {
     user?: number;
     userEmail?: string;
     name: string;
+    icon: string;
     description?: string;
     isActive: boolean;
     schedule: string;
@@ -101,6 +102,7 @@ export type TOutputFormat = {
 export type TRecipeTemplate = {
     id: string;
     name: string;
+    icon: string;
     description: string;
     category?: ERecipeTemplateCategory | string;
     author?: number | null;

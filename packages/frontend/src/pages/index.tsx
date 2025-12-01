@@ -8,7 +8,7 @@ import {
     useTutorial,
     useWindowSize,
     useImageWidget,
-    useRecipeModalHash,
+    useRecipeLibraryHash,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -16,7 +16,7 @@ import {
     removeWidgetStateFromCache,
     selectIsMinimised,
     toggleLanguageModal,
-    toggleRecipeModal,
+    toggleRecipeLibrary,
 } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
@@ -39,7 +39,7 @@ import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDi
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
-import { RecipeModalContainer } from "src/containers/RecipeModalContainer";
+import { RecipeLibraryContainer } from "src/containers/recipe-library/RecipeLibraryContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import MainLayout from "src/layout/MainLayout";
 import { ETemplateNameRegistry } from "src/constants";
@@ -68,10 +68,10 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     );
 
     const onToggleLanguageModal = () => dispatch(toggleLanguageModal());
-    const { toggleModal: hashToggleRecipeModal } = useRecipeModalHash();
-    const onToggleRecipeModal = UI.USE_URL_HASH_FOR_RECIPE_MODAL
-        ? hashToggleRecipeModal
-        : () => dispatch(toggleRecipeModal());
+    const { toggleModal: hashToggleRecipeLibrary } = useRecipeLibraryHash();
+    const onToggleRecipeLibrary = UI.USE_URL_HASH_FOR_RECIPE_MODAL
+        ? hashToggleRecipeLibrary
+        : () => dispatch(toggleRecipeLibrary());
 
     const { toggleWidgetLib } = useWidgetLib();
     const { currentTutorial, setTutFocusElemRef } = useTutorial();
@@ -343,7 +343,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         <MainLayout
             toggleWidgetLib={toggleWidgetLib}
             toggleLanguageModal={onToggleLanguageModal}
-            toggleRecipeModal={onToggleRecipeModal}
+            toggleRecipeLibrary={onToggleRecipeLibrary}
             layoutState={layoutState}
             hideFooter={
                 (showTutorial && !!availableViews?.length) || // do not show the tutorial if there are no views
@@ -464,7 +464,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             <WalletConnectionDialogContainer />
             <AboutUsModalContainer />
             <LanguageModalContainer />
-            <RecipeModalContainer />
+            <RecipeLibraryContainer />
         </MainLayout>
     );
 }
