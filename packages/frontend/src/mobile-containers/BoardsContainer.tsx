@@ -1,10 +1,6 @@
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHistory } from "react-router";
-import {
-    useView,
-    usePagination,
-    useViewRoute,
-} from "src/api/hooks";
+import { useView, usePagination, useViewRoute } from "src/api/hooks";
 import {
     EItemsSortBy,
     TRemoteUserViewPreview,
@@ -22,8 +18,8 @@ import { Logger } from "src/api/utils/logging";
 import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import { buildViewPath } from "src/api/utils/viewUtils";
-import MobileBoardsList from "src/mobile-components/MobileBoardsList";
 import CONFIG from "src/config/config";
+import MobileBoardsList from "src/mobile-components/MobileBoardsList";
 
 const INITIAL_PAGE = 1;
 
@@ -141,17 +137,11 @@ const BoardsContainer: FC = () => {
             subscribeViewMut({ id: viewId })
                 .unwrap()
                 .then((r) => {
-                    Logger.debug(
-                        "BoardsContainer::handleSubscribe success",
-                        r
-                    );
+                    Logger.debug("BoardsContainer::handleSubscribe success", r);
                     toast("Your board preferences have been updated.");
                 })
                 .catch((e) => {
-                    Logger.error(
-                        "BoardsContainer::handleSubscribe failed",
-                        e
-                    );
+                    Logger.error("BoardsContainer::handleSubscribe failed", e);
                     toast(
                         "You have reached the limit to pinned boards, please unpin some boards to pin others.",
                         {
