@@ -76,7 +76,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         : () => dispatch(toggleRecipeLibrary());
 
     const { toggleWidgetLib } = useWidgetLib();
-    const { currentTutorial, setTutFocusElemRef } = useTutorial();
+    const { currentTutorial, setTutFocusElemRef, showTutorial } = useTutorial();
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
 
     const windowSize = useWindowSize();
@@ -85,7 +85,6 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         aspectRatios: twoColWidgetAspectRatios,
         handleAspectRatioDetected,
     } = useImageWidget(selectedView);
-    const { showTutorial } = useTutorial();
 
     const [isDraggedWidgetInView, setIsDraggedWidgetInView] = useState(false);
 
