@@ -3,6 +3,7 @@ import { Footer, twMerge } from "@alphaday/ui-kit";
 import { TUserViewWidget } from "src/api/types";
 import WidgetsLibContainer from "src/containers/widgets-library/WidgetsLibContainer";
 import Header from "./LayoutHeader";
+import MobileNavigation from "./MobileNavigation";
 
 interface IProps {
     hideFooter?: boolean;
@@ -51,7 +52,7 @@ const MainLayout: React.FC<IProps> = ({
                     {children}
                 </div>
             </div>
-
+            <MobileNavigation />
             {!hideFooter && <Footer />}
         </div>
     );
