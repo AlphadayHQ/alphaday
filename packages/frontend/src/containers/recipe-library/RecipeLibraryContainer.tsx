@@ -71,6 +71,14 @@ const useAddRecipeWidget = () => {
     // Track if we've already added the widget to prevent duplicates
     const [hasAddedRecipeWidget, setHasAddedRecipeWidget] = useState(false);
 
+    // Check if the recipe widget already exists on the board
+    const hasRecipeWidgetOnBoard =
+        selectedView &&
+        resolvedRecipeWidget &&
+        selectedView.data.widgets.some(
+            (w) => w.widget.slug === resolvedRecipeWidget.slug
+        );
+
     // Effect to add recipe widget when resolved and flagged to be added
     useEffect(() => {
         if (
@@ -160,12 +168,14 @@ const useAddRecipeWidget = () => {
 
     return {
         triggerAddRecipeWidget: () => setShouldAddRecipeWidget(true),
+        hasRecipeWidgetOnBoard,
     };
 };
 
 export const RecipeLibraryContainer = () => {
     const { showModal, onClose } = useRecipeLibraryState();
-    const { triggerAddRecipeWidget } = useAddRecipeWidget();
+    const { triggerAddRecipeWidget, hasRecipeWidgetOnBoard } =
+        useAddRecipeWidget();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
     const {
@@ -202,7 +212,8 @@ export const RecipeLibraryContainer = () => {
             .unwrap()
             .then(() => {
                 refetchRecipes();
-                if (isFirstRecipe) {
+                // Only add widget if this is the first recipe AND the widget doesn't already exist on the board
+                if (isFirstRecipe && !hasRecipeWidgetOnBoard) {
                     // Trigger widget addition via useEffect
                     triggerAddRecipeWidget();
                     toast("Recipe created and added to your board!", {
