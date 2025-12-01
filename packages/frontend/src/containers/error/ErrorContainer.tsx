@@ -93,7 +93,7 @@ const getErrorMessage = ({
                     <span className="text-secondaryOrange pr-1">{status}</span>
                 </h1>
             )}
-            <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
+            <p className="font-montserrat text-center text-primaryVariant100 text-base two-col:text-xl mt-9 max-w-lg px-4">
                 {t("errorPage.default.description.text")}{" "}
                 <a
                     className="twitter"
