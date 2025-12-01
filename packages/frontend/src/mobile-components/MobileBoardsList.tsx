@@ -1,4 +1,4 @@
-import { FC, FormEvent, useCallback, useState } from "react";
+import { FC, FormEvent, useCallback, useMemo, useState } from "react";
 import {
     BoardPreview,
     ModuleLoader,
@@ -150,7 +150,9 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
 }) => {
     const sortOptions = generateSortOptions();
     const { t } = useTranslation();
-    const [activeSection, setActiveSection] = useState<"custom" | "all">("custom");
+    const [activeSection, setActiveSection] = useState<"custom" | "all">(
+        "custom"
+    );
 
     const customBoards = subscribedViews
         ?.filter((board) => !board.is_system_view)
@@ -215,6 +217,36 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
               })
             : sortByKey;
 
+    const childPreview = useMemo(() => {
+        if (isFetching && allBoards?.length === 0) {
+            return <ModuleLoader $height="200px" />;
+        }
+        if (allBoards?.length === 0) {
+            return <NoBoards msg="No boards found in this category" />;
+        }
+        return (
+            <span>
+                {allBoards?.map((view) => (
+                    <BoardPreviewWrap
+                        key={view.id}
+                        view={view}
+                        selectedViewId={selectedViewId}
+                        isAuthenticated={isAuthenticated}
+                        onSelectView={onSelectView}
+                        onBoardPin={onBoardPin}
+                    />
+                ))}
+            </span>
+        );
+    }, [
+        allBoards,
+        isAuthenticated,
+        isFetching,
+        onBoardPin,
+        onSelectView,
+        selectedViewId,
+    ]);
+
     if (customBoards === undefined || allBoards === undefined) {
         return <ModuleLoader $height="100%" />;
     }
@@ -261,12 +293,18 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex flex-col">
                             <span className="fontGroup-highlightSemi text-primary">
-                                {t("navigation.boardsLibrary.customBoardsTitle")}
+                                {t(
+                                    "navigation.boardsLibrary.customBoardsTitle"
+                                )}
                             </span>
                             <span className="text-sm text-primaryVariant100 mt-1">
                                 {isAuthenticated
-                                    ? t("navigation.boardsLibrary.customBoardsDescriptionWithAuth")
-                                    : t("navigation.boardsLibrary.customBoardsDescription")}
+                                    ? t(
+                                          "navigation.boardsLibrary.customBoardsDescriptionWithAuth"
+                                      )
+                                    : t(
+                                          "navigation.boardsLibrary.customBoardsDescription"
+                                      )}
                             </span>
                         </div>
                         {isAuthenticated && (
@@ -334,24 +372,7 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4">
-                        {isFetching && allBoards.length === 0 ? (
-                            <ModuleLoader $height="200px" />
-                        ) : allBoards.length === 0 ? (
-                            <NoBoards msg="No boards found in this category" />
-                        ) : (
-                            allBoards.map((view) => (
-                                <BoardPreviewWrap
-                                    key={view.id}
-                                    view={view}
-                                    selectedViewId={selectedViewId}
-                                    isAuthenticated={isAuthenticated}
-                                    onSelectView={onSelectView}
-                                    onBoardPin={onBoardPin}
-                                />
-                            ))
-                        )}
-                    </div>
+                    <div className="flex gap-4">{childPreview}</div>
                 </div>
             )}
         </div>

@@ -21,7 +21,7 @@ const GeneralError: FC<{ children?: React.ReactNode }> = ({ children }) => {
                 ) : (
                     <a
                         href={window.location.origin}
-                        className="button flex items-center bg-secondaryOrange p-3 rounded-full text-white font-montserrat text-xl leading-none mt-5 hover:opacity-80 focus:opacity-100"
+                        className="button flex items-center bg-secondaryOrange px-6 py-3 rounded-full text-white font-montserrat text-xl leading-none mt-5 hover:opacity-80 focus:opacity-100"
                     >
                         <img
                             src={logoDay}
