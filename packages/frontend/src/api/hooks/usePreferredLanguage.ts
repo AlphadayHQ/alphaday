@@ -28,11 +28,17 @@ export const usePreferredLanguage = () => {
             dispatch(setSelectedLanguageCode({ code: lang as ELanguageCode }));
             prevLangCodeRef.current = lang as ELanguageCode;
             i18next.changeLanguage(lang).catch((e) => {
-                Logger.error("usePreferredLanguage: could not change language", e);
+                Logger.error(
+                    "usePreferredLanguage: could not change language",
+                    e
+                );
             });
         } else if (i18next.language !== selectedLangCode) {
             i18next.changeLanguage(selectedLangCode).catch((e) => {
-                Logger.error("usePreferredLanguage: could not change language", e);
+                Logger.error(
+                    "usePreferredLanguage: could not change language",
+                    e
+                );
             });
         }
         // this should only run once
