@@ -7,7 +7,7 @@ import {
     useHistory,
     useLocation,
 } from "react-router-dom";
-import { ReactComponent as BoardsSVG } from "src/assets/icons/grid.svg";
+// import { ReactComponent as BoardsSVG } from "src/assets/icons/grid.svg";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
@@ -140,7 +140,7 @@ const RouterChild = () => {
                 >
                     <CustomNavTab label="Superfeed" Icon={SuperfeedSVG} />
                 </Link>
-                <Link
+                {/* <Link
                     to={EMobileRoutePaths.BoardsLibrary}
                     className={`flex-1 ${
                         pathname === EMobileRoutePaths.BoardsLibrary
@@ -149,7 +149,7 @@ const RouterChild = () => {
                     }`}
                 >
                     <CustomNavTab label="Boards" Icon={BoardsSVG} />
-                </Link>
+                </Link> */}
                 {IS_DEV && (
                     <Link
                         to={EMobileTabRoutePaths.Market}
