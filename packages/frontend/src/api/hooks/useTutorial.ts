@@ -21,7 +21,7 @@ interface ITutorial {
 }
 
 export const useTutorial: () => ITutorial = () => {
-    const { t, ready } = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useAppDispatch();
     const { tutFocusElemRef, setTutFocusElemRef } = useTutorialContext();
     const { isFullSize } = useViewRoute();
@@ -33,7 +33,7 @@ export const useTutorial: () => ITutorial = () => {
         (key: string) => {
             return t(`tutorials.${key}`);
         },
-        [t, ready]
+        [t]
     );
     const translatedTutorials = useMemo(
         () => tutorials(translate),

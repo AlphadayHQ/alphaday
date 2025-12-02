@@ -1,5 +1,7 @@
 import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
+import { ELanguageCode } from "./api/types/language";
+import { Logger } from "./api/utils/logging";
 import {
     translationEN,
     translationES,
@@ -8,7 +10,6 @@ import {
     translationTR,
     translationZH,
 } from "./locales/translation";
-import { ELanguageCode } from "./api/types/language";
 
 const resources: Record<ELanguageCode, { translation: JSONObject }> = {
     en: {
@@ -32,17 +33,22 @@ const resources: Record<ELanguageCode, { translation: JSONObject }> = {
 };
 
 // Initialize i18n synchronously at module load time
-i18next.use(initReactI18next).init({
-    debug: true,
-    resources,
-    fallbackLng: ELanguageCode.EN,
-    lng: ELanguageCode.EN,
-    detection: {
-        order: ["navigator", "htmlTag", "path", "subdomain"],
-    },
-    interpolation: {
-        escapeValue: false,
-    },
-});
+i18next
+    .use(initReactI18next)
+    .init({
+        debug: true,
+        resources,
+        fallbackLng: ELanguageCode.EN,
+        lng: ELanguageCode.EN,
+        detection: {
+            order: ["navigator", "htmlTag", "path", "subdomain"],
+        },
+        interpolation: {
+            escapeValue: false,
+        },
+    })
+    .catch((error: Error) => {
+        Logger.error("Failed to initialize i18next:", error);
+    });
 
 export default i18next;

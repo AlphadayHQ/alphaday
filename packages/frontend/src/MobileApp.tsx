@@ -7,10 +7,10 @@ import {
     useHistory,
     useLocation,
 } from "react-router-dom";
+import { ReactComponent as BoardsSVG } from "src/assets/icons/grid.svg";
 import { ReactComponent as MarketsSVG } from "src/assets/svg/markets.svg";
 import { ReactComponent as PortfolioSVG } from "src/assets/svg/portfolio.svg";
 import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import { ReactComponent as BoardsSVG } from "src/assets/icons/grid.svg";
 import { useAuth, useViewRoute } from "./api/hooks";
 import CONFIG from "./config";
 import ToastContainer from "./containers/toasts/ToastContainer";
