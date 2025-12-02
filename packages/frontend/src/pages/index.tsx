@@ -9,6 +9,7 @@ import {
     useWindowSize,
     useImageWidget,
     useRecipeLibraryHash,
+    useRecipes,
 } from "src/api/hooks";
 import useMousePosition from "src/api/hooks/useMousePosition";
 import {
@@ -49,6 +50,7 @@ const { UI, VIEWS, TWO_COL_WIDGETS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
+    const { enabled: isRecipesEnabled } = useRecipes();
 
     const {
         selectedView,
@@ -464,7 +466,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
             <WalletConnectionDialogContainer />
             <AboutUsModalContainer />
             <LanguageModalContainer />
-            <RecipeLibraryContainer />
+            {isRecipesEnabled && <RecipeLibraryContainer />}
         </MainLayout>
     );
 }

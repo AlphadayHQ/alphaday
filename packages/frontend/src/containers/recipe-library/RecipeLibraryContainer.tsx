@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecipeLibraryHash, useView } from "src/api/hooks";
+import { useRecipeLibraryHash, useView, useRecipes } from "src/api/hooks";
 import {
     useGetRecipesQuery,
     useGetRecipeTemplatesQuery,
@@ -173,6 +173,7 @@ const useAddRecipeWidget = () => {
 };
 
 export const RecipeLibraryContainer = () => {
+    const { enabled: isRecipesEnabled } = useRecipes();
     const { showModal, onClose } = useRecipeLibraryState();
     const { triggerAddRecipeWidget, hasRecipeWidgetOnBoard } =
         useAddRecipeWidget();
@@ -191,6 +192,11 @@ export const RecipeLibraryContainer = () => {
     const [updateRecipe] = useUpdateRecipeMutation();
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
+
+    // Don't render if recipes feature is disabled
+    if (!isRecipesEnabled) {
+        return null;
+    }
 
     const onCreateRecipe = (recipe: TRecipeInput) => {
         if (!isAuthenticated) {

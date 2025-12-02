@@ -36,3 +36,4 @@ export * from "./useHistory";
 export * from "./useSelectedCoin";
 export * from "./useImageWidget";
 export * from "./useRecipeLibraryHash";
+export * from "./useRecipes";
