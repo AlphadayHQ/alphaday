@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { useRecipeLibraryHash } from "src/api/hooks";
+import { useRecipeLibraryHash, useRecipes } from "src/api/hooks";
 import {
     useGetRecipesQuery,
     useGetRecipeTemplatesQuery,
@@ -24,12 +24,18 @@ import globalMessages from "src/globalMessages";
 import { IModuleContainer } from "src/types";
 
 const RecipeContainer: FC<IModuleContainer> = () => {
+    const { enabled: isRecipesEnabled } = useRecipes();
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
     const { openModal: hashOpenModal } = useRecipeLibraryHash();
     const toggleModal = CONFIG.UI.USE_URL_HASH_FOR_RECIPE_MODAL
         ? hashOpenModal
         : () => dispatch(toggleRecipeLibrary());
+
+    // Don't render if recipes feature is disabled
+    if (!isRecipesEnabled) {
+        return null;
+    }
 
     const {
         data: recipesData,
