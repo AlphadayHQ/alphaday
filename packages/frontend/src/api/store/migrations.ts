@@ -40,19 +40,28 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV109 = PersistedRootState;
+type RootStateV110 = PersistedRootState;
+type RootStateV109 =
+    | (PersistedState &
+          Omit<RootState, "ui"> & {
+              ui: Omit<IUIState, "showRecipeLibrary">;
+          })
+    | undefined;
+
 type RootStateV108 =
     | (PersistedState &
           Omit<RootState, "widgets"> & {
               widgets: Omit<IWidgetsState, "polymarket">;
           })
     | undefined;
+
 type RootStateV107 =
     | (PersistedState &
           Omit<RootState, "widgets"> & {
               widgets: Omit<IWidgetsState, "kasandra">;
           })
     | undefined;
+
 type RootStateV106 =
     | (PersistedState &
           Omit<RootState, "ui"> & {
@@ -134,6 +143,7 @@ type TMigrations = MigrationManifest & {
     107: (s: RootStateV106) => RootStateV107;
     108: (s: RootStateV107) => RootStateV108;
     109: (s: RootStateV108) => RootStateV109;
+    110: (s: RootStateV109) => RootStateV110;
 };
 
 /**
@@ -332,6 +342,16 @@ const migrations: TMigrations = {
             widgets: {
                 ...s.widgets,
                 polymarket: {},
+            },
+        };
+    },
+    110: (s: RootStateV109): RootStateV110 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            ui: {
+                ...s.ui,
+                showRecipeLibrary: false,
             },
         };
     },

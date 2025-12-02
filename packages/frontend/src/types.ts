@@ -132,6 +132,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     portfolio_template: lazyRetry(
         () => import("./containers/portfolio/PortfolioContainer")
     ),
+    recipe_template: lazyRetry(
+        () => import("./containers/recipe/RecipeContainer")
+    ),
     reddit_template: lazyRetry(
         () => import("./containers/items/ItemsContainer")
     ),

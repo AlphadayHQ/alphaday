@@ -13,6 +13,7 @@ export interface IUIState {
     showBalance: boolean;
     showAboutModal: boolean;
     showLanguageModal: boolean;
+    showRecipeLibrary: boolean;
     // persisted choice language of user
     selectedLanguageCode: ELanguageCode;
     tutorial: ITutorialState;
@@ -31,6 +32,7 @@ const initialState: IUIState = {
     showWidgetLib: false,
     showAboutModal: false,
     showLanguageModal: false,
+    showRecipeLibrary: false,
     selectedLanguageCode: ELanguageCode.EN,
     showBalance: true,
     tutorial: { showTutorial: undefined, currentTutorialTip: undefined },
@@ -66,6 +68,9 @@ const uiSlice = createSlice({
         },
         toggleLanguageModal(draft) {
             draft.showLanguageModal = !draft.showLanguageModal;
+        },
+        toggleRecipeLibrary(draft) {
+            draft.showRecipeLibrary = !draft.showRecipeLibrary;
         },
         toggleWidgetsNavOpen(draft) {
             draft.mobile.widgetsNavOpen = !draft.mobile.widgetsNavOpen;
@@ -124,6 +129,7 @@ export const {
     toggleShowBalance,
     toggleAboutModal,
     toggleLanguageModal,
+    toggleRecipeLibrary,
     toggleWidgetsNavOpen,
     setSelectedLanguageCode,
     setStoreShowTutorial,

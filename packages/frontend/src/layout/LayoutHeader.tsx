@@ -9,7 +9,7 @@ import {
     HeaderNavbar,
 } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { useWindowSize } from "src/api/hooks";
+import { useWindowSize, useRecipes } from "src/api/hooks";
 import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
@@ -22,6 +22,7 @@ interface IProps {
     hideFeatures: boolean;
     toggleWidgetLib: (() => void) | undefined;
     toggleLanguageModal: (() => void) | undefined;
+    toggleRecipeLibrary: (() => void) | undefined;
     isBoardsLibOpen: boolean;
     setIsBoardsLibOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setTutFocusElemRef?:
@@ -33,11 +34,13 @@ const LayoutHeader: FC<IProps> = ({
     hideFeatures,
     toggleWidgetLib,
     toggleLanguageModal,
+    toggleRecipeLibrary,
     setTutFocusElemRef,
     isBoardsLibOpen,
     setIsBoardsLibOpen,
 }) => {
     const { t } = useTranslation();
+    const { enabled: isRecipesEnabled } = useRecipes();
 
     const [mobileOpen, setMobileOpen] = useState(false);
     const headerRef = useRef<HTMLDivElement>(null);
@@ -77,6 +80,21 @@ const LayoutHeader: FC<IProps> = ({
                                     <HeaderNavElement className="mx-3">
                                         <SyncIndicatorContainer />
                                     </HeaderNavElement>
+                                    {isRecipesEnabled && (
+                                        <HeaderNavElement className="mr-1 three-col:mr-3 [&_svg]:fill-none hidden two-col:block [&_span]:hidden three-col:[&_span]:block [&_svg]:mr-0 three-col:[&_svg]:mr-1.5">
+                                            <NavTabButton
+                                                variant="recipes"
+                                                open={false}
+                                                uppercase={false}
+                                                onClick={toggleRecipeLibrary}
+                                                title={t("navigation.recipes")}
+                                            >
+                                                <span>
+                                                    {t("navigation.recipes")}
+                                                </span>
+                                            </NavTabButton>
+                                        </HeaderNavElement>
+                                    )}
                                     <HeaderNavElement className="mr-1 three-col:mr-3 [&_svg]:fill-none hidden two-col:block [&_span]:hidden three-col:[&_span]:block [&_svg]:mr-0 three-col:[&_svg]:mr-1.5">
                                         <NavTabButton
                                             variant="language"

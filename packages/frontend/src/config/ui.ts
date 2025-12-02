@@ -38,6 +38,7 @@ const Z_INDEX_REGISTRY = {
 };
 
 const UI_CONFIG = {
+    USE_URL_HASH_FOR_RECIPE_MODAL: true, // Set to false to use Redux state instead
     WIDGET_SIZE_TRACKING_ID: "widget-size-tracking-id", // ID to get size of one single-col widget
     IMAGE_WIDGET_SIZE_TRACKING_ID: "image-widget-size-tracking-id", // ID to get size of first image widget
     FULL_SIZE_WIDGET_SLUG: "calendar_template",

@@ -210,6 +210,16 @@ const API_V0 = {
             IMPORT_DUNE: "/import_dune/",
             BY_ID: (id: number): string => `/${id}/`,
         },
+        RECIPES: {
+            BASE: "recipes",
+            TEMPLATES: "/templates/",
+            LIST: "/recipes/",
+            BY_ID: (id: string): string => `/recipes/${id}/`,
+            ACTIVATE: (id: string): string => `/recipes/${id}/activate/`,
+            DEACTIVATE: (id: string): string => `/recipes/${id}/deactivate/`,
+            TRIGGER: (id: string): string => `/recipes/${id}/trigger/`,
+            OUTPUT_FORMATS: "/output-formats/",
+        },
     },
 };
 

@@ -1,0 +1,368 @@
+import { FC, useState, useMemo, ChangeEvent } from "react";
+import {
+    Input,
+    Modal,
+    ModuleLoader,
+    ModulePreview,
+    ScrollBar,
+    twMerge,
+} from "@alphaday/ui-kit";
+import {
+    TRecipe,
+    TRecipeInput,
+    TRecipeTemplate,
+    TOutputFormat,
+} from "src/api/types";
+import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
+import { ReactComponent as RecipeSVG } from "src/assets/icons/grid.svg";
+import { ReactComponent as TemplateSVG } from "src/assets/icons/other.svg";
+import { v4 as uuidv4 } from "uuid";
+import RecipeForm from "./RecipeForm";
+
+interface IProps {
+    showModal: boolean;
+    onClose: () => void;
+    recipes?: TRecipe[];
+    templates?: TRecipeTemplate[];
+    outputFormats?: TOutputFormat[];
+    isLoading?: boolean;
+    onCreateRecipe: (recipe: TRecipeInput) => void;
+    onUpdateRecipe: (recipe: TRecipeInput) => void;
+    onActivateRecipe: (recipeId: string) => void;
+    onDeactivateRecipe: (recipeId: string) => void;
+}
+
+type CategoryType = "recipes" | "templates";
+type ViewType = "list" | "create-from-template" | "edit-recipe";
+
+export const RecipeLibrary: FC<IProps> = ({
+    showModal,
+    onClose,
+    recipes = [],
+    templates = [],
+    outputFormats = [],
+    isLoading = false,
+    onCreateRecipe,
+    onUpdateRecipe,
+    onActivateRecipe,
+    onDeactivateRecipe,
+}) => {
+    const [selectedCategory, setSelectedCategory] =
+        useState<CategoryType>("templates");
+    const [searchFilter, setSearchFilter] = useState("");
+    const [currentView, setCurrentView] = useState<ViewType>("list");
+    const [selectedTemplate, setSelectedTemplate] =
+        useState<TRecipeTemplate | null>(null);
+    const [selectedRecipe, setSelectedRecipe] = useState<TRecipe | null>(null);
+
+    const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchFilter(e.target.value);
+    };
+
+    const filteredRecipes = useMemo(() => {
+        if (!searchFilter) return recipes;
+        return recipes.filter(
+            (r) =>
+                r.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+                r.description
+                    ?.toLowerCase()
+                    .includes(searchFilter.toLowerCase())
+        );
+    }, [recipes, searchFilter]);
+
+    const filteredTemplates = useMemo(() => {
+        if (!searchFilter) return templates;
+        return templates.filter(
+            (t) =>
+                t.name.toLowerCase().includes(searchFilter.toLowerCase()) ||
+                t.description
+                    ?.toLowerCase()
+                    .includes(searchFilter.toLowerCase())
+        );
+    }, [templates, searchFilter]);
+
+    const displayItems = useMemo(() => {
+        return selectedCategory === "recipes"
+            ? filteredRecipes
+            : filteredTemplates;
+    }, [selectedCategory, filteredRecipes, filteredTemplates]);
+
+    const getCategoryLabel = () => {
+        return selectedCategory === "recipes" ? "Recipes" : "Templates";
+    };
+
+    const getEmptyMessage = () => {
+        return selectedCategory === "recipes"
+            ? "No recipes found"
+            : "No templates found";
+    };
+
+    const handleSelectRecipe = (item: TRecipe | TRecipeTemplate) => {
+        if (selectedCategory === "recipes") {
+            // Recipe selected - show edit form
+            setSelectedRecipe(item as TRecipe);
+            setCurrentView("edit-recipe");
+        } else {
+            // Template selected - show create form
+            setSelectedTemplate(item as TRecipeTemplate);
+            setCurrentView("create-from-template");
+        }
+    };
+
+    const handleBackToTemplates = () => {
+        setCurrentView("list");
+        setSelectedTemplate(null);
+    };
+
+    const handleBackToRecipes = () => {
+        setCurrentView("list");
+        setSelectedRecipe(null);
+    };
+
+    const handleCreateRecipe = (recipeData: {
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+        outputFormat: string;
+    }) => {
+        if (!selectedTemplate || !onCreateRecipe) return;
+
+        const { templateConfig } = selectedTemplate;
+
+        onCreateRecipe({
+            id: uuidv4(),
+            ...recipeData,
+            sources: templateConfig.sources.map((source) => ({
+                sourceCategory: source.source_category,
+                filters: source.filters,
+                maxItems: source.max_items,
+            })),
+            outputs: templateConfig.outputs.map((output) => ({
+                outputFormat: recipeData.outputFormat,
+                promptTemplate: output.prompt_template_id || 0,
+                deliveryChannels: output.delivery_channels,
+            })),
+        });
+
+        // Navigate back to recipes view
+        setSelectedCategory("recipes");
+        setCurrentView("list");
+        setSelectedTemplate(null);
+    };
+
+    const handleUpdateRecipe = (recipeData: {
+        name: string;
+        description?: string;
+        schedule: string;
+        timezone?: string;
+        outputFormat?: string;
+    }) => {
+        if (!selectedRecipe || !onUpdateRecipe) return;
+
+        onUpdateRecipe({
+            id: selectedRecipe.id,
+            ...recipeData,
+            sources:
+                selectedRecipe.recipeSources?.map((source) => ({
+                    sourceCategory: source.sourceCategory,
+                    filters: source.filters,
+                    maxItems: source.maxItems,
+                })) || [],
+            outputs:
+                selectedRecipe.recipeOutputs?.map((output) => ({
+                    outputFormat:
+                        recipeData.outputFormat || output.outputFormat,
+                    promptTemplate: output.promptTemplate,
+                    deliveryChannels: output.deliveryChannels,
+                })) || [],
+        });
+
+        // Navigate back to recipes view
+        setCurrentView("list");
+        setSelectedRecipe(null);
+    };
+
+    const handleToggleActivation = (recipeId: string, isActive: boolean) => {
+        if (isActive && onDeactivateRecipe) {
+            onDeactivateRecipe(recipeId);
+        } else if (!isActive && onActivateRecipe) {
+            onActivateRecipe(recipeId);
+        }
+    };
+
+    const renderContent = () => {
+        if (isLoading) {
+            return <ModuleLoader $height="60vh" />;
+        }
+
+        if (displayItems.length > 0) {
+            return (
+                <ScrollBar>
+                    <div className="w-full px-4 py-2 ">
+                        <h6 className="fontGroup-normal text-primaryVariant100">
+                            {selectedCategory === "recipes"
+                                ? "These are your saved recipes you edit them here. To create a new recipe, select a template from the Templates tab."
+                                : "These are the available recipe templates you can use to create new recipes. Select a template to get started."}
+                        </h6>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2.5 pl-3">
+                        {displayItems.map((item) => {
+                            let recipeState: "active" | "inactive" | undefined;
+                            if ("isActive" in item) {
+                                recipeState = item.isActive
+                                    ? "active"
+                                    : "inactive";
+                            }
+
+                            return (
+                                <div key={item.id} className="w-min max-w-min">
+                                    <ModulePreview
+                                        previewImg={item.icon}
+                                        title={item.name}
+                                        description={item.description || ""}
+                                        onClick={() => handleSelectRecipe(item)}
+                                        selected={false}
+                                        count={0}
+                                        isMaxed={false}
+                                        hidePlusIcon
+                                        recipeState={recipeState}
+                                    />
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="w-full h-10" />
+                </ScrollBar>
+            );
+        }
+
+        return (
+            <div className="flex items-center fontGroup-highlightSemi justify-center h-full">
+                {getEmptyMessage()}
+            </div>
+        );
+    };
+
+    const renderCreateFromTemplate = () => {
+        if (!selectedTemplate) return null;
+
+        return (
+            <RecipeForm
+                template={selectedTemplate}
+                outputFormats={outputFormats}
+                onBack={handleBackToTemplates}
+                onCreate={handleCreateRecipe}
+            />
+        );
+    };
+
+    const renderEditRecipe = () => {
+        if (!selectedRecipe) return null;
+
+        return (
+            <RecipeForm
+                recipe={selectedRecipe}
+                outputFormats={outputFormats}
+                onBack={handleBackToRecipes}
+                onUpdate={handleUpdateRecipe}
+                onToggleActivation={handleToggleActivation}
+            />
+        );
+    };
+
+    return (
+        <Modal onClose={onClose} showModal={showModal}>
+            <div className="flex flex-col w-full h-full">
+                <div className="bg-background text-primaryVariant100 bg-blend-soft-light py-2 px-4 border-b border-solid border-b-background rounded-[3px]">
+                    <div className="w-full flex items-center justify-between">
+                        <div>
+                            <h6 className="m-0 inline-flex self-end fontGroup-highlightSemi uppercase text-primaryVariant100">
+                                Recipe Library
+                            </h6>
+                        </div>
+                        {currentView === "list" && (
+                            <div className="fontGroup-normal max-w-[370px] w-[80%]">
+                                <Input
+                                    onChange={handleFilterChange}
+                                    id="recipe-search"
+                                    name="recipe-search"
+                                    placeholder="Search recipes and templates..."
+                                    height="28px"
+                                    className="outline-none border-none focus:outline-none focus:border-none bg-backgroundVariant200"
+                                />
+                            </div>
+                        )}
+
+                        <div
+                            className="fill-primaryVariant100 cursor-pointer h-[30px] self-center flex items-center"
+                            role="button"
+                            title="Close Recipe Library"
+                            tabIndex={0}
+                            onClick={onClose}
+                        >
+                            <CloseSVG fill="currentColor" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex bg-background h-full">
+                    <ScrollBar className="min-w-[250px] bg-background fontGroup-highlightSemi pt-1.5">
+                        <div
+                            role="button"
+                            tabIndex={0}
+                            className={twMerge(
+                                "mt-2 flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
+                                selectedCategory === "templates" &&
+                                    "bg-backgroundBlue hover:bg-backgroundBlue text-primary fontGroup-highlightSemi"
+                            )}
+                            onClick={() => {
+                                setSelectedCategory("templates");
+                                setCurrentView("list");
+                            }}
+                        >
+                            <TemplateSVG />
+                            Templates ({templates.length})
+                        </div>
+                        <div
+                            role="button"
+                            tabIndex={0}
+                            className={twMerge(
+                                "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
+                                selectedCategory === "recipes" &&
+                                    "bg-backgroundBlue hover:bg-backgroundBlue text-primary fontGroup-highlightSemi"
+                            )}
+                            onClick={() => {
+                                setSelectedCategory("recipes");
+                                setCurrentView("list");
+                            }}
+                        >
+                            <RecipeSVG />
+                            My Recipes ({recipes.length})
+                        </div>
+                    </ScrollBar>
+
+                    <div className="w-full overflow-hidden h-full">
+                        {currentView === "list" && (
+                            <div className="flex justify-between items-center px-3 pt-3 pb-2 text-primary font-normal">
+                                <div className="fontGroup-highlightSemi">
+                                    <span>
+                                        {displayItems.length}{" "}
+                                        {getCategoryLabel()}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
+                        <div className="w-full h-[550px]">
+                            {currentView === "list" && renderContent()}
+                            {currentView === "create-from-template" &&
+                                renderCreateFromTemplate()}
+                            {currentView === "edit-recipe" &&
+                                renderEditRecipe()}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Modal>
+    );
+};

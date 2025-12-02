@@ -11,6 +11,8 @@ interface IPreview {
     onClick: () => void;
     count: number;
     isMaxed: boolean;
+    hidePlusIcon?: boolean;
+    recipeState?: "active" | "inactive";
 }
 
 export const ModulePreview: FC<IPreview> = ({
@@ -22,6 +24,8 @@ export const ModulePreview: FC<IPreview> = ({
     selected,
     isMaxed,
     padding,
+    hidePlusIcon,
+    recipeState,
 }) => {
     return (
         <div
@@ -59,12 +63,24 @@ export const ModulePreview: FC<IPreview> = ({
                                 count > 0
                                     ? "border-primaryVariant200"
                                     : "border-accentVariant100",
-                                isMaxed && "bg-accentVariant100 text-background"
+                                isMaxed &&
+                                    "bg-accentVariant100 text-background",
+                                hidePlusIcon && "hidden"
                             )}
                         >
                             <PlusSVG width="13px" />
                         </div>
                     </div>
+                    {recipeState && (
+                        <div
+                            className={twMerge(
+                                "absolute right-3 top-3 rounded-full w-2 h-2",
+                                recipeState === "active"
+                                    ? "bg-success"
+                                    : "bg-secondaryOrangeSoda"
+                            )}
+                        />
+                    )}
                 </div>
             </div>
             <p className="m-[14px_0_0] text-primary uppercase fontGroup-highlightSemi pr-1">

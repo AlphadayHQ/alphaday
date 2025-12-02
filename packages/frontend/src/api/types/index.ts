@@ -18,6 +18,7 @@ export * from "./portfolio";
 export * from "./primitives";
 export * from "./polls";
 export * from "./qna";
+export * from "./recipe";
 export * from "./reddit";
 export * from "./tvl";
 export * from "./tweets";
