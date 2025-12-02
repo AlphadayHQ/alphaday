@@ -11,9 +11,9 @@ const CustomNavTab: React.FC<{
 }> = ({ label, Icon, disabled }) => (
     <div className="inline-flex flex-col items-center justify-center px-2">
         <span className="rounded-2xl relative">
-            <Icon />
+            <Icon className="h-5" />
         </span>
-        <span className="capitalize mt-1 fontGroup-highlightSemi">
+        <span className="mt-0.5 fontGroup-supportBold">
             {disabled ? `${label} (soon)` : label}
         </span>
         {/* {disabled && <div className="text-xs leading-3">(soon)</div>} */}
@@ -26,7 +26,7 @@ const MobileNavigation = () => {
 
     return (
         <nav
-            className="fixed bottom-0 w-full p-2 bg-background border-t border-borderLine"
+            className="fixed bottom-0 w-full p-1 pt-2 bg-background border-t border-borderLine"
             style={{
                 display: !isMobile ? "none" : "flex",
             }}
