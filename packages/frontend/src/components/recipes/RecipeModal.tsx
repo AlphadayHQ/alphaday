@@ -35,7 +35,7 @@ interface IProps {
 type CategoryType = "recipes" | "templates";
 type ViewType = "list" | "create-from-template" | "edit-recipe";
 
-export const RecipeLibrary: FC<IProps> = ({
+export const RecipeModal: FC<IProps> = ({
     showModal,
     onClose,
     recipes = [],
@@ -48,7 +48,7 @@ export const RecipeLibrary: FC<IProps> = ({
     onDeactivateRecipe,
 }) => {
     const [selectedCategory, setSelectedCategory] =
-        useState<CategoryType>("templates");
+        useState<CategoryType>("recipes");
     const [searchFilter, setSearchFilter] = useState("");
     const [currentView, setCurrentView] = useState<ViewType>("list");
     const [selectedTemplate, setSelectedTemplate] =
@@ -199,38 +199,23 @@ export const RecipeLibrary: FC<IProps> = ({
         if (displayItems.length > 0) {
             return (
                 <ScrollBar>
-                    <div className="w-full px-4 py-2 ">
-                        <h6 className="fontGroup-normal text-primaryVariant100">
-                            {selectedCategory === "recipes"
-                                ? "These are your saved recipes you edit them here. To create a new recipe, select a template from the Templates tab."
-                                : "These are the available recipe templates you can use to create new recipes. Select a template to get started."}
-                        </h6>
-                    </div>
                     <div className="grid grid-cols-3 gap-2.5 pl-3">
-                        {displayItems.map((item) => {
-                            let recipeState: "active" | "inactive" | undefined;
-                            if ("isActive" in item) {
-                                recipeState = item.isActive
-                                    ? "active"
-                                    : "inactive";
-                            }
-
-                            return (
-                                <div key={item.id} className="w-min max-w-min">
-                                    <ModulePreview
-                                        previewImg={item.icon}
-                                        title={item.name}
-                                        description={item.description || ""}
-                                        onClick={() => handleSelectRecipe(item)}
-                                        selected={false}
-                                        count={0}
-                                        isMaxed={false}
-                                        hidePlusIcon
-                                        recipeState={recipeState}
-                                    />
-                                </div>
-                            );
-                        })}
+                        {displayItems.map((item) => (
+                            <div key={item.id} className="w-min max-w-min">
+                                <ModulePreview
+                                    previewImg={
+                                        (item as TRecipeTemplate)
+                                            .previewImage || item.name
+                                    }
+                                    title={item.name}
+                                    description={item.description || ""}
+                                    onClick={() => handleSelectRecipe(item)}
+                                    selected={false}
+                                    count={0}
+                                    isMaxed={false}
+                                />
+                            </div>
+                        ))}
                     </div>
                     <div className="w-full h-10" />
                 </ScrollBar>
@@ -312,33 +297,28 @@ export const RecipeLibrary: FC<IProps> = ({
                             role="button"
                             tabIndex={0}
                             className={twMerge(
-                                "mt-2 flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
-                                selectedCategory === "templates" &&
+                                "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
+                                selectedCategory === "recipes" &&
                                     "bg-backgroundBlue hover:bg-backgroundBlue text-primary fontGroup-highlightSemi"
                             )}
-                            onClick={() => {
-                                setSelectedCategory("templates");
-                                setCurrentView("list");
-                            }}
+                            onClick={() => setSelectedCategory("recipes")}
                         >
-                            <TemplateSVG />
-                            Templates ({templates.length})
+                            <RecipeSVG />
+                            My Recipes ({recipes.length})
                         </div>
+
                         <div
                             role="button"
                             tabIndex={0}
                             className={twMerge(
                                 "flex flex-row items-center p-4 pl-[25px] text-primaryVariant100 mx-2 rounded-lg hover:text-primary hover:bg-backgroundVariant100 cursor-pointer [&>svg]:mr-4 [&>svg]:w-[18px] [&>svg]:h-[18px]",
-                                selectedCategory === "recipes" &&
+                                selectedCategory === "templates" &&
                                     "bg-backgroundBlue hover:bg-backgroundBlue text-primary fontGroup-highlightSemi"
                             )}
-                            onClick={() => {
-                                setSelectedCategory("recipes");
-                                setCurrentView("list");
-                            }}
+                            onClick={() => setSelectedCategory("templates")}
                         >
-                            <RecipeSVG />
-                            My Recipes ({recipes.length})
+                            <TemplateSVG />
+                            Templates ({templates.length})
                         </div>
                     </ScrollBar>
 

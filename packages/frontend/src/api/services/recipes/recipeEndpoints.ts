@@ -51,7 +51,6 @@ const { RECIPES } = CONFIG.API.DEFAULT.ROUTES;
 const transformRecipeTemplate = (raw: TRecipeTemplateRaw): TRecipeTemplate => ({
     id: raw.id,
     name: raw.name,
-    icon: raw.icon,
     description: raw.description,
     category: raw.category,
     author: raw.author,
@@ -105,7 +104,6 @@ const transformRecipe = (raw: TRecipeRaw): TRecipe => ({
     user: raw.user,
     userEmail: raw.user_email,
     name: raw.name,
-    icon: raw.icon,
     description: raw.description,
     isActive: raw.is_active,
     schedule: raw.schedule,

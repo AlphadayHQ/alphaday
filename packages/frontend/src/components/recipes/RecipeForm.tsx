@@ -55,7 +55,6 @@ const RecipeForm: FC<IRecipeFormProps> = ({
     const [formData, setFormData] = useState({
         name: recipe?.name || "",
         description: recipe?.description || template?.description || "",
-        icon: recipe?.icon || template?.icon,
         schedule:
             recipe?.schedule ||
             template?.templateConfig.schedule ||

@@ -7,7 +7,7 @@ const RECIPE_HASH = "#recipes";
  * When `#recipes` is in the URL, the modal is open.
  * Removing the hash closes the modal.
  */
-export const useRecipeLibraryHash = () => {
+export const useRecipeModalHash = () => {
     const [showModal, setShowModal] = useState(
         () => window.location.hash === RECIPE_HASH
     );
