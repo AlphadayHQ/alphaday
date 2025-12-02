@@ -35,6 +35,7 @@ export enum EFeaturesRegistry {
     Notifications = "notification",
     MobileApp = "mobile_app",
     KasandraHistory = "kasandra_history",
+    Recipes = "recipes",
     TranslationFr = "translation_fr",
     TranslationEs = "translation_es",
     TranslationTr = "translation_tr",
