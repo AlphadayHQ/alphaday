@@ -179,11 +179,6 @@ export const RecipeLibraryContainer = () => {
         useAddRecipeWidget();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-    // Don't render if recipes feature is disabled
-    if (!isRecipesEnabled) {
-        return null;
-    }
-
     const {
         data: recipesData,
         isLoading: recipesLoading,
@@ -197,6 +192,11 @@ export const RecipeLibraryContainer = () => {
     const [updateRecipe] = useUpdateRecipeMutation();
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
+
+    // Don't render if recipes feature is disabled
+    if (!isRecipesEnabled) {
+        return null;
+    }
 
     const onCreateRecipe = (recipe: TRecipeInput) => {
         if (!isAuthenticated) {

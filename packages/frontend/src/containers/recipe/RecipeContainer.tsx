@@ -32,11 +32,6 @@ const RecipeContainer: FC<IModuleContainer> = () => {
         ? hashOpenModal
         : () => dispatch(toggleRecipeLibrary());
 
-    // Don't render if recipes feature is disabled
-    if (!isRecipesEnabled) {
-        return null;
-    }
-
     const {
         data: recipesData,
         isLoading: recipesLoading,
@@ -50,6 +45,11 @@ const RecipeContainer: FC<IModuleContainer> = () => {
     const [activateRecipe] = useActivateRecipeMutation();
     const [deactivateRecipe] = useDeactivateRecipeMutation();
     const [triggerRecipe] = useTriggerRecipeMutation();
+
+    // Don't render if recipes feature is disabled
+    if (!isRecipesEnabled) {
+        return null;
+    }
 
     const handleOpenLibrary = () => {
         toggleModal();
