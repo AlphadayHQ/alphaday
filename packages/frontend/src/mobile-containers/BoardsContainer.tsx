@@ -280,7 +280,7 @@ const BoardsContainer: FC = () => {
             onRemoveView={handleRemoveView}
             onEditView={handleEditView}
             isAuthenticated={isAuthenticated}
-            isFetching={isFetching}
+            // isFetching={isFetching}
         />
     );
 };

@@ -1,4 +1,4 @@
-import { FC, FormEvent, useCallback, useMemo, useState } from "react";
+import { FC, FormEvent, useCallback, useState } from "react";
 import {
     BoardPreview,
     ModuleLoader,
@@ -111,7 +111,6 @@ interface IMobileBoardsList {
     selectedViewId: number | undefined;
     isAuthenticated: boolean;
     sortBy: EItemsSortBy;
-    isFetching: boolean;
     onSortBy(sort: string): void;
     onSelectView: (viewId: number) => void;
     onSubscribeView: (viewId: number) => void;
@@ -146,13 +145,10 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
     isAuthenticated,
     subscribedViews,
     onEditView,
-    isFetching,
 }) => {
     const sortOptions = generateSortOptions();
     const { t } = useTranslation();
-    const [activeSection, setActiveSection] = useState<"custom" | "all">(
-        "custom"
-    );
+    const [activeSection, setActiveSection] = useState<"custom" | "all">("all");
 
     const customBoards = subscribedViews
         ?.filter((board) => !board.is_system_view)
@@ -217,36 +213,6 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
               })
             : sortByKey;
 
-    const childPreview = useMemo(() => {
-        if (isFetching && allBoards?.length === 0) {
-            return <ModuleLoader $height="200px" />;
-        }
-        if (allBoards?.length === 0) {
-            return <NoBoards msg="No boards found in this category" />;
-        }
-        return (
-            <span>
-                {allBoards?.map((view) => (
-                    <BoardPreviewWrap
-                        key={view.id}
-                        view={view}
-                        selectedViewId={selectedViewId}
-                        isAuthenticated={isAuthenticated}
-                        onSelectView={onSelectView}
-                        onBoardPin={onBoardPin}
-                    />
-                ))}
-            </span>
-        );
-    }, [
-        allBoards,
-        isAuthenticated,
-        isFetching,
-        onBoardPin,
-        onSelectView,
-        selectedViewId,
-    ]);
-
     if (customBoards === undefined || allBoards === undefined) {
         return <ModuleLoader $height="100%" />;
     }
@@ -264,9 +230,9 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                         type="button"
                         onClick={() => setActiveSection("custom")}
                         className={twMerge(
-                            "flex-1 py-4 text-center fontGroup-highlight border-b-2 transition-colors",
+                            "flex-1 pb-2 text-center fontGroup-highlight border-b-2 transition-colors",
                             activeSection === "custom"
-                                ? "border-accentVariant100 text-primary"
+                                ? "border-primary text-primary"
                                 : "border-transparent text-primaryVariant100"
                         )}
                     >
@@ -276,9 +242,9 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                         type="button"
                         onClick={() => setActiveSection("all")}
                         className={twMerge(
-                            "flex-1 py-4 text-center fontGroup-highlight border-b-2 transition-colors",
+                            "flex-1 pb-2 text-center fontGroup-highlight border-b-2 transition-colors",
                             activeSection === "all"
-                                ? "border-accentVariant100 text-primary"
+                                ? "border-primary text-primary"
                                 : "border-transparent text-primaryVariant100"
                         )}
                     >
@@ -289,7 +255,7 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
 
             {/* Custom Boards Section */}
             {activeSection === "custom" && (
-                <div className="px-4 py-4">
+                <div className="px-2 py-4">
                     <div className="flex justify-between items-center mb-4">
                         <div className="flex flex-col">
                             <span className="fontGroup-highlightSemi text-primary">
@@ -311,16 +277,16 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                             <button
                                 type="button"
                                 onClick={handleCreateEmptyBoard}
-                                className="flex justify-center items-center w-8 h-8 rounded-full border border-solid border-primary hover:border-accentVariant100 hover:text-primary"
+                                className="flex justify-center items-center w-6 h-6 rounded-full border border-solid border-primaryVariant100 hover:border-accentVariant100 hover:text-primary"
                                 title="Create an empty board and add widgets"
                                 data-testid="create-empty-board"
                             >
-                                <PlusSVG className="w-4 h-4" />
+                                <PlusSVG className="w-3 h-3 text-primaryVariant100" />
                             </button>
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-wrap gap-4 [&>div]:max-w-[45%]">
                         {customBoards.length === 0 && isAuthenticated ? (
                             <NoBoards msg="You have not created any custom boards" />
                         ) : (
@@ -343,8 +309,8 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
 
             {/* All Boards Section */}
             {activeSection === "all" && (
-                <div className="px-4 py-4">
-                    <div className="flex flex-col gap-4 mb-4">
+                <div className="px-2 pt-2 pb-4">
+                    <div className="flex flex-col gap-2 mb-2">
                         <TabsBar
                             options={tabOptions}
                             onChange={(name) => {
@@ -359,10 +325,7 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                                     : DEFAULT_TAB_OPTION
                             }
                         />
-                        <div className="flex justify-between items-center">
-                            <span className="fontGroup-highlightSemi text-primary">
-                                System Boards
-                            </span>
+                        <div className="flex justify-end items-center">
                             <SortBy
                                 selected={selectedSortValue}
                                 onSortBy={onSortBy}
@@ -372,7 +335,22 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                         </div>
                     </div>
 
-                    <div className="flex gap-4">{childPreview}</div>
+                    <div className="flex flex-wrap gap-4 [&>div]:max-w-[45%]">
+                        {customBoards.length === 0 && isAuthenticated ? (
+                            <NoBoards msg="No boards found in this category" />
+                        ) : (
+                            allBoards?.map((view) => (
+                                <BoardPreviewWrap
+                                    key={view.id}
+                                    view={view}
+                                    selectedViewId={selectedViewId}
+                                    isAuthenticated={isAuthenticated}
+                                    onSelectView={onSelectView}
+                                    onBoardPin={onBoardPin}
+                                />
+                            ))
+                        )}
+                    </div>
                 </div>
             )}
         </div>
