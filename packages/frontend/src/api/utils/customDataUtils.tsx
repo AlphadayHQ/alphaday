@@ -307,6 +307,13 @@ export const formatCustomDataField: (
                     error: undefined,
                 };
             }
+            // When the type is numeric and the value is zero, show N/A instead of "0"
+            const parsedNumber = Number(
+                String(rawField).replace(/[^0-9.-]+/g, "")
+            );
+            if (!Number.isNaN(parsedNumber) && parsedNumber === 0) {
+                return { field: "N/A", error: undefined };
+            }
             return {
                 field: formatNumber({ value: rawField }).value,
                 error: undefined,
@@ -324,6 +331,12 @@ export const formatCustomDataField: (
                     field: "-",
                     error: undefined,
                 };
+            }
+            const parsedNumber = Number(
+                String(rawField).replace(/[^0-9.-]+/g, "")
+            );
+            if (!Number.isNaN(parsedNumber) && parsedNumber === 0) {
+                return { field: "N/A", error: undefined };
             }
             return {
                 field: formatNumber({
@@ -347,6 +360,7 @@ export const formatCustomDataField: (
                     error: undefined,
                 };
             }
+            // For percentages, keep zero values as formatted strings (e.g., "0%")
             return {
                 field: formatNumber({
                     value: rawField,
