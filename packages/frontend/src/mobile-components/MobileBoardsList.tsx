@@ -286,7 +286,7 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                         )}
                     </div>
 
-                    <div className="flex flex-wrap gap-4 [&>div]:max-w-[45%]">
+                    <div className="grid grid-cols-2 gap-4">
                         {customBoards.length === 0 && isAuthenticated ? (
                             <NoBoards msg="You have not created any custom boards" />
                         ) : (
@@ -335,7 +335,7 @@ const MobileBoardsList: FC<IMobileBoardsList> = ({
                         </div>
                     </div>
 
-                    <div className="flex flex-wrap gap-4 [&>div]:max-w-[45%]">
+                    <div className="grid grid-cols-2 gap-4 px-1">
                         {customBoards.length === 0 && isAuthenticated ? (
                             <NoBoards msg="No boards found in this category" />
                         ) : (
