@@ -32,20 +32,16 @@ const MobileNavigation = () => {
             }}
         >
             <Link
-                // to={EMobileTabRoutePaths.Superfeed}
                 to="/"
                 className={`flex-1 flex justify-center ${
-                    // pathname === EMobileTabRoutePaths.Superfeed
                     pathname === "/" ? "text-primary" : "text-primaryVariant100"
                 }`}
             >
                 <CustomNavTab label="Feed" Icon={SuperfeedSVG} />
             </Link>
             <Link
-                // to={EMobileRoutePaths.BoardsLibrary}
-                to="/widget"
+                to="/widgets"
                 className={`flex-1 flex justify-center ${
-                    // pathname === EMobileRoutePaths.BoardsLibrary
                     pathname === "/widgets"
                         ? "text-primary"
                         : "text-primaryVariant100"

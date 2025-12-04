@@ -37,8 +37,13 @@ const AppRoutes = () => {
     });
 
     const resolvedView = useResolvedView();
-    const { pathContainsHashOrSlug, isRoot, isSuperfeed, isBoardsLibrary } =
-        useViewRoute();
+    const {
+        pathContainsHashOrSlug,
+        isRoot,
+        isSuperfeed,
+        isBoardsLibrary,
+        isWidgets,
+    } = useViewRoute();
 
     const errorCode = useMemo<number | undefined>(() => {
         /**
@@ -49,7 +54,8 @@ const AppRoutes = () => {
             !pathContainsHashOrSlug &&
             !isRoot &&
             !isSuperfeed &&
-            !isBoardsLibrary
+            !isBoardsLibrary &&
+            !isWidgets
         ) {
             return 404;
         }
@@ -60,6 +66,7 @@ const AppRoutes = () => {
         isRoot,
         isSuperfeed,
         isBoardsLibrary,
+        isWidgets,
         error,
         resolvedView.error,
     ]);
