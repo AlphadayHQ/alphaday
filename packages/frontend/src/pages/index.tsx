@@ -23,13 +23,12 @@ import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
 import * as userStore from "src/api/store/slices/user";
 import { ETutorialTipId, TUserViewWidget } from "src/api/types";
 import {
-    computeLayoutGrid,
     getDraggedWidget,
     recomputeWidgetsPos,
     getColType,
-    EColumnType,
     useTwoColWidgets,
     calculateTwoColWidgetsHeight,
+    getLayoutStateFromView,
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
@@ -139,16 +138,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         [isFullsize, selectedView?.data.widgets]
     );
 
-    const { widgets: twoColWidgets, twoColWidgetSlugs } =
-        useTwoColWidgets(selectedView);
-
-    const layoutGrid = useMemo(() => {
-        return computeLayoutGrid(
-            selectedView?.data.widgets.filter(
-                (w) => !twoColWidgetSlugs.includes(w.widget.template.slug)
-            )
-        );
-    }, [twoColWidgetSlugs, selectedView?.data.widgets]);
+    const { widgets: twoColWidgets } = useTwoColWidgets(selectedView);
 
     const twoColWidgetCollapsedStates = useAppSelector((state) => {
         const collapsedStates: Record<string, boolean> = {};
@@ -164,27 +154,10 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
 
     /**
      * The current layout state according to the screen size
-     * IMPORTANT: checking that layoutGrid.<layout> != null is necessary
-     * because an issue after user logout. Namely, views data may not be updated
-     * which causes layoutGrid to remain undefined.
      */
     const layoutState = useMemo<TUserViewWidget[][] | undefined>(() => {
-        const colType = getColType(windowSize.width);
-        if (colType === EColumnType.SingleCol && layoutGrid?.singleCol) {
-            return layoutGrid.singleCol;
-        }
-        if (colType === EColumnType.TwoCol && layoutGrid?.twoCol) {
-            return layoutGrid.twoCol;
-        }
-        if (colType === EColumnType.ThreeCol && layoutGrid?.threeCol) {
-            return layoutGrid.threeCol;
-        }
-
-        if (layoutGrid?.fourCol) {
-            return layoutGrid.fourCol;
-        }
-        return undefined;
-    }, [windowSize.width, layoutGrid]);
+        return getLayoutStateFromView(selectedView, windowSize.width);
+    }, [windowSize.width, selectedView]);
 
     const widgetsCount = selectedView?.data.widgets.length;
 

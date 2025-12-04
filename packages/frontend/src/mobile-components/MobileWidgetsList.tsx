@@ -45,7 +45,7 @@ interface IMobileWidgetsList {
     categories: ReadonlyArray<TRemoteWidgetCategory> | undefined;
     sortBy: EItemsSortBy;
     onSortBy(sort: string): void;
-    onSelectWidget: (widgetId: number) => void;
+    onSelectWidget: (w: TWidgetMini) => void;
     onCategorySelect: (category: string | undefined) => void;
     handlePaginate: (type: "next" | "previous") => void;
     onFilter: (filter: string) => void;
@@ -188,16 +188,14 @@ const MobileWidgetsList: FC<IMobileWidgetsList> = ({
                                     className="w-full"
                                     tabIndex={0}
                                     role="button"
-                                    onClick={() => onSelectWidget(widget.id)}
+                                    onClick={() => onSelectWidget(widget)}
                                 >
                                     <ModulePreview
                                         previewImg={widget.icon || market}
                                         title={widget.name}
                                         description={widget.short_description}
                                         count={widgetCount}
-                                        onClick={() =>
-                                            onSelectWidget(widget.id)
-                                        }
+                                        onClick={() => onSelectWidget(widget)}
                                         selected={
                                             widget.slug === selectedWidget?.slug
                                         }

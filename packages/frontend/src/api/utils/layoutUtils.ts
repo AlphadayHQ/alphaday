@@ -308,3 +308,50 @@ export const calculateTwoColWidgetsHeight = (
 
     return totalHeight;
 };
+
+/**
+ * Computes the layout state from a selected view based on the window width.
+ * This function determines which column layout to use (single, two, three, or four column)
+ * and returns the corresponding widget arrangement.
+ *
+ * @param selectedView - The current selected view containing widgets
+ * @param windowWidth - The current window width in pixels
+ * @returns The layout state as a 2D array of widgets, or undefined if the view or layout is invalid
+ *
+ * @example
+ * const layoutState = getLayoutStateFromView(selectedView, 1920);
+ * // Returns four-column layout for wide screens
+ */
+export const getLayoutStateFromView = (
+    selectedView: TCachedView | undefined,
+    windowWidth: number
+): TUserViewWidget[][] | undefined => {
+    if (!selectedView) return undefined;
+
+    const twoColWidgetSlugs = getTwoColWidgetTemplateSlugs();
+    const layoutGrid = computeLayoutGrid(
+        selectedView.data.widgets.filter(
+            (w) => !twoColWidgetSlugs.includes(w.widget.template.slug)
+        )
+    );
+
+    if (!layoutGrid) return undefined;
+
+    const colType = getColType(windowWidth);
+
+    if (colType === EColumnType.SingleCol && layoutGrid.singleCol) {
+        return layoutGrid.singleCol;
+    }
+    if (colType === EColumnType.TwoCol && layoutGrid.twoCol) {
+        return layoutGrid.twoCol;
+    }
+    if (colType === EColumnType.ThreeCol && layoutGrid.threeCol) {
+        return layoutGrid.threeCol;
+    }
+
+    if (layoutGrid.fourCol) {
+        return layoutGrid.fourCol;
+    }
+
+    return undefined;
+};

@@ -18,6 +18,7 @@ import { getSortOptionValue } from "src/api/utils/sortOptions";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
 import WidgetLibrary from "src/components/widget-library/WidgetLibrary";
 import CONFIG from "src/config/config";
+import MobileWidgetsList from "src/mobile-components/MobileWidgetsList";
 import { v4 as uuidv4 } from "uuid";
 
 const { VIEWS } = CONFIG;
@@ -25,8 +26,12 @@ const INITIAL_PAGE = 1;
 
 interface IWidgetLibContainerProps {
     layoutState: TUserViewWidget[][] | undefined;
+    isMobile?: boolean;
 }
-const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
+const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({
+    layoutState,
+    isMobile,
+}) => {
     const { selectedView, addWidgetsToCache } = useView();
     const { keywordSearchList } = useGlobalSearch();
 
@@ -216,6 +221,34 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({ layoutState }) => {
             clearTimeout(timeout);
         };
     }, [nextPage]);
+
+    if (isMobile) {
+        <MobileWidgetsList
+            selectedCategory={selectedCategory}
+            widgets={[...(widgets ?? [])].filter((w) => {
+                // filter by category. If no category is selected, show all widgets
+                return (
+                    !selectedCategory ||
+                    w.categories.some((c) => {
+                        return c.slug === selectedCategory;
+                    })
+                );
+            })}
+            categories={[...(widgetsCategory?.results || [])].sort(
+                (a, d) => a.sort_order - d.sort_order
+            )}
+            onSelectWidget={handleSelectWidget}
+            onCategorySelect={setSelectedCategory}
+            sortBy={sortBy}
+            onSortBy={handleSortBy}
+            handlePaginate={handleNextPage}
+            onFilter={handleFilter}
+            cachedWidgets={selectedView?.data.widgets?.map(
+                (sw) => sw.widget as TWidget
+            )}
+            selectedWidget={selectedWidget}
+        />;
+    }
 
     return (
         <WidgetLibrary
