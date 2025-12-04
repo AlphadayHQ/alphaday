@@ -223,31 +223,33 @@ const WidgetsLibContainer: FC<IWidgetLibContainerProps> = ({
     }, [nextPage]);
 
     if (isMobile) {
-        <MobileWidgetsList
-            selectedCategory={selectedCategory}
-            widgets={[...(widgets ?? [])].filter((w) => {
-                // filter by category. If no category is selected, show all widgets
-                return (
-                    !selectedCategory ||
-                    w.categories.some((c) => {
-                        return c.slug === selectedCategory;
-                    })
-                );
-            })}
-            categories={[...(widgetsCategory?.results || [])].sort(
-                (a, d) => a.sort_order - d.sort_order
-            )}
-            onSelectWidget={handleSelectWidget}
-            onCategorySelect={setSelectedCategory}
-            sortBy={sortBy}
-            onSortBy={handleSortBy}
-            handlePaginate={handleNextPage}
-            onFilter={handleFilter}
-            cachedWidgets={selectedView?.data.widgets?.map(
-                (sw) => sw.widget as TWidget
-            )}
-            selectedWidget={selectedWidget}
-        />;
+        return (
+            <MobileWidgetsList
+                selectedCategory={selectedCategory}
+                widgets={[...(widgets ?? [])].filter((w) => {
+                    // filter by category. If no category is selected, show all widgets
+                    return (
+                        !selectedCategory ||
+                        w.categories.some((c) => {
+                            return c.slug === selectedCategory;
+                        })
+                    );
+                })}
+                categories={[...(widgetsCategory?.results || [])].sort(
+                    (a, d) => a.sort_order - d.sort_order
+                )}
+                onSelectWidget={handleSelectWidget}
+                onCategorySelect={setSelectedCategory}
+                sortBy={sortBy}
+                onSortBy={handleSortBy}
+                handlePaginate={handleNextPage}
+                onFilter={handleFilter}
+                cachedWidgets={selectedView?.data.widgets?.map(
+                    (sw) => sw.widget as TWidget
+                )}
+                selectedWidget={selectedWidget}
+            />
+        );
     }
 
     return (
