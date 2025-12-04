@@ -30,6 +30,7 @@ const AddHoldingPage = lazyRetry(() => import("./mobile-pages/add-holding"));
 const PortfolioHoldingsPage = lazyRetry(
     () => import("./mobile-pages/portfolio-holdings")
 );
+const WidgetsPage = lazyRetry(() => import("./mobile-pages/widgets"));
 
 /**
  * A basic route.
@@ -74,7 +75,8 @@ export enum EDesktopRoutePaths {
     CalendarEvent = "/b/:slug/calendar/event/:eventId/:eventTitle",
     FallBack = "*",
     Superfeed = "/superfeed",
-    BoardsLibrary = `/boards`,
+    BoardsLibrary = "/boards",
+    Widgets = "/widgets",
 }
 
 /**
@@ -118,6 +120,12 @@ export const desktopRoutes: TRoute[] = [
         type: "regular",
         path: EDesktopRoutePaths.BoardsLibrary,
         component: BoardsPage,
+        exact: true,
+    },
+    {
+        type: "regular",
+        path: EDesktopRoutePaths.Widgets,
+        component: WidgetsPage,
         exact: true,
     },
 ];

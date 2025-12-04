@@ -63,7 +63,7 @@ const LayoutHeader: FC<IProps> = ({
     const { width } = useWindowSize();
 
     return (
-        <div ref={headerRef} className="z-10 relative">
+        <div ref={headerRef} className="z-20 two-col:z-10 relative">
             {width >= breakpoints.TwoColMinWidth ? (
                 <HeaderWrapper
                     data-testid="header-nav"
