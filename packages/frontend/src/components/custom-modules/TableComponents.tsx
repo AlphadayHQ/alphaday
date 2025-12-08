@@ -1,3 +1,4 @@
+import React from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import {
     TRemoteCustomLayoutEntry,
@@ -218,13 +219,42 @@ interface IGridBasedTableProps {
 export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
     columnsLayout,
     items,
+    rowProps,
     minCellSize,
     options,
 }) => {
+    const gridRef = React.useRef<HTMLDivElement>(null);
     const visibleColumns = columnsLayout.filter((col) => !col.hidden);
+
+    const getRowLink = (item: TCustomItem): string | undefined => {
+        if (rowProps?.uri_ref !== undefined) {
+            const uriRef = item[rowProps.uri_ref];
+            return typeof uriRef === "string" ? uriRef : undefined;
+        }
+        return undefined;
+    };
+
+    const handleRowClick = (rowLink: string | undefined) => {
+        if (rowLink) window.open(rowLink, "_blank");
+    };
+
+    const handleRowHover = (itemId: string | number, isEntering: boolean) => {
+        if (!gridRef.current) return;
+        const cells = gridRef.current.querySelectorAll(
+            `[data-row-id="${itemId}"]`
+        );
+        cells.forEach((cell) => {
+            if (isEntering) {
+                cell.classList.add("bg-backgroundVariant200");
+            } else {
+                cell.classList.remove("bg-backgroundVariant200");
+            }
+        });
+    };
 
     return (
         <div
+            ref={gridRef}
             className="grid overflow-visible min-h-0"
             style={{
                 gridTemplateColumns: `repeat(${visibleColumns.length}, max-content)`,
@@ -245,8 +275,9 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                 </div>
             ))}
 
-            {items.map((item) =>
-                visibleColumns.map((column) => {
+            {items.map((item) => {
+                const rowLink = getRowLink(item);
+                return visibleColumns.map((column) => {
                     const rawValue =
                         column.template !== undefined
                             ? evaluateTranslationTemplate(column.template, item)
@@ -277,8 +308,19 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                     return (
                         <div
                             key={`${item.id}-${column.id}`}
-                            className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px] min-h-0"
+                            data-row-id={rowLink ? item.id : undefined}
+                            className={twMerge(
+                                "px-5 py-2 border-b border-borderLine max-w-[200px] min-h-0 transition-colors",
+                                rowLink && "cursor-pointer"
+                            )}
                             style={{ minWidth: `${minCellSize}px` }}
+                            {...(rowLink && {
+                                onClick: () => handleRowClick(rowLink),
+                                onMouseEnter: () =>
+                                    handleRowHover(item.id, true),
+                                onMouseLeave: () =>
+                                    handleRowHover(item.id, false),
+                            })}
                         >
                             {column.format === "image" && imageUri ? (
                                 <img
@@ -302,8 +344,8 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                             )}
                         </div>
                     );
-                })
-            )}
+                });
+            })}
         </div>
     );
 };
