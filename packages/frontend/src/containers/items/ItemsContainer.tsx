@@ -190,9 +190,27 @@ const ItemsContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const { currentData: itemsData, isLoading, isSuccess } = response;
 
-    const [openItemMut] = ITEMS_DICT.useOpenItemMutation[widgetType]?.() || [];
-    const [bookmarkItemMut] =
-        ITEMS_DICT.useBookmarkItemMutation[widgetType]?.() || [];
+    // Call mutation hooks unconditionally to maintain hook order
+    // All hooks must be called regardless of widgetType
+    const [blogOpenMut] = useOpenBlogItemMutation();
+    const [blogBookmarkMut] = useBookmarkBlogItemMutation();
+    const [newsOpenMut] = useOpenNewsItemMutation();
+    const [newsBookmarkMut] = useBookmarkNewsItemMutation();
+
+    // Select the appropriate mutations based on widget type
+    let openItemMut: typeof blogOpenMut | typeof newsOpenMut | undefined;
+    let bookmarkItemMut:
+        | typeof blogBookmarkMut
+        | typeof newsBookmarkMut
+        | undefined;
+
+    if (widgetType === "BLOG") {
+        openItemMut = blogOpenMut;
+        bookmarkItemMut = blogBookmarkMut;
+    } else if (widgetType === "NEWS") {
+        openItemMut = newsOpenMut;
+        bookmarkItemMut = newsBookmarkMut;
+    }
 
     const onOpenItem = async (id: number) => {
         if (openItemMut !== undefined) {
