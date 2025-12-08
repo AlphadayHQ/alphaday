@@ -41,7 +41,9 @@ import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnec
 import { LanguageModalContainer } from "src/containers/LanguageModalContainer";
 import { RecipeLibraryContainer } from "src/containers/recipe-library/RecipeLibraryContainer";
 import TutorialContainer from "src/containers/tutorial/TutorialContainer";
+import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import MainLayout from "src/layout/MainLayout";
+import MobileWidgetsView from "src/mobile-components/widgets/MobileWidgetsView";
 import { ETemplateNameRegistry } from "src/constants";
 import { TTemplateSlug, TEMPLATES_DICT, IModuleContainer } from "src/types";
 
@@ -79,6 +81,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const isAuthenticated = useAppSelector(userStore.selectIsAuthenticated);
 
     const windowSize = useWindowSize();
+    const isMobile = windowSize.width < deviceBreakpoints.twoCol;
     const {
         imageWidgetSize,
         aspectRatios: twoColWidgetAspectRatios,
@@ -313,6 +316,25 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
         );
     }
 
+    // Mobile view: Show widgets in a tabbed interface, one at a time
+    if (isMobile && selectedView?.data.widgets) {
+        return (
+            <MainLayout
+                toggleWidgetLib={toggleWidgetLib}
+                toggleLanguageModal={onToggleLanguageModal}
+                hideFooter
+            >
+                <MobileWidgetsView widgets={selectedView.data.widgets} />
+                <CookieDisclaimerContainer />
+                <AuthContainer />
+                <WalletConnectionDialogContainer />
+                <AboutUsModalContainer />
+                <LanguageModalContainer />
+            </MainLayout>
+        );
+    }
+
+    // Desktop view: Show drag and drop grid layout
     return (
         <MainLayout
             toggleWidgetLib={toggleWidgetLib}
