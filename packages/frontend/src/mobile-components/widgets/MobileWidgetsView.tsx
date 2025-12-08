@@ -82,7 +82,8 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
             </div>
 
             {/* Widget Content */}
-            <div className="flex-1 overflow-y-auto py-4 px-2">
+            {/* -38px os the height of the tabs bar  */}
+            <div className="flex flex-col h-[calc(100%-38px)]">
                 <Container
                     moduleData={selectedWidget}
                     toggleAdjustable={() => {}}
