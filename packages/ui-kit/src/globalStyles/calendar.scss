@@ -16,7 +16,6 @@
 
         & .fc-list-day {
             min-width: 60px;
-            @apply tiny:min-w-[40px] tiny:-ml-[10%];
         }
         .event-highlight,
         .event-hover-highlight {
@@ -25,6 +24,8 @@
                 text-decoration: none !important;
             }
         }
+
+        @apply tiny:-ml-[64px];
     }
     tr:nth-child(1) {
         border-top: 0 !important;
@@ -74,7 +75,7 @@
                     z-index: 1;
                     width: calc(100% - 2px);
 
-                    @apply single-col:justify-between two-col:py-0 px-4;
+                    @apply single-col:justify-between two-col:py-0 px-4 tiny:px-2.5;
                 }
                 .fc {
                     &:first-child {
@@ -231,7 +232,7 @@
                             justify-content: flex-start;
                             padding-left: 6px;
 
-                            @apply flex-[0_0_15%] tiny:max-w-[40px] max-w-[15%] two-col:flex-[0_0_12%] two-col:max-w-[12%] three-col:flex-[0_0_10%] three-col:max-w-[10%];
+                            @apply flex-[0_0_15%] max-w-[15%] two-col:flex-[0_0_12%] two-col:max-w-[12%] three-col:flex-[0_0_10%] three-col:max-w-[10%];
                             &:first-of-type {
                                 margin-top: 0;
                                 & + .fc-list-event {
@@ -289,7 +290,6 @@
                             flex: 0 0 calc(90% - 60px);
                             max-width: calc(90% - 60px);
                             cursor: pointer;
-                            @apply tiny:flex-[0_0_calc(100%_-_50px)] tiny:max-w-[calc(100%_-_79px)];
 
                             &:hover {
                                 background-color: theme(
@@ -311,7 +311,7 @@
                                 flex: 0 0 100%;
                                 max-width: 90%;
                                 padding-left: 60px;
-                                @apply tiny:ml-[15%] ml-[12%] two-col:ml-[20%];
+                                @apply ml-[12%] two-col:ml-[20%];
                             }
                             // &:first-child {
                             // }
