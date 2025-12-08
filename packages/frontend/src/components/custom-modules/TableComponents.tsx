@@ -218,10 +218,23 @@ interface IGridBasedTableProps {
 export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
     columnsLayout,
     items,
+    rowProps,
     minCellSize,
     options,
 }) => {
     const visibleColumns = columnsLayout.filter((col) => !col.hidden);
+
+    const getRowLink = (item: TCustomItem): string | undefined => {
+        if (rowProps?.uri_ref !== undefined) {
+            const uriRef = item[rowProps.uri_ref];
+            return typeof uriRef === "string" ? uriRef : undefined;
+        }
+        return undefined;
+    };
+
+    const handleRowClick = (rowLink: string | undefined) => {
+        if (rowLink) window.open(rowLink, "_blank");
+    };
 
     return (
         <div
@@ -247,8 +260,9 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
             ))}
 
             {/* Cells */}
-            {items.map((item) =>
-                visibleColumns.map((column) => {
+            {items.map((item) => {
+                const rowLink = getRowLink(item);
+                return visibleColumns.map((column) => {
                     const rawValue =
                         column.template !== undefined
                             ? evaluateTranslationTemplate(column.template, item)
@@ -279,8 +293,14 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                     return (
                         <div
                             key={`${item.id}-${column.id}`}
-                            className="px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px] min-h-0"
+                            className={twMerge(
+                                "px-5 py-2 border-b border-borderLine hover:bg-background max-w-[200px] min-h-0",
+                                rowLink && "cursor-pointer"
+                            )}
                             style={{ minWidth: `${minCellSize}px` }}
+                            {...(rowLink && {
+                                onClick: () => handleRowClick(rowLink),
+                            })}
                         >
                             {/* Your cell content rendering logic */}
                             {column.format === "image" && imageUri ? (
@@ -305,8 +325,8 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                             )}
                         </div>
                     );
-                })
-            )}
+                });
+            })}
         </div>
     );
 };
