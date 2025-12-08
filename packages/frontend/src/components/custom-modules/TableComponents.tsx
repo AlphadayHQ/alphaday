@@ -245,7 +245,6 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                 gridAutoRows: "min-content",
             }}
         >
-            {/* Headers */}
             {visibleColumns.map((column) => (
                 <div
                     key={`header-${column.id}`}
@@ -259,7 +258,6 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                 </div>
             ))}
 
-            {/* Cells */}
             {items.map((item) => {
                 const rowLink = getRowLink(item);
                 return visibleColumns.map((column) => {
@@ -302,7 +300,6 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
                                 onClick: () => handleRowClick(rowLink),
                             })}
                         >
-                            {/* Your cell content rendering logic */}
                             {column.format === "image" && imageUri ? (
                                 <img
                                     src={imageUri}
