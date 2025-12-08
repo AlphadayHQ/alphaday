@@ -1,5 +1,5 @@
-import { useCallback, useState, useMemo, useRef, memo, FC } from "react";
-import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
+import { useCallback, useState, useMemo, useRef, memo } from "react";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import {
     useView,
     useAvailableViews,
@@ -27,14 +27,13 @@ import {
     recomputeWidgetsPos,
     getColType,
     useTwoColWidgets,
-    calculateTwoColWidgetsHeight,
     getLayoutStateFromView,
 } from "src/api/utils/layoutUtils";
 import { Logger } from "src/api/utils/logging";
 import { EToastRole, toast } from "src/api/utils/toastUtils";
+import DesktopWidgetsView from "src/components/widgets/DesktopWidgetsView";
 import CONFIG from "src/config/config";
 import { AboutUsModalContainer } from "src/containers/AboutUsModalContainer";
-import ModuleWrapper from "src/containers/base/ModuleWrapper";
 import CookieDisclaimerContainer from "src/containers/cookie-disclaimer/CookieDisclaimerContainer";
 import AuthContainer from "src/containers/dialogs/AuthContainer";
 import WalletConnectionDialogContainer from "src/containers/dialogs/WalletConnectionDialogContainer";
@@ -44,10 +43,9 @@ import TutorialContainer from "src/containers/tutorial/TutorialContainer";
 import { deviceBreakpoints } from "src/globalStyles/breakpoints";
 import MainLayout from "src/layout/MainLayout";
 import MobileWidgetsView from "src/mobile-components/widgets/MobileWidgetsView";
-import { ETemplateNameRegistry } from "src/constants";
-import { TTemplateSlug, TEMPLATES_DICT, IModuleContainer } from "src/types";
+import { TTemplateSlug } from "src/types";
 
-const { UI, VIEWS, TWO_COL_WIDGETS } = CONFIG;
+const { UI, VIEWS } = CONFIG;
 
 function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
     const dispatch = useAppDispatch();
@@ -284,7 +282,9 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
      *
      * the function checks these widgets exist.
      */
-    const preferredDragTutorialWidget = useMemo(() => {
+    const preferredDragTutorialWidget = useMemo<
+        [number, number] | undefined
+    >(() => {
         if (!layoutState) return undefined;
         if (layoutState[0][1]) return [1, 0]; // second widget first row
         if (layoutState[0][2]) return [2, 0]; // third widget first row
@@ -363,96 +363,16 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                     }
                 }}
             >
-                <div className="two-col:grid-cols-2 relative three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 gap-5 px-4">
-                    <div className="two-col:grid-cols-2 absolute three-col:grid-cols-3 four-col:grid-cols-4 grid w-full grid-cols-1 px-4">
-                        {Object.entries(TWO_COL_WIDGETS).map(
-                            ([key, config]) => {
-                                const moduleData = twoColWidgets[key];
-                                if (!moduleData) return null;
-
-                                const Container = TEMPLATES_DICT[
-                                    config.templateSlug
-                                ] as FC<IModuleContainer>;
-                                if (!Container) return null;
-
-                                const isImageWidget =
-                                    config.templateSlug ===
-                                    `${ETemplateNameRegistry.Two_Col_Image.toLowerCase()}_template`;
-
-                                return (
-                                    <div
-                                        id={
-                                            isImageWidget
-                                                ? UI.IMAGE_WIDGET_SIZE_TRACKING_ID
-                                                : ""
-                                        }
-                                        key={key}
-                                        className="col-span-2"
-                                    >
-                                        <Container
-                                            moduleData={moduleData}
-                                            toggleAdjustable={() => {}}
-                                            onAspectRatioDetected={
-                                                handleAspectRatioDetected
-                                            }
-                                        />
-                                    </div>
-                                );
-                            }
-                        )}
-                    </div>
-                    {layoutState?.map((widgets, colIndex) => (
-                        <Droppable
-                            // eslint-disable-next-line react/no-array-index-key
-                            key={colIndex.toString()}
-                            droppableId={colIndex.toString()}
-                        >
-                            {(provided) => (
-                                <div
-                                    ref={provided.innerRef}
-                                    {...provided.droppableProps}
-                                    style={{
-                                        marginTop: (() => {
-                                            if (
-                                                colIndex !== 0 &&
-                                                colIndex !== 1
-                                            ) {
-                                                return "0px";
-                                            }
-
-                                            const totalHeight =
-                                                calculateTwoColWidgetsHeight(
-                                                    twoColWidgets,
-                                                    twoColWidgetCollapsedStates,
-                                                    imageWidgetSize?.width,
-                                                    twoColWidgetAspectRatios
-                                                );
-                                            return totalHeight > 0
-                                                ? `${totalHeight}px`
-                                                : "0px";
-                                        })(),
-                                    }}
-                                >
-                                    {widgets.map((widget, rowIndex) => (
-                                        <ModuleWrapper
-                                            key={widget.hash}
-                                            moduleData={widget}
-                                            rowIndex={rowIndex}
-                                            colIndex={colIndex}
-                                            fullSizeWidgetConfig={
-                                                fullSizeWidgetConfig
-                                            }
-                                            preferredDragTutorialWidget={
-                                                preferredDragTutorialWidget
-                                            }
-                                        />
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    ))}
-                </div>
+                <DesktopWidgetsView
+                    layoutState={layoutState}
+                    twoColWidgets={twoColWidgets}
+                    twoColWidgetCollapsedStates={twoColWidgetCollapsedStates}
+                    imageWidgetSize={imageWidgetSize}
+                    twoColWidgetAspectRatios={twoColWidgetAspectRatios}
+                    handleAspectRatioDetected={handleAspectRatioDetected}
+                    fullSizeWidgetConfig={fullSizeWidgetConfig}
+                    preferredDragTutorialWidget={preferredDragTutorialWidget}
+                />
             </DragDropContext>
             <CookieDisclaimerContainer />
             <AuthContainer />
