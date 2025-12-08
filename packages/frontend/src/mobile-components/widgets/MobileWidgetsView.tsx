@@ -1,5 +1,6 @@
 import { FC, useState, useMemo } from "react";
 import { TabsBar } from "@alphaday/ui-kit";
+import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
 import { TEMPLATES_DICT, IModuleContainer } from "src/types";
@@ -9,6 +10,13 @@ interface IMobileWidgetsViewProps {
 }
 
 const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
+    const {
+        squareRef,
+        setHeaderRef,
+        handleClickScroll,
+        hideLeftPan,
+        hideRightPan,
+    } = useHeaderScroll();
     const [selectedWidgetIndex, setSelectedWidgetIndex] = useState(0);
 
     // Create tab options from widgets
@@ -59,13 +67,17 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
     }
 
     return (
-        <div className="h-full flex flex-col bg-background">
+        <div ref={squareRef} className="h-full flex flex-col bg-background">
             {/* Tabs Bar */}
-            <div className="sticky top-0 z-10 bg-background border-b border-borderLine">
+            <div className="sticky top-0 z-10 bg-background">
                 <TabsBar
                     options={tabOptions}
                     onChange={handleTabChange}
                     selectedOption={tabOptions[selectedWidgetIndex]}
+                    setHeaderRef={setHeaderRef}
+                    handleClickScroll={handleClickScroll}
+                    hideLeftPan={hideLeftPan}
+                    hideRightPan={hideRightPan}
                 />
             </div>
 
