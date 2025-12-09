@@ -741,3 +741,17 @@ export const customDataAsCardData: (
         return undefined;
     }
 };
+
+export const validateImageCustomData = (
+    customData: TRemoteCustomData | undefined
+): { imageUrl: string | undefined; imageLink: string | undefined } => {
+    let imageUrl = customData?.[0]?.image_url;
+    let imageLink = customData?.[0]?.image_link;
+    if (typeof imageUrl !== "string") {
+        imageUrl = undefined;
+    }
+    if (typeof imageLink !== "string") {
+        imageLink = undefined;
+    }
+    return { imageUrl, imageLink };
+};
