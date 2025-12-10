@@ -3,6 +3,7 @@ import { TCustomItem } from "src/api/types";
 import {
     validateCustomData,
     evaluateTranslationTemplate,
+    formatCustomDataField,
 } from "./customDataUtils";
 
 export const validCustomData: JSONValue = [
@@ -92,5 +93,33 @@ describe("Tests for custom data utilities", () => {
                 template.output
             );
         });
+    });
+
+    test("formatCustomDataField: zero numeric values show N/A", () => {
+        // number format
+        expect(
+            formatCustomDataField({ rawField: "0", format: "number" }).field
+        ).toBe("N/A");
+
+        expect(
+            formatCustomDataField({ rawField: "0", format: "decimal" }).field
+        ).toBe("N/A");
+        expect(
+            formatCustomDataField({ rawField: "0.00", format: "decimal" }).field
+        ).toBe("N/A");
+
+        expect(
+            formatCustomDataField({ rawField: "0", format: "currency" }).field
+        ).toBe("N/A");
+
+        // percentage: zero should be formatted normally (eg. "0%") not N/A
+        expect(
+            formatCustomDataField({
+                rawField: "0%",
+                format: "percentage",
+            }).field
+        ).toBe(
+            formatCustomDataField({ rawField: "0", format: "percentage" }).field
+        );
     });
 });

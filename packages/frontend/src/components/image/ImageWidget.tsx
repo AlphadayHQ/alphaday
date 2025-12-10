@@ -5,6 +5,7 @@ import globalMessages from "src/globalMessages";
 interface IImageWidget {
     title: string;
     imageUrl: string;
+    imageLink?: string;
     isLoading: boolean;
     showImage: boolean;
     onAspectRatioDetected?: (aspectRatio: number) => void;
@@ -13,6 +14,7 @@ interface IImageWidget {
 const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     title,
     imageUrl,
+    imageLink,
     isLoading,
     showImage,
     onAspectRatioDetected,
@@ -55,7 +57,18 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
     }
 
     return (
-        <div className="flex items-center justify-center w-full h-full">
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+        <div
+            tabIndex={-1}
+            className="flex items-center justify-center w-full h-full"
+            onClick={() => {
+                if (imageLink) {
+                    window.open(imageLink, "_blank");
+                }
+            }}
+            style={{ cursor: imageLink ? "pointer" : "default" }}
+            role="banner"
+        >
             {imageLoading && <ModuleLoader $height="500px" />}
             <img
                 src={imageUrl}
