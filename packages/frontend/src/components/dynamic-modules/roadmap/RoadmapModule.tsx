@@ -38,7 +38,7 @@ const RoadmapModule: FC<IRoadmap> = ({
     if (items.length > 0) {
         return (
             <div
-                className="bg-background h-full flex flex-col flex-grow [&_scrollbar-container]:flex [&_scrollbar-container]:flex-col"
+                className="mt-2 two-col:mt-0 bg-background h-full flex flex-col flex-grow [&_scrollbar-container]:flex [&_scrollbar-container]:flex-col"
                 style={{
                     height: `${Math.min(initialItemsHeight, widgetHeight)}px`,
                 }}
