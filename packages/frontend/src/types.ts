@@ -21,6 +21,7 @@ export interface IModuleContainer<T = unknown> {
     moduleData: TUserViewWidget<T>;
     toggleAdjustable(): void;
     onAspectRatioDetected?: (widgetHash: string, aspectRatio: number) => void;
+    mobileViewWidgetHeight?: number;
 }
 
 export type TTemplateSlug = `${Lowercase<ETemplateNameRegistry>}_template`;

@@ -32,6 +32,7 @@ interface IPodcastModule {
     onRemoveChannel: (channel: TPodcastChannel) => void;
     preferredChannelIds: number[] | undefined;
     setPreferredChannelIds: (channels: TPodcastChannel[]) => void;
+    mobileViewWidgetHeight?: number;
 }
 
 const SWITCH_HEIGHT = 38;
@@ -72,6 +73,7 @@ const PodcastModule: FC<IPodcastModule> = ({
     onRemoveChannel,
     preferredChannelIds,
     setPreferredChannelIds,
+    mobileViewWidgetHeight,
 }) => {
     const podcastNavItems = translateNavItems();
 
@@ -129,7 +131,7 @@ const PodcastModule: FC<IPodcastModule> = ({
         onSetFeedPreference(optionItem?.value);
     };
     return (
-        <div className="block">
+        <div className="block relative">
             <div ref={squareRef}>
                 <div
                     className={twMerge(
@@ -168,7 +170,7 @@ const PodcastModule: FC<IPodcastModule> = ({
                     className="transition-all duration-300 relative z-[1] bg-background"
                     style={{
                         height:
-                            widgetHeight -
+                            (mobileViewWidgetHeight ?? widgetHeight) -
                             SWITCH_HEIGHT -
                             channelsHeight -
                             audioPlayerHeight,

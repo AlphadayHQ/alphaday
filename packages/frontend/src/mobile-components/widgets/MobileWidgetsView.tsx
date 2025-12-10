@@ -1,4 +1,4 @@
-import { FC, useState, useMemo } from "react";
+import { FC, useState, useMemo, useRef, useCallback } from "react";
 import { TabsBar } from "@alphaday/ui-kit";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { TUserViewWidget } from "src/api/types";
@@ -10,6 +10,7 @@ interface IMobileWidgetsViewProps {
 }
 
 const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
+    const widgetRef = useRef<HTMLDivElement | null>(null);
     const {
         squareRef,
         setHeaderRef,
@@ -18,6 +19,15 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
         hideRightPan,
     } = useHeaderScroll();
     const [selectedWidgetIndex, setSelectedWidgetIndex] = useState(0);
+
+    // Combined callback ref to handle both widgetRef and squareRef
+    const combinedRef = useCallback(
+        (node: HTMLDivElement | null) => {
+            widgetRef.current = node;
+            squareRef(node);
+        },
+        [squareRef]
+    );
 
     // Create tab options from widgets
     const tabOptions = useMemo(() => {
@@ -67,7 +77,7 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
     }
 
     return (
-        <div ref={squareRef} className="h-full flex flex-col bg-background">
+        <div ref={combinedRef} className="h-full flex flex-col bg-background">
             {/* Tabs Bar */}
             <div className="sticky top-0 z-10 bg-background">
                 <TabsBar
@@ -82,11 +92,16 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
             </div>
 
             {/* Widget Content */}
-            {/* -38px os the height of the tabs bar  */}
+            {/* -38px is the height of the tabs bar  */}
             <div className="flex flex-col h-[calc(100%-38px)]">
                 <Container
                     moduleData={selectedWidget}
                     toggleAdjustable={() => {}}
+                    mobileViewWidgetHeight={
+                        widgetRef?.current
+                            ? widgetRef.current.clientHeight - 38
+                            : undefined
+                    }
                 />
             </div>
         </div>
