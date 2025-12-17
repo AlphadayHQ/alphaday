@@ -91,7 +91,7 @@ export const TableHeader: React.FC<{
     addExtraColumn?: boolean;
 }> = ({ layout, addExtraColumn }) => {
     return (
-        <div className="flex flex-row pt-1 px-5 min-w-fit">
+        <div className="flex flex-row pt-1 px-2 two-col:px-5 min-w-fit">
             {layout.map((columnLayout) => (
                 <TableCell
                     key={columnLayout.id}
@@ -132,7 +132,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-row py-2 px-5 hover:bg-background min-w-fit",
+                "flex flex-row py-2 px-0 two-col:px-5 hover:bg-background min-w-fit",
                 rowLink && "cursor-pointer"
             )}
             {...(rowLink && { onClick: handleOnClick })}
@@ -374,7 +374,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
     return (
         <div
             className={twMerge(
-                "flex flex-row py-2 px-5 hover:bg-background",
+                "flex flex-row py-2 px-0 two-col:px-5 hover:bg-background",
                 rowLink && "cursor-pointer"
             )}
             {...(rowLink && { onClick: handleOnClick })}
