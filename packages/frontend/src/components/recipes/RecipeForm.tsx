@@ -108,7 +108,7 @@ const RecipeForm: FC<IRecipeFormProps> = ({
                 onToggleActivation &&
                 formData.isActive !== recipe.isActive
             ) {
-                onToggleActivation(recipe.id, recipe.isActive);
+                onToggleActivation(recipe.id, formData.isActive);
             }
         } else if (onCreate) {
             onCreate(formData);
@@ -116,7 +116,15 @@ const RecipeForm: FC<IRecipeFormProps> = ({
     };
 
     const handleToggleChange = () => {
-        setFormData((prev) => ({ ...prev, isActive: !prev.isActive }));
+        setFormData((prev) => {
+            if (isEditMode && onUpdate) {
+                // Handle activation change if status has changed
+                if (recipe && onToggleActivation) {
+                    onToggleActivation(recipe.id, !prev.isActive);
+                }
+            }
+            return { ...prev, isActive: !prev.isActive };
+        });
     };
 
     return (
