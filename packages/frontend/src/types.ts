@@ -65,13 +65,7 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/calendar/CalendarContainer")
     ),
     countdown_template: lazyRetry(
-        () => import("./containers/countdown/CountdownContainer")
-    ),
-    custom_card_template: lazyRetry(
-        () => import("./containers/custom-modules/CustomCardContainer")
-    ),
-    custom_chart_template: lazyRetry(
-        () => import("./containers/custom-modules/CustomChartContainer")
+        () => import("./containers/countdown/CountdownContainer") // need to add description to fillup single col widget
     ),
     custom_table_template: lazyRetry(
         () => import("./containers/custom-modules/CustomTableContainer")
@@ -163,6 +157,15 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     ),
     verasity_tokenomics_template: lazyRetry(
         () => import("./containers/client/VerasityTokenomicsContainer")
+    ),
+    /**
+     * Deprecated templates (they don't exist in the backend.
+     */
+    custom_card_template: lazyRetry(
+        () => import("./containers/custom-modules/CustomCardContainer")
+    ),
+    custom_chart_template: lazyRetry(
+        () => import("./containers/custom-modules/CustomChartContainer")
     ),
 };
 
