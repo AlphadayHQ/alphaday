@@ -174,7 +174,7 @@ const Portfolio: FC<IPortfolio> = ({
                             </>
                         ) : (
                             <div className="flex my-4 mx-auto justify-center">
-                                <div className="flex w-[315px] justify-between tiny:scale-95">
+                                <div className="mt-10 two-col:mt-0 flex w-[315px] justify-between tiny:scale-95">
                                     <Button
                                         variant="primaryXL"
                                         title="Connect your Wallet"
