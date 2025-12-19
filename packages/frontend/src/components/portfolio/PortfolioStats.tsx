@@ -397,6 +397,12 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                                                 0,
                                                             style: ENumberStyle.Currency,
                                                             currency: "USD",
+                                                            useEllipsis: true,
+                                                            ellipsisCutoff:
+                                                                widgetSize ===
+                                                                "lg"
+                                                                    ? SMALL_PRICE_CUTOFF_LG
+                                                                    : SMALL_PRICE_CUTOFF_SM,
                                                         }).value,
                                                         showBalance
                                                     )}

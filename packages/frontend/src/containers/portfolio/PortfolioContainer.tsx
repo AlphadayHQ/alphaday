@@ -47,7 +47,10 @@ const computeAssetTotal: (a: TPortfolio[] | null) => number = (a) => {
     );
 };
 
-const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const PortfolioContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
 
     const { authWallet } = useAccount();
@@ -398,7 +401,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             showBalance={showBalance}
             toggleShowAllAssets={toggleShowAllAssets}
             showAllAssets={showAllAssets}
-            widgetHeight={widgetHeight}
+            widgetHeight={mobileViewWidgetHeight ?? widgetHeight}
             portfolioType={portfolioType}
             switchPortfolioType={switchPortfolioType}
             moduleId={`module-${moduleData.hash}`}
