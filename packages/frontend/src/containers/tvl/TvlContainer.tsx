@@ -16,7 +16,10 @@ import { IModuleContainer } from "src/types";
 
 const { MAX_PAGE_NUMBER } = CONFIG.WIDGETS.TVL;
 
-const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const TvlContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
 
     const widgetHeight = useWidgetHeight(moduleData);
@@ -125,7 +128,7 @@ const TvlContainer: FC<IModuleContainer> = ({ moduleData }) => {
             projectsTvlData={buildUniqueItemList(tvlData)}
             projectsTvlHistory={tvlHistory}
             isLoading={isLoading}
-            widgetHeight={widgetHeight}
+            widgetHeight={mobileViewWidgetHeight ?? widgetHeight}
             handlePaginate={handleNextPage}
             selectedProjectType={selectedProjectType}
             onChangeProjectType={handleChangeProjectType}
