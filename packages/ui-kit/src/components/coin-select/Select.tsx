@@ -28,7 +28,7 @@ const Option =
                 {coin.name}
             </span>
             {coin.id === selectedOption?.id && (
-                <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-not-data-selected:hidden group-data-focus:text-white">
+                <span className="absolute inset-y-0 right-0 flex items-center tiny:pr-1 pr-4 text-indigo-600 group-not-data-selected:hidden group-data-focus:text-white">
                     <CheckMarkSVG aria-hidden="true" className="size-5" />
                 </span>
             )}
@@ -36,7 +36,7 @@ const Option =
     );
 
 const IndicatorsContainer = () => (
-    <div className="absolute inset-y-0 right-0 flex items-center pr-1">
+    <div className="absolute inset-y-0 right-0 flex items-center pr-1 tiny:pt-1.5">
         <ChevronUpDownSVG
             aria-hidden="true"
             className="w-5 stroke-primaryVariant100"
@@ -48,11 +48,37 @@ export const Select = ({
     options,
     selectedOption,
     onChange,
+    classNames,
 }: {
     options: TSelect[];
     selectedOption: TSelect | undefined;
     onChange: (option: SingleValue<TSelect>) => void;
+    classNames?: {
+        container?: string;
+        control?: string;
+        menu?: string;
+        option?: string;
+        singleValue?: string;
+        valueContainer?: string;
+        input?: string;
+        placeholder?: string;
+    };
 }) => {
+    const defaultClassNames = {
+        container: () =>
+            classNames?.container ??
+            "w-full max-w-[160px] hover:bg-backgroundVariant200 rounded-md",
+        control: () => classNames?.control ?? "w-full rounded-md control-class",
+        menu: () =>
+            classNames?.menu ??
+            "w-full bg-background border border-borderLine shadow-sm rounded-b-md",
+        option: () => classNames?.option ?? "w-full",
+        singleValue: () => classNames?.singleValue ?? "w-full px-3",
+        valueContainer: () => classNames?.valueContainer ?? "w-full",
+        input: () => classNames?.input ?? "w-full",
+        placeholder: () => classNames?.placeholder ?? "w-full",
+    };
+
     return (
         <ReactSelect
             unstyled
@@ -65,18 +91,7 @@ export const Select = ({
                 Option: Option(selectedOption),
                 IndicatorsContainer,
             }}
-            classNames={{
-                container: () =>
-                    "w-full max-w-[160px] hover:bg-backgroundVariant200 rounded-md",
-                control: () => "w-full rounded-md control-class",
-                menu: () =>
-                    "w-full bg-background border border-borderLine shadow-sm rounded-b-md",
-                option: () => "w-full",
-                singleValue: () => "w-full px-3",
-                valueContainer: () => "w-full",
-                input: () => "w-full",
-                placeholder: () => "w-full",
-            }}
+            classNames={defaultClassNames}
             // eslint-disable-next-line react/no-unstable-nested-components
             formatOptionLabel={(option) => (
                 <div
