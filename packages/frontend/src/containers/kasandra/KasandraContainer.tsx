@@ -25,7 +25,10 @@ import { EFeaturesRegistry, EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
 import BaseContainer from "../base/BaseContainer";
 
-const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const KasandraContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
     const prevSelectedMarketData = useAppSelector(
         (state) => state.widgets.kasandra?.[moduleData.hash]
@@ -271,19 +274,8 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
         return `${WIDGET_HEIGHT - 55}px`;
     }, [WIDGET_HEIGHT]);
 
-    return (
-        <BaseContainer
-            uiProps={{
-                dragProps: undefined,
-                isDragging: false,
-                onToggleShowFullSize: undefined,
-                allowFullSize: false,
-                showFullSize: false,
-                setTutFocusElemRef: undefined,
-            }}
-            moduleData={moduleData}
-            adjustable={false}
-        >
+    const child = useMemo(() => {
+        return (
             <Suspense
                 fallback={<ModuleLoader $height={contentHeight} />} // 40px is the height of the header
             >
@@ -309,6 +301,47 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     onAcceptDisclaimer={handleAcceptDisclaimer}
                 />
             </Suspense>
+        );
+    }, [
+        isLoadingKasandraCoins,
+        isLoadingHistory,
+        isLoadingPredictions,
+        insights,
+        predictions,
+        marketHistory,
+        selectedCase,
+        handleSelectedCase,
+        selectedChartRange,
+        handleSelectedChartRange,
+        selectedMarket,
+        isAuthenticated,
+        kasandraCoins,
+        handleSelectedMarket,
+        contentHeight,
+        selectedTimestamp,
+        handleSelectedTimestamp,
+        disclaimerAccepted,
+        handleAcceptDisclaimer,
+    ]);
+
+    if (mobileViewWidgetHeight) {
+        return <div>{child}</div>;
+    }
+
+    return (
+        <BaseContainer
+            uiProps={{
+                dragProps: undefined,
+                isDragging: false,
+                onToggleShowFullSize: undefined,
+                allowFullSize: false,
+                showFullSize: false,
+                setTutFocusElemRef: undefined,
+            }}
+            moduleData={moduleData}
+            adjustable={false}
+        >
+            {child}
         </BaseContainer>
     );
 };
