@@ -4,6 +4,7 @@ import ImageWidget from "./ImageWidget";
 
 interface IImageModule {
     imageUrl: string | undefined;
+    imageLink?: string;
     title: string;
     contentHeight?: string;
     isLoading: boolean;
@@ -14,6 +15,7 @@ interface IImageModule {
 
 export const ImageModule: FC<IImageModule> = ({
     imageUrl,
+    imageLink,
     title,
     contentHeight,
     isLoading,
@@ -36,6 +38,7 @@ export const ImageModule: FC<IImageModule> = ({
         >
             <ImageWidget
                 imageUrl={processedImageUrl}
+                imageLink={imageLink}
                 title={title}
                 isLoading={isLoading}
                 onAspectRatioDetected={onAspectRatioDetected}

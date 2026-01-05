@@ -8,20 +8,10 @@ import {
 } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
 import { useTwoColImageWidgetSize } from "src/api/hooks";
-import { TRemoteCustomData } from "src/api/services";
+import { validateImageCustomData } from "src/api/utils/customDataUtils";
 import CONFIG from "src/config";
 import type { IModuleContainer } from "src/types";
 import { ImageModule } from "../../components/image/ImageModule";
-
-const validateCustomData = (
-    customData: TRemoteCustomData | undefined
-): { imageUrl: string | undefined } => {
-    let imageUrl = customData?.[0]?.image_url;
-    if (typeof imageUrl !== "string") {
-        imageUrl = undefined;
-    }
-    return { imageUrl };
-};
 
 const TwoColImageContainer: FC<IModuleContainer> = ({
     moduleData,
@@ -32,7 +22,9 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
         number | null
     >(null);
 
-    const { imageUrl } = validateCustomData(moduleData.widget.custom_data);
+    const { imageUrl, imageLink } = validateImageCustomData(
+        moduleData.widget.custom_data
+    );
     const previousImageUrl = useRef<string | undefined>(imageUrl);
 
     if (previousImageUrl.current !== imageUrl) {
@@ -75,6 +67,7 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
             <ImageModule
                 imageUrl={imageUrl}
+                imageLink={imageLink}
                 title={moduleData.widget.name}
                 contentHeight={contentHeight}
                 isLoading={!moduleData}
