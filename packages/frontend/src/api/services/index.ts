@@ -94,8 +94,6 @@ export * from "./dune/types";
 export * from "./alphadayApi";
 export * from "./baseTypes";
 
-export * from "./blobsApi";
-
 /**
  * third party
  */
