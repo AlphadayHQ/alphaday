@@ -260,10 +260,19 @@ export const useView: () => IView = () => {
                  * useEffect, we still need to add them here because:
                  * 1. The resolved view data might be more recent than the cached subscription data
                  * 2. On first navigation, remoteSubscribedViews might not have loaded yet
-                 * 3. This ensures the view is immediately available in subscribedViewsCache
-                 *    for the Views Tab to display
+                 * 3. This ensures the view is immediately available in both caches:
+                 *    - subscribedViewsCache (minimal metadata) for the Views Tab
+                 *    - viewsCache (full data) for sort order calculation and other operations
                  */
                 dispatch(viewsStore.updateSubscribedViewsCache([view]));
+                dispatch(
+                    viewsStore.setViewsCache({
+                        ...viewsCache,
+                        [view.id]: {
+                            ...remoteViewAsCachedView(view),
+                        },
+                    })
+                );
                 return;
             }
             // if the view is already in cache, we don't need to add it again
