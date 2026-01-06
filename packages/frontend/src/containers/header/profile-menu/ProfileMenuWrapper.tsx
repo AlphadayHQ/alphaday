@@ -51,6 +51,7 @@ const ProfileMenuContent: React.FC<{
     isMobile: boolean;
     t: (key: string) => string;
     onNavigateToBoards: () => void;
+    onNavigateToWidgets: () => void;
 }> = ({
     profile,
     walletMenuOption,
@@ -61,6 +62,7 @@ const ProfileMenuContent: React.FC<{
     isMobile,
     t,
     onNavigateToBoards,
+    onNavigateToWidgets,
 }) => (
     <div className="mx-2">
         <div className="flex justify-start sm:px-2 pb-2 sm:pb-5 pt-4 sm:pt-0">
@@ -76,6 +78,12 @@ const ProfileMenuContent: React.FC<{
                 {profile?.user.username || profile?.user.email}
             </p>
         </div>
+        <Divider />
+        <DropdownItem onClick={onNavigateToWidgets}>
+            <span title={walletMenuOption.title}>
+                {t("navigation.widgets")}
+            </span>
+        </DropdownItem>
         <Divider />
         <DropdownItem onClick={onNavigateToBoards}>
             <span title={walletMenuOption.title}>{t("navigation.boards")}</span>
@@ -175,6 +183,9 @@ const ProfileMenuMobile: React.FC<IProps> = memo(
         const onNavigateToBoards = () => {
             history.push("/boards");
         };
+        const onNavigateToWidgets = () => {
+            history.push("/widgets");
+        };
 
         return (
             <div
@@ -191,6 +202,7 @@ const ProfileMenuMobile: React.FC<IProps> = memo(
                     isMobile
                     t={t}
                     onNavigateToBoards={onNavigateToBoards}
+                    onNavigateToWidgets={onNavigateToWidgets}
                 />
             </div>
         );
@@ -242,6 +254,9 @@ const ProfileMenuDesktop: React.FC<IProps> = memo(
         const onNavigateToBoards = () => {
             history.push("/boards");
         };
+        const onNavigateToWidgets = () => {
+            history.push("/widgets");
+        };
 
         return (
             <Dropdown direction="down" data-testid="profile-menu">
@@ -277,6 +292,7 @@ const ProfileMenuDesktop: React.FC<IProps> = memo(
                             isMobile={false}
                             t={t}
                             onNavigateToBoards={onNavigateToBoards}
+                            onNavigateToWidgets={onNavigateToWidgets}
                         />
                     </DropdownMenu>
                 )}
