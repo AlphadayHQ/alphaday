@@ -264,7 +264,21 @@ export const useView: () => IView = () => {
                  *    - subscribedViewsCache (minimal metadata) for the Views Tab
                  *    - viewsCache (full data) for sort order calculation and other operations
                  */
-                dispatch(viewsStore.updateSubscribedViewsCache([view]));
+                // Extract only preview fields (without widgets, keywords, max_widgets, language)
+                const viewPreview: TRemoteUserViewPreview = {
+                    id: view.id,
+                    hash: view.hash,
+                    name: view.name,
+                    slug: view.slug,
+                    icon: view.icon,
+                    description: view.description,
+                    is_subscribed: view.is_subscribed,
+                    is_system_view: view.is_system_view,
+                    is_smart: view.is_smart,
+                    sort_order: view.sort_order,
+                    updated_at: view.updated_at,
+                };
+                dispatch(viewsStore.updateSubscribedViewsCache([viewPreview]));
                 dispatch(
                     viewsStore.setViewsCache({
                         ...viewsCache,
