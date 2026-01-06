@@ -1,7 +1,7 @@
 import { Suspense, memo, useMemo } from "react";
 import { ErrorModal } from "@alphaday/ui-kit";
 import { Web3Modal } from "@web3modal/react";
-import { BrowserRouter, Redirect, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
 import ToastContainer from "src/containers/toasts/ToastContainer";
 import {
@@ -9,6 +9,7 @@ import {
     useResolvedView,
     useViewRoute,
     useGaTracker,
+    useIsMobile,
 } from "./api/hooks";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
@@ -18,7 +19,7 @@ import { getRtkErrorCode } from "./api/utils/errorHandling";
 import { Logger } from "./api/utils/logging";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
-import { EDesktopRoutePaths, desktopRoutes, errorRoutes } from "./routes";
+import { desktopRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
 const landingPage = CONFIG.SEO.DOMAIN;
@@ -28,6 +29,7 @@ const goToLandingPage = () => {
 };
 
 const AppRoutes = () => {
+    const isMobile = useIsMobile();
     useGaTracker();
 
     const dispatch = useAppDispatch();
@@ -42,7 +44,7 @@ const AppRoutes = () => {
         isRoot,
         isSuperfeed,
         isBoardsLibrary,
-        isWidgets,
+        isWidgetsLibrary,
     } = useViewRoute();
 
     const errorCode = useMemo<number | undefined>(() => {
@@ -55,7 +57,7 @@ const AppRoutes = () => {
             !isRoot &&
             !isSuperfeed &&
             !isBoardsLibrary &&
-            !isWidgets
+            !isWidgetsLibrary
         ) {
             return 404;
         }
@@ -66,7 +68,7 @@ const AppRoutes = () => {
         isRoot,
         isSuperfeed,
         isBoardsLibrary,
-        isWidgets,
+        isWidgetsLibrary,
         error,
         resolvedView.error,
     ]);
@@ -88,16 +90,8 @@ const AppRoutes = () => {
         location.reload();
     }
 
-    if (isSuperfeed) {
-        return (
-            <Redirect
-                key={EDesktopRoutePaths.Superfeed}
-                path={EDesktopRoutePaths.Superfeed}
-                exact
-                to={EDesktopRoutePaths.Base}
-                push
-            />
-        );
+    if (!isMobile && (isBoardsLibrary || isWidgetsLibrary)) {
+        window.location.href = "/";
     }
 
     return (

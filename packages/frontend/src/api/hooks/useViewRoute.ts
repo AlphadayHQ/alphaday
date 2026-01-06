@@ -51,7 +51,7 @@ interface IViewRouteInfo {
     /**
      * true if the current path is widgets path
      */
-    isWidgets: boolean;
+    isWidgetsLibrary: boolean;
 }
 
 export const useViewRoute = (): IViewRouteInfo => {
@@ -134,7 +134,9 @@ export const useViewRoute = (): IViewRouteInfo => {
         isBoardsLibrary: location.pathname.includes(
             EDesktopRoutePaths.BoardsLibrary
         ),
-        isWidgets: location.pathname.includes(EDesktopRoutePaths.Widgets),
+        isWidgetsLibrary: location.pathname.includes(
+            EDesktopRoutePaths.Widgets
+        ),
     };
 };
 
