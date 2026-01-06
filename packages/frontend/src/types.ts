@@ -154,9 +154,6 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
     two_col_image_template: lazyRetry(
         () => import("./containers/image/TwoColImageContainer")
     ),
-    uniswap_template: lazyRetry(
-        () => import("./containers/uniswap/SwapContainer")
-    ),
     venue_template: lazyRetry(
         () => import("./containers/maps/VenueMapContainer")
     ),

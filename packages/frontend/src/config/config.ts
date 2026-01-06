@@ -5,13 +5,7 @@ import NUMBERS from "./numbers";
 import ROUTING_CONFIG from "./routing";
 import SEO_CONFIG from "./seo";
 import { SUPERFEED_CONFIG } from "./superfeed";
-import {
-    API_PROVIDERS,
-    EXPLORERS,
-    WALLET_CONNECT,
-    UNISWAP,
-    OAUTH,
-} from "./thirdparty";
+import { API_PROVIDERS, EXPLORERS, WALLET_CONNECT, OAUTH } from "./thirdparty";
 import UI_CONFIG from "./ui";
 import USER_CONFIG from "./user";
 import VIEWS_CONFIG from "./views";
@@ -98,7 +92,6 @@ const CONFIG = {
     NUMBERS,
     EXPLORERS,
     WALLET_CONNECT,
-    UNISWAP,
     OAUTH,
     VIEWS: VIEWS_CONFIG,
     USER: USER_CONFIG,

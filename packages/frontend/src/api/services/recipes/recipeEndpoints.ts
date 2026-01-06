@@ -151,6 +151,7 @@ const recipesApi = alphadayApi.injectEndpoints({
                 ...r,
                 results: r.results.map(transformRecipe),
             }),
+            providesTags: ["Recipes"],
             keepUnusedDataFor: 0,
         }),
         getRecipe: builder.query<TGetRecipeResponse, TGetRecipeRequest>({
@@ -161,6 +162,7 @@ const recipesApi = alphadayApi.injectEndpoints({
             },
             transformResponse: (r: TGetRecipeRawResponse): TGetRecipeResponse =>
                 transformRecipe(r),
+            providesTags: ["Recipes"],
             keepUnusedDataFor: 0,
         }),
         createRecipe: builder.mutation<
@@ -198,6 +200,7 @@ const recipesApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 r: TCreateRecipeRawResponse
             ): TCreateRecipeResponse => transformRecipe(r),
+            invalidatesTags: ["Recipes"],
         }),
         updateRecipe: builder.mutation<
             TUpdateRecipeResponse,
@@ -235,6 +238,7 @@ const recipesApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 r: TUpdateRecipeRawResponse
             ): TUpdateRecipeResponse => transformRecipe(r),
+            invalidatesTags: ["Recipes"],
         }),
         activateRecipe: builder.mutation<
             TActivateRecipeResponse,
@@ -252,6 +256,7 @@ const recipesApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 r: TActivateRecipeRawResponse
             ): TActivateRecipeResponse => transformRecipe(r),
+            invalidatesTags: ["Recipes"],
         }),
         deactivateRecipe: builder.mutation<
             TDeactivateRecipeResponse,
@@ -269,6 +274,7 @@ const recipesApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 r: TDeactivateRecipeRawResponse
             ): TDeactivateRecipeResponse => transformRecipe(r),
+            invalidatesTags: ["Recipes"],
         }),
         triggerRecipe: builder.mutation<
             TTriggerRecipeResponse,
@@ -286,6 +292,7 @@ const recipesApi = alphadayApi.injectEndpoints({
             transformResponse: (
                 r: TTriggerRecipeRawResponse
             ): TTriggerRecipeResponse => transformRecipe(r),
+            invalidatesTags: ["Recipes"],
         }),
         getOutputFormats: builder.query<
             TGetOutputFormatsResponse,
