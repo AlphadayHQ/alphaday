@@ -68,6 +68,7 @@ export const authApi = alphadayApi.injectEndpoints({
                             "AccountPortfolio",
                             "Views",
                             "SubscribedViews",
+                            "Recipes",
                         ])
                     );
                     return;
@@ -100,6 +101,23 @@ export const authApi = alphadayApi.injectEndpoints({
                     method: "POST",
                 };
             },
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                const loginResp = (await queryFulfilled).data;
+                if (loginResp.token) {
+                    Logger.debug(
+                        "authEndpoints::ssoLogin: success, invalidating tags"
+                    );
+                    dispatch(
+                        alphadayApi.util.invalidateTags([
+                            "Account",
+                            "AccountPortfolio",
+                            "Views",
+                            "SubscribedViews",
+                            "Recipes",
+                        ])
+                    );
+                }
+            },
         }),
         signout: builder.mutation<void, void>({
             query: () => {
@@ -110,7 +128,7 @@ export const authApi = alphadayApi.injectEndpoints({
                     method: "POST",
                 };
             },
-            invalidatesTags: ["Views", "SubscribedViews"],
+            invalidatesTags: ["Views", "SubscribedViews", "Recipes"],
         }),
     }),
     overrideExisting: false,

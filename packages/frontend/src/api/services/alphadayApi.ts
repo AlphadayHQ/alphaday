@@ -20,6 +20,7 @@ export const alphadayApi = createApi({
         "PolymarketMarkets",
         "PolymarketStats",
         "PolymarketHistory",
+        "Recipes",
     ],
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,
