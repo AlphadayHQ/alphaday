@@ -307,9 +307,9 @@ const ProfileMenuWrapper: React.FC<IProps> = ({
     ...props
 }) => {
     if (isMobile) {
-        return <ProfileMenuMobile {...props} isMobile={isMobile} />;
+        return <ProfileMenuMobile {...props} isMobile />;
     }
-    return <ProfileMenuDesktop {...props} isMobile={isMobile} />;
+    return <ProfileMenuDesktop {...props} />;
 };
 
 export default ProfileMenuWrapper;
