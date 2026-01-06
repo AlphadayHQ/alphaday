@@ -19,7 +19,7 @@ import { getRtkErrorCode } from "./api/utils/errorHandling";
 import { Logger } from "./api/utils/logging";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
-import { desktopRoutes, errorRoutes } from "./routes";
+import { appRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
 const landingPage = CONFIG.SEO.DOMAIN;
@@ -74,7 +74,7 @@ const AppRoutes = () => {
         if (error || errorCode) {
             return errorRoutes;
         }
-        return desktopRoutes;
+        return appRoutes;
     }, [error, errorCode]);
 
     /**

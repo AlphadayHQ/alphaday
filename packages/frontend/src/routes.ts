@@ -13,26 +13,6 @@ const ErrorPage = lazyRetry(() => import("./pages/error"));
 const BoardsPage = lazyRetry(() => import("./mobile-pages/boards"));
 const WidgetsPage = lazyRetry(() => import("./mobile-pages/widgets"));
 
-// const SuperfeedPage = lazyRetry(() => import("./mobile-pages/superfeed"));
-// const Placeholder = lazyRetry(() => import("./mobile-pages/placeholder"));
-// const AuthPage = lazyRetry(() => import("./mobile-pages/auth"));
-// const UserFiltersPage = lazyRetry(() => import("./mobile-pages/user-filters"));
-// const PortfolioPage = lazyRetry(() => import("./mobile-pages/portfolio"));
-// const NotificationsPage = lazyRetry(
-//     () => import("./mobile-pages/notifications")
-// );
-// const UserSettingsPage = lazyRetry(
-//     () => import("./mobile-pages/user-settings")
-// );
-// const ConnectWalletPage = lazyRetry(
-//     () => import("./mobile-pages/connect-wallet")
-// );
-// const AddWalletPage = lazyRetry(() => import("./mobile-pages/add-wallet"));
-// const AddHoldingPage = lazyRetry(() => import("./mobile-pages/add-holding"));
-// const PortfolioHoldingsPage = lazyRetry(
-//     () => import("./mobile-pages/portfolio-holdings")
-// );
-
 /**
  * A basic route.
  *
@@ -82,7 +62,7 @@ export enum ERoutePaths {
 /**
  * An array of all valid routes in the desktop app.
  */
-export const desktopRoutes: TRoute[] = [
+export const appRoutes: TRoute[] = [
     {
         type: "regular",
         path: ERoutePaths.Base,
