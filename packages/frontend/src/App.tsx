@@ -42,7 +42,6 @@ const AppRoutes = () => {
     const {
         pathContainsHashOrSlug,
         isRoot,
-        isSuperfeed,
         isBoardsLibrary,
         isWidgetsLibrary,
     } = useViewRoute();
@@ -55,7 +54,6 @@ const AppRoutes = () => {
         if (
             !pathContainsHashOrSlug &&
             !isRoot &&
-            !isSuperfeed &&
             !isBoardsLibrary &&
             !isWidgetsLibrary
         ) {
@@ -66,7 +64,6 @@ const AppRoutes = () => {
     }, [
         pathContainsHashOrSlug,
         isRoot,
-        isSuperfeed,
         isBoardsLibrary,
         isWidgetsLibrary,
         error,

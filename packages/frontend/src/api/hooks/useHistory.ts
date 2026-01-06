@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useHistory as useRRDHistory } from "react-router-dom";
-import { EMobileTabRoutePaths } from "src/routes";
+import { ERoutePaths } from "src/routes";
 
 export const useHistory = () => {
     const history = useRRDHistory();
@@ -15,7 +15,7 @@ export const useHistory = () => {
         if (history.length > 0) {
             history.goBack();
         } else {
-            history.push(EMobileTabRoutePaths.Superfeed);
+            history.push(ERoutePaths.Base);
         }
     }, [history]);
 

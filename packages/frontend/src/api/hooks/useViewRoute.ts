@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { isHash } from "src/api/utils/helpers";
 import CONFIG from "src/config/config";
-import { EMobileRoutePaths, EDesktopRoutePaths } from "src/routes";
+import { ERoutePaths } from "src/routes";
 import { FULLSIZE_ROUTES_ARR } from "src/types";
 
 enum ERouteType {
@@ -42,10 +42,6 @@ interface IViewRouteInfo {
     isRoot: boolean;
     /**
      * true if the current path is superfeed path
-     */
-    isSuperfeed: boolean;
-    /**
-     * true if the current path is boards library path
      */
     isBoardsLibrary: boolean;
     /**
@@ -130,13 +126,8 @@ export const useViewRoute = (): IViewRouteInfo => {
         isFullSize: fullSizeWidgetPath !== undefined,
         isViewHash,
         isRoot: location.pathname === "/",
-        isSuperfeed: location.pathname.includes(EMobileRoutePaths.Superfeed),
-        isBoardsLibrary: location.pathname.includes(
-            EDesktopRoutePaths.BoardsLibrary
-        ),
-        isWidgetsLibrary: location.pathname.includes(
-            EDesktopRoutePaths.Widgets
-        ),
+        isBoardsLibrary: location.pathname.includes(ERoutePaths.BoardsLibrary),
+        isWidgetsLibrary: location.pathname.includes(ERoutePaths.Widgets),
     };
 };
 
