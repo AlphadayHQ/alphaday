@@ -96,19 +96,6 @@ export default defineConfig(({ mode }) => {
                 transformMixedEsModules: true,
             },
         },
-        resolve: {
-            alias: {
-                // hack to prevent uniswap widgets error on vite (see https://github.com/Uniswap/sdk-core/issues/20)
-                jsbi: path.resolve(
-                    __dirname,
-                    "../..",
-                    "node_modules",
-                    "jsbi",
-                    "dist",
-                    "jsbi-cjs.js"
-                ),
-            },
-        },
         define: {
             "import.meta.env.VITE_VERSION": JSON.stringify(
                 process.env.npm_package_version

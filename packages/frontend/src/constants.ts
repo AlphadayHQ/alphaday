@@ -97,7 +97,6 @@ export enum ETemplateNameRegistry {
     Twitter = "TWITTER",
     TwitterList = "TWITTER_LIST",
     Two_Col_Image = "TWO_COL_IMAGE",
-    Uniswap = "UNISWAP",
     VenueMap = "VENUE",
     VerasityTokenomics = "VERASITY_TOKENOMICS",
     Video = "VIDEO",
