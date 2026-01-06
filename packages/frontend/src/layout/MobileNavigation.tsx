@@ -54,7 +54,7 @@ const MobileNavigation = () => {
                 />
             </Link>
             <Link
-                to="/widgets"
+                to="/boards"
                 className={`flex-1 flex justify-center ${
                     pathname === "/boards"
                         ? "text-primary"
