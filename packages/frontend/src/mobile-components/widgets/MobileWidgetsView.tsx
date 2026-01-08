@@ -3,6 +3,7 @@ import { TabsBar } from "@alphaday/ui-kit";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import CONFIG from "src/config";
 import { TEMPLATES_DICT, IModuleContainer } from "src/types";
 
 interface IMobileWidgetsViewProps {
@@ -93,7 +94,10 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
 
             {/* Widget Content */}
             {/* -38px is the height of the tabs bar  */}
-            <div className="flex flex-col h-[calc(100%-38px)]">
+            <div
+                id={CONFIG.UI.WIDGET_SIZE_TRACKING_ID}
+                className="flex flex-col h-[calc(100%-38px)]"
+            >
                 <Container
                     moduleData={selectedWidget}
                     toggleAdjustable={() => {}}
