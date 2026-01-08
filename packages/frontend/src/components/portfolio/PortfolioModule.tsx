@@ -1,6 +1,7 @@
 import { FC, useState, useMemo } from "react";
 import { Button, ModuleLoader } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "src/api/hooks";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { TCryptoAccount } from "src/api/types";
 import { validateHexOrEnsAddr } from "src/api/utils/accountUtils";
@@ -74,6 +75,7 @@ const Portfolio: FC<IPortfolio> = ({
     isWalletConnected,
     moduleId,
 }) => {
+    const isMobile = useIsMobile();
     const [showEnterAddress, setShowEnterAddress] = useState(false);
     const [disableAddAddressInput, setDisableAddAddressInput] = useState(true);
 
@@ -99,6 +101,41 @@ const Portfolio: FC<IPortfolio> = ({
 
     const onInputChange = (addr: string) =>
         setDisableAddAddressInput(!validateHexOrEnsAddr(addr.toLowerCase()));
+
+    const walletSetupButtons = useMemo(() => {
+        if (isMobile) {
+            return (
+                <Button
+                    variant="primaryXL"
+                    title="Enter a wallet address"
+                    onClick={handleShowEnterAddress}
+                    className=" max-w-[49%]"
+                >
+                    {t("buttons.enterAddress")}
+                </Button>
+            );
+        }
+        return (
+            <>
+                <Button
+                    variant="primaryXL"
+                    title="Connect your Wallet"
+                    onClick={onConnectWallet}
+                    className=" max-w-[49%]"
+                >
+                    {t("buttons.connectWallet")}
+                </Button>
+                <Button
+                    variant="secondaryXL"
+                    title="Enter a wallet address"
+                    onClick={handleShowEnterAddress}
+                    className=" max-w-[49%]"
+                >
+                    {t("buttons.enterAddress")}
+                </Button>
+            </>
+        );
+    }, [isMobile, onConnectWallet, t]);
 
     return (
         <div className="h-full" ref={squareRef}>
@@ -175,22 +212,7 @@ const Portfolio: FC<IPortfolio> = ({
                         ) : (
                             <div className="flex my-4 mx-auto justify-center">
                                 <div className="mt-10 two-col:mt-0 flex w-[315px] justify-between tiny:scale-95">
-                                    <Button
-                                        variant="primaryXL"
-                                        title="Connect your Wallet"
-                                        onClick={onConnectWallet}
-                                        className=" max-w-[49%]"
-                                    >
-                                        {t("buttons.connectWallet")}
-                                    </Button>
-                                    <Button
-                                        variant="secondaryXL"
-                                        title="Enter a wallet address"
-                                        onClick={handleShowEnterAddress}
-                                        className=" max-w-[49%]"
-                                    >
-                                        {t("buttons.enterAddress")}
-                                    </Button>
+                                    {walletSetupButtons}
                                 </div>
                             </div>
                         )}
