@@ -109,14 +109,14 @@ const Portfolio: FC<IPortfolio> = ({
                     variant="primaryXL"
                     title="Enter a wallet address"
                     onClick={handleShowEnterAddress}
-                    className=" max-w-[49%]"
+                    className="w-80 max-w-[49%] mt-10"
                 >
                     {t("buttons.enterAddress")}
                 </Button>
             );
         }
         return (
-            <>
+            <div className="mt-10 two-col:mt-0 flex w-[315px] justify-between tiny:scale-95">
                 <Button
                     variant="primaryXL"
                     title="Connect your Wallet"
@@ -133,7 +133,7 @@ const Portfolio: FC<IPortfolio> = ({
                 >
                     {t("buttons.enterAddress")}
                 </Button>
-            </>
+            </div>
         );
     }, [isMobile, onConnectWallet, t]);
 
@@ -211,9 +211,7 @@ const Portfolio: FC<IPortfolio> = ({
                             </>
                         ) : (
                             <div className="flex my-4 mx-auto justify-center">
-                                <div className="mt-10 two-col:mt-0 flex w-[315px] justify-between tiny:scale-95">
-                                    {walletSetupButtons}
-                                </div>
+                                {walletSetupButtons}
                             </div>
                         )}
                     </>
