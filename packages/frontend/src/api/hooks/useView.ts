@@ -179,15 +179,18 @@ export const useView: () => IView = () => {
      * We do this to show the shared views in the views tab.
      */
     const subscribedViews = useMemo<TSubscribedView[]>(() => {
-        const allViews = [
-            ...Object.values(subscribedViewsCache ?? {}),
-            ...Object.values(sharedViewsCache ?? {}),
-        ].reduce((acc, view) => {
-            if (!acc.find((v) => v.data.id === view.data.id)) {
-                return [...acc, view];
-            }
-            return acc;
-        }, [] as TSubscribedView[]);
+        const subscribedCacheViews = Object.values(subscribedViewsCache ?? {});
+        const sharedCacheViews = Object.values(sharedViewsCache ?? {});
+
+        const allViews = [...subscribedCacheViews, ...sharedCacheViews].reduce(
+            (acc, view) => {
+                if (!acc.find((v) => v.data.id === view.data.id)) {
+                    return [...acc, view];
+                }
+                return acc;
+            },
+            [] as TSubscribedView[]
+        );
         const systemViews = allViews
             .filter((v) => v.data.is_system_view)
             .sort(
@@ -198,6 +201,7 @@ export const useView: () => IView = () => {
             .sort(
                 (viewA, viewD) => viewA.data.sort_order - viewD.data.sort_order
             );
+
         return [...systemViews, ...customViews];
     }, [subscribedViewsCache, sharedViewsCache]);
 
@@ -246,11 +250,35 @@ export const useView: () => IView = () => {
              * cache. Otherwise, we will add it to the shared views cache.
              * This is to ensure the views cache is always up to date.
              */
-            if (
-                // the user must be subscribed to the view
+            const isSubscribed =
                 remoteSubscribedViews?.find((v) => v.id === view.id) !==
-                undefined
-            ) {
+                undefined;
+
+            if (isSubscribed) {
+                /**
+                 * Even though subscribed views are loaded via the remoteSubscribedViews
+                 * useEffect, we still need to add them here because:
+                 * 1. The resolved view data might be more recent than the cached subscription data
+                 * 2. On first navigation, remoteSubscribedViews might not have loaded yet
+                 * 3. This ensures the view is immediately available in both caches:
+                 *    - subscribedViewsCache (minimal metadata) for the Views Tab
+                 *    - viewsCache (full data) for sort order calculation and other operations
+                 */
+                // Extract only preview fields (without widgets, keywords, max_widgets, language)
+                const viewPreview: TRemoteUserViewPreview = {
+                    id: view.id,
+                    hash: view.hash,
+                    name: view.name,
+                    slug: view.slug,
+                    icon: view.icon,
+                    description: view.description,
+                    is_subscribed: view.is_subscribed,
+                    is_system_view: view.is_system_view,
+                    is_smart: view.is_smart,
+                    sort_order: view.sort_order,
+                    updated_at: view.updated_at,
+                };
+                dispatch(viewsStore.updateSubscribedViewsCache([viewPreview]));
                 dispatch(
                     viewsStore.setViewsCache({
                         ...viewsCache,
