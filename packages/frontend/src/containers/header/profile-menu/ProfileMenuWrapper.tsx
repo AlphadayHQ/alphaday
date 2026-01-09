@@ -56,8 +56,8 @@ const ProfileMenuContent: React.FC<{
     profile,
     walletMenuOption,
     onToggleLanguageModal,
-    handleToggle,
-    toggleTutorialState,
+    // handleToggle,
+    // toggleTutorialState,
     onShowAboutUsModal,
     isMobile,
     t,
@@ -110,7 +110,7 @@ const ProfileMenuContent: React.FC<{
             <span title="Switch Language">{t("navigation.menu.language")}</span>
         </DropdownItem>
         <Divider />
-        <DropdownItem onClick={handleToggle}>
+        {/* <DropdownItem onClick={handleToggle}>
             {t("navigation.menu.tutorial")}{" "}
             <input
                 title="Toggle Tutorial"
@@ -120,7 +120,7 @@ const ProfileMenuContent: React.FC<{
                 checked={toggleTutorialState}
             />
         </DropdownItem>
-        <Divider />
+        <Divider /> */}
         <DropdownItem onClick={onShowAboutUsModal}>
             <span title="Lear more about Alphaday">
                 {t("navigation.menu.aboutUs")}
