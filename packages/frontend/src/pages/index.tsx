@@ -323,6 +323,7 @@ function BasePage({ isFullsize }: { isFullsize: boolean | undefined }) {
                 toggleWidgetLib={toggleWidgetLib}
                 toggleLanguageModal={onToggleLanguageModal}
                 hideFooter
+                viewName={selectedView?.data.name}
             >
                 <MobileWidgetsView widgets={selectedView.data.widgets} />
                 <CookieDisclaimerContainer />

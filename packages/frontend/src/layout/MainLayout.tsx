@@ -11,6 +11,7 @@ interface IProps {
     toggleWidgetLib?: () => void;
     toggleLanguageModal?: () => void;
     toggleRecipeLibrary?: () => void;
+    viewName?: string;
     layoutState?: TUserViewWidget[][];
     children?: React.ReactNode;
     setTutFocusElemRef?:
@@ -25,6 +26,7 @@ const MainLayout: React.FC<IProps> = ({
     toggleWidgetLib,
     toggleLanguageModal,
     toggleRecipeLibrary,
+    viewName,
     layoutState,
     setTutFocusElemRef,
 }) => {
@@ -39,6 +41,7 @@ const MainLayout: React.FC<IProps> = ({
                 setTutFocusElemRef={setTutFocusElemRef}
                 isBoardsLibOpen={isBoardsLibOpen}
                 setIsBoardsLibOpen={setIsBoardsLibOpen}
+                viewName={viewName}
             />
             <WidgetsLibContainer layoutState={layoutState} />
             <div
