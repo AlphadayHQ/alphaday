@@ -180,7 +180,18 @@ const LayoutHeader: FC<IProps> = ({
                 >
                     <HeaderNavbar mobileOpen={mobileOpen}>
                         <div className="flex w-full flex-row items-center justify-between py-4 h-16">
-                            <Logo />
+                            <div className="flex flex-row-reverse">
+                                <Logo />
+                                <div className="mx-3 flex items-center fontGroup-highlightSemi">
+                                    <span className="text-lg mr-2 line-clamp-6">
+                                        /
+                                    </span>{" "}
+                                    Alpha board{" "}
+                                    <div className="w-8 h-7 mb-2 -ml-0.5">
+                                        <SyncIndicatorContainer />
+                                    </div>
+                                </div>
+                            </div>
                             {!hideFeatures && (
                                 <HeaderNavRight>
                                     {mobileOpen ? (
