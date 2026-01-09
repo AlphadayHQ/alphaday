@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { SyncIndicator, EIndicatorState } from "@alphaday/ui-kit";
+import { useResolvedView } from "src/api/hooks";
 import { RTK_VIEW_CACHE_KEYS } from "src/api/hooks/useView";
 import {
     useGetSubscribedViewsQuery,
@@ -23,6 +24,9 @@ const SyncIndicatorContainer: FC = () => {
         }
     );
 
+    const { isFetching: isFetchingResolvedView, isError: isErrorResolvedView } =
+        useResolvedView();
+
     const [, { isLoading: isLoadingSaveView, isError: isErrorSaveView }] =
         useSaveViewMutation({
             fixedCacheKey: RTK_VIEW_CACHE_KEYS.SAVE_VIEW,
@@ -40,12 +44,14 @@ const SyncIndicatorContainer: FC = () => {
 
     const isError =
         isErrorSubscribedViewsRequest ||
+        isErrorResolvedView ||
         isErrorSaveView ||
         isErrorSaveViewAs ||
         isErrorDeleteView;
 
     const isSyncing =
         isFetchingSubscribedViews ||
+        isFetchingResolvedView ||
         isLoadingSaveView ||
         isLoadingSaveViewAs ||
         isLoadingDeleteView;
