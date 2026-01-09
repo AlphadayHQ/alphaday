@@ -9,9 +9,13 @@ import ProfileMenuWrapper from "./ProfileMenuWrapper";
 
 interface IProps {
     isMobile?: boolean;
+    onCloseMenu?: () => void;
 }
 
-const ProfileMenuContainer: FC<IProps> = ({ isMobile = false }) => {
+const ProfileMenuContainer: FC<IProps> = ({
+    isMobile = false,
+    onCloseMenu,
+}) => {
     const dispatch = useAppDispatch();
     const { openAuthModal, isAuthenticated, logout } = useAuth();
     const { userProfile } = useAccount();
@@ -28,11 +32,20 @@ const ProfileMenuContainer: FC<IProps> = ({ isMobile = false }) => {
     return (
         <ProfileMenuWrapper
             onSignOut={logout}
-            onSignUpSignIn={openAuthModal}
-            onToggleLanguageModal={onToggleLanguageModal}
+            onSignUpSignIn={() => {
+                if (onCloseMenu) onCloseMenu();
+                openAuthModal();
+            }}
+            onToggleLanguageModal={() => {
+                if (onCloseMenu) onCloseMenu();
+                onToggleLanguageModal();
+            }}
             isAuthenticated={isAuthenticated}
             onShowTutorial={toggleShowTutorial}
-            onShowAboutUsModal={toggleAboutUsModal}
+            onShowAboutUsModal={() => {
+                if (onCloseMenu) onCloseMenu();
+                toggleAboutUsModal();
+            }}
             showTutorial={showTutorial}
             setTutFocusElemRef={
                 currentTutorial.tip?.id === ETutorialTipId.ComeBack

@@ -202,7 +202,10 @@ const LayoutHeader: FC<IProps> = ({
                                 <div className="z-10 mx-2.5 my-auto flex w-full flex-row items-center justify-center">
                                     <HeaderSearchContainer />
                                 </div>
-                                <ProfileMenuContainer isMobile />
+                                <ProfileMenuContainer
+                                    onCloseMenu={() => setMobileOpen(false)}
+                                    isMobile
+                                />
                             </>
                         )}
 
