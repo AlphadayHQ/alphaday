@@ -40,20 +40,13 @@ export const useResolvedView = (): ReturnType<typeof useGetViewByHashQuery> => {
         selectedView?.isReadOnly,
     ]);
 
-    return useGetViewByHashQuery(
-        {
-            ...(isViewHash
-                ? { hash: routeInfo?.value }
-                : // if the route is not a hash, it's a slug.
-                  // if the route info has no slug, we'll use the selected view slug
-                  // this should pose no issues if the selected view is not a system view
-                  // and should work as expected if the selected view is a system view
-                  { slug: routeInfo?.value ?? selectedView?.data.slug }),
-        },
-        {
-            skip: skipViewFetch,
-        }
-    );
+    const queryParams = isViewHash
+        ? { hash: routeInfo?.value }
+        : { slug: routeInfo?.value ?? selectedView?.data.slug };
+
+    return useGetViewByHashQuery(queryParams, {
+        skip: skipViewFetch,
+    });
 };
 
 export default useResolvedView;
