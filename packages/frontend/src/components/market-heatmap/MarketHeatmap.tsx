@@ -14,6 +14,7 @@ interface IMarketHeatmap {
     keywordSearchList: TKeyword[];
     maxItems: EHeatmapMaxItems;
     onMaxItemsChange: (maxItems: EHeatmapMaxItems) => void;
+    height?: number;
 }
 
 export const MarketHeatmap: FC<IMarketHeatmap> = ({
@@ -22,6 +23,7 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
     onCoinClick,
     keywordSearchList,
     onMaxItemsChange,
+    height,
 }) => {
     const [sizeMetric, setSizeMetric] = useState<EHeatmapSizeMetric>(
         EHeatmapSizeMetric.MarketCap
@@ -47,6 +49,7 @@ export const MarketHeatmap: FC<IMarketHeatmap> = ({
                     colorMetric={colorMetric}
                     onCoinClick={onCoinClick}
                     keywordSearchList={keywordSearchList}
+                    height={height ? height - 39 : undefined} // Adjust for filter height
                 />
             </div>
         </div>

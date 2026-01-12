@@ -27,6 +27,7 @@ const FaqModule: FC<IAgenda> = ({
 
     return (
         <div
+            className="mt-2 two-col:mt-0"
             style={{
                 // height of the table should not be greater than max-content
                 height: `${Math.min(initialItemsHeight, widgetHeight)}px`,

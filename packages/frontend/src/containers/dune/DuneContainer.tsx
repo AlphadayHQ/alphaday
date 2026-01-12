@@ -19,7 +19,10 @@ import type { IModuleContainer } from "src/types";
 
 const { MAX_PAGE_NUMBER } = CONFIG.WIDGETS.DUNE;
 
-const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const DuneContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
     const { isAuthenticated } = useAuth();
     const { selectedView } = useView();
@@ -271,7 +274,7 @@ const DuneContainer: FC<IModuleContainer> = ({ moduleData }) => {
             rowProps={meta.row_props}
             isLoadingItems={isLoading}
             handlePaginate={handlePaginate}
-            widgetHeight={widgetHeight}
+            widgetHeight={mobileViewWidgetHeight ?? widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
             onSetDuneMeta={handleSetDuneMeta}
             duneMeta={duneMeta}

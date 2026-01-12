@@ -11,6 +11,7 @@ interface IMarketHeatmapModule {
     keywordSearchList: TKeyword[];
     maxItems: EHeatmapMaxItems;
     onMaxItemsChange: (maxItems: EHeatmapMaxItems) => void;
+    height?: number;
 }
 
 export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
@@ -20,6 +21,7 @@ export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
     onCoinClick,
     keywordSearchList,
     onMaxItemsChange,
+    height,
 }) => {
     const transformedData = useMemo(() => {
         if (!data?.results) return [];
@@ -39,6 +41,7 @@ export const MarketHeatmapModule: FC<IMarketHeatmapModule> = ({
                 onCoinClick={onCoinClick}
                 keywordSearchList={keywordSearchList}
                 onMaxItemsChange={onMaxItemsChange}
+                height={height}
             />
         </div>
     );

@@ -73,7 +73,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
             <img
                 src={imageUrl}
                 alt={title}
-                className={`w-full h-full object-cover rounded ${
+                className={`w-full h-full object-contain two-col:object-cover rounded ${
                     imageLoading || !showImage ? "hidden" : "block"
                 }`}
                 onLoad={handleImageLoad}

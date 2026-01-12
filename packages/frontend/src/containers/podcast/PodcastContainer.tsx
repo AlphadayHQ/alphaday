@@ -37,7 +37,10 @@ import { IModuleContainer } from "src/types";
 
 const { DEFAULT_FEED_PREFERENCE, MAX_PAGE_NUMBER } = CONFIG.WIDGETS.PODCAST;
 
-const PodcastContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const PodcastContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
@@ -297,6 +300,7 @@ const PodcastContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 setSelectedPodcast={setSelectedPodcast}
                 preferredChannelIds={preferredChannelIds}
                 setPreferredChannelIds={setPreferredChannelIds}
+                mobileViewWidgetHeight={mobileViewWidgetHeight}
             />
         </AudioPlayerProvider>
     );

@@ -39,10 +39,18 @@ import { IModuleContainer } from "src/types";
 const PORTFOLIO_DATA_WAIT_TIME = 10_000; // 10 seconds
 
 const computeAssetTotal: (a: TPortfolio[] | null) => number = (a) => {
-    return a?.reduce((prev, cur) => prev + cur.token.balanceUSD, 0) ?? 0;
+    return (
+        a?.reduce(
+            (prev, cur) => Number(prev) + Number(cur.token.balanceUSD),
+            0
+        ) ?? 0
+    );
 };
 
-const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const PortfolioContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
 
     const { authWallet } = useAccount();
@@ -148,15 +156,18 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     const showVerify = authWallet.status === WalletConnectionState.Connected;
 
-    const portfolioDataForAddress =
-        tokensBalanceForAddresses !== undefined && selectedAddress
-            ? {
-                  assets: tokensBalanceForAddresses[selectedAddress] ?? [],
-                  totalValue: computeAssetTotal(
-                      tokensBalanceForAddresses[selectedAddress]
-                  ),
-              }
-            : undefined;
+    const portfolioDataForAddress = useMemo(
+        () =>
+            tokensBalanceForAddresses !== undefined && selectedAddress
+                ? {
+                      assets: tokensBalanceForAddresses[selectedAddress] ?? [],
+                      totalValue: computeAssetTotal(
+                          tokensBalanceForAddresses[selectedAddress]
+                      ),
+                  }
+                : undefined,
+        [tokensBalanceForAddresses, selectedAddress]
+    );
 
     const portfolioDataForAddresses = useMemo(() => {
         const balances: TPortfolioDataForAddress = {
@@ -190,11 +201,11 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     token: {
                         ...existingAsset.token,
                         balance:
-                            existingAsset.token.balance +
-                            curAsset.token.balance,
+                            Number(existingAsset.token.balance) +
+                            Number(curAsset.token.balance),
                         balanceUSD:
-                            existingAsset.token.balanceUSD +
-                            curAsset.token.balanceUSD,
+                            Number(existingAsset.token.balanceUSD) +
+                            Number(curAsset.token.balanceUSD),
                     },
                 };
                 return assetsCopy;
@@ -341,15 +352,18 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
 
     useEffect(() => {
         // Reset the widget height to 90px when the selectedAddress is null and isLoading is false
-        dispatch(
-            setWidgetHeight({
-                widgetHash: moduleData.hash,
-                widgetHeight: selectedAddress === null && !isLoading ? 90 : 432,
-            })
-        );
+        if (selectedAddress === null && !isLoading) {
+            dispatch(
+                setWidgetHeight({
+                    widgetHash: moduleData.hash,
+                    widgetHeight:
+                        selectedAddress === null && !isLoading ? 90 : 432,
+                })
+            );
+        }
         // This should only run when the selectedAddress is null and isLoading is false
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedAddress === null && !isLoading]);
+    }, [selectedAddress, isLoading]);
 
     return (
         <PortfolioModule
@@ -387,7 +401,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({ moduleData }) => {
             showBalance={showBalance}
             toggleShowAllAssets={toggleShowAllAssets}
             showAllAssets={showAllAssets}
-            widgetHeight={widgetHeight}
+            widgetHeight={mobileViewWidgetHeight ?? widgetHeight}
             portfolioType={portfolioType}
             switchPortfolioType={switchPortfolioType}
             moduleId={`module-${moduleData.hash}`}

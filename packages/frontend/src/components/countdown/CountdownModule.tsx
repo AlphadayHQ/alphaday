@@ -37,7 +37,7 @@ const CountdownModule: FC<IProps> = ({
     }, []);
 
     return (
-        <div className="flex flex-col flex-1">
+        <div className="justify-center two-col:justify-start flex flex-col flex-1">
             <div className="items-center justify-center flex mt-4 mx-auto mb-6 tiny:m-[5px]">
                 <Timer
                     secondsToDate={secondsToDate}

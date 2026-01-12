@@ -35,27 +35,29 @@ const MediaModule: FC<IMedia> = memo(function MediaModule({
 
     if (entryUrl) {
         return (
-            <iframe
-                src={entryUrl}
-                title={title}
-                allow="autoplay; encrypted-media"
-                className="w-full border-none"
-                style={{
-                    height: "410px",
-                    visibility: "hidden",
-                }}
-                allowFullScreen
-                ref={frameRef}
-                onLoad={() => {
-                    if (frameRef.current) {
-                        frameRef.current.style.visibility = "visible";
-                    }
-                }}
-            />
+            <div className="h-full flex items-center two-col:contents">
+                <iframe
+                    src={entryUrl}
+                    title={title}
+                    allow="autoplay; encrypted-media"
+                    className="w-full border-none"
+                    style={{
+                        height: "410px",
+                        visibility: "hidden",
+                    }}
+                    allowFullScreen
+                    ref={frameRef}
+                    onLoad={() => {
+                        if (frameRef.current) {
+                            frameRef.current.style.visibility = "visible";
+                        }
+                    }}
+                />
+            </div>
         );
     }
     return (
-        <div style={{ height: "410px" }}>
+        <div className="h-[410px]">
             <CenteredBlock>
                 <p className="text-primary fontGroup-highlightSemi">
                     {globalMessages.queries.noMatchFound("video")}

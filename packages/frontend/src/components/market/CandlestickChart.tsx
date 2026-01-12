@@ -1,6 +1,12 @@
 import { FC, memo } from "react";
-import { ApexCandleChart, Spinner, themeColors } from "@alphaday/ui-kit";
+import {
+    ApexCandleChart,
+    Spinner,
+    themeColors,
+    twMerge,
+} from "@alphaday/ui-kit";
 import moment from "moment-with-locales-es6";
+import { useIsMobile } from "src/api/hooks";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
 import { renderToString } from "src/api/utils/textUtils";
@@ -28,6 +34,8 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
     data,
     isLoading,
 }) {
+    const isMobile = useIsMobile();
+
     const minValue = minVal(data || [[0], [0]])[0];
 
     const options = {
@@ -193,7 +201,7 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
                 breakpoint: 575,
                 options: {
                     chart: {
-                        height: 200,
+                        height: isMobile ? 300 : 200,
                     },
                     xaxis: {
                         show: false,
@@ -212,14 +220,24 @@ const CandlestickChart: FC<IProps> = memo(function CandlestickChart({
 
     if (isLoading) {
         return (
-            <div className="flex w-full h-[200px] items-center justify-center">
+            <div
+                className={twMerge(
+                    "flex w-full items-center justify-center",
+                    isMobile ? "h-[300px]" : "h-[200px]"
+                )}
+            >
                 <Spinner size="sm" />
             </div>
         );
     }
 
     return (
-        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] candlestick-chart">
+        <div
+            className={twMerge(
+                "w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] candlestick-chart",
+                isMobile ? "h-[300px]" : "h-[200px] two-col:h-[284px]"
+            )}
+        >
             <ApexCandleChart
                 options={options}
                 series={chartSeries}

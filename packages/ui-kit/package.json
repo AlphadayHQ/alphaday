@@ -18,7 +18,6 @@
     "@fullcalendar/react": "6.1.11",
     "@fullcalendar/timegrid": "6.1.17",
     "@headlessui/react": "1.7.17",
-    "@ionic/react": "7.6.1",
     "apexcharts": "3.48.0",
     "moment": "2.30.1",
     "moment-with-locales-es6": "1.0.1",

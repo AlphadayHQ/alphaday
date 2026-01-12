@@ -1,9 +1,7 @@
 import { Suspense, memo, useMemo } from "react";
 import { ErrorModal } from "@alphaday/ui-kit";
-import { IonApp, IonRouterOutlet } from "@ionic/react";
-import { IonReactRouter } from "@ionic/react-router";
 import { Web3Modal } from "@web3modal/react";
-import { Redirect, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import * as userStore from "src/api/store/slices/user";
 import ToastContainer from "src/containers/toasts/ToastContainer";
 import {
@@ -11,6 +9,7 @@ import {
     useResolvedView,
     useViewRoute,
     useGaTracker,
+    useIsMobile,
 } from "./api/hooks";
 import { useGetRemoteStatusQuery } from "./api/services";
 import { useAppDispatch } from "./api/store/hooks";
@@ -20,7 +19,7 @@ import { getRtkErrorCode } from "./api/utils/errorHandling";
 import { Logger } from "./api/utils/logging";
 import CONFIG from "./config/config";
 import PreloaderPage from "./pages/preloader";
-import { EDesktopRoutePaths, desktopRoutes, errorRoutes } from "./routes";
+import { appRoutes, errorRoutes } from "./routes";
 import "@alphaday/ui-kit/global.scss";
 
 const landingPage = CONFIG.SEO.DOMAIN;
@@ -30,6 +29,7 @@ const goToLandingPage = () => {
 };
 
 const AppRoutes = () => {
+    const isMobile = useIsMobile();
     useGaTracker();
 
     const dispatch = useAppDispatch();
@@ -39,14 +39,24 @@ const AppRoutes = () => {
     });
 
     const resolvedView = useResolvedView();
-    const { pathContainsHashOrSlug, isRoot, isSuperfeed } = useViewRoute();
+    const {
+        pathContainsHashOrSlug,
+        isRoot,
+        isBoardsLibrary,
+        isWidgetsLibrary,
+    } = useViewRoute();
 
     const errorCode = useMemo<number | undefined>(() => {
         /**
          * At this moment, we do not support any other routes than the root and the hash/slug routes
          * If the path does not contain a hash or slug, we show the 404 error page
          */
-        if (!pathContainsHashOrSlug && !isRoot && !isSuperfeed) {
+        if (
+            !pathContainsHashOrSlug &&
+            !isRoot &&
+            !isBoardsLibrary &&
+            !isWidgetsLibrary
+        ) {
             return 404;
         }
         const errorInfo = error ?? resolvedView.error;
@@ -54,7 +64,8 @@ const AppRoutes = () => {
     }, [
         pathContainsHashOrSlug,
         isRoot,
-        isSuperfeed,
+        isBoardsLibrary,
+        isWidgetsLibrary,
         error,
         resolvedView.error,
     ]);
@@ -63,7 +74,7 @@ const AppRoutes = () => {
         if (error || errorCode) {
             return errorRoutes;
         }
-        return desktopRoutes;
+        return appRoutes;
     }, [error, errorCode]);
 
     /**
@@ -76,16 +87,8 @@ const AppRoutes = () => {
         location.reload();
     }
 
-    if (isSuperfeed) {
-        return (
-            <Redirect
-                key={EDesktopRoutePaths.Superfeed}
-                path={EDesktopRoutePaths.Superfeed}
-                exact
-                to={EDesktopRoutePaths.Base}
-                push
-            />
-        );
+    if (!isMobile && (isBoardsLibrary || isWidgetsLibrary)) {
+        window.location.href = "/";
     }
 
     return (
@@ -117,24 +120,22 @@ const App: React.FC = () => {
 
     if (!isCookieEnabled()) {
         return (
-            <IonApp className="theme-dark">
+            <div className="theme-dark app-container">
                 <ErrorModal
                     title="Cookie Error"
                     onClose={goToLandingPage}
                     errorMessage="Cookies must be enabled to use Alphaday."
                     size="sm"
                 />
-            </IonApp>
+            </div>
         );
     }
 
     return (
-        <IonApp className="theme-dark">
-            <IonReactRouter>
-                <IonRouterOutlet>
-                    <AppRoutes />
-                </IonRouterOutlet>
-            </IonReactRouter>
+        <div className="theme-dark app-container">
+            <BrowserRouter>
+                <AppRoutes />
+            </BrowserRouter>
             <Web3Modal
                 projectId={CONFIG.WALLET_CONNECT.PROJECT_ID}
                 ethereumClient={walletConnectProvider}
@@ -152,7 +153,7 @@ const App: React.FC = () => {
                 duration={CONFIG.UI.TOAST_DURATION}
                 className="fontGroup-supportBold"
             />
-        </IonApp>
+        </div>
     );
 };
 

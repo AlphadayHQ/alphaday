@@ -57,7 +57,7 @@ const EndpointInput: FC<IEndpointInput> = ({
             disableSave={!validateUrl(url)}
             size="sm"
         >
-            <div className="flex flex-col gap-4 w-full tiny:[&>input]:min-w-[200px] tiny:[&>input]:w-[calc(100vw_-_45px)]">
+            <div className="flex flex-col gap-4 w-full tiny:[&>input]:min-w-[200px] two-col:[&>input]:w-[calc(100vw_-_45px)]">
                 <Input
                     value={name}
                     onChange={(e) => {
@@ -66,6 +66,7 @@ const EndpointInput: FC<IEndpointInput> = ({
                     id="data-import-name"
                     name="DataImportName"
                     placeholder="Data import name e.g Top 10 DEXs"
+                    className="max-w-[300px] two-col:max-w-auto"
                 />
                 <Input
                     value={url}
@@ -75,6 +76,7 @@ const EndpointInput: FC<IEndpointInput> = ({
                     id="endpoint-input"
                     name="endpointInput"
                     placeholder={t("dune.endpointInputPlaceholder")}
+                    className="max-w-[300px] two-col:max-w-auto"
                 />
             </div>
         </Dialog>

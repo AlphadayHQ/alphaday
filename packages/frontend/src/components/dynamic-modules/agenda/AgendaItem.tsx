@@ -57,7 +57,7 @@ const AgendaItem: FC<Item> = ({ item, catColor, setItemsHeight }) => {
             tabIndex={-1}
             role="button"
         >
-            <div className="h-full min-w-[135px] flex flex-col items-end p-[5px_16px_5px_0]">
+            <div className="h-full min-w-[120px] two-col:min-w-[135px] flex flex-col items-end p-[5px_16px_5px_0]">
                 <div className="flex justify-end text-end min-w-[58px] tracking-tight-[0.5px] text-primaryVariant100 m-0 mb-1 fontGroup-supportBold">
                     {dateField}
                     {timeField && (

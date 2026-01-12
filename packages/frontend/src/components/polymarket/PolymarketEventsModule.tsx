@@ -155,7 +155,7 @@ const PolymarketEventsModule: FC<IPolymarketEventsModule> = ({
     }
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full mt-2 two-col:mt-0">
             {isLoading ? (
                 <ModuleLoader $height={contentHeight} />
             ) : (

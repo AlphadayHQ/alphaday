@@ -1,65 +1,13 @@
 import { useEffect, useRef } from "react";
 import i18next from "i18next";
 import moment from "moment-with-locales-es6";
-import { initReactI18next } from "react-i18next";
 import { useDispatch } from "react-redux";
-import {
-    translationEN,
-    translationES,
-    translationFR,
-    translationJA,
-    translationTR,
-    translationZH,
-} from "../../locales/translation";
 import { alphadayApi } from "../services";
 import { setSelectedLanguageCode } from "../store";
 import { useAppSelector } from "../store/hooks";
 import { ELanguageCode } from "../types/language";
 import { Logger } from "../utils/logging";
 import { useAllowedTranslations } from "./useAllowedTranslations";
-
-const resources: Record<ELanguageCode, { translation: JSONObject }> = {
-    en: {
-        translation: translationEN,
-    },
-    ja: {
-        translation: translationJA,
-    },
-    es: {
-        translation: translationES,
-    },
-    fr: {
-        translation: translationFR,
-    },
-    tr: {
-        translation: translationTR,
-    },
-    zh: {
-        translation: translationZH,
-    },
-};
-
-const i18nInit = (selectedLangCode: ELanguageCode) => {
-    i18next
-        .use(initReactI18next)
-        .init({
-            debug: true,
-            resources,
-            fallbackLng: selectedLangCode,
-            detection: {
-                order: ["navigator", "htmlTag", "path", "subdomain"],
-            },
-            interpolation: {
-                escapeValue: false,
-            },
-        })
-        .then(() => {
-            Logger.info("usePreferredLanguage: i18n initialized successfully");
-        })
-        .catch((e) => {
-            Logger.error("usePreferredLanguage: could not initialize i18n", e);
-        });
-};
 
 export const usePreferredLanguage = () => {
     const dispatch = useDispatch();
@@ -79,9 +27,19 @@ export const usePreferredLanguage = () => {
         if (lang && lang in languages && selectedLangCode !== lang) {
             dispatch(setSelectedLanguageCode({ code: lang as ELanguageCode }));
             prevLangCodeRef.current = lang as ELanguageCode;
-            i18nInit(lang as ELanguageCode);
-        } else {
-            i18nInit(selectedLangCode);
+            i18next.changeLanguage(lang).catch((e) => {
+                Logger.error(
+                    "usePreferredLanguage: could not change language",
+                    e
+                );
+            });
+        } else if (i18next.language !== selectedLangCode) {
+            i18next.changeLanguage(selectedLangCode).catch((e) => {
+                Logger.error(
+                    "usePreferredLanguage: could not change language",
+                    e
+                );
+            });
         }
         // this should only run once
         // eslint-disable-next-line react-hooks/exhaustive-deps
