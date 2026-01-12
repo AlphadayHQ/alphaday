@@ -10,6 +10,13 @@ interface IMobileWidgetsViewProps {
     widgets: TUserViewWidget[];
 }
 
+// TODO remove this temporary exclusion list when we have mobile-friendly versions of these templates
+// Templates to exclude on mobile
+const MOBILE_EXCLUDED_TEMPLATES = [
+    "one_col_image_template",
+    "two_col_image_template",
+];
+
 const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
     const widgetRef = useRef<HTMLDivElement | null>(null);
     const {
@@ -30,28 +37,40 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
         [squareRef]
     );
 
-    // Create tab options from widgets
+    // Filter out widgets that are excluded on mobile
+    const filteredWidgets = useMemo(() => {
+        return widgets.filter(
+            (widget) =>
+                !MOBILE_EXCLUDED_TEMPLATES.includes(widget.widget.template.slug)
+        );
+    }, [widgets]);
+
+    // Create tab options from filtered widgets
     const tabOptions = useMemo(() => {
-        return widgets.map((widget, index) => ({
+        return filteredWidgets.map((widget, index) => ({
             label: widget.name,
             value: String(index),
         }));
-    }, [widgets]);
+    }, [filteredWidgets]);
 
     // Get the currently selected widget
     const selectedWidget = useMemo(() => {
-        if (widgets.length === 0) return null;
-        return widgets[selectedWidgetIndex];
-    }, [widgets, selectedWidgetIndex]);
+        if (filteredWidgets.length === 0) return null;
+        return filteredWidgets[selectedWidgetIndex];
+    }, [filteredWidgets, selectedWidgetIndex]);
 
     const handleTabChange = (value: string) => {
         const index = parseInt(value, 10);
-        if (!Number.isNaN(index) && index >= 0 && index < widgets.length) {
+        if (
+            !Number.isNaN(index) &&
+            index >= 0 &&
+            index < filteredWidgets.length
+        ) {
             setSelectedWidgetIndex(index);
         }
     };
 
-    if (widgets.length === 0) {
+    if (filteredWidgets.length === 0) {
         return (
             <div className="flex items-center justify-center h-[calc(100vh-64px)] px-4">
                 <p className="text-primaryVariant100 text-center">
