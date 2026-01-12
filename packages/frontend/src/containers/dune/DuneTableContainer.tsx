@@ -12,7 +12,10 @@ import { IModuleContainer } from "src/types";
 
 const { MAX_PAGE_NUMBER } = CONFIG.WIDGETS.DUNE_TABLE;
 
-const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const DuneTableContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
 
     /* eslint-disable @typescript-eslint/naming-convention */
@@ -135,7 +138,7 @@ const DuneTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             rowProps={meta.row_props}
             isLoadingItems={isLoading}
             handlePaginate={handlePaginate}
-            widgetHeight={widgetHeight}
+            widgetHeight={mobileViewWidgetHeight ?? widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
         />
     );

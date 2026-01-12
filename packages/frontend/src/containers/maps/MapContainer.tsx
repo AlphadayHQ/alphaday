@@ -3,7 +3,10 @@ import { Logger } from "src/api/utils/logging";
 import MapModule from "src/components/maps/MapModule";
 import { IModuleContainer, TItem } from "src/types";
 
-const MapContainer: FC<IModuleContainer<TItem[]>> = ({ moduleData }) => {
+const MapContainer: FC<IModuleContainer<TItem[]>> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const [data] = moduleData.widget.custom_data ?? [];
 
     // TODO(v-almonacid): remove this block when format_structure is removed from db model
@@ -14,7 +17,9 @@ const MapContainer: FC<IModuleContainer<TItem[]>> = ({ moduleData }) => {
         );
     }
 
-    return <MapModule url={String(data?.url)} />;
+    return (
+        <MapModule height={mobileViewWidgetHeight} url={String(data?.url)} />
+    );
 };
 
 export default MapContainer;

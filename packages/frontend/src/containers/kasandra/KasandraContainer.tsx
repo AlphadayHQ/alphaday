@@ -25,7 +25,14 @@ import { EFeaturesRegistry, EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
 import BaseContainer from "../base/BaseContainer";
 
-const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const HEADER_HEIGHT = 55; // px - height of the header component in the widget
+const CHART_POLLING_INTERVAL =
+    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000;
+
+const KasandraContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
     const prevSelectedMarketData = useAppSelector(
         (state) => state.widgets.kasandra?.[moduleData.hash]
@@ -99,7 +106,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             (c) => c.id === prevSelectedMarketData?.selectedMarket?.id
         );
 
-        return storedMarket ?? kasandraCoins[0] ?? undefined;
+        return storedMarket ?? kasandraCoins[0];
     }, [prevSelectedMarketData?.selectedMarket, kasandraCoins]);
 
     const { currentData: marketHistory, isFetching: isLoadingHistory } =
@@ -109,8 +116,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 interval: selectedChartRange,
             },
             {
-                pollingInterval:
-                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+                pollingInterval: CHART_POLLING_INTERVAL,
                 skip: selectedMarket === undefined,
             }
         );
@@ -123,18 +129,22 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
                 limit: 1000,
             },
             {
-                pollingInterval:
-                    CONFIG.WIDGETS.MARKET.HISTORY_POLLING_INTERVAL * 1000,
+                pollingInterval: CHART_POLLING_INTERVAL,
                 skip: selectedMarket === undefined,
             }
         );
 
-    const { data: insights } = useGetInsightsQuery({
-        coin: selectedMarket?.slug,
-        interval: selectedChartRange,
-        type: isKasandraHistoryAllowed ? undefined : "prediction",
-        limit: 30,
-    });
+    const { data: insights } = useGetInsightsQuery(
+        {
+            coin: selectedMarket?.slug,
+            interval: selectedChartRange,
+            type: isKasandraHistoryAllowed ? undefined : "prediction",
+            limit: 30,
+        },
+        {
+            skip: selectedMarket === undefined,
+        }
+    );
 
     const logData = useMemo(() => {
         return {
@@ -268,8 +278,38 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
     }, [lastSelectedKeyword, kasandraCoins, tags, dispatch, moduleData.hash]);
 
     const contentHeight = useMemo(() => {
-        return `${WIDGET_HEIGHT - 55}px`;
+        return `${WIDGET_HEIGHT - HEADER_HEIGHT}px`;
     }, [WIDGET_HEIGHT]);
+
+    const content = (
+        <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
+            <KasandraModule
+                isLoading={isLoadingKasandraCoins}
+                isLoadingHistory={isLoadingHistory}
+                isLoadingPredictions={isLoadingPredictions}
+                insights={insights || undefined}
+                selectedPredictions={predictions || undefined}
+                selectedMarketHistory={marketHistory}
+                selectedCase={selectedCase}
+                onSelectCase={handleSelectedCase}
+                selectedChartRange={selectedChartRange}
+                onSelectChartRange={handleSelectedChartRange}
+                selectedMarket={selectedMarket}
+                isAuthenticated={isAuthenticated}
+                supportedCoins={kasandraCoins}
+                onSelectMarket={handleSelectedMarket}
+                contentHeight={contentHeight}
+                selectedTimestamp={selectedTimestamp}
+                onSelectDataPoint={handleSelectedTimestamp}
+                disclaimerAccepted={disclaimerAccepted}
+                onAcceptDisclaimer={handleAcceptDisclaimer}
+            />
+        </Suspense>
+    );
+
+    if (mobileViewWidgetHeight) {
+        return content;
+    }
 
     return (
         <BaseContainer
@@ -284,31 +324,7 @@ const KasandraContainer: FC<IModuleContainer> = ({ moduleData }) => {
             moduleData={moduleData}
             adjustable={false}
         >
-            <Suspense
-                fallback={<ModuleLoader $height={contentHeight} />} // 40px is the height of the header
-            >
-                <KasandraModule
-                    isLoading={isLoadingKasandraCoins}
-                    isLoadingHistory={isLoadingHistory}
-                    isLoadingPredictions={isLoadingPredictions}
-                    insights={insights || undefined}
-                    selectedPredictions={predictions || undefined}
-                    selectedMarketHistory={marketHistory}
-                    selectedCase={selectedCase}
-                    onSelectCase={handleSelectedCase}
-                    selectedChartRange={selectedChartRange}
-                    onSelectChartRange={handleSelectedChartRange}
-                    selectedMarket={selectedMarket}
-                    isAuthenticated={isAuthenticated}
-                    supportedCoins={kasandraCoins}
-                    onSelectMarket={handleSelectedMarket}
-                    contentHeight={contentHeight}
-                    selectedTimestamp={selectedTimestamp}
-                    onSelectDataPoint={handleSelectedTimestamp}
-                    disclaimerAccepted={disclaimerAccepted}
-                    onAcceptDisclaimer={handleAcceptDisclaimer}
-                />
-            </Suspense>
+            {content}
         </BaseContainer>
     );
 };

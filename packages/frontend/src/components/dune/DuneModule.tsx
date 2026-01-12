@@ -49,7 +49,7 @@ const DuneModule: FC<IDuneModuleProps> = ({
 
     if (!items) {
         return (
-            <div className="flex my-[18px] mx-auto justify-center">
+            <div className="flex my-14 two-col:my-[18px] mx-auto justify-center">
                 <div className="flex w-[315px] justify-center tiny:scale-95">
                     <Button
                         variant="primaryXL"

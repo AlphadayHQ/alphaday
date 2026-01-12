@@ -37,7 +37,7 @@ const AddressInput: FC<IAddressInput> = ({
             size="sm"
             useKeyPress={useKeyPress}
         >
-            <div className="flex justify-center w-full tiny:[&>input]:min-w-[200px] tiny:[&>input]:w-[calc(100vw_-_45px)]">
+            <div className="flex justify-center tiny:[&>input]:min-w-[200px] w-[calc(100vw_-_45px)]">
                 <Input
                     value={value}
                     onChange={(e) => {
@@ -47,6 +47,7 @@ const AddressInput: FC<IAddressInput> = ({
                     id="wallet-input"
                     name="walletInput"
                     placeholder={t("portfolio.inputPlaceholder")}
+                    className="max-w-[85vw]"
                 />
             </div>
         </Dialog>

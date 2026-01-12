@@ -1,6 +1,7 @@
 import { FC, memo, useState } from "react";
-import { ApexAreaChart, Spinner, themeColors } from "@alphaday/ui-kit";
+import { ApexAreaChart, Spinner, themeColors, twMerge } from "@alphaday/ui-kit";
 import moment from "moment-with-locales-es6";
+import { useIsMobile } from "src/api/hooks";
 import { TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
@@ -32,6 +33,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
     selectedChartRange,
     isLoading,
 }) {
+    const isMobile = useIsMobile();
     const [zoomKey, setZoomKey] = useState(0);
     const [showResetZoom, setShowResetZoom] = useState(false);
 
@@ -199,7 +201,7 @@ const LineChart: FC<IProps> = memo(function LineChart({
                 breakpoint: 575,
                 options: {
                     chart: {
-                        height: 200,
+                        height: isMobile ? 300 : 200,
                     },
                     xaxis: {
                         show: false,
@@ -223,14 +225,24 @@ const LineChart: FC<IProps> = memo(function LineChart({
 
     if (isLoading) {
         return (
-            <div className="flex w-full h-[200px] items-center justify-center">
+            <div
+                className={twMerge(
+                    "flex w-full items-center justify-center",
+                    isMobile ? "h-[300px]" : "h-[200px]"
+                )}
+            >
                 <Spinner size="sm" />
             </div>
         );
     }
 
     return (
-        <div className="w-full h-[200px] [&>div]:-mx-[10px] two-col:h-[284px] line-chart">
+        <div
+            className={twMerge(
+                "w-full [&>div]:-mx-[10px]  line-chart",
+                isMobile ? "h-[300px]" : "h-[200px] two-col:h-[284px]"
+            )}
+        >
             <ApexAreaChart
                 key={zoomKey}
                 options={options}

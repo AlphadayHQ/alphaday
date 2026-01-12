@@ -14,8 +14,8 @@ const getErrorMessage = ({
 }): React.ReactNode => {
     if (status === "offline") {
         return (
-            <>
-                <h1 className="font-montserrat text-primaryFiltered m-0 text-[120px] leading-none">
+            <div className="px-2 two-col:px-0">
+                <h1 className="font-montserrat text-primaryFiltered m-0 text-6xl two-col:text-[120px] leading-none">
                     {t("errorPage.offline.heading.text")}{" "}
                     <span className="text-secondaryOrange pr-1">
                         {t("errorPage.offline.heading.highlight")}
@@ -24,7 +24,7 @@ const getErrorMessage = ({
                 <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
                     {t("errorPage.offline.description")}
                 </p>
-            </>
+            </div>
         );
     }
 
@@ -93,7 +93,7 @@ const getErrorMessage = ({
                     <span className="text-secondaryOrange pr-1">{status}</span>
                 </h1>
             )}
-            <p className="font-montserrat text-primaryVariant100 text-xl mt-9 max-w-screen-sm">
+            <p className="font-montserrat text-center text-primaryVariant100 text-base two-col:text-xl mt-9 max-w-lg px-4">
                 {t("errorPage.default.description.text")}{" "}
                 <a
                     className="twitter"

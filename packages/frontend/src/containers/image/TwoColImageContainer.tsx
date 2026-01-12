@@ -16,6 +16,7 @@ import { ImageModule } from "../../components/image/ImageModule";
 const TwoColImageContainer: FC<IModuleContainer> = ({
     moduleData,
     onAspectRatioDetected,
+    mobileViewWidgetHeight,
 }) => {
     const imageWidgetSize = useTwoColImageWidgetSize();
     const [detectedAspectRatio, setDetectedAspectRatio] = useState<
@@ -46,6 +47,9 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
     );
 
     const contentHeight = useMemo(() => {
+        if (mobileViewWidgetHeight) {
+            return `${mobileViewWidgetHeight}px`;
+        }
         const { WIDGETS } = CONFIG;
         const imageConfig = WIDGETS.TWO_COL_IMAGE;
 
@@ -61,7 +65,7 @@ const TwoColImageContainer: FC<IModuleContainer> = ({
 
         // Fallback to static height
         return `${imageConfig.WIDGET_HEIGHT || 500}px`;
-    }, [imageWidgetSize?.width, detectedAspectRatio]);
+    }, [mobileViewWidgetHeight, detectedAspectRatio, imageWidgetSize?.width]);
 
     return (
         <Suspense fallback={<ModuleLoader $height={contentHeight} />}>

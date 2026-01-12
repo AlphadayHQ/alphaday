@@ -43,7 +43,7 @@ const RecipeModule: FC<IRecipeModule> = memo(function RecipeModule({
 
     return (
         <div className="flex flex-col h-full p-4 pt-2">
-            <div className="flex-1 flex flex-col justify-center gap-6">
+            <div className="mt-6 two-col:mt-0 two-col:flex-1 flex flex-col two-col:justify-center gap-6">
                 <div className="flex gap-4">
                     <div className="flex flex-col justify-center items-center border border-borderLine box-border rounded-lg min-w-[90px] w-full p-0 h-[91px]">
                         <h6 className="fontGroup-support text-center uppercase mb-2 text-secondaryOrange">

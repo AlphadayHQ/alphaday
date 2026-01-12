@@ -7,7 +7,10 @@ import { Logger } from "src/api/utils/logging";
 import CustomTableModule from "src/components/custom-modules/CustomTableModule";
 import { IModuleContainer } from "src/types";
 
-const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const CustomTableContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
     const dispatch = useAppDispatch();
 
     /* eslint-disable @typescript-eslint/naming-convention */
@@ -88,7 +91,7 @@ const CustomTableContainer: FC<IModuleContainer> = ({ moduleData }) => {
             rowProps={meta.row_props}
             isLoadingItems={isLoading}
             handlePaginate={() => ({})}
-            widgetHeight={widgetHeight}
+            widgetHeight={mobileViewWidgetHeight ?? widgetHeight}
             setWidgetHeight={handleSetWidgetHeight}
             isHeaderOnlyMode={moduleData.widget.slug.includes("dune_")}
         />

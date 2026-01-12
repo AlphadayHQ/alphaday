@@ -17,6 +17,7 @@ interface IHeatmapGrid {
     colorMetric: EHeatmapColorMetric;
     onCoinClick: (coin: TCoin) => void;
     keywordSearchList: TKeyword[];
+    height?: number;
 }
 
 type DisplayMode = "minimal" | "compact" | "comfortable" | "spacious";
@@ -156,6 +157,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
     colorMetric,
     onCoinClick,
     keywordSearchList,
+    height: propHeight,
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
@@ -341,6 +343,7 @@ export const HeatmapGrid: FC<IHeatmapGrid> = ({
         <div
             ref={containerRef}
             className="relative w-full h-full overflow-hidden bg-backgroundVariant100"
+            style={{ height: propHeight ?? "100%" }}
         >
             <svg
                 width="100%"

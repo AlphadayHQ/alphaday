@@ -10,10 +10,11 @@ import {
 } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { useWindowSize, useRecipes } from "src/api/hooks";
+import { truncateWithEllipsis } from "src/api/utils/textUtils";
 import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
 import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
-import ProfileDropdownContainer from "src/containers/header/profile-dropdown/ProfileDropdownContainer";
+import ProfileMenuContainer from "src/containers/header/profile-menu/ProfileMenuContainer";
 import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
 import HeaderSearchContainer from "src/containers/search/HeaderSearchContainer";
 import ViewsTabContainer from "src/containers/views-tab/ViewsTabContainer";
@@ -28,6 +29,7 @@ interface IProps {
     setTutFocusElemRef?:
         | React.Dispatch<React.SetStateAction<HTMLElement | null>>
         | undefined;
+    viewName?: string;
 }
 
 const LayoutHeader: FC<IProps> = ({
@@ -38,6 +40,7 @@ const LayoutHeader: FC<IProps> = ({
     setTutFocusElemRef,
     isBoardsLibOpen,
     setIsBoardsLibOpen,
+    viewName,
 }) => {
     const { t } = useTranslation();
     const { enabled: isRecipesEnabled } = useRecipes();
@@ -62,8 +65,12 @@ const LayoutHeader: FC<IProps> = ({
     };
     const { width } = useWindowSize();
 
+    const viewDisplayName = viewName
+        ? truncateWithEllipsis(`${viewName} board`, 20, "end")
+        : "";
+
     return (
-        <div ref={headerRef} className="z-10 relative">
+        <div ref={headerRef} className="z-20 two-col:z-10 relative">
             {width >= breakpoints.TwoColMinWidth ? (
                 <HeaderWrapper
                     data-testid="header-nav"
@@ -159,7 +166,7 @@ const LayoutHeader: FC<IProps> = ({
                                         ]}
                                     /> */}
                                     <HeaderNavElement className="single-col:ml-1 ml-[8px] mr-4">
-                                        <ProfileDropdownContainer />
+                                        <ProfileMenuContainer />
                                     </HeaderNavElement>
                                 </HeaderNavRight>
                             </>
@@ -179,8 +186,19 @@ const LayoutHeader: FC<IProps> = ({
                     className={isBoardsLibOpen ? "static mb-[-110px]" : ""}
                 >
                     <HeaderNavbar mobileOpen={mobileOpen}>
-                        <div className="flex w-full flex-row items-center justify-between py-5">
-                            <Logo />
+                        <div className="flex w-full flex-row items-center justify-between py-4 h-16">
+                            <div className="flex flex-row-reverse">
+                                <Logo />
+                                <div className="mx-3 flex items-center fontGroup-highlightSemi">
+                                    <span className="text-lg mr-2 line-clamp-6">
+                                        /
+                                    </span>{" "}
+                                    {viewDisplayName}{" "}
+                                    <div className="w-8 h-7 mb-2 -ml-0.5">
+                                        <SyncIndicatorContainer />
+                                    </div>
+                                </div>
+                            </div>
                             {!hideFeatures && (
                                 <HeaderNavRight>
                                     {mobileOpen ? (
@@ -199,20 +217,12 @@ const LayoutHeader: FC<IProps> = ({
                         </div>
                         {mobileOpen && (
                             <>
-                                <div className="mx-2.5 my-auto flex w-full flex-row items-center justify-center">
+                                <div className="z-10 mx-2.5 my-auto flex w-full flex-row items-center justify-center">
                                     <HeaderSearchContainer />
                                 </div>
-
-                                <h3 className="two-col:pl-4 two-col:pb-0 pb-0 pl-3 pr-0 pt-2.5 fontGroup-highlightSemi">
-                                    {t("navigation.boards")}
-                                </h3>
-
-                                <ViewsTabContainer
-                                    mobileOpen
-                                    isBoardsLibOpen={isBoardsLibOpen}
-                                    onToggleBoardsLib={toggleBoardsLib}
-                                    headerRef={headerRef}
-                                    handleMobileOpen={handleMobileOpen}
+                                <ProfileMenuContainer
+                                    onCloseMenu={() => setMobileOpen(false)}
+                                    isMobile
                                 />
                             </>
                         )}
@@ -228,7 +238,7 @@ const LayoutHeader: FC<IProps> = ({
                                             ml={["8px", "1px", "1px", "16px"]}
                                         /> */}
                                     <HeaderNavElement className="single-col:ml-4 ml-[8px]">
-                                        <ProfileDropdownContainer />
+                                        <ProfileMenuContainer />
                                     </HeaderNavElement>
                                 </>
                             )}

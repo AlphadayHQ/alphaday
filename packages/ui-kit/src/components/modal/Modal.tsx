@@ -30,11 +30,6 @@ export interface IModal extends IProps {
  * This is a modal component uses the triggerId to open the modal.
  * when an element with the triggerId is clicked, the modal will open.
  *
- * Ionic's isOpen: boolean can also be used to open the modal. However it uses a
- * one-way data binding, so it will not update it's value when the modal closes.
- * https://ionicframework.com/docs/api/modal#using-isopen
- *
- * IonBackdrop enables the click outside to close functionality.
  */
 
 export const Modal: FC<IModal> = ({

@@ -66,7 +66,7 @@ const PolymarketTopVolumeModule: FC<IPolymarketTopVolumeModule> = ({
     };
 
     return (
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full mt-2 two-col:mt-0">
             <div className="h-full pb-14 ml-2" role="button">
                 <div className="flex items-center justify-between px-1 pb-2 mr-[3px]">
                     <div className="flex gap-4 w-full">

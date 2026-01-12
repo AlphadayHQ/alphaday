@@ -65,5 +65,9 @@
     "url": "https://github.com/AlphadayHQ/alphaday/issues"
   },
   "homepage": "https://github.com/AlphadayHQ/alphaday#readme",
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "resolutions": {
+    "@types/react": "18.2.25",
+    "@types/react-dom": "18.2.6"
+  }
 }

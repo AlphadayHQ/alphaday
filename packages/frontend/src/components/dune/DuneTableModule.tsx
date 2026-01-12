@@ -7,9 +7,10 @@ import {
     useRef,
     useState,
 } from "react";
-import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
+import { ModuleLoader, ScrollBar, twMerge } from "@alphaday/ui-kit";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
+import { useIsMobile } from "src/api/hooks";
 import { DimensionsContext } from "src/api/store/providers/dimensions-context";
 import {
     TCustomLayoutEntry,
@@ -48,6 +49,7 @@ const DuneTableModule: FC<IDuneTableProps> = ({
     setWidgetHeight,
     duneMeta,
 }) => {
+    const isMobile = useIsMobile();
     const { widgetsSize } = useContext(DimensionsContext);
     const { t } = useTranslation();
     const [scrollRef, setScrollRef] = useState<HTMLElement | undefined>();
@@ -99,9 +101,14 @@ const DuneTableModule: FC<IDuneTableProps> = ({
     }
 
     return (
-        <div className="h-25 overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primaryVariant100 scrollbar-thumb-rounded">
+        <div className="overflow-x-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-primaryVariant100 scrollbar-thumb-rounded">
             {duneMeta && (
-                <div className="px-4 pb-2 text-center text-xs text-primaryVariant200">
+                <div
+                    className={twMerge(
+                        "px-4 pb-2 text-center text-xs text-primaryVariant200",
+                        isMobile ? "pt-2" : "pt-0"
+                    )}
+                >
                     <span className="font-semibold text-primary">
                         {duneMeta.widgetName}
                     </span>

@@ -1,4 +1,4 @@
-import { FC, useMemo, useEffect, useRef } from "react";
+import { FC, useMemo, useEffect, useRef, useState } from "react";
 import {
     ApexDonutChart,
     ScrollBar,
@@ -57,6 +57,9 @@ const PortfolioStats: FC<IPortfolioStats> = ({
 }) => {
     const LegendWrapRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<HTMLDivElement>(null);
+    const [assetListHeight, setAssetListHeight] = useState(
+        DEFAULT_ASSET_LIST_HEIGHT
+    );
 
     const { t } = useTranslation();
 
@@ -182,11 +185,20 @@ const PortfolioStats: FC<IPortfolioStats> = ({
         }
     }, [widgetSize, selectedAddress, moduleId]);
 
-    const assetListHeight =
-        (chartRef.current
-            ? widgetHeight - chartRef.current.offsetHeight + PADDING_OFFSET
-            : DEFAULT_ASSET_LIST_HEIGHT) -
-        2 * 53;
+    useEffect(() => {
+        const calculateHeight = () => {
+            const newHeight =
+                (chartRef.current
+                    ? widgetHeight -
+                      chartRef.current.offsetHeight +
+                      PADDING_OFFSET
+                    : DEFAULT_ASSET_LIST_HEIGHT) -
+                2 * 53;
+            setAssetListHeight(newHeight);
+        };
+
+        calculateHeight();
+    }, [widgetHeight, assets.length]);
 
     return (
         <div className="px-4 portfolio-widget">
@@ -302,12 +314,12 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                             }}
                         >
                             <ScrollBar>
-                                {assets.map((asset) => {
+                                {assets.map((asset, index) => {
                                     const assetKey = `${
                                         showAllAssets ? "all" : "single"
-                                    }${asset.address}-${asset.network}-${
-                                        asset.updatedAt
-                                    }-${asset.token.id}`;
+                                    }-${asset.address}-${asset.network}-${
+                                        asset.token.address
+                                    }-${index}`;
 
                                     return (
                                         <div
@@ -385,6 +397,12 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                                                 0,
                                                             style: ENumberStyle.Currency,
                                                             currency: "USD",
+                                                            useEllipsis: true,
+                                                            ellipsisCutoff:
+                                                                widgetSize ===
+                                                                "lg"
+                                                                    ? SMALL_PRICE_CUTOFF_LG
+                                                                    : SMALL_PRICE_CUTOFF_SM,
                                                         }).value,
                                                         showBalance
                                                     )}

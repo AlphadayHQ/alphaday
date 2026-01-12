@@ -1,6 +1,6 @@
 import { type FC, Suspense, useCallback, useMemo, useState } from "react";
 import { ModuleLoader } from "@alphaday/ui-kit";
-import { useWidgetHeight } from "src/api/hooks";
+import { useIsMobile, useWidgetHeight } from "src/api/hooks";
 import { useGlobalSearch } from "src/api/hooks/useGlobalSearch";
 import { useGetCoinsQuery } from "src/api/services";
 import { ETag, TCoin, TKeyword } from "src/api/types";
@@ -9,7 +9,11 @@ import { EHeatmapMaxItems } from "../../components/market-heatmap/types";
 import BaseContainer from "../base/BaseContainer";
 import { MarketHeatmapModule } from "./MarketHeatmapModule";
 
-const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
+const MarketHeatmapContainer: FC<IModuleContainer> = ({
+    moduleData,
+    mobileViewWidgetHeight,
+}) => {
+    const isMobile = useIsMobile();
     const widgetHeight = useWidgetHeight(moduleData);
     const [maxItems, setMaxItems] = useState<EHeatmapMaxItems>(
         EHeatmapMaxItems.TwentyFive
@@ -78,6 +82,24 @@ const MarketHeatmapContainer: FC<IModuleContainer> = ({ moduleData }) => {
     const contentHeight = useMemo(() => {
         return `${widgetHeight - 40}px`;
     }, [widgetHeight]);
+
+    if (isMobile) {
+        return isLoading ? (
+            <ModuleLoader $height={contentHeight} />
+        ) : (
+            <Suspense fallback={<ModuleLoader $height={contentHeight} />}>
+                <MarketHeatmapModule
+                    data={data}
+                    maxItems={maxItems}
+                    isError={isError}
+                    onCoinClick={handleCoinClick}
+                    keywordSearchList={keywordSearchList}
+                    onMaxItemsChange={setMaxItems}
+                    height={mobileViewWidgetHeight}
+                />
+            </Suspense>
+        );
+    }
 
     return (
         <BaseContainer
