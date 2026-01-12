@@ -184,10 +184,10 @@ export const RecipeLibrary: FC<IProps> = ({
     };
 
     const handleToggleActivation = (recipeId: string, isActive: boolean) => {
-        if (isActive && onDeactivateRecipe) {
-            onDeactivateRecipe(recipeId);
-        } else if (!isActive && onActivateRecipe) {
+        if (isActive && onActivateRecipe) {
             onActivateRecipe(recipeId);
+        } else if (!isActive && onDeactivateRecipe) {
+            onDeactivateRecipe(recipeId);
         }
     };
 

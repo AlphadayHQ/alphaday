@@ -229,13 +229,6 @@ export const WALLET_CONNECT = {
     PROJECT_ID: import.meta.env.VITE_WALLET_CONNECT_PROJECT_ID ?? "",
 } as const;
 
-export const UNISWAP = {
-    convenienceFee: import.meta.env.VITE_SWAP_FEE
-        ? parseInt(import.meta.env.VITE_SWAP_FEE, 10)
-        : undefined,
-    convenienceFeeRecipient: import.meta.env.VITE_SWAP_FEE_ADDRESS || undefined,
-} as const;
-
 export const OAUTH = {
     GOOGLE_CLIENT_ID: import.meta.env.VITE_OAUTH_ID_GOOGLE,
     APPLE_CLIENT_ID: import.meta.env.VITE_OAUTH_ID_APPLE,

@@ -131,18 +131,23 @@ export const useViewUpdater: () => void = () => {
     });
 
     const shouldAddToCache = useMemo(() => {
-        if (!resolvedView.currentData) return false;
+        if (!resolvedView.currentData) {
+            return false;
+        }
 
         const isLangChanged = isViewLangModified(
             selectedView,
             resolvedView.currentData
         );
+
+        const foundInAvailableViews = availableViews?.find(
+            (v) => v.data.hash === resolvedView.data?.hash
+        );
+
         const isNewView =
             !isViewModified &&
             !isFetchingSubscribedViews &&
-            !availableViews?.find(
-                (v) => v.data.hash === resolvedView.data?.hash
-            );
+            !foundInAvailableViews;
 
         return isLangChanged || isNewView;
     }, [
@@ -155,10 +160,6 @@ export const useViewUpdater: () => void = () => {
     ]);
 
     if (shouldAddToCache && resolvedView.currentData) {
-        Logger.debug(
-            "useViewUpdater: adding view to cache",
-            resolvedView.currentData.name
-        );
         addViewToCache(resolvedView.currentData);
     }
 
@@ -281,7 +282,6 @@ export const useViewUpdater: () => void = () => {
 
     const viewFromPathInCache = useMemo(() => {
         if (routeInfo === undefined) return undefined;
-        // Look for the current view slug/hash in the views cache
         return subscribedViews.find(
             (v) =>
                 v.data.slug === routeInfo.value ||
@@ -299,6 +299,7 @@ export const useViewUpdater: () => void = () => {
             routeInfo !== undefined &&
             !resolvedView.isError
         ) {
+            // First, try to select from cache if available
             if (
                 viewFromPathInCache !== undefined &&
                 viewFromPathInCache.data.id !== selectedViewId
@@ -307,6 +308,18 @@ export const useViewUpdater: () => void = () => {
                     `useViewUpdater: selecting view ${viewFromPathInCache.data.name} from path`
                 );
                 setSelectedViewId(viewFromPathInCache.data.id);
+                return;
+            }
+
+            // If not in cache but successfully resolved from backend, select it directly
+            // This handles the case where a view is resolved but not yet reflected in the
+            // subscribedViews cache (e.g., shared/public boards on first visit)
+            if (
+                viewFromPathInCache === undefined &&
+                resolvedView.currentData !== undefined &&
+                resolvedView.currentData.id !== selectedViewId
+            ) {
+                setSelectedViewId(resolvedView.currentData.id);
                 return;
             }
         }
