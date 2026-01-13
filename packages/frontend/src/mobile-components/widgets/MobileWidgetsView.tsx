@@ -3,18 +3,13 @@ import { TabsBar } from "@alphaday/ui-kit";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { MOBILE_DEPRIORITIZED_TEMPLATES } from "src/config/widgets";
 import CONFIG from "src/config";
 import { TEMPLATES_DICT, IModuleContainer } from "src/types";
 
 interface IMobileWidgetsViewProps {
     widgets: TUserViewWidget[];
 }
-
-// Templates to deprioritize on mobile (should not appear in first 3 positions)
-const MOBILE_DEPRIORITIZED_TEMPLATES = [
-    "one_col_image_template",
-    "two_col_image_template",
-];
 
 const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
     const widgetRef = useRef<HTMLDivElement | null>(null);
@@ -39,22 +34,18 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
     // Reorder widgets to ensure deprioritized templates don't appear in first 3 positions
     const reorderedWidgets = useMemo(() => {
         const result = [...widgets];
+        const deprioritizedTemplates =
+            MOBILE_DEPRIORITIZED_TEMPLATES as readonly string[];
 
         // Check first 3 positions
         for (let i = 0; i < Math.min(3, result.length); i += 1) {
             const widget = result[i];
-            if (
-                MOBILE_DEPRIORITIZED_TEMPLATES.includes(
-                    widget.widget.template.slug
-                )
-            ) {
+            if (deprioritizedTemplates.includes(widget.widget.template.slug)) {
                 // Find first non-deprioritized widget after position i
                 const swapIndex = result.findIndex(
                     (w, idx) =>
                         idx > i &&
-                        !MOBILE_DEPRIORITIZED_TEMPLATES.includes(
-                            w.widget.template.slug
-                        )
+                        !deprioritizedTemplates.includes(w.widget.template.slug)
                 );
 
                 if (swapIndex !== -1) {
