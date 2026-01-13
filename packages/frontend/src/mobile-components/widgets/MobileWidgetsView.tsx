@@ -10,6 +10,12 @@ interface IMobileWidgetsViewProps {
     widgets: TUserViewWidget[];
 }
 
+// Templates to deprioritize on mobile (should not appear in first 3 positions)
+const MOBILE_DEPRIORITIZED_TEMPLATES = [
+    "one_col_image_template",
+    "two_col_image_template",
+];
+
 const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
     const widgetRef = useRef<HTMLDivElement | null>(null);
     const {
@@ -30,28 +36,66 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
         [squareRef]
     );
 
-    // Create tab options from widgets
+    // Reorder widgets to ensure deprioritized templates don't appear in first 3 positions
+    const reorderedWidgets = useMemo(() => {
+        const result = [...widgets];
+
+        // Check first 3 positions
+        for (let i = 0; i < Math.min(3, result.length); i += 1) {
+            const widget = result[i];
+            if (
+                MOBILE_DEPRIORITIZED_TEMPLATES.includes(
+                    widget.widget.template.slug
+                )
+            ) {
+                // Find first non-deprioritized widget after position i
+                const swapIndex = result.findIndex(
+                    (w, idx) =>
+                        idx > i &&
+                        !MOBILE_DEPRIORITIZED_TEMPLATES.includes(
+                            w.widget.template.slug
+                        )
+                );
+
+                if (swapIndex !== -1) {
+                    // Swap positions
+                    [result[i], result[swapIndex]] = [
+                        result[swapIndex],
+                        result[i],
+                    ];
+                }
+            }
+        }
+
+        return result;
+    }, [widgets]);
+
+    // Create tab options from reordered widgets
     const tabOptions = useMemo(() => {
-        return widgets.map((widget, index) => ({
+        return reorderedWidgets.map((widget, index) => ({
             label: widget.name,
             value: String(index),
         }));
-    }, [widgets]);
+    }, [reorderedWidgets]);
 
     // Get the currently selected widget
     const selectedWidget = useMemo(() => {
-        if (widgets.length === 0) return null;
-        return widgets[selectedWidgetIndex];
-    }, [widgets, selectedWidgetIndex]);
+        if (reorderedWidgets.length === 0) return null;
+        return reorderedWidgets[selectedWidgetIndex];
+    }, [reorderedWidgets, selectedWidgetIndex]);
 
     const handleTabChange = (value: string) => {
         const index = parseInt(value, 10);
-        if (!Number.isNaN(index) && index >= 0 && index < widgets.length) {
+        if (
+            !Number.isNaN(index) &&
+            index >= 0 &&
+            index < reorderedWidgets.length
+        ) {
             setSelectedWidgetIndex(index);
         }
     };
 
-    if (widgets.length === 0) {
+    if (reorderedWidgets.length === 0) {
         return (
             <div className="flex items-center justify-center h-[calc(100vh-64px)] px-4">
                 <p className="text-primaryVariant100 text-center">
