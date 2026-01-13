@@ -299,7 +299,7 @@ export const WIDGETS_CONFIG = {
 
 export const TWO_COL_WIDGETS_CONFIG = {
     two_col_image: {
-        templateSlug: `${ETemplateNameRegistry.Two_Col_Image}_template`,
+        templateSlug: `${ETemplateNameRegistry.Two_Col_Image.toLowerCase()}_template`,
         templateName: ETemplateNameRegistry.Two_Col_Image,
         widgetConfig: WIDGETS_CONFIG.TWO_COL_IMAGE,
     },
@@ -309,12 +309,12 @@ export const TWO_COL_WIDGETS_CONFIG = {
         widgetConfig: WIDGETS_CONFIG.KASANDRA,
     },
     kasandraFlakeOff: {
-        templateSlug: `${ETemplateNameRegistry.KasandraFlakeOff}_template`,
+        templateSlug: `${ETemplateNameRegistry.KasandraFlakeOff.toLowerCase()}_template`,
         templateName: ETemplateNameRegistry.KasandraFlakeOff,
         widgetConfig: WIDGETS_CONFIG.KASANDRA_FLAKEOFF,
     },
     marketHeatmap: {
-        templateSlug: `${ETemplateNameRegistry.MarketHeatmap}_template`,
+        templateSlug: `${ETemplateNameRegistry.MarketHeatmap.toLowerCase()}_template`,
         templateName: ETemplateNameRegistry.MarketHeatmap,
         widgetConfig: WIDGETS_CONFIG.MARKET_HEATMAP,
     },
@@ -324,6 +324,6 @@ export const TWO_COL_WIDGETS_CONFIG = {
  * Templates to deprioritize on mobile (should not appear in first 3 positions)
  */
 export const MOBILE_DEPRIORITIZED_TEMPLATES = [
-    `${ETemplateNameRegistry.One_Col_Image}_template`,
-    `${ETemplateNameRegistry.Two_Col_Image}_template`,
+    `${ETemplateNameRegistry.One_Col_Image.toLowerCase()}_template`,
+    `${ETemplateNameRegistry.Two_Col_Image.toLowerCase()}_template`,
 ] as const;
