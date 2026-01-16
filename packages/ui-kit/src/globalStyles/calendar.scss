@@ -390,6 +390,13 @@
         background-color: theme("colors.background");
     }
 
+    .fc-daygrid-day-bottom {
+        margin: 0 !important;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
     .fc-daygrid-day-events {
         display: flex;
         justify-content: flex-end;
