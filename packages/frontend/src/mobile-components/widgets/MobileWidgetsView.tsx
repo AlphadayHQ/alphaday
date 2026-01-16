@@ -3,6 +3,7 @@ import { TabsBar } from "@alphaday/ui-kit";
 import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import { TUserViewWidget } from "src/api/types";
 import { Logger } from "src/api/utils/logging";
+import { MOBILE_DEPRIORITIZED_TEMPLATES } from "src/config/widgets";
 import CONFIG from "src/config";
 import { TEMPLATES_DICT, IModuleContainer } from "src/types";
 
@@ -30,28 +31,62 @@ const MobileWidgetsView: FC<IMobileWidgetsViewProps> = ({ widgets }) => {
         [squareRef]
     );
 
-    // Create tab options from widgets
+    // Reorder widgets to ensure deprioritized templates don't appear in first 3 positions
+    const reorderedWidgets = useMemo(() => {
+        const result = [...widgets];
+        const deprioritizedTemplates =
+            MOBILE_DEPRIORITIZED_TEMPLATES as readonly string[];
+
+        // Check first 3 positions
+        for (let i = 0; i < Math.min(3, result.length); i += 1) {
+            const widget = result[i];
+            if (deprioritizedTemplates.includes(widget.widget.template.slug)) {
+                // Find first non-deprioritized widget after position i
+                const swapIndex = result.findIndex(
+                    (w, idx) =>
+                        idx > i &&
+                        !deprioritizedTemplates.includes(w.widget.template.slug)
+                );
+
+                if (swapIndex !== -1) {
+                    // Swap positions
+                    [result[i], result[swapIndex]] = [
+                        result[swapIndex],
+                        result[i],
+                    ];
+                }
+            }
+        }
+
+        return result;
+    }, [widgets]);
+
+    // Create tab options from reordered widgets
     const tabOptions = useMemo(() => {
-        return widgets.map((widget, index) => ({
+        return reorderedWidgets.map((widget, index) => ({
             label: widget.name,
             value: String(index),
         }));
-    }, [widgets]);
+    }, [reorderedWidgets]);
 
     // Get the currently selected widget
     const selectedWidget = useMemo(() => {
-        if (widgets.length === 0) return null;
-        return widgets[selectedWidgetIndex];
-    }, [widgets, selectedWidgetIndex]);
+        if (reorderedWidgets.length === 0) return null;
+        return reorderedWidgets[selectedWidgetIndex];
+    }, [reorderedWidgets, selectedWidgetIndex]);
 
     const handleTabChange = (value: string) => {
         const index = parseInt(value, 10);
-        if (!Number.isNaN(index) && index >= 0 && index < widgets.length) {
+        if (
+            !Number.isNaN(index) &&
+            index >= 0 &&
+            index < reorderedWidgets.length
+        ) {
             setSelectedWidgetIndex(index);
         }
     };
 
-    if (widgets.length === 0) {
+    if (reorderedWidgets.length === 0) {
         return (
             <div className="flex items-center justify-center h-[calc(100vh-64px)] px-4">
                 <p className="text-primaryVariant100 text-center">
