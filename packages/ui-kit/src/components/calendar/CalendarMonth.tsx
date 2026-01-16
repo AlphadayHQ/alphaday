@@ -55,38 +55,57 @@ export const getCoords = (elem: HTMLElement | null): TElemCoords => {
     };
 };
 
+const MAX_DOTS_PER_DAY = 30;
+
+// Track which events have been added to each day to avoid race conditions
+const dayEventCounts = new Map<string, Set<string>>();
+
 const eventRender = (info: EventMountArg, widgetHash: string) => {
     const { event, backgroundColor } = info;
     const cal = document.querySelector(`#cal-${widgetHash}`);
-
     const { start } = event;
     const end = moment(event.end || start)
         .add(1, "days")
         .format();
 
-    // loop through event dates
     const now = moment(start);
     if (cal) {
         while (now.isBefore(end, "day")) {
-            const dot = document.createElement("span");
-            dot.style.backgroundColor = backgroundColor;
-            dot.className =
-                "fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-today";
-            dot.setAttribute("data-id", event.id);
-
-            // append to calendar day
+            const dateStr = now.format("YYYY-MM-DD");
             const daygrid = cal.querySelector(
-                `.fc-daygrid-day[data-date="${String(
-                    now.format("YYYY-MM-DD")
-                )}"] .fc-daygrid-day-frame .fc-daygrid-day-events`
+                `.fc-daygrid-day[data-date="${dateStr}"] .fc-daygrid-day-frame .fc-daygrid-day-events`
             );
 
-            // check if dot has been added before
-            const prevDot = daygrid?.querySelector(
-                `.fc-daygrid-event[data-id="${String(event.id)}"]`
-            );
+            if (daygrid) {
+                // Initialize tracking for this day if needed
+                if (!dayEventCounts.has(dateStr)) {
+                    dayEventCounts.set(dateStr, new Set());
+                }
 
-            if (!prevDot && daygrid) daygrid.append(dot);
+                const eventsForDay = dayEventCounts.get(dateStr);
+                if (eventsForDay) {
+                    // Check if we haven't already added this event and haven't exceeded limit
+                    if (
+                        !eventsForDay.has(event.id) &&
+                        eventsForDay.size < MAX_DOTS_PER_DAY
+                    ) {
+                        const prevDot = daygrid.querySelector(
+                            `[data-id="${event.id}"]`
+                        );
+                        if (!prevDot) {
+                            const dot = document.createElement("span");
+                            dot.style.backgroundColor = backgroundColor;
+                            dot.className =
+                                "fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-today";
+                            dot.setAttribute("data-id", event.id);
+                            daygrid.append(dot);
+
+                            // Track that we added this event
+                            eventsForDay.add(event.id);
+                        }
+                    }
+                }
+            }
             now.add(1, "days");
         }
     }
@@ -347,6 +366,8 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
     );
 
     useEffect(() => {
+        // Clear the day event counts when calendar re-renders
+        dayEventCounts.clear();
         setKey((prev) => prev + 1);
     }, [events, catFilters]);
 
@@ -356,6 +377,7 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
             locale={locale}
             key={key}
             plugins={[dayGridPlugin, interactionPlugin]}
+            dayMaxEvents={MAX_DOTS_PER_DAY}
             headerToolbar={{
                 left: "",
                 center: "prev, title,next",
