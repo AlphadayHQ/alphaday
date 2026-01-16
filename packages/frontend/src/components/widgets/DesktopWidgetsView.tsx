@@ -43,7 +43,7 @@ const DesktopWidgetsView: FC<IDesktopWidgetsViewProps> = ({
                     if (!moduleData) return null;
 
                     const Container = TEMPLATES_DICT[
-                        config.templateSlug
+                        config.templateSlug as TTemplateSlug
                     ] as FC<IModuleContainer>;
                     if (!Container) return null;
 
