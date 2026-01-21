@@ -177,6 +177,39 @@ const viewsSlice = createSlice({
             }
             draft.subscribedViewsCache = { ...draftViewsCache };
         },
+        addOrUpdateSubscribedView(
+            draft,
+            action: PayloadAction<TUserViewPreview>
+        ) {
+            const { payload: subscribedView } = action;
+            const { subscribedViewsCache } = draft;
+
+            const prevState = subscribedViewsCache
+                ? subscribedViewsCache[subscribedView.id]
+                : undefined;
+
+            const updatedView: TSubscribedView =
+                prevState !== undefined
+                    ? {
+                          ...prevState,
+                          lastSynced: new Date().toISOString(),
+                          data: {
+                              ...subscribedView,
+                          },
+                      }
+                    : {
+                          lastModified: undefined,
+                          lastSynced: new Date().toISOString(),
+                          data: {
+                              ...subscribedView,
+                          },
+                      };
+
+            draft.subscribedViewsCache = {
+                ...(subscribedViewsCache ?? {}),
+                [subscribedView.id]: updatedView,
+            };
+        },
         syncView(draft, action: PayloadAction<TRemoteUserView>) {
             const remoteView = mapRemoteView(action.payload);
             Logger.debug(
@@ -761,6 +794,7 @@ export const {
     addWidgetsToView,
     removeWidgetFromView,
     updateSubscribedViewsCache,
+    addOrUpdateSubscribedView,
     setSubscribedViewsCache,
 } = viewsSlice.actions;
 export default viewsSlice.reducer;
