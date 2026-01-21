@@ -31,6 +31,7 @@ import viewsReducer, {
     selectedViewSelector,
     getSelectedViewRefFromDraft,
     updateSubscribedViewsCache,
+    addOrUpdateSubscribedView,
     setSubscribedViewsCache,
 } from "./views";
 
@@ -307,6 +308,117 @@ describe("updateSubscribedViewsCache", () => {
         ];
 
         expect(newSubscribedViews).toStrictEqual(updatedSubscribedViews);
+    });
+
+    it("should replace entire cache with payload (not merge)", () => {
+        // Start with cache containing views 1, 2, 3
+        const initialCache = {
+            1: fakeSubscribedViewsCacheMock(1),
+            2: fakeSubscribedViewsCacheMock(2),
+            3: fakeSubscribedViewsCacheMock(3),
+        };
+
+        initialState = {
+            ...initialState,
+            subscribedViewsCache: initialCache,
+        };
+
+        // Update with only views 2 and 4
+        const newSubscribedViews = [
+            fakeSubscribedView(2),
+            fakeSubscribedView(4),
+        ];
+
+        const newViewState = viewsReducer(
+            initialState,
+            updateSubscribedViewsCache(newSubscribedViews)
+        );
+
+        // Should have only views 2 and 4 (views 1 and 3 removed)
+        expect(Object.keys(newViewState.subscribedViewsCache || {})).toEqual([
+            "2",
+            "4",
+        ]);
+        expect(newViewState.subscribedViewsCache?.[1]).toBeUndefined();
+        expect(newViewState.subscribedViewsCache?.[3]).toBeUndefined();
+        expect(newViewState.subscribedViewsCache?.[2]).toBeDefined();
+        expect(newViewState.subscribedViewsCache?.[4]).toBeDefined();
+    });
+});
+
+describe("addOrUpdateSubscribedView", () => {
+    it("should add a new subscribed view without affecting others", () => {
+        // Start with cache containing views 1, 2, 3
+        const initialCache = {
+            1: fakeSubscribedViewsCacheMock(1),
+            2: fakeSubscribedViewsCacheMock(2),
+            3: fakeSubscribedViewsCacheMock(3),
+        };
+
+        initialState = {
+            ...initialState,
+            subscribedViewsCache: initialCache,
+        };
+
+        // Add view 4
+        const newView = fakeSubscribedView(4);
+
+        const newViewState = viewsReducer(
+            initialState,
+            addOrUpdateSubscribedView(newView)
+        );
+
+        // Should have all 4 views
+        expect(Object.keys(newViewState.subscribedViewsCache || {})).toHaveLength(4);
+        expect(newViewState.subscribedViewsCache?.[1]).toBeDefined();
+        expect(newViewState.subscribedViewsCache?.[2]).toBeDefined();
+        expect(newViewState.subscribedViewsCache?.[3]).toBeDefined();
+        expect(newViewState.subscribedViewsCache?.[4]).toBeDefined();
+    });
+
+    it("should update an existing subscribed view without affecting others", async () => {
+        // Start with cache containing views 1, 2, 3
+        const initialCache = {
+            1: fakeSubscribedViewsCacheMock(1),
+            2: fakeSubscribedViewsCacheMock(2),
+            3: fakeSubscribedViewsCacheMock(3),
+        };
+
+        initialState = {
+            ...initialState,
+            subscribedViewsCache: initialCache,
+        };
+
+        // Wait 1 second to ensure lastSynced will be different
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        // Update view 2
+        const updatedView = {
+            ...fakeSubscribedView(2),
+            name: "Updated View 2",
+        };
+
+        const newViewState = viewsReducer(
+            initialState,
+            addOrUpdateSubscribedView(updatedView)
+        );
+
+        // Should still have 3 views
+        expect(Object.keys(newViewState.subscribedViewsCache || {})).toHaveLength(3);
+
+        // View 2 should be updated
+        expect(newViewState.subscribedViewsCache?.[2]?.data.name).toBe("Updated View 2");
+
+        // lastSynced should be more recent than initial
+        expect(
+            moment(newViewState.subscribedViewsCache?.[2]?.lastSynced).isAfter(
+                initialCache[2].lastSynced
+            )
+        ).toBe(true);
+
+        // Views 1 and 3 should be unchanged
+        expect(newViewState.subscribedViewsCache?.[1]).toEqual(initialCache[1]);
+        expect(newViewState.subscribedViewsCache?.[3]).toEqual(initialCache[3]);
     });
 });
 
