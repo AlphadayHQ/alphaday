@@ -304,7 +304,7 @@ export const TWO_COL_WIDGETS_CONFIG = {
         widgetConfig: WIDGETS_CONFIG.TWO_COL_IMAGE,
     },
     kasandra: {
-        templateSlug: `${ETemplateNameRegistry.Kasandra}_template`,
+        templateSlug: `${ETemplateNameRegistry.Kasandra.toLowerCase()}_template`,
         templateName: ETemplateNameRegistry.Kasandra,
         widgetConfig: WIDGETS_CONFIG.KASANDRA,
     },
