@@ -278,7 +278,7 @@ export const useView: () => IView = () => {
                     sort_order: view.sort_order,
                     updated_at: view.updated_at,
                 };
-                dispatch(viewsStore.updateSubscribedViewsCache([viewPreview]));
+                dispatch(viewsStore.addOrUpdateSubscribedView(viewPreview));
                 dispatch(
                     viewsStore.setViewsCache({
                         ...viewsCache,
