@@ -243,8 +243,9 @@ describe("updateSubscribedViewsCache", () => {
         const viewIds = newSubscribedViews.map((view) => view.id);
 
         // delay the last modified date by 1 second
-        // eslint-disable-next-line no-promise-executor-return
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => {
+            setTimeout(resolve, 1000);
+        });
 
         const newSubscribedViewsState = viewsReducer(
             initialState,
@@ -369,7 +370,9 @@ describe("addOrUpdateSubscribedView", () => {
         );
 
         // Should have all 4 views
-        expect(Object.keys(newViewState.subscribedViewsCache || {})).toHaveLength(4);
+        expect(
+            Object.keys(newViewState.subscribedViewsCache || {})
+        ).toHaveLength(4);
         expect(newViewState.subscribedViewsCache?.[1]).toBeDefined();
         expect(newViewState.subscribedViewsCache?.[2]).toBeDefined();
         expect(newViewState.subscribedViewsCache?.[3]).toBeDefined();
@@ -390,7 +393,9 @@ describe("addOrUpdateSubscribedView", () => {
         };
 
         // Wait 1 second to ensure lastSynced will be different
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => {
+            setTimeout(resolve, 1000);
+        });
 
         // Update view 2
         const updatedView = {
@@ -404,10 +409,14 @@ describe("addOrUpdateSubscribedView", () => {
         );
 
         // Should still have 3 views
-        expect(Object.keys(newViewState.subscribedViewsCache || {})).toHaveLength(3);
+        expect(
+            Object.keys(newViewState.subscribedViewsCache || {})
+        ).toHaveLength(3);
 
         // View 2 should be updated
-        expect(newViewState.subscribedViewsCache?.[2]?.data.name).toBe("Updated View 2");
+        expect(newViewState.subscribedViewsCache?.[2]?.data.name).toBe(
+            "Updated View 2"
+        );
 
         // lastSynced should be more recent than initial
         expect(
