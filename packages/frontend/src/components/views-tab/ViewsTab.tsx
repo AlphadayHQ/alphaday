@@ -5,8 +5,10 @@ import {
     twMerge,
     ViewTabButton,
     ShareViewDialog,
+    IconButton,
 } from "@alphaday/ui-kit";
 import { useWindowSize } from "src/api/hooks";
+import useHeaderScroll from "src/api/hooks/useHeaderScroll";
 import {
     ETutorialTipId,
     TCachedView,
@@ -63,6 +65,9 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
     );
     const [showShareViewDialog, setShowShareViewDialog] =
         useState<boolean>(false);
+
+    const { setHeaderRef, handleClickScroll, hideLeftPan, hideRightPan } =
+        useHeaderScroll();
 
     const isSelectedViewModified = selectedView && isViewModified(selectedView);
     const tabsCount = subscribedViews.length + (extraOptions?.length || 0);
@@ -132,69 +137,89 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                 mobileOpen && "border-b-2 border-b-background"
             )}
         >
-            <div className="flex gap-1.5 h-full py-0 px-3 two-col:px-4 overflow-auto [&>.tabButton]:max-h-10 two-col:w-full two-col:flex two-col:justify-start">
-                {subscribedViews.length !== 0 && isWalletBoardAllowed && (
-                    <span
-                        style={
-                            walletViewState === EWalletViewState.Ready
-                                ? tabButtonWrapperStyle
-                                : {}
-                        }
-                        ref={(ref) =>
-                            currentTutorialTipId ===
-                                ETutorialTipId.WalletView &&
-                            ref &&
-                            setTutFocusElemRef(ref)
-                        }
-                    >
-                        <WalletViewTabButton
-                            walletViewState={walletViewState}
-                            onClick={onWalletViewTabClick}
-                            isSelected={
-                                selectedView?.data.hash ===
-                                walletView?.data.hash
-                            }
-                            isModified={
-                                walletView ? isViewModified(walletView) : false
-                            }
-                            walletViewName={walletView?.data.name}
-                            options={[
-                                {
-                                    handler:
-                                        walletView &&
-                                        walletViewState ===
-                                            EWalletViewState.Ready
-                                            ? () => handleShareView(walletView)
-                                            : undefined,
-                                    icon: "share",
-                                    title: "Share board",
-                                    key: "share-board",
-                                },
-                                {
-                                    handler: walletView
-                                        ? () =>
-                                              onRemoveView({
-                                                  id: walletView.data.id,
-                                                  isReadOnly:
-                                                      walletView.isReadOnly,
-                                                  hash: walletView.data.hash,
-                                                  slug: walletView.data.slug,
-                                              })
-                                        : undefined,
-                                    icon: "trash",
-                                    title: "Remove board",
-                                    key: "remove-board",
-                                },
-                            ]}
-                        />
-                    </span>
+            <div className="flex items-center h-full">
+                {!hideLeftPan && (
+                    <IconButton
+                        title="Scroll tabs left"
+                        variant="leftArrow"
+                        onClick={() => handleClickScroll()}
+                        className="shrink-0 ml-1 h-8 !px-1 !rounded !bg-backgroundVariant100 hover:!bg-backgroundVariant200 active:!bg-backgroundVariant100"
+                    />
                 )}
-                {filteredSubscribedViews.map((view, index) => {
-                    /**
-                     *  note: only including actions allowed for custom views for now
-                     */
-                    const viewMenuOptions: TViewTabMenuOption[] | undefined =
-                        view.data.is_system_view
+                <div
+                    ref={setHeaderRef}
+                    className="flex gap-1.5 h-full py-0 px-3 two-col:px-4 overflow-auto [&>.tabButton]:max-h-10 two-col:w-full two-col:flex two-col:justify-start flex-1"
+                >
+                    {subscribedViews.length !== 0 && isWalletBoardAllowed && (
+                        <span
+                            style={
+                                walletViewState === EWalletViewState.Ready
+                                    ? tabButtonWrapperStyle
+                                    : {}
+                            }
+                            ref={(ref) =>
+                                currentTutorialTipId ===
+                                    ETutorialTipId.WalletView &&
+                                ref &&
+                                setTutFocusElemRef(ref)
+                            }
+                        >
+                            <WalletViewTabButton
+                                walletViewState={walletViewState}
+                                onClick={onWalletViewTabClick}
+                                isSelected={
+                                    selectedView?.data.hash ===
+                                    walletView?.data.hash
+                                }
+                                isModified={
+                                    walletView
+                                        ? isViewModified(walletView)
+                                        : false
+                                }
+                                walletViewName={walletView?.data.name}
+                                options={[
+                                    {
+                                        handler:
+                                            walletView &&
+                                            walletViewState ===
+                                                EWalletViewState.Ready
+                                                ? () =>
+                                                      handleShareView(
+                                                          walletView
+                                                      )
+                                                : undefined,
+                                        icon: "share",
+                                        title: "Share board",
+                                        key: "share-board",
+                                    },
+                                    {
+                                        handler: walletView
+                                            ? () =>
+                                                  onRemoveView({
+                                                      id: walletView.data.id,
+                                                      isReadOnly:
+                                                          walletView.isReadOnly,
+                                                      hash: walletView.data
+                                                          .hash,
+                                                      slug: walletView.data
+                                                          .slug,
+                                                  })
+                                            : undefined,
+                                        icon: "trash",
+                                        title: "Remove board",
+                                        key: "remove-board",
+                                    },
+                                ]}
+                            />
+                        </span>
+                    )}
+                    {filteredSubscribedViews.map((view, index) => {
+                        /**
+                         *  note: only including actions allowed for custom views for now
+                         */
+                        const viewMenuOptions:
+                            | TViewTabMenuOption[]
+                            | undefined = view.data.is_system_view
                             ? undefined
                             : [
                                   {
@@ -220,70 +245,88 @@ const ViewsTab: FC<IViewsTabProps> = memo(function ViewsTab({
                                       key: "remove-board",
                                   },
                               ];
-                    return (
-                        <span
-                            key={view.data.hash}
-                            ref={(ref) =>
-                                index ===
-                                    Math.floor(subscribedViews.length / 2) && // set the tut focus to the view in the middle
-                                currentTutorialTipId ===
-                                    ETutorialTipId.SwitchView &&
-                                ref &&
-                                setTutFocusElemRef(ref)
-                            }
-                            style={tabButtonWrapperStyle}
-                        >
-                            <ViewTabButton
-                                className={
-                                    selectedView?.data.hash !== view.data.hash
-                                        ? "tabButton"
-                                        : "tabButton selected"
+                        return (
+                            <span
+                                key={view.data.hash}
+                                ref={(ref) =>
+                                    index ===
+                                        Math.floor(
+                                            subscribedViews.length / 2
+                                        ) && // set the tut focus to the view in the middle
+                                    currentTutorialTipId ===
+                                        ETutorialTipId.SwitchView &&
+                                    ref &&
+                                    setTutFocusElemRef(ref)
                                 }
-                                onClick={() => handleSelectTab(view)}
-                                title={`Open ${view.data.name}`}
-                                selected={
-                                    selectedView?.data.hash === view.data.hash
-                                }
-                                modified={isViewModified(view)}
-                                options={viewMenuOptions}
+                                style={tabButtonWrapperStyle}
                             >
-                                <span className="name">{view.data.name}</span>
-                            </ViewTabButton>
-                        </span>
-                    );
-                })}
-                {extraOptions &&
-                    !mobileOpen &&
-                    extraOptions.map((option) => (
-                        <span key={option.title} style={tabButtonWrapperStyle}>
-                            <ViewTabButton
-                                className={
-                                    isSelectedViewModified
-                                        ? "opacity-80 hover:[&:not(.selected)]:bg-backgroundVariant200"
-                                        : "opacity-40 hover:[&:not(.selected)]:bg-backgroundVariant200"
-                                }
-                                onClick={
-                                    option.disabled
-                                        ? () => {
-                                              if (isSelectedViewModified) {
-                                                  toast(
-                                                      "Connect and verify your wallet to edit boards and enjoy more customizations",
-                                                      {
-                                                          type: EToastRole.Error,
-                                                      }
-                                                  );
+                                <ViewTabButton
+                                    className={
+                                        selectedView?.data.hash !==
+                                        view.data.hash
+                                            ? "tabButton"
+                                            : "tabButton selected"
+                                    }
+                                    onClick={() => handleSelectTab(view)}
+                                    title={`Open ${view.data.name}`}
+                                    selected={
+                                        selectedView?.data.hash ===
+                                        view.data.hash
+                                    }
+                                    modified={isViewModified(view)}
+                                    options={viewMenuOptions}
+                                >
+                                    <span className="name">
+                                        {view.data.name}
+                                    </span>
+                                </ViewTabButton>
+                            </span>
+                        );
+                    })}
+                    {extraOptions &&
+                        !mobileOpen &&
+                        extraOptions.map((option) => (
+                            <span
+                                key={option.title}
+                                style={tabButtonWrapperStyle}
+                            >
+                                <ViewTabButton
+                                    className={
+                                        isSelectedViewModified
+                                            ? "opacity-80 hover:[&:not(.selected)]:bg-backgroundVariant200"
+                                            : "opacity-40 hover:[&:not(.selected)]:bg-backgroundVariant200"
+                                    }
+                                    onClick={
+                                        option.disabled
+                                            ? () => {
+                                                  if (isSelectedViewModified) {
+                                                      toast(
+                                                          "Connect and verify your wallet to edit boards and enjoy more customizations",
+                                                          {
+                                                              type: EToastRole.Error,
+                                                          }
+                                                      );
+                                                  }
                                               }
-                                          }
-                                        : option.handler
-                                }
-                                selected={false}
-                                title="Save current board"
-                                // disabled={option.disabled}
-                            >
-                                <span className="name">{option.title}</span>
-                            </ViewTabButton>
-                        </span>
-                    ))}
+                                            : option.handler
+                                    }
+                                    selected={false}
+                                    title="Save current board"
+                                    // disabled={option.disabled}
+                                >
+                                    <span className="name">{option.title}</span>
+                                </ViewTabButton>
+                            </span>
+                        ))}
+                </div>
+                {!hideRightPan && (
+                    <IconButton
+                        title="Scroll tabs right"
+                        variant="rightArrow"
+                        onClick={() => handleClickScroll(true)}
+                        className="shrink-0 mr-1 h-8 !px-1 !rounded !bg-backgroundVariant100 hover:!bg-backgroundVariant200 active:!bg-backgroundVariant100"
+                    />
+                )}
             </div>
             <ShareViewDialog
                 title={`Share your "${truncateWithEllipsis(
