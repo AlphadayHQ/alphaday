@@ -14,7 +14,7 @@ export const WIDGETS_CONFIG = {
     },
     [ETemplateNameRegistry.Calendar]: {
         TAG_ITEM_TYPE: "event",
-        QUERY_EVENTS_HARD_LIMIT: 200,
+        QUERY_EVENTS_HARD_LIMIT: 500,
         WIDGET_HEIGHT: 604, // gotten from cal-month
         POLLING_INTERVAL: 180 * 60, // 3h
         ADJUSTABLE: true,
