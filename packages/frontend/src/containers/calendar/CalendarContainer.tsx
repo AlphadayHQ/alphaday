@@ -174,9 +174,23 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
     const pollingInterval =
         (moduleData.widget.refresh_interval || POLLING_INTERVAL) * 1000;
 
-    const monthStart = moment(selectedDate).startOf("month");
     const tagsParam = tags ? filteringListToStr(tags) : undefined;
     const queryOpts = { skip: !selectedDate, pollingInterval };
+
+    // Compute month boundaries using native Date (immutable — each is a new object)
+    const monthStartDate = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        1
+    );
+    const formatDate = (d: Date) => d.toISOString().slice(0, 10);
+    const addMonths = (d: Date, n: number) =>
+        new Date(d.getFullYear(), d.getMonth() + n, 1);
+
+    const prevStart = formatDate(addMonths(monthStartDate, -1));
+    const currStart = formatDate(monthStartDate);
+    const nextStart = formatDate(addMonths(monthStartDate, 1));
+    const nextEnd = formatDate(addMonths(monthStartDate, 2));
 
     const {
         data: prevMonthData,
@@ -184,11 +198,8 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
         isFetching: isFetchingPrev,
     } = useGetEventsQuery(
         {
-            period_after: monthStart
-                .clone()
-                .subtract(1, "month")
-                .format("YYYY-MM-DD"),
-            period_before: monthStart.format("YYYY-MM-DD"),
+            period_after: prevStart,
+            period_before: currStart,
             limit: QUERY_EVENTS_HARD_LIMIT,
             tags: tagsParam,
         },
@@ -201,11 +212,8 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
         isFetching: isFetchingCurr,
     } = useGetEventsQuery(
         {
-            period_after: monthStart.format("YYYY-MM-DD"),
-            period_before: monthStart
-                .clone()
-                .add(1, "month")
-                .format("YYYY-MM-DD"),
+            period_after: currStart,
+            period_before: nextStart,
             limit: QUERY_EVENTS_HARD_LIMIT,
             tags: tagsParam,
         },
@@ -218,14 +226,8 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
         isFetching: isFetchingNext,
     } = useGetEventsQuery(
         {
-            period_after: monthStart
-                .clone()
-                .add(1, "month")
-                .format("YYYY-MM-DD"),
-            period_before: monthStart
-                .clone()
-                .add(2, "months")
-                .format("YYYY-MM-DD"),
+            period_after: nextStart,
+            period_before: nextEnd,
             limit: QUERY_EVENTS_HARD_LIMIT,
             tags: tagsParam,
         },
@@ -236,7 +238,12 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
         const prev = prevMonthData?.results ?? [];
         const curr = currMonthData?.results ?? [];
         const next = nextMonthData?.results ?? [];
-        return [...prev, ...curr, ...next];
+        const seen = new Set<string>();
+        return [...prev, ...curr, ...next].filter((e) => {
+            if (seen.has(e.id)) return false;
+            seen.add(e.id);
+            return true;
+        });
     }, [
         prevMonthData?.results,
         currMonthData?.results,
