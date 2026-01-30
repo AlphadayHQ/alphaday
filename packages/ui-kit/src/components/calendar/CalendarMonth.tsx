@@ -1,5 +1,5 @@
 import { FC, useRef, useState, useEffect, useCallback } from "react";
-import { ViewContentArg, DatesSetArg, EventMountArg } from "@fullcalendar/core";
+import { ViewContentArg, DatesSetArg } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
@@ -56,58 +56,82 @@ export const getCoords = (elem: HTMLElement | null): TElemCoords => {
 };
 
 const MAX_DOTS_PER_DAY = 30;
+const DOT_CLASS =
+    "fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-today";
 
-// Track which events have been added to each day to avoid race conditions
-const dayEventCounts = new Map<string, Set<string>>();
-
-const eventRender = (info: EventMountArg, widgetHash: string) => {
-    const { event, backgroundColor } = info;
+/**
+ * Build all event dots in a single batch pass instead of per-event callbacks.
+ * Uses a pre-built day cell map to avoid repeated DOM queries,
+ * native Date arithmetic instead of moment, and DocumentFragment
+ * for a single DOM write per day cell.
+ */
+const renderEventDots = (
+    events: TEvent[],
+    widgetHash: string
+): void => {
     const cal = document.querySelector(`#cal-${widgetHash}`);
-    const { start } = event;
-    const end = moment(event.end || start)
-        .add(1, "days")
-        .format();
+    if (!cal) return;
 
-    const now = moment(start);
-    if (cal) {
-        while (now.isBefore(end, "day")) {
-            const dateStr = now.format("YYYY-MM-DD");
-            const daygrid = cal.querySelector(
-                `.fc-daygrid-day[data-date="${dateStr}"] .fc-daygrid-day-frame .fc-daygrid-day-events`
-            );
+    // Build day cell lookup map once (max 42 cells in a month grid)
+    const dayCellMap = new Map<string, Element>();
+    cal.querySelectorAll(".fc-daygrid-day").forEach((cell) => {
+        const date = cell.getAttribute("data-date");
+        const container = cell.querySelector(
+            ".fc-daygrid-day-frame .fc-daygrid-day-events"
+        );
+        if (date && container) dayCellMap.set(date, container);
+    });
 
-            if (daygrid) {
-                // Initialize tracking for this day if needed
-                if (!dayEventCounts.has(dateStr)) {
-                    dayEventCounts.set(dateStr, new Set());
+    // Group dots by day
+    const dotsByDay = new Map<
+        string,
+        { id: string; color: string | undefined }[]
+    >();
+
+    for (const event of events) {
+        if (!event.start) continue;
+        const startTime = new Date(event.start);
+        const endTime =
+            new Date(event.end || event.start).getTime() + 86_400_000;
+        const current = new Date(startTime);
+
+        while (current.getTime() < endTime) {
+            const dateStr = current.toISOString().slice(0, 10);
+            if (dayCellMap.has(dateStr)) {
+                let dayDots = dotsByDay.get(dateStr);
+                if (!dayDots) {
+                    dayDots = [];
+                    dotsByDay.set(dateStr, dayDots);
                 }
-
-                const eventsForDay = dayEventCounts.get(dateStr);
-                if (eventsForDay) {
-                    // Check if we haven't already added this event and haven't exceeded limit
-                    if (
-                        !eventsForDay.has(event.id) &&
-                        eventsForDay.size < MAX_DOTS_PER_DAY
-                    ) {
-                        const prevDot = daygrid.querySelector(
-                            `[data-id="${event.id}"]`
-                        );
-                        if (!prevDot) {
-                            const dot = document.createElement("span");
-                            dot.style.backgroundColor = backgroundColor;
-                            dot.className =
-                                "fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-today";
-                            dot.setAttribute("data-id", event.id);
-                            daygrid.append(dot);
-
-                            // Track that we added this event
-                            eventsForDay.add(event.id);
-                        }
-                    }
-                }
+                dayDots.push({
+                    id: event.id,
+                    color: event.backgroundColor,
+                });
             }
-            now.add(1, "days");
+            current.setDate(current.getDate() + 1);
         }
+    }
+
+    // Render dots using DocumentFragment (single DOM write per day)
+    for (const [dateStr, dots] of dotsByDay) {
+        const container = dayCellMap.get(dateStr);
+        if (!container) continue;
+
+        const fragment = document.createDocumentFragment();
+        const seen = new Set<string>();
+        let count = 0;
+
+        for (const dot of dots) {
+            if (seen.has(dot.id) || count >= MAX_DOTS_PER_DAY) continue;
+            seen.add(dot.id);
+            const span = document.createElement("span");
+            if (dot.color) span.style.backgroundColor = dot.color;
+            span.className = DOT_CLASS;
+            fragment.appendChild(span);
+            count++;
+        }
+
+        container.appendChild(fragment);
     }
 };
 
@@ -365,11 +389,21 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
         [widgetHash]
     );
 
+    // Force remount when events or filters change
     useEffect(() => {
-        // Clear the day event counts when calendar re-renders
-        dayEventCounts.clear();
         setKey((prev) => prev + 1);
     }, [events, catFilters]);
+
+    // Batch-render dots after FullCalendar has mounted into the DOM.
+    // We use requestAnimationFrame to ensure the calendar grid cells
+    // exist before we query them.
+    useEffect(() => {
+        if (!events?.length) return;
+        const rafId = requestAnimationFrame(() => {
+            renderEventDots(events, widgetHash);
+        });
+        return () => cancelAnimationFrame(rafId);
+    }, [key, events, widgetHash]);
 
     return (
         <FullCalendar
@@ -394,9 +428,8 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
                 },
             }}
             navLinkDayClick={() => {}} // this controls the date number click
-            eventDisplay="block"
+            eventDisplay="none"
             events={events}
-            eventDidMount={(...args) => eventRender(...args, widgetHash)}
             ref={calendarRef}
             windowResize={handleSize}
             contentHeight="auto"
