@@ -174,29 +174,81 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
     const pollingInterval =
         (moduleData.widget.refresh_interval || POLLING_INTERVAL) * 1000;
 
+    const monthStart = moment(selectedDate).startOf("month");
+    const tagsParam = tags ? filteringListToStr(tags) : undefined;
+    const queryOpts = { skip: !selectedDate, pollingInterval };
+
     const {
-        data: eventsData,
-        isLoading: isLoadingEvents,
-        isFetching: isFetchingEvents,
+        data: prevMonthData,
+        isLoading: isLoadingPrev,
+        isFetching: isFetchingPrev,
     } = useGetEventsQuery(
         {
-            period_after: moment(selectedDate)
-                .startOf("month")
+            period_after: monthStart
+                .clone()
                 .subtract(1, "month")
                 .format("YYYY-MM-DD"),
-            period_before: moment(selectedDate)
-                .startOf("month")
+            period_before: monthStart.format("YYYY-MM-DD"),
+            limit: QUERY_EVENTS_HARD_LIMIT,
+            tags: tagsParam,
+        },
+        queryOpts
+    );
+
+    const {
+        data: currMonthData,
+        isLoading: isLoadingCurr,
+        isFetching: isFetchingCurr,
+    } = useGetEventsQuery(
+        {
+            period_after: monthStart.format("YYYY-MM-DD"),
+            period_before: monthStart
+                .clone()
                 .add(1, "month")
                 .format("YYYY-MM-DD"),
             limit: QUERY_EVENTS_HARD_LIMIT,
-            tags: tags ? filteringListToStr(tags) : undefined,
+            tags: tagsParam,
         },
-        { skip: !selectedDate, pollingInterval }
+        queryOpts
     );
 
+    const {
+        data: nextMonthData,
+        isLoading: isLoadingNext,
+        isFetching: isFetchingNext,
+    } = useGetEventsQuery(
+        {
+            period_after: monthStart
+                .clone()
+                .add(1, "month")
+                .format("YYYY-MM-DD"),
+            period_before: monthStart
+                .clone()
+                .add(2, "months")
+                .format("YYYY-MM-DD"),
+            limit: QUERY_EVENTS_HARD_LIMIT,
+            tags: tagsParam,
+        },
+        queryOpts
+    );
+
+    const mergedEvents = useMemo(() => {
+        const prev = prevMonthData?.results ?? [];
+        const curr = currMonthData?.results ?? [];
+        const next = nextMonthData?.results ?? [];
+        return [...prev, ...curr, ...next];
+    }, [
+        prevMonthData?.results,
+        currMonthData?.results,
+        nextMonthData?.results,
+    ]);
+
+    const isLoadingEvents = isLoadingPrev || isLoadingCurr || isLoadingNext;
+    const isFetchingEvents = isFetchingPrev || isFetchingCurr || isFetchingNext;
+
     const closestEvent: TEvent | undefined = useMemo(
-        () => getClosestEvent(eventsData?.results, selectedDate),
-        [eventsData?.results, selectedDate]
+        () => getClosestEvent(mergedEvents, selectedDate),
+        [mergedEvents, selectedDate]
     );
 
     const {
@@ -305,7 +357,7 @@ const CalendarContainer: FC<IModuleContainer<TCategoryData[][]>> = ({
 
     return (
         <CalendarModule
-            events={eventsData?.results}
+            events={mergedEvents}
             fetchEvents={fetchCalendarEvents}
             onClickEvent={onClickEvent}
             onDatesSet={onDatesSet}
