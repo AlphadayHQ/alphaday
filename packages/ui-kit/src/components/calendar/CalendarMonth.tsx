@@ -69,10 +69,10 @@ const renderEventDots = (events: TEvent[], widgetHash: string): void => {
     const cal = document.querySelector(`#cal-${widgetHash}`);
     if (!cal) return;
 
-    // Clear any previously rendered dots before re-rendering
-    cal.querySelectorAll(`.${DOT_CLASS.split(" ")[0]}`).forEach((el) =>
-        el.remove()
-    );
+    // Clear any previously rendered dots and "+X more" links before re-rendering
+    cal.querySelectorAll(
+        `.${DOT_CLASS.split(" ")[0]}, .fc-daygrid-more-link`
+    ).forEach((el) => el.remove());
 
     // Build day cell lookup map once (max 42 cells in a month grid)
     const dayCellMap = new Map<string, Element>();
@@ -124,6 +124,13 @@ const renderEventDots = (events: TEvent[], widgetHash: string): void => {
         const seen = new Set<string>();
 
         dots.forEach((dot) => {
+            if (!seen.has(dot.id)) seen.add(dot.id);
+        });
+
+        const uniqueCount = seen.size;
+        seen.clear();
+
+        dots.forEach((dot) => {
             if (seen.has(dot.id) || seen.size >= MAX_DOTS_PER_DAY) return;
             seen.add(dot.id);
             const span = document.createElement("span");
@@ -131,6 +138,13 @@ const renderEventDots = (events: TEvent[], widgetHash: string): void => {
             span.className = DOT_CLASS;
             fragment.appendChild(span);
         });
+
+        if (uniqueCount > MAX_DOTS_PER_DAY) {
+            const moreEl = document.createElement("span");
+            moreEl.className = "fc-daygrid-more-link fc-more-link text-[11px]";
+            moreEl.textContent = `+${uniqueCount - MAX_DOTS_PER_DAY} more`;
+            fragment.appendChild(moreEl);
+        }
 
         container.appendChild(fragment);
     });
