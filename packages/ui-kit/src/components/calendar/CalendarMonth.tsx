@@ -69,6 +69,11 @@ const renderEventDots = (events: TEvent[], widgetHash: string): void => {
     const cal = document.querySelector(`#cal-${widgetHash}`);
     if (!cal) return;
 
+    // Clear any previously rendered dots before re-rendering
+    cal.querySelectorAll(`.${DOT_CLASS.split(" ")[0]}`).forEach((el) =>
+        el.remove()
+    );
+
     // Build day cell lookup map once (max 42 cells in a month grid)
     const dayCellMap = new Map<string, Element>();
     cal.querySelectorAll(".fc-daygrid-day").forEach((cell) => {
@@ -118,9 +123,8 @@ const renderEventDots = (events: TEvent[], widgetHash: string): void => {
         const fragment = document.createDocumentFragment();
         const seen = new Set<string>();
 
-        dots.filter(
-            (dot) => !seen.has(dot.id) && seen.size < MAX_DOTS_PER_DAY
-        ).forEach((dot) => {
+        dots.forEach((dot) => {
+            if (seen.has(dot.id) || seen.size >= MAX_DOTS_PER_DAY) return;
             seen.add(dot.id);
             const span = document.createElement("span");
             if (dot.color) span.style.backgroundColor = dot.color;
