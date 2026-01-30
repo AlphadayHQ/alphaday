@@ -65,10 +65,7 @@ const DOT_CLASS =
  * native Date arithmetic instead of moment, and DocumentFragment
  * for a single DOM write per day cell.
  */
-const renderEventDots = (
-    events: TEvent[],
-    widgetHash: string
-): void => {
+const renderEventDots = (events: TEvent[], widgetHash: string): void => {
     const cal = document.querySelector(`#cal-${widgetHash}`);
     if (!cal) return;
 
@@ -88,51 +85,51 @@ const renderEventDots = (
         { id: string; color: string | undefined }[]
     >();
 
-    for (const event of events) {
-        if (!event.start) continue;
-        const startTime = new Date(event.start);
-        const endTime =
-            new Date(event.end || event.start).getTime() + 86_400_000;
-        const current = new Date(startTime);
+    events
+        .filter((event) => event.start)
+        .forEach((event) => {
+            const startTime = new Date(event.start);
+            const endTime =
+                new Date(event.end || event.start).getTime() + 86_400_000;
+            const current = new Date(startTime);
 
-        while (current.getTime() < endTime) {
-            const dateStr = current.toISOString().slice(0, 10);
-            if (dayCellMap.has(dateStr)) {
-                let dayDots = dotsByDay.get(dateStr);
-                if (!dayDots) {
-                    dayDots = [];
-                    dotsByDay.set(dateStr, dayDots);
+            while (current.getTime() < endTime) {
+                const dateStr = current.toISOString().slice(0, 10);
+                if (dayCellMap.has(dateStr)) {
+                    let dayDots = dotsByDay.get(dateStr);
+                    if (!dayDots) {
+                        dayDots = [];
+                        dotsByDay.set(dateStr, dayDots);
+                    }
+                    dayDots.push({
+                        id: event.id,
+                        color: event.backgroundColor,
+                    });
                 }
-                dayDots.push({
-                    id: event.id,
-                    color: event.backgroundColor,
-                });
+                current.setDate(current.getDate() + 1);
             }
-            current.setDate(current.getDate() + 1);
-        }
-    }
+        });
 
     // Render dots using DocumentFragment (single DOM write per day)
-    for (const [dateStr, dots] of dotsByDay) {
+    Array.from(dotsByDay.entries()).forEach(([dateStr, dots]) => {
         const container = dayCellMap.get(dateStr);
-        if (!container) continue;
+        if (!container) return;
 
         const fragment = document.createDocumentFragment();
         const seen = new Set<string>();
-        let count = 0;
 
-        for (const dot of dots) {
-            if (seen.has(dot.id) || count >= MAX_DOTS_PER_DAY) continue;
+        dots.filter(
+            (dot) => !seen.has(dot.id) && seen.size < MAX_DOTS_PER_DAY
+        ).forEach((dot) => {
             seen.add(dot.id);
             const span = document.createElement("span");
             if (dot.color) span.style.backgroundColor = dot.color;
             span.className = DOT_CLASS;
             fragment.appendChild(span);
-            count++;
-        }
+        });
 
         container.appendChild(fragment);
-    }
+    });
 };
 
 interface ICalendarMonth extends ICalendarBaseProps {
@@ -398,7 +395,7 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
     // We use requestAnimationFrame to ensure the calendar grid cells
     // exist before we query them.
     useEffect(() => {
-        if (!events?.length) return;
+        if (!events?.length) return undefined;
         const rafId = requestAnimationFrame(() => {
             renderEventDots(events, widgetHash);
         });
