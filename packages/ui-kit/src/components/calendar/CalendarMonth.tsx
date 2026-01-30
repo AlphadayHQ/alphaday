@@ -1,5 +1,5 @@
-import { FC, useRef, useState, useEffect, useCallback } from "react";
-import { ViewContentArg, DatesSetArg, EventMountArg } from "@fullcalendar/core";
+import { FC, useRef, useEffect, useCallback } from "react";
+import { ViewContentArg, DatesSetArg } from "@fullcalendar/core";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin, { DateClickArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
@@ -56,59 +56,96 @@ export const getCoords = (elem: HTMLElement | null): TElemCoords => {
 };
 
 const MAX_DOTS_PER_DAY = 30;
+const DOT_CLASS =
+    "fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-today";
 
-// Track which events have been added to each day to avoid race conditions
-const dayEventCounts = new Map<string, Set<string>>();
-
-const eventRender = (info: EventMountArg, widgetHash: string) => {
-    const { event, backgroundColor } = info;
+/**
+ * Build all event dots in a single batch pass instead of per-event callbacks.
+ * Uses a pre-built day cell map to avoid repeated DOM queries,
+ * native Date arithmetic instead of moment, and DocumentFragment
+ * for a single DOM write per day cell.
+ */
+const renderEventDots = (events: TEvent[], widgetHash: string): void => {
     const cal = document.querySelector(`#cal-${widgetHash}`);
-    const { start } = event;
-    const end = moment(event.end || start)
-        .add(1, "days")
-        .format();
+    if (!cal) return;
 
-    const now = moment(start);
-    if (cal) {
-        while (now.isBefore(end, "day")) {
-            const dateStr = now.format("YYYY-MM-DD");
-            const daygrid = cal.querySelector(
-                `.fc-daygrid-day[data-date="${dateStr}"] .fc-daygrid-day-frame .fc-daygrid-day-events`
-            );
+    // Clear any previously rendered dots and "+X more" links before re-rendering
+    cal.querySelectorAll(
+        `.${DOT_CLASS.split(" ")[0]}, .fc-daygrid-more-link`
+    ).forEach((el) => el.remove());
 
-            if (daygrid) {
-                // Initialize tracking for this day if needed
-                if (!dayEventCounts.has(dateStr)) {
-                    dayEventCounts.set(dateStr, new Set());
-                }
+    // Build day cell lookup map once (max 42 cells in a month grid)
+    const dayCellMap = new Map<string, Element>();
+    cal.querySelectorAll(".fc-daygrid-day").forEach((cell) => {
+        const date = cell.getAttribute("data-date");
+        const container = cell.querySelector(
+            ".fc-daygrid-day-frame .fc-daygrid-day-events"
+        );
+        if (date && container) dayCellMap.set(date, container);
+    });
 
-                const eventsForDay = dayEventCounts.get(dateStr);
-                if (eventsForDay) {
-                    // Check if we haven't already added this event and haven't exceeded limit
-                    if (
-                        !eventsForDay.has(event.id) &&
-                        eventsForDay.size < MAX_DOTS_PER_DAY
-                    ) {
-                        const prevDot = daygrid.querySelector(
-                            `[data-id="${event.id}"]`
-                        );
-                        if (!prevDot) {
-                            const dot = document.createElement("span");
-                            dot.style.backgroundColor = backgroundColor;
-                            dot.className =
-                                "fc-daygrid-event fc-daygrid-block-event fc-h-event fc-event fc-event-start fc-event-end fc-event-today";
-                            dot.setAttribute("data-id", event.id);
-                            daygrid.append(dot);
+    // Group dots by day
+    const dotsByDay = new Map<
+        string,
+        { id: string; color: string | undefined }[]
+    >();
 
-                            // Track that we added this event
-                            eventsForDay.add(event.id);
-                        }
+    events
+        .filter((event) => event.start)
+        .forEach((event) => {
+            const startTime = new Date(event.start);
+            const endTime =
+                new Date(event.end || event.start).getTime() + 86_400_000;
+            const current = new Date(startTime);
+
+            while (current.getTime() < endTime) {
+                const dateStr = `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(current.getDate()).padStart(2, "0")}`;
+                if (dayCellMap.has(dateStr)) {
+                    let dayDots = dotsByDay.get(dateStr);
+                    if (!dayDots) {
+                        dayDots = [];
+                        dotsByDay.set(dateStr, dayDots);
                     }
+                    dayDots.push({
+                        id: event.id,
+                        color: event.backgroundColor,
+                    });
                 }
+                current.setDate(current.getDate() + 1);
             }
-            now.add(1, "days");
+        });
+
+    // Render dots using DocumentFragment (single DOM write per day)
+    Array.from(dotsByDay.entries()).forEach(([dateStr, dots]) => {
+        const container = dayCellMap.get(dateStr);
+        if (!container) return;
+
+        const fragment = document.createDocumentFragment();
+        const seen = new Set<string>();
+        let overflow = 0;
+
+        dots.forEach((dot) => {
+            if (seen.has(dot.id)) return;
+            seen.add(dot.id);
+            if (seen.size <= MAX_DOTS_PER_DAY) {
+                const span = document.createElement("span");
+                if (dot.color) span.style.backgroundColor = dot.color;
+                span.className = DOT_CLASS;
+                fragment.appendChild(span);
+            } else {
+                overflow += 1;
+            }
+        });
+
+        if (overflow > 0) {
+            const moreEl = document.createElement("span");
+            moreEl.className = "fc-daygrid-more-link fc-more-link text-[11px]";
+            moreEl.textContent = `+${overflow} more`;
+            fragment.appendChild(moreEl);
         }
-    }
+
+        container.appendChild(fragment);
+    });
 };
 
 interface ICalendarMonth extends ICalendarBaseProps {
@@ -140,7 +177,7 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
     events,
     onDatesSet,
     showFullSize,
-    catFilters,
+    catFilters: _catFilters,
     selectedDate,
     widgetHash,
     handleHeaderTooltips,
@@ -149,9 +186,9 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
     isAlphaModalOpen,
     handleIsAlphaModalOpen,
 }) => {
-    const [key, setKey] = useState(0); // to force calendar to rerender
-
     const calendarRef = useRef<FullCalendar>(null);
+    const eventsRef = useRef(events);
+    eventsRef.current = events;
 
     const handleSize = (event: ViewContentArg): void => {
         const contentAPi = event.view.calendar;
@@ -296,6 +333,10 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
     const handleNewMonthView = useCallback(
         (info: DatesSetArg) => {
             handleHeaderTooltips(info, widgetHash, showFullSize);
+            // Re-render dots after FC has swapped grid cells for the new month
+            if (eventsRef.current?.length) {
+                renderEventDots(eventsRef.current, widgetHash);
+            }
             if (onDatesSet != null) {
                 onDatesSet(info.view.currentStart.toString());
             }
@@ -360,22 +401,31 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
                     n2?.setAttribute("data-tip", "Next Week");
                     n2?.setAttribute("data-place", "right");
                 }
+
+                // Render dots on initial mount when events are already available
+                if (eventsRef.current?.length) {
+                    renderEventDots(eventsRef.current, widgetHash);
+                }
             }
         },
         [widgetHash]
     );
 
+    // Re-render dots when event data changes (e.g., new data from queries).
+    // viewDidMount and datesSet handle lifecycle-driven rendering;
+    // this effect handles data-driven updates when the grid is already stable.
     useEffect(() => {
-        // Clear the day event counts when calendar re-renders
-        dayEventCounts.clear();
-        setKey((prev) => prev + 1);
-    }, [events, catFilters]);
+        if (!events?.length) return undefined;
+        const rafId = requestAnimationFrame(() => {
+            renderEventDots(events, widgetHash);
+        });
+        return () => cancelAnimationFrame(rafId);
+    }, [events, widgetHash]);
 
     return (
         <FullCalendar
             initialDate={selectedDate}
             locale={locale}
-            key={key}
             plugins={[dayGridPlugin, interactionPlugin]}
             dayMaxEvents={MAX_DOTS_PER_DAY}
             headerToolbar={{
@@ -394,9 +444,8 @@ export const CalendarMonth: FC<ICalendarMonth> = ({
                 },
             }}
             navLinkDayClick={() => {}} // this controls the date number click
-            eventDisplay="block"
+            eventDisplay="none"
             events={events}
-            eventDidMount={(...args) => eventRender(...args, widgetHash)}
             ref={calendarRef}
             windowResize={handleSize}
             contentHeight="auto"
