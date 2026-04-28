@@ -117,7 +117,7 @@ const API_V0 = {
             BY_ID: (id: number): string => `/${id}/`,
         },
         SOCIALS: {
-            BASE: "items/socials",
+            BASE: "items/socials/",
             DISCORD: "discord",
             LENS: "lens",
             REDDIT: "reddit",

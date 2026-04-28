@@ -72,7 +72,7 @@ const marketApi = alphadayApi.injectEndpoints({
                     MARKET.DEFAULT
                 )}?${params}`;
                 Logger.debug("getMarketData: querying", path);
-                return `${MARKET.BASE}?${params}`;
+                return `${MARKET.BASE}${MARKET.DEFAULT}?${params}`;
             },
             transformResponse: (
                 r: TGetMarketDataRawResponse
