@@ -105,7 +105,7 @@ const marketApi = alphadayApi.injectEndpoints({
                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 const route = `${MARKET.BASE}${MARKET.HISTORY}${
                     req.coin
-                }/${String(req.interval)}`;
+                }/${String(req.interval)}/`;
                 Logger.debug("querying", route);
                 return route;
             },
