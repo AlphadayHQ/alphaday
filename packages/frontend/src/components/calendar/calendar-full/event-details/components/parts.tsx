@@ -3,7 +3,7 @@ import { Button, twMerge } from "@alphaday/ui-kit";
 import DOMPurify from "dompurify";
 import { useTranslation } from "react-i18next";
 import { TEventDetails } from "src/api/types";
-import { ReactComponent as ExternalLinkSVG } from "src/assets/icons/external-link.svg";
+import ExternalLinkSVG from "src/assets/icons/external-link.svg?react";
 
 export const EventOrganizer: FC<{
     event: TEventDetails;

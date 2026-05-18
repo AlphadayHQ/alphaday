@@ -9,7 +9,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { TEvent } from "src/api/types";
 import { getEventCategoryByType } from "src/api/utils/calendarUtils";
-import { ReactComponent as ArrowUpSVG } from "src/assets/icons/arrow-up.svg";
+import ArrowUpSVG from "src/assets/icons/arrow-up.svg?react";
 import UI_CONFIG from "src/config/ui";
 import { useClickOutside } from "src/hooks";
 import {

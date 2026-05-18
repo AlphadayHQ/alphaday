@@ -1,6 +1,6 @@
 import { FC, ReactNode, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
-import { ReactComponent as TrashSVG } from "../../assets/svg/trash.svg";
+import TrashSVG from "../../assets/svg/trash.svg?react";
 import { Button } from "../buttons/Button";
 
 interface IBaseModuleWrapper {

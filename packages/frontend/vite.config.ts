@@ -91,11 +91,6 @@ export default defineConfig(({ mode }) => {
             globals: true,
             environment: "happy-dom",
         },
-        build: {
-            commonjsOptions: {
-                transformMixedEsModules: true,
-            },
-        },
         define: {
             "import.meta.env.VITE_VERSION": JSON.stringify(
                 process.env.npm_package_version

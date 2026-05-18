@@ -8,7 +8,7 @@ import {
     onClickDisabled,
     onClickNoTags,
 } from "src/api/utils/walletViewUtils";
-import { ReactComponent as WandSVG } from "src/assets/icons/wand.svg";
+import WandSVG from "src/assets/icons/wand.svg?react";
 
 interface IWalletViewTabButton {
     onClick: () => void;

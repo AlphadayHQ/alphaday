@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { ReactComponent as BookmarkSVG } from "src/assets/svg/bookmark.svg";
-import { ReactComponent as BookmarkedSVG } from "src/assets/svg/bookmarked.svg";
+import BookmarkSVG from "src/assets/svg/bookmark.svg?react";
+import BookmarkedSVG from "src/assets/svg/bookmarked.svg?react";
 import { twMerge } from "tailwind-merge";
 
 interface IBookmark {
