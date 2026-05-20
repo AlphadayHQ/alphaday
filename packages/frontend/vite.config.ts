@@ -79,6 +79,17 @@ export default defineConfig(({ mode }) => {
     }
     return {
         plugins,
+        resolve: {
+            alias: [
+                {
+                    find: /^moment-with-locales-es6$/,
+                    replacement: path.resolve(
+                        __dirname,
+                        "src/shims/moment-with-locales-es6.ts"
+                    ),
+                },
+            ],
+        },
         css: {
             modules: {
                 localsConvention: "camelCase",
