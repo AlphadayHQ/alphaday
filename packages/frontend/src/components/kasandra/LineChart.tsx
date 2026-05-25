@@ -386,10 +386,6 @@ const LineChart: FC<IProps> = memo(function LineChart({
                     show: false,
                 },
             },
-            column: {
-                colors: "var(--alpha-border)",
-                opacity: 1,
-            },
         },
         tooltip: {
             title: {
