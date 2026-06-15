@@ -1,12 +1,12 @@
 import { FC, useMemo, useState } from "react";
 import { themeColors, twMerge, useLayer } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { ReactComponent as CameraSVG } from "src/assets/icons/camera.svg";
-import { ReactComponent as CloseSVG } from "src/assets/icons/close.svg";
-import { ReactComponent as InfoSVG } from "src/assets/icons/info.svg";
-import { ReactComponent as MaximizeSVG } from "src/assets/icons/maximize.svg";
-import { ReactComponent as MinimizeSVG } from "src/assets/icons/minimize.svg";
-import { ReactComponent as SettingsSVG } from "src/assets/icons/settings.svg";
+import CameraSVG from "src/assets/icons/camera.svg?react";
+import CloseSVG from "src/assets/icons/close.svg?react";
+import InfoSVG from "src/assets/icons/info.svg?react";
+import MaximizeSVG from "src/assets/icons/maximize.svg?react";
+import MinimizeSVG from "src/assets/icons/minimize.svg?react";
+import SettingsSVG from "src/assets/icons/settings.svg?react";
 import UI_CONFIG from "src/config/ui";
 
 const { Z_INDEX_REGISTRY } = UI_CONFIG;
