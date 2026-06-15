@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ReactComponent as CopySVG } from "src/assets/svg/copy.svg";
+import CopySVG from "src/assets/svg/copy.svg?react";
 import { Dialog } from "./Dialog";
 
 interface IProps {

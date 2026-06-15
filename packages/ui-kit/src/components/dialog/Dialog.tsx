@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "../../assets/svg/close3.svg";
+import CloseSVG from "../../assets/svg/close3.svg?react";
 import { Button, ButtonProps } from "../buttons/Button";
 import { Modal } from "../modal/Modal";
 
