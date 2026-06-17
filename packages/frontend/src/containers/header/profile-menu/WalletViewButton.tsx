@@ -7,7 +7,7 @@ import {
     getWalletViewStateMessages,
     onClickNoTags,
 } from "src/api/utils/walletViewUtils";
-import { ReactComponent as WandSVG } from "src/assets/icons/wand.svg";
+import WandSVG from "src/assets/icons/wand.svg?react";
 import { withFeature } from "src/containers/features/withFeature";
 import { EFeaturesRegistry } from "src/constants";
 

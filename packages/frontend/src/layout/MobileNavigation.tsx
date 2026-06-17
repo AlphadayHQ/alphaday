@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useIsMobile } from "src/api/hooks";
-import { ReactComponent as WidgetsSVG } from "src/assets/icons/grid.svg";
-import { ReactComponent as SuperfeedSVG } from "src/assets/svg/superfeed.svg";
-import { ReactComponent as ViewsSVG } from "src/assets/svg/views.svg";
+import WidgetsSVG from "src/assets/icons/grid.svg?react";
+import SuperfeedSVG from "src/assets/svg/superfeed.svg?react";
+import ViewsSVG from "src/assets/svg/views.svg?react";
 
 const CustomNavTab: React.FC<{
     label: string;

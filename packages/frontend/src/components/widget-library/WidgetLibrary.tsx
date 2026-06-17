@@ -21,14 +21,14 @@ import {
     translateLabels,
     TTranslationValues,
 } from "src/api/utils/translationUtils";
-import { ReactComponent as ChartSVG } from "src/assets/icons/chart.svg";
-import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
-import { ReactComponent as DefiSVG } from "src/assets/icons/defi.svg";
-import { ReactComponent as WidgetsSVG } from "src/assets/icons/grid.svg";
-import { ReactComponent as InvestingSVG } from "src/assets/icons/investing.svg";
-import { ReactComponent as L2SVG } from "src/assets/icons/l2.svg";
-import { ReactComponent as OtherSVG } from "src/assets/icons/other.svg";
-import { ReactComponent as UsersSVG } from "src/assets/icons/users.svg";
+import ChartSVG from "src/assets/icons/chart.svg?react";
+import CloseSVG from "src/assets/icons/close3.svg?react";
+import DefiSVG from "src/assets/icons/defi.svg?react";
+import WidgetsSVG from "src/assets/icons/grid.svg?react";
+import InvestingSVG from "src/assets/icons/investing.svg?react";
+import L2SVG from "src/assets/icons/l2.svg?react";
+import OtherSVG from "src/assets/icons/other.svg?react";
+import UsersSVG from "src/assets/icons/users.svg?react";
 import market from "src/assets/img/preview/marketModule2x.png";
 import CONFIG from "src/config/config";
 

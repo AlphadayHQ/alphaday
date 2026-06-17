@@ -6,10 +6,10 @@ import { TCoin } from "src/api/types";
 import { THistoryInsightItem, TInsightItem } from "src/api/types/kasandra";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { Logger } from "src/api/utils/logging";
-import { ReactComponent as ArrowDownSVG } from "src/assets/svg/arrow-down.svg";
-import { ReactComponent as ArrowUpSVG } from "src/assets/svg/arrow-up.svg";
-import { ReactComponent as TrendDownThinSVG } from "src/assets/svg/trend-down-thin.svg";
-import { ReactComponent as TrendUpThinSVG } from "src/assets/svg/trend-up-thin.svg";
+import ArrowDownSVG from "src/assets/svg/arrow-down.svg?react";
+import ArrowUpSVG from "src/assets/svg/arrow-up.svg?react";
+import TrendDownThinSVG from "src/assets/svg/trend-down-thin.svg?react";
+import TrendUpThinSVG from "src/assets/svg/trend-up-thin.svg?react";
 import { imgOnError } from "src/utils/errorHandling";
 import { useDynamicWidgetItem } from "../dynamic-modules/hooks/useDynamicWidgetItem";
 

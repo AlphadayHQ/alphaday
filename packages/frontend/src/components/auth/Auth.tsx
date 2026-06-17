@@ -3,8 +3,8 @@ import { Spinner } from "@alphaday/ui-kit";
 import { EmailInput } from "@alphaday/ui-kit/src/mobile-components/auth/EmailInput";
 import { EAuthMethod, EAuthState, TUserAccess } from "src/api/types";
 import { validateEmail } from "src/api/utils/accountUtils";
-import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
-import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
+import AppleIcon from "src/assets/icons/socials/apple_icon.svg?react";
+import GoogleIcon from "src/assets/icons/socials/google_icon.svg?react";
 import { OTPInput } from "./OtpInput";
 
 export interface AuthProps {
