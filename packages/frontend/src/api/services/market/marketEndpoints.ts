@@ -72,7 +72,7 @@ const marketApi = alphadayApi.injectEndpoints({
                     MARKET.DEFAULT
                 )}?${params}`;
                 Logger.debug("getMarketData: querying", path);
-                return `${MARKET.BASE}?${params}`;
+                return `${MARKET.BASE}${MARKET.DEFAULT}?${params}`;
             },
             transformResponse: (
                 r: TGetMarketDataRawResponse
@@ -105,7 +105,7 @@ const marketApi = alphadayApi.injectEndpoints({
                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                 const route = `${MARKET.BASE}${MARKET.HISTORY}${
                     req.coin
-                }/${String(req.interval)}`;
+                }/${String(req.interval)}/`;
                 Logger.debug("querying", route);
                 return route;
             },

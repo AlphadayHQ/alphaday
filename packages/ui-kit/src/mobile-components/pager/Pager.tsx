@@ -1,6 +1,6 @@
 import React from "react";
-import { ReactComponent as ChevronLeftIcon } from "src/assets/svg/chevron-left.svg";
-import { ReactComponent as Close3Icon } from "src/assets/svg/close3.svg";
+import ChevronLeftIcon from "src/assets/svg/chevron-left.svg?react";
+import Close3Icon from "src/assets/svg/close3.svg?react";
 import { twMerge } from "tailwind-merge";
 
 interface PagerProps {

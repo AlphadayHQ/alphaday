@@ -33,3 +33,9 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Claude
+.claude/
