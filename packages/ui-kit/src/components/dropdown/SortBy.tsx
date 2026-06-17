@@ -1,6 +1,6 @@
 import { FC, Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ReactComponent as ChevronDownSVG } from "src/assets/svg/chevron-down.svg";
+import ChevronDownSVG from "src/assets/svg/chevron-down.svg?react";
 import { twMerge } from "tailwind-merge";
 
 interface ISortBy {
