@@ -3,7 +3,7 @@ import { usePagination, useWidgetHeight } from "src/api/hooks";
 import { TBaseTag, useGetTvlQuery } from "src/api/services";
 import { selectTvlProjectType, setSelectedTvlProjectType } from "src/api/store";
 import { useAppDispatch, useAppSelector } from "src/api/store/hooks";
-import { TProjectData, TProjectTvlHistory } from "src/api/types";
+import { TProjectData } from "src/api/types";
 import { filteringListToStr } from "src/api/utils/filterUtils";
 import {
     buildUniqueItemList,
@@ -99,7 +99,7 @@ const TvlContainer: FC<IModuleContainer> = ({
 
     const tvlHistory = tvlData
         ?.map((p) => p.tvlHistories)
-        .filter((e) => e !== undefined) as TProjectTvlHistory[];
+        .filter((e) => e !== undefined);
 
     // set current page 350ms after next page is set.
     // RTK should cache requests, so we don't need to be too careful about rerenders.
