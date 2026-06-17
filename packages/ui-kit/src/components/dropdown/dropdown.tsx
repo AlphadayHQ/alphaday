@@ -10,7 +10,7 @@ import {
     FunctionComponent,
     useMemo,
 } from "react";
-import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
+import UserSVG from "src/assets/svg/user.svg?react";
 import { twMerge } from "tailwind-merge";
 import { useClickOutside } from "../../hooks";
 

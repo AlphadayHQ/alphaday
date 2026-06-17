@@ -11,7 +11,7 @@ import { useWidgetBreakpoints } from "src/api/hooks";
 import { formatNumber, ENumberStyle } from "src/api/utils/format";
 import { makeRepeated } from "src/api/utils/itemUtils";
 import { getAssetPrefix } from "src/api/utils/portfolioUtils";
-import { ReactComponent as ShowSVG } from "src/assets/icons/shown.svg";
+import ShowSVG from "src/assets/icons/shown.svg?react";
 import CONFIG from "src/config/config";
 import globalMessages from "src/globalMessages";
 import { ITEM_COLORS } from "../item-colors";

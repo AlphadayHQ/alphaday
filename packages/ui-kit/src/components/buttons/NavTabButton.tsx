@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { ReactComponent as CloseSVG } from "../../assets/svg/close.svg";
-import { ReactComponent as LanguageSVG } from "../../assets/svg/language.svg";
-import { ReactComponent as RecipesSVG } from "../../assets/svg/recipes.svg";
-import { ReactComponent as ViewsSVG } from "../../assets/svg/views.svg";
-import { ReactComponent as WidgetsSVG } from "../../assets/svg/widgets.svg";
+import CloseSVG from "../../assets/svg/close.svg?react";
+import LanguageSVG from "../../assets/svg/language.svg?react";
+import RecipesSVG from "../../assets/svg/recipes.svg?react";
+import ViewsSVG from "../../assets/svg/views.svg?react";
+import WidgetsSVG from "../../assets/svg/widgets.svg?react";
 import { TabButton } from "./TabButton";
 
 interface ButtonProps {

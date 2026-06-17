@@ -13,7 +13,7 @@ import {
     resolveCellFormat,
 } from "src/api/utils/customDataUtils";
 import { handleTableImgError } from "src/api/utils/errorHandling";
-import { ReactComponent as LinkSVG } from "src/assets/icons/external-link.svg";
+import LinkSVG from "src/assets/icons/external-link.svg?react";
 
 const getFieldDetails = (field: TCustomLayoutEntry, item: TCustomItem) => {
     const rawField =
