@@ -9,8 +9,8 @@ import {
     useKeyPress,
 } from "src/api/hooks";
 import { WalletConnectionState, EWalletConnectionMethod } from "src/api/types";
-import { ReactComponent as MetamaskSVG } from "src/assets/icons/metamask.svg";
-import { ReactComponent as WalletConnectSVG } from "src/assets/icons/wallet-connect.svg";
+import MetamaskSVG from "src/assets/icons/metamask.svg?react";
+import WalletConnectSVG from "src/assets/icons/wallet-connect.svg?react";
 import type { IDialog } from "src/components/dialog/Dialog";
 import WalletConnectionPicker from "src/components/wallet-connection/WalletConnectionPicker";
 import { EFeaturesRegistry } from "src/constants";

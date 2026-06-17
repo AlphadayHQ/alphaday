@@ -4,7 +4,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useGetUserProfileQuery, useGetFeaturesQuery } from "src/api/services";
 import * as userStore from "src/api/store/slices/user";
 import { DefaultWrapper } from "src/mocks/utils";
-import Vitest from "vitest";
+import type * as Vitest from "vitest";
 import { useAppDispatch } from "../store/hooks";
 import { useAccount } from "./useAccount";
 

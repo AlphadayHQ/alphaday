@@ -1,18 +1,18 @@
 /* eslint-disable react/button-has-type */
 import { FC } from "react";
-import { ReactComponent as BellSVG } from "src/assets/svg/bell.svg";
-import { ReactComponent as ArrowDown } from "src/assets/svg/chevron-down.svg";
-import { ReactComponent as ArrowLeft } from "src/assets/svg/chevron-left.svg";
-import { ReactComponent as ArrowRight } from "src/assets/svg/chevron-right.svg";
-import { ReactComponent as CloseSVG } from "src/assets/svg/close.svg";
-import { ReactComponent as Close2SVG } from "src/assets/svg/close2.svg";
-import { ReactComponent as InfoSVG } from "src/assets/svg/info.svg";
-import { ReactComponent as StarSVG } from "src/assets/svg/star.svg";
-import { ReactComponent as StarFilledSVG } from "src/assets/svg/starFilled.svg";
-import { ReactComponent as UserSVG } from "src/assets/svg/user.svg";
+import BellSVG from "src/assets/svg/bell.svg?react";
+import ArrowDown from "src/assets/svg/chevron-down.svg?react";
+import ArrowLeft from "src/assets/svg/chevron-left.svg?react";
+import ArrowRight from "src/assets/svg/chevron-right.svg?react";
+import CloseSVG from "src/assets/svg/close.svg?react";
+import Close2SVG from "src/assets/svg/close2.svg?react";
+import InfoSVG from "src/assets/svg/info.svg?react";
+import StarSVG from "src/assets/svg/star.svg?react";
+import StarFilledSVG from "src/assets/svg/starFilled.svg?react";
+import UserSVG from "src/assets/svg/user.svg?react";
 import { twMerge } from "tailwind-merge";
 import { tv, VariantProps } from "tailwind-variants";
-import { ReactComponent as TrashSVG } from "../../assets/svg/trash.svg";
+import TrashSVG from "../../assets/svg/trash.svg?react";
 import styles from "./Button.module.scss";
 
 const buttonVariants = tv({
