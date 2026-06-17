@@ -3,7 +3,7 @@ import { FC, useState, ChangeEvent } from "react";
 import { Input, ScrollBar, Toggle, twMerge } from "@alphaday/ui-kit";
 import { TRecipe, TRecipeTemplate, TOutputFormat } from "src/api/types";
 import { TIMEZONES } from "src/api/utils/dateUtils";
-import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
+import ArrowSVG from "src/assets/icons/arrow-right.svg?react";
 
 // Parse existing cron to extract time and frequency
 const parseCron = (cron: string) => {

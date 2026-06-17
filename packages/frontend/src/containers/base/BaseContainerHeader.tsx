@@ -2,7 +2,7 @@ import { FC, useMemo } from "react";
 import { BaseModuleHeader, TabButton, twMerge } from "@alphaday/ui-kit";
 import { TBaseTag } from "src/api/services";
 import { TUserViewWidget } from "src/api/types";
-import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
+import CloseSVG from "src/assets/icons/close3.svg?react";
 import BaseContainerMenu from "./BaseContainerMenu";
 
 interface IBaseContainerHeader {
