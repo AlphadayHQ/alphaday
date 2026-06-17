@@ -1,6 +1,6 @@
 import ReactSelect, { SingleValue } from "react-select";
-import { ReactComponent as CheckMarkSVG } from "../../assets/svg/checkmark.svg";
-import { ReactComponent as ChevronUpDownSVG } from "../../assets/svg/chevron-up-down.svg";
+import CheckMarkSVG from "../../assets/svg/checkmark.svg?react";
+import ChevronUpDownSVG from "../../assets/svg/chevron-up-down.svg?react";
 
 // ?? option-label-text ClassName is used in the Select component to style the option label text
 

@@ -20,7 +20,7 @@ import {
     translateLabels,
     TTranslationValues,
 } from "src/api/utils/translationUtils";
-import { ReactComponent as EmptySVG } from "src/assets/icons/empty.svg";
+import EmptySVG from "src/assets/icons/empty.svg?react";
 import market from "src/assets/img/preview/marketModule2x.png";
 
 const DEFAULT_TAB_OPTION = {
