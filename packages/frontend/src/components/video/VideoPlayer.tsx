@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import useElementSize from "src/api/hooks/useElementSize";
 import { TVideoItem } from "src/api/types";
 import { computeDuration } from "src/api/utils/dateUtils";
-import { ReactComponent as ArrowSVG } from "src/assets/icons/arrow-right.svg";
+import ArrowSVG from "src/assets/icons/arrow-right.svg?react";
 import ItemBookmark from "src/components/listItem/ItemBookmark";
 
 interface IVideoPlayer {

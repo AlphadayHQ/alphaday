@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { ReactComponent as PauseSVG } from "src/assets/svg/pause.svg";
-import { ReactComponent as PlaySVG } from "src/assets/svg/play2.svg";
+import PauseSVG from "src/assets/svg/pause.svg?react";
+import PlaySVG from "src/assets/svg/play2.svg?react";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
 import ItemBookmark from "./ItemBookmark";

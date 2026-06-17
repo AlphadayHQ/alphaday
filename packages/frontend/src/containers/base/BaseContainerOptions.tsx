@@ -9,8 +9,8 @@ import {
     SearchBar,
     TabButton,
 } from "@alphaday/ui-kit";
-import { ReactComponent as PinSVG } from "@alphaday/ui-kit/src/assets/svg/pin.svg";
-import { ReactComponent as PinnedSVG } from "@alphaday/ui-kit/src/assets/svg/pinned.svg";
+import PinSVG from "@alphaday/ui-kit/src/assets/svg/pin.svg?react";
+import PinnedSVG from "@alphaday/ui-kit/src/assets/svg/pinned.svg?react";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 import { useTranslation } from "react-i18next";
 import {
