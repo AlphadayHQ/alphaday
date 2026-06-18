@@ -1,12 +1,12 @@
 import { FC, useMemo } from "react";
 import { useLayer } from "react-laag";
-import { ReactComponent as InfoSVG } from "src/assets/svg/info.svg";
-import { ReactComponent as MoreSVG } from "src/assets/svg/more-kebab.svg";
-import { ReactComponent as PinSVG } from "src/assets/svg/pin.svg";
-import { ReactComponent as PinnedSVG } from "src/assets/svg/pinned.svg";
-import { ReactComponent as EditSVG } from "src/assets/svg/rename.svg";
-import { ReactComponent as ShareSVG } from "src/assets/svg/share.svg";
-import { ReactComponent as TrashSVG } from "src/assets/svg/trash.svg";
+import InfoSVG from "src/assets/svg/info.svg?react";
+import MoreSVG from "src/assets/svg/more-kebab.svg?react";
+import PinSVG from "src/assets/svg/pin.svg?react";
+import PinnedSVG from "src/assets/svg/pinned.svg?react";
+import EditSVG from "src/assets/svg/rename.svg?react";
+import ShareSVG from "src/assets/svg/share.svg?react";
+import TrashSVG from "src/assets/svg/trash.svg?react";
 
 import { themeColors } from "src/globalStyles/themes";
 import { twMerge } from "tailwind-merge";

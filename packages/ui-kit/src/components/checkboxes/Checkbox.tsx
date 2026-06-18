@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { ReactComponent as CheckedSVG } from "src/assets/svg/checked.svg";
-import { ReactComponent as UncheckedSVG } from "src/assets/svg/unchecked.svg";
+import CheckedSVG from "src/assets/svg/checked.svg?react";
+import UncheckedSVG from "src/assets/svg/unchecked.svg?react";
 import { twMerge } from "tailwind-merge";
 
 export interface CheckBoxProps {
