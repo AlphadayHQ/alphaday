@@ -12,16 +12,3 @@ exports[`Test for text Utilities > remarkRegex() > <p>Check out <a href="https:/
   </a>
 </p>
 `;
-
-exports[`Test for text Utilities remarkRegex(): <p>Check out <a href="https://www.alphaday.com">https://www.alphaday.com</a>.</p> 1`] = `
-<p>
-  Check out 
-  <a
-    href="https://www.alphaday.com."
-    rel="noopener noreferrer"
-    target="_blank"
-  >
-    https://www.alphaday.com.
-  </a>
-</p>
-`;
