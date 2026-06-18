@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Switch } from "@headlessui/react";
-import { ReactComponent as CheckedSVG } from "src/assets/svg/checkmark.svg";
+import CheckedSVG from "src/assets/svg/checkmark.svg?react";
 import { twMerge } from "tailwind-merge";
 
 export const Toggle: FC<{ enabled: boolean; onChange: () => void }> = ({

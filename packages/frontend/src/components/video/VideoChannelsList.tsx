@@ -2,7 +2,7 @@ import React, { FC, useEffect, useMemo, useRef, useState } from "react";
 import { ChannelSkeleton, IconButton, Input, twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { TVideoChannel } from "src/api/types";
-import { ReactComponent as ChevronSVG } from "src/assets/icons/chevron-down2.svg";
+import ChevronSVG from "src/assets/icons/chevron-down2.svg?react";
 
 interface IVideoChannelsList {
     channels: TVideoChannel[] | undefined;

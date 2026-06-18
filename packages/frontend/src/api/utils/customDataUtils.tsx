@@ -462,8 +462,9 @@ export const resolveCellFormat: (
                 foundFormat = f2;
                 return true;
             }
-            if (isValidFormat(itemRecord[key])) {
-                foundFormat = itemRecord[key] as TRemoteFormat;
+            const fk = itemRecord[key];
+            if (isValidFormat(fk)) {
+                foundFormat = fk;
                 return true;
             }
             // check `.format` top-level field

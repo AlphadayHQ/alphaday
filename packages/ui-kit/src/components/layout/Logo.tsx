@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ReactComponent as Logoday } from "../../assets/svg/logo-white.svg";
+import Logoday from "../../assets/svg/logo-white.svg?react";
 
 const Logo: FC = () => {
     return (
