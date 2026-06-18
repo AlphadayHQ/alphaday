@@ -1,9 +1,9 @@
 import { FC, memo, useState } from "react";
 import { Button } from "@alphaday/ui-kit";
 import { EAuthMethod, EAuthState } from "src/api/types";
-import { ReactComponent as AppleIcon } from "src/assets/icons/socials/apple_icon.svg";
-import { ReactComponent as EnvelopeIcon } from "src/assets/icons/socials/envelope_icon.svg";
-import { ReactComponent as GoogleIcon } from "src/assets/icons/socials/google_icon.svg";
+import AppleIcon from "src/assets/icons/socials/apple_icon.svg?react";
+import EnvelopeIcon from "src/assets/icons/socials/envelope_icon.svg?react";
+import GoogleIcon from "src/assets/icons/socials/google_icon.svg?react";
 import { Auth, AuthProps } from "./Auth";
 
 export const AuthMethodSelection: FC<{

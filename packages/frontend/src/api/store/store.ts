@@ -10,7 +10,7 @@ import {
     PURGE,
     REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/es/storage";
 // import { setupListeners } from '@reduxjs/toolkit/query'
 import CONFIG from "src/config";
 import { alphadayApi, coingeckoApi, zapperApi, ipApi } from "../services";

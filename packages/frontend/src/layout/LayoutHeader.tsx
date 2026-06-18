@@ -11,8 +11,8 @@ import {
 import { useTranslation } from "react-i18next";
 import { useWindowSize, useRecipes } from "src/api/hooks";
 import { truncateWithEllipsis } from "src/api/utils/textUtils";
-import { ReactComponent as Close2 } from "src/assets/icons/close2.svg";
-import { ReactComponent as MenuMobile } from "src/assets/icons/menuMobile.svg";
+import Close2 from "src/assets/icons/close2.svg?react";
+import MenuMobile from "src/assets/icons/menuMobile.svg?react";
 // import NotificationDropdownContainer from "src/containers/header/notification-dropdown/NotificationDropdownContainer";
 import ProfileMenuContainer from "src/containers/header/profile-menu/ProfileMenuContainer";
 import SyncIndicatorContainer from "src/containers/header/SyncIndicatorContainer";
