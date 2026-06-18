@@ -13,9 +13,9 @@ import {
     TRecipeTemplate,
     TOutputFormat,
 } from "src/api/types";
-import { ReactComponent as CloseSVG } from "src/assets/icons/close3.svg";
-import { ReactComponent as RecipeSVG } from "src/assets/icons/grid.svg";
-import { ReactComponent as TemplateSVG } from "src/assets/icons/other.svg";
+import CloseSVG from "src/assets/icons/close3.svg?react";
+import RecipeSVG from "src/assets/icons/grid.svg?react";
+import TemplateSVG from "src/assets/icons/other.svg?react";
 import { v4 as uuidv4 } from "uuid";
 import RecipeForm from "./RecipeForm";
 

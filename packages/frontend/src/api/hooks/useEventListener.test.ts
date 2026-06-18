@@ -1,10 +1,10 @@
 import { renderHook } from "@testing-library/react-hooks";
-import Vitest from "vitest";
+import type * as Vitest from "vitest";
 import useEventListener from "./useEventListener";
 
 describe("useEventListener", () => {
-    let addEventListenerSpy: Vitest.SpyInstance;
-    let removeEventListenerSpy: Vitest.SpyInstance;
+    let addEventListenerSpy: Vitest.MockInstance;
+    let removeEventListenerSpy: Vitest.MockInstance;
 
     afterEach(() => {
         addEventListenerSpy.mockRestore();

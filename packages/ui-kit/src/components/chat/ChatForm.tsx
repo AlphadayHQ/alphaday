@@ -7,7 +7,7 @@ import {
     useRef,
     useState,
 } from "react";
-import { ReactComponent as Send } from "src/assets/svg/send.svg";
+import Send from "src/assets/svg/send.svg?react";
 
 interface IForm {
     handleSend: (m: string) => void;
