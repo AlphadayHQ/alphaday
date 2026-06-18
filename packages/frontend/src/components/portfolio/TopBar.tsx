@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Switch, TabButton } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
+import PlusSVG from "src/assets/icons/plus.svg?react";
 import { EPortfolioType } from "./types";
 
 interface ITopBarProps {

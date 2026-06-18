@@ -24,9 +24,9 @@ import {
     translateLabels,
     TTranslationValues,
 } from "src/api/utils/translationUtils";
-import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
-import { ReactComponent as EmptySVG } from "src/assets/icons/empty.svg";
-import { ReactComponent as PlusSVG } from "src/assets/icons/plus.svg";
+import CloseSVG from "src/assets/icons/close2.svg?react";
+import EmptySVG from "src/assets/icons/empty.svg?react";
+import PlusSVG from "src/assets/icons/plus.svg?react";
 
 const DEFAULT_TAB_OPTION = {
     label: "All",

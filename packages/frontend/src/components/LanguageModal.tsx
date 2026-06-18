@@ -10,7 +10,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { useAllowedTranslations } from "src/api/hooks/useAllowedTranslations";
 import { ELanguageCode } from "src/api/types/language";
-import { ReactComponent as CheckedSVG } from "src/assets/icons/checkmark.svg";
+import CheckedSVG from "src/assets/icons/checkmark.svg?react";
 
 interface IProps {
     onSetLanguageCode: (code: ELanguageCode) => void;

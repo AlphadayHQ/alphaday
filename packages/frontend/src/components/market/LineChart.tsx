@@ -6,7 +6,7 @@ import { TChartRange } from "src/api/types";
 import { ENumberStyle, formatNumber } from "src/api/utils/format";
 import { minVal } from "src/api/utils/helpers";
 import { renderToString } from "src/api/utils/textUtils";
-import { ReactComponent as ZoomResetSVG } from "src/assets/icons/zoom-reset.svg";
+import ZoomResetSVG from "src/assets/icons/zoom-reset.svg?react";
 
 type IProps = {
     data: number[][];

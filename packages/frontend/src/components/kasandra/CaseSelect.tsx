@@ -3,8 +3,8 @@ import { Select } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { SingleValue } from "react-select";
 import { EPredictionCase } from "src/api/types";
-import { ReactComponent as TrendDownThinSVG } from "src/assets/svg/trend-down-thin.svg";
-import { ReactComponent as TrendUpThinSVG } from "src/assets/svg/trend-up-thin.svg";
+import TrendDownThinSVG from "src/assets/svg/trend-down-thin.svg?react";
+import TrendUpThinSVG from "src/assets/svg/trend-up-thin.svg?react";
 
 export type TCase = {
     id: EPredictionCase | "all";

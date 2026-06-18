@@ -15,9 +15,9 @@ import Select, {
     ValueContainerProps,
     OptionsOrGroups,
 } from "react-select";
-import { ReactComponent as CheckMarkSVG } from "src/assets/svg/checkmark.svg";
+import CheckMarkSVG from "src/assets/svg/checkmark.svg?react";
 import { twMerge } from "tailwind-merge";
-import { ReactComponent as HotSVG } from "../../assets/svg/hot.svg";
+import HotSVG from "../../assets/svg/hot.svg?react";
 import { Spinner } from "../spinner/Spinner";
 /**
  * for simplicity, all components types here are defined with IsMulti = true
