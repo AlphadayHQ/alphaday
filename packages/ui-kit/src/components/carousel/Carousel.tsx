@@ -6,7 +6,7 @@ import {
     useState,
     useCallback,
 } from "react";
-import { ReactComponent as PointerSVG } from "src/assets/svg/pointer.svg";
+import PointerSVG from "src/assets/svg/pointer.svg?react";
 import { twMerge } from "tailwind-merge";
 import { Z_INDEX_REGISTRY } from "../../config/zIndexRegistry";
 

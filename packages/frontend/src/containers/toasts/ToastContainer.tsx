@@ -1,7 +1,7 @@
 import { FC, memo } from "react";
 import { Button } from "@alphaday/ui-kit";
 import { ToastOptions, ToastBar, Toaster, toast } from "react-hot-toast";
-import { ReactComponent as CloseSVG } from "src/assets/icons/close2.svg";
+import CloseSVG from "src/assets/icons/close2.svg?react";
 
 interface ToastContainerProps extends ToastOptions {
     containerClassName?: string;

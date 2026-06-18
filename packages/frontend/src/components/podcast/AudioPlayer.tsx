@@ -8,8 +8,8 @@ import React, {
 } from "react";
 import { useAudioPosition } from "react-use-audio-player";
 import { TPodcastItem } from "src/api/types";
-import { ReactComponent as PauseSVG } from "src/assets/icons/pause.svg";
-import { ReactComponent as PlaySVG } from "src/assets/icons/play2.svg";
+import PauseSVG from "src/assets/icons/pause.svg?react";
+import PlaySVG from "src/assets/icons/play2.svg?react";
 
 interface IAudioPlayer {
     podcast: TPodcastItem | null;

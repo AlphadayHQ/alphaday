@@ -2,7 +2,7 @@ import { FC, useCallback, useState } from "react";
 import { twMerge } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { formatNumber } from "src/api/utils/format";
-import { ReactComponent as NoImageSVG } from "src/assets/icons/no-image.svg";
+import NoImageSVG from "src/assets/icons/no-image.svg?react";
 
 interface INft {
     img: string | undefined;
