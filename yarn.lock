@@ -11803,10 +11803,10 @@ react-microsoft-clarity@1.2.0:
   resolved "https://registry.yarnpkg.com/react-microsoft-clarity/-/react-microsoft-clarity-1.2.0.tgz#949f953cec4d4f9d7b4eaab01c240dfa48fb44c8"
   integrity sha512-a1bsJR1uN1daWq3cBc7NheEGPXrotMRE0oFeRio7kXvHawzQfqu5iX9BoYFF9zRUL0dn+Mz57h1fNlcv3pqXEg==
 
-react-quick-pinch-zoom@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-5.1.0.tgz#942a1e9cc9178a526b8ffba16148c111a876b8bb"
-  integrity sha512-c8iOBrhbWwuJkUgbM0itkxhYHN3Zc15fvwYclo52scuicPidOuXJxwoVboNtccgtG24w33EhpuKVA7aLt93oSA==
+react-quick-pinch-zoom@5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-5.1.1.tgz#a3dd0297dd5108235afbb8d47077a700c2ce0e69"
+  integrity sha512-x+uL7n0Y8OA+W3wvAEWDQlVkHcsD1BRYow3k3Z5Kki6CaQY92qxQbOrPvs2PC1ygzJpcqFwp+MzMyjlgyWsYCQ==
   dependencies:
     tslib ">=2.0.0"
 
