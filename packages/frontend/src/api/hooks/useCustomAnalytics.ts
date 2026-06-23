@@ -23,7 +23,9 @@ export const useCustomAnalytics = () => {
 
     const logButtonClicked = (payload: TButtonClickEventPayload) => {
         const key = EActivityLogEventTypes.ButtonClicked;
-        logEvent(analytics, key, payload);
+        if (analytics) {
+            logEvent(analytics, key, payload);
+        }
         logButtonClickedActivity(payload.buttonName, payload.data);
         Logger.debug("logButtonClicked", key, payload);
     };
