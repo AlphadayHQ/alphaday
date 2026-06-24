@@ -1,9 +1,20 @@
 import { useEffect } from "react";
-import ReactGA from "react-ga4";
+import ReactGADefault from "react-ga4";
 import { useLocation } from "react-router-dom";
 import { useCookieChoice } from "src/api/hooks";
 import { Logger } from "src/api/utils/logging";
 import CONFIG from "src/config";
+
+// react-ga4 ships as CommonJS. Vite's dev pre-bundler (esbuild) resolves the
+// default-import interop correctly, but the production Rollup build double-wraps
+// the default export, leaving `ReactGA.initialize` undefined. Unwrap the extra
+// `default` layer when present so it works under both bundlers.
+const ReactGA =
+    typeof (ReactGADefault as { initialize?: unknown }).initialize ===
+    "function"
+        ? ReactGADefault
+        : (ReactGADefault as unknown as { default: typeof ReactGADefault })
+              .default;
 
 let isInitialized = false;
 
