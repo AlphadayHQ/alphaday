@@ -34,6 +34,12 @@ describe("getYoutubeVideoId", () => {
     it("returns null for an empty url", () => {
         expect(getYoutubeVideoId("")).toBeNull();
     });
+    it("returns null for a non-YouTube host", () => {
+        expect(getYoutubeVideoId("https://vimeo.com/12345")).toBeNull();
+    });
+    it("returns null for a watch URL without a `v` param", () => {
+        expect(getYoutubeVideoId("https://www.youtube.com/watch")).toBeNull();
+    });
 });
 
 describe("getVideoEmbedUrl", () => {
@@ -50,6 +56,10 @@ describe("getVideoEmbedUrl", () => {
                 autoplay: 1,
             })
         ).toBe("//www.youtube.com/embed/abc123?autoplay=1");
+    });
+    it("passes through a non-YouTube URL unchanged", () => {
+        const url = "https://vimeo.com/12345";
+        expect(getVideoEmbedUrl(url, { autoplay: 1 })).toBe(url);
     });
 });
 

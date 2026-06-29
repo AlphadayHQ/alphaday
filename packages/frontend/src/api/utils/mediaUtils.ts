@@ -41,13 +41,24 @@ export const getYoutubeVideoId = (url: string): string | null => {
     if (!url) return null;
     try {
         const parsed = new URL(url, "https://www.youtube.com");
-        const fromQuery = parsed.searchParams.get("v");
-        if (fromQuery) return fromQuery;
-        // matches /shorts/ID, /embed/ID, and youtu.be/ID (first path segment)
-        const match = parsed.pathname.match(
-            /\/(?:shorts|embed)\/([^/?#]+)|^\/([^/?#]+)/
-        );
-        return match?.[1] ?? match?.[2] ?? null;
+        const { hostname } = parsed;
+        // youtu.be short links carry the id as the first (and only) path segment
+        if (hostname === "youtu.be") {
+            return parsed.pathname.match(/^\/([^/?#]+)/)?.[1] ?? null;
+        }
+        // Only treat youtube.com hosts (www., m., music., …) as YouTube; any
+        // other host is left for the caller to pass through unchanged.
+        if (hostname.endsWith("youtube.com")) {
+            const fromQuery = parsed.searchParams.get("v");
+            if (fromQuery) return fromQuery;
+            // /shorts/ID and /embed/ID — note a bare /watch with no `v` is not
+            // a valid id source, so it correctly falls through to null.
+            return (
+                parsed.pathname.match(/\/(?:shorts|embed)\/([^/?#]+)/)?.[1] ??
+                null
+            );
+        }
+        return null;
     } catch (e) {
         Logger.error("getYoutubeVideoId::failed to parse url", url, e);
         return null;
