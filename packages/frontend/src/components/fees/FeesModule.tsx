@@ -14,7 +14,6 @@ export enum EFeesItemPreference {
 interface IFees {
     isLoading: boolean;
     items: TFeesItem[] | undefined;
-    attribution: string | undefined;
     widgetHeight: number;
     selectedMetric: TFeesMetric;
     onChangeMetric: (metric: EFeesItemPreference) => void;
@@ -34,7 +33,6 @@ const translateNavItems = () => [
 const FeesModule: FC<IFees> = memo(function FeesModule({
     isLoading,
     items,
-    attribution,
     widgetHeight,
     selectedMetric,
     onChangeMetric,
@@ -46,13 +44,11 @@ const FeesModule: FC<IFees> = memo(function FeesModule({
     const THRESHOLD = 475;
     const SWITCH_HEIGHT = 38;
     const LIST_HEADER_HEIGHT = 28;
-    const ATTRIBUTION_HEIGHT = 20;
     const LIST_HEIGHT = useMemo(
         () =>
             width >= THRESHOLD
-                ? widgetHeight -
-                  (SWITCH_HEIGHT + LIST_HEADER_HEIGHT + ATTRIBUTION_HEIGHT)
-                : widgetHeight - (SWITCH_HEIGHT + ATTRIBUTION_HEIGHT),
+                ? widgetHeight - (SWITCH_HEIGHT + LIST_HEADER_HEIGHT)
+                : widgetHeight - SWITCH_HEIGHT,
         [widgetHeight, width]
     );
 
@@ -108,11 +104,6 @@ const FeesModule: FC<IFees> = memo(function FeesModule({
                         </div>
                     )}
                 </ul>
-                {attribution && (
-                    <div className="flex justify-end px-4 py-0.5 fontGroup-mini text-primaryVariant100">
-                        {attribution}
-                    </div>
-                )}
             </div>
         </div>
     );

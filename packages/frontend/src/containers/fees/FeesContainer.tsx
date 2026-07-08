@@ -47,7 +47,6 @@ const FeesContainer: FC<IModuleContainer> = ({
     return (
         <FeesModule
             items={feesResponse?.items}
-            attribution={feesResponse?.config.attribution}
             isLoading={isLoading}
             widgetHeight={mobileViewWidgetHeight ?? widgetHeight}
             selectedMetric={selectedMetric}
