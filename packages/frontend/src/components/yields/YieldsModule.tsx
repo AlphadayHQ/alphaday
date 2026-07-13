@@ -1,6 +1,5 @@
-import { FC, useMemo, memo, FormEvent } from "react";
+import { FC, memo, FormEvent } from "react";
 import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
-import useElementSize from "src/api/hooks/useElementSize";
 import { TYieldPool } from "src/api/types";
 import { shouldFetchMoreItems } from "src/api/utils/itemUtils";
 import globalMessages from "src/globalMessages";
@@ -13,23 +12,15 @@ interface IYields {
     handlePaginate: (type: "next" | "previous") => void;
 }
 
+const LIST_HEADER_HEIGHT = 28;
+
 const YieldsModule: FC<IYields> = memo(function YieldsModule({
     isLoading,
     yieldsData,
     widgetHeight,
     handlePaginate,
 }) {
-    const [squareRef, { width }] = useElementSize();
-
-    const THRESHOLD = 475;
-    const LIST_HEADER_HEIGHT = 28;
-    const LIST_HEIGHT = useMemo(
-        () =>
-            width >= THRESHOLD
-                ? widgetHeight - LIST_HEADER_HEIGHT
-                : widgetHeight,
-        [widgetHeight, width]
-    );
+    const LIST_HEIGHT = widgetHeight - LIST_HEADER_HEIGHT;
 
     const handleListScroll = ({ currentTarget }: FormEvent<HTMLElement>) => {
         if (shouldFetchMoreItems(currentTarget)) {
@@ -42,11 +33,9 @@ const YieldsModule: FC<IYields> = memo(function YieldsModule({
     }
 
     return (
-        <div ref={squareRef}>
+        <div>
             <div className="relative p-0">
-                {yieldsData?.length !== 0 && width >= THRESHOLD && (
-                    <YieldItemsHeader />
-                )}
+                {yieldsData?.length !== 0 && <YieldItemsHeader />}
                 <ul className="mt-0" style={{ height: `${LIST_HEIGHT}px` }}>
                     {yieldsData !== undefined && yieldsData?.length !== 0 ? (
                         <ScrollBar

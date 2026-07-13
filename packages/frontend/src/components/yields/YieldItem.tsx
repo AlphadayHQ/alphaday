@@ -12,9 +12,9 @@ const COLUMN_WIDTHS = {
 
 export const YieldItemsHeader: FC = () => {
     return (
-        <div className="flex flex-row flex-[1_auto] py-[10px] px-6 pb-[3px]">
+        <div className="flex flex-row flex-[1_auto] pt-[10px] pl-3 pr-5">
             <div
-                className="flex flex-row flex-1 items-center"
+                className="flex flex-row flex-1 items-center pr-1"
                 style={{ flex: COLUMN_WIDTHS.INDEX }}
             />
             <div
