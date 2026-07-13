@@ -6,6 +6,7 @@ export * from "./dao";
 export * from "./discord";
 export * from "./event";
 export * from "./features";
+export * from "./fees";
 export * from "./forum";
 export * from "./gas";
 export * from "./lens";

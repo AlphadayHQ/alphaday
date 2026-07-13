@@ -3,6 +3,7 @@ import {
     TChartRange,
     EItemFeedPreference,
     TProjectType,
+    TFeesMetric,
     TKasandraCase,
 } from "src/api/types";
 import { ECalendarType } from "src/components/calendar/types";
@@ -63,6 +64,10 @@ export interface ITvlWidgetState {
     selectedProjectType: TProjectType;
 }
 
+export interface ITvlFeesWidgetState {
+    selectedMetric: TFeesMetric;
+}
+
 export interface IWidgetsState {
     common: Record<string, ICommonWidgetState>;
     market: Record<string, IMarketWidgetState>;
@@ -73,6 +78,7 @@ export interface IWidgetsState {
     podcast: Record<string, IPodcastsWidgetState>;
     video: Record<string, IVideosWidgetState>;
     tvl: Record<string, ITvlWidgetState>;
+    tvlFees: Record<string, ITvlFeesWidgetState>;
     kasandra: Record<string, IKasandraWidgetState>;
     polymarket: Record<string, IPolymarketWidgetState>;
 }
@@ -87,6 +93,7 @@ const initialState: IWidgetsState = {
     video: {},
     blog: {},
     tvl: {},
+    tvlFees: {},
     kasandra: {},
     polymarket: {},
 };
@@ -405,6 +412,22 @@ const widgetsSlice = createSlice({
                 selectedProjectType: projectType,
             };
         },
+        setSelectedFeesMetric(
+            draft,
+            action: PayloadAction<{
+                widgetHash: string;
+                metric: TFeesMetric;
+            }>
+        ) {
+            const {
+                payload: { widgetHash, metric },
+            } = action;
+
+            draft.tvlFees[widgetHash] = {
+                ...draft.tvlFees[widgetHash],
+                selectedMetric: metric,
+            };
+        },
         setPolymarketFilter(
             draft,
             action: PayloadAction<{
@@ -442,6 +465,7 @@ export const {
     removeWidgetStateFromCache,
     setWidgetHeight,
     setSelectedTvlProjectType,
+    setSelectedFeesMetric,
     setPolymarketFilter,
 } = widgetsSlice.actions;
 export default widgetsSlice.reducer;
@@ -524,3 +548,8 @@ export const selectTvlProjectType =
     (widgetHash: string) =>
     (state: RootState): TProjectType | undefined =>
         state.widgets.tvl[widgetHash]?.selectedProjectType;
+
+export const selectFeesMetric =
+    (widgetHash: string) =>
+    (state: RootState): TFeesMetric | undefined =>
+        state.widgets.tvlFees[widgetHash]?.selectedMetric;

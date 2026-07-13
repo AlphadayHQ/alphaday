@@ -140,6 +140,7 @@ const API_V0 = {
             BASE: "tvl",
             DEFAULT: "/",
             HISTORY: "/history/",
+            FEES: "/fees/",
         },
         VIEWS: {
             BASE: "ui",

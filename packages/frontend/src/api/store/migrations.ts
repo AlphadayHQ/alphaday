@@ -40,7 +40,13 @@ type PersistedRootState = (PersistedState & RootState) | undefined;
  *   102: (s: RootStateV101) => PersistedRootState
  */
 
-type RootStateV110 = PersistedRootState;
+type RootStateV111 = PersistedRootState;
+type RootStateV110 =
+    | (PersistedState &
+          Omit<RootState, "widgets"> & {
+              widgets: Omit<IWidgetsState, "tvlFees">;
+          })
+    | undefined;
 type RootStateV109 =
     | (PersistedState &
           Omit<RootState, "ui"> & {
@@ -144,6 +150,7 @@ type TMigrations = MigrationManifest & {
     108: (s: RootStateV107) => RootStateV108;
     109: (s: RootStateV108) => RootStateV109;
     110: (s: RootStateV109) => RootStateV110;
+    111: (s: RootStateV110) => RootStateV111;
 };
 
 /**
@@ -352,6 +359,16 @@ const migrations: TMigrations = {
             ui: {
                 ...s.ui,
                 showRecipeLibrary: false,
+            },
+        };
+    },
+    111: (s: RootStateV110): RootStateV111 => {
+        if (!s) return undefined;
+        return {
+            ...s,
+            widgets: {
+                ...s.widgets,
+                tvlFees: {},
             },
         };
     },
