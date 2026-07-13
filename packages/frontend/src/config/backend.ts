@@ -141,6 +141,10 @@ const API_V0 = {
             DEFAULT: "/",
             HISTORY: "/history/",
         },
+        YIELDS: {
+            BASE: "tvl",
+            DEFAULT: "/yields/",
+        },
         VIEWS: {
             BASE: "ui",
             AVAILABLE_VIEWS: "/views/",

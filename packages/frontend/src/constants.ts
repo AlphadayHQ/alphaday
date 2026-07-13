@@ -100,4 +100,5 @@ export enum ETemplateNameRegistry {
     VenueMap = "VENUE",
     VerasityTokenomics = "VERASITY_TOKENOMICS",
     Video = "VIDEO",
+    Yields = "YIELDS",
 }

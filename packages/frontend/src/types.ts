@@ -146,6 +146,9 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/dynamic/AgendaContainer")
     ),
     tvl_template: lazyRetry(() => import("./containers/tvl/TvlContainer")),
+    yields_template: lazyRetry(
+        () => import("./containers/yields/YieldsContainer")
+    ),
     two_col_image_template: lazyRetry(
         () => import("./containers/image/TwoColImageContainer")
     ),
