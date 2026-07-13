@@ -5,6 +5,7 @@ export type TRemoteVideoItem = TRemoteItem & {
     image: string;
     published_at: string;
     short_description: string;
+    aspect_ratio?: number | string;
 };
 
 export type TGetVideoItemsRequest = {
