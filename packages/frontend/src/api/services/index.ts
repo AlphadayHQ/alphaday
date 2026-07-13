@@ -38,6 +38,9 @@ export * from "./event/types";
 export * from "./tvl/tvlEndpoints";
 export * from "./tvl/types";
 
+export * from "./yields/yieldsEndpoints";
+export * from "./yields/types";
+
 export * from "./fees/feesEndpoints";
 export * from "./fees/types";
 

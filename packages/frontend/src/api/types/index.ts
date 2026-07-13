@@ -22,6 +22,7 @@ export * from "./qna";
 export * from "./recipe";
 export * from "./reddit";
 export * from "./tvl";
+export * from "./yields";
 export * from "./tweets";
 export * from "./tutorial";
 export * from "./user";

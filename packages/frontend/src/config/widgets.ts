@@ -247,6 +247,12 @@ export const WIDGETS_CONFIG = {
         MAX_PAGE_NUMBER: 10,
         ADJUSTABLE: true,
     },
+    [ETemplateNameRegistry.Yields]: {
+        POLLING_INTERVAL: 180, // 3 min
+        WIDGET_HEIGHT: 253,
+        MAX_PAGE_NUMBER: 10,
+        ADJUSTABLE: true,
+    },
     [ETemplateNameRegistry.TvlFees]: {
         TAG_ITEM_TYPE: "project",
         POLLING_INTERVAL: 180, // 3 min
