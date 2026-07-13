@@ -3,7 +3,12 @@ import { useGetLatestVideoQuery } from "src/api/services/video/videoEndpoints";
 import { TSourceData } from "src/api/types";
 import { filteringListToStr } from "src/api/utils/filterUtils";
 import { Logger } from "src/api/utils/logging";
-import { entryEmbedUrl } from "src/api/utils/mediaUtils";
+import {
+    entryEmbedUrl,
+    getYoutubeVideoId,
+    isYoutubeShortUrl,
+    resolveVideoAspect,
+} from "src/api/utils/mediaUtils";
 import MediaModule from "src/components/media/MediaModule";
 import { EWidgetSettingsRegistry } from "src/constants";
 import { IModuleContainer } from "src/types";
@@ -34,38 +39,44 @@ const MediaContainer: FC<IModuleContainer<TSourceData[]>> = ({
         );
     }
 
-    const entryUrl = useMemo(() => {
+    const { entryUrl, isVertical } = useMemo(() => {
         try {
             if (moduleData.widget.slug === "latest_video_widget") {
-                const sourceUrl = latestVideo?.url?.split("?").reverse()[0];
-
-                const feedParams = new URLSearchParams(sourceUrl);
-                const entryId = feedParams.get("v");
-                return entryId ? entryEmbedUrl(entryId, { rel: 0 }) : null;
+                const sourceUrl = latestVideo?.url ?? "";
+                const entryId = getYoutubeVideoId(sourceUrl);
+                return {
+                    entryUrl: entryId
+                        ? entryEmbedUrl(entryId, { rel: 0 })
+                        : null,
+                    isVertical: latestVideo
+                        ? resolveVideoAspect(latestVideo).isVertical
+                        : false,
+                };
             }
             const widgetData = moduleData.widget.custom_data ?? [];
             const feedData = widgetData[0]?.source_url;
             if (feedData == null) {
                 throw new Error("data must contain source_url");
             }
-            const sourceUrl = String(feedData).split("?").reverse()[0];
-            const feedParams = new URLSearchParams(sourceUrl);
-            const entryId = feedParams.get("v");
-            return entryId ? entryEmbedUrl(entryId, { rel: 0 }) : null;
+            const sourceUrl = String(feedData);
+            const entryId = getYoutubeVideoId(sourceUrl);
+            return {
+                entryUrl: entryId ? entryEmbedUrl(entryId, { rel: 0 }) : null,
+                // custom embeds give us only a URL, so fall back to the
+                // `/shorts/` heuristic to detect vertical content
+                isVertical: isYoutubeShortUrl(sourceUrl),
+            };
         } catch (error) {
             Logger.error("MediaContainer::error", error);
-            return null;
+            return { entryUrl: null, isVertical: false };
         }
-    }, [
-        latestVideo?.url,
-        moduleData.widget.custom_data,
-        moduleData.widget.slug,
-    ]);
+    }, [latestVideo, moduleData.widget.custom_data, moduleData.widget.slug]);
 
     return (
         <MediaModule
             isLoading={!moduleData || isFetching}
             entryUrl={entryUrl || ""}
+            isVertical={isVertical}
             title={moduleData.widget.name}
         />
     );
