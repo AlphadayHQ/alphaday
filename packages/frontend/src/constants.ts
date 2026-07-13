@@ -94,10 +94,12 @@ export enum ETemplateNameRegistry {
     Table = "TABLE",
     Talks = "TALKS",
     Tvl = "TVL",
+    TvlFees = "TVL_FEES",
     Twitter = "TWITTER",
     TwitterList = "TWITTER_LIST",
     Two_Col_Image = "TWO_COL_IMAGE",
     VenueMap = "VENUE",
     VerasityTokenomics = "VERASITY_TOKENOMICS",
     Video = "VIDEO",
+    Yields = "YIELDS",
 }
