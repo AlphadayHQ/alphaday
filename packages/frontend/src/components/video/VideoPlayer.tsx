@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import useElementSize from "src/api/hooks/useElementSize";
 import { TVideoItem } from "src/api/types";
 import { computeDuration } from "src/api/utils/dateUtils";
+import { getVideoEmbedUrl, resolveVideoAspect } from "src/api/utils/mediaUtils";
 import ArrowSVG from "src/assets/icons/arrow-right.svg?react";
 import ItemBookmark from "src/components/listItem/ItemBookmark";
 
@@ -48,6 +49,15 @@ const VideoPlayer: FC<IVideoPlayer> = ({
         ? computeDuration(video?.publishedAt)
         : undefined;
 
+    const { isVertical, ratio } = resolveVideoAspect(video ?? { url: "" });
+
+    // For vertical (Shorts-style) videos we constrain the iframe width to keep
+    // its native aspect ratio centered, instead of stretching it full-width.
+    const iframeWidth =
+        isVertical && playerHeight
+            ? Math.min(videoPlayerWrapWidth, Math.round(playerHeight * ratio))
+            : videoPlayerWrapWidth;
+
     if (video === null) {
         return (
             <div className="w-full flex justify-center items-center bg-background">
@@ -79,16 +89,14 @@ const VideoPlayer: FC<IVideoPlayer> = ({
                         <ArrowSVG className="mr-[5px]" /> Back
                     </Button>
                 )}
-                <div className="w-full relative text-[0]">
+                <div className="w-full relative text-[0] flex justify-center">
                     <iframe
                         title="video"
-                        className="w-full border-0 border-none"
-                        src={video.url
-                            .replace("watch?v=", "embed/")
-                            .concat("?autoplay=1")}
+                        className="border-0 border-none"
+                        src={getVideoEmbedUrl(video.url, { autoplay: 1 })}
                         allow="autoplay; encrypted-media"
                         allowFullScreen
-                        width={videoPlayerWrapWidth}
+                        width={iframeWidth}
                         height={playerHeight}
                     />
                 </div>
