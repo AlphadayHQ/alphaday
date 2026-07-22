@@ -15,14 +15,18 @@ const DeveloperActivityContainer: FC<IModuleContainer> = ({
     const widgetHeight = useWidgetHeight(moduleData);
 
     // This widget is coin-scoped: the coin is taken from the widget's included
-    // tags. We use the first pinned tag as the target coin.
+    // tags (the same tags the search bar applies to every widget). Since the
+    // developer-activity endpoint accepts a single coin, we use the most
+    // recently added tag as the target coin. The search bar appends tags to the
+    // end of the list (see views::addKeywordToViewWidgets), so the last tag is
+    // the one the user most recently searched for.
     const tagsSettings = moduleData.settings.filter(
         (s) =>
             s.widget_setting.setting.slug ===
             EWidgetSettingsRegistry.IncludedTags
     );
     const tags = tagsSettings[0]?.tags;
-    const coin = tags?.[0]?.slug;
+    const coin = tags?.[tags.length - 1]?.slug;
 
     const pollingInterval =
         (moduleData.widget.refresh_interval || POLLING_INTERVAL) * 1000;
