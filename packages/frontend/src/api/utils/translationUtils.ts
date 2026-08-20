@@ -20,6 +20,8 @@ export enum ETranslationValues {
     trading = "Trading",
     chains = "Chains",
     protocols = "Protocols",
+    revenue = "Revenue",
+    fees = "Fees",
     timeline = "Timeline",
     Active = "Active",
     Resolved = "Resolved",
