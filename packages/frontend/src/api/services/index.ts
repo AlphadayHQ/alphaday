@@ -47,6 +47,10 @@ export * from "./fees/types";
 export * from "./exploits/exploitsEndpoints";
 export * from "./exploits/types";
 
+export * from "./developerActivity/developerActivityEndpoints";
+export * from "./developerActivity/types";
+
+
 export * from "./projects/projectsEndpoints";
 export * from "./projects/types";
 

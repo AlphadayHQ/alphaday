@@ -3,6 +3,7 @@ export * from "./blog";
 export * from "./chat";
 export * from "./custom";
 export * from "./dao";
+export * from "./developerActivity";
 export * from "./discord";
 export * from "./event";
 export * from "./exploits";
