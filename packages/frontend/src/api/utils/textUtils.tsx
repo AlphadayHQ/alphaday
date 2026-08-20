@@ -108,8 +108,9 @@ export const REMARK_URL_REGEX =
 export const REMARK_MENTION_REGEX = /(@[a-zA-Z\d-_]{1,31})/g;
 export const REMARK_HASHTAG_REGEX = /(#\w*[A-Za-z]\w*)/g;
 
-interface IParentWithLiteral extends Literal {
+interface IParentWithLiteral extends Omit<Literal, "value"> {
     url?: string;
+    value?: Literal["value"];
     children: Literal[];
 }
 
@@ -161,7 +162,7 @@ export const remarkRegex = (
                         newChildren.push({
                             type: "link",
                             url,
-                            value: {
+                            data: {
                                 hProperties: {
                                     target: "_blank",
                                     rel: "noopener noreferrer",
