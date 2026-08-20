@@ -61,6 +61,7 @@ export enum ETemplateNameRegistry {
     CustomChart = "CUSTOM_CHART",
     CustomTable = "CUSTOM_TABLE",
     Dao = "DAO",
+    DeveloperActivity = "DEVELOPER_ACTIVITY",
     Discord = "DISCORD",
     Dune = "DUNE",
     DuneTable = "DUNE_TABLE",

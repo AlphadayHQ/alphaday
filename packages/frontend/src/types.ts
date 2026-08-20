@@ -71,6 +71,10 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/custom-modules/CustomTableContainer")
     ),
     dao_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    developer_activity_template: lazyRetry(
+        () =>
+            import("./containers/developerActivity/DeveloperActivityContainer")
+    ),
     discord_template: lazyRetry(
         () => import("./containers/items/ItemsContainer")
     ),
