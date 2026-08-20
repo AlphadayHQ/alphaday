@@ -148,6 +148,10 @@ const API_V0 = {
             BASE: "tvl",
             DEFAULT: "/yields/",
         },
+        EXPLOITS: {
+            BASE: "security",
+            DEFAULT: "/exploits/",
+        },
         VIEWS: {
             BASE: "ui",
             AVAILABLE_VIEWS: "/views/",

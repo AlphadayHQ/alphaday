@@ -65,6 +65,7 @@ export enum ETemplateNameRegistry {
     Discord = "DISCORD",
     Dune = "DUNE",
     DuneTable = "DUNE_TABLE",
+    Exploits = "EXPLOITS",
     FAQ = "FAQ",
     Forum = "FORUM",
     Gas = "GAS",
