@@ -75,6 +75,7 @@ beforeEach(() => {
                 selectedProjectType: "chain",
             },
         },
+        tvlFees: {},
     };
 
     rootState = {

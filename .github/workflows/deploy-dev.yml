@@ -55,7 +55,7 @@ jobs:
 
             - uses: actions/setup-node@v3
               with:
-                  node-version: "20.11.0"
+                  node-version: "22.12.0"
                   cache: "yarn"
                   cache-dependency-path: |
                       yarn.lock
@@ -94,7 +94,7 @@ jobs:
             - name: deploy
               uses: kefranabg/s3-sync-action@master # https://github.com/kefranabg/s3-sync-action
               with:
-                  args: --acl public-read --follow-symlinks --delete
+                  args: --follow-symlinks --delete
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.DEPLOYER__AWS_ACCESS_KEY_ID }}
                   AWS_SECRET_ACCESS_KEY: ${{ secrets.DEPLOYER__SECRET_ACCESS_KEY }}

@@ -71,6 +71,10 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/custom-modules/CustomTableContainer")
     ),
     dao_template: lazyRetry(() => import("./containers/items/ItemsContainer")),
+    developer_activity_template: lazyRetry(
+        () =>
+            import("./containers/developerActivity/DeveloperActivityContainer")
+    ),
     discord_template: lazyRetry(
         () => import("./containers/items/ItemsContainer")
     ),
@@ -146,6 +150,15 @@ export const TEMPLATES_DICT: Partial<TTemplatesDict> = {
         () => import("./containers/dynamic/AgendaContainer")
     ),
     tvl_template: lazyRetry(() => import("./containers/tvl/TvlContainer")),
+    yields_template: lazyRetry(
+        () => import("./containers/yields/YieldsContainer")
+    ),
+    tvl_fees_template: lazyRetry(
+        () => import("./containers/fees/FeesContainer")
+    ),
+    exploits_template: lazyRetry(
+        () => import("./containers/exploits/ExploitsContainer")
+    ),
     two_col_image_template: lazyRetry(
         () => import("./containers/image/TwoColImageContainer")
     ),
