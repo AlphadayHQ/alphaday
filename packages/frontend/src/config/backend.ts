@@ -42,6 +42,8 @@ const API_V0 = {
             PINNED: "/pinned_coins/",
             KASANDRA_SUPPORTED: "/kasandra_supported/",
             PIN: (id: number): string => `/${id}/toggle_pin/`,
+            DEVELOPER_ACTIVITY: (coin: string): string =>
+                `/${coin}/developer-activity/`,
         },
         DAO: {
             BASE: "items/dao",
@@ -145,6 +147,10 @@ const API_V0 = {
         YIELDS: {
             BASE: "tvl",
             DEFAULT: "/yields/",
+        },
+        EXPLOITS: {
+            BASE: "security",
+            DEFAULT: "/exploits/",
         },
         VIEWS: {
             BASE: "ui",
