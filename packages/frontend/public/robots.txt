@@ -1,0 +1,39 @@
+# https://www.robotstxt.org/robotstxt.html
+#
+# app.alphaday.com is the application, not the search surface. Every route here
+# serves the same empty SPA shell to a crawler — identical title, no
+# description, no content — so there is nothing on this host worth indexing,
+# and every URL competes with the real page for the same board on
+# alphaday.com/{slug}.
+#
+# The de-indexing is done by `<meta name="robots" content="noindex, follow">`
+# in index.html. Two details of that tag are deliberate:
+#
+#   - It is static, not injected after hydration. GPTBot, ClaudeBot,
+#     PerplexityBot and CCBot do not execute JavaScript, so a directive that
+#     only exists post-render is invisible to exactly the crawlers this host
+#     most needs to keep out of its duplicate URLs.
+#   - `follow`, not `nofollow`. The pages are not worth indexing, but their
+#     links back to alphaday.com remain a legitimate signal.
+#   - No canonical accompanies it. `noindex` plus a canonical is a conflicting
+#     instruction — drop this page, and consolidate it onto that one — and the
+#     obvious target (alphaday.com/{slug}) does not exist for every board that
+#     has a dashboard here.
+#
+# The directive is in the HTML and NOT a Disallow below, and that matters:
+#
+#   Disallow blocks crawling, not indexing. A crawler that cannot fetch the
+#   page never sees the noindex, and Google will still list a blocked URL it
+#   finds linked from elsewhere — as a bare URL with no snippet, which is
+#   strictly worse than either alternative. Crawling must stay open for the
+#   directive in the HTML to be readable at all.
+#
+# Once Search Console shows these URLs dropped out (expect weeks, not days), a
+# Disallow can be added to save crawl budget. Adding it before then would
+# freeze them in the index in their current state.
+
+User-agent: *
+Allow: /
+
+# No Sitemap directive: this host publishes no sitemap, and should not. The
+# indexable pages are on alphaday.com, which lists them in its own.
