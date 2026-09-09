@@ -79,7 +79,7 @@
     "happy-dom": "20.8.9",
     "react-test-renderer": "18.2.0",
     "sharp": "0.32.6",
-    "svgo": "3.3.4",
+    "svgo": "3.3.5",
     "terser": "5.39.2",
     "vite-plugin-image-optimizer": "2.0.3",
     "vite-plugin-optimize-css-modules": "1.4.0",
