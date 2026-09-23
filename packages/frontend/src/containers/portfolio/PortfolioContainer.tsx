@@ -7,9 +7,7 @@ import {
 } from "src/api/hooks";
 import {
     useResolveEnsQuery,
-    useGetNftBalanceForAddressesQuery,
-    TNftBalanceForAddress,
-    computeNftAssetTotal,
+    useGetNftBalancesQuery,
     useGetMarketDataQuery,
     useGetBalancesQuery,
 } from "src/api/services";
@@ -127,7 +125,7 @@ const PortfolioContainer: FC<IModuleContainer> = ({
         data: nftBalanceForAddresses,
         isLoading: isLoadingNftBalanceForAddresses,
         isError: isErrorNftBalanceForAddresses,
-    } = useGetNftBalanceForAddressesQuery(
+    } = useGetNftBalancesQuery(
         {
             addresses: mapAccountsToAddressArray(
                 showAllAssets || selectedPortfolioAccount === null
@@ -215,22 +213,10 @@ const PortfolioContainer: FC<IModuleContainer> = ({
         return balances;
     }, [tokensBalanceForAddresses]);
 
-    const portfolioNftDataForAddresses = useMemo(() => {
-        const balances: TNftBalanceForAddress = {
-            items: [],
-            totalValue: 0,
-        };
-
-        if (nftBalanceForAddresses) {
-            balances.items = [
-                ...balances.items,
-                ...nftBalanceForAddresses.items,
-            ];
-        }
-
-        balances.totalValue = computeNftAssetTotal(balances.items);
-        return balances;
-    }, [nftBalanceForAddresses]);
+    const portfolioNftDataForAddresses = useMemo(
+        () => ({ items: nftBalanceForAddresses?.items ?? [] }),
+        [nftBalanceForAddresses]
+    );
 
     const onDisconnectWallet = () => {
         if (authWallet.account) {

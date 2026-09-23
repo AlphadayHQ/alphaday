@@ -2,7 +2,6 @@ import { FC } from "react";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { MemoryRouter, MemoryRouterProps } from "react-router-dom";
-import { zapperApi } from "src/api/services";
 import searchReducer from "src/api/store/slices/search";
 import uiReducer from "src/api/store/slices/ui";
 import userReducer from "src/api/store/slices/user";
@@ -10,10 +9,9 @@ import viewsReducer from "src/api/store/slices/views";
 
 interface IProps {
     children?: React.ReactNode;
-    withZapperApi?: boolean;
 }
 
-export const BaseWrapper: FC<IProps> = ({ children, withZapperApi }) => {
+export const BaseWrapper: FC<IProps> = ({ children }) => {
     return (
         <Provider
             store={configureStore({
@@ -22,13 +20,6 @@ export const BaseWrapper: FC<IProps> = ({ children, withZapperApi }) => {
                     ui: uiReducer,
                     user: userReducer,
                     views: viewsReducer,
-                    ...(!!withZapperApi && {
-                        [zapperApi.reducerPath]: zapperApi.reducer,
-                    }),
-                }),
-                ...(!!withZapperApi && {
-                    middleware: (getDefaultMiddleware) =>
-                        getDefaultMiddleware().concat(zapperApi.middleware),
                 }),
             })}
         >
@@ -42,10 +33,6 @@ interface IDefaultProps {
 }
 export const DefaultWrapper: FC<IDefaultProps> = ({ children }) => (
     <BaseWrapper>{children}</BaseWrapper>
-);
-
-export const WrapperWithZapperApi: FC<IDefaultProps> = ({ children }) => (
-    <BaseWrapper withZapperApi>{children}</BaseWrapper>
 );
 
 type TWithLocationHoc = <T extends { children?: React.ReactNode }>(

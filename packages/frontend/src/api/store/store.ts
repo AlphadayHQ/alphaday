@@ -13,7 +13,7 @@ import {
 import storage from "redux-persist/es/storage";
 // import { setupListeners } from '@reduxjs/toolkit/query'
 import CONFIG from "src/config";
-import { alphadayApi, coingeckoApi, zapperApi, ipApi } from "../services";
+import { alphadayApi, coingeckoApi, ipApi } from "../services";
 import migrations from "./migrations";
 import { rootReducer, type RootState as ReducerState } from "./reducer";
 
@@ -25,7 +25,6 @@ const persistConfig = {
     blacklist: [
         alphadayApi.reducerPath,
         coingeckoApi.reducerPath,
-        zapperApi.reducerPath,
         ipApi.reducerPath,
     ],
 };
@@ -56,7 +55,6 @@ export const store = configureStore({
         })
             .concat(alphadayApi.middleware)
             .concat(coingeckoApi.middleware)
-            .concat(zapperApi.middleware)
             .concat(ipApi.middleware),
 });
 

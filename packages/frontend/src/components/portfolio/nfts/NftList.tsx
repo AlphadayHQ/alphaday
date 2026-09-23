@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ScrollBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
-import { TZapperNftAsset } from "src/api/services";
+import { TNftAsset } from "src/api/services";
 import globalMessages from "src/globalMessages";
 import CONFIG from "../../../config";
 import { TPortfolioNFTDataForAddress } from "../types";
@@ -15,19 +15,17 @@ interface INftList {
     nftsQueryFailed: boolean;
 }
 
-const getImage = (data: TZapperNftAsset): string | undefined => {
+const getImage = (data: TNftAsset): string | undefined => {
     const imageMedia = data.token.medias.find(
         (media) => media.type === "image"
     );
-    let url;
-    if (imageMedia?.type === "image") {
-        url = imageMedia.originalUrl;
-    }
+    // fall back to the collection logo when the token has no image media
+    const url = imageMedia?.originalUrl ?? data.token.collection.logoImageUrl;
     if (url?.includes("ipfs://")) {
         const cid = url?.split("ipfs://")?.[1];
         return cid ? `${API_BASE_URL}${String(cid)}` : undefined;
     }
-    return url;
+    return url ?? undefined;
 };
 
 const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
@@ -40,7 +38,7 @@ const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
                     : `${item.token.tokenId}`
             }
             img={getImage(item)}
-            name={item.token.name}
+            name={item.token.name || item.token.tokenId}
             value={
                 item.token.estimatedValueEth
                     ? parseFloat(item.token.estimatedValueEth)

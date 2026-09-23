@@ -172,6 +172,7 @@ const API_V0 = {
         PORTFOLIO: {
             BASE: "portfolio",
             BALANCES: "/data/",
+            NFTS: "/nfts/",
             RESOLVE_ENS: (ens: string): string => `/resolve_ens/${ens}/`,
         },
         PODCAST: {

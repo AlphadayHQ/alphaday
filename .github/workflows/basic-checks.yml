@@ -7,10 +7,6 @@ on:
 env:
     ENVIRONMENT: test
 
-    VITE_ZAPPER_BASE_URL: https://api.zapper.fi/v1/
-    VITE_ZAPPER_BASE_URL_V2: https://api.zapper.fi/v2/
-    VITE_APP_ZAPPER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ZAPPER }}
-
 jobs:
     basic-checks:
         if: ${{ !(contains(github.event.pull_request.title, '(skip-ci)')) }}
