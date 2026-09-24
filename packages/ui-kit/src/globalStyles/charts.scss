@@ -89,7 +89,8 @@
 
 .portfolio-widget {
     .donut-chart {
-        div[type="donut"] {
+        // react-apexcharts wrapper div (it no longer carries a type="donut" attribute)
+        > div {
             display: flex;
             width: 100%;
             transform: scale(0.9) !important;
@@ -114,17 +115,21 @@
         }
         .apexcharts-graphical {
             height: 100px;
-            transform: translate(160px, 41px);
+            // apexcharts v4 ignores plotOptions.pie.donut.customScale, so size the donut here
+            transform: translate(157px, 45px) scale(0.85);
         }
 
         .apexcharts-legend-series {
             margin: 4px 0 4px 4px !important;
 
-            .apexcharts-legend-marker {
-                width: 9px !important;
-                height: 9px !important;
+            span.apexcharts-legend-marker {
                 margin-right: 4px;
-                border-radius: 4px;
+
+                // apexcharts v4 offsets the marker circle with translate(50%, 50%), which
+                // doesn't resolve reliably inside the chart's foreignObject, so don't clip it
+                svg {
+                    overflow: visible;
+                }
             }
 
             .apexcharts-legend-text {
@@ -164,11 +169,6 @@
     .sm-legend-wrap {
         display: flex;
         width: 100% !important;
-
-        .apexcharts-legend-marker {
-            width: 9px !important;
-            height: 9px !important;
-        }
 
         .apexcharts-legend {
             height: auto !important;

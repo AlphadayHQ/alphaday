@@ -12,8 +12,6 @@ env:
     VITE_X_APP_ID: sBnL0RkWkM
     VITE_X_APP_SECRET: 21gPAwU3uOUisMJJFJjaotbDxCmvCHKMh76Xlvb8XK2RkkvZHhtSfcUfoz6QiFx8zhZf31vxvKAFD7pkdmbjHiKwoVuS2iDOLjvC
 
-    VITE_ZAPPER_BASE_URL: https://api.zapper.fi/v1/
-    VITE_ZAPPER_BASE_URL_V2: https://api.zapper.fi/v2/
     VITE_COINGECKO_BASE_URL: https://api.coingecko.com/api/v3/
     VITE_DEFIPULSE_BASE_URL: https://data-api.defipulse.com/api/v1/
     VITE_ETHERSCAN_BASE_URL: https://api.etherscan.io/api
@@ -62,7 +60,6 @@ jobs:
                   VITE_DEFIPULSE_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_DEFIPULSE }}
                   VITE_ETHERSCAN_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHERSCAN }}
                   VITE_ETHPLORER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ETHPLORER }}
-                  VITE_ZAPPER_API_KEY: ${{ secrets.STAGING__FRONTEND__API_KEY_ZAPPER }}
 
                   VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.DEV__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
 
