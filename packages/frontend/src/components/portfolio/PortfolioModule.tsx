@@ -43,6 +43,7 @@ interface IPortfolio {
     portfolioType: EPortfolioType;
     ethPrice?: number | undefined;
     widgetHeight: number;
+    isLoadingNfts: boolean;
     nftsQueryFailed: boolean;
     moduleId: string;
 }
@@ -70,6 +71,7 @@ const Portfolio: FC<IPortfolio> = ({
     portfolioType,
     switchPortfolioType,
     nftBalanceForAddresses,
+    isLoadingNfts,
     nftsQueryFailed,
     authAccount,
     isWalletConnected,
@@ -205,6 +207,7 @@ const Portfolio: FC<IPortfolio> = ({
                                     <NftList
                                         nftData={nftBalanceForAddresses}
                                         widgetHeight={widgetHeight}
+                                        isLoading={isLoadingNfts}
                                         nftsQueryFailed={nftsQueryFailed}
                                     />
                                 )}

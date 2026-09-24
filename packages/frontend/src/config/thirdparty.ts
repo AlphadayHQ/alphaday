@@ -106,23 +106,6 @@ export const SUPPORTED_EVM_NETWORKS = {
     },
 };
 
-const ZAPPER = {
-    API_KEY: String(import.meta.env.VITE_ZAPPER_API_KEY),
-    API_BASE_URL: String(import.meta.env.VITE_ZAPPER_BASE_URL),
-    ROUTES: {
-        TOKEN_BALANCES: "apps/tokens/balances",
-        GAS_PRICES: "gas-prices",
-    },
-};
-const ZAPPER_V2 = {
-    API_KEY: String(import.meta.env.VITE_ZAPPER_API_KEY),
-    API_BASE_URL: String(import.meta.env.VITE_ZAPPER_BASE_URL_V2),
-    ROUTES: {
-        TOKEN_BALANCES: "balances",
-        NFT_BALANCES: "nft/balances/tokens",
-    },
-};
-
 const DEFI_PULSE = {
     API_KEY: String(import.meta.env.VITE_DEFIPULSE_API_KEY),
     API_BASE_URL: String(import.meta.env.VITE_DEFIPULSE_BASE_URL),
@@ -165,8 +148,6 @@ const IPFS_GATEWAY = {
 };
 
 export const API_PROVIDERS: TApiProviders = {
-    ZAPPER,
-    ZAPPER_V2,
     DEFI_PULSE,
     ETHERSCAN,
     ETHPLORER,
@@ -179,12 +160,12 @@ export const API_PROVIDERS: TApiProviders = {
 export const EXPLORERS = {
     TOKEN_METADATA_URL: (asset: TPortfolio): string | undefined => {
         /**
-         * Zapper returns 0x000000000... for some native coins contract address
+         * Native coins may come back with 0x000000000... as contract address
          * e.g AVAX has 0x0000000.. but this is not the true
          * contract address except in the case of ethereum
          * so we point to coingecko instead.
          */
-        const zapperCoinGeckoMap = {
+        const nativeCoinGeckoMap = {
             ETH: "ethereum",
             AVAX: "avalanche",
             CELO: "celo",
@@ -197,8 +178,8 @@ export const EXPLORERS = {
             MATIC: "polygon",
         };
         const geckoCoin =
-            zapperCoinGeckoMap[
-                asset.token.symbol as keyof typeof zapperCoinGeckoMap
+            nativeCoinGeckoMap[
+                asset.token.symbol as keyof typeof nativeCoinGeckoMap
             ];
         if (geckoCoin) {
             return `https://www.coingecko.com/en/coins/${geckoCoin}`;
