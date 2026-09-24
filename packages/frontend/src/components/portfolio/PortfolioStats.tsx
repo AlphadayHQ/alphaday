@@ -139,7 +139,9 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                     useSeriesColors: false,
                 },
                 markers: {
-                    radius: 3,
+                    // apexcharts v4 draws a circle of this radius, centered in the marker box
+                    size: 4,
+                    strokeWidth: 0,
                 },
                 onItemHover() {},
                 formatter(
@@ -362,6 +364,12 @@ const PortfolioStats: FC<IPortfolioStats> = ({
                                                         formatNumber({
                                                             value: asset.token
                                                                 .balance,
+                                                            useEllipsis: true,
+                                                            ellipsisCutoff:
+                                                                widgetSize ===
+                                                                "lg"
+                                                                    ? SMALL_PRICE_CUTOFF_LG
+                                                                    : SMALL_PRICE_CUTOFF_SM,
                                                         }).value,
                                                         showBalance
                                                     )}

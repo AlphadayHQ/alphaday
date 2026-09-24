@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ScrollBar } from "@alphaday/ui-kit";
+import { ModuleLoader, ScrollBar } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { TNftAsset } from "src/api/services";
 import globalMessages from "src/globalMessages";
@@ -12,6 +12,7 @@ const { API_BASE_URL } = CONFIG.API_PROVIDERS.IPFS_GATEWAY;
 interface INftList {
     nftData: TPortfolioNFTDataForAddress;
     widgetHeight: number;
+    isLoading: boolean;
     nftsQueryFailed: boolean;
 }
 
@@ -28,7 +29,12 @@ const getImage = (data: TNftAsset): string | undefined => {
     return url ?? undefined;
 };
 
-const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
+const NftList: FC<INftList> = ({
+    nftData,
+    widgetHeight,
+    isLoading,
+    nftsQueryFailed,
+}) => {
     const { t } = useTranslation();
     const nftCards = nftData.items.map((item) => (
         <NftCard
@@ -67,6 +73,10 @@ const NftList: FC<INftList> = ({ nftData, widgetHeight, nftsQueryFailed }) => {
     );
 
     const height = widgetHeight - 53 - 42 || 600; // 53 & 42 are the heights of the addresses tab and asset switcher respectively
+
+    if (isLoading) {
+        return <ModuleLoader $height={`${String(height)}px`} />;
+    }
 
     return (
         <div className="pt-5" style={{ height }}>
