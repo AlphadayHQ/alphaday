@@ -91,7 +91,6 @@ const PortfolioStats: FC<IPortfolioStats> = ({
     const donutData = {
         options: {
             chart: {
-                id: "portfolio-donut",
                 sparkline: {
                     enabled: false,
                 },
