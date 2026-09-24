@@ -7,6 +7,13 @@
 
     <base href="/" />
 
+    <!-- The app is not the search surface; alphaday.com is. Every route here
+         serves this same contentless shell, so each is a duplicate of the rest
+         and of alphaday.com/{slug}. Static, not injected after hydration: the
+         model crawlers this matters most for do not run JS. Reasoning and the
+         reversal path are in public/robots.txt. -->
+    <meta name="robots" content="noindex, follow" />
+
     <meta name="color-scheme" content="light dark" />
     <meta name="viewport"
       content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />

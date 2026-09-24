@@ -1,4 +1,4 @@
-import { TZapperNftAsset } from "src/api/services";
+import { TNftAsset } from "src/api/services";
 import { TPortfolio } from "src/api/types";
 
 export type TPortfolioDataForAddress = {
@@ -7,7 +7,7 @@ export type TPortfolioDataForAddress = {
 };
 
 export type TPortfolioNFTDataForAddress = {
-    items: TZapperNftAsset[];
+    items: TNftAsset[];
 };
 
 export type PoolTotalItem = {

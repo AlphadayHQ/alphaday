@@ -109,6 +109,5 @@ export * from "./baseTypes";
 /**
  * third party
  */
-export * from "./zapperApi";
 export * from "./coingeckoApi";
 export * from "./ipApi";

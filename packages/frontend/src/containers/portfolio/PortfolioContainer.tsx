@@ -7,9 +7,7 @@ import {
 } from "src/api/hooks";
 import {
     useResolveEnsQuery,
-    useGetNftBalanceForAddressesQuery,
-    TNftBalanceForAddress,
-    computeNftAssetTotal,
+    useGetNftBalancesQuery,
     useGetMarketDataQuery,
     useGetBalancesQuery,
 } from "src/api/services";
@@ -37,6 +35,8 @@ import { IModuleContainer } from "src/types";
 
 // this is set to `10` as a requirement to be fulfilled for BE to load and cache the portfolio data
 const PORTFOLIO_DATA_WAIT_TIME = 10_000; // 10 seconds
+// height of the widget body when no wallet is added, fitting only the wallet setup buttons
+const COLLAPSED_WIDGET_HEIGHT = 90;
 
 const computeAssetTotal: (a: TPortfolio[] | null) => number = (a) => {
     return (
@@ -124,10 +124,12 @@ const PortfolioContainer: FC<IModuleContainer> = ({
     );
 
     const {
-        data: nftBalanceForAddresses,
-        isLoading: isLoadingNftBalanceForAddresses,
+        // currentData (not data) so another address set's cached NFTs are
+        // never shown for, or used to mask a failure of, the current one
+        currentData: nftBalanceForAddresses,
+        isFetching: isFetchingNftBalanceForAddresses,
         isError: isErrorNftBalanceForAddresses,
-    } = useGetNftBalanceForAddressesQuery(
+    } = useGetNftBalancesQuery(
         {
             addresses: mapAccountsToAddressArray(
                 showAllAssets || selectedPortfolioAccount === null
@@ -137,6 +139,8 @@ const PortfolioContainer: FC<IModuleContainer> = ({
         },
         {
             skip: selectedAddress === null,
+            // the backend can be slow to respond (504s), so keep polling to recover
+            pollingInterval: pollingIntervalLimit,
         }
     );
 
@@ -215,22 +219,10 @@ const PortfolioContainer: FC<IModuleContainer> = ({
         return balances;
     }, [tokensBalanceForAddresses]);
 
-    const portfolioNftDataForAddresses = useMemo(() => {
-        const balances: TNftBalanceForAddress = {
-            items: [],
-            totalValue: 0,
-        };
-
-        if (nftBalanceForAddresses) {
-            balances.items = [
-                ...balances.items,
-                ...nftBalanceForAddresses.items,
-            ];
-        }
-
-        balances.totalValue = computeNftAssetTotal(balances.items);
-        return balances;
-    }, [nftBalanceForAddresses]);
+    const portfolioNftDataForAddresses = useMemo(
+        () => ({ items: nftBalanceForAddresses?.items ?? [] }),
+        [nftBalanceForAddresses]
+    );
 
     const onDisconnectWallet = () => {
         if (authWallet.account) {
@@ -344,24 +336,34 @@ const PortfolioContainer: FC<IModuleContainer> = ({
         tokensBalanceForAddresses,
     ]);
 
+    // NFTs have their own loading state in NftList, so they don't block the balances
     const isLoading =
         isConnectingWallet ||
         isLoadingTokensBalanceForAddresses ||
-        isLoadingNftBalanceForAddresses || // TODO: separate nft isLoading state
         isLoadingEthPrice; // At first, isLoading is true & portfolioDataForAddress is undefined
 
     useEffect(() => {
-        // Reset the widget height to 90px when the selectedAddress is null and isLoading is false
-        if (selectedAddress === null && !isLoading) {
+        // Collapse the widget to only fit the wallet setup buttons when there is no wallet
+        if (selectedAddress === null) {
+            if (!isLoading) {
+                dispatch(
+                    setWidgetHeight({
+                        widgetHash: moduleData.hash,
+                        widgetHeight: COLLAPSED_WIDGET_HEIGHT,
+                    })
+                );
+            }
+            return;
+        }
+        // Once a wallet is added, restore the default height if the widget is still collapsed
+        if (widgetHeight <= COLLAPSED_WIDGET_HEIGHT) {
             dispatch(
                 setWidgetHeight({
                     widgetHash: moduleData.hash,
-                    widgetHeight:
-                        selectedAddress === null && !isLoading ? 90 : 432,
+                    widgetHeight: CONFIG.WIDGETS.PORTFOLIO.WIDGET_HEIGHT,
                 })
             );
         }
-        // This should only run when the selectedAddress is null and isLoading is false
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedAddress, isLoading]);
 
@@ -396,7 +398,14 @@ const PortfolioContainer: FC<IModuleContainer> = ({
             nftBalanceForAddresses={portfolioNftDataForAddresses}
             ethPrice={ethPriceResponse?.results[0]?.price}
             balancesQueryFailed={balancesQueryFailed}
-            nftsQueryFailed={isErrorNftBalanceForAddresses}
+            isLoadingNfts={
+                isFetchingNftBalanceForAddresses &&
+                nftBalanceForAddresses === undefined
+            }
+            nftsQueryFailed={
+                isErrorNftBalanceForAddresses &&
+                nftBalanceForAddresses === undefined
+            }
             toggleBalance={toggleBalance}
             showBalance={showBalance}
             toggleShowAllAssets={toggleShowAllAssets}
