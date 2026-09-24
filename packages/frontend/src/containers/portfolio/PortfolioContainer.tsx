@@ -124,8 +124,10 @@ const PortfolioContainer: FC<IModuleContainer> = ({
     );
 
     const {
-        data: nftBalanceForAddresses,
-        isLoading: isLoadingNftBalanceForAddresses,
+        // currentData (not data) so another address set's cached NFTs are
+        // never shown for, or used to mask a failure of, the current one
+        currentData: nftBalanceForAddresses,
+        isFetching: isFetchingNftBalanceForAddresses,
         isError: isErrorNftBalanceForAddresses,
     } = useGetNftBalancesQuery(
         {
@@ -396,7 +398,10 @@ const PortfolioContainer: FC<IModuleContainer> = ({
             nftBalanceForAddresses={portfolioNftDataForAddresses}
             ethPrice={ethPriceResponse?.results[0]?.price}
             balancesQueryFailed={balancesQueryFailed}
-            isLoadingNfts={isLoadingNftBalanceForAddresses}
+            isLoadingNfts={
+                isFetchingNftBalanceForAddresses &&
+                nftBalanceForAddresses === undefined
+            }
             nftsQueryFailed={
                 isErrorNftBalanceForAddresses &&
                 nftBalanceForAddresses === undefined
