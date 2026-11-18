@@ -22,6 +22,7 @@ describe("safeUrl", () => {
         "java\nscript:alert(1)",
         "data:text/html,<script>alert(1)</script>",
         "vbscript:msgbox(1)",
+        "file:///etc/passwd",
         "",
         "   ",
     ])("rejects %j", (url) => {
@@ -30,6 +31,23 @@ describe("safeUrl", () => {
 
     it.each([undefined, null, 42, {}])("rejects non-string %j", (url) => {
         expect(safeUrl(url)).toBeUndefined();
+    });
+
+    describe("on an opaque-origin document (file://, WebView)", () => {
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
+        it("still allows relative URLs and rejects javascript: and file:", () => {
+            // safeUrl must not depend on the page's base URL
+            vi.spyOn(document, "baseURI", "get").mockReturnValue(
+                "file:///android_asset/public/index.html"
+            );
+            expect(safeUrl("/path")).toBe("/path");
+            expect(safeUrl("#hash")).toBe("#hash");
+            expect(safeUrl("javascript:alert(1)")).toBeUndefined();
+            expect(safeUrl("file:///etc/passwd")).toBeUndefined();
+        });
     });
 });
 

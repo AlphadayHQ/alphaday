@@ -1,5 +1,10 @@
 import { FC, memo, useRef, useState } from "react";
-import { CenteredBlock, ModuleLoader, openInNewTab } from "@alphaday/ui-kit";
+import {
+    CenteredBlock,
+    ModuleLoader,
+    openInNewTab,
+    safeUrl,
+} from "@alphaday/ui-kit";
 import globalMessages from "src/globalMessages";
 
 interface IImageWidget {
@@ -66,7 +71,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
                     openInNewTab(imageLink);
                 }
             }}
-            style={{ cursor: imageLink ? "pointer" : "default" }}
+            style={{ cursor: safeUrl(imageLink) ? "pointer" : "default" }}
             role="banner"
         >
             {imageLoading && <ModuleLoader $height="500px" />}

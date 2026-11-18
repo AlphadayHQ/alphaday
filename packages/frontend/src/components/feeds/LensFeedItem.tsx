@@ -1,6 +1,6 @@
+/* eslint-disable no-underscore-dangle */
 import { FC } from "react";
 import { openInNewTab } from "@alphaday/ui-kit";
-/* eslint-disable no-underscore-dangle */
 import moment from "moment-with-locales-es6";
 import ReactMarkdown from "react-markdown";
 import { TLensPost } from "src/api/types";
