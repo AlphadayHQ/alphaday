@@ -191,7 +191,7 @@ const KasandraItem: FC<{
                                             .slice(0, 2)
                                             .map((source) => (
                                                 <a
-                                                    href={source.url}
+                                                    href={safeUrl(source.url)}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     key={source.url}
@@ -242,7 +242,7 @@ const KasandraItem: FC<{
                                             .slice(0, 3)
                                             .map((source) => (
                                                 <a
-                                                    href={source.url}
+                                                    href={safeUrl(source.url)}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     key={source.url}

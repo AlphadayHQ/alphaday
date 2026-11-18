@@ -1,5 +1,5 @@
 import React from "react";
-import { twMerge } from "@alphaday/ui-kit";
+import { twMerge, openInNewTab } from "@alphaday/ui-kit";
 import {
     TRemoteCustomLayoutEntry,
     TRemoteCustomRowProps,
@@ -57,7 +57,7 @@ export const TableCell: React.FC<ITableCellProps> = ({
     isCompactMode,
 }) => {
     const handleOnClick = () => {
-        if (href) window.open(href, "_blank");
+        openInNewTab(href);
     };
     return (
         <div
@@ -126,7 +126,7 @@ export const TableRow: React.FC<ITableRowProps> = ({
     }
 
     const handleOnClick = () => {
-        if (rowLink) window.open(rowLink, "_blank");
+        openInNewTab(rowLink);
     };
 
     return (
@@ -235,7 +235,7 @@ export const GridBasedTable: React.FC<IGridBasedTableProps> = ({
     };
 
     const handleRowClick = (rowLink: string | undefined) => {
-        if (rowLink) window.open(rowLink, "_blank");
+        openInNewTab(rowLink);
     };
 
     const handleRowHover = (itemId: string | number, isEntering: boolean) => {
@@ -369,7 +369,7 @@ export const CompactTableRow: React.FC<ITableRowProps> = ({
     }
 
     const handleOnClick = () => {
-        if (rowLink) window.open(rowLink, "_blank");
+        openInNewTab(rowLink);
     };
     return (
         <div

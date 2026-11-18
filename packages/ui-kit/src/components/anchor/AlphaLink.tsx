@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { safeUrl } from "../../utils/urlUtils";
 
 interface IAnchor {
     path: string;
@@ -29,7 +30,7 @@ export const AnchorElement: FC<IAnchor> = ({
             className,
             "text-primaryVariant100 fontGroup-highlightSemi hover:text-accentVariant100 active:text-backgroundBlue cursor-pointer hover:underline active:underline"
         )}
-        href={path}
+        href={safeUrl(path)}
         target={target}
         onClick={onClick}
         {...rest}

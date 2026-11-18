@@ -1,4 +1,5 @@
 import { FC, useMemo, useCallback, Suspense } from "react";
+import { openInNewTab } from "@alphaday/ui-kit";
 import { useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import {
@@ -56,7 +57,7 @@ const PolymarketTopVolumeContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     question: market.question,
                 },
             });
-            window.open(event?.url, "_blank", "noopener,noreferrer");
+            openInNewTab(event?.url);
         },
         [logButtonClicked, event?.url, moduleData.name]
     );

@@ -1,5 +1,5 @@
 import { FC, memo, useRef, useState } from "react";
-import { CenteredBlock, ModuleLoader } from "@alphaday/ui-kit";
+import { CenteredBlock, ModuleLoader, openInNewTab } from "@alphaday/ui-kit";
 import globalMessages from "src/globalMessages";
 
 interface IImageWidget {
@@ -63,7 +63,7 @@ const ImageWidget: FC<IImageWidget> = memo(function ImageWidget({
             className="flex items-center justify-center w-full h-full"
             onClick={() => {
                 if (imageLink) {
-                    window.open(imageLink, "_blank");
+                    openInNewTab(imageLink);
                 }
             }}
             style={{ cursor: imageLink ? "pointer" : "default" }}

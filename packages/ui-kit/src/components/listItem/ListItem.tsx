@@ -3,6 +3,7 @@ import PauseSVG from "src/assets/svg/pause.svg?react";
 import PlaySVG from "src/assets/svg/play2.svg?react";
 import { imgOnError } from "src/utils/errorHandling";
 import { twMerge } from "tailwind-merge";
+import { safeUrl } from "../../utils/urlUtils";
 import ItemBookmark from "./ItemBookmark";
 import styles from "./ListItem.module.scss";
 
@@ -119,7 +120,7 @@ export const ListItem: FC<IList> = ({
         return (
             <>
                 <a
-                    href={path}
+                    href={safeUrl(path)}
                     target="_blank"
                     onClick={onClick}
                     className={variantStyle.base}
@@ -164,7 +165,7 @@ export const ListItem: FC<IList> = ({
                         <div className={variantStyle.title}>
                             <a
                                 type={variant}
-                                href={path}
+                                href={safeUrl(path)}
                                 target="_blank"
                                 rel="noreferrer"
                             >
@@ -175,7 +176,7 @@ export const ListItem: FC<IList> = ({
                             {tag && (
                                 <>
                                     <a
-                                        href={tagImg}
+                                        href={safeUrl(tagImg)}
                                         target="_blank"
                                         rel="noreferrer"
                                     >
@@ -316,7 +317,7 @@ export const ListItem: FC<IList> = ({
             <a
                 className={listItemVariants(variant).base}
                 target="_blank"
-                href={path}
+                href={safeUrl(path)}
                 rel="noreferrer"
             >
                 <img
