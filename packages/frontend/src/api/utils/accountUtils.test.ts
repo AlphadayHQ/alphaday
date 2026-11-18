@@ -75,6 +75,20 @@ describe("validateEthAddr", () => {
     it("should return false if address is invalid", () => {
         expect(validateEthAddr("0xx")).toEqual(false);
     });
+
+    // behaviour kept from Web3.utils.isAddress(addr.toLowerCase())
+    it.each([
+        ["0x52908400098527886E0F7030069857D2E4169EE7", true], // mixed case, checksum ignored
+        ["0x52908400098527886e0f7030069857d2e4169ee8", true], // lowercase
+        ["52908400098527886e0f7030069857d2e4169ee7", true], // no 0x prefix
+        ["0X52908400098527886E0F7030069857D2E4169EE7", true], // uppercase 0X
+        ["0x52908400098527886e0f7030069857d2e4169ee", false], // 39 hex digits
+        ["0x52908400098527886e0f7030069857d2e4169eeg", false], // non-hex char
+        ["vitalik.eth", false],
+        ["", false],
+    ])("validateEthAddr(%j) is %s", (addr, expected) => {
+        expect(validateEthAddr(addr)).toBe(expected);
+    });
 });
 
 describe("validateENSAddr", () => {

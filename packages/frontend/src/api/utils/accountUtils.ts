@@ -1,7 +1,7 @@
 import { TRemoteAccount } from "src/api/services";
 import { TCryptoAccount } from "src/api/types";
 import { TPortfolioTabAccount } from "src/components/portfolio/types";
-import Web3 from "web3";
+import { isAddress } from "viem";
 
 /**
  * @description check whether the test account already existis in accounts
@@ -26,9 +26,15 @@ export const accountExists: (
     );
 };
 
+/**
+ * Checks for a 40-hex-digit Ethereum address. The `0x` prefix is optional
+ * and the checksum is not enforced (the value is lowercased), matching the
+ * previous `Web3.utils.isAddress(addr.toLowerCase())` behaviour.
+ */
 export const validateEthAddr = (addr: string | null): boolean => {
     if (addr == null) return false;
-    return Web3.utils.isAddress(addr.toLowerCase());
+    const lower = addr.toLowerCase();
+    return isAddress(lower.startsWith("0x") ? lower : `0x${lower}`);
 };
 
 const ENS_REGEX = /^.{3,}\.(eth|addr.reverse|test)$/;

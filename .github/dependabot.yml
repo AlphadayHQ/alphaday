@@ -14,3 +14,18 @@ updates:
       timezone: UTC
     open-pull-requests-limit: 3
     versioning-strategy: increase
+
+  # Keep third-party GitHub Actions (which receive deploy credentials) up to
+  # date. Dependabot only updates actions pinned to a version tag or commit
+  # SHA; branch refs such as `@master` are never touched, so pin those first.
+  #
+  # Note: sharp is also pinned in the root package.json `resolutions`, which
+  # Dependabot does not update; bump that line by hand with any sharp upgrade.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "friday"
+      time: "05:00"
+      timezone: UTC
+    open-pull-requests-limit: 3
