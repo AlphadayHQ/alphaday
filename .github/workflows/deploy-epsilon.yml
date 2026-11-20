@@ -114,10 +114,16 @@ jobs:
             - name: Get Repo Name
               run: echo "REPOSITORY_NAME=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
 
-              # Notify Discord
+              # Notify Discord. Untrusted values (PR title, tag) are passed as env vars
+              # and JSON-encoded by jq: never interpolate them into `run:` or a
+              # template (the previous action rendered its args with lodash
+              # templates, so a PR title could read env secrets or run code).
+              # allowed_mentions is empty so a title can't ping @everyone.
             - name: Discord notification
               env:
                   DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK__OPS_CHANNEL }}
-              uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
-              with:
-                  args: "${{ env.REPOSITORY_NAME }} has been deployed on app.epsilon.com"
+              run: |
+                  jq -n \
+                  --arg content "${REPOSITORY_NAME} has been deployed on app.epsilon.com" \
+                  '{content: $content, allowed_mentions: {parse: []}}' \
+                  | curl -fsS -X POST -H "Content-Type: application/json" --data-binary @- "$DISCORD_WEBHOOK"
