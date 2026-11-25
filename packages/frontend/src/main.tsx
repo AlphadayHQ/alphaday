@@ -24,6 +24,34 @@ import PreloaderPage from "./pages/preloader";
 const App = lazyRetry(() => import("./App"));
 
 /**
+ * The production CSP is a <meta> tag (see csp.config.ts), which can't send
+ * violation reports, so a script or request it blocks would otherwise fail
+ * silently. Log violations and send them to Sentry (when Sentry is enabled).
+ * Violations caused by browser extensions are ignored, and blocked URLs are
+ * reduced to origin + path so query strings (e.g. API keys) aren't sent.
+ */
+const EXTENSION_URL = /^(chrome|moz|safari(-web)?|ms-browser)-extension:/;
+const stripQuery = (uri: string): string => {
+    try {
+        const { origin, pathname } = new URL(uri);
+        return origin + pathname;
+    } catch {
+        return uri; // "inline", "eval", etc.
+    }
+};
+document.addEventListener("securitypolicyviolation", (e) => {
+    if (EXTENSION_URL.test(e.blockedURI) || EXTENSION_URL.test(e.sourceFile)) {
+        return;
+    }
+    const blocked = stripQuery(e.blockedURI);
+    Logger.warn("CSP violation", e.effectiveDirective, blocked);
+    Sentry.captureMessage(
+        `CSP violation: ${e.effectiveDirective} blocked ${blocked}`,
+        "warning"
+    );
+});
+
+/**
  * Enable automatic page reload.
  * We adopted the `autoUpdate` behavior, but according to the workbox docs
  * the app wouldn't reload unless we import at least one virtual module in the app code.
