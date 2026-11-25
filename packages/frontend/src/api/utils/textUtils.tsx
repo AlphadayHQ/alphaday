@@ -1,3 +1,4 @@
+import { safeUrl } from "@alphaday/ui-kit";
 import { flushSync } from "react-dom";
 import { createRoot } from "react-dom/client";
 import type { Node, Parent, Literal } from "unist";
@@ -76,7 +77,7 @@ export const containsURLs = (text: string): boolean => {
 
 export const stringToAnchor = (str: string): JSX.Element => (
     <a
-        href={str}
+        href={safeUrl(str)}
         className="link" // className link is used to style this item from a parent container
         target="_blank"
         rel="noreferrer"

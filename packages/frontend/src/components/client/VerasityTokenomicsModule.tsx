@@ -1,4 +1,5 @@
 import { useEffect, useState, FC, useMemo } from "react";
+import { safeUrl } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { useHover, useLayer, useMousePositionAsTrigger } from "react-laag";
 import { toast } from "src/api/utils/toastUtils";
@@ -288,7 +289,7 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                     {faqLink !== undefined && (
                         <a
                             className="text-primary pr-[10px] hover:text-primaryVariant100"
-                            href={faqLink.href}
+                            href={safeUrl(faqLink.href)}
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -297,7 +298,7 @@ const PieChartModule: FC<IPieChart> = ({ data }) => {
                     )}
                     {moreLink !== undefined && (
                         <a
-                            href={moreLink.href}
+                            href={safeUrl(moreLink.href)}
                             target="_blank"
                             rel="noreferrer"
                         >

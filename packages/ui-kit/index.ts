@@ -104,6 +104,7 @@ import { DropdownSelect } from "./src/mobile-components/select/DropdownSelect";
 
 export type { TViewTabMenuOption, DatesSetArg, EventClickArg, TDatePos };
 export * from "./src/mobile-components/form-elements/FormElements";
+export { safeUrl, openInNewTab } from "./src/utils/urlUtils";
 export {
     ApexAreaChart,
     ApexBarChart,
