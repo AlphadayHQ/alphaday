@@ -1,5 +1,5 @@
 import { FC, FormEvent, useState } from "react";
-import { listItemVariants, HRElement } from "@alphaday/ui-kit";
+import { listItemVariants, HRElement, safeUrl } from "@alphaday/ui-kit";
 import moment from "moment-with-locales-es6";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
@@ -93,7 +93,7 @@ const DiscordFeedItem: FC<IDiscordItem> = ({ item }) => {
                             {item.embeds.map((embed) => (
                                 <a
                                     key={embed.url}
-                                    href={embed.url}
+                                    href={safeUrl(embed.url)}
                                     target="_blank"
                                     rel="noreferrer"
                                     onClick={(event) => event.stopPropagation()}

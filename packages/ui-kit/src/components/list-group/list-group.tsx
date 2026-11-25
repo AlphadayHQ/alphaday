@@ -1,5 +1,6 @@
 import { Children, FC, FunctionComponent, ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
+import { safeUrl } from "../../utils/urlUtils";
 
 interface IProps {
     className?: string;
@@ -118,7 +119,7 @@ export const ListGroupItem: FC<IListGroupItem> = ({
                 "border-light relative block border bg-transparent p-3 first:border-t-0 last:border-b-0",
                 className
             )}
-            href={href}
+            href={safeUrl(href)}
             {...restProps}
         >
             {children}

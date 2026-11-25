@@ -1,4 +1,5 @@
 import { FC, useMemo, useCallback, useState, useEffect, useRef } from "react";
+import { openInNewTab } from "@alphaday/ui-kit";
 import { usePagination, useWidgetHeight } from "src/api/hooks";
 import { useCustomAnalytics } from "src/api/hooks/useCustomAnalytics";
 import { useGetPolymarketEventsQuery } from "src/api/services";
@@ -103,7 +104,7 @@ const PolymarketEventsContainer: FC<IModuleContainer> = ({ moduleData }) => {
                     eventTitle: event.title,
                 },
             });
-            window.open(event.url, "_blank", "noopener,noreferrer");
+            openInNewTab(event.url);
         },
         [logButtonClicked, moduleData.name]
     );

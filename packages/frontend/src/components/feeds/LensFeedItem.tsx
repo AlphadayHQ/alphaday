@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { FC } from "react";
+import { openInNewTab } from "@alphaday/ui-kit";
 import moment from "moment-with-locales-es6";
 import ReactMarkdown from "react-markdown";
 import { TLensPost } from "src/api/types";
@@ -47,7 +48,7 @@ const LensFeedItem: FC<TLensPost> = ({ tweet, url, social_account }) => {
                  * If the user clicks on a link, we do not want to open the feed in a new tab.
                  */
                 if (!(target instanceof HTMLAnchorElement)) {
-                    window.open(url, "_blank");
+                    openInNewTab(url);
                 }
             }}
         >
