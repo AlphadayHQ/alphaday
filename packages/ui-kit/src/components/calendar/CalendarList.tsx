@@ -40,6 +40,62 @@ const getValidCalendarDateRange = () => {
     return { start: today, end: todayPlus2Years };
 };
 
+const createTextSpan = (text: string): HTMLSpanElement => {
+    const span = document.createElement("span");
+    span.textContent = text;
+    return span;
+};
+
+const createSeparator = (): HTMLSpanElement => {
+    const separator = createTextSpan("•");
+    separator.style.margin = "0 5px";
+    return separator;
+};
+
+/**
+ * Builds the "category • time • location" row shown in the list views.
+ *
+ * Most values come from the API (the time comes from FullCalendar), so
+ * they are written with `textContent` and CSSOM properties instead of an
+ * HTML string. That way they can never be parsed as markup. CSSOM also
+ * discards invalid values, so `color` cannot inject extra style
+ * declarations.
+ */
+const buildListEventMeta = ({
+    color,
+    label,
+    time,
+    location,
+}: {
+    color: string | undefined;
+    label: string | undefined;
+    time: string;
+    location: string | undefined;
+}): HTMLDivElement => {
+    const row = document.createElement("div");
+    row.style.cssText =
+        "width: 100%; display: flex; align-items: center; font-size: 12px; flex-wrap: wrap;";
+
+    const dot = document.createElement("div");
+    dot.style.cssText =
+        "width: 7px; height: 7px; border-radius: 4px; margin-right: 5px; display: inline-block;";
+    dot.style.backgroundColor = color ?? "";
+
+    const categoryLabel = createTextSpan(label ?? "");
+    categoryLabel.style.color = color ?? "";
+    categoryLabel.style.cssFloat = "right";
+
+    row.append(dot, categoryLabel, createSeparator(), createTextSpan(time));
+
+    if (location) {
+        const locationEl = createTextSpan(location);
+        locationEl.style.whiteSpace = "pre-wrap";
+        row.append(createSeparator(), locationEl);
+    }
+
+    return row;
+};
+
 interface ICalendarList extends ICalendarBaseProps {
     locale: string;
     eventClickHandler: (e: EventClickArg) => void;
@@ -113,7 +169,7 @@ export const CalendarList: FC<ICalendarList> = ({
                     titleText,
                     eventTimeEl.nextSibling
                 );
-                const time = eventTimeEl?.innerHTML;
+                const time = eventTimeEl?.textContent ?? "";
 
                 (eventTimeEl?.parentNode as HTMLElement)?.classList?.add(
                     `list-event-${e.event.id}`
@@ -124,21 +180,14 @@ export const CalendarList: FC<ICalendarList> = ({
                 }
 
                 titleText.classList.add("fc-list-event-time");
-                titleText.innerHTML = `
-            <div style="width: 100%; display:flex; align-items: center; font-size: 12px; flex-wrap: wrap;">
-            <div style="width:7px; height:7px; border-radius:4px; margin-right: 5px; display: inline-block; background-color: ${backgroundColor}"></div>
-            <span style="color:${String(
-                backgroundColor
-            )}; float: right;">${String(category?.label)}
-            </span>
-            <span style="margin: 0 5px;">•</span>
-            <span>${time || ""}</span>
-            ${selectedEvent.location && '<span style="margin: 0 5px;">•</span>'}
-            <span style="white-space: pre-wrap;">${
-                selectedEvent.location
-            }</span>
-            </div>
-            `;
+                titleText.append(
+                    buildListEventMeta({
+                        color: backgroundColor,
+                        label: category?.label,
+                        time,
+                        location: selectedEvent.location,
+                    })
+                );
 
                 dates.forEach((date) => {
                     const text = date.textContent?.split(" ");
@@ -151,7 +200,7 @@ export const CalendarList: FC<ICalendarList> = ({
                     date?.parentNode?.insertBefore(newDate, date.nextSibling);
                     date?.style.setProperty("display", "none");
                     newDate.classList.add("fc-list-day-text");
-                    newDate.innerHTML = `${text[1]}<span>${text[0]}</span>`;
+                    newDate.append(text[1], createTextSpan(text[0]));
                     if (now === text[0]) {
                         newDate.classList.add("now");
                     }
