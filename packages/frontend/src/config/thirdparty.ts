@@ -106,21 +106,6 @@ export const SUPPORTED_EVM_NETWORKS = {
     },
 };
 
-const DEFI_PULSE = {
-    API_KEY: String(import.meta.env.VITE_DEFIPULSE_API_KEY),
-    API_BASE_URL: String(import.meta.env.VITE_DEFIPULSE_BASE_URL),
-};
-
-const ETHERSCAN = {
-    API_KEY: String(import.meta.env.VITE_ETHERSCAN_API_KEY),
-    API_BASE_URL: String(import.meta.env.VITE_ETHERSCAN_BASE_URL),
-};
-
-const ETHPLORER = {
-    API_KEY: String(import.meta.env.VITE_ETHPLORER_API_KEY),
-    API_BASE_URL: "",
-};
-
 const COINGECKO = {
     API_KEY: undefined,
     API_BASE_URL: String(import.meta.env.VITE_COINGECKO_BASE_URL),
@@ -148,9 +133,6 @@ const IPFS_GATEWAY = {
 };
 
 export const API_PROVIDERS: TApiProviders = {
-    DEFI_PULSE,
-    ETHERSCAN,
-    ETHPLORER,
     COINGECKO,
     ULTRA_SOUND_MONEY,
     IPAPI,
