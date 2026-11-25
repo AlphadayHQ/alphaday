@@ -129,10 +129,18 @@ jobs:
               id: previoustag
               uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
-              # Notify Discord
+              # Notify Discord. Untrusted values (PR title, tag) are passed as env vars
+              # and JSON-encoded by jq: never interpolate them into `run:` or a
+              # template (the previous action rendered its args with lodash
+              # templates, so a PR title could read env secrets or run code).
+              # allowed_mentions is empty so a title can't ping @everyone.
             - name: Discord notification
               env:
                   DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK__OPS_CHANNEL }}
-              uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
-              with:
-                  args: "${{ env.REPOSITORY_NAME }}-${{ steps.previoustag.outputs.tag }} (${{ github.event.pull_request.title }}) has been deployed on ${{ env.ENVIRONMENT }}."
+                  PR_TITLE: ${{ github.event.pull_request.title }}
+                  TAG: ${{ steps.previoustag.outputs.tag }}
+              run: |
+                  jq -n \
+                  --arg content "${REPOSITORY_NAME}-${TAG} (${PR_TITLE}) has been deployed on ${ENVIRONMENT}." \
+                  '{content: $content, allowed_mentions: {parse: []}}' \
+                  | curl -fsS -X POST -H "Content-Type: application/json" --data-binary @- "$DISCORD_WEBHOOK"
