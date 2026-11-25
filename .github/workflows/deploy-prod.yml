@@ -11,8 +11,6 @@ env:
     VITE_X_APP_SECRET: 21gPAwU3uOUisMJJFJjaotbDxCmvCHKMh76Xlvb8XK2RkkvZHhtSfcUfoz6QiFx8zhZf31vxvKAFD7pkdmbjHiKwoVuS2iDOLjvC
 
     VITE_COINGECKO_BASE_URL: https://api.coingecko.com/api/v3/
-    VITE_DEFIPULSE_BASE_URL: https://data-api.defipulse.com/api/v1/
-    VITE_ETHERSCAN_BASE_URL: https://api.etherscan.io/api
     VITE_ULTRA_SOUND_MONEY_BASE_URL: https://api.ultrasound.money/
     VITE_ALPHADAY_IPFS_GATEWAY: https://alphaday.infura-ipfs.io/ipfs/
 
@@ -72,10 +70,6 @@ jobs:
 
                   VITE_STORAGE_BUCKET_URL: ${{ secrets.PROD__FRONTEND__STORAGE_BUCKET_URL }}
 
-                  VITE_DEFIPULSE_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_DEFIPULSE }}
-                  VITE_ETHERSCAN_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ETHERSCAN }}
-                  VITE_ETHPLORER_API_KEY: ${{ secrets.PROD__FRONTEND__API_KEY_ETHPLORER }}
-
                   VITE_WALLET_CONNECT_PROJECT_ID: ${{ secrets.PROD__REACT_APP_WALLET_CONNECT_PROJECT_ID }}
 
                   VITE_FIRE_API_KEY: ${{ secrets.PROD__REACT_APP_FIRE_API_KEY }}
@@ -133,10 +127,18 @@ jobs:
               id: previoustag
               uses: "WyriHaximus/github-action-get-previous-tag@v1"
 
-              # Notify Discord
+              # Notify Discord. Untrusted values (PR title, tag) are passed as env vars
+              # and JSON-encoded by jq: never interpolate them into `run:` or a
+              # template (the previous action rendered its args with lodash
+              # templates, so a PR title could read env secrets or run code).
+              # allowed_mentions is empty so a title can't ping @everyone.
             - name: Discord notification
               env:
                   DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK__OPS_CHANNEL }}
-              uses: "Ilshidur/action-discord@0c4b27844ba47cb1c7bee539c8eead5284ce9fa9"
-              with:
-                  args: "${{ env.REPOSITORY_NAME }}-${{ steps.previoustag.outputs.tag }} (${{ github.event.pull_request.title }}) has been deployed on ${{ env.ENVIRONMENT }}."
+                  PR_TITLE: ${{ github.event.pull_request.title }}
+                  TAG: ${{ steps.previoustag.outputs.tag }}
+              run: |
+                  jq -n \
+                  --arg content "${REPOSITORY_NAME}-${TAG} (${PR_TITLE}) has been deployed on ${ENVIRONMENT}." \
+                  '{content: $content, allowed_mentions: {parse: []}}' \
+                  | curl -fsS -X POST -H "Content-Type: application/json" --data-binary @- "$DISCORD_WEBHOOK"
