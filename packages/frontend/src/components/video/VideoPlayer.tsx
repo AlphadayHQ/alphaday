@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { Button } from "@alphaday/ui-kit";
+import { Button, safeUrl } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import useElementSize from "src/api/hooks/useElementSize";
 import { TVideoItem } from "src/api/types";
@@ -93,7 +93,9 @@ const VideoPlayer: FC<IVideoPlayer> = ({
                     <iframe
                         title="video"
                         className="border-0 border-none"
-                        src={getVideoEmbedUrl(video.url, { autoplay: 1 })}
+                        src={safeUrl(
+                            getVideoEmbedUrl(video.url, { autoplay: 1 })
+                        )}
                         allow="autoplay; encrypted-media"
                         allowFullScreen
                         width={iframeWidth}

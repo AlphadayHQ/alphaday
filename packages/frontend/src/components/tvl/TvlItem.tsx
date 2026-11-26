@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Arrow } from "@alphaday/ui-kit";
+import { Arrow, openInNewTab, safeUrl } from "@alphaday/ui-kit";
 import { useTranslation } from "react-i18next";
 import { TProjectData, TProjectTvlHistory, TProjectType } from "src/api/types";
 import { imgOnError } from "src/api/utils/errorHandling";
@@ -20,7 +20,7 @@ const computePercentageChange: (a: number, b: number) => number = (a, b) =>
 
 const handleOnClick = (projectData: TProjectData) => () => {
     if (projectData.project.url) {
-        window.open(projectData.project.url, "_blank");
+        openInNewTab(projectData.project.url);
     }
 };
 
@@ -434,7 +434,7 @@ export const ChainTvlItem: FC<IChainlTvlProps> = ({ index, projectData }) => {
                 </div>
                 <div className="text-primary fontGroup-highlightSemi ml-1.5">
                     <a
-                        href={projectData.project.url}
+                        href={safeUrl(projectData.project.url)}
                         target="_blank"
                         title={`Open ${projectData.project.name}`}
                         rel="noreferrer"

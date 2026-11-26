@@ -8,6 +8,7 @@ import { optimizeCssModules } from "vite-plugin-optimize-css-modules";
 import { VitePWA } from "vite-plugin-pwa";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
+import { cspPlugin } from "./csp.config";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -66,6 +67,7 @@ export default defineConfig(({ mode }) => {
         svgr(),
         ViteImageOptimizer(), // optimize images, svgs and gifs
         optimizeCssModules(), // optimize css modules
+        cspPlugin(env.VITE_API_BASE_URL), // Content-Security-Policy, build only
     ];
     if (env.USE_SSL === "true") {
         plugins.push(

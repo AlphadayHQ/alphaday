@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { openInNewTab } from "@alphaday/ui-kit";
 import moment from "moment-with-locales-es6";
 import ReactMarkdown from "react-markdown";
 import { TSocialItem } from "src/api/services";
@@ -43,7 +44,7 @@ const TwitterFeedItem: FC<TSocialItem<TTweets>> = ({
         <TweetWrapper
             onClick={({ target }) => {
                 if (!(target instanceof HTMLAnchorElement)) {
-                    window.open(url, "_blank");
+                    openInNewTab(url);
                 }
             }}
         >
